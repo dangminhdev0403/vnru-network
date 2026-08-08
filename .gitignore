@@ -1,0 +1,42 @@
+# Runtime secrets and env files
+secrets/env_backend
+secrets/env_frontend
+secrets/**/*.env
+secrets/**/*.json
+!secrets/.gitkeep
+!secrets/**/.gitkeep
+!secrets/README.md
+.vscode/**
+
+# Root/runtime env files
+.env
+.env.*
+!.env.example
+!.env.docker.example
+!.env.production.example
+!.env.*.example
+
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.docker.example
+!**/.env.production.example
+!**/.env.*.example
+
+node_modules
+**/node_modules
+.next
+**/.next
+dist
+**/dist
+coverage
+**/coverage
+
+.pnpm-store
+**/.pnpm-store
+
+*.log
+
+# nested repository backups
+**/.git.backup
+**/.git.backup.zip
