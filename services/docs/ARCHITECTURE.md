@@ -8,14 +8,15 @@ Keep this file short. Detailed conventions live in topic-specific docs in this s
 
 ## 2. Docs Index
 
-| Need                                                                            | Read                 |
-| ------------------------------------------------------------------------------- | -------------------- |
-| Core backend architecture and service boundaries                                | `ARCHITECTURE.md`    |
-| Service structure, dependency direction, and service extension workflow         | `SERVICE_GUIDE.md`   |
-| API contracts, authorization, data ownership, migrations, realtime/integrations | `CONTRACT_GUIDE.md`  |
-| New service/service extension workflow                                          | `EXTENSION_GUIDE.md` |
-| Development rules, security rules, validation gates, execution contract         | `RULES.md`           |
-| Active/archived backend milestones and progress tracking                        | `PLANS.md`           |
+| Need | Read |
+| --- | --- |
+| Core backend architecture and service boundaries | `ARCHITECTURE.md` |
+| Service structure, dependency direction, and service boundaries | `SERVICE_GUIDE.md` |
+| Migration rules and schema guidelines | `MIGRATION_GUIDE.md` |
+| Multilingual backend plan | `MULTILINGUAL_BACKEND_PLAN.md` |
+| Authoritative global API contracts & event standards | `../../docs/API_SPEC.md` |
+| Development rules, security rules, validation gates | `RULES.md` |
+| Active/archived backend milestones and progress tracking | `PLANS.md` |
 
 Rule: do not read all docs by default. Start with this file, then open only the doc matching the current task.
 
@@ -29,23 +30,26 @@ Rule: do not read all docs by default. Start with this file, then open only the 
 * Keep service data ownership explicit.
 * Do not introduce shared business logic across services without a defined ownership boundary.
 
-## 4. Backend Services & Capability Ownership
+## 4. Target Backend Services & Capability Ownership
+
+Target microservice ecosystem (Currently implemented: `auth-service`):
 
 ```txt
 services/
-  api-gateway/          # Edge routing, rate limiting, request context propagation
-  auth-service/         # IAM, SSO federation, 2FA policies, active context, RBAC policies, audit log
-  organization-service/ # Institutions, departments, researcher CVs, expert mapping, partner matches
-  knowledge-service/    # Scientific publications, preprints, patents, conference papers repository
-  grant-service/        # Funding programs, bilateral calls, paired proposals, Co-PI lock
-  review-service/       # Reviewer pool, double-blind assignments, rubric scoring, aggregated evaluations
-  project-service/      # Joint research projects, milestones, bilateral financial reports, overdue alerts
-  academic-service/     # Scholarships, quotas, Pushkin Virtual Hub, JINR youth practice
-  technology-service/   # Tech transfer marketplace, enterprise needs, 2+2 consortiums, IP advisory
-  analytics-service/    # Fact ingestion, executive KPIs, collaboration network graph, strategic exports (Read-only)
+  auth-service/         # IAM, SSO federation, 2FA policies, active context, RBAC policies, audit log (Current)
+  api-gateway/          # Edge routing, rate limiting, request context propagation (Target)
+  organization-service/ # Institutions, departments, researcher CVs, expert mapping, partner matches (Target)
+  knowledge-service/    # Scientific publications, preprints, patents, conference papers repository (Target)
+  grant-service/        # Funding programs, bilateral calls, paired proposals, Co-PI lock (Target)
+  review-service/       # Reviewer pool, double-blind assignments, rubric scoring, aggregated evaluations (Target)
+  project-service/      # Joint research projects, milestones, bilateral financial reports, overdue alerts (Target)
+  academic-service/     # Scholarships, quotas, Pushkin Virtual Hub, JINR youth practice (Target)
+  technology-service/   # Tech transfer marketplace, enterprise needs, 2+2 consortiums, IP advisory (Target)
+  analytics-service/    # Fact ingestion, executive KPIs, collaboration network graph, strategic exports (Target, Read-only)
 ```
 
 Each service owns its domain modules and persistence boundary (database-per-service). Cross-service communication uses synchronous REST via OpenAPI contracts or asynchronous Kafka events published via the Transactional Outbox pattern.
+
 
 
 ## 5. Standard Service Boundary

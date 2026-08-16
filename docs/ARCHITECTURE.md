@@ -69,20 +69,23 @@ The architecture integrates six core business capabilities across three canonica
 
 ## 3. Six Business Capabilities & Domain Microservices
 
-The six source capabilities map to domain-oriented microservices:
+The six source capabilities map to domain-oriented microservices (Target Architecture):
 
-| Module / Capability | Core Business Responsibility `[SOURCE]` | Owning Microservice |
+| Module / Capability | Core Business Responsibility `[SOURCE]` | Owning Service & Implementation Status |
 | --- | --- | --- |
-| **1. Unified IAM & Governance** | Identity federation, SSO, 2FA policy, active authorization context resolution, and RBAC policy enforcement. | `auth-service` |
-| **2. Knowledge & Expert Network** | Digital scientific repository (publications, patents, proceedings), expert mapping, researcher CVs, and partner recommendation signals. | `knowledge-service`<br>`organization-service` |
-| **3. Bilateral Grants / PMS & Review** | Bilateral funding calls, paired submission confirmation (VN Co-PI + RU Co-PI), double-blind multi-stage peer review, joint project tracking, milestones, bilateral financial reporting, overdue alerts, and acceptance. | `grant-service`<br>`review-service`<br>`project-service` |
-| **4. Academic Exchange & Language Hub** | Scholarship & quota management, Pushkin Virtual Hub (courses, exams, certifications, events), and young researcher / JINR practice opportunities. | `academic-service` |
-| **5. Technology Transfer & Enterprise Connection** | Technology catalog, enterprise demand posting, expressions of interest, 2+2 consortium collaborations (1 VN Inst + 1 VN Ent + 1 RU Inst + 1 RU Ent), and bilateral IP/legal advisory catalog. | `technology-service` |
-| **6. Science Diplomacy Dashboard** | Executive KPIs for Intergovernmental Committee, collaboration network mapping (cities, institutes, emerging topics), trend analysis, and strategic report export. | `analytics-service`<br>(Analytics Layer) |
+| **1. Unified IAM & Governance** | Identity federation, SSO, 2FA policy, active authorization context resolution, and RBAC policy enforcement. | `auth-service` *(Current Implementation)* |
+| **2. Knowledge & Expert Network** | Digital scientific repository (publications, patents, proceedings), expert mapping, researcher CVs, and partner recommendation signals. | `knowledge-service`<br>`organization-service` *(Target / Planned)* |
+| **3. Bilateral Grants / PMS & Review** | Bilateral funding calls, paired submission confirmation (VN Co-PI + RU Co-PI), double-blind multi-stage peer review, joint project tracking, milestones, bilateral financial reporting, overdue alerts, and acceptance. | `grant-service`<br>`review-service`<br>`project-service` *(Target / Planned)* |
+| **4. Academic Exchange & Language Hub** | Scholarship & quota management, Pushkin Virtual Hub (courses, exams, certifications, events), and young researcher / JINR practice opportunities. | `academic-service` *(Target / Planned)* |
+| **5. Technology Transfer & Enterprise Connection** | Technology catalog, enterprise demand posting, expressions of interest, 2+2 consortium collaborations (1 VN Inst + 1 VN Ent + 1 RU Inst + 1 RU Ent), and bilateral IP/legal advisory catalog. | `technology-service` *(Target / Planned)* |
+| **6. Science Diplomacy Dashboard** | Executive KPIs for Intergovernmental Committee, collaboration network mapping (cities, institutes, emerging topics), trend analysis, and strategic report export. | `analytics-service`<br>(Analytics Layer) *(Target / Planned, Read-only)* |
+
+> **State Note**: Currently, `auth-service` is implemented under `services/auth-service/`. Additional domain services and edge infrastructure represent the planned target microservices architecture.
 
 ---
 
-## 4. System Topology & Communication
+## 4. System Topology & Communication (Target Architecture)
+
 
 ```text
 Frontend (Next.js 16.3) ──[HTTP/REST]──> API Gateway ──[HTTP/REST]──> Microservices (NestJS)

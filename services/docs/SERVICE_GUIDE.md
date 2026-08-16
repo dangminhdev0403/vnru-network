@@ -94,22 +94,23 @@ tests/
 
 Do not create empty folders. Let complexity justify structure.
 
-## Service boundaries
+## Service boundaries (Target Architecture)
 
-| Service | Business Capability `[SOURCE]` | Owned Responsibility & Boundary |
-| --- | --- | --- |
-| `api-gateway` | Edge Layer | Route dispatching, rate limiting, request context header propagation |
-| `auth-service` | IAM & Governance | Authentication, SSO federation, 2FA policies, active context resolution, RBAC policies, audit log |
-| `organization-service` | Knowledge & Expert | Organizations, institutions, departments, researcher profiles/CVs, expert mapping, partner matches |
-| `knowledge-service` | Knowledge & Expert | Digital scientific publications, preprints, patents, conference papers repository |
-| `grant-service` | Grants & PMS | Funding programs, bilateral calls, paired proposals (VN/RU Co-PIs), version locking |
-| `review-service` | Grants & PMS | Reviewer pool, double-blind assignments, rubric scoring, aggregated evaluations |
-| `project-service` | Grants & PMS | Approved joint projects, milestones, bilateral financial reports, overdue alerts, acceptance |
-| `academic-service` | Academic Exchange | Scholarships, quotas, Pushkin Virtual Hub (language courses, exams, certs), JINR youth practice |
-| `technology-service` | Technology Transfer | Technology marketplace, enterprise needs, 2+2 consortium collaborations, IP advisory |
-| `analytics-service` | Science Diplomacy Dashboard | Standardized fact ingestion, executive KPIs, collaboration network graph, strategic exports *(Read-only)* |
+| Service | Business Capability `[SOURCE]` | Owned Responsibility & Boundary | Implementation Status |
+| --- | --- | --- | --- |
+| `auth-service` | IAM & Governance | Authentication, SSO federation, 2FA policies, active context resolution, RBAC policies, audit log | **Current Implementation** |
+| `api-gateway` | Edge Layer | Route dispatching, rate limiting, request context header propagation | **Target / Planned** |
+| `organization-service` | Knowledge & Expert | Organizations, institutions, departments, researcher profiles/CVs, expert mapping, partner matches | **Target / Planned** |
+| `knowledge-service` | Knowledge & Expert | Digital scientific publications, preprints, patents, conference papers repository | **Target / Planned** |
+| `grant-service` | Grants & PMS | Funding programs, bilateral calls, paired proposals (VN/RU Co-PIs), version locking | **Target / Planned** |
+| `review-service` | Grants & PMS | Reviewer pool, double-blind assignments, rubric scoring, aggregated evaluations | **Target / Planned** |
+| `project-service` | Grants & PMS | Approved joint projects, milestones, bilateral financial reports, overdue alerts, acceptance | **Target / Planned** |
+| `academic-service` | Academic Exchange | Scholarships, quotas, Pushkin Virtual Hub (language courses, exams, certs), JINR youth practice | **Target / Planned** |
+| `technology-service` | Technology Transfer | Technology marketplace, enterprise needs, 2+2 consortium collaborations, IP advisory | **Target / Planned** |
+| `analytics-service` | Science Diplomacy Dashboard | Standardized fact ingestion, executive KPIs, collaboration network graph, strategic exports *(Read-only)* | **Target / Planned (Read-only)** |
 
 Each service owns its internal modules and persistence details (database-per-service).
+
 
 Do not access another service's repository, database, or internal implementation directly.
 

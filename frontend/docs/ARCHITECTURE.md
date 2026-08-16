@@ -8,18 +8,17 @@ Keep this file short. Detailed conventions belong in topic-specific documents un
 
 ## 2. Docs Index
 
-| Need                                                          | Read                      |
-| ------------------------------------------------------------- | ------------------------- |
-| Core architecture and layer boundaries                        | `ARCHITECTURE.md`         |
-| Feature/module structure and extension workflow               | `MODULE_GUIDE.md`         |
-| Backend API, generated contracts, auth/session integration    | `CONTRACT_GUIDE.md`       |
-| Runtime boundaries, components, state, realtime, errors, i18n | `RUNTIME_UI_GUIDE.md`     |
-| Development rules and execution contracts                     | `RULES.md`                |
-| Active/archived implementation plans                          | `PLANS.md`                |
-| UI visual system and component style                          | `DESIGN.md`               |
-| Smoke tests and manual route checks                           | `FRONTEND_SMOKE_TESTS.md` |
+| Need | Read |
+| --- | --- |
+| Core architecture, layers, product surfaces & routes | `ARCHITECTURE.md` |
+| Feature module structure, folders & standard features | `MODULE_GUIDE.md` |
+| Backend API integration, contracts, auth & error handling | `CONTRACT_GUIDE.md` |
+| Runtime boundaries, components, state, realtime & i18n | `RUNTIME_UI_GUIDE.md` |
+| Development rules and execution constraints | `RULES.md` |
+| Active/archived frontend milestones and plans | `PLANS.md` |
 
 Rule: do not read all docs by default. Start with this file, then open only the document relevant to the current task.
+
 
 ## 3. Core Principles
 
