@@ -1,112 +1,101 @@
-# VN-RU Network Architecture
+# VN-RU Network API Specification & Event Contracts
 
-## 1. Architecture decision
+## 1. Contract Source of Truth
 
-VN-RU Network is designed as a **modular backend with microservice-ready boundaries**:
-
-```txt
-frontend/                         # Next.js frontend
-services/                         # backend services
-shared/api-contract/              # exported OpenAPI/shared contract
-```
-
-The current backend service may contain multiple domain modules. Modules must have clear ownership and dependency boundaries so they can be extracted into dedicated services later when there is a real operational reason.
-
-Do not split modules into microservices prematurely. Service extraction is a separate architectural decision.
-
-## 2. Current runtime topology
-
-```txt
-Browser / mobile web
-  -> Next.js frontend
-  -> Backend service(s)
-  -> PostgreSQL
-  -> External providers where enabled
-```
-
-The current architecture does not require an API gateway, message broker, distributed cache, or database-per-service split unless a specific requirement justifies it.
-
-## 3. Domain / Module Boundaries
-
-Each module should define a clear business boundary.
-
-Every module owns:
-
-* business capability;
-* data/models it owns;
-* controllers/routes it exposes;
-* public services/ports other modules may use;
-* events it publishes/consumes, if any;
-* tests that protect behavior.
-
-Modules should remain internally cohesive and should not expose persistence implementation details.
-
-A module may later become an independent service when its ownership, scaling, deployment, security, integration, or operational requirements justify extraction.
-
-Do not decide the final service split before the domain boundaries are understood.
-
-## 4. Dependency direction
-
-Allowed direction:
-
-```txt
-Controller -> Application Service -> Repository/Adapter -> Database/Provider
-```
-
-Cross-module calls must go through a public service/port exported by the owning module. Repositories and persistence details are internal to their module.
-
-Rules:
-
-* Controllers stay thin and own HTTP parsing/response mapping only.
-* Services own workflow, authorization/resource checks, and transaction decisions.
-* Repositories own persistence details and are not exported across module boundaries.
-* Shared guards/decorators may depend on public Identity contracts, not deep implementation details.
-* External providers stay behind adapters/services.
-* A module must not directly access another module's repository or persistence implementation.
-
-## 5. Contract source of truth
-
-OpenAPI export from the backend is the HTTP contract source of truth.
+The single source of truth for HTTP/REST contracts in VN-RU Network is the **OpenAPI specification exported from backend services**:
 
 ```bash
 npm run openapi:export
 ```
 
-The exported contract should be consumed or verified through `shared/api-contract`.
+Exported OpenAPI specifications are synchronized to `shared/api-contract/` and consumed by frontend generators.
 
-`docs/API_CONTRACT.md` should describe contract policy and runtime notes. It should not become a hand-maintained endpoint catalog that drifts from generated OpenAPI.
+- Do not maintain duplicate handwritten endpoint tables that drift from generated OpenAPI schemas.
+- Contract breaking changes MUST be coordinated via schema versioning before frontend code assumptions change.
 
-## 6. Event and async strategy
+---
 
-Use synchronous transactions and in-process communication where the workflow does not require asynchronous processing.
+## 2. API Design Conventions
 
-When events are needed, use an explicit versioned envelope:
+### 2.1. Resource Modeling & URI Structure
+Endpoints reflect domain resources and nested resource ownership:
 
-```txt
-id, type, version, occurredAt, producer, correlationId, actor, payload
+| Capability | Resource Scope | Typical REST Operations |
+| --- | --- | --- |
+| **IAM** | `/api/v1/auth/*`<br>`/api/v1/users/*`<br>`/api/v1/roles/*` | Sign in, SSO callback, active context switch, profile update, role assignment. |
+| **Knowledge** | `/api/v1/publications/*`<br>`/api/v1/patents/*`<br>`/api/v1/search/*` | Search repository, retrieve publication details, upload preprint/patent metadata. |
+| **Organization & Experts** | `/api/v1/organizations/*`<br>`/api/v1/experts/*`<br>`/api/v1/matches/*` | Institution directory, expert profile/CV, similarity & partner recommendations. |
+| **Grants & PMS** | `/api/v1/grants/programs/*`<br>`/api/v1/grants/calls/*`<br>`/api/v1/grants/proposals/*`<br>`/api/v1/projects/*` | Publish call, draft paired proposal, Co-PI mutual sign-off, lock proposal, update milestone, submit bilateral financial report. |
+| **Review** | `/api/v1/reviews/assignments/*`<br>`/api/v1/reviews/evaluations/*` | Reviewer queue, anonymized proposal fetch, submit double-blind score & comments. |
+| **Academic** | `/api/v1/academic/scholarships/*`<br>`/api/v1/academic/courses/*`<br>`/api/v1/academic/exams/*`<br>`/api/v1/academic/practice/*` | Scholarship application, Pushkin Hub course enrollment, exam registration, certificate verification, JINR practice application. |
+| **Technology** | `/api/v1/technology/listings/*`<br>`/api/v1/technology/demands/*`<br>`/api/v1/technology/consortiums/*`<br>`/api/v1/technology/ip/*` | Technology marketplace search, post demand, submit expression of interest, create 2+2 consortium, access IP advisory. |
+| **Analytics** | `/api/v1/analytics/kpi/*`<br>`/api/v1/analytics/collaboration-map/*`<br>`/api/v1/analytics/reports/export/*` | Executive KPI rollups, network graph nodes/edges, generate strategic PDF/Excel export. *(Read-only)* |
+
+### 2.2. Bounded Collection Responses
+All collection/list endpoints MUST enforce bounded pagination:
+```json
+{
+  "items": [ ... ],
+  "meta": {
+    "total": 120,
+    "page": 1,
+    "limit": 20,
+    "totalPages": 6,
+    "hasNextPage": true,
+    "hasPreviousPage": false
+  }
+}
 ```
 
-Do not introduce Kafka, RabbitMQ, Redis Streams, or an outbox worker without a specific workflow requirement.
+---
 
-## 7. Service extraction policy
+## 3. Asynchronous Event Contracts & Envelope Standard
 
-A module may be extracted into a dedicated service only when at least one trigger is real and measured:
+Cross-service synchronization and analytics ingestion use Kafka domain events formatted in a standard versioned envelope:
 
-* independent scaling or deployment cadence;
-* isolation/security requirement;
-* external integration reliability requirement;
-* clear data ownership and contract stability;
-* team ownership boundary;
-* operational need such as independent retries/queueing.
+```json
+{
+  "id": "c4b3e8a0-7f21-4d9b-a012-3456789abcde",
+  "type": "grants.proposal.submitted",
+  "version": "1.0",
+  "occurredAt": "2026-08-17T03:30:00.000Z",
+  "producer": "grant-service",
+  "correlationId": "f1e2d3c4-b5a6-7890-1234-56789abcdef0",
+  "actor": {
+    "userId": "usr_1029384756",
+    "activeContext": "researcher",
+    "organizationId": "org_vn_hust"
+  },
+  "payload": {
+    "proposalId": "prop_998877",
+    "callId": "call_2026_bilateral_01",
+    "vnCoPIId": "usr_1029384756",
+    "ruCoPIId": "usr_5566778899",
+    "title": "AI in Climate Modeling",
+    "status": "SUBMITTED_LOCKED"
+  }
+}
+```
 
-Until then, keep modules inside their current service.
+### 3.1. Canonical Domain Events
 
-When extraction is required, preserve the existing domain contract and define the new service boundary explicitly before implementation.
+| Domain | Event Type | Description | Consumers |
+| --- | --- | --- | --- |
+| `auth` | `iam.user.registered` | New user created via SSO/registration | `organization-service`, `analytics-service` |
+| `auth` | `iam.role.assigned` | Role / permission context modified | `audit-service`, `analytics-service` |
+| `grant` | `grants.call.published` | Bilateral funding call opened | `notification-service`, `analytics-service` |
+| `grant` | `grants.proposal.submitted` | Paired proposal signed by both Co-PIs and locked | `review-service`, `analytics-service` |
+| `review` | `reviews.evaluation.completed` | Reviewer completed double-blind evaluation | `grant-service`, `analytics-service` |
+| `grant` | `grants.decision.issued` | Joint funding decision finalized | `project-service`, `notification-service`, `analytics-service` |
+| `project` | `projects.milestone.overdue` | Project milestone deadline exceeded | `notification-service`, `analytics-service` |
+| `academic` | `academic.scholarship.awarded` | Scholarship quota granted to applicant | `notification-service`, `analytics-service` |
+| `technology` | `technology.interest.submitted` | Enterprise expressed interest in technology asset | `technology-service`, `notification-service` |
+| `technology` | `technology.consortium.formed` | 2+2 bilateral consortium established | `project-service`, `analytics-service` |
 
-## 8. Rename policy
+### 3.2. Audit Logging Events
+Security and governance actions emit audit records:
+- Identity & session actions: `iam.auth.login_success`, `iam.auth.2fa_verified`, `iam.auth.failed`.
+- Access control changes: `iam.role.created`, `iam.permission.revoked`.
+- Reviewer unmasking or re-identification actions: `reviews.anonymization.unmask`.
+- Grant decisions & disbursement authorizations: `grants.decision.approved`, `projects.disbursement.approved`.
 
-Service names should represent their actual responsibility.
-
-Do not rename or split an existing service only for naming consistency.
-
-A service rename or extraction must be a separate phase because it can affect Docker, CI, scripts, documentation, OpenAPI export, and frontend environment references.

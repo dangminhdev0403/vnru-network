@@ -1,86 +1,72 @@
 # VN-RU Network Domain Map
 
-## Purpose
+## 1. Purpose
 
-This document maps business domains and module ownership inside the current backend service structure.
+This document maps business domains, capability ownership, and persistent data boundaries across the VN-RU Network microservices.
 
-It is an ownership guide before moving code between modules or extracting a module into a dedicated service.
+It enforces the fundamental architectural principle: **Every business state has exactly one owning service.** No domain or dashboard may directly mutate or own another domain's state.
 
-## Domain / Module ownership
+---
 
-Each module must define:
+## 2. Six Business Capabilities & Domain Mapping
 
-| Area                 | Required definition                                                   |
-| -------------------- | --------------------------------------------------------------------- |
-| Business capability  | What business responsibility the module owns                          |
-| Code boundary        | Where the module implementation lives                                 |
-| Data ownership       | Models and data owned by the module                                   |
-| Public API/port      | Services or contracts other modules may use                           |
-| Dependencies         | Other modules it is allowed to depend on                              |
-| Extraction readiness | Whether the module has a clear boundary for future service extraction |
+| Capability `[SOURCE]` | Domain / Service | Business Responsibility `[SOURCE]` | Owned Models & State (Single Source of Truth) | Allowed Upstream Dependencies |
+| --- | --- | --- | --- | --- |
+| **IAM & Unified Governance** | `auth-service` | Identity federation, SSO, 2FA policies, active authorization context resolution, and RBAC management. | `User`, `Account`, `Session`, `Role`, `Permission`, `UserRole`, `ActiveContext`, `AuditLog` | Shared DB / Infra |
+| **Knowledge Repository** | `knowledge-service` | Digital scientific publications, patents, conference materials, scientific library indexing. | `Publication`, `Patent`, `ConferencePaper`, `KnowledgeAsset`, `AssetTopic` | `auth-service` (context/user check) |
+| **Institutions & Expert Directory** | `organization-service` | Universities, institutes, faculties, researcher profiles/CVs, expert mapping, and match signals. | `Organization`, `Department`, `UserProfile`, `ExpertCV`, `ResearchArea`, `MatchSignal` | `auth-service` (identity link) |
+| **Bilateral Research Grants** | `grant-service` | Bilateral funding programs, funding calls, joint proposals, and VN/RU paired submission state. | `FundingProgram`, `FundingCall`, `JointProposal`, `CoPIAssignment`, `ProposalAttachment` | `auth-service`, `organization-service` |
+| **Multi-Stage Peer Review** | `review-service` | Reviewer pool, double-blind assignments, scoring rubrics, review submissions, aggregated evaluations. | `ReviewerPool`, `ReviewAssignment`, `EvaluationScore`, `ReviewRecord`, `DecisionRecommendation` | `auth-service`, `grant-service` (read proposal snapshot) |
+| **Project Management (PMS)** | `project-service` | Approved project lifecycle, bilateral milestones, financial reports, overdue alerts, acceptance records. | `Project`, `Milestone`, `Deliverable`, `BilateralFinancialReport`, `AcceptanceRecord`, `OverdueAlert` | `auth-service`, `grant-service` (approved grant link) |
+| **Academic Exchange & Language Hub** | `academic-service` | Scholarship quotas, applications, Pushkin Virtual Hub (courses, exams, certs), JINR youth practice. | `ScholarshipProgram`, `QuotaAllocation`, `AcademicApplication`, `LanguageCourse`, `ExamEnrollment`, `Certificate`, `PracticeOpportunity` | `auth-service`, `organization-service` |
+| **Technology Transfer & 2+2** | `technology-service` | Technology catalog, enterprise demand, expressions of interest, 2+2 consortium collaborations, IP advisory. | `TechnologyListing`, `EnterpriseNeed`, `ExpressionOfInterest`, `Consortium2Plus2`, `IPAdvisoryRecord` | `auth-service`, `organization-service` |
+| **Science Diplomacy & Cross-Cutting Analytics** | `analytics-service`<br>(Analytics Layer) | Executive KPIs, Intergovernmental Committee reports, collaboration network maps, trend analytics. | `FactSnapshot`, `AggregateMetric`, `CollaborationGraphNode`, `CollaborationGraphEdge`, `ReportExportJob` *(Read-only projections)* | Event bus / normalized fact streams from all domains |
+| **Edge Gateway** | `api-gateway` | Edge routing, rate limiting, request context propagation, client session termination. | None (stateless routing / Redis rate-limit counters) | Downstream domain HTTP ports |
 
-Do not define final service boundaries before the corresponding domain and module ownership is understood.
+---
 
-## Allowed dependencies
+## 3. Data Ownership & Source-of-Truth Rules
+
+1. **Exclusive Write Authority**: Only the owning service may write or mutate its business models.
+2. **No Shared Persistence**: Cross-service database access, database links, or shared database tables are strictly forbidden.
+3. **Cross-Domain References**: Cross-domain relationships MUST use immutable IDs/references (e.g., `organizationId`, `proposalId`, `authorUserId`) rather than foreign-key constraints across service database boundaries.
+4. **Analytics Non-Transactional Rule**: `analytics-service` is a consumer of facts and events. It stores derived projections and metrics for querying, but it NEVER owns or writes back business state to `grant-service`, `project-service`, `technology-service`, or any other domain.
+5. **Double-Blind Review Data Isolation**: `review-service` owns review assignments and scoring data. The anonymized proposal snapshot viewed by reviewers MUST NOT leak author or institution identity.
+
+---
+
+## 4. Inter-Domain Dependency & Communication Rules
 
 ```txt
-Module A
-  -> Public API / Port
-  -> Module B
+┌─────────────────────────────────────────────────────────────┐
+│                       api-gateway                           │
+└──────────────┬───────────────────────────────┬──────────────┘
+               │                               │
+       ┌───────▼────────┐             ┌────────▼────────┐
+       │  auth-service  │             │  grant-service  │
+       └───────┬────────┘             └────────┬────────┘
+               │                               │
+               │ [Domain Events via Outbox]     │ [Domain Events via Outbox]
+               ▼                               ▼
+       ┌────────────────────────────────────────────────┐
+       │                Kafka Event Bus                 │
+       └───────┬───────────────────────────────┬────────┘
+               │                               │
+       ┌───────▼────────┐             ┌────────▼────────┐
+       │ review-service │             │analytics-service│
+       └────────────────┘             └─────────────────┘
 ```
 
-Rules:
+- **Synchronous Invocations**: Allowed only for lightweight verification (e.g., verifying user identity or organization status via public HTTP/REST ports).
+- **Asynchronous Orchestration**: Business workflows spanning multiple domains (e.g., Proposal Approved → Create Project; Call Closed → Trigger Review Assignment) MUST use versioned domain events via Kafka.
+- **Fail-Safe Isolation**: A failure in `analytics-service`, `notification-service`, or search indexing MUST NOT fail the upstream transactional business operation.
 
-* Modules must communicate through public services/ports.
-* Do not access another module's repository directly.
-* Do not access another module's Prisma queries directly.
-* Do not expose persistence implementation as a module contract.
-* Shared infrastructure may be used by modules where appropriate.
-* Cross-module dependencies must follow the dependency direction defined in `ARCHITECTURE.md`.
+---
 
-## Data ownership
+## 5. Service Extraction Readiness
 
-Each business model must have one owning module.
+A domain module within a backend service is ready for dedicated service extraction when:
+- It has clear, exclusive data ownership with no cross-schema joins.
+- Its public API and event contracts are stable and versioned.
+- Independent scaling, deployment, security, or compliance boundaries justify the operational overhead.
 
-Rules:
-
-* The owning module controls writes to its data.
-* Other modules must use the owner's public service/port or API.
-* Do not duplicate ownership of the same business data across modules.
-* Read access must still respect the owning module's boundary.
-
-## Transaction boundaries
-
-Keep transactions inside the owning module whenever possible.
-
-For workflows crossing module boundaries:
-
-* prefer a public application service;
-* use in-process events when asynchronous behavior is actually required;
-* do not introduce a message broker by default;
-* do not use distributed transactions by default.
-
-## Extraction readiness
-
-A module may become a dedicated service when its boundary is sufficiently stable and there is a real reason to extract it.
-
-Possible triggers:
-
-* independent scaling or deployment;
-* security or isolation requirement;
-* clear data ownership;
-* stable API/event contract;
-* independent external integration;
-* operational requirement.
-
-Until those conditions exist, keep the module inside its current service.
-
-## Refactor sequence
-
-1. Define business ownership.
-2. Define module data ownership.
-3. Define public services/ports.
-4. Remove direct access to internal repositories across modules.
-5. Add tests protecting the module boundary.
-6. Review API/event contracts.
-7. Consider service extraction only after the boundary is stable.

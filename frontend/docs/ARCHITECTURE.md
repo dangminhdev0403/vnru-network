@@ -98,39 +98,83 @@ Do not move server responsibilities into Client Components without a concrete re
 
 Detailed runtime rules belong in `RUNTIME_UI_GUIDE.md`.
 
-## 7. Product Surface and Route Ownership
+## 7. Product Surfaces & Route Architecture `[DESIGN]`
 
-Before adding routes, define the product surface they belong to.
-
-A product surface is a user-facing area with its own:
-
-* route ownership;
-* access rules;
-* layout/shell;
-* loading behavior;
-* error behavior;
-* feature composition.
-
-Typical surfaces may include:
+The Web experience structure maps the six business capabilities into distinct product surfaces with clear access rules:
 
 ```txt
-Public
-Authentication
-Management
-Operations
-User-facing application
-Internal/BFF
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. Public / Discovery Surface                                               │
+│    /                   - Home & network highlights                          │
+│    /search             - Global & semantic discovery across entities        │
+│    /knowledge/*        - Digital scientific repository, papers, patents     │
+│    /experts/*          - Expert directory, researcher profiles, matches     │
+│    /grants/*           - Funding programs and bilateral calls catalog       │
+│    /academic/*         - Academic scholarships, Pushkin Hub, youth practice │
+│    /technology/*       - Tech transfer marketplace, enterprise needs        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 2. Authentication & Session Surface                                         │
+│    /login              - SSO & Identity Provider authentication             │
+│    /security           - 2FA setup, active sessions, credential security    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 3. Authenticated Persona Workspaces Surface                                  │
+│    /workspace          - Context resolver & workspace dispatcher            │
+│    /workspace/researcher   - Proposals, Co-PI paired signs, active projects │
+│    /workspace/student      - Scholarship applications, courses, exams       │
+│    /workspace/enterprise   - Tech demands, interests, 2+2 consortiums       │
+│    /workspace/organization - Faculty management, institutional proposals    │
+│    /workspace/agency       - Program administration, decisions, disbursals  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 4. Double-Blind Peer Review Surface                                         │
+│    /reviews            - Assigned review queue (anonymized)                 │
+│    /reviews/:id        - Double-blind evaluation, rubric scoring, comments  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 5. Governance & Administration Surface                                      │
+│    /admin/users        - User and identity management                       │
+│    /admin/access       - Roles, permissions, and context administration     │
+│    /admin/audit        - Immutable security & action audit review           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 6. Science Diplomacy & Strategic Analytics Surface                          │
+│    /dashboard          - Executive bilateral KPIs                           │
+│    /dashboard/network  - Collaboration network graph (cities/institutes)    │
+│    /dashboard/trends   - Emerging technology & scientific topic trends      │
+│    /dashboard/reports  - Strategic report generation & export               │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-Do not create route groups only for organizational convenience.
+### 7.1. Persona User Journeys & Primary CTAs `[SOURCE]`
 
-Rules:
+| Persona | Primary Entry Point | Core Flow | Primary CTA |
+| --- | --- | --- | --- |
+| **Visitor** | `/` (Home) / `/search` | Explore repository, view public expert profiles and funding calls | *Search / Explore* |
+| **Researcher** | `/workspace/researcher` | Profile CV maintenance, paired proposal drafting, milestone reporting | *Submit Paired Proposal* |
+| **Student** | `/academic` / `/workspace/student` | Browse scholarships, enroll in Pushkin language hub, register exams | *Apply / Enroll* |
+| **Reviewer** | `/reviews` | Open anonymized assigned proposal, score against rubric, submit | *Score & Submit Review* |
+| **Enterprise** | `/technology` / `/workspace/enterprise` | Search IP/technologies, post demand, form 2+2 consortium | *Express Interest* |
+| **Institution Staff** | `/workspace/organization` | Verify institutional proposals, track department projects | *Verify / Report* |
+| **Agency Officer** | `/workspace/agency` | Publish funding calls, assign reviewers, issue funding decisions | *Review & Approve* |
+| **Science Diplomat** | `/dashboard` | Inspect real-time bilateral KPIs, collaboration maps, export report | *Drill-Down / Export Report* |
 
-* Route groups should represent product surfaces.
-* Authenticated surfaces should define access, layout, loading, and error behavior.
-* Route pages should compose feature components.
-* Pages should not contain large amounts of domain business logic.
-* Route ownership must remain clear as the application grows.
+### 7.2. Shared UI State Model `[DESIGN]`
+
+All product surfaces must handle the eight standard UI states deterministically:
+
+| State | UI Behavior & Meaning |
+| --- | --- |
+| **Loading** | Async fetch in progress; maintain layout stability with skeleton loaders. |
+| **Empty** | Valid query executed with zero records; guide user toward relevant action/filter reset. |
+| **Error** | Request failed; display user-friendly localized message with retry action. |
+| **Forbidden (`403`)** | Authenticated user lacks permission for active context; display access request guidance. |
+| **Unauthorized (`401`)** | Unauthenticated session or expired token; redirect to `/login` with return URL. |
+| **Validation Error** | Form input invalid; display clear, localized field-level error messages. |
+| **Conflict (`409`)** | State conflict (e.g. concurrent proposal edits, version mismatch); prompt user to refresh. |
+| **Success** | Mutation complete; display clear feedback toast and update/invalidate cache. |
+
+### 7.3. Multilingual Experience (VI / RU / EN) `[SOURCE]`
+
+- All product surfaces must support seamless language switching between Vietnamese (`vi`), Russian (`ru`), and English (`en`).
+- Scientific terminology translation assistance is integrated via AI hooks in specialized reading/authoring surfaces.
+
 
 ## 8. Feature Module
 

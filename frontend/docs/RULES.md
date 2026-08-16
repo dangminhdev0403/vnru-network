@@ -1,189 +1,42 @@
-# PROJECT RULES
+# Frontend Rules
 
-## Core Rules
+Read `../../docs/RULES.md` first. Current `frontend/package.json`, source, and tests are capability truth; target-state docs never authorize inventing missing packages or paths.
 
-- Before starting implementation, read and follow `docs/RULES.md` plus any relevant file in `docs/` for the task.
-- For each implementation task, set a short mission name and keep the working plan aligned to that mission until completion.
-- Prefer Server Components by default
-- Do not fetch APIs directly inside UI components
-- Use TanStack Query for async server state
-- Keep business logic outside page components
-- Reuse existing UI primitives before creating new ones
-- Do not modify unrelated logic during UI redesign
+## Before code
 
-## API Logging Rule (Mandatory)
+1. Read `../AGENTS.md`, `docs/ARCHITECTURE.md`, this file, one matching guide, and relevant Next.js 16.3 docs under `node_modules/next/dist/docs/`.
+2. Inspect the affected route/component, every caller of a changed shared symbol, current package manifest, and nearest tests.
+3. If a named dependency/path does not exist, stop or request its separately approved setup. Do not create a substitute abstraction.
 
-- Every backend request MUST emit a response log (`res log`) with prefix `[API_RES]`.
-- Required log fields: `method`, `url`, `status`, `ok`, `durationMs`, and `response` payload.
-- Apply logging centrally in `src/core/http/http-client.ts`; do not duplicate ad-hoc per page.
-- Do not remove response logging during feature work. If format changes, update this RULES file in the same task.
+## Boundaries
 
-## API Transport Rule (Mandatory)
+- Prefer Server Components. Add `"use client"` only for browser APIs, events, or client hooks.
+- Presentation components render state and emit events; they do not own transport, authorization, or business workflows.
+- No raw backend `fetch`/Axios in pages, layouts, or reusable UI. Use an existing repository/service/HTTP boundary.
+- Backend authorization is authoritative. Frontend capability checks only control UX.
+- Forms select entities by human-readable labels, never raw-ID typing.
+- Show localized inline errors where possible; never expose raw backend/stack/database errors.
+- Reuse current UI primitives. Preserve responsive layout and accessibility basics.
 
-- Always use the central HTTP transports for backend API calls.
-- Use `src/core/http/http-client.ts` (`httpClient` / `HttpClient`) as a pure browser/public/backend transport. It does not own auth refresh, retry loops, navigation, or browser logout event dispatch.
-- Use `src/core/http/internal-api-client.ts` for same-origin authenticated browser BFF flows. It owns one retry through `POST /api/auth/refresh-session` and emits the single logout-required signal when refresh/retry fails.
-- Use `src/core/http/http-server.ts` (`httpServer`) as a pure server transport for backend API calls that run in Route Handlers or server-only service paths with explicit `Authorization` or `accessToken`.
-- Do not call backend APIs with raw `fetch`, raw `axios`, or ad-hoc request helpers from pages, layouts, UI components, or feature services.
-- Keep APIs that do not require authentication in the `httpClient` flow.
-- Keep authenticated server calls in the `httpServer` flow.
-- Keep refresh + `unstable_update` only in cookie-writable Route Handler or Server Action boundaries.
+## Server state
 
-## Entity Selection & UX Rules (Mandatory)
+The installed `@tanstack/react-query` and `@dangminhdev04032005/query-resource` packages define this client server-state path:
 
-- **Dropdown Select for Entity IDs**: Forms requiring entity selection (such as Hotel, Room, User) MUST NOT ask the user to type raw UUID strings. You MUST fetch options from an API route and render a `<select>` dropdown displaying human-readable names and entity codes (e.g. `Khách sạn Grand Saigon (HSG)`).
-- **Workspace Navigation & Session Fallbacks**: When adding new navigation items to `workspace-registry.ts`, `anyCapabilities` MUST include both the new domain capability (e.g. `platform.billing.view`) AND existing active session capabilities (e.g. `platform.roles.view`, `platform.hotels.view`) so currently logged-in users see the navigation item immediately without needing re-authentication.
+```text
+repository -> query-resource resource -> feature hook -> component
+```
 
-## UI Theme Direction & Typography Scale
+Repositories own transport and DTO mapping. Resources own keys/options/cache operations. Feature hooks own permissions, enabled guards, cross-resource coordination, navigation, and UI feedback. Every response-affecting scope/input belongs in deterministic serializable keys.
 
-The application should follow a:
+Do not add a local query-resource copy or second cache abstraction. Add an app-level `QueryClient` provider only with the first approved client query consumer; no provider is needed while the app has no client server-state usage.
 
-- follow file `@DESIGN.md`
-- fresh, bright, friendly, modern UI
-- clean and spacious layout (`p-6`+, `gap-6`+)
-- typography scale: main page headers MUST be `text-2xl` or `text-3xl font-extrabold`; content text MUST be `text-sm font-medium` or `text-base`. Avoid microscopic text (`text-[10px]` or `text-xs`) for critical content or primary CTA buttons.
+## State
 
-UI style preferences:
+- Server data stays in server loading/query cache, not a client store.
+- Shareable filters/pagination use URL state.
+- Local interaction uses React state.
+- Cross-route persistent client state uses an existing store/storage utility only when current source already provides one or the task explicitly adds it.
 
-- large rounded cards (`rounded-2xl`)
-- soft shadows and backdrop-blur modals (`backdrop-blur-sm bg-slate-900/60`)
-- comfortable spacing
-- clean typography
-- product-focused visuals
-- minimal visual clutter
-- responsive-first layouts
+## Completion
 
-Avoid:
-
-- overly dark UI
-- black/white corporate dashboards
-- crowded marketplace-style layouts
-- microscopic font sizes for main content
-
-## Data Fetching
-
-- Use queries/\* hooks
-- Use feature repositories for backend/BFF calls; existing service loaders may migrate incrementally.
-- Avoid duplicate fetching
-
-## React Query Rule (Mandatory)
-
-- For every new or materially changed client-side API module, declare server-state capabilities with `@dangminhdev04032005/query-resource`, then consume its options through `useQuery`, `useInfiniteQuery`, or `useMutation` in queries/* or feature hooks.
-- Do not write raw `queryKey` + `queryFn` or raw `mutationFn` configuration in pages, presentation components, or feature hooks. The only allowed direct TanStack Query configuration is the application-level `QueryClient` provider; hooks consume resource-generated options.
-- Do not call backend APIs directly with raw fetch/axios inside page, layout, or presentational components.
-- Repositories own transport selection, endpoints, DTO mapping, transforms, and pagination normalization. `@dangminhdev04032005/query-resource` remains independent of `fetch`, Axios, VietSage clients, and backend response envelopes.
-- Resources own key factories, query/infinite options, mutations, local invalidation, prefetch/ensure, and cache patch/rollback operations.
-- Feature hooks own permission checks, feature flags, enabled guards, filter normalization, cross-resource coordination, navigation, and UI feedback.
-- Every response-affecting scope value and input must be represented in `scopeKey` or `inputKey`. Keys must be deterministic and JSON-serializable.
-- Declare only supported capabilities. Domain commands are named mutations; do not add an untyped `extra` namespace or assume every module has full CRUD.
-- Keep same-resource invalidation declarative in the mutation definition. Cross-resource effects must be explicit in a feature hook.
-- Realtime handlers must use resource-generated keys/cache operations when a resource exists; do not duplicate key arrays.
-- Use enabled guards for missing params/session to avoid premature requests and unnecessary 401 retries.
-- Server-side (RSC/layout) fetches stay in server layers; React Query is the client cache/interaction layer.
-- Frontend dependency management is rooted at `front-end-vietsage/package.json`. Do not create nested `package.json`, nested `node_modules`, `packages/*` workspaces, or a local copy of the query-resource package.
-- Cross-project reuse is via `@dangminhdev04032005/query-resource`. Each project still writes its own repositories/resources around its own API contract.
-
-## State Management
-
-- Use Zustand for global client state, shared UI state, and storage-backed client state.
-- Do not introduce ad-hoc global state through React Context, module-level mutable variables, or duplicated `useState` chains when the state must be shared across routes/components.
-- Do not read/write `localStorage` or `sessionStorage` directly from feature components for shared/persistent state; wrap persistent client state in a Zustand store using `persist` / `createJSONStorage` or a dedicated storage utility used by that store.
-- Keep Zustand stores minimal and client-only. Store UI/session preferences, persisted client selections, and cross-component client state there; do not mirror backend resources in Zustand.
-- TanStack Query for server state
-
-## Auth & Routing Rules
-
-- Keep route permission policy in one place: `src/lib/rbac.ts`.
-- For Next.js 16 auth edge handling, use `src/proxy.ts` (not legacy `middleware.ts`).
-- Protected route behavior is mandatory: unauthenticated user -> redirect to `/login?callbackUrl=<current-path>`.
-- Protected route behavior is mandatory: authenticated but unauthorized role -> render `404` via `notFound()`.
-- Enforce role checks in server layouts for protected route groups (`/guest`, `/staff`, `/admin`).
-- Never redirect directly from raw `callbackUrl`; always resolve through `resolveSafeRedirect(...)`.
-- Reject external callback URLs and unknown internal paths; fallback to role default path.
-
-## UI Rules
-
-- Use skill `/design-taste-frontend` + `/ui-ux-pro-max` only when creating brand new screens, layouts, or visual concepts
-- Use skill `/design-taste-frontend` +`/frontend-design` only when improving or redesigning existing UI
-- Keep responsive design mobile-friendly
-- Reuse `components/ui/*` primitives first
-- Do not modify unrelated business logic during UI redesign
-- For synchronization tasks, follow root validation checklist at `docs/FRONTEND_SYNC_VALIDATION.md`
-
-Avoid duplicating query boilerplate already handled by the resource system.
-
-## Change Tracking Rule (Mandatory)
-
-For every completed implementation/fix, you MUST update documentation in the same task:
-
-- update file `docs/PLANS.md` with:
-  - date
-  - what changed
-  - verification result
-  - remaining blockers/risks
-- if behavior/rules/process changed, update `docs/RULES.md` in the same PR/commit.
-- If `docs/PLANS.md` is not updated, the task is NOT considered complete.
-  After complete a module, run a cleanup pass for lint warnings to keep the project clean.
-
-Do not mark work as complete until documentation sync is finished.
-
-## Git Commit Rule (Mandatory)
-
-- Follow the project's git commit rules whenever the user asks to commit or prepare commit-ready work.
-- Inspect `git status --short` before committing.
-- Do not include unrelated modified/untracked files in a commit.
-- Do not revert user changes or generated work unless explicitly requested.
-- Keep commits scoped to the mission name and completed plan.
-- Use clear conventional commit-style messages when no stricter project-specific commit format is provided, for example `fix: stabilize auth refresh boundary` or `docs: update project rules`.
-- Before reporting commit-ready work, list changed files, validation commands, and documentation updates.
-
-## Execution Contract (Mandatory)
-
-This frontend scope follows the repository-level delegation-aware approval rule in `../../../../docs/RULES.md`.
-
-For direct user-facing sessions, stay read-only until the user explicitly approves the proposed scope.
-
-For delegated specialist/đệ/Kanban/Codex worker sessions, do not ask for another confirmation when the launch prompt states that user/Hermes has already approved execution. Treat that prompt as the approved execution context and work only inside the delegated scope.
-
-If Codex stops at a stale approval guard, restart Codex with the approved execution context at the top of the prompt instead of waiting for an interactive `CHO PHÉP SỬA` inside the process.
-
-After explicit approval:
-
-- Do not stop after describing intent.
-- Do not answer with planning only.
-- Inspect relevant files.
-- Apply the approved code/docs change only.
-- Run the smallest reliable validation command.
-- Update `docs/PLANS.md` only when the task affects tracked milestones/progress.
-- Only then provide the final report.
-
-A task is not complete until all completion evidence exists:
-
-1. Files inspected
-2. Files changed
-3. Validation command run, or a concrete blocker if validation cannot run
-4. Result captured
-5. Required docs updated when applicable
-6. Final report delivered
-
-Do not end with future-tense statements like:
-
-- `I will implement`
-- `I'll now implement`
-- `I'm going to implement`
-- `Next I will`
-
-Use evidence-based past-tense statements only:
-
-- `Changed ...`
-- `Ran ...`
-- `Updated ...`
-- `Verified ...`
-
-If blocked, report the concrete blocker:
-
-- missing file
-- failing command
-- permission issue
-- missing dependency
-- unclear required input
+Run the smallest available lint/typecheck/test/build gate for touched behavior. Final report must include `Docs read:`, changed files, exact commands/results, and blockers. Do not update plans unless milestone state actually changed.

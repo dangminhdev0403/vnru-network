@@ -1,0 +1,6 @@
+---
+description: Mandatory VN-RU repository instructions
+alwaysApply: true
+---
+
+Before proposing or editing code, read and follow root `AGENTS.md`, then every scope-specific file it mandates. Do not proceed when those files are unavailable. Final response must list `Docs read:` with exact paths.

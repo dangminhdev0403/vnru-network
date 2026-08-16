@@ -46,7 +46,7 @@ Create only the folders the feature needs.
 - Resources may use their feature repository and stable feature contract types. They must not import React components or UI state.
 - Repositories may use the runtime-appropriate core HTTP utility or internal route handler. They must not import resources or React.
 - `@dangminhdev04032005/query-resource` is the shared frontend infrastructure package. Do not add a local factory copy, nested package.json, pnpm workspace package, or feature-local `node_modules` for resource utilities.
-- Reuse the published package in another project; do not copy VietSage repositories or resources with it.
+- Reuse the installed published package; do not copy another project’s repositories or resources.
 - Keep response-affecting scope in `scopeKey` and response-affecting inputs in `inputKey`. Treat scope and input values as immutable after options are created.
 - Declare domain commands such as `approve`, `cancel`, `checkIn`, or `markRead` as named mutations. Do not recreate an untyped `extra` bucket.
 - Keep local invalidation in the resource definition. Coordinate invalidation across different resources explicitly in a feature hook so dependencies remain visible.
@@ -79,7 +79,7 @@ without adding persona checks to route pages.
 ```ts
 const registry = createWorkspaceRegistry([
   {
-    roleAliases: { HOTEL_AUDITOR: "finance" },
+    roleAliases: { REVIEWER: "review" },
     navigation: [auditNavigation],
     widgets: [auditSummaryWidget],
   },
@@ -87,8 +87,7 @@ const registry = createWorkspaceRegistry([
 ```
 
 - Use stable, namespaced keys such as `finance.audit-summary`.
-- Declare `personas`, `anyCapabilities`, and `requiresHotel` on each entry. Missing capability or
-  hotel scope filters the entry out.
+- Declare only registry fields and capabilities present in current source/contracts. Missing authorization context filters the entry out.
 - Registry configuration changes presentation only. Backend endpoints must continue to enforce
   authorization and resource scope.
 - Duplicate keys and role aliases are rejected. Set `replaceExisting: true` only for an intentional,
@@ -96,7 +95,27 @@ const registry = createWorkspaceRegistry([
 - Keep data loading conditional on the resolved widget set so hidden modules do not trigger API
   requests.
 - Keep widget keys inside the Workspace boundary. Pass domain-neutral decisions such as
-  `includeRequests` or `includeServices` into a Hotel Operations loader.
+  `includeReviews` into a domain loader.
+
+## Standard Portal Feature Modules `[DESIGN]`
+
+Frontend feature modules align with the six business capabilities:
+
+| Feature Module | Business Capability | Key Components & Responsibilities |
+| --- | --- | --- |
+| `features/auth` | IAM & Governance | Sign-in forms, SSO handlers, 2FA verification, session bridge, active context selector. |
+| `features/knowledge` | Knowledge Repository | Publication search, detail viewers, paper upload/indexing forms, topic filters. |
+| `features/organization` | Expert Directory & Institutions | Institution directory, researcher profile/CV, similarity & partner matching UI. |
+| `features/grants` | Bilateral Grants & PMS | Call catalog, paired proposal collaborative editor, Co-PI mutual sign-off, version locking. |
+| `features/reviews` | Multi-Stage Peer Review | Reviewer queue, double-blind proposal view (anonymized), scoring rubrics, comment submission. |
+| `features/projects` | Project Management | Project timeline, milestone status updates, bilateral financial report uploads, overdue alerts. |
+| `features/academic` | Academic Exchange | Scholarship applications, Pushkin Virtual Hub courses/exams/certificates, JINR practice. |
+| `features/technology` | Technology Transfer | Technology marketplace, demand postings, expression of interest forms, 2+2 consortium builder. |
+| `features/analytics` | Science Diplomacy Dashboard | Executive KPI cards, collaboration network graph, topic trend charts, PDF/Excel export trigger. |
+| `features/workspace` | Persona Workspaces | Dynamic workspace shells, persona role dispatching, navigation registry, context switching. |
+| `features/admin` | Governance & Admin | User administration, role/permission matrices, immutable audit log explorer. |
+
+---
 
 ## Anti-patterns
 
@@ -108,3 +127,4 @@ const registry = createWorkspaceRegistry([
 - Duplicating backend authorization or workflow rules as frontend truth.
 - Creating every optional feature folder even when unused.
 - Sharing feature internals by deep imports instead of defining a stable interface.
+

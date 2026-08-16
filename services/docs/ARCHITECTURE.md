@@ -29,22 +29,24 @@ Rule: do not read all docs by default. Start with this file, then open only the 
 * Keep service data ownership explicit.
 * Do not introduce shared business logic across services without a defined ownership boundary.
 
-## 4. Current Backend Runtime
+## 4. Backend Services & Capability Ownership
 
 ```txt
 services/
-  api-gateway/
-  auth-service/
-  organization-service/
-  knowledge-service/
-  grant-service/
-  review-service/
-  project-service/
-  academic-service/
-  technology-service/
+  api-gateway/          # Edge routing, rate limiting, request context propagation
+  auth-service/         # IAM, SSO federation, 2FA policies, active context, RBAC policies, audit log
+  organization-service/ # Institutions, departments, researcher CVs, expert mapping, partner matches
+  knowledge-service/    # Scientific publications, preprints, patents, conference papers repository
+  grant-service/        # Funding programs, bilateral calls, paired proposals, Co-PI lock
+  review-service/       # Reviewer pool, double-blind assignments, rubric scoring, aggregated evaluations
+  project-service/      # Joint research projects, milestones, bilateral financial reports, overdue alerts
+  academic-service/     # Scholarships, quotas, Pushkin Virtual Hub, JINR youth practice
+  technology-service/   # Tech transfer marketplace, enterprise needs, 2+2 consortiums, IP advisory
+  analytics-service/    # Fact ingestion, executive KPIs, collaboration network graph, strategic exports (Read-only)
 ```
 
-Each service owns its own backend modules and persistence boundary.
+Each service owns its domain modules and persistence boundary (database-per-service). Cross-service communication uses synchronous REST via OpenAPI contracts or asynchronous Kafka events published via the Transactional Outbox pattern.
+
 
 ## 5. Standard Service Boundary
 

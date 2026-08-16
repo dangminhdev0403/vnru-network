@@ -1,59 +1,13 @@
 # Multilingual Backend Plan
 
-## Scope
+No backend i18n implementation is assumed by this document. Activate only after a service contract requires multiple locales and the user approves the slice.
 
-The service supports Vietnamese (`vi`) and English (`en`) API messages through a shared i18n layer. The current rollout localizes common success messages and centralized error details while keeping existing controller decorators and thrown exception strings compatible.
+Minimum contract:
 
-## Request Locale
+1. Resolve locale from an explicit supported input; define one fallback.
+2. Keep stable message/error codes in service logic. Translate at the transport boundary.
+3. Store catalogs in one shared service-local location; no hardcoded user-facing message matrix in controllers.
+4. Preserve response shape and authorization behavior across locales.
+5. Add one focused check for supported locale, unsupported fallback, and stable error code.
 
-Locale is resolved in this order:
-
-1. `?lang=vi|en`
-2. `x-lang: vi|en`
-3. `Accept-Language`
-4. Default locale: `vi`
-
-Unsupported locales fall back to `vi`.
-
-## Module Migration
-
-For new and migrated module endpoints:
-
-1. Add stable keys to `src/common/i18n/i18n.catalog.ts`.
-2. Use `@SuccessMessageKey("module.action.success")` in controllers.
-3. Prefer throwing exceptions with stable error codes in the response body, or add known legacy strings to `LEGACY_MESSAGE_KEYS` while migrating.
-4. Keep user-facing text out of service logic when possible; services should expose stable failure codes and relevant metadata.
-
-## Catalog Naming
-
-Use dotted keys grouped by domain:
-
-- `auth.login.success`
-- `hotels.rooms.create.success`
-- `guestOs.requests.cancel.error.invalidStatus`
-- `errors.database.duplicateField`
-
-## Response Contract
-
-Successful responses keep the existing shape:
-
-```json
-{
-  "status": 200,
-  "error": null,
-  "message": "Localized message",
-  "data": {}
-}
-```
-
-Error responses keep the existing shape and localize `data.detail` when a catalog entry is known:
-
-```json
-{
-  "status": 400,
-  "message": "RECORD_NOT_FOUND",
-  "data": {
-    "detail": "Localized detail"
-  }
-}
-```
+Do not add an i18n package when a small existing catalog/stdlib lookup covers the approved scope.

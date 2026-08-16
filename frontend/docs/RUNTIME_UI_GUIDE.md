@@ -47,24 +47,14 @@ Rules:
 - Prefer URL state for shareable filters, pagination, and selected views.
 - Browser storage must be wrapped by feature/core utilities.
 
-GuestOS keeps a versioned anonymous device identifier in its browser-storage utility. QR scans send
-that identifier with the current session token so rescanning the same room rotates/reuses the same
-device slot instead of consuming another slot. The identifier is not an authentication authority;
-the backend still validates the QR, active stay, session, and checkout state.
-
-Room-management list state uses a query resource. Owner and staff views refresh the room projection
-periodically while visible, and owner table/grid actions refetch the same resource so device counts
-and room states remain consistent without duplicating server state in separate components.
+Persistent identifiers or server-state resources may be added only when current product contracts require them. Browser identifiers are never authentication authority; backend validation remains authoritative.
 
 ## Workspace navigation and RBAC rendering
 
-- The typed workspace registry owns persona aliases, dashboard definitions, labels, and nav order.
-- Navigation is projected from the session-bound active role capabilities and explicit hotel ID;
-  raw permission keys must never be used as user-facing labels.
-- A view capability may render read-only content. Create, assign, revoke, and status controls render
-  only when the matching manage capability is present.
-- Tenant and hotel scope stay in URL/local query state. Do not load tenant staff before an explicit
-  tenant is selected, and do not load hotel assignments before a hotel is selected.
+- If a typed workspace registry exists, it owns aliases, dashboard definitions, labels, and navigation order.
+- Navigation uses session-bound capabilities and explicit resource scope; raw permission keys are not user-facing labels.
+- Mutating controls render only with the matching manage capability.
+- Resource scope belongs in URL/local query state when it must be shareable.
 - Frontend capability filtering improves clarity and request volume; it never replaces backend
   authorization.
 
@@ -75,17 +65,33 @@ and room states remain consistent without duplicating server state in separate c
 - Realtime events should update or invalidate server-state caches when appropriate.
 - Connection lifecycle, cleanup, reconnect behavior, and auth context must be centralized.
 
-## Loading, Error, and Empty States
+## Loading, Error, and Standard UI States `[DESIGN]`
 
 - Use route-level `loading.tsx` and `error.tsx` when a product surface needs its own boundary.
-- Use component-level loading states for localized async sections.
-- Empty states should guide user action.
+- Implement explicit handling for the eight standard UI states:
+  1. `Loading`: Stable layout with skeleton indicators.
+  2. `Empty`: Informative empty-state graphics and actionable reset/create CTA.
+  3. `Error`: Localized error messages with retry action.
+  4. `Forbidden (403)`: Clear permission denial explanation and request-access CTA.
+  5. `Unauthorized (401)`: Redirect to `/login` preserving target return URL.
+  6. `Validation Error`: Form field error highlights and localized feedback strings.
+  7. `Conflict (409)`: Concurrency conflict banner with diff / refresh prompts.
+  8. `Success`: Feedback toasts and automated cache invalidation.
 - Do not display raw backend error objects directly.
 - Use toasts for user-triggered action feedback, not as the only error boundary.
 
-## I18n
+## Multilingual Support & AI Translation `[SOURCE]`
 
-- App-wide copy belongs in `core/i18n` or config-level i18n files.
+- **Supported Locales**: Vietnamese (`vi`), Russian (`ru`), and English (`en`).
+- App-wide copy belongs in `core/i18n` or config-level i18n dictionaries.
 - Feature-specific copy belongs in `features/[feature]/i18n`.
-- Route-only copy may be colocated only when it is not reusable.
+- **AI-Assisted Terminology Translation**:
+  - Specialized scientific/technical terminology translation hooks (`useTerminologyTranslation`) are available for reading and authoring interfaces.
+  - Translation suggestions must remain non-blocking and clearly marked as AI-assisted until confirmed by the user.
 - Avoid hardcoding user-facing copy in large interactive flows.
+
+## Workspace Context Switching
+
+- Authenticated users holding multiple roles (e.g. Researcher + Reviewer) switch active context via the workspace context switcher.
+- Context changes update the active session authorization token and trigger workspace re-rendering without a hard browser reload.
+

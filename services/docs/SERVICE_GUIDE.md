@@ -96,17 +96,20 @@ Do not create empty folders. Let complexity justify structure.
 
 ## Service boundaries
 
-| Service                | Responsibility                                     |
-| ---------------------- | -------------------------------------------------- |
-| `auth-service`         | Authentication, users, roles, permissions, RBAC    |
-| `organization-service` | Organizations, institutions, researchers, experts  |
-| `knowledge-service`    | Knowledge repository, publications, documents      |
-| `grant-service`        | Programs, funding calls, proposals, funding        |
-| `review-service`       | Reviewers, assignments, peer review                |
-| `project-service`      | Research projects, milestones, reports             |
-| `academic-service`     | Scholarships, academic exchange, academic programs |
-| `technology-service`   | Technology transfer, enterprises, technology       |
+| Service | Business Capability `[SOURCE]` | Owned Responsibility & Boundary |
+| --- | --- | --- |
+| `api-gateway` | Edge Layer | Route dispatching, rate limiting, request context header propagation |
+| `auth-service` | IAM & Governance | Authentication, SSO federation, 2FA policies, active context resolution, RBAC policies, audit log |
+| `organization-service` | Knowledge & Expert | Organizations, institutions, departments, researcher profiles/CVs, expert mapping, partner matches |
+| `knowledge-service` | Knowledge & Expert | Digital scientific publications, preprints, patents, conference papers repository |
+| `grant-service` | Grants & PMS | Funding programs, bilateral calls, paired proposals (VN/RU Co-PIs), version locking |
+| `review-service` | Grants & PMS | Reviewer pool, double-blind assignments, rubric scoring, aggregated evaluations |
+| `project-service` | Grants & PMS | Approved joint projects, milestones, bilateral financial reports, overdue alerts, acceptance |
+| `academic-service` | Academic Exchange | Scholarships, quotas, Pushkin Virtual Hub (language courses, exams, certs), JINR youth practice |
+| `technology-service` | Technology Transfer | Technology marketplace, enterprise needs, 2+2 consortium collaborations, IP advisory |
+| `analytics-service` | Science Diplomacy Dashboard | Standardized fact ingestion, executive KPIs, collaboration network graph, strategic exports *(Read-only)* |
 
-Each service owns its internal modules and persistence details.
+Each service owns its internal modules and persistence details (database-per-service).
 
 Do not access another service's repository, database, or internal implementation directly.
+
