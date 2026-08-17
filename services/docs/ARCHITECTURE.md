@@ -48,6 +48,8 @@ services/
   analytics-service/    # Fact ingestion, executive KPIs, collaboration network graph, strategic exports (Target, Read-only)
 ```
 
+`auth-service` implements Module 1 through five internal module boundaries: `identity`, `authentication`, `session`, `access-control`, and `security`. These are modules inside one service deployment boundary, not separate microservices. Detailed responsibilities and flows are documented in `../auth-service/README.md` and `SERVICE_GUIDE.md`.
+
 Each service owns its domain modules and persistence boundary (database-per-service). Cross-service communication uses synchronous REST via OpenAPI contracts or asynchronous Kafka events published via the Transactional Outbox pattern.
 
 
