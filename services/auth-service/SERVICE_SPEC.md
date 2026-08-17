@@ -1,16 +1,16 @@
 # Auth Service Specification — Module 1
 
-## 1. Mục tiêu
+## 1. Purpose
 
-`auth-service` hiện thực Module 1: **Quản trị, Định danh & Xác thực hợp nhất** của VN-RU Network.
+`auth-service` implements Module 1: **Unified Administration, Identity & Authentication** for VN-RU Network.
 
-Service này là nguồn sự thật cho IAM ở cấp nền tảng: danh tính nội bộ, xác thực, phiên đăng nhập, ngữ cảnh truy cập, vai trò/quyền và chính sách bảo mật liên quan xác thực.
+This service is the platform-level source of truth for IAM: internal identities, authentication, login sessions, access context, roles/permissions, and authentication-related security policies.
 
-Service không sở hữu nghiệp vụ của organization, expert, grant, review, project, academic, technology, knowledge hoặc analytics.
+The service does not own business capabilities from organization, expert, grant, review, project, academic, technology, knowledge, or analytics domains.
 
-## 2. Trạng thái hiện tại
+## 2. Current State
 
-Base hiện tại chỉ khóa ranh giới module nội bộ:
+The current base only locks the internal module boundaries:
 
 ```txt
 src/modules/
@@ -21,109 +21,109 @@ src/modules/
   security/
 ```
 
-Các module đã được đăng ký trong `AppModule` nhưng chưa có entity, controller, persistence, JWT, SSO/IdP, 2FA implementation hay migration.
+These modules are registered in `AppModule`, but no domain entities, controllers, persistence, JWT, SSO/IdP, 2FA implementation, or migrations have been added yet.
 
-## 3. Ranh giới trách nhiệm
+## 3. Responsibility Boundaries
 
 ### 3.1 `identity`
 
-Sở hữu danh tính nội bộ của người dùng trong VN-RU Network.
+Owns the internal identity of a user in VN-RU Network.
 
-Trách nhiệm:
+Responsibilities:
 
 - `User` / internal identity;
-- liên kết external/federated identity;
-- trạng thái tài khoản;
-- quy tắc liên kết và hợp nhất danh tính.
+- external/federated identity linkage;
+- account status;
+- identity linking and merging rules.
 
-Không sở hữu:
+Does not own:
 
-- hồ sơ researcher/expert;
-- organization profile;
-- session;
-- role/permission;
-- provider-specific authentication flow.
+- researcher/expert profiles;
+- organization profiles;
+- sessions;
+- roles/permissions;
+- provider-specific authentication flows.
 
-Câu hỏi module trả lời: **Người này là ai trong VN-RU Network?**
+Primary question: **Who is this person inside VN-RU Network?**
 
 ### 3.2 `authentication`
 
-Sở hữu orchestration cho quá trình xác thực.
+Owns authentication orchestration.
 
-Trách nhiệm:
+Responsibilities:
 
 - login entry flow;
 - SSO / external IdP boundary;
 - authentication callback;
 - logout orchestration;
-- điều phối step-up/2FA khi security policy yêu cầu.
+- step-up/2FA orchestration when required by security policy.
 
-Không sở hữu:
+Does not own:
 
 - user state;
 - session persistence;
 - role/permission state.
 
-Câu hỏi module trả lời: **Danh tính này đã chứng minh mình là ai bằng cách nào?**
+Primary question: **How has this identity proved who it is?**
 
 ### 3.3 `session`
 
-Sở hữu vòng đời phiên đăng nhập.
+Owns the authenticated session lifecycle.
 
-Trách nhiệm:
+Responsibilities:
 
-- tạo session sau khi xác thực thành công;
-- kiểm tra session hiện tại;
+- create a session after successful authentication;
+- validate the current session;
 - expiration;
-- refresh/renewal nếu thiết kế sau này chấp thuận;
-- revoke một session;
-- revoke toàn bộ session của user khi cần.
+- refresh/renewal if approved by the later session design;
+- revoke one session;
+- revoke all sessions for a user when required.
 
-Câu hỏi module trả lời: **Phiên xác thực này còn hợp lệ không?**
+Primary question: **Is this authenticated session still valid?**
 
 ### 3.4 `access-control`
 
-Sở hữu baseline access policy của IAM.
+Owns the IAM baseline access policy.
 
-Trách nhiệm:
+Responsibilities:
 
 - Role;
 - Permission;
 - RoleAssignment;
 - Active Authorization Context;
 - permission resolution;
-- baseline authorization decision.
+- baseline authorization decisions.
 
-Nguyên tắc:
+Principle:
 
 ```txt
-Danh tính
-+ ngữ cảnh hoạt động
-+ quyền nền tảng
+Identity
++ active context
++ platform permissions
 = baseline access decision
 ```
 
-`access-control` không quyết định business state của tài nguyên. Ví dụ Grant/Review/Project vẫn phải tự kiểm tra ownership, assignment, workflow state và domain rules của chúng.
+`access-control` does not decide business state for domain resources. Grant, Review, Project, and other business services must still validate ownership, assignment, workflow state, and their own domain rules.
 
-Câu hỏi module trả lời: **Trong ngữ cảnh hiện tại, danh tính này được dùng capability nền tảng nào?**
+Primary question: **In the active context, which platform capabilities may this identity use?**
 
 ### 3.5 `security`
 
-Sở hữu policy bảo mật quanh quá trình xác thực.
+Owns authentication-related security policies.
 
-Trách nhiệm:
+Responsibilities:
 
 - 2FA policy;
 - failed authentication policy;
-- lock/disable security rule;
+- account lock/disable security rules;
 - suspicious authentication policy;
-- security event cần thiết cho Module 1.
+- security events required by Module 1.
 
-Không được trở thành một user store hoặc session store thứ hai.
+It must not become a second user store or session store.
 
-Câu hỏi module trả lời: **Cần thêm điều kiện bảo mật nào trước khi tin cậy phiên truy cập?**
+Primary question: **Which additional security controls must be satisfied before access is trusted?**
 
-## 4. Luồng chính
+## 4. Core Flows
 
 ### 4.1 Login
 
@@ -133,26 +133,26 @@ Client
   -> external IdP / authentication provider
   -> identity resolve/link
   -> identity account-status check
-  -> security policy / 2FA khi cần
+  -> security policy / 2FA when required
   -> access-control context resolution
   -> session creation
   -> authenticated result
 ```
 
-Kết quả mong muốn của login là một phiên đã xác thực gắn với một internal `userId` và authorization context hợp lệ; chi tiết token/session transport sẽ được quyết định ở implementation slice tương ứng.
+The expected login result is an authenticated session bound to an internal `userId` and a valid authorization context. Token/session transport details are intentionally deferred to the corresponding implementation slice.
 
-### 4.2 Request đã xác thực
+### 4.2 Authenticated Request
 
 ```txt
 Request
   -> session validation
   -> identity/account status validation
-  -> access-control resolve active context + permissions
+  -> access-control resolves active context + permissions
   -> target business service
   -> business service validates resource scope + workflow state
 ```
 
-IAM chỉ cung cấp baseline access. Business service là nguồn sự thật cho authorization phụ thuộc tài nguyên và trạng thái nghiệp vụ.
+IAM provides baseline access only. The owning business service remains the source of truth for authorization that depends on resource scope and business workflow state.
 
 ### 4.3 Logout
 
@@ -160,17 +160,17 @@ IAM chỉ cung cấp baseline access. Business service là nguồn sự thật c
 Client
   -> authentication logout orchestration
   -> session revoke
-  -> security/audit hook khi cần
+  -> security/audit hook when required
   -> completed
 ```
 
-`authentication` điều phối logout; `session` sở hữu việc làm mất hiệu lực phiên.
+`authentication` orchestrates logout; `session` owns session invalidation.
 
-### 4.4 Chuyển active context
+### 4.4 Active Context Switching
 
-Chỉ triển khai sau khi OPEN-02 được chốt.
+Implement only after OPEN-02 is resolved.
 
-Hướng dự kiến:
+Expected direction:
 
 ```txt
 Authenticated user
@@ -178,14 +178,14 @@ Authenticated user
   -> select target context
   -> access-control validates assignment/scope
   -> activate context
-  -> permission set is resolved for that context
+  -> resolve permissions for that context
 ```
 
-Không cộng dồn quyền của các context khác nhau một cách mặc định.
+Permissions from different contexts must not be combined by default.
 
-## 5. Ownership dữ liệu logic
+## 5. Logical Data Ownership
 
-Các model sau thuộc `auth-service` về mặt ownership, nhưng chưa phải schema persistence chính thức:
+The following models logically belong to `auth-service`, but are not yet an approved persistence schema:
 
 ```txt
 identity
@@ -202,10 +202,10 @@ access-control
   AuthorizationContext
 
 security
-  SecurityPolicy / SecurityEvent cần thiết cho IAM
+  SecurityPolicy / SecurityEvent required for IAM
 ```
 
-Các model sau **không thuộc** `auth-service`:
+The following models do **not** belong to `auth-service`:
 
 ```txt
 Organization
@@ -220,13 +220,13 @@ Technology
 Publication
 ```
 
-Nếu authorization context cần organization/resource scope, chỉ giữ stable reference cần thiết; không sao chép business record sang IAM.
+If authorization context requires organization/resource scope, store only the stable references needed by IAM; do not copy business records into `auth-service`.
 
-## 6. Dependency direction
+## 6. Dependency Direction
 
-Dependency nội bộ phải có chủ đích và không tạo vòng phụ thuộc.
+Internal dependencies must be intentional and must not create dependency cycles.
 
-Luồng orchestration chính:
+Primary orchestration flow:
 
 ```txt
 authentication
@@ -236,21 +236,21 @@ authentication
   -> session
 ```
 
-Các module chỉ được dùng public contract khi ranh giới đã đủ phức tạp để cần `*-public.ts`; không import repository hoặc persistence implementation của module khác như một shortcut.
+Modules should use public contracts once a boundary is complex enough to justify `*-public.ts`. Do not import repositories or persistence implementations from another internal module as a shortcut.
 
-## 7. Security invariants
+## 7. Security Invariants
 
-- Backend là nguồn sự thật cho authentication và authorization.
-- Endpoint private theo mặc định; public endpoint phải được khai báo rõ và có test.
-- Quyết định truy cập phải fail closed khi thiếu identity/session/context cần thiết.
-- User bị disable/suspend không được tiếp tục sử dụng session vô thời hạn.
-- Business permission không thay thế resource ownership/workflow validation ở service sở hữu nghiệp vụ.
-- Không ghi audit cho mọi UI interaction; chỉ ghi hành động IAM/bảo mật có giá trị truy vết.
-- Không khóa IdP, token model hoặc multi-context behavior trước khi quyết định tương ứng được chốt.
+- The backend is the source of truth for authentication and authorization.
+- Endpoints are private by default; public endpoints must be explicitly declared and tested.
+- Access decisions must fail closed when required identity/session/context data is missing.
+- Disabled or suspended users must not continue using sessions indefinitely.
+- Business permissions do not replace resource ownership or workflow validation in the owning business service.
+- Do not audit every UI interaction; audit only IAM/security actions that have traceability value.
+- Do not lock the IdP, token model, or multi-context behavior before the corresponding decision is resolved.
 
-## 8. Hợp đồng đầu ra của auth-service
+## 8. Auth Service Output Contract
 
-Mục tiêu cuối cùng là cung cấp một authenticated request context ổn định cho các service khác, ở mức logic gồm:
+The long-term goal is to provide a stable authenticated request context to other services. At a logical level it contains:
 
 ```txt
 userId
@@ -261,32 +261,32 @@ permissions
 authenticationLevel
 ```
 
-Tên field và transport contract chính thức chỉ được khóa khi API/session design được triển khai và đưa vào OpenAPI.
+Final field names and transport contracts must only be locked when API/session design is implemented and added to OpenAPI.
 
-## 9. OPEN decisions ảnh hưởng trực tiếp
+## 9. Directly Related OPEN Decisions
 
-- **OPEN-01** — lựa chọn SSO / Identity Provider chính xác.
-- **OPEN-02** — mô hình multi-role / multi-context và cơ chế switching cuối cùng.
+- **OPEN-01** — exact SSO / Identity Provider selection.
+- **OPEN-02** — final multi-role / multi-context model and switching behavior.
 
-Không implementation nào được âm thầm đóng hai quyết định này.
+No implementation may silently close these two decisions.
 
-## 10. Phạm vi chưa triển khai
+## 10. Not Implemented Yet
 
-Base hiện tại cố ý chưa có:
+The current base intentionally does not include:
 
 - JWT / Passport;
-- SSO provider cụ thể;
-- DB/ORM/Prisma schema hoặc migration;
-- 2FA mechanism cụ thể;
-- role/permission seed;
-- public authentication endpoint;
-- audit module/service riêng;
+- a concrete SSO provider;
+- DB/ORM/Prisma schema or migrations;
+- a concrete 2FA mechanism;
+- role/permission seed data;
+- public authentication endpoints;
+- a separate audit module/service;
 - event publishing;
-- dependency/package mới.
+- new dependencies/packages.
 
-## 11. Hướng triển khai
+## 11. Implementation Direction
 
-Thứ tự triển khai dự kiến theo capability, không phải tạo trước toàn bộ folder:
+The expected implementation order is capability-driven; do not create all folders in advance:
 
 ```txt
 1. identity model + persistence boundary
@@ -298,19 +298,19 @@ Thứ tự triển khai dự kiến theo capability, không phải tạo trướ
 7. IAM administration + selective audit
 ```
 
-Mỗi slice phải giữ boundary ở tài liệu này, bổ sung test tương ứng và chỉ mở rộng module structure khi có code thực sự cần đến.
+Each slice must preserve the boundaries in this document, add corresponding tests, and expand module structure only when real code requires it.
 
-## 12. Kết quả hoàn thành Module 1
+## 12. Module 1 Completion Criteria
 
-Module 1 được xem là hoàn thành về mặt capability khi hệ thống có thể:
+Module 1 is capability-complete when the system can:
 
-- xác định duy nhất internal user từ luồng xác thực được chấp thuận;
-- quản lý trạng thái user và liên kết external identity;
-- tạo, kiểm tra, hết hạn và revoke session;
-- áp dụng 2FA/security policy đã được chốt;
-- resolve active authorization context;
-- resolve role/permission trong context đó;
-- cung cấp authenticated context nhất quán cho service khác;
-- quản trị user/role/access theo chính sách IAM;
-- ghi lại các sự kiện IAM/bảo mật cần truy vết;
-- từ chối truy cập an toàn khi identity/session/context không hợp lệ.
+- resolve a unique internal user from an approved authentication flow;
+- manage user state and external identity linkage;
+- create, validate, expire, and revoke sessions;
+- enforce the approved 2FA/security policy;
+- resolve the active authorization context;
+- resolve roles/permissions within that context;
+- provide a consistent authenticated context to other services;
+- administer users/roles/access according to IAM policy;
+- record IAM/security events that require traceability;
+- deny access safely when identity/session/context is invalid.
