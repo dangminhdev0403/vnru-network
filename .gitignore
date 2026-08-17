@@ -36,6 +36,7 @@ coverage
 **/.pnpm-store
 
 *.log
+graphify-out/cache/
 
 # nested repository backups
 **/.git.backup

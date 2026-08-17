@@ -1,0 +1,122 @@
+{
+  "frontend/app/layout.tsx": {
+    "mtime": 1786216984.1233504,
+    "ast_hash": "70f839ece80281c576701dc08f055685",
+    "semantic_hash": "70f839ece80281c576701dc08f055685"
+  },
+  "frontend/app/page.tsx": {
+    "mtime": 1786216984.1243498,
+    "ast_hash": "7960d56e7fc48ecd789e2fd32155fa90",
+    "semantic_hash": "7960d56e7fc48ecd789e2fd32155fa90"
+  },
+  "frontend/eslint.config.mjs": {
+    "mtime": 1786216984.09035,
+    "ast_hash": "dfa1f5f6a7037bf39dc510f30b180002",
+    "semantic_hash": "dfa1f5f6a7037bf39dc510f30b180002"
+  },
+  "frontend/next.config.ts": {
+    "mtime": 1786216984.1103506,
+    "ast_hash": "9b77af189a21a7a64e4bd7a426f64176",
+    "semantic_hash": "9b77af189a21a7a64e4bd7a426f64176"
+  },
+  "frontend/package.json": {
+    "mtime": 1786223287.2349918,
+    "ast_hash": "27a4457ba26d1c8104faa540c9ae3177",
+    "semantic_hash": "27a4457ba26d1c8104faa540c9ae3177"
+  },
+  "frontend/postcss.config.mjs": {
+    "mtime": 1786216984.0953503,
+    "ast_hash": "239f3ebf717465dc636818a1a619398d",
+    "semantic_hash": "239f3ebf717465dc636818a1a619398d"
+  },
+  "frontend/tsconfig.json": {
+    "mtime": 1786216984.376945,
+    "ast_hash": "02fc19ad21338c2ab820a70136310db4",
+    "semantic_hash": "02fc19ad21338c2ab820a70136310db4"
+  },
+  "services/auth-service/eslint.config.mjs": {
+    "mtime": 1786217681.3806813,
+    "ast_hash": "069d66f3fd2af0b03d917cf51a1f4c42",
+    "semantic_hash": "069d66f3fd2af0b03d917cf51a1f4c42"
+  },
+  "services/auth-service/nest-cli.json": {
+    "mtime": 1786217681.3806813,
+    "ast_hash": "fa439650fa28a1a7aa8c2b6d81c8cc20",
+    "semantic_hash": "fa439650fa28a1a7aa8c2b6d81c8cc20"
+  },
+  "services/auth-service/package.json": {
+    "mtime": 1786217681.3806813,
+    "ast_hash": "aa6fc02215dd83ea6da4406842db04ed",
+    "semantic_hash": "aa6fc02215dd83ea6da4406842db04ed"
+  },
+  "services/auth-service/src/app.controller.spec.ts": {
+    "mtime": 1786217681.3846824,
+    "ast_hash": "e91fed2ee35431d60d1adbf1d5739b83",
+    "semantic_hash": "e91fed2ee35431d60d1adbf1d5739b83"
+  },
+  "services/auth-service/src/app.controller.ts": {
+    "mtime": 1786217681.3826792,
+    "ast_hash": "ae15d1c5a85e6ebfad68b7193766dfb5",
+    "semantic_hash": "ae15d1c5a85e6ebfad68b7193766dfb5"
+  },
+  "services/auth-service/src/app.module.ts": {
+    "mtime": 1786945221.274123,
+    "ast_hash": "e1593331c81870937d558b2d9d677dd0",
+    "semantic_hash": "e1593331c81870937d558b2d9d677dd0"
+  },
+  "services/auth-service/src/app.service.ts": {
+    "mtime": 1786217681.3836799,
+    "ast_hash": "08e985e831bca61f6be89c5c2ecef2fa",
+    "semantic_hash": "08e985e831bca61f6be89c5c2ecef2fa"
+  },
+  "services/auth-service/src/main.ts": {
+    "mtime": 1786217681.3846824,
+    "ast_hash": "513b1a8ccb913e8454d526755795b56e",
+    "semantic_hash": "513b1a8ccb913e8454d526755795b56e"
+  },
+  "services/auth-service/src/modules/access-control/access-control.module.ts": {
+    "mtime": 1786945221.2751746,
+    "ast_hash": "4ea8778c645004924ed694afe499d14e",
+    "semantic_hash": "4ea8778c645004924ed694afe499d14e"
+  },
+  "services/auth-service/src/modules/authentication/authentication.module.ts": {
+    "mtime": 1786945221.2756958,
+    "ast_hash": "ed64e11d2f4c0e398c10c76ca745a91b",
+    "semantic_hash": "ed64e11d2f4c0e398c10c76ca745a91b"
+  },
+  "services/auth-service/src/modules/identity/identity.module.ts": {
+    "mtime": 1786945221.2762156,
+    "ast_hash": "39661a632d240f9fbaa3fda86386fcd7",
+    "semantic_hash": "39661a632d240f9fbaa3fda86386fcd7"
+  },
+  "services/auth-service/src/modules/security/security.module.ts": {
+    "mtime": 1786945221.2772877,
+    "ast_hash": "1753a50f6df852328bee8f40679325d8",
+    "semantic_hash": "1753a50f6df852328bee8f40679325d8"
+  },
+  "services/auth-service/src/modules/session/session.module.ts": {
+    "mtime": 1786945221.2778375,
+    "ast_hash": "ec5262a155d605e4ef392dec20c1db5a",
+    "semantic_hash": "ec5262a155d605e4ef392dec20c1db5a"
+  },
+  "services/auth-service/test/app.e2e-spec.ts": {
+    "mtime": 1786217681.3856807,
+    "ast_hash": "668094bf268e0395763312620e5638e8",
+    "semantic_hash": "668094bf268e0395763312620e5638e8"
+  },
+  "services/auth-service/test/jest-e2e.json": {
+    "mtime": 1786217681.3846824,
+    "ast_hash": "707a50895cb1c565825637916e9cf290",
+    "semantic_hash": "707a50895cb1c565825637916e9cf290"
+  },
+  "services/auth-service/tsconfig.build.json": {
+    "mtime": 1786217681.381682,
+    "ast_hash": "d23fc4aff02c91ce9c424c15aea9b49b",
+    "semantic_hash": "d23fc4aff02c91ce9c424c15aea9b49b"
+  },
+  "services/auth-service/tsconfig.json": {
+    "mtime": 1786217681.3826792,
+    "ast_hash": "e99b998156dc99eda85378413a794718",
+    "semantic_hash": "e99b998156dc99eda85378413a794718"
+  }
+}
