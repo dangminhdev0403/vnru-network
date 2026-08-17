@@ -6,6 +6,8 @@
 
 This service owns the IAM boundary only. It must not absorb business ownership from organization, grant, review, project, academic, technology, knowledge, or analytics domains.
 
+Detailed service contract and Module 1 ownership rules: [`SERVICE_SPEC.md`](./SERVICE_SPEC.md).
+
 ## Current Base
 
 The current base intentionally separates Module 1 into five internal modules from the start:
