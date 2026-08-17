@@ -111,6 +111,33 @@ Do not create empty folders. Let complexity justify structure.
 
 Each service owns its internal modules and persistence details (database-per-service).
 
+## `auth-service` Internal Module Base
+
+Module 1 is split into explicit internal boundaries from the beginning rather than collecting all IAM responsibilities in one large identity module:
+
+```txt
+auth-service/src/modules/
+  identity/
+  authentication/
+  session/
+  access-control/
+  security/
+```
+
+Responsibilities:
+
+* `identity`: platform user identity, federated identity linkage, and account status;
+* `authentication`: login/SSO/callback/logout and step-up authentication orchestration;
+* `session`: authenticated session creation, validation, expiration, and revocation;
+* `access-control`: role, permission, role assignment, active authorization context, and baseline permission resolution;
+* `security`: 2FA and authentication security policies, failed-authentication controls, and security events.
+
+The modules remain inside one `auth-service` deployment boundary. This is internal modularization, not additional microservices.
+
+Business services remain authoritative for resource ownership and workflow-state rules. `auth-service` provides identity, session, active context, and baseline permissions; it does not decide whether a grant proposal, review assignment, project milestone, or other business resource is in a valid domain state.
+
+Exact SSO/IdP selection and the final multi-role/multi-context switching model remain unresolved under OPEN-01 and OPEN-02. The base structure must not silently lock either decision.
+
+Detailed current notes live in `../auth-service/README.md`.
 
 Do not access another service's repository, database, or internal implementation directly.
-
