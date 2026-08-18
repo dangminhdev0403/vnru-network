@@ -7,6 +7,8 @@ import {
   Patch,
   Post,
   Query,
+  Req,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import type { RoleAssignment } from '@prisma/client';
@@ -15,6 +17,7 @@ import {
   AuthenticatedRequestGuard,
   RequirePermission,
 } from '../authentication/authenticated-request-context';
+import type { AuthenticatedRequest } from '../authentication/authenticated-request-context';
 import {
   IamAdminService,
   UserSelectResult,
@@ -75,6 +78,7 @@ export class IamAdminController {
   async setUserStatus(
     @Param('id') id: string,
     @Body() body: { status?: unknown },
+    @Req() req: AuthenticatedRequest,
   ): Promise<UserSelectResult> {
     const parsedId = uuidSchema.safeParse(id);
     if (!parsedId.success) {
@@ -90,7 +94,16 @@ export class IamAdminController {
       );
     }
 
-    return this.iamAdminService.setUserStatus(parsedId.data, parsedStatus.data);
+    const actorId = req.authContext?.userId;
+    if (!actorId) {
+      throw new UnauthorizedException('Actor ID not found in request context');
+    }
+
+    return this.iamAdminService.setUserStatus(
+      parsedId.data,
+      parsedStatus.data,
+      actorId,
+    );
   }
 
   @Get('roles')
@@ -110,6 +123,7 @@ export class IamAdminController {
   @Post('role-assignments')
   async upsertRoleAssignment(
     @Body() body: Record<string, unknown>,
+    @Req() req: AuthenticatedRequest,
   ): Promise<RoleAssignment> {
     const parsed = roleAssignmentSchema.safeParse(body);
     if (!parsed.success) {
@@ -118,6 +132,11 @@ export class IamAdminController {
       );
     }
 
-    return this.iamAdminService.upsertRoleAssignment(parsed.data);
+    const actorId = req.authContext?.userId;
+    if (!actorId) {
+      throw new UnauthorizedException('Actor ID not found in request context');
+    }
+
+    return this.iamAdminService.upsertRoleAssignment(parsed.data, actorId);
   }
 }

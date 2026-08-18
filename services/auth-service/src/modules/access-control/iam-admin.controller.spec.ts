@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import {
   UserStatus,
   RoleAssignmentStatus,
@@ -8,7 +8,10 @@ import { Reflector } from '@nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
 import { IamAdminController } from './iam-admin.controller';
 import { IamAdminService } from './iam-admin.service';
-import { AuthenticatedRequestGuard } from '../authentication/authenticated-request-context';
+import {
+  AuthenticatedRequestGuard,
+  AuthenticatedRequest,
+} from '../authentication/authenticated-request-context';
 import { AuthenticationService } from '../authentication/authentication.service';
 
 describe('IamAdminController', () => {
@@ -69,20 +72,28 @@ describe('IamAdminController', () => {
 
     describe('setUserStatus', () => {
       const validUuid = '123e4567-e89b-12d3-a456-426614174000';
+      const mockReq = {
+        authContext: {
+          userId: 'actor-usr-123',
+        },
+      } as unknown as AuthenticatedRequest;
 
-      it('calls service with valid uuid and active status', async () => {
+      it('calls service with valid uuid, active status, and actorId', async () => {
         serviceMock.setUserStatus.mockResolvedValue({
           id: validUuid,
           status: UserStatus.ACTIVE,
           email: 'test@example.com',
         });
-        const result = await controller.setUserStatus(validUuid, {
-          status: UserStatus.ACTIVE,
-        });
+        const result = await controller.setUserStatus(
+          validUuid,
+          { status: UserStatus.ACTIVE },
+          mockReq,
+        );
 
         expect(serviceMock.setUserStatus).toHaveBeenCalledWith(
           validUuid,
           UserStatus.ACTIVE,
+          'actor-usr-123',
         );
         expect(result).toEqual({
           id: validUuid,
@@ -91,22 +102,52 @@ describe('IamAdminController', () => {
         });
       });
 
+      it('throws UnauthorizedException if authContext is missing', async () => {
+        const reqWithoutAuth = {} as unknown as AuthenticatedRequest;
+        await expect(
+          controller.setUserStatus(
+            validUuid,
+            { status: UserStatus.ACTIVE },
+            reqWithoutAuth,
+          ),
+        ).rejects.toThrow(UnauthorizedException);
+        expect(serviceMock.setUserStatus).not.toHaveBeenCalled();
+      });
+
+      it('throws UnauthorizedException if userId is missing in authContext', async () => {
+        const reqWithoutUserId = {
+          authContext: {},
+        } as unknown as AuthenticatedRequest;
+        await expect(
+          controller.setUserStatus(
+            validUuid,
+            { status: UserStatus.ACTIVE },
+            reqWithoutUserId,
+          ),
+        ).rejects.toThrow(UnauthorizedException);
+        expect(serviceMock.setUserStatus).not.toHaveBeenCalled();
+      });
+
       it('throws BadRequestException for non-uuid ID', async () => {
         await expect(
-          controller.setUserStatus('invalid-id', { status: UserStatus.ACTIVE }),
+          controller.setUserStatus(
+            'invalid-id',
+            { status: UserStatus.ACTIVE },
+            mockReq,
+          ),
         ).rejects.toThrow(BadRequestException);
       });
 
       it('throws BadRequestException for invalid status value', async () => {
         await expect(
-          controller.setUserStatus(validUuid, { status: 'PENDING' }),
+          controller.setUserStatus(validUuid, { status: 'PENDING' }, mockReq),
         ).rejects.toThrow(BadRequestException);
       });
 
       it('throws BadRequestException for missing status in body', async () => {
-        await expect(controller.setUserStatus(validUuid, {})).rejects.toThrow(
-          BadRequestException,
-        );
+        await expect(
+          controller.setUserStatus(validUuid, {}, mockReq),
+        ).rejects.toThrow(BadRequestException);
       });
     });
 
@@ -132,6 +173,11 @@ describe('IamAdminController', () => {
     describe('upsertRoleAssignment', () => {
       const validUserUuid = '123e4567-e89b-12d3-a456-426614174000';
       const validRoleUuid = '987f6543-e21b-44d5-a789-0123456789ab';
+      const mockReq = {
+        authContext: {
+          userId: 'actor-usr-123',
+        },
+      } as unknown as AuthenticatedRequest;
 
       const validPayload = {
         userId: validUserUuid,
@@ -141,7 +187,7 @@ describe('IamAdminController', () => {
         status: RoleAssignmentStatus.ACTIVE,
       };
 
-      it('calls service with valid role assignment payload', async () => {
+      it('calls service with valid role assignment payload and actorId', async () => {
         const mockResult: RoleAssignment = {
           id: 'ra-1',
           userId: validUserUuid,
@@ -152,33 +198,55 @@ describe('IamAdminController', () => {
           createdAt: new Date(),
         };
         serviceMock.upsertRoleAssignment.mockResolvedValue(mockResult);
-        const result = await controller.upsertRoleAssignment(validPayload);
+        const result = await controller.upsertRoleAssignment(
+          validPayload,
+          mockReq,
+        );
 
         expect(serviceMock.upsertRoleAssignment).toHaveBeenCalledWith(
           validPayload,
+          'actor-usr-123',
         );
         expect(result).toEqual(mockResult);
       });
 
+      it('throws UnauthorizedException if authContext is missing', async () => {
+        const reqWithoutAuth = {} as unknown as AuthenticatedRequest;
+        await expect(
+          controller.upsertRoleAssignment(validPayload, reqWithoutAuth),
+        ).rejects.toThrow(UnauthorizedException);
+        expect(serviceMock.upsertRoleAssignment).not.toHaveBeenCalled();
+      });
+
+      it('throws UnauthorizedException if userId is missing in authContext', async () => {
+        const reqWithoutUserId = {
+          authContext: {},
+        } as unknown as AuthenticatedRequest;
+        await expect(
+          controller.upsertRoleAssignment(validPayload, reqWithoutUserId),
+        ).rejects.toThrow(UnauthorizedException);
+        expect(serviceMock.upsertRoleAssignment).not.toHaveBeenCalled();
+      });
+
       it('throws BadRequestException for invalid user UUID', async () => {
         const payload = { ...validPayload, userId: 'invalid' };
-        await expect(controller.upsertRoleAssignment(payload)).rejects.toThrow(
-          BadRequestException,
-        );
+        await expect(
+          controller.upsertRoleAssignment(payload, mockReq),
+        ).rejects.toThrow(BadRequestException);
       });
 
       it('throws BadRequestException for empty contextType', async () => {
         const payload = { ...validPayload, contextType: '   ' };
-        await expect(controller.upsertRoleAssignment(payload)).rejects.toThrow(
-          BadRequestException,
-        );
+        await expect(
+          controller.upsertRoleAssignment(payload, mockReq),
+        ).rejects.toThrow(BadRequestException);
       });
 
       it('throws BadRequestException for invalid status', async () => {
         const payload = { ...validPayload, status: 'EXPIRED' };
-        await expect(controller.upsertRoleAssignment(payload)).rejects.toThrow(
-          BadRequestException,
-        );
+        await expect(
+          controller.upsertRoleAssignment(payload, mockReq),
+        ).rejects.toThrow(BadRequestException);
       });
     });
   });

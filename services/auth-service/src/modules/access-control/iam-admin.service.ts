@@ -31,6 +31,9 @@ export interface MappedRole {
 }
 
 export interface IamAdminPrismaClient {
+  $transaction<T>(
+    fn: (tx: Omit<IamAdminPrismaClient, '$transaction'>) => Promise<T>,
+  ): Promise<T>;
   user: {
     findMany(args: {
       take: number;
@@ -86,6 +89,16 @@ export interface IamAdminPrismaClient {
       data: { revokedAt: Date };
     }): Promise<{ count: number }>;
   };
+  securityAuditEvent: {
+    create(args: {
+      data: {
+        event: string;
+        actorId: string;
+        targetId: string;
+        context: any;
+      };
+    }): Promise<any>;
+  };
 }
 
 @Injectable()
@@ -111,6 +124,7 @@ export class IamAdminService {
   async setUserStatus(
     id: string,
     status: UserStatus,
+    actorId: string,
   ): Promise<UserSelectResult> {
     const user = await this.prisma.user.findUnique({
       where: { id },
@@ -119,29 +133,40 @@ export class IamAdminService {
       throw new NotFoundException('User not found');
     }
 
-    const updatedUser = await this.prisma.user.update({
-      where: { id },
-      data: { status },
-      select: {
-        id: true,
-        email: true,
-        status: true,
-      },
-    });
-
-    if (status === UserStatus.INACTIVE) {
-      await this.prisma.session.updateMany({
-        where: {
-          userId: id,
-          revokedAt: null,
-        },
-        data: {
-          revokedAt: new Date(),
+    return this.prisma.$transaction(async (tx) => {
+      const updatedUser = await tx.user.update({
+        where: { id },
+        data: { status },
+        select: {
+          id: true,
+          email: true,
+          status: true,
         },
       });
-    }
 
-    return updatedUser;
+      if (status === UserStatus.INACTIVE) {
+        await tx.session.updateMany({
+          where: {
+            userId: id,
+            revokedAt: null,
+          },
+          data: {
+            revokedAt: new Date(),
+          },
+        });
+      }
+
+      await tx.securityAuditEvent.create({
+        data: {
+          event: 'IAM_USER_STATUS_CHANGED',
+          actorId,
+          targetId: id,
+          context: { status },
+        },
+      });
+
+      return updatedUser;
+    });
   }
 
   async listRoles(limit: number, offset: number): Promise<MappedRole[]> {
@@ -171,13 +196,16 @@ export class IamAdminService {
     });
   }
 
-  async upsertRoleAssignment(input: {
-    userId: string;
-    roleId: string;
-    contextType: string;
-    contextId: string;
-    status: RoleAssignmentStatus;
-  }): Promise<RoleAssignment> {
+  async upsertRoleAssignment(
+    input: {
+      userId: string;
+      roleId: string;
+      contextType: string;
+      contextId: string;
+      status: RoleAssignmentStatus;
+    },
+    actorId: string,
+  ): Promise<RoleAssignment> {
     const user = await this.prisma.user.findUnique({
       where: { id: input.userId },
     });
@@ -192,25 +220,43 @@ export class IamAdminService {
       throw new NotFoundException('Role not found');
     }
 
-    return this.prisma.roleAssignment.upsert({
-      where: {
-        userId_roleId_contextType_contextId: {
+    return this.prisma.$transaction(async (tx) => {
+      const assignment = await tx.roleAssignment.upsert({
+        where: {
+          userId_roleId_contextType_contextId: {
+            userId: input.userId,
+            roleId: input.roleId,
+            contextType: input.contextType,
+            contextId: input.contextId,
+          },
+        },
+        update: {
+          status: input.status,
+        },
+        create: {
           userId: input.userId,
           roleId: input.roleId,
           contextType: input.contextType,
           contextId: input.contextId,
+          status: input.status,
         },
-      },
-      update: {
-        status: input.status,
-      },
-      create: {
-        userId: input.userId,
-        roleId: input.roleId,
-        contextType: input.contextType,
-        contextId: input.contextId,
-        status: input.status,
-      },
+      });
+
+      await tx.securityAuditEvent.create({
+        data: {
+          event: 'IAM_ROLE_ASSIGNMENT_CHANGED',
+          actorId,
+          targetId: input.userId,
+          context: {
+            roleId: input.roleId,
+            contextType: input.contextType,
+            contextId: input.contextId,
+            status: input.status,
+          },
+        },
+      });
+
+      return assignment;
     });
   }
 }
