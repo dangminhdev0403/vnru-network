@@ -32,6 +32,9 @@ export interface AuthenticatedRequest extends RequestWithCookies {
 export const RequirePermission = (permission: string) =>
   SetMetadata(REQUIRED_PERMISSION, permission);
 
+export const REQUIRE_MFA_KEY = 'requireMfa';
+export const RequireMfa = () => SetMetadata(REQUIRE_MFA_KEY, true);
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
@@ -76,6 +79,14 @@ export class AuthenticatedRequestGuard implements CanActivate {
     const authContext = await this.authenticationService.getCurrentUser(token);
     if (!authContext) {
       throw new UnauthorizedException('Invalid or expired session');
+    }
+
+    const requireMfa = this.reflector.getAllAndOverride<boolean>(
+      REQUIRE_MFA_KEY,
+      [context.getHandler(), context.getClass()],
+    );
+    if (requireMfa && authContext.authenticationLevel !== 'MFA') {
+      throw new ForbiddenException('Multi-factor authentication required');
     }
 
     const permission = this.reflector.getAllAndOverride<string>(

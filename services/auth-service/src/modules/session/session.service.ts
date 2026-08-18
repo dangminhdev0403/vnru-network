@@ -12,6 +12,7 @@ export const DEFAULT_MAX_SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 export interface CreateSessionInput {
   userId: string;
   ttlMs: number;
+  authenticationLevel?: 'PASSWORD' | 'MFA';
 }
 
 export interface SessionRecord {
@@ -23,6 +24,7 @@ export interface SessionRecord {
   createdAt: Date;
   activeContextType: string | null;
   activeContextId: string | null;
+  authenticationLevel: 'PASSWORD' | 'MFA';
 }
 
 export interface CreateSessionResult {
@@ -49,6 +51,7 @@ export interface SessionPrismaClient {
         expiresAt: Date;
         activeContextType?: string | null;
         activeContextId?: string | null;
+        authenticationLevel?: 'PASSWORD' | 'MFA';
       };
     }) => Promise<SessionRecord>;
     findUnique: (args: {
@@ -111,6 +114,7 @@ export class SessionService {
         tokenDigest,
         userId: input.userId,
         expiresAt,
+        authenticationLevel: input.authenticationLevel ?? 'PASSWORD',
       },
     });
 

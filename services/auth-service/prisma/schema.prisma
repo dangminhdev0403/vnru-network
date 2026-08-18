@@ -16,6 +16,11 @@ enum RoleAssignmentStatus {
   INACTIVE
 }
 
+enum AuthenticationLevel {
+  PASSWORD
+  MFA
+}
+
 model User {
   id                 String             @id @default(uuid())
   email              String?
@@ -36,15 +41,16 @@ model ExternalIdentity {
 }
 
 model Session {
-  id                String    @id @default(uuid())
-  tokenDigest       String    @unique
-  userId            String
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  expiresAt         DateTime
-  revokedAt         DateTime?
-  createdAt         DateTime  @default(now())
-  activeContextType String?
-  activeContextId   String?
+  id                  String              @id @default(uuid())
+  tokenDigest         String              @unique
+  userId              String
+  user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt           DateTime
+  revokedAt           DateTime?
+  createdAt           DateTime            @default(now())
+  activeContextType   String?
+  activeContextId     String?
+  authenticationLevel AuthenticationLevel @default(PASSWORD)
 
   @@index([userId, revokedAt])
 }

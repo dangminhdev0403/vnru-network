@@ -226,6 +226,7 @@ describe('AuthenticationService', () => {
           expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
           createdAt: new Date(),
           revokedAt: null,
+          authenticationLevel: 'PASSWORD',
         },
       };
       sessionService.createSession.mockResolvedValue(createdSessionResult);
@@ -268,6 +269,7 @@ describe('AuthenticationService', () => {
       expect(sessionArgs.userId).toBe(activeUser.id);
       expect(typeof sessionArgs.ttlMs).toBe('number');
       expect(sessionArgs.ttlMs).toBeGreaterThan(0);
+      expect(sessionArgs.authenticationLevel).toBe('PASSWORD');
 
       // Verifies returned result contains opaque session token and internal identity
       expect(result.token).toBe('synthetic-opaque-session-token-abc123xyz');
@@ -315,6 +317,7 @@ describe('AuthenticationService', () => {
           expiresAt: new Date(Date.now() + 60000),
           createdAt: new Date(),
           revokedAt: null,
+          authenticationLevel: 'PASSWORD',
         },
       });
 
@@ -393,6 +396,67 @@ describe('AuthenticationService', () => {
       // Invariant: session must NEVER be created for an inactive user
       expect(sessionService.createSession).not.toHaveBeenCalled();
     });
+
+    it('creates session with MFA level if OIDC callback has MFA authenticationLevel', async () => {
+      oidcService.createAuthorizationRequest.mockResolvedValue(
+        syntheticAuthUrl,
+      );
+      await service.beginLogin({ redirectUri });
+
+      const firstAuthCall =
+        oidcService.createAuthorizationRequest.mock.calls[0];
+      if (!firstAuthCall) {
+        throw new Error('Expected createAuthorizationRequest call');
+      }
+      const capturedState = firstAuthCall[0].state;
+
+      const normalizedOidcUser: NormalizedOidcUser = {
+        issuer: syntheticIssuer,
+        subject: 'sub-researcher-001',
+        email: 'researcher@example.com',
+        authenticationLevel: 'MFA',
+      };
+      oidcService.handleCallback.mockResolvedValue(normalizedOidcUser);
+
+      const activeUser: IdentityUser = {
+        id: 'usr-active-001',
+        email: 'researcher@example.com',
+        status: 'ACTIVE',
+      };
+      identityService.resolveOrCreateByExternalIdentity.mockResolvedValue(
+        activeUser,
+      );
+
+      const createdSessionResult: CreateSessionResult = {
+        token: 'synthetic-opaque-session-token-abc123xyz',
+        session: {
+          id: 'sess-001',
+          tokenDigest: 'digest-001',
+          userId: activeUser.id,
+          expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
+          createdAt: new Date(),
+          revokedAt: null,
+          authenticationLevel: 'MFA',
+        },
+      };
+      sessionService.createSession.mockResolvedValue(createdSessionResult);
+
+      const callbackUrl = `https://portal.example.com/auth/callback?code=synth-code-123&state=${capturedState}`;
+      const result = await service.handleCallback({
+        currentUrl: callbackUrl,
+        state: capturedState,
+      });
+
+      expect(sessionService.createSession).toHaveBeenCalledTimes(1);
+      const createSessionCall = sessionService.createSession.mock.calls[0];
+      if (!createSessionCall) {
+        throw new Error('Expected createSession call');
+      }
+      const sessionArgs = createSessionCall[0];
+      expect(sessionArgs.userId).toBe(activeUser.id);
+      expect(sessionArgs.authenticationLevel).toBe('MFA');
+      expect(result.token).toBe('synthetic-opaque-session-token-abc123xyz');
+    });
   });
 
   describe('getCurrentUser', () => {
@@ -404,6 +468,7 @@ describe('AuthenticationService', () => {
         expiresAt: new Date(Date.now() + 60000),
         createdAt: new Date(),
         revokedAt: null,
+        authenticationLevel: 'PASSWORD',
       };
       sessionService.validateSession.mockResolvedValue(activeSession);
       identityService.findById.mockResolvedValue({
@@ -423,6 +488,7 @@ describe('AuthenticationService', () => {
         sessionId: 'sess-001',
         activeContext: null,
         capabilities: [],
+        authenticationLevel: 'PASSWORD',
       });
     });
 
@@ -436,6 +502,7 @@ describe('AuthenticationService', () => {
         revokedAt: null,
         activeContextType: 'ORGANIZATION',
         activeContextId: 'org-100',
+        authenticationLevel: 'PASSWORD',
       });
       identityService.findById.mockResolvedValue({
         id: 'usr-active-001',
@@ -454,6 +521,7 @@ describe('AuthenticationService', () => {
           contextId: 'org-100',
         },
         capabilities: ['research.read'],
+        authenticationLevel: 'PASSWORD',
       });
       expect(accessControlService.resolveCapabilities).toHaveBeenCalledWith({
         userId: 'usr-active-001',
@@ -470,6 +538,7 @@ describe('AuthenticationService', () => {
         expiresAt: new Date(Date.now() + 60000),
         createdAt: new Date(),
         revokedAt: null,
+        authenticationLevel: 'PASSWORD',
       };
       sessionService.validateSession.mockResolvedValue(activeSession);
       identityService.findById.mockResolvedValue({
@@ -495,6 +564,7 @@ describe('AuthenticationService', () => {
         expiresAt: new Date(Date.now() + 60000),
         createdAt: new Date(),
         revokedAt: null,
+        authenticationLevel: 'PASSWORD',
       };
       sessionService.validateSession.mockResolvedValue(activeSession);
       identityService.findById.mockResolvedValue(null);

@@ -75,6 +75,7 @@ describe('SessionService', () => {
         expiresAt: expectedExpiresAt,
         createdAt: fixedNow,
         revokedAt: null,
+        authenticationLevel: 'PASSWORD',
       };
 
       prisma.session.create.mockResolvedValue(createdRecord);
@@ -82,6 +83,7 @@ describe('SessionService', () => {
       const result = await service.createSession({
         userId: 'usr-1',
         ttlMs,
+        authenticationLevel: 'PASSWORD',
       });
 
       expect(prisma.session.create).toHaveBeenCalledTimes(1);
@@ -90,6 +92,7 @@ describe('SessionService', () => {
           tokenDigest: syntheticDigest,
           userId: 'usr-1',
           expiresAt: expectedExpiresAt,
+          authenticationLevel: 'PASSWORD',
         },
       });
       expect(result).toEqual({
@@ -136,6 +139,7 @@ describe('SessionService', () => {
         expiresAt: expectedExpiresAt,
         createdAt: fixedNow,
         revokedAt: null,
+        authenticationLevel: 'PASSWORD',
       };
       prisma.session.create.mockResolvedValue(createdRecord);
 
@@ -149,6 +153,7 @@ describe('SessionService', () => {
           tokenDigest: syntheticDigest,
           userId: 'usr-1',
           expiresAt: expectedExpiresAt,
+          authenticationLevel: 'PASSWORD',
         },
       });
     });
@@ -166,6 +171,7 @@ describe('SessionService', () => {
         expiresAt: new Date(Date.now() + 10000),
         createdAt: new Date(),
         revokedAt: null,
+        authenticationLevel: 'PASSWORD',
       };
       prisma.session.create.mockResolvedValue(createdRecord);
 
@@ -189,6 +195,7 @@ describe('SessionService', () => {
         expiresAt: new Date(fixedNow.getTime() + 60000),
         createdAt: fixedNow,
         revokedAt: null,
+        authenticationLevel: 'PASSWORD',
       };
 
       prisma.session.findUnique.mockResolvedValue(activeRecord);
@@ -217,6 +224,7 @@ describe('SessionService', () => {
         expiresAt: new Date(fixedNow.getTime() - 1000),
         createdAt: new Date(fixedNow.getTime() - 10000),
         revokedAt: null,
+        authenticationLevel: 'PASSWORD',
       };
 
       prisma.session.findUnique.mockResolvedValue(expiredRecord);
@@ -234,6 +242,7 @@ describe('SessionService', () => {
         expiresAt: fixedNow,
         createdAt: new Date(fixedNow.getTime() - 10000),
         revokedAt: null,
+        authenticationLevel: 'PASSWORD',
       };
 
       prisma.session.findUnique.mockResolvedValue(boundaryRecord);
@@ -251,6 +260,7 @@ describe('SessionService', () => {
         expiresAt: new Date(fixedNow.getTime() + 60000),
         createdAt: fixedNow,
         revokedAt: new Date(fixedNow.getTime() - 500),
+        authenticationLevel: 'PASSWORD',
       };
 
       prisma.session.findUnique.mockResolvedValue(revokedRecord);
@@ -310,6 +320,7 @@ describe('SessionService', () => {
         revokedAt: null,
         activeContextType: null,
         activeContextId: null,
+        authenticationLevel: 'PASSWORD',
       };
 
       const updatedRecord: SessionRecord = {
@@ -317,6 +328,7 @@ describe('SessionService', () => {
         tokenDigest: 'hashed-new-token-123',
         activeContextType: target.contextType,
         activeContextId: target.contextId,
+        authenticationLevel: 'PASSWORD',
       };
 
       // Mock database finding the active session first
@@ -382,6 +394,7 @@ describe('SessionService', () => {
         revokedAt: null,
         activeContextType: null,
         activeContextId: null,
+        authenticationLevel: 'PASSWORD',
       };
 
       prisma.session.findUnique.mockResolvedValue(activeRecord);
@@ -404,6 +417,7 @@ describe('SessionService', () => {
         revokedAt: null,
         activeContextType: null,
         activeContextId: null,
+        authenticationLevel: 'PASSWORD',
       };
 
       prisma.session.findUnique.mockResolvedValue(expiredRecord);
@@ -426,6 +440,7 @@ describe('SessionService', () => {
         revokedAt: fixedNow,
         activeContextType: null,
         activeContextId: null,
+        authenticationLevel: 'PASSWORD',
       };
 
       prisma.session.findUnique.mockResolvedValue(revokedRecord);
@@ -448,6 +463,7 @@ describe('SessionService', () => {
         revokedAt: null,
         activeContextType: null,
         activeContextId: null,
+        authenticationLevel: 'PASSWORD',
       };
 
       prisma.session.findUnique.mockResolvedValue(activeRecord);
