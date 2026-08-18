@@ -1,6 +1,9 @@
 import type { CookieOptions, Response } from 'express';
 import { AuthenticationController } from './authentication.controller';
-import type { RequestWithCookies } from './authenticated-request-context';
+import type {
+  AuthenticatedRequest,
+  RequestWithCookies,
+} from './authenticated-request-context';
 import { SessionService } from '../session/session-public';
 import {
   AuthenticatedUser,
@@ -32,7 +35,13 @@ type MockResponse = {
 describe('AuthenticationController', () => {
   let controller: AuthenticationController;
   let authService: MockAuthService;
-  let sessionService: { switchContext: jest.Mock };
+  let sessionService: {
+    switchContext: jest.Mock;
+    getActiveSessionsForUser: jest.Mock;
+    revokeSessionByIdForUser: jest.Mock;
+    revokeOtherSessionsForUser: jest.Mock;
+    getSessionById: jest.Mock;
+  };
   let mockResponse: MockResponse;
   let originalEnv: NodeJS.ProcessEnv;
 
@@ -64,7 +73,13 @@ describe('AuthenticationController', () => {
       >(),
       logout: jest.fn<Promise<void>, [(string | null | undefined)?]>(),
     };
-    sessionService = { switchContext: jest.fn() };
+    sessionService = {
+      switchContext: jest.fn(),
+      getActiveSessionsForUser: jest.fn(),
+      revokeSessionByIdForUser: jest.fn(),
+      revokeOtherSessionsForUser: jest.fn(),
+      getSessionById: jest.fn(),
+    };
 
     mockResponse = {
       redirect: jest.fn<void, [string]>(),
@@ -316,6 +331,211 @@ describe('AuthenticationController', () => {
 
       expect(authService.logout).toHaveBeenCalledWith('');
       expect(mockResponse.clearCookie).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('getSessions', () => {
+    it('returns bounded active sessions of the user with current boolean set correctly', async () => {
+      const authContext = {
+        userId: 'usr-1',
+        sessionId: 'sess-current',
+        activeContext: null,
+        capabilities: [],
+      };
+      const mockReq = { authContext };
+
+      const mockSessions = [
+        {
+          id: 'sess-current',
+          createdAt: new Date(),
+          expiresAt: new Date(),
+          activeContextType: 'ORGANIZATION',
+          activeContextId: 'org-1',
+          userId: 'usr-1',
+        },
+        {
+          id: 'sess-other',
+          createdAt: new Date(),
+          expiresAt: new Date(),
+          activeContextType: null,
+          activeContextId: null,
+          userId: 'usr-1',
+        },
+      ];
+      sessionService.getActiveSessionsForUser.mockResolvedValue(mockSessions);
+
+      const result = await controller.getSessions(mockReq);
+
+      expect(sessionService.getActiveSessionsForUser).toHaveBeenCalledWith(
+        'usr-1',
+      );
+      expect(result).toEqual([
+        {
+          id: 'sess-current',
+          createdAt: mockSessions[0].createdAt,
+          expiresAt: mockSessions[0].expiresAt,
+          activeContext: {
+            contextType: 'ORGANIZATION',
+            contextId: 'org-1',
+          },
+          current: true,
+        },
+        {
+          id: 'sess-other',
+          createdAt: mockSessions[1].createdAt,
+          expiresAt: mockSessions[1].expiresAt,
+          activeContext: null,
+          current: false,
+        },
+      ]);
+    });
+
+    it('throws UnauthorizedException when req.authContext is missing', async () => {
+      const mockReq = {};
+      await expect(
+        controller.getSessions(mockReq as unknown as AuthenticatedRequest),
+      ).rejects.toThrow('Authentication required');
+    });
+  });
+
+  describe('revokeSession', () => {
+    it('revokes owned session by id and returns ok', async () => {
+      const authContext = {
+        userId: 'usr-1',
+        sessionId: 'sess-current',
+        activeContext: null,
+        capabilities: [],
+      };
+      const mockReq = { authContext };
+
+      sessionService.getSessionById.mockResolvedValue({
+        id: 'sess-target',
+        userId: 'usr-1',
+      });
+      sessionService.revokeSessionByIdForUser.mockResolvedValue(true);
+
+      const result = await controller.revokeSession(
+        'sess-target',
+        mockReq,
+        mockResponse as unknown as Response,
+      );
+
+      expect(sessionService.getSessionById).toHaveBeenCalledWith('sess-target');
+      expect(sessionService.revokeSessionByIdForUser).toHaveBeenCalledWith(
+        'sess-target',
+        'usr-1',
+      );
+      expect(mockResponse.clearCookie).not.toHaveBeenCalled();
+      expect(result).toEqual({ ok: true });
+    });
+
+    it('clears session cookie when current session is revoked', async () => {
+      const authContext = {
+        userId: 'usr-1',
+        sessionId: 'sess-current',
+        activeContext: null,
+        capabilities: [],
+      };
+      const mockReq = { authContext };
+
+      sessionService.getSessionById.mockResolvedValue({
+        id: 'sess-current',
+        userId: 'usr-1',
+      });
+      sessionService.revokeSessionByIdForUser.mockResolvedValue(true);
+
+      const result = await controller.revokeSession(
+        'sess-current',
+        mockReq,
+        mockResponse as unknown as Response,
+      );
+
+      expect(sessionService.revokeSessionByIdForUser).toHaveBeenCalledWith(
+        'sess-current',
+        'usr-1',
+      );
+      expect(mockResponse.clearCookie).toHaveBeenCalledTimes(1);
+      expect(result).toEqual({ ok: true });
+    });
+
+    it('throws BadRequestException for blank session ID', async () => {
+      const mockReq = { authContext: { userId: 'usr-1' } };
+      await expect(
+        controller.revokeSession(
+          '',
+          mockReq as unknown as AuthenticatedRequest,
+          mockResponse as unknown as Response,
+        ),
+      ).rejects.toThrow('Session ID is required');
+
+      await expect(
+        controller.revokeSession(
+          '  ',
+          mockReq as unknown as AuthenticatedRequest,
+          mockResponse as unknown as Response,
+        ),
+      ).rejects.toThrow('Session ID is required');
+    });
+
+    it('throws NotFoundException when session is missing', async () => {
+      const mockReq = { authContext: { userId: 'usr-1' } };
+      sessionService.getSessionById.mockResolvedValue(null);
+
+      await expect(
+        controller.revokeSession(
+          'sess-missing',
+          mockReq as unknown as AuthenticatedRequest,
+          mockResponse as unknown as Response,
+        ),
+      ).rejects.toThrow('Session not found');
+    });
+
+    it('does not disclose a session owned by another user', async () => {
+      const mockReq = { authContext: { userId: 'usr-1' } };
+      sessionService.getSessionById.mockResolvedValue({
+        id: 'sess-other',
+        userId: 'usr-other',
+      });
+
+      await expect(
+        controller.revokeSession(
+          'sess-other',
+          mockReq as unknown as AuthenticatedRequest,
+          mockResponse as unknown as Response,
+        ),
+      ).rejects.toThrow('Session not found');
+      expect(sessionService.revokeSessionByIdForUser).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('revokeOtherSessions', () => {
+    it('revokes other sessions and returns ok', async () => {
+      const authContext = {
+        userId: 'usr-1',
+        sessionId: 'sess-current',
+        activeContext: null,
+        capabilities: [],
+      };
+      const mockReq = { authContext };
+
+      sessionService.revokeOtherSessionsForUser.mockResolvedValue(undefined);
+
+      const result = await controller.revokeOtherSessions(mockReq);
+
+      expect(sessionService.revokeOtherSessionsForUser).toHaveBeenCalledWith(
+        'usr-1',
+        'sess-current',
+      );
+      expect(result).toEqual({ ok: true });
+    });
+
+    it('throws UnauthorizedException when req.authContext is missing', async () => {
+      const mockReq = {};
+      await expect(
+        controller.revokeOtherSessions(
+          mockReq as unknown as AuthenticatedRequest,
+        ),
+      ).rejects.toThrow('Authentication required');
     });
   });
 });

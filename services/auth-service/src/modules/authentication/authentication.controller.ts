@@ -2,13 +2,17 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   ForbiddenException,
   Get,
+  NotFoundException,
+  Param,
   Post,
   Query,
   Req,
   Res,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { validateConfig } from '../../config';
@@ -20,10 +24,14 @@ import {
   CallbackResult,
 } from './authentication.service';
 import {
+  AuthenticatedRequestGuard,
   extractSessionCookie,
   SESSION_COOKIE_NAME,
 } from './authenticated-request-context';
-import type { RequestWithCookies } from './authenticated-request-context';
+import type {
+  AuthenticatedRequest,
+  RequestWithCookies,
+} from './authenticated-request-context';
 
 export const SESSION_COOKIE_OPTIONS = {
   httpOnly: true,
@@ -144,6 +152,92 @@ export class AuthenticationController {
       sameSite: 'lax',
       path: '/',
     });
+
+    return { ok: true };
+  }
+
+  @Get('sessions')
+  @UseGuards(AuthenticatedRequestGuard)
+  async getSessions(@Req() req: AuthenticatedRequest) {
+    const authContext = req.authContext;
+    if (!authContext) {
+      throw new UnauthorizedException('Authentication required');
+    }
+
+    const sessions = await this.sessionService.getActiveSessionsForUser(
+      authContext.userId,
+    );
+
+    return sessions.map((session) => ({
+      id: session.id,
+      createdAt: session.createdAt,
+      expiresAt: session.expiresAt,
+      activeContext:
+        session.activeContextType && session.activeContextId
+          ? {
+              contextType: session.activeContextType,
+              contextId: session.activeContextId,
+            }
+          : null,
+      current: session.id === authContext.sessionId,
+    }));
+  }
+
+  @Delete('sessions/:sessionId')
+  @UseGuards(AuthenticatedRequestGuard)
+  async revokeSession(
+    @Param('sessionId') sessionId: string,
+    @Req() req: AuthenticatedRequest,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<{ ok: boolean }> {
+    if (!sessionId || !sessionId.trim()) {
+      throw new BadRequestException('Session ID is required');
+    }
+
+    const authContext = req.authContext;
+    if (!authContext) {
+      throw new UnauthorizedException('Authentication required');
+    }
+
+    const session = await this.sessionService.getSessionById(sessionId.trim());
+    if (!session || session.userId !== authContext.userId) {
+      throw new NotFoundException('Session not found');
+    }
+
+    const success = await this.sessionService.revokeSessionByIdForUser(
+      sessionId.trim(),
+      authContext.userId,
+    );
+    if (!success) {
+      throw new NotFoundException('Session not found or not owned by user');
+    }
+
+    if (session.id === authContext.sessionId) {
+      res.clearCookie(SESSION_COOKIE_NAME, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/',
+      });
+    }
+
+    return { ok: true };
+  }
+
+  @Delete('sessions')
+  @UseGuards(AuthenticatedRequestGuard)
+  async revokeOtherSessions(
+    @Req() req: AuthenticatedRequest,
+  ): Promise<{ ok: boolean }> {
+    const authContext = req.authContext;
+    if (!authContext) {
+      throw new UnauthorizedException('Authentication required');
+    }
+
+    await this.sessionService.revokeOtherSessionsForUser(
+      authContext.userId,
+      authContext.sessionId,
+    );
 
     return { ok: true };
   }

@@ -11,6 +11,7 @@ describe('SessionService', () => {
     session: {
       create: jest.Mock;
       findUnique: jest.Mock;
+      findMany: jest.Mock;
       updateMany: jest.Mock;
     };
     $transaction: jest.Mock;
@@ -30,6 +31,7 @@ describe('SessionService', () => {
       session: {
         create: jest.fn(),
         findUnique: jest.fn(),
+        findMany: jest.fn(),
         updateMany: jest.fn(),
       },
       $transaction: jest.fn(),
@@ -294,6 +296,151 @@ describe('SessionService', () => {
           revokedAt: fixedNow,
         },
       });
+    });
+  });
+
+  describe('getActiveSessionsForUser', () => {
+    it('returns unexpired, non-revoked sessions for a user', async () => {
+      const activeSessions: SessionRecord[] = [
+        {
+          id: 'sess-1',
+          tokenDigest: 'digest-1',
+          userId: 'usr-1',
+          expiresAt: new Date(fixedNow.getTime() + 60000),
+          createdAt: fixedNow,
+          revokedAt: null,
+          activeContextType: null,
+          activeContextId: null,
+        },
+      ];
+      prisma.session.findMany.mockResolvedValue(activeSessions);
+
+      const result = await service.getActiveSessionsForUser('usr-1');
+
+      expect(prisma.session.findMany).toHaveBeenCalledWith({
+        where: {
+          userId: 'usr-1',
+          revokedAt: null,
+          expiresAt: { gt: fixedNow },
+        },
+        orderBy: { createdAt: 'desc' },
+        take: 100,
+      });
+      expect(result).toEqual(activeSessions);
+    });
+  });
+
+  describe('revokeSessionByIdForUser', () => {
+    it('revokes session by id and returns true if user matches and exists', async () => {
+      const targetSession: SessionRecord = {
+        id: 'sess-target',
+        tokenDigest: 'digest-target',
+        userId: 'usr-1',
+        expiresAt: new Date(fixedNow.getTime() + 60000),
+        createdAt: fixedNow,
+        revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
+      };
+      prisma.session.findUnique.mockResolvedValue(targetSession);
+      prisma.session.updateMany.mockResolvedValue({ count: 1 });
+
+      const result = await service.revokeSessionByIdForUser(
+        'sess-target',
+        'usr-1',
+      );
+
+      expect(prisma.session.findUnique).toHaveBeenCalledWith({
+        where: { id: 'sess-target' },
+      });
+      expect(prisma.session.updateMany).toHaveBeenCalledWith({
+        where: {
+          id: 'sess-target',
+          userId: 'usr-1',
+          revokedAt: null,
+        },
+        data: {
+          revokedAt: fixedNow,
+        },
+      });
+      expect(result).toBe(true);
+    });
+
+    it('returns false and does not update if session does not exist', async () => {
+      prisma.session.findUnique.mockResolvedValue(null);
+
+      const result = await service.revokeSessionByIdForUser(
+        'sess-missing',
+        'usr-1',
+      );
+
+      expect(result).toBe(false);
+      expect(prisma.session.updateMany).not.toHaveBeenCalled();
+    });
+
+    it('returns false and does not update if session user does not match', async () => {
+      const targetSession: SessionRecord = {
+        id: 'sess-target',
+        tokenDigest: 'digest-target',
+        userId: 'usr-other',
+        expiresAt: new Date(fixedNow.getTime() + 60000),
+        createdAt: fixedNow,
+        revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
+      };
+      prisma.session.findUnique.mockResolvedValue(targetSession);
+
+      const result = await service.revokeSessionByIdForUser(
+        'sess-target',
+        'usr-1',
+      );
+
+      expect(result).toBe(false);
+      expect(prisma.session.updateMany).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('revokeOtherSessionsForUser', () => {
+    it('revokes all other active sessions for a user, preserving currentSessionId', async () => {
+      prisma.session.updateMany.mockResolvedValue({ count: 2 });
+
+      await service.revokeOtherSessionsForUser('usr-1', 'sess-current');
+
+      expect(prisma.session.updateMany).toHaveBeenCalledTimes(1);
+      expect(prisma.session.updateMany).toHaveBeenCalledWith({
+        where: {
+          userId: 'usr-1',
+          id: { not: 'sess-current' },
+          revokedAt: null,
+        },
+        data: {
+          revokedAt: fixedNow,
+        },
+      });
+    });
+  });
+
+  describe('getSessionById', () => {
+    it('finds session by id using findUnique', async () => {
+      const targetSession: SessionRecord = {
+        id: 'sess-1',
+        tokenDigest: 'digest-1',
+        userId: 'usr-1',
+        expiresAt: new Date(fixedNow.getTime() + 60000),
+        createdAt: fixedNow,
+        revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
+      };
+      prisma.session.findUnique.mockResolvedValue(targetSession);
+
+      const result = await service.getSessionById('sess-1');
+
+      expect(prisma.session.findUnique).toHaveBeenCalledWith({
+        where: { id: 'sess-1' },
+      });
+      expect(result).toEqual(targetSession);
     });
   });
 
