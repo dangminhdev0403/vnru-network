@@ -1,6 +1,8 @@
 import {
   BadRequestException,
+  Body,
   Controller,
+  ForbiddenException,
   Get,
   Post,
   Query,
@@ -11,13 +13,17 @@ import {
 import type { Response } from 'express';
 import { validateConfig } from '../../config';
 import { DEFAULT_MAX_SESSION_TTL_MS } from '../session/session-public';
+import { SessionService } from '../session/session-public';
 import {
   AuthenticatedUser,
   AuthenticationService,
   CallbackResult,
 } from './authentication.service';
-
-export const SESSION_COOKIE_NAME = 'vnru_session';
+import {
+  extractSessionCookie,
+  SESSION_COOKIE_NAME,
+} from './authenticated-request-context';
+import type { RequestWithCookies } from './authenticated-request-context';
 
 export const SESSION_COOKIE_OPTIONS = {
   httpOnly: true,
@@ -27,58 +33,12 @@ export const SESSION_COOKIE_OPTIONS = {
   maxAge: DEFAULT_MAX_SESSION_TTL_MS,
 };
 
-export interface RequestWithCookies {
-  cookies?: unknown;
-  headers?: {
-    cookie?: string | string[] | undefined;
-    Cookie?: string | string[] | undefined;
-    [key: string]: unknown;
-  };
-  url?: string;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
-
-function extractSessionCookie(req: RequestWithCookies): string | undefined {
-  if (isRecord(req?.cookies)) {
-    const val = req.cookies[SESSION_COOKIE_NAME];
-    if (typeof val === 'string' && val.trim() !== '') {
-      return val.trim();
-    }
-  }
-
-  const rawCookie = req?.headers?.cookie ?? req?.headers?.Cookie;
-  const cookieHeader = Array.isArray(rawCookie)
-    ? rawCookie.join('; ')
-    : typeof rawCookie === 'string'
-      ? rawCookie
-      : '';
-
-  if (cookieHeader.trim() !== '') {
-    const parts = cookieHeader.split(';');
-    for (const part of parts) {
-      const [rawName, ...rest] = part.trim().split('=');
-      if (rawName === SESSION_COOKIE_NAME) {
-        const val = rest.join('=').trim();
-        if (val) {
-          try {
-            return decodeURIComponent(val);
-          } catch {
-            return val;
-          }
-        }
-      }
-    }
-  }
-
-  return undefined;
-}
-
 @Controller('api/v1/auth')
 export class AuthenticationController {
-  constructor(private readonly authService: AuthenticationService) {}
+  constructor(
+    private readonly authService: AuthenticationService,
+    private readonly sessionService: SessionService,
+  ) {}
 
   private getConfiguredRedirectUri(): string {
     return validateConfig().KEYCLOAK_REDIRECT_URI;
@@ -136,6 +96,38 @@ export class AuthenticationController {
     }
 
     return user;
+  }
+
+  @Post('context')
+  async switchContext(
+    @Body() body: { contextType?: unknown; contextId?: unknown },
+    @Req() req: RequestWithCookies,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<{ contextType: string; contextId: string }> {
+    const token = extractSessionCookie(req);
+    if (!token) {
+      throw new UnauthorizedException('Authentication required');
+    }
+    if (
+      typeof body?.contextType !== 'string' ||
+      !body.contextType.trim() ||
+      typeof body?.contextId !== 'string' ||
+      !body.contextId.trim()
+    ) {
+      throw new BadRequestException('Context type and id are required');
+    }
+
+    const target = {
+      contextType: body.contextType.trim(),
+      contextId: body.contextId.trim(),
+    };
+    try {
+      const result = await this.sessionService.switchContext(token, target);
+      res.cookie(SESSION_COOKIE_NAME, result.token, SESSION_COOKIE_OPTIONS);
+      return target;
+    } catch {
+      throw new ForbiddenException('Context switch denied');
+    }
   }
 
   @Post('logout')

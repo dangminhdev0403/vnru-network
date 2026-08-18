@@ -20,6 +20,7 @@ import {
   SessionRecord,
   SessionService,
 } from '../session/session-public';
+import { AccessControlService } from '../access-control/access-control.service';
 
 type MockOidcService = {
   createAuthorizationRequest: jest.Mock<
@@ -52,6 +53,7 @@ describe('AuthenticationService', () => {
   let oidcService: MockOidcService;
   let identityService: MockIdentityService;
   let sessionService: MockSessionService;
+  let accessControlService: { resolveCapabilities: jest.Mock };
   let originalEnv: NodeJS.ProcessEnv;
 
   beforeAll(() => {
@@ -103,11 +105,13 @@ describe('AuthenticationService', () => {
       revokeSession: jest.fn<Promise<void>, [string]>(),
       revokeAllForUser: jest.fn<Promise<void>, [string]>(),
     };
+    accessControlService = { resolveCapabilities: jest.fn() };
 
     service = new AuthenticationService(
       oidcService as unknown as KeycloakOidcService,
       identityService as unknown as IdentityService,
       sessionService as unknown as SessionService,
+      accessControlService as unknown as AccessControlService,
     );
   });
 
@@ -417,6 +421,44 @@ describe('AuthenticationService', () => {
       expect(user).toEqual({
         userId: 'usr-active-001',
         sessionId: 'sess-001',
+        activeContext: null,
+        capabilities: [],
+      });
+    });
+
+    it('resolves capabilities only for the exact active context', async () => {
+      sessionService.validateSession.mockResolvedValue({
+        id: 'sess-context',
+        tokenDigest: 'digest-context',
+        userId: 'usr-active-001',
+        expiresAt: new Date(Date.now() + 60000),
+        createdAt: new Date(),
+        revokedAt: null,
+        activeContextType: 'ORGANIZATION',
+        activeContextId: 'org-100',
+      });
+      identityService.findById.mockResolvedValue({
+        id: 'usr-active-001',
+        email: 'researcher@example.com',
+        status: 'ACTIVE',
+      });
+      accessControlService.resolveCapabilities.mockResolvedValue([
+        'research.read',
+      ]);
+
+      await expect(service.getCurrentUser('token')).resolves.toEqual({
+        userId: 'usr-active-001',
+        sessionId: 'sess-context',
+        activeContext: {
+          contextType: 'ORGANIZATION',
+          contextId: 'org-100',
+        },
+        capabilities: ['research.read'],
+      });
+      expect(accessControlService.resolveCapabilities).toHaveBeenCalledWith({
+        userId: 'usr-active-001',
+        contextType: 'ORGANIZATION',
+        contextId: 'org-100',
       });
     });
 

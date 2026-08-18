@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { createHash, randomBytes } from 'crypto';
 import { validateConfig } from '../../config';
+import { AccessControlService } from '../access-control/access-control.service';
 import { IdentityService, IdentityUser } from '../identity/identity-public';
 import {
   DEFAULT_MAX_SESSION_TTL_MS,
@@ -29,6 +30,8 @@ export interface CallbackResult {
 export interface AuthenticatedUser {
   userId: string;
   sessionId: string;
+  activeContext: { contextType: string; contextId: string } | null;
+  capabilities: string[];
 }
 
 interface TransientStateEntry {
@@ -47,6 +50,7 @@ export class AuthenticationService {
     private readonly oidcService: KeycloakOidcService,
     private readonly identityService: IdentityService,
     private readonly sessionService: SessionService,
+    private readonly accessControlService: AccessControlService,
   ) {}
 
   private cleanupExpiredStates(): void {
@@ -174,9 +178,25 @@ export class AuthenticationService {
       return null;
     }
 
+    const activeContext =
+      session.activeContextType && session.activeContextId
+        ? {
+            contextType: session.activeContextType,
+            contextId: session.activeContextId,
+          }
+        : null;
+    const capabilities = activeContext
+      ? await this.accessControlService.resolveCapabilities({
+          userId: session.userId,
+          ...activeContext,
+        })
+      : [];
+
     return {
       userId: session.userId,
       sessionId: session.id,
+      activeContext,
+      capabilities,
     };
   }
 
