@@ -52,11 +52,20 @@ export interface SessionPrismaClient {
       };
     }) => Promise<SessionRecord>;
     findUnique: (args: {
-      where: { tokenDigest: string };
+      where: { tokenDigest?: string; id?: string };
     }) => Promise<SessionRecord | null>;
+    findMany: (args: {
+      where: {
+        userId?: string;
+        revokedAt?: null;
+        expiresAt?: { gt: Date };
+      };
+      orderBy?: { createdAt: 'asc' | 'desc' };
+      take?: number;
+    }) => Promise<SessionRecord[]>;
     updateMany: (args: {
       where: {
-        id?: string;
+        id?: string | { not: string };
         tokenDigest?: string;
         userId?: string;
         revokedAt?: null;
@@ -168,6 +177,72 @@ export class SessionService {
       data: {
         revokedAt: now,
       },
+    });
+  }
+
+  async getActiveSessionsForUser(
+    userId: string,
+    limit = 100,
+  ): Promise<SessionRecord[]> {
+    const now = this.now();
+    return this.prisma.session.findMany({
+      where: {
+        userId,
+        revokedAt: null,
+        expiresAt: { gt: now },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: limit,
+    });
+  }
+
+  async revokeSessionByIdForUser(
+    sessionId: string,
+    userId: string,
+  ): Promise<boolean> {
+    const now = this.now();
+    const session = await this.prisma.session.findUnique({
+      where: { id: sessionId },
+    });
+
+    if (!session || session.userId !== userId) {
+      return false;
+    }
+
+    await this.prisma.session.updateMany({
+      where: {
+        id: sessionId,
+        userId,
+        revokedAt: null,
+      },
+      data: {
+        revokedAt: now,
+      },
+    });
+
+    return true;
+  }
+
+  async revokeOtherSessionsForUser(
+    userId: string,
+    currentSessionId: string,
+  ): Promise<void> {
+    const now = this.now();
+    await this.prisma.session.updateMany({
+      where: {
+        userId,
+        id: { not: currentSessionId },
+        revokedAt: null,
+      },
+      data: {
+        revokedAt: now,
+      },
+    });
+  }
+
+  async getSessionById(sessionId: string): Promise<SessionRecord | null> {
+    return this.prisma.session.findUnique({
+      where: { id: sessionId },
     });
   }
 
