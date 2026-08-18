@@ -7,6 +7,7 @@ import { SessionModule } from '../session/session.module';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticatedRequestGuard } from './authenticated-request-context';
+import { IamAdminController } from '../access-control/iam-admin.controller';
 import {
   KeycloakOidcService,
   OIDC_CLIENT_BOUNDARY,
@@ -18,7 +19,7 @@ import {
 
 @Module({
   imports: [IdentityModule, SessionModule, AccessControlModule],
-  controllers: [AuthenticationController],
+  controllers: [AuthenticationController, IamAdminController],
   providers: [
     {
       provide: OIDC_CLIENT_BOUNDARY,
