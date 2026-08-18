@@ -1,0 +1,42 @@
+:root {
+  --pf-v5-global--primary-color--100: #0b1c30;
+  --pf-v5-global--primary-color--200: #13243d;
+}
+
+body {
+  background: #f8fafc;
+  color: #0f172a;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.login-pf body {
+  background: linear-gradient(135deg, #0b1c30 0 42%, #f8fafc 42% 100%);
+}
+
+.card-pf {
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow: 0 20px 48px rgb(15 23 42 / 18%);
+}
+
+#kc-header-wrapper {
+  color: #fff;
+  font-size: 0;
+}
+
+#kc-header-wrapper::after {
+  content: "VN-RU Knowledge Network";
+  font: 700 28px/1.2 Georgia, serif;
+}
+
+.pf-v5-c-button.pf-m-primary,
+#kc-login {
+  background: #0b1c30;
+  border-radius: 10px;
+}
+
+.pf-v5-c-form-control,
+input[type="text"],
+input[type="password"] {
+  border-radius: 10px;
+}
