@@ -1,315 +1,102 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Reviewer Workspace - VN-RU Knowledge Network</title>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&amp;family=Source+Serif+4:wght@400;600&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Theme Configuration -->
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface-tint": "#565e74",
-                    "surface-variant": "#d3e4fe",
-                    "primary-fixed": "#dae2fd",
-                    "on-secondary-fixed": "#00201d",
-                    "on-tertiary": "#ffffff",
-                    "on-primary-fixed": "#131b2e",
-                    "outline-variant": "#c6c6cd",
-                    "inverse-on-surface": "#eaf1ff",
-                    "surface-container-highest": "#d3e4fe",
-                    "primary": "#000000",
-                    "primary-container": "#131b2e",
-                    "on-surface": "#0b1c30",
-                    "on-error-container": "#93000a",
-                    "on-primary": "#ffffff",
-                    "surface-dim": "#cbdbf5",
-                    "inverse-primary": "#bec6e0",
-                    "on-background": "#0b1c30",
-                    "tertiary-fixed-dim": "#ffb77d",
-                    "secondary-container": "#86f2e4",
-                    "tertiary": "#000000",
-                    "on-secondary": "#ffffff",
-                    "error": "#ba1a1a",
-                    "on-error": "#ffffff",
-                    "tertiary-fixed": "#ffdcc3",
-                    "on-secondary-container": "#006f66",
-                    "on-primary-container": "#7c839b",
-                    "error-container": "#ffdad6",
-                    "background": "#f8f9ff",
-                    "surface": "#f8f9ff",
-                    "tertiary-container": "#2f1500",
-                    "secondary": "#006a61",
-                    "surface-container": "#e5eeff",
-                    "primary-fixed-dim": "#bec6e0",
-                    "on-tertiary-container": "#c76c00",
-                    "surface-container-lowest": "#ffffff",
-                    "on-secondary-fixed-variant": "#005049",
-                    "secondary-fixed-dim": "#6bd8cb",
-                    "on-tertiary-fixed": "#2f1500",
-                    "surface-container-low": "#eff4ff",
-                    "on-tertiary-fixed-variant": "#6e3900",
-                    "on-primary-fixed-variant": "#3f465c",
-                    "outline": "#76777d",
-                    "surface-bright": "#f8f9ff",
-                    "inverse-surface": "#213145",
-                    "on-surface-variant": "#45464d",
-                    "secondary-fixed": "#89f5e7",
-                    "surface-container-high": "#dce9ff"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "base": "8px",
-                    "stack-lg": "48px",
-                    "container-max": "1280px",
-                    "stack-sm": "12px",
-                    "gutter": "24px",
-                    "stack-md": "24px",
-                    "margin-desktop": "48px",
-                    "margin-mobile": "16px"
-            },
-            "fontFamily": {
-                    "headline-md": ["Hanken Grotesk"],
-                    "body-md": ["\"Source Serif 4\""],
-                    "body-lg": ["\"Source Serif 4\""],
-                    "headline-lg": ["Hanken Grotesk"],
-                    "headline-lg-mobile": ["Hanken Grotesk"],
-                    "display-lg": ["Hanken Grotesk"],
-                    "label-md": ["Hanken Grotesk"],
-                    "label-sm": ["Hanken Grotesk"]
-            },
-            "fontSize": {
-                    "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
-                    "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
-                    "body-lg": ["18px", { "lineHeight": "1.7", "fontWeight": "400" }],
-                    "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
-                    "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
-                    "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                    "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500" }],
-                    "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "600" }]
-            }
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Reviewer Workspace - VN-RU Knowledge Network</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#f8fafc",
+            "on-surface": "#0f172a",
+            "on-surface-variant": "#475569",
+            "primary": "#0b1c30",
+            "on-primary": "#ffffff",
+            "secondary": "#0284c7",
+            "secondary-container": "#bae6fd",
+            "tertiary": "#059669",
+            "outline": "#94a3b8",
+            "outline-variant": "#e2e8f0"
+          },
+          fontFamily: {
+            "sans": ["'Hanken Grotesk'", "sans-serif"],
+            "serif": ["'Source Serif 4'", "serif"]
           }
         }
       }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .icon-fill {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined', sans-serif;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      white-space: nowrap;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
 </head>
-<body class="bg-surface text-on-surface font-body-md min-h-screen">
-<!-- TopNavBar -->
-<header class="fixed w-full top-0 z-50 bg-surface border-b border-outline-variant h-20 flex flex-col justify-center">
-<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-20">
-<!-- Brand -->
-<div class="flex items-center gap-4">
-<span class="text-headline-md font-headline-md font-bold text-primary">VN-RU Knowledge Network</span>
-</div>
-<!-- Navigation Links -->
-<nav class="hidden md:flex items-center gap-8">
-<!-- All inactive as page intent is a specific dashboard, not a top-level nav node -->
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all duration-200 py-2 px-3 rounded-lg" href="#">Home</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all duration-200 py-2 px-3 rounded-lg" href="#">News</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all duration-200 py-2 px-3 rounded-lg" href="#">Search</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all duration-200 py-2 px-3 rounded-lg" href="#">Knowledge</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all duration-200 py-2 px-3 rounded-lg" href="#">Experts</a>
-<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all duration-200 py-2 px-3 rounded-lg" href="#">Opportunities</a>
-</nav>
-<!-- Actions -->
-<div class="flex items-center gap-6">
-<!-- Search Bar Placeholder -->
-<button class="text-on-surface-variant hover:text-primary p-2">
-<span class="material-symbols-outlined">search</span>
-</button>
-<div class="text-label-md font-label-md text-on-surface-variant">VN / RU / EN</div>
-<button class="text-label-md font-label-md text-on-primary bg-primary px-4 py-2 rounded-lg hover:opacity-80 scale-95 transition-all">Login/Join</button>
-</div>
-</div>
-</header>
-<!-- SideNavBar -->
-<aside class="hidden md:flex fixed left-0 top-0 h-full flex-col pt-24 pb-base z-40 bg-surface-container-low w-[280px] border-r border-outline-variant justify-between">
-<div class="flex flex-col gap-2 px-4">
-<!-- Header Area inside Sidebar -->
-<div class="mb-stack-sm flex items-center gap-3 px-4">
-<img class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A small, professional headshot avatar of a senior academic researcher, styled in a minimalist, modern aesthetic with soft, high-key lighting against a pure white background, conveying expertise and institutional stability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCozniIcnUMRoaR7j7kN0bsxbK4hRAbga2mRDU5acVe8yaseTlbQmd2UE0lEjsWan5GM-fSz_5XugmtW09py2PtpF9GH79oRlakydvZPf4o76jC5G2Ms99ptokT1D2q0RO8s0i4UCMCLX6xP6hPUA93fSGa8G8AS3Rd3LPXq2lnEeNr0qpS_uS7-RSd4SXQBt1id_-pDu0LcrLmZbfWwfSjp14m19JGjH-_H-UDXjU1gwQCS3lGV_q4Pg"/>
-<div>
-<h2 class="text-label-md font-headline-md font-semibold text-on-surface">Scientific Workspace</h2>
-<p class="text-label-sm font-label-sm text-on-surface-variant">Role-based Access</p>
-</div>
-</div>
-<button class="w-full bg-secondary text-on-secondary text-label-md font-label-md py-3 rounded-lg mb-4 hover:opacity-90 transition-opacity">Submit Proposal</button>
-<!-- Navigation List -->
-<nav class="flex flex-col gap-1">
-<a class="flex items-center gap-3 text-label-md font-label-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant dark:hover:bg-on-primary-container transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined">biotech</span>
-                    Researcher Hub
-                </a>
-<!-- Active Nav Item -->
-<a class="flex items-center gap-3 text-label-md font-label-md bg-secondary-container text-on-secondary-container font-bold rounded-lg px-4 py-3 translate-x-1 transition-transform duration-200" href="#">
-<span class="material-symbols-outlined icon-fill">rate_review</span>
-                    Reviewer Workspace
-                </a>
-<a class="flex items-center gap-3 text-label-md font-label-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant dark:hover:bg-on-primary-container transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined">corporate_fare</span>
-                    Organization Portal
-                </a>
-<a class="flex items-center gap-3 text-label-md font-label-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant dark:hover:bg-on-primary-container transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined">handshake</span>
-                    Enterprise Connect
-                </a>
-<a class="flex items-center gap-3 text-label-md font-label-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant dark:hover:bg-on-primary-container transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined">insights</span>
-                    Leadership Insight
-                </a>
-</nav>
-</div>
-<div class="px-4">
-<nav class="flex flex-col gap-1 border-t border-outline-variant pt-4">
-<a class="flex items-center gap-3 text-label-md font-label-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined">settings</span>
-                    Settings
-                </a>
-<a class="flex items-center gap-3 text-label-md font-label-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined">help</span>
-                    Support
-                </a>
-</nav>
-</div>
-</aside>
-<!-- Main Content Area -->
-<main class="md:ml-[280px] pt-20 flex flex-col min-h-screen">
-<div class="flex-grow w-full max-w-container-max mx-auto px-margin-desktop py-stack-lg">
-<!-- Header Section -->
-<header class="mb-stack-lg">
-<h1 class="text-display-lg font-display-lg text-on-surface mb-2">Reviewer Workspace</h1>
-<p class="text-body-lg font-body-lg text-on-surface-variant max-w-2xl">Evaluate pending bilateral research proposals. Precision and thoroughness are paramount to the joint scientific initiative.</p>
-</header>
-<!-- Dashboard Grid -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-<!-- Main Queue Column -->
-<section class="md:col-span-8 flex flex-col gap-stack-md">
-<div class="flex items-center justify-between border-b border-outline-variant pb-base">
-<h2 class="text-headline-md font-headline-md text-on-surface">Pending Reviews</h2>
-<div class="flex gap-2">
-<button class="text-label-sm font-label-sm border border-outline-variant px-3 py-1 rounded hover:bg-surface-container-low transition-colors text-on-surface">Filter</button>
-<button class="text-label-sm font-label-sm border border-outline-variant px-3 py-1 rounded hover:bg-surface-container-low transition-colors text-on-surface">Sort</button>
-</div>
-</div>
-<!-- Queue List -->
-<div class="flex flex-col">
-<!-- Review Card 1 (High Priority) -->
-<article class="group bg-surface-container-lowest border-b border-outline-variant py-4 px-2 hover:bg-surface-container-low transition-colors flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-<div class="flex-grow">
-<div class="flex items-center gap-2 mb-1">
-<span class="text-label-sm font-label-sm bg-error-container text-on-error-container px-2 py-0.5 rounded">High Priority</span>
-<span class="text-label-sm font-label-sm text-on-surface-variant">Due: Oct 24, 2024</span>
-</div>
-<h3 class="text-body-lg font-body-lg font-semibold text-primary group-hover:text-secondary transition-colors mb-1">Quantum Cryptography Standards for Bilateral Communication</h3>
-<p class="text-body-md font-body-md text-on-surface-variant text-sm line-clamp-1">Proposer: Moscow Institute of Physics and Technology &amp; Hanoi University of Science</p>
-</div>
-<div class="flex-shrink-0 sm:ml-4">
-<button class="bg-primary text-on-primary text-label-md font-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap">Begin Review</button>
-</div>
-</article>
-<!-- Review Card 2 (In Progress) -->
-<article class="group bg-surface-container-lowest border-b border-outline-variant py-4 px-2 hover:bg-surface-container-low transition-colors flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-<div class="flex-grow">
-<div class="flex items-center gap-2 mb-1">
-<span class="text-label-sm font-label-sm bg-surface-variant text-on-surface px-2 py-0.5 rounded">In Progress</span>
-<span class="text-label-sm font-label-sm text-on-surface-variant">Due: Nov 02, 2024</span>
-</div>
-<h3 class="text-body-lg font-body-lg font-semibold text-primary group-hover:text-secondary transition-colors mb-1">Agri-tech Innovations in Tropico-Temperate Climates</h3>
-<p class="text-body-md font-body-md text-on-surface-variant text-sm line-clamp-1">Proposer: Vietnam Academy of Agricultural Sciences</p>
-</div>
-<div class="flex-shrink-0 sm:ml-4">
-<button class="border border-outline text-on-surface text-label-md font-label-md px-4 py-2 rounded-lg hover:bg-surface-container-highest transition-colors whitespace-nowrap">Continue</button>
-</div>
-</article>
-<!-- Review Card 3 (Normal) -->
-<article class="group bg-surface-container-lowest border-b border-outline-variant py-4 px-2 hover:bg-surface-container-low transition-colors flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-<div class="flex-grow">
-<div class="flex items-center gap-2 mb-1">
-<span class="text-label-sm font-label-sm border border-outline-variant text-on-surface-variant px-2 py-0.5 rounded">Standard</span>
-<span class="text-label-sm font-label-sm text-on-surface-variant">Due: Nov 15, 2024</span>
-</div>
-<h3 class="text-body-lg font-body-lg font-semibold text-primary group-hover:text-secondary transition-colors mb-1">Advanced Materials for Maritime Corrosion Resistance</h3>
-<p class="text-body-md font-body-md text-on-surface-variant text-sm line-clamp-1">Proposer: St. Petersburg State Marine Technical University</p>
-</div>
-<div class="flex-shrink-0 sm:ml-4">
-<button class="border border-outline text-on-surface text-label-md font-label-md px-4 py-2 rounded-lg hover:bg-surface-container-highest transition-colors whitespace-nowrap">View Details</button>
-</div>
-</article>
-</div>
-</section>
-<!-- Sidebar Content Column -->
-<aside class="md:col-span-4 flex flex-col gap-stack-md">
-<!-- Status Widget -->
-<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant">
-<h3 class="text-headline-md font-headline-md text-on-surface mb-4">Evaluation Cycle Q4</h3>
-<ul class="flex flex-col gap-3">
-<li class="flex justify-between items-center text-body-md font-body-md">
-<span class="text-on-surface-variant flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-error"></span> Needs Attention</span>
-<span class="font-semibold text-on-surface">1</span>
-</li>
-<li class="flex justify-between items-center text-body-md font-body-md">
-<span class="text-on-surface-variant flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary-fixed-dim"></span> In Progress</span>
-<span class="font-semibold text-on-surface">3</span>
-</li>
-<li class="flex justify-between items-center text-body-md font-body-md">
-<span class="text-on-surface-variant flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-secondary"></span> Submitted</span>
-<span class="font-semibold text-on-surface">12</span>
-</li>
-</ul>
-</div>
-<!-- Guidelines Widget -->
-<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant relative overflow-hidden group">
-<div class="absolute inset-0 bg-gradient-to-br from-surface-variant/20 to-transparent pointer-events-none"></div>
-<h3 class="text-headline-md font-headline-md text-on-surface mb-2 relative z-10">Review Guidelines</h3>
-<p class="text-body-md font-body-md text-on-surface-variant mb-4 relative z-10">Ensure assessments adhere to the bilateral scientific integrity framework updated October 2024.</p>
-<a class="inline-flex items-center gap-2 text-label-md font-label-md text-secondary hover:text-on-secondary-container transition-colors relative z-10" href="#">
-                            Access Knowledge Repository
-                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-</a>
-</div>
-</aside>
-</div>
-</div>
-<!-- Footer -->
-<footer class="w-full py-stack-md px-margin-desktop mt-stack-lg border-t border-outline-variant bg-surface-container-highest">
-<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-<div class="text-label-md font-headline-md font-bold text-on-surface">
-                    VN-RU Knowledge Network
-                </div>
-<p class="text-body-md font-body-md text-on-surface text-center md:text-left">
-                    © 2024 VN-RU Knowledge Network. All rights reserved. Institutional Modernism Architecture.
-                </p>
-<div class="flex flex-wrap gap-4 justify-center md:justify-end">
-<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Institutional Repository</a>
-<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
-<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Secretariat</a>
-<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">VN-RU Bilateral Agreement</a>
-</div>
-</div>
-</footer>
-</main>
-</body></html>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-sans antialiased">
+  <header class="bg-white/90 backdrop-blur-md border-b border-outline-variant sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="/" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-800 text-white flex items-center justify-center font-serif font-bold text-sm">VR</div>
+          <span class="font-serif font-bold text-base text-primary">Reviewer Evaluation Portal</span>
+        </a>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-semibold">Double-Blind Protocol Active</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="/stitch/workspace-shell.html" class="text-xs font-semibold text-secondary hover:underline">Switch Context</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 py-10 flex-grow w-full space-y-6">
+    <div class="bg-white rounded-2xl border border-outline-variant p-6 shadow-xs">
+      <div class="flex items-center justify-between text-xs text-on-surface-variant mb-2">
+        <span class="font-mono">Proposal Code: #PROP-2026-088</span>
+        <span class="text-amber-700 font-semibold">Evaluation Due: 3 Days Remaining</span>
+      </div>
+      <h1 class="font-serif font-bold text-xl text-primary mb-2">
+        Anonymized Evaluation: Scalable Quantum Random Number Generation for Bilateral Encrypted Channels
+      </h1>
+      <p class="text-xs text-on-surface-variant leading-relaxed mb-6">
+        All institutional and author identifiers have been cryptographically masked in accordance with Module 3 Double-Blind Review Policy.
+      </p>
+
+      <!-- Rubric Scoring Slider -->
+      <div class="space-y-4 pt-4 border-t border-outline-variant text-xs">
+        <div>
+          <div class="flex justify-between font-semibold mb-1">
+            <span>1. Scientific Rigor &amp; Methodology</span>
+            <span class="text-secondary font-mono">9 / 10</span>
+          </div>
+          <input type="range" min="1" max="10" value="9" class="w-full accent-secondary"/>
+        </div>
+        <div>
+          <div class="flex justify-between font-semibold mb-1">
+            <span>2. Bilateral Cooperation Impact</span>
+            <span class="text-secondary font-mono">8 / 10</span>
+          </div>
+          <input type="range" min="1" max="10" value="8" class="w-full accent-secondary"/>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end gap-3">
+        <button class="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface">Save Draft</button>
+        <button class="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold shadow-xs">Submit Final Score</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

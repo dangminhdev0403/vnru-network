@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface User {
   id: string;
@@ -19,9 +20,7 @@ export default function IamClientPage() {
   const router = useRouter();
 
   // Tab State
-  const [activeTab, setActiveTab] = useState<"users" | "roles" | "assign">(
-    "users",
-  );
+  const [activeTab, setActiveTab] = useState<"users" | "roles" | "assign">("users");
 
   // Users State
   const [users, setUsers] = useState<User[]>([]);
@@ -39,27 +38,19 @@ export default function IamClientPage() {
   // Status Change Dialog State
   const [statusTargetUser, setStatusTargetUser] = useState<User | null>(null);
   const [statusMutationPending, setStatusMutationPending] = useState(false);
-  const [statusMutationError, setStatusMutationError] = useState<string | null>(
-    null,
-  );
-  const statusDialogRef = useRef<HTMLDialogElement>(null);
+  const [statusMutationError, setStatusMutationError] = useState<string | null>(null);
 
   // Role Assignment Form State
   const [assignUser, setAssignUser] = useState("");
   const [assignRole, setAssignRole] = useState("");
   const [assignContextType, setAssignContextType] = useState("");
   const [assignContextId, setAssignContextId] = useState("");
-  const [assignStatus, setAssignStatus] = useState<"ACTIVE" | "INACTIVE">(
-    "ACTIVE",
-  );
+  const [assignStatus, setAssignStatus] = useState<"ACTIVE" | "INACTIVE">("ACTIVE");
   const [assignmentPending, setAssignmentPending] = useState(false);
   const [assignmentError, setAssignmentError] = useState<string | null>(null);
-  const [assignmentSuccess, setAssignmentSuccess] = useState(false);
 
-  // Success Notification banner
-  const [globalSuccessMessage, setGlobalSuccessMessage] = useState<
-    string | null
-  >(null);
+  // Global Alerts & Permissions
+  const [globalSuccessMessage, setGlobalSuccessMessage] = useState<string | null>(null);
   const [accessDenied, setAccessDenied] = useState(false);
 
   const handleAuthFailure = useCallback(
@@ -74,14 +65,14 @@ export default function IamClientPage() {
       }
       return false;
     },
-    [router],
+    [router]
   );
 
-  // Refresh state to trigger data reloading
+  // Trigger data reloads
   const [refreshCount, setRefreshCount] = useState(0);
   const triggerRefresh = () => setRefreshCount((prev) => prev + 1);
 
-  // Load Users Effect
+  // Load Users
   useEffect(() => {
     let active = true;
 
@@ -89,9 +80,7 @@ export default function IamClientPage() {
       setUsersLoading(true);
       setUsersError(null);
       try {
-        const res = await fetch(
-          `/api/admin/users?limit=${USERS_LIMIT}&offset=${usersOffset}`,
-        );
+        const res = await fetch(`/api/admin/users?limit=${USERS_LIMIT}&offset=${usersOffset}`);
         if (handleAuthFailure(res.status)) return;
         if (!res.ok) {
           throw new Error("Failed to load users");
@@ -102,9 +91,7 @@ export default function IamClientPage() {
         }
       } catch (err: unknown) {
         if (active) {
-          setUsersError(
-            err instanceof Error ? err.message : "An unexpected error occurred",
-          );
+          setUsersError(err instanceof Error ? err.message : "An unexpected error occurred");
         }
       } finally {
         if (active) {
@@ -120,7 +107,7 @@ export default function IamClientPage() {
     };
   }, [usersOffset, refreshCount, handleAuthFailure]);
 
-  // Load Roles Effect
+  // Load Roles
   useEffect(() => {
     let active = true;
 
@@ -140,9 +127,7 @@ export default function IamClientPage() {
         }
       } catch (err: unknown) {
         if (active) {
-          setRolesError(
-            err instanceof Error ? err.message : "An unexpected error occurred",
-          );
+          setRolesError(err instanceof Error ? err.message : "An unexpected error occurred");
         }
       } finally {
         if (active) {
@@ -158,888 +143,520 @@ export default function IamClientPage() {
     };
   }, [refreshCount, handleAuthFailure]);
 
-  // Handle patch user status
-  const handleConfirmStatusChange = async () => {
+  // Handle User Status Mutation
+  const handleUpdateUserStatus = async () => {
     if (!statusTargetUser) return;
     setStatusMutationPending(true);
     setStatusMutationError(null);
-
-    const nextStatus =
-      statusTargetUser.status === "ACTIVE" ? "INACTIVE" : "ACTIVE";
+    const newStatus = statusTargetUser.status === "ACTIVE" ? "INACTIVE" : "ACTIVE";
 
     try {
-      const res = await fetch(
-        `/api/admin/users/${statusTargetUser.id}/status`,
-        {
-          method: "PATCH",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({ status: nextStatus }),
-        },
-      );
+      const res = await fetch(`/api/admin/users/${statusTargetUser.id}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
 
       if (handleAuthFailure(res.status)) return;
-
       if (!res.ok) {
         throw new Error("Failed to update user status");
       }
 
-      setGlobalSuccessMessage(
-        `Successfully updated user ${statusTargetUser.email || statusTargetUser.id} to ${nextStatus}.`,
-      );
-      setTimeout(() => setGlobalSuccessMessage(null), 5000);
-
-      statusDialogRef.current?.close();
       setStatusTargetUser(null);
+      setGlobalSuccessMessage(`User status updated to ${newStatus} successfully.`);
       triggerRefresh();
     } catch (err: unknown) {
-      setStatusMutationError(
-        err instanceof Error ? err.message : "Failed to change user status",
-      );
+      setStatusMutationError(err instanceof Error ? err.message : "An error occurred while updating status");
     } finally {
       setStatusMutationPending(false);
     }
   };
 
-  // Handle post role assignment
-  const handleAssignRoleSubmit = async (e: React.FormEvent) => {
+  // Handle Role Assignment
+  const handleAssignRole = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      !assignUser ||
-      !assignRole ||
-      !assignContextType.trim() ||
-      !assignContextId.trim()
-    ) {
-      setAssignmentError("All fields are required.");
+    if (!assignUser || !assignRole) {
+      setAssignmentError("Please specify both a user ID and a role.");
       return;
     }
 
     setAssignmentPending(true);
     setAssignmentError(null);
-    setAssignmentSuccess(false);
 
     try {
       const res = await fetch("/api/admin/role-assignments", {
         method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userId: assignUser,
           roleId: assignRole,
-          contextType: assignContextType.trim(),
-          contextId: assignContextId.trim(),
+          contextType: assignContextType.trim() || undefined,
+          contextId: assignContextId.trim() || undefined,
           status: assignStatus,
         }),
       });
 
       if (handleAuthFailure(res.status)) return;
-
       if (!res.ok) {
-        throw new Error(
-          "Failed to assign role. Make sure fields are valid and context exists.",
-        );
+        throw new Error("Failed to assign role");
       }
 
-      setAssignmentSuccess(true);
+      setAssignUser("");
+      setAssignRole("");
       setAssignContextType("");
       setAssignContextId("");
-      // Refresh list of users to reflect any state changes if needed
-      triggerRefresh();
+      setGlobalSuccessMessage("Role assigned successfully.");
     } catch (err: unknown) {
-      setAssignmentError(
-        err instanceof Error ? err.message : "Failed to assign role.",
-      );
+      setAssignmentError(err instanceof Error ? err.message : "An error occurred during role assignment");
     } finally {
       setAssignmentPending(false);
     }
   };
 
-  const handleSignOut = async () => {
-    try {
-      const res = await fetch("/api/auth/logout", { method: "POST" });
-      if (res.ok) {
-        router.push("/login");
-      }
-    } catch (err) {
-      console.error("Logout failed:", err);
-    }
-  };
-
-  // Helper to mask IDs safely
-  const maskId = (id: string) => {
-    if (id.length <= 12) return id;
-    return `${id.slice(0, 6)}••••${id.slice(-6)}`;
-  };
-
-  const renderUsersTab = () => {
-    if (usersLoading) {
-      return (
-        <div className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm divide-y divide-outline-variant">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="p-4 md:p-6 flex justify-between items-center animate-pulse"
-            >
-              <div className="space-y-2 w-48">
-                <div className="h-4 bg-outline-variant/30 rounded w-3/4"></div>
-                <div className="h-3 bg-outline-variant/30 rounded w-5/6"></div>
-              </div>
-              <div className="h-8 bg-outline-variant/30 rounded w-24"></div>
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    if (usersError) {
-      return (
-        <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden min-h-[250px]">
-          <div className="absolute top-0 left-0 w-full h-1 bg-error"></div>
-          <div className="w-16 h-16 rounded-full bg-error-container/30 flex items-center justify-center text-error mb-4">
-            <span className="material-symbols-outlined text-3xl">error</span>
-          </div>
-          <h4 className="font-sans text-headline-md text-primary mb-2">
-            Failed to load users
-          </h4>
-          <p className="font-serif text-sm text-on-surface-variant max-w-[280px] mb-4">
-            {usersError}
-          </p>
-          <button
-            onClick={triggerRefresh}
-            className="text-primary font-sans text-label-sm underline hover:text-secondary transition-colors"
-          >
-            Try Again
-          </button>
-        </div>
-      );
-    }
-
-    if (users.length === 0) {
-      return (
-        <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-sm h-[250px]">
-          <div className="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant mb-4">
-            <span className="material-symbols-outlined text-3xl">group</span>
-          </div>
-          <h4 className="font-sans text-headline-md text-primary mb-2">
-            No Users Found
-          </h4>
-          <p className="font-serif text-sm text-on-surface-variant max-w-[250px]">
-            No user records are available in this slice.
-          </p>
-        </div>
-      );
-    }
-
-    return (
-      <div className="space-y-4">
-        <div className="bg-surface border border-outline-variant rounded shadow-[0_4px_12px_rgba(0,0,0,0.05)] overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-surface-container-low border-b border-outline-variant text-label-sm text-on-surface uppercase tracking-wider">
-                <th className="p-4 font-bold">User ID</th>
-                <th className="p-4 font-bold">Email</th>
-                <th className="p-4 font-bold">Status</th>
-                <th className="p-4 font-bold text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-outline-variant font-body-md text-body-md text-on-surface">
-              {users.map((user) => (
-                <tr
-                  key={user.id}
-                  className="hover:bg-surface-container-low transition-colors"
-                >
-                  <td className="p-4 font-mono text-sm">{maskId(user.id)}</td>
-                  <td className="p-4">
-                    {user.email || (
-                      <span className="text-on-surface-variant italic">
-                        No Email
-                      </span>
-                    )}
-                  </td>
-                  <td className="p-4">
-                    <span
-                      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${
-                        user.status === "ACTIVE"
-                          ? "bg-secondary-container text-on-secondary-container"
-                          : "bg-outline-variant text-on-surface-variant"
-                      }`}
-                    >
-                      {user.status}
-                    </span>
-                  </td>
-                  <td className="p-4 text-right">
-                    <button
-                      onClick={() => {
-                        setStatusTargetUser(user);
-                        setStatusMutationError(null);
-                        statusDialogRef.current?.showModal();
-                      }}
-                      className={`px-3 py-1.5 rounded font-sans text-label-sm font-semibold transition-colors ${
-                        user.status === "ACTIVE"
-                          ? "bg-error-container/20 text-error border border-error-container hover:bg-error-container/40"
-                          : "bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed transition-colors"
-                      }`}
-                    >
-                      {user.status === "ACTIVE" ? "Deactivate" : "Activate"}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Pagination */}
-        <div className="flex justify-between items-center py-2">
-          <button
-            onClick={() =>
-              setUsersOffset((prev) => Math.max(0, prev - USERS_LIMIT))
-            }
-            disabled={usersOffset === 0}
-            className="px-4 py-2 border border-outline-variant rounded font-sans text-label-sm font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            Previous
-          </button>
-          <button
-            onClick={() => setUsersOffset((prev) => prev + USERS_LIMIT)}
-            disabled={users.length < USERS_LIMIT}
-            className="px-4 py-2 border border-outline-variant rounded font-sans text-label-sm font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            Next
-          </button>
-        </div>
-      </div>
-    );
-  };
-
-  const renderRolesTab = () => {
-    if (rolesLoading) {
-      return (
-        <div className="flex gap-6 h-[400px]">
-          <div className="w-[280px] bg-surface-container-lowest border border-outline-variant rounded animate-pulse"></div>
-          <div className="flex-1 bg-surface-container-lowest border border-outline-variant rounded animate-pulse"></div>
-        </div>
-      );
-    }
-
-    if (rolesError) {
-      return (
-        <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden min-h-[250px]">
-          <div className="absolute top-0 left-0 w-full h-1 bg-error"></div>
-          <div className="w-16 h-16 rounded-full bg-error-container/30 flex items-center justify-center text-error mb-4">
-            <span className="material-symbols-outlined text-3xl">error</span>
-          </div>
-          <h4 className="font-sans text-headline-md text-primary mb-2">
-            Failed to load roles
-          </h4>
-          <p className="font-serif text-sm text-on-surface-variant max-w-[280px] mb-4">
-            {rolesError}
-          </p>
-          <button
-            onClick={triggerRefresh}
-            className="text-primary font-sans text-label-sm underline hover:text-secondary transition-colors"
-          >
-            Try Again
-          </button>
-        </div>
-      );
-    }
-
-    return (
-      <div className="flex flex-col md:flex-row gap-6 items-stretch">
-        {/* Left Pane: Role List */}
-        <div className="w-full md:w-[320px] bg-surface border border-outline-variant rounded shadow-sm flex flex-col overflow-hidden shrink-0">
-          <div className="p-4 border-b border-outline-variant bg-surface-container-low">
-            <h3 className="font-sans text-label-md font-bold text-on-surface uppercase tracking-wider">
-              Roles
-            </h3>
-          </div>
-          <div className="divide-y divide-outline-variant overflow-y-auto max-h-[400px]">
-            {roles.map((role) => (
-              <button
-                key={role.id}
-                onClick={() => setSelectedRole(role)}
-                className={`w-full text-left p-4 hover:bg-surface-container-low transition-colors flex justify-between items-center ${
-                  selectedRole?.id === role.id
-                    ? "bg-surface-container-low border-l-4 border-primary"
-                    : ""
-                }`}
-              >
-                <div>
-                  <h4 className="font-sans text-label-md font-semibold text-on-surface">
-                    {role.name}
-                  </h4>
-                  <p className="font-sans text-label-sm text-on-surface-variant line-clamp-1">
-                    {maskId(role.id)}
-                  </p>
-                </div>
-                <span className="material-symbols-outlined text-on-surface-variant">
-                  chevron_right
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Right Pane: Role Details */}
-        <div className="flex-1 bg-surface border border-outline-variant rounded shadow-sm p-6">
-          {selectedRole ? (
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-sans text-headline-md font-bold text-primary mb-1">
-                  {selectedRole.name}
-                </h3>
-                <p className="font-mono text-sm text-on-surface-variant">
-                  {selectedRole.id}
-                </p>
-              </div>
-
-              <div>
-                <h4 className="font-sans text-label-sm font-bold text-on-surface uppercase tracking-wider mb-2">
-                  Permissions Granted
-                </h4>
-                {selectedRole.permissions &&
-                selectedRole.permissions.length > 0 ? (
-                  <div className="bg-surface-container-low border border-outline-variant rounded overflow-hidden">
-                    <ul
-                      className="divide-y divide-outline-variant"
-                      aria-label="Permissions list"
-                    >
-                      {selectedRole.permissions.map((perm) => (
-                        <li
-                          key={perm}
-                          className="p-3 font-mono text-sm text-on-surface hover:bg-surface-container-high transition-colors"
-                        >
-                          {perm}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <p className="font-serif text-body-md text-on-surface-variant italic">
-                    No permissions are explicitly assigned to this role.
-                  </p>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div className="h-full flex items-center justify-center text-center p-8">
-              <p className="font-serif text-body-md text-on-surface-variant italic">
-                Select a role from the left pane to view details.
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  const renderAssignTab = () => {
-    return (
-      <div className="bg-surface border border-outline-variant rounded shadow-sm p-6 max-w-2xl">
-        <h3 className="font-sans text-headline-md font-bold text-primary mb-4">
-          New Role Assignment
-        </h3>
-
-        {assignmentSuccess && (
-          <div
-            className="mb-6 p-4 bg-secondary-container text-on-secondary-container rounded-lg border border-outline-variant flex items-start gap-3"
-            role="alert"
-          >
-            <span className="material-symbols-outlined text-secondary">
-              check_circle
-            </span>
-            <div>
-              <div className="font-sans font-bold">
-                Role Assigned Successfully
-              </div>
-              <div className="font-serif text-sm">
-                The user assignment has been recorded.
-              </div>
-            </div>
-          </div>
-        )}
-
-        {assignmentError && (
-          <div
-            className="mb-6 p-4 bg-error-container text-on-error-container rounded-lg border border-error flex items-start gap-3"
-            role="alert"
-          >
-            <span className="material-symbols-outlined text-error">error</span>
-            <div>
-              <div className="font-sans font-bold">Failed to Assign Role</div>
-              <div className="font-serif text-sm">{assignmentError}</div>
-            </div>
-          </div>
-        )}
-
-        <form onSubmit={handleAssignRoleSubmit} className="space-y-5">
-          <div>
-            <label
-              htmlFor="assign-user"
-              className="block font-sans text-label-sm font-bold text-on-surface uppercase tracking-wider mb-2"
-            >
-              Select User *
-            </label>
-            <select
-              id="assign-user"
-              value={assignUser}
-              onChange={(e) => setAssignUser(e.target.value)}
-              disabled={assignmentPending}
-              required
-              className="w-full px-3 py-2 bg-surface border border-outline-variant rounded text-on-surface focus:outline-none focus:border-primary disabled:opacity-50 font-sans"
-            >
-              <option value="">-- Choose User --</option>
-              {users.map((u) => (
-                <option key={u.id} value={u.id}>
-                  {u.email || u.id} ({u.status})
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label
-              htmlFor="assign-role"
-              className="block font-sans text-label-sm font-bold text-on-surface uppercase tracking-wider mb-2"
-            >
-              Select Role *
-            </label>
-            <select
-              id="assign-role"
-              value={assignRole}
-              onChange={(e) => setAssignRole(e.target.value)}
-              disabled={assignmentPending}
-              required
-              className="w-full px-3 py-2 bg-surface border border-outline-variant rounded text-on-surface focus:outline-none focus:border-primary disabled:opacity-50 font-sans"
-            >
-              <option value="">-- Choose Role --</option>
-              {roles.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label
-                htmlFor="assign-context-type"
-                className="block font-sans text-label-sm font-bold text-on-surface uppercase tracking-wider mb-2"
-              >
-                Context Type *
-              </label>
-              <input
-                id="assign-context-type"
-                type="text"
-                value={assignContextType}
-                onChange={(e) => setAssignContextType(e.target.value)}
-                placeholder="e.g. GLOBAL or INSTITUTION"
-                disabled={assignmentPending}
-                required
-                className="w-full px-3 py-2 bg-surface border border-outline-variant rounded text-on-surface focus:outline-none focus:border-primary disabled:opacity-50 font-sans"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="assign-context-id"
-                className="block font-sans text-label-sm font-bold text-on-surface uppercase tracking-wider mb-2"
-              >
-                Context ID *
-              </label>
-              <input
-                id="assign-context-id"
-                type="text"
-                value={assignContextId}
-                onChange={(e) => setAssignContextId(e.target.value)}
-                placeholder="e.g. global or institute-uuid"
-                disabled={assignmentPending}
-                required
-                className="w-full px-3 py-2 bg-surface border border-outline-variant rounded text-on-surface focus:outline-none focus:border-primary disabled:opacity-50 font-sans"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="assign-status"
-              className="block font-sans text-label-sm font-bold text-on-surface uppercase tracking-wider mb-2"
-            >
-              Assignment Status *
-            </label>
-            <select
-              id="assign-status"
-              value={assignStatus}
-              onChange={(e) =>
-                setAssignStatus(e.target.value as "ACTIVE" | "INACTIVE")
-              }
-              disabled={assignmentPending}
-              required
-              className="w-full px-3 py-2 bg-surface border border-outline-variant rounded text-on-surface focus:outline-none focus:border-primary disabled:opacity-50 font-sans"
-            >
-              <option value="ACTIVE">ACTIVE</option>
-              <option value="INACTIVE">INACTIVE</option>
-            </select>
-          </div>
-
-          <button
-            type="submit"
-            disabled={assignmentPending}
-            className="w-full md:w-auto px-6 py-2.5 bg-secondary hover:bg-secondary-fixed text-on-secondary font-sans text-label-md font-bold rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          >
-            {assignmentPending ? "Assigning..." : "Assign Role"}
-          </button>
-        </form>
-      </div>
-    );
-  };
-
+  // 403 Access Denied State (Authoritative Backend Boundary)
   if (accessDenied) {
     return (
-      <main className="min-h-screen grid place-items-center bg-background p-6">
-        <section
-          className="max-w-md rounded border border-outline-variant bg-surface p-8 text-center"
-          role="alert"
-        >
-          <h1 className="font-sans text-headline-md font-bold text-primary">
-            Access Denied
-          </h1>
-          <p className="mt-2 font-serif text-on-surface-variant">
-            Your active context does not grant IAM administration access.
+      <div className="min-h-screen bg-surface flex flex-col items-center justify-center p-6 text-on-surface antialiased font-sans">
+        <div className="max-w-md w-full bg-white rounded-3xl border border-outline-variant p-8 shadow-xl text-center space-y-4 animate-scale-in">
+          <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mx-auto">
+            <span className="material-symbols-outlined text-3xl">shield_person</span>
+          </div>
+          <span className="text-xs font-bold text-amber-800 uppercase tracking-wider block">HTTP 403 • Authorization Required</span>
+          <h1 className="font-serif text-2xl font-bold text-primary">Access Denied</h1>
+          <p className="text-xs text-on-surface-variant leading-relaxed">
+            Your active authorization context does not have permissions to manage IAM governance. This boundary is strictly enforced by the backend auth service.
           </p>
-        </section>
-      </main>
+          <div className="pt-4 flex flex-col sm:flex-row gap-2 justify-center">
+            <Link href="/" className="px-4 py-2.5 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface">
+              Return Home
+            </Link>
+            <a href="/login" className="px-5 py-2.5 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary-container">
+              Switch Account
+            </a>
+          </div>
+        </div>
+      </div>
     );
   }
 
   return (
-    <div className="bg-background text-on-background antialiased min-h-screen flex flex-col font-sans">
-      {/* TopNavBar */}
-      <header className="bg-surface text-primary border-b border-outline-variant w-full top-0 z-50">
-        <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 max-w-container-max mx-auto">
-          <div className="flex items-center gap-4">
-            <span
-              aria-hidden="true"
-              className="material-symbols-outlined text-2xl"
-            >
-              menu
-            </span>
-            <span className="font-sans text-headline-md font-bold text-primary">
-              Collaboration Network
-            </span>
-          </div>
-          <div className="flex items-center gap-6">
-            <nav className="hidden md:flex items-center gap-4">
-              <button
-                aria-label="Vietnamese"
-                className="text-on-surface-variant hover:text-primary transition-colors font-sans text-label-sm uppercase"
-              >
-                VI
-              </button>
-              <button
-                aria-label="Russian"
-                className="text-on-surface-variant hover:text-primary transition-colors font-sans text-label-sm uppercase"
-              >
-                RU
-              </button>
-              <button
-                aria-current="true"
-                aria-label="English"
-                className="text-primary font-bold border-b-2 border-primary pb-1 font-sans text-label-sm uppercase"
-              >
-                EN
-              </button>
-            </nav>
-            <div className="flex items-center gap-4">
-              <button
-                aria-label="Notifications"
-                className="text-on-surface-variant hover:text-primary transition-colors"
-              >
-                <span aria-hidden="true" className="material-symbols-outlined">
-                  notifications
-                </span>
-              </button>
-              <button
-                aria-label="Settings"
-                className="text-on-surface-variant hover:text-primary transition-colors"
-              >
-                <span aria-hidden="true" className="material-symbols-outlined">
-                  settings
-                </span>
-              </button>
-              <div className="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm border border-outline-variant">
-                A
-              </div>
+    <div className="bg-background text-on-background min-h-screen flex flex-col font-sans antialiased">
+      {/* Top Header */}
+      <header className="bg-primary text-white sticky top-0 z-40 border-b border-primary-container">
+        <div className="flex justify-between items-center px-6 lg:px-10 h-16 max-w-7xl mx-auto w-full">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-secondary flex items-center justify-center text-white font-serif font-bold text-sm shadow-sm">
+              VR
             </div>
+            <div>
+              <span className="font-serif font-bold text-base tracking-tight">IAM Governance Console</span>
+              <p className="text-[10px] text-white/70 hidden sm:block">Module 1 Identity &amp; Access Administration</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 text-xs">
+            <span className="text-white/80 hidden md:inline">Traditions and Friendship Foundation</span>
+            <Link href="/" className="px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold transition-all">
+              Exit Console
+            </Link>
           </div>
         </div>
       </header>
 
-      <div className="flex flex-1 max-w-container-max mx-auto w-full">
-        {/* SideNavBar */}
-        <aside className="hidden md:flex flex-col p-stack-sm w-[280px] h-[calc(100vh-64px)] overflow-y-auto bg-surface-container-low border-r border-outline-variant sticky top-16 z-40">
-          <div className="mb-8 px-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-lg">
-              GR
+      <main className="max-w-7xl mx-auto px-6 lg:px-10 py-8 flex-grow w-full space-y-6 animate-fade-in-up">
+        {/* Success Toast */}
+        {globalSuccessMessage && (
+          <div className="p-4 bg-emerald-50 text-emerald-800 rounded-2xl border border-emerald-200 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-2.5 text-xs font-medium">
+              <span className="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span>
+              <span>{globalSuccessMessage}</span>
             </div>
-            <div>
-              <h2 className="font-sans text-label-md font-bold text-primary truncate">
-                Global Research
-              </h2>
-              <p className="font-sans text-label-sm text-on-surface-variant truncate">
-                System Governance
-              </p>
-            </div>
-          </div>
-          <nav className="flex-1 space-y-1">
-            <a
-              className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                dashboard
-              </span>
-              <span className="font-sans text-label-md">Dashboard</span>
-            </a>
-            <a
-              className="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container font-bold rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined filled-icon"
-              >
-                admin_panel_settings
-              </span>
-              <span className="font-sans text-label-md">IAM Console</span>
-            </a>
-            <a
-              className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                account_balance
-              </span>
-              <span className="font-sans text-label-md">Institutions</span>
-            </a>
-            <a
-              className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                group
-              </span>
-              <span className="font-sans text-label-md">Expert Directory</span>
-            </a>
-          </nav>
-          <div className="mt-auto border-t border-outline-variant pt-4 space-y-1">
-            <button
-              onClick={handleSignOut}
-              className="w-full text-left flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                logout
-              </span>
-              <span className="font-sans text-label-md">Sign Out</span>
+            <button onClick={() => setGlobalSuccessMessage(null)} className="text-emerald-700 hover:text-emerald-900 text-xs">
+              ✕
             </button>
           </div>
-        </aside>
+        )}
 
-        {/* Main Content Area */}
-        <main className="flex-1 p-margin-mobile md:p-margin-desktop overflow-y-auto">
-          {/* Page Header */}
-          <div className="mb-stack-lg border-b border-outline-variant pb-6">
-            <h1 className="font-sans text-headline-lg-mobile md:text-headline-lg text-primary font-bold mb-2">
-              IAM Administration Console
-            </h1>
-            <p className="font-serif text-body-lg text-on-surface-variant max-w-3xl">
-              Manage identities, access controls, and role-based context
-              privileges.
+        {/* Top Overview */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="font-serif text-3xl font-bold text-primary">Identity &amp; Access Governance</h1>
+            <p className="text-xs sm:text-sm text-on-surface-variant mt-1">
+              Administer user directory, examine permission capabilities, and grant scoped RBAC assignments.
             </p>
           </div>
-
-          {/* Success Banner */}
-          {globalSuccessMessage && (
-            <div
-              className="mb-6 p-4 bg-secondary-container text-on-secondary-container rounded-lg border border-outline-variant flex items-center gap-3"
-              role="status"
-              aria-live="polite"
-            >
-              <span className="material-symbols-outlined text-secondary">
-                check_circle
-              </span>
-              <span className="font-sans font-medium">
-                {globalSuccessMessage}
-              </span>
-            </div>
-          )}
-
-          {/* Tab Navigation */}
-          <div className="flex border-b border-outline-variant mb-6 gap-6 overflow-x-auto">
-            <button
-              onClick={() => {
-                setActiveTab("users");
-                setAssignmentSuccess(false);
-                setAssignmentError(null);
-              }}
-              aria-current={activeTab === "users" ? "page" : undefined}
-              className={`pb-3 font-sans text-label-md font-bold whitespace-nowrap border-b-2 transition-colors ${
-                activeTab === "users"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-on-surface-variant hover:text-primary"
-              }`}
-            >
-              Users{" "}
-              <span className="font-normal text-on-surface-variant ml-1">
-                Người dùng / Пользователи
-              </span>
-            </button>
-            <button
-              onClick={() => {
-                setActiveTab("roles");
-                setAssignmentSuccess(false);
-                setAssignmentError(null);
-              }}
-              aria-current={activeTab === "roles" ? "page" : undefined}
-              className={`pb-3 font-sans text-label-md font-bold whitespace-nowrap border-b-2 transition-colors ${
-                activeTab === "roles"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-on-surface-variant hover:text-primary"
-              }`}
-            >
-              Roles &amp; Permissions{" "}
-              <span className="font-normal text-on-surface-variant ml-1">
-                Vai trò / Роли
-              </span>
-            </button>
-            <button
-              onClick={() => {
-                setActiveTab("assign");
-                setAssignmentSuccess(false);
-                setAssignmentError(null);
-              }}
-              aria-current={activeTab === "assign" ? "page" : undefined}
-              className={`pb-3 font-sans text-label-md font-bold whitespace-nowrap border-b-2 transition-colors ${
-                activeTab === "assign"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-on-surface-variant hover:text-primary"
-              }`}
-            >
-              Assign Role{" "}
-              <span className="font-normal text-on-surface-variant ml-1">
-                Phân công / Назначения
-              </span>
-            </button>
-          </div>
-
-          {/* Tab Panes */}
-          <div className="py-2">
-            {activeTab === "users" && renderUsersTab()}
-            {activeTab === "roles" && renderRolesTab()}
-            {activeTab === "assign" && renderAssignTab()}
-          </div>
-        </main>
-      </div>
-
-      {/* Footer */}
-      <footer className="bg-surface-container-low w-full border-t border-outline-variant mt-auto">
-        <div className="flex justify-between items-center py-base px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto flex-col md:flex-row gap-4 md:gap-0">
-          <span className="font-sans text-label-md font-bold text-primary text-center md:text-left">
-            © 2026 VN-RU Scientific Collaboration Network. All Rights Reserved.
-          </span>
-          <nav className="flex items-center gap-6">
-            <a
-              className="font-sans text-label-sm text-on-surface-variant hover:text-primary underline decoration-1"
-              href="#"
-            >
-              Privacy Policy
-            </a>
-            <a
-              className="font-sans text-label-sm text-on-surface-variant hover:text-primary underline decoration-1"
-              href="#"
-            >
-              Terms of Service
-            </a>
-            <a
-              className="font-sans text-label-sm text-on-surface-variant hover:text-primary underline decoration-1"
-              href="#"
-            >
-              Contact Support
-            </a>
-          </nav>
+          <button
+            onClick={triggerRefresh}
+            className="px-4 py-2 rounded-xl bg-white hover:bg-surface-container border border-outline-variant text-xs font-semibold text-primary transition-all flex items-center gap-2 shadow-xs"
+          >
+            <span className="material-symbols-outlined text-[16px]">sync</span>
+            <span>Sync Directory</span>
+          </button>
         </div>
-      </footer>
 
-      {/* Confirmation Dialog - Native dialog element */}
-      <dialog
-        ref={statusDialogRef}
-        className="backdrop:bg-primary/20 backdrop:backdrop-blur-sm p-0 rounded-xl shadow-lg border border-outline-variant w-full max-w-md overflow-hidden bg-surface"
-        onClose={() => setStatusTargetUser(null)}
-      >
-        {statusTargetUser && (
-          <div className="p-6">
-            <div className="w-12 h-12 rounded-full bg-error-container/20 flex items-center justify-center text-error mb-4">
-              <span className="material-symbols-outlined text-2xl">
-                warning
+        {/* Tab Navigation Navigation Bar */}
+        <div className="flex gap-2 p-1.5 bg-surface-container-low rounded-2xl border border-outline-variant/80 w-fit">
+          <button
+            onClick={() => setActiveTab("users")}
+            className={`px-5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+              activeTab === "users"
+                ? "bg-white text-primary shadow-sm"
+                : "text-on-surface-variant hover:text-primary"
+            }`}
+          >
+            <span className="material-symbols-outlined text-[16px]">group</span>
+            <span>Identities &amp; Users</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("roles")}
+            className={`px-5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+              activeTab === "roles"
+                ? "bg-white text-primary shadow-sm"
+                : "text-on-surface-variant hover:text-primary"
+            }`}
+          >
+            <span className="material-symbols-outlined text-[16px]">admin_panel_settings</span>
+            <span>Roles &amp; Policies</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("assign")}
+            className={`px-5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+              activeTab === "assign"
+                ? "bg-white text-primary shadow-sm"
+                : "text-on-surface-variant hover:text-primary"
+            }`}
+          >
+            <span className="material-symbols-outlined text-[16px]">assignment_ind</span>
+            <span>Assign Role</span>
+          </button>
+        </div>
+
+        {/* TAB 1: USERS */}
+        {activeTab === "users" && (
+          <div className="bg-white rounded-3xl border border-outline-variant shadow-xs overflow-hidden">
+            <div className="p-6 border-b border-outline-variant flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <h2 className="font-serif font-bold text-lg text-primary">Registered Platform Identities</h2>
+                <p className="text-xs text-on-surface-variant">Validated accounts mapped to Keycloak OIDC subjects.</p>
+              </div>
+              <span className="text-xs font-mono px-3 py-1 rounded-lg bg-surface-container text-on-surface-variant">
+                Page {Math.floor(usersOffset / USERS_LIMIT) + 1}
               </span>
             </div>
-            <h3 className="font-sans text-[20px] font-bold text-primary mb-2">
-              Confirm Status Change
+
+            {usersError && (
+              <div className="p-4 m-6 bg-error-container text-on-error-container rounded-xl text-xs flex items-center gap-2">
+                <span className="material-symbols-outlined text-error text-[18px]">error</span>
+                <span>{usersError}</span>
+              </div>
+            )}
+
+            {usersLoading ? (
+              <div className="p-8 space-y-4 animate-pulse">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="h-10 bg-slate-100 rounded-xl"></div>
+                ))}
+              </div>
+            ) : users.length === 0 ? (
+              <div className="p-12 text-center text-xs text-on-surface-variant">
+                No users found for current filter.
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="bg-surface-container-low text-on-surface-variant font-semibold border-b border-outline-variant">
+                      <th className="py-3.5 px-6">User Identifier</th>
+                      <th className="py-3.5 px-6">Email Address</th>
+                      <th className="py-3.5 px-6">Status</th>
+                      <th className="py-3.5 px-6 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-outline-variant/60">
+                    {users.map((user) => (
+                      <tr key={user.id} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3.5 px-6 font-mono text-[11px] text-primary">{user.id}</td>
+                        <td className="py-3.5 px-6 font-medium">{user.email || "—"}</td>
+                        <td className="py-3.5 px-6">
+                          <span
+                            className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                              user.status === "ACTIVE"
+                                ? "bg-emerald-100 text-emerald-800"
+                                : "bg-slate-100 text-slate-700"
+                            }`}
+                          >
+                            <span
+                              className={`w-1.5 h-1.5 rounded-full ${
+                                user.status === "ACTIVE" ? "bg-emerald-600" : "bg-slate-500"
+                              }`}
+                            ></span>
+                            {user.status}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-6 text-right">
+                          <button
+                            onClick={() => setStatusTargetUser(user)}
+                            className="px-3 py-1.5 rounded-lg border border-outline-variant hover:bg-surface-container text-xs font-semibold text-secondary transition-all"
+                          >
+                            {user.status === "ACTIVE" ? "Deactivate" : "Activate"}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {/* Pagination Controls */}
+            <div className="p-4 border-t border-outline-variant flex justify-between items-center">
+              <button
+                disabled={usersOffset === 0 || usersLoading}
+                onClick={() => setUsersOffset((prev) => Math.max(0, prev - USERS_LIMIT))}
+                className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface"
+              >
+                Previous
+              </button>
+              <button
+                disabled={users.length < USERS_LIMIT || usersLoading}
+                onClick={() => setUsersOffset((prev) => prev + USERS_LIMIT)}
+                className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: ROLES */}
+        {activeTab === "roles" && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="bg-white rounded-3xl border border-outline-variant p-6 shadow-xs space-y-3">
+              <h2 className="font-serif font-bold text-lg text-primary mb-2">Defined RBAC Roles</h2>
+              {rolesLoading ? (
+                <div className="space-y-2 animate-pulse">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="h-10 bg-slate-100 rounded-xl"></div>
+                  ))}
+                </div>
+              ) : rolesError ? (
+                <div className="text-xs text-error">{rolesError}</div>
+              ) : (
+                <div className="space-y-1.5">
+                  {roles.map((role) => (
+                    <button
+                      key={role.id}
+                      onClick={() => setSelectedRole(role)}
+                      className={`w-full text-left p-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-between ${
+                        selectedRole?.id === role.id
+                          ? "bg-primary text-white shadow-sm"
+                          : "hover:bg-surface text-on-surface"
+                      }`}
+                    >
+                      <span>{role.name}</span>
+                      <span className="font-mono text-[10px] opacity-70">
+                        {role.permissions?.length || 0} permissions
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="lg:col-span-2 bg-white rounded-3xl border border-outline-variant p-6 shadow-xs">
+              {selectedRole ? (
+                <div>
+                  <div className="flex items-center justify-between pb-4 border-b border-outline-variant mb-4">
+                    <div>
+                      <h3 className="font-serif font-bold text-xl text-primary">{selectedRole.name}</h3>
+                      <p className="text-xs font-mono text-outline mt-0.5">Role ID: {selectedRole.id}</p>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-xs font-semibold">
+                      Authoritative Policy
+                    </span>
+                  </div>
+
+                  <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block mb-3">
+                    Granted Capability Scopes
+                  </span>
+
+                  <div className="flex flex-wrap gap-2">
+                    {selectedRole.permissions && selectedRole.permissions.length > 0 ? (
+                      selectedRole.permissions.map((perm) => (
+                        <span
+                          key={perm}
+                          className="px-3 py-1 rounded-lg bg-surface-container border border-outline-variant font-mono text-xs text-primary"
+                        >
+                          {perm}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-xs text-on-surface-variant">No explicit capability keys attached.</span>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="p-12 text-center text-xs text-on-surface-variant">
+                  Select a role to inspect permission capabilities.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 3: ASSIGN ROLE */}
+        {activeTab === "assign" && (
+          <div className="max-w-2xl bg-white rounded-3xl border border-outline-variant p-8 shadow-xs space-y-6">
+            <div>
+              <h2 className="font-serif font-bold text-2xl text-primary">Grant Scoped Capability Assignment</h2>
+              <p className="text-xs text-on-surface-variant mt-1">
+                Assign roles scoped to specific organizations, grants, or technology projects.
+              </p>
+            </div>
+
+            {assignmentError && (
+              <div className="p-4 bg-error-container text-on-error-container rounded-xl text-xs flex items-center gap-2">
+                <span className="material-symbols-outlined text-error text-[18px]">error</span>
+                <span>{assignmentError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleAssignRole} className="space-y-4">
+              <div>
+                <label htmlFor="assign-user-id" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">
+                  User ID / Principal *
+                </label>
+                <input
+                  id="assign-user-id"
+                  type="text"
+                  required
+                  value={assignUser}
+                  onChange={(e) => setAssignUser(e.target.value)}
+                  placeholder="e.g. usr_01928374a"
+                  className="w-full text-xs rounded-xl border border-outline-variant p-3 focus:ring-secondary font-mono"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="assign-role-id" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">
+                  Assigned Role *
+                </label>
+                <select
+                  id="assign-role-id"
+                  required
+                  value={assignRole}
+                  onChange={(e) => setAssignRole(e.target.value)}
+                  className="w-full text-xs rounded-xl border border-outline-variant p-3 focus:ring-secondary bg-white"
+                >
+                  <option value="">Select a role...</option>
+                  {roles.map((r) => (
+                    <option key={r.id} value={r.id}>
+                      {r.name} ({r.id})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="assign-context-type" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">
+                    Context Type (Optional)
+                  </label>
+                  <input
+                    id="assign-context-type"
+                    type="text"
+                    value={assignContextType}
+                    onChange={(e) => setAssignContextType(e.target.value)}
+                    placeholder="e.g. ORGANIZATION"
+                    className="w-full text-xs rounded-xl border border-outline-variant p-3 focus:ring-secondary font-mono"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="assign-context-id" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">
+                    Context ID (Optional)
+                  </label>
+                  <input
+                    id="assign-context-id"
+                    type="text"
+                    value={assignContextId}
+                    onChange={(e) => setAssignContextId(e.target.value)}
+                    placeholder="e.g. org_vast_01"
+                    className="w-full text-xs rounded-xl border border-outline-variant p-3 focus:ring-secondary font-mono"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="assign-status" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">
+                  Assignment Status
+                </label>
+                <select
+                  id="assign-status"
+                  value={assignStatus}
+                  onChange={(e) => setAssignStatus(e.target.value as "ACTIVE" | "INACTIVE")}
+                  className="w-full text-xs rounded-xl border border-outline-variant p-3 focus:ring-secondary bg-white"
+                >
+                  <option value="ACTIVE">ACTIVE</option>
+                  <option value="INACTIVE">INACTIVE</option>
+                </select>
+              </div>
+
+              <div className="pt-2 flex justify-end">
+                <button
+                  type="submit"
+                  disabled={assignmentPending}
+                  className="px-6 py-3 rounded-xl bg-primary hover:bg-primary-container text-white text-xs font-semibold transition-all flex items-center gap-2 shadow-md"
+                >
+                  {assignmentPending && <span className="material-symbols-outlined text-[16px] animate-spin">progress_activity</span>}
+                  <span>Submit Assignment</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+      </main>
+
+      {/* Status Change Confirmation Modal */}
+      {statusTargetUser && (
+        <div className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-outline-variant space-y-4 animate-scale-in">
+            <h3 className="font-serif font-bold text-xl text-primary">
+              {statusTargetUser.status === "ACTIVE" ? "Deactivate User Identity?" : "Activate User Identity?"}
             </h3>
-            <p className="font-serif text-body-md text-on-surface-variant mb-6">
-              Are you sure you want to change the status of user &quot;
-              {statusTargetUser.email || statusTargetUser.id}&quot; to{" "}
-              <strong>
-                {statusTargetUser.status === "ACTIVE" ? "INACTIVE" : "ACTIVE"}
-              </strong>
-              ?
+            <p className="text-xs text-on-surface-variant leading-relaxed">
+              Target identity: <span className="font-mono font-semibold text-primary">{statusTargetUser.id}</span>
+              <br />
+              New status will be:{" "}
+              <strong>{statusTargetUser.status === "ACTIVE" ? "INACTIVE" : "ACTIVE"}</strong>
             </p>
 
             {statusMutationError && (
-              <div
-                className="mb-4 p-3 bg-error-container text-on-error-container rounded text-sm font-sans"
-                role="alert"
-              >
+              <div className="p-3 bg-error-container text-on-error-container text-xs rounded-xl">
                 {statusMutationError}
               </div>
             )}
 
-            <div className="flex justify-end gap-3">
+            <div className="flex justify-end gap-3 pt-2">
               <button
                 type="button"
                 disabled={statusMutationPending}
-                className="px-4 py-2 border border-outline-variant text-on-surface-variant font-sans text-label-sm rounded-lg hover:bg-surface-container-low transition-colors disabled:opacity-50"
-                onClick={() => statusDialogRef.current?.close()}
+                onClick={() => setStatusTargetUser(null)}
+                className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 disabled={statusMutationPending}
-                onClick={handleConfirmStatusChange}
-                className="px-4 py-2 bg-secondary text-on-secondary font-sans text-label-sm rounded-lg hover:bg-secondary-fixed transition-colors disabled:opacity-50"
+                onClick={handleUpdateUserStatus}
+                className="px-5 py-2 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary-container flex items-center gap-2"
               >
-                {statusMutationPending ? "Processing..." : "Confirm"}
+                {statusMutationPending && <span className="material-symbols-outlined text-[16px] animate-spin">progress_activity</span>}
+                <span>Confirm Status Change</span>
               </button>
             </div>
           </div>
-        )}
-      </dialog>
+        </div>
+      )}
     </div>
   );
 }

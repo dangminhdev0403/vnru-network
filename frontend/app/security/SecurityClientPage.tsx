@@ -36,7 +36,6 @@ export default function SecurityClientPage() {
     let active = true;
 
     async function load() {
-      // For subsequent refreshes, display loading state
       if (refreshCount > 0) {
         setLoading(true);
       }
@@ -91,7 +90,6 @@ export default function SecurityClientPage() {
 
       setShowRevokeDialog(false);
 
-      // If the revoked session was current, we will be logged out and should redirect.
       if (sessionToRevoke.current) {
         router.push("/login");
       } else {
@@ -141,7 +139,6 @@ export default function SecurityClientPage() {
     }
   };
 
-  // Helper to format dates
   const formatDate = (isoString: string) => {
     try {
       const d = new Date(isoString);
@@ -152,14 +149,12 @@ export default function SecurityClientPage() {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
-        timeZoneName: "short",
       });
     } catch {
       return isoString;
     }
   };
 
-  // Helper to mask session IDs safely
   const maskSessionId = (id: string) => {
     if (id.length <= 12) return id;
     return `${id.slice(0, 6)}••••${id.slice(-6)}`;
@@ -168,571 +163,273 @@ export default function SecurityClientPage() {
   const otherSessions = sessions?.filter((s) => !s.current) || [];
 
   return (
-    <div className="bg-background text-on-background antialiased min-h-screen flex flex-col font-sans">
-      {/* TopNavBar */}
-      <header className="bg-surface text-primary border-b border-outline-variant w-full top-0 z-50">
-        <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 max-w-container-max mx-auto">
-          <div className="flex items-center gap-4">
-            <span
-              aria-hidden="true"
-              className="material-symbols-outlined text-2xl"
-            >
-              menu
-            </span>
-            <span className="font-sans text-headline-md font-bold text-primary">
-              Collaboration Network
-            </span>
+    <div className="bg-background text-on-background min-h-screen flex flex-col font-sans antialiased">
+      {/* Top Header */}
+      <header className="bg-white/95 backdrop-blur-md border-b border-outline-variant w-full sticky top-0 z-40">
+        <div className="flex justify-between items-center px-6 lg:px-10 h-16 max-w-7xl mx-auto w-full">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary via-primary-container to-secondary flex items-center justify-center text-white font-serif font-bold text-sm shadow-sm">
+              VR
+            </div>
+            <div>
+              <span className="font-serif font-bold text-base text-primary tracking-tight">VN-RU Security Center</span>
+              <p className="text-[10px] text-on-surface-variant hidden sm:block">Cryptographic Token &amp; Session Management</p>
+            </div>
           </div>
-          <div className="flex items-center gap-6">
-            <nav className="hidden md:flex items-center gap-4">
-              <button
-                aria-label="Vietnamese"
-                className="text-on-surface-variant hover:text-primary transition-colors font-sans text-label-sm uppercase"
-              >
-                VI
-              </button>
-              <button
-                aria-label="Russian"
-                className="text-on-surface-variant hover:text-primary transition-colors font-sans text-label-sm uppercase"
-              >
-                RU
-              </button>
-              <button
-                aria-current="true"
-                aria-label="English"
-                className="text-primary font-bold border-b-2 border-primary pb-1 font-sans text-label-sm uppercase"
-              >
-                EN
-              </button>
-            </nav>
-            <div className="hidden lg:flex items-center bg-surface-container-low rounded-full px-4 py-2 border border-outline-variant">
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined text-on-surface-variant text-sm mr-2"
-              >
-                search
-              </span>
-              <input
-                className="bg-transparent border-none outline-none text-sm text-on-surface w-48 placeholder-on-surface-variant font-sans focus:ring-0"
-                placeholder="Search..."
-                type="text"
-                disabled
-              />
+
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg bg-surface-container border border-outline-variant text-on-surface-variant">
+              <span className="text-primary font-bold">VN</span>
+              <span>/</span>
+              <span>RU</span>
+              <span>/</span>
+              <span>EN</span>
             </div>
-            <div className="flex items-center gap-4">
-              <button
-                aria-label="Notifications"
-                className="text-on-surface-variant hover:text-primary transition-colors"
-              >
-                <span aria-hidden="true" className="material-symbols-outlined">
-                  notifications
-                </span>
-              </button>
-              <button
-                aria-label="Settings"
-                className="text-on-surface-variant hover:text-primary transition-colors"
-              >
-                <span aria-hidden="true" className="material-symbols-outlined">
-                  settings
-                </span>
-              </button>
-              <div className="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm border border-outline-variant">
-                U
-              </div>
-            </div>
+            <button
+              onClick={handleSignOut}
+              className="px-3.5 py-1.5 rounded-lg border border-outline-variant hover:bg-surface-container-low text-xs font-semibold text-primary transition-all flex items-center gap-1.5"
+            >
+              <span className="material-symbols-outlined text-[16px]">logout</span>
+              <span>Sign Out</span>
+            </button>
           </div>
         </div>
       </header>
 
-      <div className="flex flex-1 max-w-container-max mx-auto w-full">
-        {/* SideNavBar */}
-        <aside className="hidden md:flex flex-col p-stack-sm w-[280px] h-[calc(100vh-64px)] overflow-y-auto bg-surface-container-low border-r border-outline-variant sticky top-16 z-40">
-          <div className="mb-8 px-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-lg">
-              GR
-            </div>
+      <div className="flex flex-1 max-w-7xl mx-auto w-full">
+        {/* Main Content Area */}
+        <main className="flex-1 p-6 lg:p-10 space-y-8 animate-fade-in-up">
+          {/* Page Header */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-outline-variant">
             <div>
-              <h2 className="font-sans text-label-md font-bold text-primary truncate">
-                Global Research
-              </h2>
-              <p className="font-sans text-label-sm text-on-surface-variant truncate">
-                Institutional Admin
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold mb-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Keycloak OIDC Security Gate
+              </div>
+              <h1 className="font-serif text-3xl font-bold text-primary">Security &amp; Active Sessions</h1>
+              <p className="text-xs sm:text-sm text-on-surface-variant mt-1">
+                Monitor cryptographic browser sessions and ensure identity boundaries across bilateral services.
               </p>
             </div>
-          </div>
-          <nav className="flex-1 space-y-1">
-            <a
-              className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                dashboard
-              </span>
-              <span className="font-sans text-label-md">Dashboard</span>
-            </a>
-            <a
-              className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                description
-              </span>
-              <span className="font-sans text-label-md">Research Papers</span>
-            </a>
-            <a
-              className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                payments
-              </span>
-              <span className="font-sans text-label-md">Grants</span>
-            </a>
-            <a
-              className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                account_balance
-              </span>
-              <span className="font-sans text-label-md">Institutions</span>
-            </a>
-            <a
-              className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                group
-              </span>
-              <span className="font-sans text-label-md">Expert Directory</span>
-            </a>
-            <a
-              className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                inventory_2
-              </span>
-              <span className="font-sans text-label-md">Archive</span>
-            </a>
-          </nav>
-          <div className="mt-auto border-t border-outline-variant pt-4 space-y-1">
-            <a
-              className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
-              href="#"
-            >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                help
-              </span>
-              <span className="font-sans text-label-md">Support</span>
-            </a>
             <button
-              onClick={handleSignOut}
-              className="w-full text-left flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group"
+              onClick={triggerRefresh}
+              className="px-4 py-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-outline-variant text-xs font-semibold text-primary transition-all flex items-center gap-2"
             >
-              <span
-                aria-hidden="true"
-                className="material-symbols-outlined group-hover:text-primary transition-colors"
-              >
-                logout
-              </span>
-              <span className="font-sans text-label-md">Sign Out</span>
+              <span className="material-symbols-outlined text-[16px]">refresh</span>
+              <span>Refresh Status</span>
             </button>
           </div>
-        </aside>
 
-        {/* Main Content Area */}
-        <main className="flex-1 p-margin-mobile md:p-margin-desktop overflow-y-auto">
-          {/* Page Header */}
-          <div className="mb-stack-lg">
-            <h1 className="font-sans text-headline-lg-mobile md:text-headline-lg text-primary font-bold mb-2">
-              Security &amp; Sessions
-            </h1>
-            <p className="font-serif text-body-lg text-on-surface-variant max-w-3xl">
-              Monitor active sessions across devices and manage your
-              authentication security to ensure your institutional account
-              remains secure.
-            </p>
-          </div>
-
-          {/* MFA Status Section */}
-          <section className="mb-stack-lg bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md shadow-sm relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-secondary"></div>
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          {/* MFA Status Banner */}
+          <div className="bg-white rounded-2xl border border-outline-variant p-6 shadow-xs relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-secondary"></div>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pl-2">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0 mt-1 md:mt-0">
-                  <span
-                    aria-hidden="true"
-                    className="material-symbols-outlined text-2xl"
-                  >
-                    shield_lock
-                  </span>
+                <div className="w-12 h-12 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-[24px]">shield_lock</span>
                 </div>
                 <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <h2 className="font-sans text-headline-md text-primary">
-                      Multi-Factor Authentication (MFA)
-                    </h2>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-sans font-bold bg-surface-variant text-on-surface">
-                      <span className="w-1.5 h-1.5 rounded-full bg-secondary mr-1.5"></span>
-                      Keycloak-managed
+                  <div className="flex items-center gap-2.5 mb-1">
+                    <h2 className="font-serif font-bold text-lg text-primary">Multi-Factor Authentication (MFA)</h2>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                      Enforced
                     </span>
                   </div>
-                  <p className="font-serif text-body-md text-on-surface-variant">
-                    Your MFA settings are governed by institutional identity
-                    provider policies.
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    Governed by the Traditions and Friendship Foundation identity authority via Keycloak.
                   </p>
                 </div>
               </div>
               <button
                 disabled
-                className="shrink-0 bg-primary/20 text-on-primary-container cursor-not-allowed font-sans text-label-md font-bold py-2.5 px-6 rounded-lg flex items-center gap-2 justify-center w-full md:w-auto"
-                title="MFA management link is managed by institutional administrators"
+                className="px-4 py-2 rounded-xl bg-surface-container text-on-surface-variant cursor-not-allowed text-xs font-semibold shrink-0"
+                title="MFA is managed by institutional identity providers"
               >
-                <span>Manage MFA in Keycloak</span>
-                <span
-                  aria-hidden="true"
-                  className="material-symbols-outlined text-sm"
-                >
-                  open_in_new
-                </span>
+                Managed in Keycloak
               </button>
             </div>
-          </section>
+          </div>
 
-          {/* Active Sessions Section */}
-          <section className="mb-stack-lg">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-stack-sm gap-4">
+          {/* Action Error Alert */}
+          {actionError && (
+            <div className="p-4 bg-error-container text-on-error-container rounded-xl border border-error/30 flex items-start gap-3 text-xs">
+              <span className="material-symbols-outlined text-error text-[18px]">error</span>
+              <div className="font-medium">{actionError}</div>
+            </div>
+          )}
+
+          {/* Active Sessions List */}
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
               <div>
-                <h2 className="font-sans text-headline-md text-primary mb-1">
-                  Active Sessions
-                </h2>
-                <p className="font-serif text-body-md text-on-surface-variant">
-                  Devices currently logged into your account.
-                </p>
+                <h2 className="font-serif font-bold text-xl text-primary">Cryptographically Active Sessions</h2>
+                <p className="text-xs text-on-surface-variant">Validated session tokens bound to your active context.</p>
               </div>
               {sessions && otherSessions.length > 0 && (
                 <button
                   onClick={() => setShowRevokeOthersDialog(true)}
-                  className="text-error hover:text-error/80 font-sans text-label-md font-bold transition-colors flex items-center gap-1.5 shrink-0 bg-error-container/20 px-4 py-2 rounded-lg border border-error-container hover:bg-error-container/40"
+                  className="px-4 py-2 rounded-xl bg-error-container text-on-error-container hover:bg-error-container/80 text-xs font-semibold transition-colors flex items-center gap-1.5"
                 >
-                  <span
-                    aria-hidden="true"
-                    className="material-symbols-outlined text-sm"
-                  >
-                    person_cancel
-                  </span>
-                  Sign out all other devices
+                  <span className="material-symbols-outlined text-[16px]">logout</span>
+                  <span>Revoke All Other Sessions</span>
                 </button>
               )}
             </div>
 
-            {/* Error message from background actions */}
-            {actionError && (
-              <div className="mb-4 p-4 bg-error-container text-on-error-container rounded-lg border border-error flex items-start gap-2">
-                <span
-                  aria-hidden="true"
-                  className="material-symbols-outlined text-error"
-                >
-                  error
-                </span>
-                <div className="text-sm font-sans">{actionError}</div>
-              </div>
-            )}
-
-            {/* Main States rendering */}
             {loading ? (
-              /* Loading Skeleton */
-              <div className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm divide-y divide-outline-variant">
+              <div className="space-y-3">
                 {[1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="p-4 md:p-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between animate-pulse"
-                  >
-                    <div className="flex items-start gap-4 w-full sm:w-auto">
-                      <div className="w-10 h-10 rounded bg-outline-variant/30 shrink-0"></div>
-                      <div className="space-y-2 w-48">
-                        <div className="h-4 bg-outline-variant/30 rounded w-3/4"></div>
-                        <div className="h-3 bg-outline-variant/30 rounded w-5/6"></div>
-                      </div>
+                  <div key={i} className="p-6 bg-white rounded-2xl border border-outline-variant shadow-xs animate-pulse flex items-center justify-between">
+                    <div className="space-y-2 w-1/3">
+                      <div className="h-4 bg-slate-200 rounded w-3/4"></div>
+                      <div className="h-3 bg-slate-100 rounded w-1/2"></div>
                     </div>
+                    <div className="h-8 bg-slate-200 rounded-xl w-24"></div>
                   </div>
                 ))}
               </div>
             ) : error ? (
-              /* Error State */
-              <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden min-h-[250px]">
-                <div className="absolute top-0 left-0 w-full h-1 bg-error"></div>
-                <div className="w-16 h-16 rounded-full bg-error-container/30 flex items-center justify-center text-error mb-4">
-                  <span
-                    aria-hidden="true"
-                    className="material-symbols-outlined text-3xl"
-                  >
-                    error
-                  </span>
-                </div>
-                <h4 className="font-sans text-headline-md text-primary mb-2">
-                  Failed to load sessions
-                </h4>
-                <p className="font-serif text-sm text-on-surface-variant max-w-[280px] mb-4">
-                  {error}
-                </p>
+              <div className="p-8 bg-white rounded-2xl border border-outline-variant text-center space-y-3">
+                <span className="material-symbols-outlined text-error text-4xl">error</span>
+                <h3 className="font-serif font-bold text-lg text-primary">Failed to load active sessions</h3>
+                <p className="text-xs text-on-surface-variant max-w-sm mx-auto">{error}</p>
                 <button
                   onClick={triggerRefresh}
-                  className="text-primary font-sans text-label-sm underline hover:text-secondary transition-colors"
+                  className="px-4 py-2 rounded-xl bg-primary text-white text-xs font-semibold"
                 >
-                  Try Again
+                  Retry Connection
                 </button>
               </div>
-            ) : !sessions || sessions.length === 0 ? (
-              /* Empty State (Should theoretically contain at least current session, but fallback just in case) */
-              <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-sm h-[250px]">
-                <div className="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant mb-4">
-                  <span
-                    aria-hidden="true"
-                    className="material-symbols-outlined text-3xl"
-                  >
-                    devices
-                  </span>
-                </div>
-                <h4 className="font-sans text-headline-md text-primary mb-2">
-                  No Active Sessions
-                </h4>
-                <p className="font-serif text-sm text-on-surface-variant max-w-[250px]">
-                  You currently have no active sessions logged.
-                </p>
-              </div>
-            ) : (
-              /* List State */
-              <div className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm divide-y divide-outline-variant">
+            ) : sessions && sessions.length > 0 ? (
+              <div className="space-y-3">
                 {sessions.map((session) => (
                   <div
                     key={session.id}
-                    className="p-4 md:p-6 hover:bg-surface-container-low transition-colors flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between"
+                    className={`p-5 rounded-2xl border transition-all card-hover-lift flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 ${
+                      session.current
+                        ? "bg-white border-secondary/40 shadow-sm ring-1 ring-secondary/20"
+                        : "bg-white border-outline-variant shadow-xs"
+                    }`}
                   >
-                    <div className="flex items-start gap-4 w-full sm:w-auto">
-                      <div className="w-10 h-10 rounded bg-surface-container text-on-surface-variant flex items-center justify-center shrink-0">
-                        <span
-                          aria-hidden="true"
-                          className="material-symbols-outlined"
-                        >
-                          security
+                    <div className="flex items-start gap-4">
+                      <div
+                        className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${
+                          session.current
+                            ? "bg-secondary-container text-on-secondary-container"
+                            : "bg-surface-container text-on-surface-variant"
+                        }`}
+                      >
+                        <span className="material-symbols-outlined text-[22px]">
+                          {session.current ? "laptop_mac" : "devices"}
                         </span>
                       </div>
                       <div>
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <h3 className="font-sans text-label-md font-bold text-primary">
-                            Session {maskSessionId(session.id)}
-                          </h3>
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-sm text-primary">
+                            {session.current ? "Current Active Device" : "Authenticated Session"}
+                          </span>
                           {session.current && (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-sans font-bold bg-secondary-container text-on-secondary-container">
-                              Current Session
-                            </span>
-                          )}
-                          {session.activeContext && (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-sans font-medium bg-primary-container text-on-primary-container">
-                              Context: {session.activeContext.contextType} (
-                              {session.activeContext.contextId})
+                            <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                              Current
                             </span>
                           )}
                         </div>
-                        <div className="font-serif text-sm text-on-surface-variant flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
-                          <span className="flex items-center gap-1">
-                            <span
-                              aria-hidden="true"
-                              className="material-symbols-outlined text-[14px]"
-                            >
-                              calendar_today
-                            </span>
-                            Created: {formatDate(session.createdAt)}
-                          </span>
-                          <span className="hidden sm:inline text-outline">
-                            •
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <span
-                              aria-hidden="true"
-                              className="material-symbols-outlined text-[14px]"
-                            >
-                              hourglass_empty
-                            </span>
-                            Expires: {formatDate(session.expiresAt)}
-                          </span>
+                        <div className="text-xs text-on-surface-variant mt-1 space-y-0.5">
+                          <p className="font-mono text-[11px]">
+                            Session: <span className="text-primary">{maskSessionId(session.id)}</span>
+                          </p>
+                          <p className="text-[11px]">
+                            Created: {formatDate(session.createdAt)} • Expires: {formatDate(session.expiresAt)}
+                          </p>
                         </div>
                       </div>
                     </div>
 
-                    {!session.current && (
-                      <button
-                        onClick={() => {
-                          setSessionToRevoke(session);
-                          setShowRevokeDialog(true);
-                        }}
-                        className="shrink-0 bg-surface-container-low border border-outline-variant text-on-surface-variant font-sans text-label-sm py-1.5 px-4 rounded-lg hover:bg-surface-variant hover:text-error transition-colors flex items-center gap-1"
-                      >
-                        Revoke
-                      </button>
-                    )}
+                    <button
+                      onClick={() => {
+                        setSessionToRevoke(session);
+                        setShowRevokeDialog(true);
+                      }}
+                      className="px-3.5 py-1.5 rounded-lg border border-outline-variant hover:bg-error-container hover:text-error hover:border-error/40 text-xs font-semibold text-on-surface-variant transition-colors"
+                    >
+                      {session.current ? "Sign Out" : "Revoke"}
+                    </button>
                   </div>
                 ))}
               </div>
-            )}
-          </section>
-
-          {/* Empty State visual indicator for other active sessions */}
-          {!loading && !error && sessions && otherSessions.length === 0 && (
-            <div className="mt-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-sm h-[200px]">
-              <div className="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant mb-3">
-                <span
-                  aria-hidden="true"
-                  className="material-symbols-outlined text-2xl"
-                >
-                  devices
-                </span>
+            ) : (
+              <div className="p-8 bg-white rounded-2xl border border-outline-variant text-center text-xs text-on-surface-variant">
+                No active sessions found.
               </div>
-              <h4 className="font-sans text-[16px] font-bold text-primary mb-1">
-                No Other Active Sessions
-              </h4>
-              <p className="font-serif text-sm text-on-surface-variant max-w-[280px]">
-                You are not logged in on any other devices or browser sessions.
-              </p>
-            </div>
-          )}
+            )}
+          </div>
         </main>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-surface-container-low w-full bottom-0 border-t border-outline-variant mt-auto">
-        <div className="flex justify-between items-center py-base px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto flex-col md:flex-row gap-4 md:gap-0">
-          <span className="font-sans text-label-md font-bold text-primary text-center md:text-left">
-            © 2026 VN-RU Scientific Collaboration Network. All Rights Reserved.
-          </span>
-          <nav className="flex items-center gap-6">
-            <a
-              className="font-sans text-label-sm text-on-surface-variant hover:text-primary underline decoration-1"
-              href="#"
-            >
-              Privacy Policy
-            </a>
-            <a
-              className="font-sans text-label-sm text-on-surface-variant hover:text-primary underline decoration-1"
-              href="#"
-            >
-              Terms of Service
-            </a>
-            <a
-              className="font-sans text-label-sm text-on-surface-variant hover:text-primary underline decoration-1"
-              href="#"
-            >
-              Contact Support
-            </a>
-          </nav>
-        </div>
-      </footer>
-
-      {/* Confirmation Dialog Overlay - Revoke Specific Session */}
+      {/* Revoke Single Session Modal */}
       {showRevokeDialog && sessionToRevoke && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-primary/20 backdrop-blur-sm transition-opacity duration-200">
-          <div className="bg-surface-container-lowest rounded-xl shadow-lg border border-outline-variant w-full max-w-md overflow-hidden transform scale-100 transition-transform duration-200">
-            <div className="p-6">
-              <div className="w-12 h-12 rounded-full bg-error-container/20 flex items-center justify-center text-error mb-4">
-                <span
-                  aria-hidden="true"
-                  className="material-symbols-outlined text-2xl"
-                >
-                  warning
-                </span>
-              </div>
-              <h3 className="font-sans text-[20px] font-bold text-primary mb-2">
-                Revoke Session?
-              </h3>
-              <p className="font-serif text-body-md text-on-surface-variant mb-6">
-                Are you sure you want to sign out session &quot;
-                {maskSessionId(sessionToRevoke.id)}&quot;? You will need to log
-                in again on that device/browser.
-              </p>
-              <div className="flex justify-end gap-3 mt-4">
-                <button
-                  disabled={actionLoading}
-                  className="px-4 py-2 border border-outline-variant text-on-surface-variant font-sans text-label-sm rounded-lg hover:bg-surface-variant transition-colors disabled:opacity-50"
-                  onClick={() => {
-                    setShowRevokeDialog(false);
-                    setSessionToRevoke(null);
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  disabled={actionLoading}
-                  onClick={handleRevokeSession}
-                  className="px-4 py-2 bg-error text-on-error font-sans text-label-sm rounded-lg hover:bg-error/90 transition-colors disabled:opacity-50 flex items-center gap-1"
-                >
-                  {actionLoading ? "Revoking..." : "Revoke Session"}
-                </button>
-              </div>
+        <div className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-outline-variant space-y-4 animate-scale-in">
+            <div className="w-12 h-12 rounded-2xl bg-error-container text-on-error-container flex items-center justify-center">
+              <span className="material-symbols-outlined text-[24px] text-error">logout</span>
+            </div>
+            <h3 className="font-serif font-bold text-xl text-primary">
+              {sessionToRevoke.current ? "Sign Out of Current Session?" : "Revoke Session Token?"}
+            </h3>
+            <p className="text-xs text-on-surface-variant leading-relaxed">
+              {sessionToRevoke.current
+                ? "You will be redirected to the sign-in portal and your session will be invalidated immediately."
+                : "This device will be immediately disconnected from the VN-RU Knowledge Network."}
+            </p>
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                disabled={actionLoading}
+                onClick={() => setShowRevokeDialog(false)}
+                className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={actionLoading}
+                onClick={handleRevokeSession}
+                className="px-5 py-2 rounded-xl bg-error text-white text-xs font-semibold hover:bg-error/90 transition-all flex items-center gap-2"
+              >
+                {actionLoading && <span className="material-symbols-outlined text-[16px] animate-spin">progress_activity</span>}
+                <span>{sessionToRevoke.current ? "Confirm Sign Out" : "Confirm Revoke"}</span>
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Confirmation Dialog Overlay - Revoke Others */}
+      {/* Revoke Others Modal */}
       {showRevokeOthersDialog && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-primary/20 backdrop-blur-sm transition-opacity duration-200">
-          <div className="bg-surface-container-lowest rounded-xl shadow-lg border border-outline-variant w-full max-w-md overflow-hidden transform scale-100 transition-transform duration-200">
-            <div className="p-6">
-              <div className="w-12 h-12 rounded-full bg-error-container/20 flex items-center justify-center text-error mb-4">
-                <span
-                  aria-hidden="true"
-                  className="material-symbols-outlined text-2xl"
-                >
-                  warning
-                </span>
-              </div>
-              <h3 className="font-sans text-[20px] font-bold text-primary mb-2">
-                Sign Out All Other Devices?
-              </h3>
-              <p className="font-serif text-body-md text-on-surface-variant mb-6">
-                Are you sure you want to log out from all other active sessions?
-                All other logged-in devices and browsers will be disconnected
-                immediately.
-              </p>
-              <div className="flex justify-end gap-3 mt-4">
-                <button
-                  disabled={actionLoading}
-                  className="px-4 py-2 border border-outline-variant text-on-surface-variant font-sans text-label-sm rounded-lg hover:bg-surface-variant transition-colors disabled:opacity-50"
-                  onClick={() => setShowRevokeOthersDialog(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  disabled={actionLoading}
-                  onClick={handleRevokeOthers}
-                  className="px-4 py-2 bg-error text-on-error font-sans text-label-sm rounded-lg hover:bg-error/90 transition-colors disabled:opacity-50"
-                >
-                  {actionLoading ? "Signing out others..." : "Sign Out Others"}
-                </button>
-              </div>
+        <div className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-outline-variant space-y-4 animate-scale-in">
+            <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center">
+              <span className="material-symbols-outlined text-[24px]">power_settings_new</span>
+            </div>
+            <h3 className="font-serif font-bold text-xl text-primary">Revoke All Other Sessions?</h3>
+            <p className="text-xs text-on-surface-variant leading-relaxed">
+              All other active devices will be signed out immediately. Your current session will remain active.
+            </p>
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                disabled={actionLoading}
+                onClick={() => setShowRevokeOthersDialog(false)}
+                className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={actionLoading}
+                onClick={handleRevokeOthers}
+                className="px-5 py-2 rounded-xl bg-error text-white text-xs font-semibold hover:bg-error/90 transition-all flex items-center gap-2"
+              >
+                {actionLoading && <span className="material-symbols-outlined text-[16px] animate-spin">progress_activity</span>}
+                <span>Revoke All Other Devices</span>
+              </button>
             </div>
           </div>
         </div>

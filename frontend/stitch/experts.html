@@ -1,461 +1,190 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Expert Directory - VN-RU Knowledge Network</title>
-<!-- Material Symbols Outlined -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Google Fonts: Hanken Grotesk & Source Serif 4 -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Tailwind Config from Style Guidance -->
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-tint": "#565e74",
-                        "surface-variant": "#d3e4fe",
-                        "primary-fixed": "#dae2fd",
-                        "on-secondary-fixed": "#00201d",
-                        "on-tertiary": "#ffffff",
-                        "on-primary-fixed": "#131b2e",
-                        "outline-variant": "#c6c6cd",
-                        "inverse-on-surface": "#eaf1ff",
-                        "surface-container-highest": "#d3e4fe",
-                        "primary": "#000000",
-                        "primary-container": "#131b2e",
-                        "on-surface": "#0b1c30",
-                        "on-error-container": "#93000a",
-                        "on-primary": "#ffffff",
-                        "surface-dim": "#cbdbf5",
-                        "inverse-primary": "#bec6e0",
-                        "on-background": "#0b1c30",
-                        "tertiary-fixed-dim": "#ffb77d",
-                        "secondary-container": "#86f2e4",
-                        "tertiary": "#000000",
-                        "on-secondary": "#ffffff",
-                        "error": "#ba1a1a",
-                        "on-error": "#ffffff",
-                        "tertiary-fixed": "#ffdcc3",
-                        "on-secondary-container": "#006f66",
-                        "on-primary-container": "#7c839b",
-                        "error-container": "#ffdad6",
-                        "background": "#f8f9ff",
-                        "surface": "#f8f9ff",
-                        "tertiary-container": "#2f1500",
-                        "secondary": "#006a61",
-                        "surface-container": "#e5eeff",
-                        "primary-fixed-dim": "#bec6e0",
-                        "on-tertiary-container": "#c76c00",
-                        "surface-container-lowest": "#ffffff",
-                        "on-secondary-fixed-variant": "#005049",
-                        "secondary-fixed-dim": "#6bd8cb",
-                        "on-tertiary-fixed": "#2f1500",
-                        "surface-container-low": "#eff4ff",
-                        "on-tertiary-fixed-variant": "#6e3900",
-                        "on-primary-fixed-variant": "#3f465c",
-                        "outline": "#76777d",
-                        "surface-bright": "#f8f9ff",
-                        "inverse-surface": "#213145",
-                        "on-surface-variant": "#45464d",
-                        "secondary-fixed": "#89f5e7",
-                        "surface-container-high": "#dce9ff"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "base": "8px",
-                        "stack-lg": "48px",
-                        "container-max": "1280px",
-                        "stack-sm": "12px",
-                        "gutter": "24px",
-                        "stack-md": "24px",
-                        "margin-desktop": "48px",
-                        "margin-mobile": "16px"
-                    },
-                    "fontFamily": {
-                        "headline-md": ["Hanken Grotesk"],
-                        "body-md": ["\"Source Serif 4\""],
-                        "body-lg": ["\"Source Serif 4\""],
-                        "headline-lg": ["Hanken Grotesk"],
-                        "headline-lg-mobile": ["Hanken Grotesk"],
-                        "display-lg": ["Hanken Grotesk"],
-                        "label-md": ["Hanken Grotesk"],
-                        "label-sm": ["Hanken Grotesk"]
-                    },
-                    "fontSize": {
-                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
-                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
-                        "body-lg": ["18px", { "lineHeight": "1.7", "fontWeight": "400" }],
-                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
-                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
-                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500" }],
-                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "600" }]
-                    }
-                }
-            }
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Expert Directory - VN-RU Knowledge Network</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#f8fafc",
+            "on-surface": "#0f172a",
+            "on-surface-variant": "#475569",
+            "primary": "#0b1c30",
+            "on-primary": "#ffffff",
+            "secondary": "#0284c7",
+            "secondary-container": "#bae6fd",
+            "tertiary": "#059669",
+            "outline": "#94a3b8",
+            "outline-variant": "#e2e8f0"
+          },
+          fontFamily: {
+            "sans": ["'Hanken Grotesk'", "sans-serif"],
+            "serif": ["'Source Serif 4'", "serif"]
+          }
         }
-    </script>
-<style>
-        /* Base styles for font applications if needed globally, though utility classes are preferred */
-        body {
-            background-color: #f8f9ff; /* bg-background */
-        }
-
-        /* Custom scrollbar for a cleaner institutional look */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f8f9ff;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #c6c6cd;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #76777d;
-        }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined', sans-serif;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      white-space: nowrap;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card-lift {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-lift:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -6px rgba(11, 28, 48, 0.09);
+    }
+  </style>
 </head>
-<body class="bg-background text-on-background antialiased min-h-screen flex flex-col">
-<!-- TopNavBar (From Shared Components JSON) -->
-<nav class="bg-surface docked full-width top-0 border-b border-outline-variant flat no shadows sticky z-50">
-<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20">
-<!-- Brand -->
-<div class="text-headline-md font-headline-md font-bold text-primary flex items-center gap-2 cursor-pointer">
-<span class="material-symbols-outlined text-primary" data-icon="hub">hub</span>
-                VN-RU Knowledge Network
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-sans antialiased">
+  <header class="bg-white/90 backdrop-blur-md border-b border-outline-variant sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-serif font-bold text-sm">VR</div>
+          <span class="font-serif font-bold text-lg text-primary">VN-RU Experts</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-5 text-sm text-on-surface-variant font-medium">
+          <a href="/stitch/home.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="/stitch/search.html" class="hover:text-primary transition-colors">Search</a>
+          <a href="/stitch/knowledge.html" class="hover:text-primary transition-colors">Knowledge</a>
+          <a href="#" class="text-primary font-semibold border-b-2 border-primary pb-1">Experts</a>
+          <a href="/stitch/opportunities.html" class="hover:text-primary transition-colors">Opportunities</a>
+        </nav>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="/login" class="px-4 py-2 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition-all">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="bg-white border-b border-outline-variant py-10 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div>
+        <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">
+          <span class="material-symbols-outlined text-[16px]">verified</span> Bilateral Scientific Registry
+        </div>
+        <h1 class="font-serif text-3xl font-bold text-primary">Expert Directory</h1>
+        <p class="text-xs sm:text-sm text-on-surface-variant mt-1">
+          Discover certified scientists, principal investigators, and reviewers across Vietnamese and Russian institutions.
+        </p>
+      </div>
+      <div class="flex items-center gap-2 w-full md:w-auto">
+        <input type="text" placeholder="Search by name, institution, or field..." class="text-xs rounded-xl border border-outline-variant p-2.5 w-full md:w-64 focus:ring-secondary"/>
+        <button class="px-4 py-2.5 rounded-xl bg-primary text-white text-xs font-semibold shrink-0">Filter</button>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-6 py-10 flex-grow grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Expert 1 -->
+    <div class="bg-white rounded-2xl border border-outline-variant p-6 card-lift flex flex-col justify-between">
+      <div>
+        <div class="flex items-start gap-4 mb-4">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-container text-white font-serif font-bold text-xl flex items-center justify-center shrink-0 shadow-md">
+            NA
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <h2 class="font-serif font-bold text-base text-primary">Prof. Dr. Nguyen Van An</h2>
+              <span class="material-symbols-outlined text-emerald-600 text-[16px]" title="Verified Scientist">verified</span>
             </div>
-<!-- Navigation Links (Desktop) -->
-<div class="hidden md:flex items-center gap-6">
-<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md py-2" href="#">Home</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md py-2" href="#">News</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md py-2" href="#">Search</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md py-2" href="#">Knowledge</a>
-<!-- Active Navigation Item -->
-<a class="text-primary border-b-2 border-primary font-bold pb-1 text-label-md font-label-md py-2" href="#">Experts</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md py-2" href="#">Opportunities</a>
-</div>
-<!-- Trailing Actions -->
-<div class="flex items-center gap-6">
-<button class="hidden lg:block text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors">
-                    VN / RU / EN
-                </button>
-<button class="text-label-md font-label-md bg-primary text-on-primary px-4 py-2 rounded font-bold hover:bg-surface-container-highest hover:text-primary transition-all duration-200 border border-primary hover:border-outline">
-                    Login/Join
-                </button>
-<!-- Mobile Menu Toggle -->
-<button class="md:hidden text-primary">
-<span class="material-symbols-outlined" data-icon="menu">menu</span>
-</button>
-</div>
-</div>
-</nav>
-<!-- Main Content Area -->
-<main class="flex-1 w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg flex flex-col md:flex-row gap-gutter">
-<!-- Left Sidebar: Filters (Fixed 280px on Desktop) -->
-<aside class="w-full md:w-[280px] flex-shrink-0 flex flex-col gap-stack-md bg-surface-container-lowest border border-outline-variant rounded-xl p-6 h-fit sticky top-[104px]">
-<div class="flex items-center justify-between border-b border-outline-variant pb-4 mb-2">
-<h2 class="text-headline-md font-headline-md text-on-surface">Filters</h2>
-<button class="text-label-sm font-label-sm text-secondary hover:text-primary transition-colors underline">Reset All</button>
-</div>
-<!-- Search within experts -->
-<div class="flex flex-col gap-2">
-<label class="text-label-md font-label-md text-on-surface-variant">Search Directory</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search" style="font-size: 20px;">search</span>
-<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Name, keyword, institution..." type="text"/>
-</div>
-</div>
-<!-- H-Index Range Filter -->
-<div class="flex flex-col gap-3 pt-4 border-t border-outline-variant">
-<div class="flex justify-between items-center cursor-pointer group">
-<label class="text-label-md font-label-md text-on-surface font-semibold group-hover:text-primary transition-colors">H-Index Range</label>
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
-</div>
-<div class="flex items-center gap-2">
-<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" min="0" placeholder="Min" type="number"/>
-<span class="text-on-surface-variant">-</span>
-<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Max" type="number"/>
-</div>
-</div>
-<!-- Scientific Councils Filter -->
-<div class="flex flex-col gap-3 pt-4 border-t border-outline-variant">
-<div class="flex justify-between items-center cursor-pointer group">
-<label class="text-label-md font-label-md text-on-surface font-semibold group-hover:text-primary transition-colors">Scientific Councils</label>
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_less">expand_less</span>
-</div>
-<div class="flex flex-col gap-2 max-h-[200px] overflow-y-auto pr-2">
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="w-4 h-4 rounded border-outline-variant text-secondary focus:ring-secondary cursor-pointer" type="checkbox"/>
-<span class="text-body-md font-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Physical Sciences</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input checked="" class="w-4 h-4 rounded border-outline-variant text-secondary focus:ring-secondary cursor-pointer" type="checkbox"/>
-<span class="text-body-md font-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Biomedical Engineering</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="w-4 h-4 rounded border-outline-variant text-secondary focus:ring-secondary cursor-pointer" type="checkbox"/>
-<span class="text-body-md font-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Information Technology</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="w-4 h-4 rounded border-outline-variant text-secondary focus:ring-secondary cursor-pointer" type="checkbox"/>
-<span class="text-body-md font-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Material Science</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="w-4 h-4 rounded border-outline-variant text-secondary focus:ring-secondary cursor-pointer" type="checkbox"/>
-<span class="text-body-md font-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Environmental Ecology</span>
-</label>
-</div>
-</div>
-<!-- Apply Button -->
-<button class="w-full mt-4 bg-surface-container-high border border-outline-variant text-primary text-label-md font-label-md font-bold py-2 rounded-lg hover:bg-surface-variant transition-colors">
-                Apply Filters
-            </button>
-</aside>
-<!-- Right Content: Expert Grid -->
-<section class="flex-1 flex flex-col gap-stack-md">
-<!-- Page Header & Sorting -->
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-outline-variant">
-<div>
-<h1 class="text-display-lg font-display-lg text-on-surface hidden md:block">Expert Directory</h1>
-<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface md:hidden">Expert Directory</h1>
-<p class="text-body-md font-body-md text-on-surface-variant mt-2">Connecting researchers across 12 bilateral institutions.</p>
-</div>
-<div class="flex items-center gap-4">
-<span class="text-label-md font-label-md text-on-surface-variant whitespace-nowrap">Showing 242 Experts</span>
-<div class="flex items-center gap-2 border border-outline-variant rounded px-3 py-1.5 bg-surface-container-lowest">
-<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Sort by</span>
-<select class="bg-transparent border-none text-label-md font-label-md text-on-surface focus:ring-0 p-0 cursor-pointer">
-<option>Relevance</option>
-<option>Highest H-Index</option>
-<option>Most Recent Projects</option>
-<option>Alphabetical (A-Z)</option>
-</select>
-</div>
-</div>
-</div>
-<!-- Bento-style Grid for Expert Cards -->
-<div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-<!-- Expert Card 1 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-sm transition-shadow duration-300 flex flex-col group relative">
-<!-- Subtle left accent border for 'file dossier' feel -->
-<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary opacity-80"></div>
-<div class="p-6 flex flex-col gap-4 flex-1 pl-7">
-<!-- Header: Avatar & Info -->
-<div class="flex gap-4 items-start">
-<img class="w-16 h-16 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a mature male scientist with graying hair and glasses, wearing a sharp dark suit over a light blue collared shirt. He is looking directly at the camera with a subtle, confident smile. The background is a brightly lit, modern laboratory setting with blurred specialized equipment, emphasizing a high-tech, clean, light-mode aesthetic common in premium institutional photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh9DeuaKyMO96l0VauY-jXbTuXRcrMHSCQP6OOU4ijjh4NEPLGGH62xqR8UDQPd6CYGw0zwIJRg3tCnLr4bW-Es1EIEQ5202eWQDaMXT7f17qikLptoiXLmbOhyZMhH3W1dkyUJyRnHPv8agoKHMTGeRpdT4vbz5-WDxmI_OShot2iGnkZN3UZz7i3-jNCu5bmvq68_JZfge7nOepONGuiIjv1CzAVZzk40aWFsUN1ue00h--hE2h2xQ"/>
-<div>
-<h3 class="text-headline-md font-headline-md text-on-surface group-hover:text-primary transition-colors cursor-pointer">Dr. Mikhail Ivanov</h3>
-<p class="text-label-md font-label-md text-on-surface-variant flex items-center gap-1 mt-1">
-<span class="material-symbols-outlined text-outline" data-icon="account_balance" style="font-size: 16px;">account_balance</span>
-                                    Moscow Institute of Physics and Technology
-                                </p>
-<div class="flex items-center gap-2 mt-2">
-<span class="bg-surface-container-high text-on-surface px-2 py-0.5 rounded text-[11px] font-label-sm uppercase tracking-wide border border-outline-variant">H-Index: 42</span>
-</div>
-</div>
-</div>
-<!-- Area of Expertise Tags -->
-<div class="flex flex-wrap gap-2 mt-2">
-<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-full border border-outline-variant/50">Quantum Computing</span>
-<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-full border border-outline-variant/50">Nanomaterials</span>
-<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-full border border-outline-variant/50">Condensed Matter</span>
-</div>
-<!-- Recent Joint Projects (The 'Academic' feel area) -->
-<div class="mt-4 flex-1">
-<h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-2 flex items-center gap-1 border-b border-outline-variant pb-1">
-<span class="material-symbols-outlined" data-icon="handshake" style="font-size: 14px;">handshake</span> Recent Bilateral Projects
-                            </h4>
-<ul class="text-body-md font-body-md text-on-surface space-y-2">
-<li class="line-clamp-2 leading-snug">Development of scalable topological qubits using hybrid semiconductor-superconductor nanowires (2022-2024).</li>
-</ul>
-</div>
-</div>
-<!-- Footer Actions -->
-<div class="bg-surface-container-low px-6 pl-7 py-4 border-t border-outline-variant flex justify-between items-center">
-<button class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
-<span class="material-symbols-outlined" data-icon="description" style="font-size: 18px;">description</span>
-                            View Full Profile
-                        </button>
-<button class="bg-secondary text-on-secondary text-label-md font-label-md font-semibold px-5 py-2 rounded shadow-sm hover:bg-on-secondary-fixed transition-colors flex items-center gap-2">
-<span class="material-symbols-outlined" data-icon="person_add" style="font-size: 18px;">person_add</span>
-                            Connect
-                        </button>
-</div>
-</div>
-<!-- Expert Card 2 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-sm transition-shadow duration-300 flex flex-col group relative">
-<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary opacity-80"></div>
-<div class="p-6 flex flex-col gap-4 flex-1 pl-7">
-<div class="flex gap-4 items-start">
-<img class="w-16 h-16 rounded-full object-cover border border-outline-variant" data-alt="A brightly lit portrait of a female researcher in her late 30s of Southeast Asian descent. She is wearing a crisp white lab coat over a professional dark blouse. Her expression is focused yet approachable. The background is an out-of-focus, pristine modern university hallway with abundant natural light streaming in, conveying an institutional, academic, and modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlZdLKDGTYUP1__5oXuX3XQNoyoW-EmHom5vuRqqxCW0WPHqI4SrfO6khIxlOajfD9x-SKml-x077ZoxduQScfYUaAEq2cJf5hixgdbLHEvOYbfm6aXwXCu1fXAnLKBnSaAoLMYFU1-Whhw6OiKI_ljQIVeHtPelgEA28Ye3WseoK7q9Sz3NqzEAM76dhFx9_jFIJa3ljcS5rie2RC_wHdEi-Uti1G9y0vTP1Dea-UTKCXdOWHAwdmLw"/>
-<div>
-<h3 class="text-headline-md font-headline-md text-on-surface group-hover:text-primary transition-colors cursor-pointer">Assoc. Prof. Nguyen Thi Lan</h3>
-<p class="text-label-md font-label-md text-on-surface-variant flex items-center gap-1 mt-1">
-<span class="material-symbols-outlined text-outline" data-icon="account_balance" style="font-size: 16px;">account_balance</span>
-                                    Vietnam National University, Hanoi
-                                </p>
-<div class="flex items-center gap-2 mt-2">
-<span class="bg-surface-container-high text-on-surface px-2 py-0.5 rounded text-[11px] font-label-sm uppercase tracking-wide border border-outline-variant">H-Index: 38</span>
-</div>
-</div>
-</div>
-<div class="flex flex-wrap gap-2 mt-2">
-<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-full border border-outline-variant/50">Biomedical Engineering</span>
-<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-full border border-outline-variant/50">Targeted Drug Delivery</span>
-</div>
-<div class="mt-4 flex-1">
-<h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-2 flex items-center gap-1 border-b border-outline-variant pb-1">
-<span class="material-symbols-outlined" data-icon="handshake" style="font-size: 14px;">handshake</span> Recent Bilateral Projects
-                            </h4>
-<ul class="text-body-md font-body-md text-on-surface space-y-2">
-<li class="line-clamp-2 leading-snug">Synthesis of novel polymer nanocomposites for localized cancer therapy applications (2023-Present).</li>
-</ul>
-</div>
-</div>
-<div class="bg-surface-container-low px-6 pl-7 py-4 border-t border-outline-variant flex justify-between items-center">
-<button class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
-<span class="material-symbols-outlined" data-icon="description" style="font-size: 18px;">description</span>
-                            View Full Profile
-                        </button>
-<button class="bg-secondary text-on-secondary text-label-md font-label-md font-semibold px-5 py-2 rounded shadow-sm hover:bg-on-secondary-fixed transition-colors flex items-center gap-2">
-<span class="material-symbols-outlined" data-icon="person_add" style="font-size: 18px;">person_add</span>
-                            Connect
-                        </button>
-</div>
-</div>
-<!-- Expert Card 3 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-sm transition-shadow duration-300 flex flex-col group relative">
-<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary opacity-80"></div>
-<div class="p-6 flex flex-col gap-4 flex-1 pl-7">
-<div class="flex gap-4 items-start">
-<div class="w-16 h-16 rounded-full border border-outline-variant bg-surface-container-high flex items-center justify-center text-on-surface-variant text-headline-md font-headline-md font-bold">
-                                AS
-                            </div>
-<div>
-<h3 class="text-headline-md font-headline-md text-on-surface group-hover:text-primary transition-colors cursor-pointer">Dr. Andrei Sokolov</h3>
-<p class="text-label-md font-label-md text-on-surface-variant flex items-center gap-1 mt-1">
-<span class="material-symbols-outlined text-outline" data-icon="account_balance" style="font-size: 16px;">account_balance</span>
-                                    Saint Petersburg State University
-                                </p>
-<div class="flex items-center gap-2 mt-2">
-<span class="bg-surface-container-high text-on-surface px-2 py-0.5 rounded text-[11px] font-label-sm uppercase tracking-wide border border-outline-variant">H-Index: 29</span>
-</div>
-</div>
-</div>
-<div class="flex flex-wrap gap-2 mt-2">
-<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-full border border-outline-variant/50">Artificial Intelligence</span>
-<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-full border border-outline-variant/50">Natural Language Processing</span>
-<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-full border border-outline-variant/50">Machine Translation</span>
-</div>
-<div class="mt-4 flex-1">
-<h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-2 flex items-center gap-1 border-b border-outline-variant pb-1">
-<span class="material-symbols-outlined" data-icon="handshake" style="font-size: 14px;">handshake</span> Recent Bilateral Projects
-                            </h4>
-<ul class="text-body-md font-body-md text-on-surface space-y-2">
-<li class="line-clamp-2 leading-snug">Cross-lingual structural mapping between Slavic and Austroasiatic language families using neural networks (2021-2023).</li>
-</ul>
-</div>
-</div>
-<div class="bg-surface-container-low px-6 pl-7 py-4 border-t border-outline-variant flex justify-between items-center">
-<button class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
-<span class="material-symbols-outlined" data-icon="description" style="font-size: 18px;">description</span>
-                            View Full Profile
-                        </button>
-<button class="bg-secondary text-on-secondary text-label-md font-label-md font-semibold px-5 py-2 rounded shadow-sm hover:bg-on-secondary-fixed transition-colors flex items-center gap-2">
-<span class="material-symbols-outlined" data-icon="person_add" style="font-size: 18px;">person_add</span>
-                            Connect
-                        </button>
-</div>
-</div>
-<!-- Expert Card 4 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-sm transition-shadow duration-300 flex flex-col group relative">
-<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary opacity-80"></div>
-<div class="p-6 flex flex-col gap-4 flex-1 pl-7">
-<div class="flex gap-4 items-start">
-<img class="w-16 h-16 rounded-full object-cover border border-outline-variant" data-alt="A portrait of an older male academic of Southeast Asian descent, distinguished with silver hair, wearing dark framed glasses and a neat charcoal suit. He looks directly at the viewer with a serious, intellectual gaze. The setting is a minimalist, modern library interior with neat rows of books out of focus in the background, bathed in soft, cool, light-mode lighting, projecting an aura of established expertise and institutional prestige." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0OqywryhGimCLMeBLaenV1SW-WBjUcTlJ4PoMzb5qsWUor_Bi2MSa9OgBbBheTrYPFgAxtevoQDdOGQ2yk2tjHfyi0Bose57zO7655GrIyecGHHQrbd0SCd2SZ5y8CbCbUBPRpfUdXzvTRQWO1LR22gym5f6aUqGHbS2vwNJHrOQ80Uswkj9jX2LiaBazvs14u3suSp9GInQXvTPQATmN2NuM_3jcrO2tWz9969JfzdKSsPOxXbJw-A"/>
-<div>
-<h3 class="text-headline-md font-headline-md text-on-surface group-hover:text-primary transition-colors cursor-pointer">Prof. Tran Minh Tuan</h3>
-<p class="text-label-md font-label-md text-on-surface-variant flex items-center gap-1 mt-1">
-<span class="material-symbols-outlined text-outline" data-icon="account_balance" style="font-size: 16px;">account_balance</span>
-                                    Hanoi University of Science and Technology
-                                </p>
-<div class="flex items-center gap-2 mt-2">
-<span class="bg-surface-container-high text-on-surface px-2 py-0.5 rounded text-[11px] font-label-sm uppercase tracking-wide border border-outline-variant">H-Index: 51</span>
-</div>
-</div>
-</div>
-<div class="flex flex-wrap gap-2 mt-2">
-<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-full border border-outline-variant/50">Renewable Energy Systems</span>
-<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-full border border-outline-variant/50">Power Grid Optimization</span>
-</div>
-<div class="mt-4 flex-1">
-<h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-2 flex items-center gap-1 border-b border-outline-variant pb-1">
-<span class="material-symbols-outlined" data-icon="handshake" style="font-size: 14px;">handshake</span> Recent Bilateral Projects
-                            </h4>
-<ul class="text-body-md font-body-md text-on-surface space-y-2">
-<li class="line-clamp-2 leading-snug">Integration modeling of offshore wind farms into existing national transmission infrastructures in tropical climates (2024).</li>
-</ul>
-</div>
-</div>
-<div class="bg-surface-container-low px-6 pl-7 py-4 border-t border-outline-variant flex justify-between items-center">
-<button class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
-<span class="material-symbols-outlined" data-icon="description" style="font-size: 18px;">description</span>
-                            View Full Profile
-                        </button>
-<button class="bg-surface-container-high border border-outline-variant text-primary text-label-md font-label-md font-semibold px-5 py-2 rounded shadow-sm hover:bg-surface-variant transition-colors flex items-center gap-2">
-<span class="material-symbols-outlined" data-icon="check" style="font-size: 18px;">check</span>
-                            Request Sent
-                        </button>
-</div>
-</div>
-</div>
-<!-- Pagination -->
-<div class="flex justify-center items-center gap-2 mt-8 pt-8 border-t border-outline-variant">
-<button class="w-10 h-10 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-colors">
-<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
-</button>
-<button class="w-10 h-10 flex items-center justify-center rounded bg-primary text-on-primary font-label-md font-bold">1</button>
-<button class="w-10 h-10 flex items-center justify-center rounded border border-outline-variant text-on-surface hover:bg-surface-container-high transition-colors font-label-md">2</button>
-<button class="w-10 h-10 flex items-center justify-center rounded border border-outline-variant text-on-surface hover:bg-surface-container-high transition-colors font-label-md">3</button>
-<span class="text-on-surface-variant">...</span>
-<button class="w-10 h-10 flex items-center justify-center rounded border border-outline-variant text-on-surface hover:bg-surface-container-high transition-colors font-label-md">12</button>
-<button class="w-10 h-10 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-colors">
-<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
-</button>
-</div>
-</section>
-</main>
-<!-- Footer (From Shared Components JSON) -->
-<footer class="bg-surface-container-highest w-full py-stack-md px-margin-mobile md:px-margin-desktop mt-stack-lg full-width bottom-0 border-t border-outline-variant flat no shadows">
-<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-<div class="text-label-md font-headline-md font-bold text-on-surface flex items-center gap-2">
-<span class="material-symbols-outlined" data-icon="account_balance" style="font-size: 20px;">account_balance</span>
-                Institutional Modernism Architecture.
+            <p class="text-xs text-on-surface-variant">Institute of Materials Science, VAST</p>
+            <span class="inline-block text-[11px] font-semibold text-secondary mt-1">Hanoi, Vietnam</span>
+          </div>
+        </div>
+        <div class="space-y-1.5 text-xs text-on-surface-variant mb-4">
+          <div class="flex justify-between"><span>Publications:</span> <span class="font-semibold text-primary font-mono">68</span></div>
+          <div class="flex justify-between"><span>Citations:</span> <span class="font-semibold text-primary font-mono">1,420</span></div>
+          <div class="flex justify-between"><span>Joint Projects:</span> <span class="font-semibold text-emerald-700 font-mono">5 Active</span></div>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">Nanomaterials</span>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">Photovoltaics</span>
+        </div>
+      </div>
+      <button class="w-full mt-5 py-2.5 rounded-xl border border-outline-variant hover:bg-surface-container-low text-xs font-semibold text-primary transition-all">
+        View Scientific CV
+      </button>
+    </div>
+
+    <!-- Expert 2 -->
+    <div class="bg-white rounded-2xl border border-outline-variant p-6 card-lift flex flex-col justify-between">
+      <div>
+        <div class="flex items-start gap-4 mb-4">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-secondary to-primary text-white font-serif font-bold text-xl flex items-center justify-center shrink-0 shadow-md">
+            IS
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <h2 class="font-serif font-bold text-base text-primary">Dr. Igor V. Smirnov</h2>
+              <span class="material-symbols-outlined text-emerald-600 text-[16px]" title="Verified Scientist">verified</span>
             </div>
-<div class="flex flex-wrap justify-center gap-6">
-<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Institutional Repository</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Privacy Policy</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Contact Secretariat</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">VN-RU Bilateral Agreement</a>
-</div>
-<div class="text-body-md font-body-md text-on-surface-variant text-sm text-center md:text-right">
-                © 2024 VN-RU Knowledge Network. All rights reserved.
+            <p class="text-xs text-on-surface-variant">NUST MISIS &amp; RAS Associate</p>
+            <span class="inline-block text-[11px] font-semibold text-secondary mt-1">Moscow, Russia</span>
+          </div>
+        </div>
+        <div class="space-y-1.5 text-xs text-on-surface-variant mb-4">
+          <div class="flex justify-between"><span>Publications:</span> <span class="font-semibold text-primary font-mono">94</span></div>
+          <div class="flex justify-between"><span>Citations:</span> <span class="font-semibold text-primary font-mono">3,180</span></div>
+          <div class="flex justify-between"><span>Joint Projects:</span> <span class="font-semibold text-emerald-700 font-mono">7 Active</span></div>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">Thin Films</span>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">Clean Energy</span>
+        </div>
+      </div>
+      <button class="w-full mt-5 py-2.5 rounded-xl border border-outline-variant hover:bg-surface-container-low text-xs font-semibold text-primary transition-all">
+        View Scientific CV
+      </button>
+    </div>
+
+    <!-- Expert 3 -->
+    <div class="bg-white rounded-2xl border border-outline-variant p-6 card-lift flex flex-col justify-between">
+      <div>
+        <div class="flex items-start gap-4 mb-4">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-800 to-primary text-white font-serif font-bold text-xl flex items-center justify-center shrink-0 shadow-md">
+            TL
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <h2 class="font-serif font-bold text-base text-primary">Assoc. Prof. Tran Thi Lan</h2>
+              <span class="material-symbols-outlined text-emerald-600 text-[16px]" title="Verified Scientist">verified</span>
             </div>
-</div>
-</footer>
-</body></html>
+            <p class="text-xs text-on-surface-variant">VNU Hanoi, University of Science</p>
+            <span class="inline-block text-[11px] font-semibold text-secondary mt-1">Hanoi, Vietnam</span>
+          </div>
+        </div>
+        <div class="space-y-1.5 text-xs text-on-surface-variant mb-4">
+          <div class="flex justify-between"><span>Publications:</span> <span class="font-semibold text-primary font-mono">45</span></div>
+          <div class="flex justify-between"><span>Citations:</span> <span class="font-semibold text-primary font-mono">890</span></div>
+          <div class="flex justify-between"><span>Joint Projects:</span> <span class="font-semibold text-emerald-700 font-mono">3 Active</span></div>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">Marine Ecology</span>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">Phytochemistry</span>
+        </div>
+      </div>
+      <button class="w-full mt-5 py-2.5 rounded-xl border border-outline-variant hover:bg-surface-container-low text-xs font-semibold text-primary transition-all">
+        View Scientific CV
+      </button>
+    </div>
+  </main>
+</body>
+</html>

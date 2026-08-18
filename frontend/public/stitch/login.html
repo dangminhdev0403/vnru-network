@@ -1,189 +1,301 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Login | Russia–Vietnam Knowledge Network</title>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Google Fonts: Source Serif 4 and Hanken Grotesk -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Tailwind Config injected from instructions -->
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface": "#f7f9fb",
-                        "on-secondary-fixed-variant": "#264191",
-                        "on-secondary": "#ffffff",
-                        "on-primary-container": "#7c839b",
-                        "on-surface-variant": "#45464d",
-                        "primary-container": "#131b2e",
-                        "on-error": "#ffffff",
-                        "surface-container-highest": "#e0e3e5",
-                        "error-container": "#ffdad6",
-                        "on-primary-fixed": "#131b2e",
-                        "tertiary-container": "#002116",
-                        "secondary-container": "#8fa7fe",
-                        "tertiary-fixed": "#a6f2d1",
-                        "on-secondary-fixed": "#00164e",
-                        "surface-dim": "#d8dadc",
-                        "on-primary-fixed-variant": "#3f465c",
-                        "outline-variant": "#c6c6cd",
-                        "on-primary": "#ffffff",
-                        "on-secondary-container": "#1d3989",
-                        "inverse-surface": "#2d3133",
-                        "outline": "#76777d",
-                        "on-tertiary-fixed": "#002116",
-                        "tertiary-fixed-dim": "#8bd6b6",
-                        "surface-variant": "#e0e3e5",
-                        "secondary-fixed-dim": "#b6c4ff",
-                        "on-tertiary-fixed-variant": "#00513b",
-                        "surface-container-lowest": "#ffffff",
-                        "surface-container-high": "#e6e8ea",
-                        "secondary": "#4059aa",
-                        "primary-fixed": "#dae2fd",
-                        "on-surface": "#191c1e",
-                        "surface-tint": "#565e74",
-                        "surface-container": "#eceef0",
-                        "secondary-fixed": "#dce1ff",
-                        "inverse-primary": "#bec6e0",
-                        "surface-bright": "#f7f9fb",
-                        "surface-container-low": "#f2f4f6",
-                        "primary": "#000000",
-                        "inverse-on-surface": "#eff1f3",
-                        "primary-fixed-dim": "#bec6e0",
-                        "on-error-container": "#93000a",
-                        "background": "#f7f9fb",
-                        "on-tertiary": "#ffffff",
-                        "error": "#ba1a1a",
-                        "tertiary": "#000000",
-                        "on-background": "#191c1e",
-                        "on-tertiary-container": "#479175"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "stack-section": "32px",
-                        "stack-compact": "8px",
-                        "container-max": "1280px",
-                        "margin-mobile": "16px",
-                        "gutter": "24px",
-                        "unit": "4px"
-                    },
-                    "fontFamily": {
-                        "display-lg": ["\"Source Serif 4\""],
-                        "body-sm": ["Hanken Grotesk"],
-                        "body-md": ["Hanken Grotesk"],
-                        "headline-lg-mobile": ["\"Source Serif 4\""],
-                        "headline-lg": ["\"Source Serif 4\""],
-                        "label-caps": ["Hanken Grotesk"],
-                        "body-lg": ["Hanken Grotesk"],
-                        "headline-md": ["\"Source Serif 4\""]
-                    },
-                    "fontSize": {
-                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
-                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
-                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
-                    }
-                }
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Login | Russia–Vietnam Knowledge Network</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#f8fafc",
+            "on-surface": "#0f172a",
+            "on-surface-variant": "#475569",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f1f5f9",
+            "surface-container": "#e2e8f0",
+            "surface-container-high": "#cbd5e1",
+            "surface-container-highest": "#94a3b8",
+            "primary": "#0b1c30",
+            "on-primary": "#ffffff",
+            "primary-container": "#13243d",
+            "on-primary-container": "#94a3b8",
+            "secondary": "#0284c7",
+            "secondary-container": "#bae6fd",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#0369a1",
+            "tertiary": "#059669",
+            "tertiary-container": "#a7f3d0",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#065f46",
+            "outline": "#94a3b8",
+            "outline-variant": "#e2e8f0",
+            "error": "#dc2626",
+            "error-container": "#fee2e2",
+            "on-error": "#ffffff",
+            "on-error-container": "#991b1b"
+          },
+          fontFamily: {
+            "sans": ["'Hanken Grotesk'", "sans-serif"],
+            "serif": ["'Source Serif 4'", "serif"]
+          },
+          animation: {
+            "float": "floatSlow 4s ease-in-out infinite",
+            "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+            "fade-in-up": "fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards"
+          },
+          keyframes: {
+            floatSlow: {
+              "0%, 100%": { transform: "translateY(0px)" },
+              "50%": { transform: "translateY(-8px)" }
+            },
+            fadeInUp: {
+              "0%": { opacity: "0", transform: "translateY(16px)" },
+              "100%": { opacity: "1", transform: "translateY(0)" }
             }
+          }
         }
-    </script>
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined', sans-serif;
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      display: inline-block;
+      white-space: nowrap;
+      -webkit-font-smoothing: antialiased;
+    }
+    .glow-mesh {
+      background: radial-gradient(circle at 30% 20%, rgba(2, 132, 199, 0.18) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(5, 150, 105, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 10% 80%, rgba(30, 58, 138, 0.25) 0%, transparent 60%);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: 0 20px 40px -15px rgba(11, 28, 48, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.6);
+    }
+  </style>
 </head>
-<body class="bg-surface text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-secondary-container selection:text-on-secondary-container">
-<!-- Top Navigation Bar - Context: Transactional page, nav is suppressed to purely minimal state -->
-<header class="bg-surface border-b border-outline-variant flat no shadows w-full z-10 sticky top-0">
-<div class="flex justify-between items-center px-margin-mobile md:px-gutter max-w-container-max mx-auto h-16 w-full">
-<div class="flex items-center gap-2">
-<!-- Academic emblem placeholder -->
-<div class="w-8 h-8 rounded-full border border-outline flex items-center justify-center bg-surface-container">
-<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">language</span>
-</div>
-<h1 class="font-headline-md text-headline-md font-semibold text-primary hidden md:block">Mạng lưới Tri thức Nga - Việt</h1>
-<h1 class="font-headline-md text-headline-md font-semibold text-primary md:hidden">RVKN</h1>
-</div>
-<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Secure access</span>
-</div>
-</header>
-<!-- Main Content: Split Screen Layout -->
-<main class="flex-grow flex flex-col md:flex-row w-full max-w-[1600px] mx-auto bg-surface-container-lowest">
-<!-- Left Side: Editorial Graphic (Hidden on mobile) -->
-<section class="hidden md:flex md:w-1/2 lg:w-3/5 bg-surface-container relative overflow-hidden flex-col justify-end p-12 lg:p-24 border-r border-outline-variant">
-<!-- Background Image -->
-<div class="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-multiply" data-alt="An abstract, high-end scientific visualization showing interconnected global data nodes, rendered in a sophisticated institutional style. The color palette features subtle academic blues and soft grays, evoking a calm, rigorous intellectual environment. Fine, precise geometric lines connect luminous data points against a very light, almost white background, resembling high-level academic research diagrams." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDLUgmkHBbuTPv198z_5q0CecBFEpZEU1qTnvqNxZ277KtCm-2dP923ZdLbtGR0f5-0o6zJYKb9L7K6tkUvw8Isj9Ss8qwTMWenzqqyK3v7B0nYWJ1vXhlc_KjLl1RkcxPpLq_s3HAqSO-kDXB6plQ0BvAJQPWK_PEZOokR0lFGBd8xPJrfJ62O88zhOcujr-YT8mBrIHqrcUtZfEWotO8dxb4erdXTVOaYpeT1rSk-4GtGtwLX_OXbvQ')"></div>
-<!-- Overlay to ensure text readability -->
-<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent opacity-80"></div>
-<div class="relative z-10 max-w-xl">
-<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant block mb-stack-compact">Member Workspace</span>
-<h2 class="font-display-lg text-display-lg text-primary mb-6">Russia–Vietnam Knowledge Network</h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-md">
-                    Facilitating bilateral scientific cooperation, academic exchange, and rigorous transnational research initiatives.
-                </p>
-<div class="flex items-center gap-4 text-on-surface-variant">
-<div class="h-px w-12 bg-outline-variant"></div>
-<span class="font-body-sm text-body-sm">Framework v2.4</span>
-</div>
-</div>
-</section>
-<!-- Right Side: Login Canvas -->
-<section class="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-margin-mobile md:p-12 lg:p-16 min-h-[calc(100vh-64px-64px)] bg-surface-container-low">
-<div class="w-full max-w-md bg-surface-container-lowest border border-outline-variant rounded-xl p-8 md:p-10 shadow-xl shadow-primary/5">
-<div class="w-12 h-12 mb-6 rounded-lg bg-primary text-on-primary flex items-center justify-center" aria-hidden="true">
-<span class="material-symbols-outlined">lock</span>
-</div>
-<div class="mb-stack-section">
-<span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary block mb-stack-compact">VN-RU secure access</span>
-<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-compact">Welcome back</h2>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Continue to your authorized workspace through the VN-RU identity service.</p>
-</div>
-<p class="hidden mb-5 border border-error/30 bg-error-container p-3 font-body-sm text-body-sm text-on-error-container" data-auth-status role="alert">
-                    Sign in is unavailable because Keycloak is not configured for this environment.
-                </p>
-<a class="w-full h-12 bg-primary text-on-primary font-body-md text-body-md font-semibold rounded-lg hover:bg-inverse-surface transition-colors active:scale-[0.99] duration-150 flex items-center justify-center gap-2 shadow-sm" data-auth-login href="/api/auth/login" target="_top">
-                    Sign in
-                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                </a>
-<div class="mt-6 pt-5 border-t border-outline-variant flex items-start gap-3 text-on-surface-variant">
-<span class="material-symbols-outlined text-[18px] mt-0.5" aria-hidden="true">verified_user</span>
-<p class="font-body-sm text-body-sm">Authentication is handled by Keycloak. VN-RU never receives your password.</p>
-</div>
-<script>
-const params = new URLSearchParams(location.search);
-const login = document.querySelector('[data-auth-login]');
-const returnTo = params.get('returnTo');
-if (returnTo) login.href += `?returnTo=${encodeURIComponent(returnTo)}`;
-if (params.get('error') === 'configuration-unavailable') {
-  document.querySelector('[data-auth-status]').classList.remove('hidden');
-  login.remove();
-}
-</script>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="bg-surface border-t border-outline-variant w-full mt-auto">
-<div class="flex flex-col md:flex-row justify-between items-center py-stack-compact px-margin-mobile md:px-gutter max-w-container-max mx-auto w-full min-h-[64px] gap-4 md:gap-0">
-<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant text-center md:text-left">
-                © 2026 Russia–Vietnam Knowledge Network
-            </span>
-<span class="font-label-caps text-label-caps text-on-surface-variant">Secure member access</span>
-</div>
-</footer>
-</body></html>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-sans antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+  <!-- Bilateral Top Header Bar -->
+  <header class="bg-surface/90 backdrop-blur-md border-b border-outline-variant w-full z-20 sticky top-0">
+    <div class="flex justify-between items-center px-6 lg:px-12 max-w-7xl mx-auto h-16 w-full">
+      <a href="/" class="flex items-center gap-3 group transition-transform hover:scale-[1.01]" target="_top">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary-container to-secondary flex items-center justify-center shadow-md shadow-primary/10 group-hover:shadow-primary/20 transition-all">
+          <span class="material-symbols-outlined text-[22px] text-white">hub</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-serif font-bold text-lg text-primary tracking-tight">VN-RU</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold uppercase tracking-wider">Network</span>
+          </div>
+          <p class="text-[11px] text-on-surface-variant hidden sm:block">Russia–Vietnam Knowledge Network • Mạng lưới Tri thức Việt – Nga</p>
+        </div>
+      </a>
+      <div class="flex items-center gap-4">
+        <div class="hidden md:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface-variant">
+          <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+          <span>Single Sign-On (OIDC)</span>
+        </div>
+        <div class="flex items-center gap-1 text-xs font-medium text-on-surface-variant border-l border-outline-variant pl-4">
+          <span class="text-primary font-bold">VN</span>
+          <span class="text-outline">/</span>
+          <span>RU</span>
+          <span class="text-outline">/</span>
+          <span>EN</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero & Split Authentication View -->
+  <main class="flex-grow flex flex-col md:flex-row w-full max-w-[1600px] mx-auto relative overflow-hidden">
+    <!-- Left Hero Graphics & Brand Column -->
+    <section class="hidden md:flex md:w-1/2 lg:w-3/5 bg-primary relative overflow-hidden flex-col justify-between p-12 lg:p-20 text-white">
+      <!-- Glow Gradients Background -->
+      <div class="absolute inset-0 glow-mesh opacity-90"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
+
+      <!-- Top Badges -->
+      <div class="relative z-10 animate-fade-in-up">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-medium text-white/90 mb-6 shadow-inner">
+          <span class="material-symbols-outlined text-[16px] text-tertiary-container">verified</span>
+          <span>Independent Bilateral Cooperation Initiative</span>
+        </div>
+        <h1 class="font-serif text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-4">
+          Connecting Science, Innovation &amp; Academic Heritage
+        </h1>
+        <p class="text-white/80 text-base lg:text-lg max-w-xl font-light leading-relaxed">
+          The official single window for joint research grants, peer reviews, 2+2 enterprise technology transfer, and bilateral scientific exchange between Vietnam and the Russian Federation.
+        </p>
+      </div>
+
+      <!-- Center Floating Visual Cards -->
+      <div class="relative z-10 grid grid-cols-2 gap-4 my-8 max-w-lg">
+        <div class="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 transition-all hover:bg-white/15 hover:border-white/25 card-hover-lift">
+          <div class="w-9 h-9 rounded-xl bg-secondary/30 flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined text-secondary-container text-[20px]">science</span>
+          </div>
+          <div class="text-2xl font-bold text-white tracking-tight">400+</div>
+          <div class="text-xs text-white/70 font-medium mt-0.5">Joint Research Proposals</div>
+        </div>
+        <div class="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 transition-all hover:bg-white/15 hover:border-white/25 card-hover-lift">
+          <div class="w-9 h-9 rounded-xl bg-tertiary/30 flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined text-tertiary-container text-[20px]">group</span>
+          </div>
+          <div class="text-2xl font-bold text-white tracking-tight">1,850+</div>
+          <div class="text-xs text-white/70 font-medium mt-0.5">Bilateral Verified Experts</div>
+        </div>
+      </div>
+
+      <!-- Bottom Operator Footer -->
+      <div class="relative z-10 pt-6 border-t border-white/15 flex items-center justify-between text-xs text-white/70">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[16px] text-tertiary-container">shield</span>
+          <span>Operated by Traditions and Friendship Foundation</span>
+        </div>
+        <span class="font-mono text-white/50">Framework v2.4</span>
+      </div>
+    </section>
+
+    <!-- Right Login Form Column -->
+    <section class="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-6 sm:p-10 lg:p-16 bg-surface relative">
+      <div class="absolute inset-0 bg-gradient-to-b from-surface-container-low/60 to-transparent pointer-events-none"></div>
+
+      <div class="w-full max-w-md glass-card rounded-3xl p-8 sm:p-10 relative z-10 animate-fade-in-up">
+        <!-- Top Auth Icon & Title -->
+        <div class="flex items-center justify-between mb-8">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-primary to-primary-container text-white flex items-center justify-center shadow-lg shadow-primary/20">
+            <span class="material-symbols-outlined text-[28px]">lock</span>
+          </div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            IAM Gate Active
+          </span>
+        </div>
+
+        <div class="mb-8">
+          <span class="text-xs font-bold uppercase tracking-widest text-secondary block mb-1">VN-RU Secure Access</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-primary tracking-tight">Welcome back</h2>
+          <p class="text-sm text-on-surface-variant mt-2 leading-relaxed">
+            Continue to your authorized workspace through the VN-RU unified identity service.
+          </p>
+        </div>
+
+        <!-- Configuration Error Alert Banner -->
+        <div class="hidden mb-6 border border-error/40 bg-error-container/80 backdrop-blur-sm rounded-xl p-4 text-sm text-on-error-container shadow-sm" data-auth-status role="alert">
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-[20px] text-error mt-0.5">error</span>
+            <div class="flex-1">
+              <span class="font-semibold block">Authentication Unavailable</span>
+              <p class="text-xs mt-0.5 text-on-error-container/90">Sign in is unavailable because Keycloak is not configured for this environment.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary Sign In Action Button -->
+        <a class="w-full h-13 py-3.5 px-6 bg-gradient-to-r from-primary via-primary-container to-primary hover:from-primary-container hover:to-primary text-on-primary font-medium text-base rounded-xl transition-all duration-200 shadow-md hover:shadow-xl hover:shadow-primary/20 active:scale-[0.99] flex items-center justify-center gap-3 group aria-disabled:opacity-60 aria-disabled:pointer-events-none" data-auth-login href="/api/auth/login">
+          <span data-auth-label>Sign in</span>
+          <span class="material-symbols-outlined text-[20px] transition-transform duration-200 group-hover:translate-x-1" data-auth-icon>arrow_forward</span>
+        </a>
+
+        <!-- Security Guarantee Notice -->
+        <div class="mt-8 pt-6 border-t border-outline-variant/80 flex items-start gap-3 text-on-surface-variant text-xs leading-relaxed">
+          <div class="w-6 h-6 rounded-lg bg-surface-container flex items-center justify-center shrink-0 mt-0.5">
+            <span class="material-symbols-outlined text-[16px] text-tertiary">verified_user</span>
+          </div>
+          <p>
+            Authentication is handled by Keycloak. VN-RU never receives your password. Sessions are cryptographically verified across bilateral service nodes.
+          </p>
+        </div>
+
+        <!-- Client Scripts -->
+        <script>
+          const params = new URLSearchParams(location.search);
+          const login = document.querySelector('[data-auth-login]');
+          const returnTo = params.get('returnTo');
+          if (returnTo && login) {
+            login.href += `?returnTo=${encodeURIComponent(returnTo)}`;
+          }
+          let popup;
+          let popupTimer;
+          let finishLogin;
+          const resetLogin = () => {
+            clearInterval(popupTimer);
+            if (finishLogin) window.removeEventListener('message', finishLogin);
+            login?.removeAttribute('aria-disabled');
+            document.querySelector('[data-auth-label]').textContent = 'Sign in';
+            const icon = document.querySelector('[data-auth-icon]');
+            icon.textContent = 'arrow_forward';
+            icon.classList.remove('animate-spin');
+          };
+          login?.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (login.getAttribute('aria-disabled') === 'true') return;
+            const target = returnTo && returnTo.startsWith('/') && !returnTo.startsWith('//') ? returnTo : '/';
+            const authUrl = `/api/auth/login?returnTo=${encodeURIComponent('/auth-popup-complete.html')}`;
+            popup = window.open(authUrl, 'vnru-auth', 'popup,width=520,height=700');
+            if (!popup) {
+              window.top.location.assign(login.href);
+              return;
+            }
+            login.setAttribute('aria-disabled', 'true');
+            document.querySelector('[data-auth-label]').textContent = 'Signing in…';
+            const icon = document.querySelector('[data-auth-icon]');
+            icon.textContent = 'progress_activity';
+            icon.classList.add('animate-spin');
+            popupTimer = setInterval(() => {
+              if (popup.closed) resetLogin();
+            }, 500);
+            finishLogin = (message) => {
+              if (message.origin !== location.origin || message.source !== popup || message.data !== 'vnru:authenticated') return;
+              window.removeEventListener('message', finishLogin);
+              clearInterval(popupTimer);
+              window.top.location.assign(target);
+            };
+            window.addEventListener('message', finishLogin);
+          });
+          if (params.get('error') === 'configuration-unavailable') {
+            const statusEl = document.querySelector('[data-auth-status]');
+            if (statusEl) statusEl.classList.remove('hidden');
+            if (login) login.remove();
+          }
+        </script>
+      </div>
+    </section>
+  </main>
+
+  <!-- Clean Institutional Footer -->
+  <footer class="bg-surface border-t border-outline-variant w-full mt-auto">
+    <div class="flex flex-col sm:flex-row justify-between items-center py-4 px-6 lg:px-12 max-w-7xl mx-auto w-full text-xs text-on-surface-variant gap-2">
+      <div class="flex items-center gap-2">
+        <span>© 2026 Russia–Vietnam Knowledge Network</span>
+        <span>•</span>
+        <span>Traditions and Friendship Foundation</span>
+      </div>
+      <div class="flex items-center gap-4 font-medium">
+        <span class="flex items-center gap-1.5 text-emerald-600">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          256-bit TLS Encrypted
+        </span>
+        <span class="text-outline">|</span>
+        <span>Secure Member Access</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

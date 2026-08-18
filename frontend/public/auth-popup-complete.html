@@ -1,0 +1,8 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sign in complete</title>
+<p>Sign in complete. This window will close.</p>
+<script>
+  window.opener?.postMessage('vnru:authenticated', location.origin);
+  window.close();
+</script>
