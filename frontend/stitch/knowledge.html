@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VN-RU Knowledge Network - Knowledge Repository</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&amp;family=Source+Serif+4:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#565e74",
+                      "surface-variant": "#d3e4fe",
+                      "primary-fixed": "#dae2fd",
+                      "on-secondary-fixed": "#00201d",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#131b2e",
+                      "outline-variant": "#c6c6cd",
+                      "inverse-on-surface": "#eaf1ff",
+                      "surface-container-highest": "#d3e4fe",
+                      "primary": "#000000",
+                      "primary-container": "#131b2e",
+                      "on-surface": "#0b1c30",
+                      "on-error-container": "#93000a",
+                      "on-primary": "#ffffff",
+                      "surface-dim": "#cbdbf5",
+                      "inverse-primary": "#bec6e0",
+                      "on-background": "#0b1c30",
+                      "tertiary-fixed-dim": "#ffb77d",
+                      "secondary-container": "#86f2e4",
+                      "tertiary": "#000000",
+                      "on-secondary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "on-error": "#ffffff",
+                      "tertiary-fixed": "#ffdcc3",
+                      "on-secondary-container": "#006f66",
+                      "on-primary-container": "#7c839b",
+                      "error-container": "#ffdad6",
+                      "background": "#f8f9ff",
+                      "surface": "#f8f9ff",
+                      "tertiary-container": "#2f1500",
+                      "secondary": "#006a61",
+                      "surface-container": "#e5eeff",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-tertiary-container": "#c76c00",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#005049",
+                      "secondary-fixed-dim": "#6bd8cb",
+                      "on-tertiary-fixed": "#2f1500",
+                      "surface-container-low": "#eff4ff",
+                      "on-tertiary-fixed-variant": "#6e3900",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "outline": "#76777d",
+                      "surface-bright": "#f8f9ff",
+                      "inverse-surface": "#213145",
+                      "on-surface-variant": "#45464d",
+                      "secondary-fixed": "#89f5e7",
+                      "surface-container-high": "#dce9ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "stack-lg": "48px",
+                      "container-max": "1280px",
+                      "stack-sm": "12px",
+                      "gutter": "24px",
+                      "stack-md": "24px",
+                      "margin-desktop": "48px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-md": [
+                              "\"Source Serif 4\""
+                      ],
+                      "body-lg": [
+                              "\"Source Serif 4\""
+                      ],
+                      "headline-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg-mobile": [
+                              "Hanken Grotesk"
+                      ],
+                      "display-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-sm": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.7",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .glass-panel {
+            background: rgba(248, 249, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(198, 198, 205, 0.3);
+        }
+
+        .shadow-ambient-lvl1 {
+            box-shadow: 0 4px 12px rgba(11, 28, 48, 0.05);
+        }
+
+        .shadow-ambient-lvl2 {
+            box-shadow: 0 12px 24px rgba(11, 28, 48, 0.1);
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<nav class="bg-surface dark:bg-surface-dim docked full-width top-0 border-b border-outline-variant dark:border-outline flat no shadows sticky z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-20">
+<!-- Brand -->
+<div class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">
+                VN-RU Knowledge Network
+            </div>
+<!-- Navigation Links (Web) -->
+<div class="hidden md:flex items-center space-x-gutter">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-DEFAULT text-label-md font-label-md" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-DEFAULT text-label-md font-label-md" href="#">News</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-DEFAULT text-label-md font-label-md" href="#">Search</a>
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary font-bold pb-1 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-t-DEFAULT text-label-md font-label-md opacity-80 scale-95 transition-all" href="#">Knowledge</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-DEFAULT text-label-md font-label-md" href="#">Experts</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-DEFAULT text-label-md font-label-md" href="#">Opportunities</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center space-x-stack-sm">
+<span class="text-label-sm font-label-sm text-on-surface-variant hidden lg:block">VN / RU / <span class="text-primary border-b border-primary">EN</span></span>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-DEFAULT text-label-md font-label-md hover:opacity-90 transition-opacity">
+                    Login/Join
+                </button>
+</div>
+</div>
+</nav>
+<!-- Main Layout Grid -->
+<div class="flex-1 max-w-container-max mx-auto w-full px-margin-desktop py-stack-lg grid grid-cols-12 gap-gutter items-start">
+<!-- Sidebar (Advanced Filtering) - Fixed 280px equivalent on Desktop -->
+<aside class="col-span-12 md:col-span-3 lg:col-span-3 space-y-stack-md glass-panel p-stack-sm rounded-lg shadow-ambient-lvl1 sticky top-[100px]">
+<div class="flex items-center justify-between pb-stack-sm border-b border-outline-variant">
+<h2 class="text-headline-md font-headline-md text-primary">Filters</h2>
+<button class="text-secondary hover:text-secondary-fixed-dim transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">tune</span>
+</button>
+</div>
+<!-- Accordion Group: Year -->
+<div class="space-y-base pt-base">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wide">Year</h3>
+<div class="space-y-2">
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-secondary rounded-DEFAULT border-outline-variant focus:ring-secondary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-background group-hover:text-primary transition-colors">2024</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-secondary rounded-DEFAULT border-outline-variant focus:ring-secondary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-background group-hover:text-primary transition-colors">2023</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-secondary rounded-DEFAULT border-outline-variant focus:ring-secondary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-background group-hover:text-primary transition-colors">2022</span>
+</label>
+</div>
+</div>
+<!-- Accordion Group: Field -->
+<div class="space-y-base pt-stack-sm border-t border-outline-variant/50">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wide">Field</h3>
+<div class="space-y-2 max-h-48 overflow-y-auto scrollbar-hide">
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input checked="" class="form-checkbox h-4 w-4 text-secondary rounded-DEFAULT border-outline-variant focus:ring-secondary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-background group-hover:text-primary transition-colors">Quantum Computing</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-secondary rounded-DEFAULT border-outline-variant focus:ring-secondary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-background group-hover:text-primary transition-colors">Materials Science</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-secondary rounded-DEFAULT border-outline-variant focus:ring-secondary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-background group-hover:text-primary transition-colors">Biomedical Engineering</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-secondary rounded-DEFAULT border-outline-variant focus:ring-secondary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-background group-hover:text-primary transition-colors">Aerospace</span>
+</label>
+</div>
+</div>
+<!-- Accordion Group: Institution -->
+<div class="space-y-base pt-stack-sm border-t border-outline-variant/50">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wide">Institution</h3>
+<div class="space-y-2 max-h-48 overflow-y-auto scrollbar-hide">
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-secondary rounded-DEFAULT border-outline-variant focus:ring-secondary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-background group-hover:text-primary transition-colors">VNU Hanoi</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-secondary rounded-DEFAULT border-outline-variant focus:ring-secondary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-background group-hover:text-primary transition-colors">Moscow State University</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-secondary rounded-DEFAULT border-outline-variant focus:ring-secondary focus:ring-offset-background bg-transparent" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-background group-hover:text-primary transition-colors">Skoltech</span>
+</label>
+</div>
+</div>
+<button class="w-full mt-stack-sm py-2 border border-outline-variant text-on-surface-variant rounded-DEFAULT text-label-md font-label-md hover:bg-surface-container-low transition-colors">
+                Clear Filters
+            </button>
+</aside>
+<!-- Main Content Canvas -->
+<main class="col-span-12 md:col-span-9 lg:col-span-9 space-y-stack-md">
+<!-- Header & Search -->
+<div class="space-y-stack-sm">
+<h1 class="text-display-lg font-display-lg text-primary">Knowledge Repository</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-2xl">Access peer-reviewed research, technical outcomes, and policy documents from the Vietnam-Russia scientific collaboration network.</p>
+<div class="relative w-full max-w-xl mt-stack-md">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-12 pr-4 py-3 text-body-md font-body-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-all shadow-ambient-lvl1" placeholder="Search title, author, or keyword..." type="text"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex space-x-stack-md border-b border-outline-variant">
+<button class="text-primary border-b-2 border-primary font-label-md text-label-md pb-2 px-1 translate-y-[1px]">Research Papers</button>
+<button class="text-on-surface-variant hover:text-primary border-b-2 border-transparent hover:border-outline-variant transition-colors font-label-md text-label-md pb-2 px-1">Technical Outcomes</button>
+<button class="text-on-surface-variant hover:text-primary border-b-2 border-transparent hover:border-outline-variant transition-colors font-label-md text-label-md pb-2 px-1">Policy Documents</button>
+</div>
+<!-- Content List (Bento-inspired Cards) -->
+<div class="space-y-stack-sm pt-base">
+<!-- Card 1 -->
+<article class="bg-surface-container-lowest rounded-lg border border-outline-variant p-stack-sm shadow-ambient-lvl1 hover:shadow-ambient-lvl2 transition-shadow group">
+<div class="flex flex-col md:flex-row justify-between items-start gap-stack-sm">
+<div class="flex-1 space-y-base">
+<div class="flex items-center space-x-2">
+<span class="bg-surface-variant text-on-primary-fixed text-label-sm font-label-sm px-2 py-1 rounded-sm uppercase tracking-wide">Quantum Computing</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Oct 2024</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary group-hover:text-secondary transition-colors cursor-pointer">Advancements in Superconducting Qubit Coherence Times</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Authors: Dr. Nguyen Van A, Prof. Dmitri Sokolov, Elena Ivanova</p>
+<p class="text-body-md font-body-md text-on-background line-clamp-3">This paper explores novel material synthesis techniques to enhance the coherence times of superconducting qubits, a critical hurdle in scaling quantum processors. By utilizing an ultra-high vacuum deposition process at cryogenic temperatures, we observed a 40% increase in T1 relaxation times compared to standard fabrication methods...</p>
+</div>
+<div class="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start w-full md:w-auto gap-4 md:pl-stack-sm border-t md:border-t-0 md:border-l border-outline-variant/30 pt-4 md:pt-0 mt-4 md:mt-0">
+<div class="flex items-center space-x-2 md:mb-auto">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 0;">school</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant text-right">VNU &amp; MIPT</span>
+</div>
+<div class="flex space-x-2">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-DEFAULT transition-all" title="View Details">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">visibility</span>
+</button>
+<button class="p-2 text-secondary hover:text-secondary-fixed-dim hover:bg-surface-container-low rounded-DEFAULT transition-all" title="Download PDF">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">download</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface-container-lowest rounded-lg border border-outline-variant p-stack-sm shadow-ambient-lvl1 hover:shadow-ambient-lvl2 transition-shadow group">
+<div class="flex flex-col md:flex-row justify-between items-start gap-stack-sm">
+<div class="flex-1 space-y-base">
+<div class="flex items-center space-x-2">
+<span class="bg-surface-variant text-on-primary-fixed text-label-sm font-label-sm px-2 py-1 rounded-sm uppercase tracking-wide">Materials Science</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Aug 2024</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary group-hover:text-secondary transition-colors cursor-pointer">Thermal Properties of Graphene-Aerogel Composites</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Authors: Tran Thi B, Sergei Volkov</p>
+<p class="text-body-md font-body-md text-on-background line-clamp-3">We present a comprehensive study on the thermal conductivity of synthesized graphene-aerogel composites. The unique porous structure, combined with the high thermal conductivity of the graphene sheets, results in an anisotropic thermal profile suitable for advanced aerospace thermal management systems...</p>
+</div>
+<div class="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start w-full md:w-auto gap-4 md:pl-stack-sm border-t md:border-t-0 md:border-l border-outline-variant/30 pt-4 md:pt-0 mt-4 md:mt-0">
+<div class="flex items-center space-x-2 md:mb-auto">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 0;">school</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant text-right">HUST &amp; Skoltech</span>
+</div>
+<div class="flex space-x-2">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-DEFAULT transition-all" title="View Details">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">visibility</span>
+</button>
+<button class="p-2 text-secondary hover:text-secondary-fixed-dim hover:bg-surface-container-low rounded-DEFAULT transition-all" title="Download PDF">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">download</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface-container-lowest rounded-lg border border-outline-variant p-stack-sm shadow-ambient-lvl1 hover:shadow-ambient-lvl2 transition-shadow group">
+<div class="flex flex-col md:flex-row justify-between items-start gap-stack-sm">
+<div class="flex-1 space-y-base">
+<div class="flex items-center space-x-2">
+<span class="bg-surface-variant text-on-primary-fixed text-label-sm font-label-sm px-2 py-1 rounded-sm uppercase tracking-wide">Biomedical Engineering</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">May 2024</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary group-hover:text-secondary transition-colors cursor-pointer">Machine Learning Applications in Early Stroke Detection</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Authors: Le Van C, Anna Petrova, Igor Smirnov</p>
+<p class="text-body-md font-body-md text-on-background line-clamp-3">This paper details a cross-institutional collaborative effort to develop a robust machine learning model capable of identifying early signs of ischemic stroke from low-resolution MRI scans. Utilizing a dataset spanning demographic cohorts from both Vietnam and Russia, the model achieved a 92% accuracy rate...</p>
+</div>
+<div class="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start w-full md:w-auto gap-4 md:pl-stack-sm border-t md:border-t-0 md:border-l border-outline-variant/30 pt-4 md:pt-0 mt-4 md:mt-0">
+<div class="flex items-center space-x-2 md:mb-auto">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 0;">school</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant text-right">VinUni &amp; Sechenov</span>
+</div>
+<div class="flex space-x-2">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-DEFAULT transition-all" title="View Details">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">visibility</span>
+</button>
+<button class="p-2 text-secondary hover:text-secondary-fixed-dim hover:bg-surface-container-low rounded-DEFAULT transition-all" title="Download PDF">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">download</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center items-center space-x-2 pt-stack-sm">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT bg-primary text-on-primary text-label-sm font-label-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-low text-label-sm font-label-sm transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-low text-label-sm font-label-sm transition-colors">3</button>
+<span class="text-on-surface-variant">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-low text-label-sm font-label-sm transition-colors">12</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">chevron_right</span>
+</button>
+</div>
+</main>
+</div>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-highest dark:bg-inverse-surface full-width bottom-0 border-t border-outline-variant dark:border-outline flat no shadows w-full py-stack-md px-margin-desktop mt-stack-lg mt-auto">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-stack-sm">
+<div class="text-label-md font-headline-md font-bold text-on-surface dark:text-inverse-on-surface">
+                VN-RU Knowledge Network
+            </div>
+<div class="flex flex-wrap justify-center gap-x-gutter gap-y-2">
+<a class="text-on-surface-variant dark:text-on-primary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors text-label-sm font-label-sm" href="#">Institutional Repository</a>
+<a class="text-on-surface-variant dark:text-on-primary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors text-label-sm font-label-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-primary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors text-label-sm font-label-sm" href="#">Contact Secretariat</a>
+<a class="text-on-surface-variant dark:text-on-primary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors text-label-sm font-label-sm" href="#">VN-RU Bilateral Agreement</a>
+</div>
+<div class="text-body-md font-body-md text-on-surface dark:text-inverse-on-surface text-center md:text-right text-sm">
+                © 2024 VN-RU Knowledge Network. All rights reserved. Institutional Modernism Architecture.
+            </div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,14 @@
+{
+  "projectId": "11832106896420513667",
+  "screens": {
+    "home": "1544582802b64eb9a8576b02683fd9a7",
+    "search": "afa21bd0c0ef48d38d79017b6800642e",
+    "knowledge": "47646ba134d6406294fe470e9cc45023",
+    "experts": "7645dc1cc74d414884908a6924a7f8cc",
+    "opportunities": "4035f32541fe4da088d6020e52504ff5",
+    "researcher": "bbf3e04d25814cf1aba8ef93d9ff2233",
+    "reviewer": "7eb366b1c8e14080b7f0e790dcfb160c",
+    "governance": "06614f79505846709c655968aedb175f",
+    "login": "0aa8702b55db4f41a54c0760296dff02"
+  }
+}

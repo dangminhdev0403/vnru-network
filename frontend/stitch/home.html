@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VN-RU Knowledge Network Portal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Source+Serif+4:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#565e74",
+                    "surface-variant": "#d3e4fe",
+                    "primary-fixed": "#dae2fd",
+                    "on-secondary-fixed": "#00201d",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#131b2e",
+                    "outline-variant": "#c6c6cd",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container-highest": "#d3e4fe",
+                    "primary": "#000000",
+                    "primary-container": "#131b2e",
+                    "on-surface": "#0b1c30",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#cbdbf5",
+                    "inverse-primary": "#bec6e0",
+                    "on-background": "#0b1c30",
+                    "tertiary-fixed-dim": "#ffb77d",
+                    "secondary-container": "#86f2e4",
+                    "tertiary": "#000000",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#ffdcc3",
+                    "on-secondary-container": "#006f66",
+                    "on-primary-container": "#7c839b",
+                    "error-container": "#ffdad6",
+                    "background": "#f8f9ff",
+                    "surface": "#f8f9ff",
+                    "tertiary-container": "#2f1500",
+                    "secondary": "#006a61",
+                    "surface-container": "#e5eeff",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-tertiary-container": "#c76c00",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#005049",
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "on-tertiary-fixed": "#2f1500",
+                    "surface-container-low": "#eff4ff",
+                    "on-tertiary-fixed-variant": "#6e3900",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "outline": "#76777d",
+                    "surface-bright": "#f8f9ff",
+                    "inverse-surface": "#213145",
+                    "on-surface-variant": "#45464d",
+                    "secondary-fixed": "#89f5e7",
+                    "surface-container-high": "#dce9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "stack-lg": "48px",
+                    "container-max": "1280px",
+                    "stack-sm": "12px",
+                    "gutter": "24px",
+                    "stack-md": "24px",
+                    "margin-desktop": "48px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-md": ["\"Source Serif 4\""],
+                    "body-lg": ["\"Source Serif 4\""],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "label-md": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.7", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-surface-variant selection:text-on-surface">
+<header class="bg-surface dark:bg-surface-dim docked full-width top-0 border-b border-outline-variant dark:border-outline flat no shadows z-50 sticky">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-20">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed tracking-tight">
+                    VN-RU Knowledge Network
+                </span>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary font-bold pb-1 text-label-md font-label-md" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-DEFAULT text-label-md font-label-md" href="#">News</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-DEFAULT text-label-md font-label-md" href="#">Search</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-DEFAULT text-label-md font-label-md" href="#">Knowledge</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-DEFAULT text-label-md font-label-md" href="#">Experts</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all duration-200 px-3 py-2 rounded-DEFAULT text-label-md font-label-md" href="#">Opportunities</a>
+</nav>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors hidden lg:block">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<div class="flex gap-2 text-label-sm font-label-sm text-on-surface-variant">
+<button class="hover:text-primary underline decoration-primary underline-offset-4 font-bold text-primary">VN</button>
+<span>/</span>
+<button class="hover:text-primary transition-colors">RU</button>
+<span>/</span>
+<button class="hover:text-primary transition-colors">EN</button>
+</div>
+<a class="bg-primary-container text-on-primary px-4 py-2 rounded-DEFAULT text-label-md font-label-md hover:bg-primary transition-colors shadow-sm" href="/login" target="_top">
+                    Login/Join
+                </a>
+</div>
+</div>
+</header>
+<main>
+<section class="relative w-full h-[600px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20" data-alt="A striking digital art representation of an advanced scientific laboratory environment bridging two nations, rendered in a bright, modern light-mode aesthetic. High-key, soft white lighting illuminates complex geometric data structures and abstract DNA helix motifs suspended in mid-air. The visual style relies on a sophisticated palette of pristine whites, extremely light greys, deep slate blues, and subtle emerald accents. The mood is highly analytical, organized, and technologically forward, perfectly embodying Institutional Modernism." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0H1qRvfWDnjZTxhHWEc8VRIc7OPCwtsYr5nwRMhSfUW5Dk7LQT7rxMUQGo2CNUpwzwPGltQrVBGep9WuKpwmxLSOLj3JBSxV0txH7bxIPyIC1NHApZILZcuJUIeILTavPe8imonKxHDbSXr2loAUQNpK2-LDeSzohTBQ6axQOOUKe2IFDvUNvcHZ_mfHH1eCmfh4HobOx5f949dF2lg_4s2ZbZvsMWE1b7r3UiTKkxEjjUO9uOUtDhQ')"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-surface/90 via-surface/70 to-surface"></div>
+<div class="relative z-10 w-full max-w-container-max mx-auto px-margin-desktop text-center flex flex-col items-center">
+<h1 class="text-display-lg font-display-lg text-primary-container max-w-4xl mb-stack-md leading-tight">
+                    Synthesizing Knowledge,<br/>Catalyzing Innovation
+                </h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-2xl mb-stack-lg">
+                    The premier bilateral platform for academic exchange, joint research ventures, and technology transfer between the scientific communities of Vietnam and Russia.
+                </p>
+<div class="w-full max-w-3xl bg-surface-container-lowest rounded-lg border border-outline-variant p-2 flex items-center shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all focus-within:ring-2 focus-within:ring-secondary-container focus-within:border-transparent">
+<div class="pl-4 pr-2 flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-body-md font-body-md text-on-surface placeholder:text-outline py-3 outline-none" placeholder="Search papers, experts, institutions, or funding opportunities..." type="text"/>
+<button class="bg-secondary text-on-secondary px-6 py-3 rounded-DEFAULT text-label-md font-label-md font-semibold hover:bg-on-secondary-container transition-colors ml-2 flex items-center gap-2">
+                        Search
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<section class="w-full max-w-container-max mx-auto px-margin-desktop py-stack-lg border-t border-outline-variant/30">
+<h2 class="text-headline-md font-headline-md text-primary-container mb-stack-md flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">analytics</span>
+                Network Impact
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-shadow">
+<div class="text-display-lg font-display-lg text-primary mb-2">412</div>
+<div class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Active Joint Projects</div>
+<div class="mt-4 w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[75%]"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-shadow">
+<div class="text-display-lg font-display-lg text-primary mb-2">1,850+</div>
+<div class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Registered Experts</div>
+<div class="mt-4 w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[60%]"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-shadow">
+<div class="text-display-lg font-display-lg text-primary mb-2">89</div>
+<div class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Tech Transfers Executed</div>
+<div class="mt-4 w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-surface-tint w-[40%]"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full bg-surface-container-low py-stack-lg border-y border-outline-variant/50">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="flex justify-between items-end mb-stack-md">
+<h2 class="text-headline-md font-headline-md text-primary-container flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">feed</span>
+                        Latest Announcements
+                    </h2>
+<a class="text-label-md font-label-md text-secondary hover:text-on-secondary-container transition-colors flex items-center gap-1 font-semibold" href="#">
+                        View All Repository <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<div class="flex gap-gutter overflow-x-auto pb-4 snap-x snap-mandatory hide-scrollbar" style="scrollbar-width: none;">
+<article class="min-w-[320px] max-w-[400px] flex-shrink-0 bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden snap-start group cursor-pointer hover:border-surface-tint transition-colors">
+<div class="w-full h-40 bg-cover bg-center border-b border-outline-variant/30 relative" data-alt="A clean, minimalist abstract composition featuring very light blue and white architectural lines intersecting perfectly, representing structured bilateral agreements. Shot from a high angle with soft, diffused studio lighting typical of corporate modernism. The mood is official, precise, and highly professional without being overly decorative." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA30RKEa-AzOruAhXSP9hQeQoDlTaYzSd5ynzMlNTFSQyj-KtJY2mXqQdNxMXN7p03VfH7hr345F6pbfLkaxwD6xNtAbbYJSTQXzVX1MmdTgfEGIQ8tu0XW4Ufnr1Jql4ZWVOY6I5L3k8iD3aFx_Nftw7_0Ihaq0fQWIRhML8uyLPEKVnONfbYYiqWJZa70PHRewx_kEqOwJWkay6QSwDgJpuA7t3vbPyjIdCxwpL0L-iDWyvRWXG4W7g')">
+<span class="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 text-label-sm font-label-sm text-primary-container rounded border border-outline-variant/50">Bilateral Agreement</span>
+</div>
+<div class="p-5">
+<h3 class="text-body-lg font-headline-md font-semibold text-on-surface mb-2 line-clamp-2 group-hover:text-primary-container transition-colors">Framework for the 2025 Joint Clean Energy Research Initiative Announced</h3>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-3 mb-4">
+                                The secretariat has officially released the operational guidelines for the upcoming bilateral funding cycle focusing on sustainable energy solutions and smart grid technologies.
+                            </p>
+<span class="text-label-sm font-label-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> Oct 12, 2024
+                            </span>
+</div>
+</article>
+<article class="min-w-[320px] max-w-[400px] flex-shrink-0 bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden snap-start group cursor-pointer hover:border-surface-tint transition-colors">
+<div class="w-full h-40 bg-cover bg-center border-b border-outline-variant/30 relative" data-alt="A macro shot of a sleek, modern microscope lens sitting on a pristine white laboratory table, illuminated by a cool, clinical light. The background is a soft blur of light slate grey, emphasizing scientific rigor and exactitude inherent in Institutional Modernism." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBwdwbM9eJQ8zJxZBWWTs5pqzU4CjRF0C-bMnjV1kXXzUN9FxI6CnEsieeHPns0UZAj59fx3VHCmuQgvingwaLlyfVgwctzjb53eLAL1OBxmXpGFmTeFDBAxIeIsMMeRWRqosSklUXg8afnZp3x6gLen1mgmBurM9C6JUdaZXhOMZCpvpsNom755uyC4aAuB1E2YvQRynAvstR2hkbM9qbJGf5aeqclI9fywZtNDiyCYJR75hD9hKzY-A')">
+<span class="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 text-label-sm font-label-sm text-secondary rounded border border-outline-variant/50">Call for Papers</span>
+</div>
+<div class="p-5">
+<h3 class="text-body-lg font-headline-md font-semibold text-on-surface mb-2 line-clamp-2 group-hover:text-primary-container transition-colors">Symposium on Advanced Materials Science: Moscow-Hanoi Connect</h3>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-3 mb-4">
+                                Abstract submissions are now open for the bi-annual symposium. We invite researchers from network institutions to present findings on nanomaterials and polymers.
+                            </p>
+<span class="text-label-sm font-label-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> Oct 08, 2024
+                            </span>
+</div>
+</article>
+<article class="min-w-[320px] max-w-[400px] flex-shrink-0 bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden snap-start group cursor-pointer hover:border-surface-tint transition-colors">
+<div class="w-full h-40 bg-cover bg-center border-b border-outline-variant/30 relative" data-alt="An ultra-modern, minimalist server room or data center aisle viewed straight on. The racks are crisp white with extremely subtle blue LED indicators. The lighting is bright, shadowless, and clinical. The aesthetic screams high-capacity data processing and structured information architecture." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDfEQGL9-CdkflK75KI_XM3RGYFt96uHS0EJUDwxXFWvwoUFsEOU20x8hlLa8tbdvxpRgOOOe-BhzIAHxEN_ps1CkcByjzjdE5noa2v6qDQd9I-m2UlEE8NTAzAI2c8oO8kbd8vz-wsTnYzEQpavU5lKcrMHBlcBgKggkxWVLJR8B7FrV0X7hl_nLEakHJOhU1-cIPIvPggX9oqbaPPDNGK5AjMh-uPJUgFHgngCVGRGiXasAe5K54KkQ')">
+<span class="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 text-label-sm font-label-sm text-surface-tint rounded border border-outline-variant/50">Infrastructure Update</span>
+</div>
+<div class="p-5">
+<h3 class="text-body-lg font-headline-md font-semibold text-on-surface mb-2 line-clamp-2 group-hover:text-primary-container transition-colors">Knowledge Network Database Migration Phase II Complete</h3>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-3 mb-4">
+                                Improved search indexing and faster retrieval times for archival publications dating back to 1995 have been successfully implemented across all regional nodes.
+                            </p>
+<span class="text-label-sm font-label-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> Oct 01, 2024
+                            </span>
+</div>
+</article>
+</div>
+</div>
+</section>
+<section class="w-full max-w-container-max mx-auto px-margin-desktop py-stack-lg">
+<h2 class="text-headline-md font-headline-md text-primary-container mb-stack-md flex items-center gap-2">
+<span class="material-symbols-outlined text-surface-tint" style="font-variation-settings: 'FILL' 1;">explore</span>
+                Featured Opportunities
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="group relative overflow-hidden bg-primary-container text-on-primary rounded-xl p-8 flex flex-col justify-between min-h-[300px] border border-primary-container">
+<div class="absolute top-0 right-0 p-6 opacity-20 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px]">account_balance</span>
+</div>
+<div class="relative z-10">
+<div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-surface/10 mb-6 backdrop-blur-sm">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<h3 class="text-headline-lg font-headline-lg mb-4">Research Funding Portal</h3>
+<p class="text-body-lg font-body-lg text-surface-dim max-w-md">
+                            Access bilateral grant opportunities, submit joint proposals, and track funding cycles managed by the joint steering committee.
+                        </p>
+</div>
+<div class="relative z-10 mt-8">
+<button class="bg-on-primary text-primary-container px-6 py-3 rounded-DEFAULT text-label-md font-label-md font-bold hover:bg-surface-variant transition-colors flex items-center gap-2 w-fit">
+                            Browse Grants
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="group relative overflow-hidden bg-surface-container-lowest border border-outline-variant rounded-xl p-8 flex flex-col justify-between min-h-[300px] hover:border-secondary transition-colors shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
+<div class="absolute top-0 right-0 p-6 opacity-5 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px] text-primary">flight_takeoff</span>
+</div>
+<div class="relative z-10">
+<div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-surface-container-low mb-6 border border-outline-variant/50">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">swap_horiz</span>
+</div>
+<h3 class="text-headline-lg font-headline-lg text-on-surface mb-4">Academic Exchange</h3>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-md">
+                            Facilitating scholar mobility, visiting professorships, and specialized post-doctoral placements across partner institutions.
+                        </p>
+</div>
+<div class="relative z-10 mt-8">
+<button class="bg-transparent border border-outline text-on-surface px-6 py-3 rounded-DEFAULT text-label-md font-label-md font-bold hover:bg-surface-container-low hover:border-surface-tint transition-colors flex items-center gap-2 w-fit">
+                            Explore Placements
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-surface-container-highest dark:bg-inverse-surface full-width bottom-0 border-t border-outline-variant dark:border-outline flat no shadows w-full py-stack-md px-margin-desktop mt-stack-lg">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="text-label-md font-headline-md font-bold text-on-surface">VN-RU Knowledge Network</span>
+<span class="text-body-md font-body-md text-on-surface-variant text-sm">
+                    © 2024 VN-RU Knowledge Network. All rights reserved. Institutional Modernism Architecture.
+                </span>
+</div>
+<nav class="flex flex-wrap justify-center gap-6">
+<a class="text-label-sm font-label-sm text-on-surface-variant dark:text-on-primary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Institutional Repository</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant dark:text-on-primary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Privacy Policy</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant dark:text-on-primary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Contact Secretariat</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant dark:text-on-primary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">VN-RU Bilateral Agreement</a>
+</nav>
+</div>
+</footer>
+</body></html>

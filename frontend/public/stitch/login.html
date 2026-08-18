@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | Russia–Vietnam Knowledge Network</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Source Serif 4 and Hanken Grotesk -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from instructions -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f7f9fb",
+                        "on-secondary-fixed-variant": "#264191",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#7c839b",
+                        "on-surface-variant": "#45464d",
+                        "primary-container": "#131b2e",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#131b2e",
+                        "tertiary-container": "#002116",
+                        "secondary-container": "#8fa7fe",
+                        "tertiary-fixed": "#a6f2d1",
+                        "on-secondary-fixed": "#00164e",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "outline-variant": "#c6c6cd",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#1d3989",
+                        "inverse-surface": "#2d3133",
+                        "outline": "#76777d",
+                        "on-tertiary-fixed": "#002116",
+                        "tertiary-fixed-dim": "#8bd6b6",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "on-tertiary-fixed-variant": "#00513b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary": "#4059aa",
+                        "primary-fixed": "#dae2fd",
+                        "on-surface": "#191c1e",
+                        "surface-tint": "#565e74",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed": "#dce1ff",
+                        "inverse-primary": "#bec6e0",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-low": "#f2f4f6",
+                        "primary": "#000000",
+                        "inverse-on-surface": "#eff1f3",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-error-container": "#93000a",
+                        "background": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#000000",
+                        "on-background": "#191c1e",
+                        "on-tertiary-container": "#479175"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-section": "32px",
+                        "stack-compact": "8px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["\"Source Serif 4\""],
+                        "body-sm": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["\"Source Serif 4\""],
+                        "headline-lg": ["\"Source Serif 4\""],
+                        "label-caps": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-md": ["\"Source Serif 4\""]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Top Navigation Bar - Context: Transactional page, nav is suppressed to purely minimal state -->
+<header class="bg-surface border-b border-outline-variant flat no shadows w-full z-10 sticky top-0">
+<div class="flex justify-between items-center px-margin-mobile md:px-gutter max-w-container-max mx-auto h-16 w-full">
+<div class="flex items-center gap-2">
+<!-- Academic emblem placeholder -->
+<div class="w-8 h-8 rounded-full border border-outline flex items-center justify-center bg-surface-container">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">language</span>
+</div>
+<h1 class="font-headline-md text-headline-md font-semibold text-primary hidden md:block">Mạng lưới Tri thức Nga - Việt</h1>
+<h1 class="font-headline-md text-headline-md font-semibold text-primary md:hidden">RVKN</h1>
+</div>
+<div class="flex items-center gap-4 text-primary">
+<div class="flex items-center gap-4 font-body-sm text-body-sm text-on-surface-variant">
+<button class="hover:text-primary transition-colors text-on-surface font-bold border-b-2 border-primary h-16 flex items-center px-1">EN</button>
+<button class="hover:text-primary transition-colors h-16 flex items-center px-1">RU</button>
+<button class="hover:text-primary transition-colors h-16 flex items-center px-1">VN</button>
+</div>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<button class="hover:text-primary text-on-surface-variant transition-colors flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high duration-150 active:scale-95">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content: Split Screen Layout -->
+<main class="flex-grow flex flex-col md:flex-row w-full max-w-[1600px] mx-auto bg-surface-container-lowest">
+<!-- Left Side: Editorial Graphic (Hidden on mobile) -->
+<section class="hidden md:flex md:w-1/2 lg:w-3/5 bg-surface-container relative overflow-hidden flex-col justify-end p-12 lg:p-24 border-r border-outline-variant">
+<!-- Background Image -->
+<div class="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-multiply" data-alt="An abstract, high-end scientific visualization showing interconnected global data nodes, rendered in a sophisticated institutional style. The color palette features subtle academic blues and soft grays, evoking a calm, rigorous intellectual environment. Fine, precise geometric lines connect luminous data points against a very light, almost white background, resembling high-level academic research diagrams." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDLUgmkHBbuTPv198z_5q0CecBFEpZEU1qTnvqNxZ277KtCm-2dP923ZdLbtGR0f5-0o6zJYKb9L7K6tkUvw8Isj9Ss8qwTMWenzqqyK3v7B0nYWJ1vXhlc_KjLl1RkcxPpLq_s3HAqSO-kDXB6plQ0BvAJQPWK_PEZOokR0lFGBd8xPJrfJ62O88zhOcujr-YT8mBrIHqrcUtZfEWotO8dxb4erdXTVOaYpeT1rSk-4GtGtwLX_OXbvQ')"></div>
+<!-- Overlay to ensure text readability -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent opacity-80"></div>
+<div class="relative z-10 max-w-xl">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant block mb-stack-compact">Institutional Access</span>
+<h2 class="font-display-lg text-display-lg text-primary mb-6">Russia–Vietnam Knowledge Network</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-md">
+                    Facilitating bilateral scientific cooperation, academic exchange, and rigorous transnational research initiatives.
+                </p>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<div class="h-px w-12 bg-outline-variant"></div>
+<span class="font-body-sm text-body-sm">Framework v2.4</span>
+</div>
+</div>
+</section>
+<!-- Right Side: Login Canvas -->
+<section class="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-margin-mobile md:p-12 lg:p-16 min-h-[calc(100vh-64px-64px)]">
+<div class="w-full max-w-md bg-surface-container-lowest">
+<div class="mb-stack-section">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-compact">Secure Sign In</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Access the institutional repository and collaborative workspace.</p>
+</div>
+<form class="flex flex-col gap-5">
+<!-- Username / Email -->
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-label-caps text-on-surface" for="credentials">Institutional Email</label>
+<input class="w-full h-11 px-4 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all shadow-sm" id="credentials" name="credentials" placeholder="researcher@institute.edu" required="" type="email"/>
+</div>
+<!-- Password -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-baseline">
+<label class="font-label-caps text-label-caps text-on-surface" for="password">Password</label>
+<a class="font-body-sm text-body-sm text-secondary hover:text-on-secondary-fixed-variant transition-colors hover:underline" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<input class="w-full h-11 pl-4 pr-10 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all shadow-sm" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute inset-y-0 right-0 flex items-center pr-3 text-outline hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Actions -->
+<div class="mt-4 flex flex-col gap-3">
+<button class="w-full h-11 bg-primary text-on-primary font-body-md text-body-md font-medium rounded-DEFAULT hover:bg-inverse-surface transition-colors active:scale-[0.98] duration-150 flex items-center justify-center gap-2 shadow-sm" type="submit">
+                            Sign In
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<div class="relative flex items-center py-2">
+<div class="flex-grow border-t border-outline-variant"></div>
+<span class="flex-shrink-0 mx-4 font-body-sm text-body-sm text-on-surface-variant">or</span>
+<div class="flex-grow border-t border-outline-variant"></div>
+</div>
+<button class="w-full h-11 bg-surface-container-lowest text-on-surface border border-outline-variant font-body-md text-body-md font-medium rounded-DEFAULT hover:bg-surface-container-low hover:border-outline transition-colors active:scale-[0.98] duration-150 flex items-center justify-center gap-2 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">account_balance</span>
+                            Login with Institutional SSO
+                        </button>
+</div>
+</form>
+<!-- Footer Link inside card area -->
+<div class="mt-stack-section pt-stack-section border-t border-outline-variant text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Don't have an account?
+                        <a class="text-secondary hover:text-on-secondary-fixed-variant font-medium hover:underline transition-colors" href="#">Request access</a>
+</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface border-t border-outline-variant w-full mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center py-stack-compact px-margin-mobile md:px-gutter max-w-container-max mx-auto w-full min-h-[64px] gap-4 md:gap-0">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant text-center md:text-left">
+                © 2024 Russia–Vietnam Knowledge Network. Institutional Modernism Framework.
+            </span>
+<div class="flex flex-wrap justify-center gap-4 md:gap-6 font-label-caps text-label-caps">
+<a class="text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Institutional Access</a>
+</div>
+</div>
+</footer>
+
+</body></html>
