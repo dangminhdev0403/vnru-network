@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { Client, Issuer } from 'openid-client';
 import { validateConfig } from '../../config';
+import { IdentityModule } from '../identity/identity.module';
+import { SessionModule } from '../session/session.module';
+import { AuthenticationController } from './authentication.controller';
+import { AuthenticationService } from './authentication.service';
 import {
   KeycloakOidcService,
   OIDC_CLIENT_BOUNDARY,
@@ -11,6 +15,8 @@ import {
 } from './keycloak-oidc.service';
 
 @Module({
+  imports: [IdentityModule, SessionModule],
+  controllers: [AuthenticationController],
   providers: [
     {
       provide: OIDC_CLIENT_BOUNDARY,
@@ -89,7 +95,8 @@ import {
       },
     },
     KeycloakOidcService,
+    AuthenticationService,
   ],
-  exports: [KeycloakOidcService, OIDC_CLIENT_BOUNDARY],
+  exports: [AuthenticationService, KeycloakOidcService, OIDC_CLIENT_BOUNDARY],
 })
 export class AuthenticationModule {}
