@@ -129,6 +129,23 @@ describe('Configuration Schema Validation', () => {
     ).toThrow();
   });
 
+  it('should require HTTPS Keycloak endpoints in production', () => {
+    expect(() =>
+      validateConfig({
+        ...validBaseEnv,
+        NODE_ENV: 'production',
+        KEYCLOAK_ISSUER_URL: 'http://keycloak.example.com/realms/vnru',
+      }),
+    ).toThrow('KEYCLOAK_ISSUER_URL must use https:// in production');
+    expect(() =>
+      validateConfig({
+        ...validBaseEnv,
+        NODE_ENV: 'production',
+        KEYCLOAK_REDIRECT_URI: 'http://portal.example.com/api/auth/callback',
+      }),
+    ).toThrow('KEYCLOAK_REDIRECT_URI must use https:// in production');
+  });
+
   it('should reject completely empty environment object without fallback defaults', () => {
     expect(() => validateConfig({})).toThrow();
   });
