@@ -1,0 +1,25 @@
+export const SESSION_COOKIE_NAME = "vnru_session";
+export const RETURN_TO_COOKIE_NAME = "vnru_return_to";
+
+export function sanitizeReturnTo(value: string | null | undefined): string {
+  return value?.startsWith("/") && !value.startsWith("//") ? value : "/";
+}
+
+export function authServiceUrl(path: string): URL {
+  const baseUrl = process.env.AUTH_SERVICE_URL;
+  if (!baseUrl) throw new Error("AUTH_SERVICE_URL is required");
+  return new URL(path, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
+}
+
+export function backendHeaders(request: Request): Headers {
+  const headers = new Headers({ accept: "application/json" });
+  const cookie = request.headers.get("cookie");
+  if (cookie) headers.set("cookie", cookie);
+  return headers;
+}
+
+export function forwardSessionCookie(source: Response, target: Headers): void {
+  const cookie = source.headers.get("set-cookie");
+  if (!cookie) return;
+  target.append("set-cookie", process.env.NODE_ENV === "production" ? cookie : cookie.replace(/;\s*Secure/gi, ""));
+}

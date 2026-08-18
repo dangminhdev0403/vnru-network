@@ -159,42 +159,15 @@
 <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-compact">Secure Sign In</h2>
 <p class="font-body-sm text-body-sm text-on-surface-variant">Access the institutional repository and collaborative workspace.</p>
 </div>
-<form class="flex flex-col gap-5">
-<!-- Username / Email -->
-<div class="flex flex-col gap-1">
-<label class="font-label-caps text-label-caps text-on-surface" for="credentials">Institutional Email</label>
-<input class="w-full h-11 px-4 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all shadow-sm" id="credentials" name="credentials" placeholder="researcher@institute.edu" required="" type="email"/>
-</div>
-<!-- Password -->
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-baseline">
-<label class="font-label-caps text-label-caps text-on-surface" for="password">Password</label>
-<a class="font-body-sm text-body-sm text-secondary hover:text-on-secondary-fixed-variant transition-colors hover:underline" href="#">Forgot password?</a>
-</div>
-<div class="relative">
-<input class="w-full h-11 pl-4 pr-10 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all shadow-sm" id="password" name="password" placeholder="••••••••" required="" type="password"/>
-<button class="absolute inset-y-0 right-0 flex items-center pr-3 text-outline hover:text-on-surface transition-colors" type="button">
-<span class="material-symbols-outlined text-[20px]">visibility_off</span>
-</button>
-</div>
-</div>
-<!-- Actions -->
-<div class="mt-4 flex flex-col gap-3">
-<button class="w-full h-11 bg-primary text-on-primary font-body-md text-body-md font-medium rounded-DEFAULT hover:bg-inverse-surface transition-colors active:scale-[0.98] duration-150 flex items-center justify-center gap-2 shadow-sm" type="submit">
-                            Sign In
-                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
-<div class="relative flex items-center py-2">
-<div class="flex-grow border-t border-outline-variant"></div>
-<span class="flex-shrink-0 mx-4 font-body-sm text-body-sm text-on-surface-variant">or</span>
-<div class="flex-grow border-t border-outline-variant"></div>
-</div>
-<button class="w-full h-11 bg-surface-container-lowest text-on-surface border border-outline-variant font-body-md text-body-md font-medium rounded-DEFAULT hover:bg-surface-container-low hover:border-outline transition-colors active:scale-[0.98] duration-150 flex items-center justify-center gap-2 shadow-sm" type="button">
+<a class="w-full h-11 bg-primary text-on-primary font-body-md text-body-md font-medium rounded-DEFAULT hover:bg-inverse-surface transition-colors active:scale-[0.98] duration-150 flex items-center justify-center gap-2 shadow-sm" data-auth-login href="/api/auth/login" target="_top">
 <span class="material-symbols-outlined text-[18px]">account_balance</span>
-                            Login with Institutional SSO
-                        </button>
-</div>
-</form>
+                        Continue with Institutional SSO
+                    </a>
+<script>
+const login = document.querySelector('[data-auth-login]');
+const returnTo = new URLSearchParams(location.search).get('returnTo');
+if (returnTo) login.href += `?returnTo=${encodeURIComponent(returnTo)}`;
+</script>
 <!-- Footer Link inside card area -->
 <div class="mt-stack-section pt-stack-section border-t border-outline-variant text-center">
 <p class="font-body-sm text-body-sm text-on-surface-variant">
