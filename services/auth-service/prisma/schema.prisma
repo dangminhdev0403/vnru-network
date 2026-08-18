@@ -11,12 +11,18 @@ enum UserStatus {
   INACTIVE
 }
 
+enum RoleAssignmentStatus {
+  ACTIVE
+  INACTIVE
+}
+
 model User {
   id                 String             @id @default(uuid())
   email              String?
   status             UserStatus         @default(ACTIVE)
   externalIdentities ExternalIdentity[]
   sessions           Session[]
+  roleAssignments    RoleAssignment[]
 }
 
 model ExternalIdentity {
@@ -39,4 +45,42 @@ model Session {
   createdAt   DateTime  @default(now())
 
   @@index([userId, revokedAt])
+}
+
+model Role {
+  id              String           @id @default(uuid())
+  name            String           @unique
+  permissions     RolePermission[]
+  roleAssignments RoleAssignment[]
+}
+
+model Permission {
+  id    String           @id @default(uuid())
+  key   String           @unique
+  roles RolePermission[]
+}
+
+model RolePermission {
+  id           String     @id @default(uuid())
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+}
+
+model RoleAssignment {
+  id          String               @id @default(uuid())
+  userId      String
+  roleId      String
+  contextType String
+  contextId   String
+  status      RoleAssignmentStatus @default(ACTIVE)
+  createdAt   DateTime             @default(now())
+  user        User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        Role                 @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId, contextType, contextId])
+  @@index([userId, contextType, contextId, status])
 }
