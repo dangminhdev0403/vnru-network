@@ -1,8 +1,7 @@
 import type { CookieOptions, Response } from 'express';
-import {
-  AuthenticationController,
-  RequestWithCookies,
-} from './authentication.controller';
+import { AuthenticationController } from './authentication.controller';
+import type { RequestWithCookies } from './authenticated-request-context';
+import { SessionService } from '../session/session-public';
 import {
   AuthenticatedUser,
   AuthenticationService,
@@ -33,6 +32,7 @@ type MockResponse = {
 describe('AuthenticationController', () => {
   let controller: AuthenticationController;
   let authService: MockAuthService;
+  let sessionService: { switchContext: jest.Mock };
   let mockResponse: MockResponse;
   let originalEnv: NodeJS.ProcessEnv;
 
@@ -64,6 +64,7 @@ describe('AuthenticationController', () => {
       >(),
       logout: jest.fn<Promise<void>, [(string | null | undefined)?]>(),
     };
+    sessionService = { switchContext: jest.fn() };
 
     mockResponse = {
       redirect: jest.fn<void, [string]>(),
@@ -81,6 +82,7 @@ describe('AuthenticationController', () => {
 
     controller = new AuthenticationController(
       authService as unknown as AuthenticationService,
+      sessionService as unknown as SessionService,
     );
   });
 
@@ -186,6 +188,8 @@ describe('AuthenticationController', () => {
       authService.getCurrentUser.mockResolvedValue({
         userId: 'usr-active-001',
         sessionId: 'sess-001',
+        activeContext: null,
+        capabilities: [],
       });
 
       const mockReq: RequestWithCookies = {
@@ -202,6 +206,8 @@ describe('AuthenticationController', () => {
       expect(result).toEqual({
         userId: 'usr-active-001',
         sessionId: 'sess-001',
+        activeContext: null,
+        capabilities: [],
       });
     });
 
@@ -224,6 +230,49 @@ describe('AuthenticationController', () => {
       };
 
       await expect(controller.me(mockReq)).rejects.toThrow();
+    });
+  });
+
+  describe('context switch', () => {
+    it('rotates the cookie without returning the opaque token', async () => {
+      sessionService.switchContext.mockResolvedValue({
+        token: 'rotated-token',
+        session: {},
+      });
+      const result = await controller.switchContext(
+        { contextType: ' ORGANIZATION ', contextId: ' org-100 ' },
+        { cookies: { vnru_session: 'current-token' } },
+        mockResponse as unknown as Response,
+      );
+      expect(sessionService.switchContext).toHaveBeenCalledWith(
+        'current-token',
+        {
+          contextType: 'ORGANIZATION',
+          contextId: 'org-100',
+        },
+      );
+      expect(mockResponse.cookie).toHaveBeenCalledWith(
+        'vnru_session',
+        'rotated-token',
+        expect.objectContaining({ httpOnly: true, secure: true }),
+      );
+      expect(result).toEqual({
+        contextType: 'ORGANIZATION',
+        contextId: 'org-100',
+      });
+      expect(result).not.toHaveProperty('token');
+    });
+
+    it('does not replace the cookie when switching fails', async () => {
+      sessionService.switchContext.mockRejectedValue(new Error('denied'));
+      await expect(
+        controller.switchContext(
+          { contextType: 'ORGANIZATION', contextId: 'org-100' },
+          { cookies: { vnru_session: 'current-token' } },
+          mockResponse as unknown as Response,
+        ),
+      ).rejects.toThrow('Context switch denied');
+      expect(mockResponse.cookie).not.toHaveBeenCalled();
     });
   });
 
