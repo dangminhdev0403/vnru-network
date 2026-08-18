@@ -37,6 +37,7 @@ type MockIdentityService = {
     Promise<IdentityUser>,
     [ResolveExternalIdentityInput]
   >;
+  findById: jest.Mock<Promise<IdentityUser | null>, [string]>;
 };
 
 type MockSessionService = {
@@ -74,6 +75,7 @@ describe('AuthenticationService', () => {
         Promise<IdentityUser>,
         [ResolveExternalIdentityInput]
       >(),
+      findById: jest.fn<Promise<IdentityUser | null>, [string]>(),
     };
 
     sessionService = {
@@ -374,7 +376,7 @@ describe('AuthenticationService', () => {
   });
 
   describe('getCurrentUser', () => {
-    it('returns minimal internal identity after session digest validation', async () => {
+    it('returns minimal internal identity after session digest validation when user is active', async () => {
       const activeSession: SessionRecord = {
         id: 'sess-001',
         tokenDigest: 'digest-001',
@@ -384,16 +386,68 @@ describe('AuthenticationService', () => {
         revokedAt: null,
       };
       sessionService.validateSession.mockResolvedValue(activeSession);
+      identityService.findById.mockResolvedValue({
+        id: 'usr-active-001',
+        email: 'researcher@example.com',
+        status: 'ACTIVE',
+      });
 
       const user = await service.getCurrentUser('presented-session-token');
 
       expect(sessionService.validateSession).toHaveBeenCalledWith(
         'presented-session-token',
       );
+      expect(identityService.findById).toHaveBeenCalledWith('usr-active-001');
       expect(user).toEqual({
         userId: 'usr-active-001',
         sessionId: 'sess-001',
       });
+    });
+
+    it('returns null and fails closed when user is inactive', async () => {
+      const activeSession: SessionRecord = {
+        id: 'sess-002',
+        tokenDigest: 'digest-002',
+        userId: 'usr-inactive-002',
+        expiresAt: new Date(Date.now() + 60000),
+        createdAt: new Date(),
+        revokedAt: null,
+      };
+      sessionService.validateSession.mockResolvedValue(activeSession);
+      identityService.findById.mockResolvedValue({
+        id: 'usr-inactive-002',
+        email: 'inactive@example.com',
+        status: 'INACTIVE',
+      });
+
+      const user = await service.getCurrentUser('presented-session-token');
+
+      expect(sessionService.validateSession).toHaveBeenCalledWith(
+        'presented-session-token',
+      );
+      expect(identityService.findById).toHaveBeenCalledWith('usr-inactive-002');
+      expect(user).toBeNull();
+    });
+
+    it('returns null and fails closed when user record is missing', async () => {
+      const activeSession: SessionRecord = {
+        id: 'sess-003',
+        tokenDigest: 'digest-003',
+        userId: 'usr-missing-003',
+        expiresAt: new Date(Date.now() + 60000),
+        createdAt: new Date(),
+        revokedAt: null,
+      };
+      sessionService.validateSession.mockResolvedValue(activeSession);
+      identityService.findById.mockResolvedValue(null);
+
+      const user = await service.getCurrentUser('presented-session-token');
+
+      expect(sessionService.validateSession).toHaveBeenCalledWith(
+        'presented-session-token',
+      );
+      expect(identityService.findById).toHaveBeenCalledWith('usr-missing-003');
+      expect(user).toBeNull();
     });
 
     it('returns null and fails closed when session token is invalid, expired, or revoked', async () => {
@@ -404,6 +458,7 @@ describe('AuthenticationService', () => {
       expect(sessionService.validateSession).toHaveBeenCalledWith(
         'invalid-or-expired-token',
       );
+      expect(identityService.findById).not.toHaveBeenCalled();
       expect(user).toBeNull();
     });
 
@@ -411,6 +466,7 @@ describe('AuthenticationService', () => {
       const user = await service.getCurrentUser('');
 
       expect(sessionService.validateSession).not.toHaveBeenCalled();
+      expect(identityService.findById).not.toHaveBeenCalled();
       expect(user).toBeNull();
     });
   });

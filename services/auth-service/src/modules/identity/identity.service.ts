@@ -33,6 +33,9 @@ export interface IdentityPrismaClient {
     }) => Promise<ExternalIdentityRecord>;
   };
   user: {
+    findUnique: (args: {
+      where: { id: string };
+    }) => Promise<IdentityUser | null>;
     create: (args: {
       data: { email?: string; status?: string };
     }) => Promise<IdentityUser>;
@@ -48,6 +51,16 @@ export class IdentityService {
     @Inject(IDENTITY_PRISMA)
     private readonly prisma: IdentityPrismaClient,
   ) {}
+
+  async findById(id: string): Promise<IdentityUser | null> {
+    if (!id || typeof id !== 'string' || id.trim() === '') {
+      return null;
+    }
+
+    return this.prisma.user.findUnique({
+      where: { id: id.trim() },
+    });
+  }
 
   async resolveOrCreateByExternalIdentity(
     input: ResolveExternalIdentityInput,

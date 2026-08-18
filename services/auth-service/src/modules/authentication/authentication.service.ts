@@ -169,6 +169,11 @@ export class AuthenticationService {
       return null;
     }
 
+    const user = await this.identityService.findById(session.userId);
+    if (!user || user.status !== 'ACTIVE') {
+      return null;
+    }
+
     return {
       userId: session.userId,
       sessionId: session.id,

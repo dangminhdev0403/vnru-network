@@ -24,6 +24,10 @@ describe('IdentityService', () => {
       >;
     };
     user: {
+      findUnique: jest.Mock<
+        Promise<IdentityUser | null>,
+        [{ where: { id: string } }]
+      >;
       create: jest.Mock<
         Promise<IdentityUser>,
         [{ data: { email?: string; status?: string } }]
@@ -53,6 +57,10 @@ describe('IdentityService', () => {
         >(),
       },
       user: {
+        findUnique: jest.fn<
+          Promise<IdentityUser | null>,
+          [{ where: { id: string } }]
+        >(),
         create: jest.fn<
           Promise<IdentityUser>,
           [{ data: { email?: string; status?: string } }]
@@ -66,6 +74,45 @@ describe('IdentityService', () => {
     };
 
     service = new IdentityService(prisma as unknown as IdentityPrismaClient);
+  });
+
+  describe('findById', () => {
+    it('returns user when record exists for the given id', async () => {
+      const existingUser: IdentityUser = {
+        id: 'usr-123',
+        status: 'ACTIVE',
+        email: 'usr123@example.com',
+      };
+
+      prisma.user.findUnique.mockResolvedValue(existingUser);
+
+      const result = await service.findById('usr-123');
+
+      expect(prisma.user.findUnique).toHaveBeenCalledWith({
+        where: { id: 'usr-123' },
+      });
+      expect(result).toEqual(existingUser);
+    });
+
+    it('returns null when user record is not found', async () => {
+      prisma.user.findUnique.mockResolvedValue(null);
+
+      const result = await service.findById('usr-nonexistent');
+
+      expect(prisma.user.findUnique).toHaveBeenCalledWith({
+        where: { id: 'usr-nonexistent' },
+      });
+      expect(result).toBeNull();
+    });
+
+    it('returns null and skips database query when id is empty or whitespace', async () => {
+      const resultEmpty = await service.findById('');
+      const resultWhitespace = await service.findById('   ');
+
+      expect(prisma.user.findUnique).not.toHaveBeenCalled();
+      expect(resultEmpty).toBeNull();
+      expect(resultWhitespace).toBeNull();
+    });
   });
 
   it('returns existing user when external identity linkage exists', async () => {
