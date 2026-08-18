@@ -5,6 +5,7 @@ import { IamAdminService } from './iam-admin.service';
 describe('IamAdminService', () => {
   let service: IamAdminService;
   let prismaMock: {
+    $transaction: jest.Mock;
     user: {
       findMany: jest.Mock;
       findUnique: jest.Mock;
@@ -20,10 +21,18 @@ describe('IamAdminService', () => {
     session: {
       updateMany: jest.Mock;
     };
+    securityAuditEvent: {
+      create: jest.Mock;
+    };
   };
 
   beforeEach(() => {
     prismaMock = {
+      $transaction: jest
+        .fn()
+        .mockImplementation(<T>(fn: (tx: any) => Promise<T>): Promise<T> =>
+          fn(prismaMock),
+        ),
       user: {
         findMany: jest.fn(),
         findUnique: jest.fn(),
@@ -38,6 +47,9 @@ describe('IamAdminService', () => {
       },
       session: {
         updateMany: jest.fn(),
+      },
+      securityAuditEvent: {
+        create: jest.fn(),
       },
     };
 
@@ -73,7 +85,7 @@ describe('IamAdminService', () => {
   });
 
   describe('setUserStatus', () => {
-    it('updates user status and revokes sessions if status is INACTIVE', async () => {
+    it('updates user status, revokes sessions if status is INACTIVE, and writes audit event in transaction', async () => {
       const existingUser = {
         id: 'usr-1',
         email: 'test@example.com',
@@ -88,12 +100,18 @@ describe('IamAdminService', () => {
       prismaMock.user.findUnique.mockResolvedValue(existingUser);
       prismaMock.user.update.mockResolvedValue(updatedUser);
       prismaMock.session.updateMany.mockResolvedValue({ count: 2 });
+      prismaMock.securityAuditEvent.create.mockResolvedValue({ id: 'audit-1' });
 
-      const result = await service.setUserStatus('usr-1', UserStatus.INACTIVE);
+      const result = await service.setUserStatus(
+        'usr-1',
+        UserStatus.INACTIVE,
+        'actor-usr-123',
+      );
 
       expect(prismaMock.user.findUnique).toHaveBeenCalledWith({
         where: { id: 'usr-1' },
       });
+      expect(prismaMock.$transaction).toHaveBeenCalled();
       expect(prismaMock.user.update).toHaveBeenCalledWith({
         where: { id: 'usr-1' },
         data: { status: UserStatus.INACTIVE },
@@ -112,10 +130,18 @@ describe('IamAdminService', () => {
           revokedAt: expect.any(Date) as unknown,
         },
       });
+      expect(prismaMock.securityAuditEvent.create).toHaveBeenCalledWith({
+        data: {
+          event: 'IAM_USER_STATUS_CHANGED',
+          actorId: 'actor-usr-123',
+          targetId: 'usr-1',
+          context: { status: UserStatus.INACTIVE },
+        },
+      });
       expect(result).toEqual(updatedUser);
     });
 
-    it('updates user status but does NOT revoke sessions if status is ACTIVE', async () => {
+    it('updates user status, does NOT revoke sessions if status is ACTIVE, and writes audit event in transaction', async () => {
       const existingUser = {
         id: 'usr-1',
         email: 'test@example.com',
@@ -129,23 +155,68 @@ describe('IamAdminService', () => {
 
       prismaMock.user.findUnique.mockResolvedValue(existingUser);
       prismaMock.user.update.mockResolvedValue(updatedUser);
+      prismaMock.securityAuditEvent.create.mockResolvedValue({ id: 'audit-2' });
 
-      const result = await service.setUserStatus('usr-1', UserStatus.ACTIVE);
+      const result = await service.setUserStatus(
+        'usr-1',
+        UserStatus.ACTIVE,
+        'actor-usr-123',
+      );
 
       expect(prismaMock.user.findUnique).toHaveBeenCalledWith({
         where: { id: 'usr-1' },
       });
+      expect(prismaMock.$transaction).toHaveBeenCalled();
       expect(prismaMock.session.updateMany).not.toHaveBeenCalled();
+      expect(prismaMock.securityAuditEvent.create).toHaveBeenCalledWith({
+        data: {
+          event: 'IAM_USER_STATUS_CHANGED',
+          actorId: 'actor-usr-123',
+          targetId: 'usr-1',
+          context: { status: UserStatus.ACTIVE },
+        },
+      });
       expect(result).toEqual(updatedUser);
     });
 
-    it('throws NotFoundException if user is not found', async () => {
+    it('throws NotFoundException if user is not found and does not start transaction', async () => {
       prismaMock.user.findUnique.mockResolvedValue(null);
 
       await expect(
-        service.setUserStatus('usr-nonexistent', UserStatus.ACTIVE),
+        service.setUserStatus(
+          'usr-nonexistent',
+          UserStatus.ACTIVE,
+          'actor-usr-123',
+        ),
       ).rejects.toThrow(NotFoundException);
-      expect(prismaMock.user.update).not.toHaveBeenCalled();
+      expect(prismaMock.$transaction).not.toHaveBeenCalled();
+    });
+
+    it('rolls back transaction (rethrows error) if audit event logging fails', async () => {
+      const existingUser = {
+        id: 'usr-1',
+        email: 'test@example.com',
+        status: UserStatus.ACTIVE,
+      };
+      const updatedUser = {
+        id: 'usr-1',
+        email: 'test@example.com',
+        status: UserStatus.INACTIVE,
+      };
+
+      prismaMock.user.findUnique.mockResolvedValue(existingUser);
+      prismaMock.user.update.mockResolvedValue(updatedUser);
+      prismaMock.session.updateMany.mockResolvedValue({ count: 2 });
+      prismaMock.securityAuditEvent.create.mockRejectedValue(
+        new Error('Database error during audit insert'),
+      );
+
+      await expect(
+        service.setUserStatus('usr-1', UserStatus.INACTIVE, 'actor-usr-123'),
+      ).rejects.toThrow('Database error during audit insert');
+
+      expect(prismaMock.$transaction).toHaveBeenCalled();
+      expect(prismaMock.securityAuditEvent.create).toHaveBeenCalled();
     });
   });
 
@@ -208,15 +279,16 @@ describe('IamAdminService', () => {
       status: RoleAssignmentStatus.ACTIVE,
     };
 
-    it('performs upsert if user and role exist', async () => {
+    it('performs upsert, logs security audit event and returns result inside transaction', async () => {
       prismaMock.user.findUnique.mockResolvedValue({ id: 'usr-1' });
       prismaMock.role.findUnique.mockResolvedValue({ id: 'role-1' });
       prismaMock.roleAssignment.upsert.mockResolvedValue({
         id: 'assignment-1',
         ...input,
       });
+      prismaMock.securityAuditEvent.create.mockResolvedValue({ id: 'audit-3' });
 
-      const result = await service.upsertRoleAssignment(input);
+      const result = await service.upsertRoleAssignment(input, 'actor-usr-123');
 
       expect(prismaMock.user.findUnique).toHaveBeenCalledWith({
         where: { id: 'usr-1' },
@@ -224,6 +296,7 @@ describe('IamAdminService', () => {
       expect(prismaMock.role.findUnique).toHaveBeenCalledWith({
         where: { id: 'role-1' },
       });
+      expect(prismaMock.$transaction).toHaveBeenCalled();
       expect(prismaMock.roleAssignment.upsert).toHaveBeenCalledWith({
         where: {
           userId_roleId_contextType_contextId: {
@@ -244,27 +317,61 @@ describe('IamAdminService', () => {
           status: RoleAssignmentStatus.ACTIVE,
         },
       });
+      expect(prismaMock.securityAuditEvent.create).toHaveBeenCalledWith({
+        data: {
+          event: 'IAM_ROLE_ASSIGNMENT_CHANGED',
+          actorId: 'actor-usr-123',
+          targetId: 'usr-1',
+          context: {
+            roleId: 'role-1',
+            contextType: 'ORGANIZATION',
+            contextId: 'org-123',
+            status: RoleAssignmentStatus.ACTIVE,
+          },
+        },
+      });
       expect(result).toEqual({ id: 'assignment-1', ...input });
     });
 
-    it('throws NotFoundException if user does not exist', async () => {
+    it('throws NotFoundException if user does not exist and does not start transaction', async () => {
       prismaMock.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.upsertRoleAssignment(input)).rejects.toThrow(
-        NotFoundException,
-      );
+      await expect(
+        service.upsertRoleAssignment(input, 'actor-usr-123'),
+      ).rejects.toThrow(NotFoundException);
+      expect(prismaMock.$transaction).not.toHaveBeenCalled();
       expect(prismaMock.role.findUnique).not.toHaveBeenCalled();
       expect(prismaMock.roleAssignment.upsert).not.toHaveBeenCalled();
     });
 
-    it('throws NotFoundException if role does not exist', async () => {
+    it('throws NotFoundException if role does not exist and does not start transaction', async () => {
       prismaMock.user.findUnique.mockResolvedValue({ id: 'usr-1' });
       prismaMock.role.findUnique.mockResolvedValue(null);
 
-      await expect(service.upsertRoleAssignment(input)).rejects.toThrow(
-        NotFoundException,
-      );
+      await expect(
+        service.upsertRoleAssignment(input, 'actor-usr-123'),
+      ).rejects.toThrow(NotFoundException);
+      expect(prismaMock.$transaction).not.toHaveBeenCalled();
       expect(prismaMock.roleAssignment.upsert).not.toHaveBeenCalled();
+    });
+
+    it('rolls back transaction (rethrows error) if audit event logging fails', async () => {
+      prismaMock.user.findUnique.mockResolvedValue({ id: 'usr-1' });
+      prismaMock.role.findUnique.mockResolvedValue({ id: 'role-1' });
+      prismaMock.roleAssignment.upsert.mockResolvedValue({
+        id: 'assignment-1',
+        ...input,
+      });
+      prismaMock.securityAuditEvent.create.mockRejectedValue(
+        new Error('Audit log error'),
+      );
+
+      await expect(
+        service.upsertRoleAssignment(input, 'actor-usr-123'),
+      ).rejects.toThrow('Audit log error');
+
+      expect(prismaMock.$transaction).toHaveBeenCalled();
+      expect(prismaMock.securityAuditEvent.create).toHaveBeenCalled();
     });
   });
 });

@@ -92,3 +92,12 @@ model RoleAssignment {
   @@unique([userId, roleId, contextType, contextId])
   @@index([userId, contextType, contextId, status])
 }
+
+model SecurityAuditEvent {
+  id        String   @id @default(uuid())
+  event     String
+  actorId   String
+  targetId  String
+  context   Json
+  createdAt DateTime @default(now())
+}
