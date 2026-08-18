@@ -9,6 +9,10 @@
     "researcher": "bbf3e04d25814cf1aba8ef93d9ff2233",
     "reviewer": "7eb366b1c8e14080b7f0e790dcfb160c",
     "governance": "06614f79505846709c655968aedb175f",
-    "login": "0aa8702b55db4f41a54c0760296dff02"
+    "login": "0aa8702b55db4f41a54c0760296dff02",
+    "workspace-shell": "568f0d873e004458a41d23f2a08b7705",
+    "security": "6aa17e13f6774f549fef280dcf1ab032",
+    "iam-admin": "076db8257f8945d9baaead70eb1f5175",
+    "system-states": "869661fc027c4ac992c032c9753f26a1"
   }
 }

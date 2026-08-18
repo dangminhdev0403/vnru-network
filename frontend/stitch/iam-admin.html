@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IAM Administration Console - VN-RU Scientific Collaboration Network</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Source+Serif+4:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#bec6e0",
+                        "surface-container": "#e5eeff",
+                        "on-surface-variant": "#45464d",
+                        "on-tertiary-fixed": "#2f1500",
+                        "on-secondary-fixed": "#00201d",
+                        "on-secondary": "#ffffff",
+                        "primary": "#000000",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "inverse-on-surface": "#eaf1ff",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "secondary-container": "#86f2e4",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#006a61",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "surface-container-low": "#eff4ff",
+                        "outline-variant": "#c6c6cd",
+                        "primary-container": "#131b2e",
+                        "on-surface": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#89f5e7",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-surface": "#213145",
+                        "primary-fixed": "#dae2fd",
+                        "tertiary-fixed": "#ffdcc3",
+                        "surface": "#f8f9ff",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#006f66",
+                        "tertiary": "#000000",
+                        "tertiary-container": "#2f1500",
+                        "on-tertiary-container": "#c76c00",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#565e74",
+                        "on-primary-container": "#7c839b",
+                        "surface-container-high": "#dce9ff",
+                        "outline": "#76777d",
+                        "surface-variant": "#d3e4fe",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-secondary-fixed-variant": "#005049",
+                        "background": "#f8f9ff",
+                        "on-primary-fixed": "#131b2e",
+                        "on-error-container": "#93000a",
+                        "on-background": "#0b1c30",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-md": "24px",
+                        "stack-sm": "12px",
+                        "base": "8px",
+                        "container-max": "1280px",
+                        "margin-desktop": "48px",
+                        "stack-lg": "48px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["\"Source Serif 4\""],
+                        "display-lg": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-lg": ["\"Source Serif 4\""],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.7", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Checkbox styling */
+        input[type="checkbox"] {
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-container border-b border-outline-variant dark:border-outline flat no shadows flex justify-between items-center w-full px-margin-desktop h-16 mx-auto">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary tracking-tight">Collaboration Network</span>
+<div class="hidden md:flex bg-surface-container-low border border-outline-variant rounded px-3 py-1.5 items-center">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">search</span>
+<input class="bg-transparent border-none text-label-sm font-label-sm focus:ring-0 p-0 text-on-surface w-64 placeholder-on-surface-variant" placeholder="Search IAM resources..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-4">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-sm text-label-sm" href="#">VI</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-sm text-label-sm" href="#">RU</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 hover:text-primary dark:hover:text-inverse-primary transition-colors font-label-sm text-label-sm" href="#">EN</a>
+</nav>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">settings</span></button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden flex items-center justify-center">
+<img alt="Researcher Profile Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of an administrator in a formal setting, neutral background, sharp focus, high key lighting, modern institutional style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATcmXOyEzXuKsSaTgAWG9tWt2tBWS6BzYf7K6tgEgdJly40cjZnO8OuzXAfXdL6FzylzTUV6fxV6JoNFW8i5vWXuRKhU7p-BBgvDuKNR9wZjJPqZVJAkUptLaW7pWq0hF64vnaghx3l5fQMyg3sbfhWQrX9jtC2OZuFedT5mMrsIxbByE1kUMoc3iX0zw8DznSFDa2LSf4re9mPzsyWAnoocil4XTww5AUV2FoREBxbeGo3tummgnESw"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col p-stack-sm w-[280px] h-full overflow-y-auto bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline flat no shadows shrink-0">
+<div class="mb-stack-lg px-2 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-label-md">
+<span class="material-symbols-outlined filled-icon">admin_panel_settings</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-primary leading-tight">Global Research</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Institutional Admin</p>
+</div>
+</div>
+<button class="w-full bg-secondary hover:bg-secondary-fixed text-on-secondary font-label-md text-label-md py-2 px-4 rounded mb-stack-md transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span> Submit Research
+            </button>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">description</span> Research Papers
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">payments</span> Grants
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container font-bold rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all duration-200 scale-[0.99] transition-transform" href="#">
+<span class="material-symbols-outlined filled-icon">account_balance</span> Institutions
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">group</span> Expert Directory
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span> Archive
+                </a>
+</nav>
+<div class="mt-auto pt-stack-sm border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg font-label-md text-label-md transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span> Support
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg font-label-md text-label-md transition-all duration-200" href="#">
+<span class="material-symbols-outlined">logout</span> Sign Out
+                </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-hidden bg-background">
+<!-- Header area -->
+<div class="px-margin-desktop py-stack-md border-b border-outline-variant bg-surface">
+<div class="max-w-container-max mx-auto">
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary mb-2">IAM Administration Console</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage identity, access, and audit logs for the Russia–Vietnam Knowledge Network.</p>
+</div>
+</div>
+<!-- Content Area -->
+<div class="flex-1 overflow-y-auto p-margin-desktop">
+<div class="max-w-container-max mx-auto h-full flex flex-col">
+<!-- Tabs -->
+<div class="flex border-b border-outline-variant mb-stack-lg gap-8 overflow-x-auto scrollbar-hide">
+<button class="whitespace-nowrap pb-2 font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" id="tab-btn-users" onclick="switchTab('users')">
+                            Users <span class="text-on-surface-variant font-normal ml-1">Người dùng / Пользователи</span>
+</button>
+<button class="whitespace-nowrap pb-2 font-label-md text-label-md font-bold text-primary border-b-2 border-primary" id="tab-btn-roles" onclick="switchTab('roles')">
+                            Roles &amp; Permissions <span class="text-on-surface-variant font-normal ml-1">Vai trò / Роли</span>
+</button>
+<button class="whitespace-nowrap pb-2 font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" id="tab-btn-assignments" onclick="switchTab('assignments')">
+                            Assignments <span class="text-on-surface-variant font-normal ml-1">Phân công / Назначения</span>
+</button>
+<button class="whitespace-nowrap pb-2 font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" id="tab-btn-effective" onclick="switchTab('effective')">
+                            Effective Access <span class="text-on-surface-variant font-normal ml-1">Quyền / Доступ</span>
+</button>
+<button class="whitespace-nowrap pb-2 font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" id="tab-btn-audit" onclick="switchTab('audit')">
+                            Audit <span class="text-on-surface-variant font-normal ml-1">Kiểm toán / Аудит</span>
+</button>
+</div>
+<!-- Roles & Permissions Tab Content (Active) -->
+<div class="flex-1 flex gap-gutter h-[calc(100vh-320px)]" id="tab-roles">
+<!-- Left Pane: Role List -->
+<div class="w-[320px] bg-surface border border-outline-variant rounded shadow-[0_4px_12px_rgba(0,0,0,0.05)] flex flex-col shrink-0 overflow-hidden">
+<div class="p-4 border-b border-outline-variant bg-surface-container-low space-y-3">
+<div class="flex justify-between items-center">
+<h3 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Roles</h3>
+<button class="p-1 text-primary hover:bg-surface-container-high rounded transition-colors" title="Create Role">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+</button>
+</div>
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full pl-8 pr-3 py-1.5 bg-surface border border-outline-variant rounded font-label-sm text-label-sm focus:outline-none focus:border-primary text-on-surface" placeholder="Search roles..." type="text"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<div class="divide-y divide-outline-variant">
+<!-- Role Item 1 -->
+<div class="p-3 bg-surface-container-low border-l-4 border-primary cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-label-md text-label-md font-semibold text-on-surface">Institutional Admin</h4>
+<span class="w-2 h-2 rounded-full bg-secondary-container mt-1" title="Active"></span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant line-clamp-2">Full administrative access over institutional resources and user assignments.</p>
+</div>
+<!-- Role Item 2 -->
+<div class="p-3 cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-label-md text-label-md font-semibold text-on-surface">Principal Investigator</h4>
+<span class="w-2 h-2 rounded-full bg-secondary-container mt-1" title="Active"></span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant line-clamp-2">Manages specific research projects, funding applications, and team members.</p>
+</div>
+<!-- Role Item 3 -->
+<div class="p-3 cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-label-md text-label-md font-semibold text-on-surface">Review Board Member</h4>
+<span class="w-2 h-2 rounded-full bg-secondary-container mt-1" title="Active"></span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant line-clamp-2">Read-only access to submissions with ability to submit evaluations.</p>
+</div>
+<!-- Role Item 4 -->
+<div class="p-3 cursor-pointer hover:bg-surface-container transition-colors opacity-70">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-label-md text-label-md font-semibold text-on-surface">Guest Researcher</h4>
+<span class="w-2 h-2 rounded-full bg-outline-variant mt-1" title="Inactive"></span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant line-clamp-2">Limited access to public academic exchange resources.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Pane: Detailed Role Editor -->
+<div class="flex-1 bg-surface border border-outline-variant rounded shadow-[0_4px_12px_rgba(0,0,0,0.05)] flex flex-col overflow-hidden">
+<!-- Unsaved Changes Banner -->
+<div class="bg-surface-container-highest border-b border-outline-variant px-4 py-2 flex justify-between items-center hidden" id="unsaved-banner">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container">info</span>
+                Unsaved changes
+            </span>
+<div class="flex gap-2">
+<button class="px-3 py-1 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors">Discard</button>
+<button class="px-3 py-1 bg-primary text-on-primary rounded font-label-sm text-label-sm hover:bg-primary-container transition-colors">Save Changes</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6">
+<div class="max-w-3xl">
+<div class="mb-8">
+<div class="flex justify-between items-start mb-4">
+<h2 class="font-headline-lg text-headline-md font-bold text-primary">Institutional Admin</h2>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-secondary-container text-on-secondary-container uppercase tracking-wider">Active</span>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider mb-1">Role Name</label>
+<input class="w-full px-3 py-2 bg-surface border border-outline-variant rounded font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary" type="text" value="Institutional Admin"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider mb-1">Description</label>
+<textarea class="w-full px-3 py-2 bg-surface border border-outline-variant rounded font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary h-20 resize-none">Full administrative access over institutional resources and user assignments.</textarea>
+</div>
+</div>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-sm font-bold text-primary mb-4 pb-2 border-b border-outline-variant">Permission Matrix</h3>
+<div class="space-y-6">
+<!-- Group: IAM -->
+<div class="bg-surface-container-low border border-outline-variant rounded overflow-hidden">
+<div class="px-4 py-2 bg-surface-container-high border-b border-outline-variant flex justify-between items-center cursor-pointer">
+<span class="font-label-md text-label-md font-bold text-on-surface">IAM (Identity &amp; Access Management)</span>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+<div class="p-4 space-y-3">
+<label class="flex items-start gap-3 cursor-pointer group">
+<input checked="" class="mt-1 border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-semibold group-hover:text-primary transition-colors">IAM.USER.READ</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">View user profiles and basic directory information.</div>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input checked="" class="mt-1 border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-semibold group-hover:text-primary transition-colors">IAM.USER.WRITE</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Create, modify, or suspend user accounts within scope.</div>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input checked="" class="mt-1 border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-semibold group-hover:text-primary transition-colors">IAM.ROLE.ASSIGN</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Grant or revoke roles for users within organizational context.</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Group: Knowledge -->
+<div class="bg-surface-container-low border border-outline-variant rounded overflow-hidden">
+<div class="px-4 py-2 bg-surface-container-high border-b border-outline-variant flex justify-between items-center cursor-pointer">
+<span class="font-label-md text-label-md font-bold text-on-surface">Knowledge (Research &amp; Papers)</span>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+<div class="p-4 space-y-3">
+<label class="flex items-start gap-3 cursor-pointer group">
+<input checked="" class="mt-1 border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-semibold group-hover:text-primary transition-colors">KNOWLEDGE.PAPER.READ_ALL</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Access all published and internal research papers across the network.</div>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input class="mt-1 border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-semibold group-hover:text-primary transition-colors">KNOWLEDGE.PAPER.APPROVE</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Approve research papers for official network publication.</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Group: Funding -->
+<div class="bg-surface-container-low border border-outline-variant rounded overflow-hidden">
+<div class="px-4 py-2 bg-surface-container-high border-b border-outline-variant flex justify-between items-center cursor-pointer">
+<span class="font-label-md text-label-md font-bold text-on-surface">Funding (Grants &amp; Budget)</span>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Assignments Tab (Hidden by default) -->
+<div class="hidden flex-1 flex flex-col gap-gutter" id="tab-assignments">
+<!-- Placeholder for Assignments implementation -->
+<div class="flex-1 bg-surface border border-outline-variant rounded flex items-center justify-center">
+<p class="text-on-surface-variant font-body-md">Assignments Tab Content (Switch to Roles &amp; Permissions)</p>
+</div>
+</div>
+<!-- Effective Access Tab (Hidden by default) -->
+<div class="hidden flex-1 flex flex-col gap-gutter" id="tab-effective">
+<!-- Placeholder for Effective Access implementation -->
+<div class="flex-1 bg-surface border border-outline-variant rounded flex items-center justify-center">
+<p class="text-on-surface-variant font-body-md">Effective Access Tab Content (Switch to Roles &amp; Permissions)</p>
+</div>
+</div>
+<!-- Users Tab (Hidden by default) -->
+<div class="hidden flex-1 flex flex-col gap-gutter" id="tab-users">
+<div class="flex-1 bg-surface border border-outline-variant rounded flex items-center justify-center">
+<p class="text-on-surface-variant font-body-md">Users Tab Content (Switch to Roles &amp; Permissions)</p>
+</div>
+</div>
+<!-- Audit Tab (Hidden by default) -->
+<div class="hidden flex-1 flex flex-col gap-gutter" id="tab-audit">
+<div class="flex-1 bg-surface border border-outline-variant rounded flex items-center justify-center">
+<p class="text-on-surface-variant font-body-md">Audit Tab Content (Switch to Roles &amp; Permissions)</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-container-lowest border-t border-outline-variant dark:border-outline flat no shadows flex justify-between items-center py-base px-margin-desktop w-full mt-auto">
+<span class="text-on-surface-variant dark:text-on-surface-variant font-label-sm text-label-sm">© 2024 VN-RU Scientific Collaboration Network. All Rights Reserved.</span>
+<div class="flex gap-4">
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary underline decoration-1 Transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary underline decoration-1 Transition-colors duration-200" href="#">Terms of Service</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary underline decoration-1 Transition-colors duration-200" href="#">Contact Support</a>
+</div>
+</footer>
+<script>
+        function toggleDrawer(show) {
+            const drawer = document.getElementById('user-drawer');
+            if (drawer) {
+                if (show) {
+                    drawer.classList.remove('hidden');
+                    drawer.classList.add('flex');
+                } else {
+                    drawer.classList.add('hidden');
+                    drawer.classList.remove('flex');
+                }
+            }
+        }
+
+        function switchTab(tabId) {
+            // Hide all tabs
+            const tabs = ['users', 'roles', 'assignments', 'effective', 'audit'];
+            tabs.forEach(id => {
+                const el = document.getElementById('tab-' + id);
+                if (el) {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                }
+                const btn = document.getElementById('tab-btn-' + id);
+                if (btn) {
+                    btn.classList.remove('font-bold', 'text-primary', 'border-b-2', 'border-primary');
+                    btn.classList.add('text-on-surface-variant');
+                }
+            });
+
+            // Show selected tab
+            const activeEl = document.getElementById('tab-' + tabId);
+            if (activeEl) {
+                activeEl.classList.remove('hidden');
+                activeEl.classList.add('flex');
+            }
+            const activeBtn = document.getElementById('tab-btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-on-surface-variant');
+                activeBtn.classList.add('font-bold', 'text-primary', 'border-b-2', 'border-primary');
+            }
+        }
+
+        // Simulating unsaved changes banner
+        document.querySelectorAll('input[type="checkbox"], input[type="text"], textarea').forEach(el => {
+            el.addEventListener('change', () => {
+                const banner = document.getElementById('unsaved-banner');
+                if (banner) {
+                    banner.classList.remove('hidden');
+                }
+            });
+        });
+    </script>
+</body></html>
