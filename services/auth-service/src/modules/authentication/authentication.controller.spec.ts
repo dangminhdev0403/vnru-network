@@ -34,6 +34,22 @@ describe('AuthenticationController', () => {
   let controller: AuthenticationController;
   let authService: MockAuthService;
   let mockResponse: MockResponse;
+  let originalEnv: NodeJS.ProcessEnv;
+
+  beforeAll(() => {
+    originalEnv = { ...process.env };
+    process.env.DATABASE_URL =
+      'postgresql://synthetic:dummy@localhost:5432/dummy';
+    process.env.KEYCLOAK_ISSUER_URL =
+      'https://keycloak.example.com/realms/vnru';
+    process.env.KEYCLOAK_CLIENT_ID = 'vnru-auth';
+    process.env.KEYCLOAK_REDIRECT_URI =
+      'https://portal.example.com/auth/callback';
+  });
+
+  afterAll(() => {
+    process.env = originalEnv;
+  });
 
   const syntheticAuthUrl =
     'https://keycloak.example.com/realms/vnru/protocol/openid-connect/auth?client_id=vnru-auth&response_type=code&state=synth-state&nonce=synth-nonce&code_challenge=synth-challenge&code_challenge_method=S256&redirect_uri=https%3A%2F%2Fportal.example.com%2Fauth%2Fcallback';

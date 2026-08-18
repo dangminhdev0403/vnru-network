@@ -52,6 +52,22 @@ describe('AuthenticationService', () => {
   let oidcService: MockOidcService;
   let identityService: MockIdentityService;
   let sessionService: MockSessionService;
+  let originalEnv: NodeJS.ProcessEnv;
+
+  beforeAll(() => {
+    originalEnv = { ...process.env };
+    process.env.DATABASE_URL =
+      'postgresql://synthetic:dummy@localhost:5432/dummy';
+    process.env.KEYCLOAK_ISSUER_URL =
+      'https://keycloak.example.com/realms/vnru';
+    process.env.KEYCLOAK_CLIENT_ID = 'vnru-auth';
+    process.env.KEYCLOAK_REDIRECT_URI =
+      'https://portal.example.com/auth/callback';
+  });
+
+  afterAll(() => {
+    process.env = originalEnv;
+  });
 
   const syntheticIssuer = 'https://keycloak.example.com/realms/vnru';
   const redirectUri = 'https://portal.example.com/auth/callback';
