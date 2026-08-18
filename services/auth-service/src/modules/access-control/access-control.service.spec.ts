@@ -271,4 +271,62 @@ describe('AccessControlService', () => {
     expect(capabilities).not.toContain('role-faculty');
     expect(capabilities).not.toContain('role-lab-lead');
   });
+
+  describe('hasActiveAssignment', () => {
+    it('returns true if active assignment exists', async () => {
+      prisma.roleAssignment.findMany.mockResolvedValue([
+        {
+          id: 'ra-1',
+          userId: 'usr-1',
+          contextType: 'ORGANIZATION',
+          contextId: 'org-100',
+          status: 'ACTIVE',
+          role: { id: 'r1', name: 'ROLE_1', permissions: [] },
+        },
+      ]);
+
+      const result = await service.hasActiveAssignment(
+        'usr-1',
+        'ORGANIZATION',
+        'org-100',
+      );
+      expect(result).toBe(true);
+      expect(prisma.roleAssignment.findMany).toHaveBeenCalledWith({
+        where: {
+          userId: 'usr-1',
+          contextType: 'ORGANIZATION',
+          contextId: 'org-100',
+          status: 'ACTIVE',
+        },
+      });
+    });
+
+    it('returns false if active assignment does not exist', async () => {
+      prisma.roleAssignment.findMany.mockResolvedValue([]);
+
+      const result = await service.hasActiveAssignment(
+        'usr-1',
+        'ORGANIZATION',
+        'org-100',
+      );
+      expect(result).toBe(false);
+    });
+
+    it('uses the provided transaction client if passed', async () => {
+      const txPrisma = {
+        roleAssignment: {
+          findMany: jest.fn().mockResolvedValue([]),
+        },
+      } as unknown as AccessControlPrismaClient;
+
+      const result = await service.hasActiveAssignment(
+        'usr-1',
+        'ORGANIZATION',
+        'org-100',
+        txPrisma,
+      );
+      expect(result).toBe(false);
+      expect(txPrisma?.roleAssignment.findMany).toHaveBeenCalledTimes(1);
+    });
+  });
 });

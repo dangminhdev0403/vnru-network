@@ -1,5 +1,9 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import { createHash, randomBytes } from 'crypto';
+import {
+  AccessControlService,
+  AccessControlPrismaClient,
+} from '../access-control/access-control.service';
 
 export const SESSION_PRISMA = 'SESSION_PRISMA';
 
@@ -17,6 +21,8 @@ export interface SessionRecord {
   expiresAt: Date;
   revokedAt: Date | null;
   createdAt: Date;
+  activeContextType: string | null;
+  activeContextId: string | null;
 }
 
 export interface CreateSessionResult {
@@ -32,12 +38,17 @@ export interface SessionServiceOptions {
 }
 
 export interface SessionPrismaClient {
+  $transaction?: <T>(
+    fn: (tx: SessionPrismaClient & AccessControlPrismaClient) => Promise<T>,
+  ) => Promise<T>;
   session: {
     create: (args: {
       data: {
         tokenDigest: string;
         userId: string;
         expiresAt: Date;
+        activeContextType?: string | null;
+        activeContextId?: string | null;
       };
     }) => Promise<SessionRecord>;
     findUnique: (args: {
@@ -45,11 +56,18 @@ export interface SessionPrismaClient {
     }) => Promise<SessionRecord | null>;
     updateMany: (args: {
       where: {
+        id?: string;
         tokenDigest?: string;
         userId?: string;
         revokedAt?: null;
+        expiresAt?: { gt: Date };
       };
-      data: { revokedAt: Date };
+      data: {
+        tokenDigest?: string;
+        revokedAt?: Date;
+        activeContextType?: string | null;
+        activeContextId?: string | null;
+      };
     }) => Promise<{ count: number }>;
   };
 }
@@ -64,6 +82,7 @@ export class SessionService {
   constructor(
     @Inject(SESSION_PRISMA)
     private readonly prisma: SessionPrismaClient,
+    private readonly accessControlService: AccessControlService,
     @Optional()
     options?: SessionServiceOptions,
   ) {
@@ -150,5 +169,84 @@ export class SessionService {
         revokedAt: now,
       },
     });
+  }
+
+  async switchContext(
+    currentPlainToken: string,
+    target: { contextType: string; contextId: string },
+  ): Promise<{ token: string; session: SessionRecord }> {
+    const oldDigest = this.hashToken(currentPlainToken);
+    const newPlainToken = this.generateToken();
+    const newDigest = this.hashToken(newPlainToken);
+    const now = this.now();
+
+    if (!this.prisma.$transaction) {
+      throw new Error('Prisma transaction client not available');
+    }
+
+    const updatedSession = await this.prisma.$transaction(
+      async (tx: SessionPrismaClient & AccessControlPrismaClient) => {
+        const session = await tx.session.findUnique({
+          where: { tokenDigest: oldDigest },
+        });
+
+        if (!session) {
+          throw new Error('Session not found');
+        }
+        if (session.revokedAt !== null) {
+          throw new Error('Session is revoked');
+        }
+        if (session.expiresAt.getTime() <= now.getTime()) {
+          throw new Error('Session is expired');
+        }
+
+        const hasActive = await this.accessControlService.hasActiveAssignment(
+          session.userId,
+          target.contextType,
+          target.contextId,
+          tx,
+        );
+
+        if (!hasActive) {
+          throw new Error(
+            'Active role assignment not found for target context',
+          );
+        }
+
+        const updateResult = await tx.session.updateMany({
+          where: {
+            id: session.id,
+            tokenDigest: oldDigest,
+            userId: session.userId,
+            revokedAt: null,
+            expiresAt: { gt: now },
+          },
+          data: {
+            tokenDigest: newDigest,
+            activeContextType: target.contextType,
+            activeContextId: target.contextId,
+          },
+        });
+
+        if (updateResult.count !== 1) {
+          throw new Error('Concurrent/stale session update detected');
+        }
+
+        const resultSession = await tx.session.findUnique({
+          where: { tokenDigest: newDigest },
+        });
+
+        if (!resultSession) {
+          throw new Error('Failed to retrieve updated session');
+        }
+
+        return resultSession;
+      },
+    );
+
+    return {
+      token: newPlainToken,
+      session: updatedSession,
+    };
   }
 }

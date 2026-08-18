@@ -45,7 +45,7 @@ export interface AccessControlPrismaClient {
         contextId: string;
         status: string;
       };
-      include: {
+      include?: {
         role: {
           include: {
             permissions: {
@@ -115,5 +115,26 @@ export class AccessControlService {
     }
 
     return Array.from(permissionKeys).sort();
+  }
+
+  async hasActiveAssignment(
+    userId: string,
+    contextType: string,
+    contextId: string,
+    txClient?: AccessControlPrismaClient,
+  ): Promise<boolean> {
+    if (!userId || !contextType || !contextId) {
+      return false;
+    }
+    const client = txClient ?? this.prisma;
+    const assignments = await client.roleAssignment.findMany({
+      where: {
+        userId,
+        contextType,
+        contextId,
+        status: 'ACTIVE',
+      },
+    });
+    return assignments.length > 0;
   }
 }
