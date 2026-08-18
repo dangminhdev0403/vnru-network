@@ -16,6 +16,7 @@ model User {
   email              String?
   status             UserStatus         @default(ACTIVE)
   externalIdentities ExternalIdentity[]
+  sessions           Session[]
 }
 
 model ExternalIdentity {
@@ -26,4 +27,16 @@ model ExternalIdentity {
   user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([issuer, subject])
+}
+
+model Session {
+  id          String    @id @default(uuid())
+  tokenDigest String    @unique
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt   DateTime
+  revokedAt   DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([userId, revokedAt])
 }
