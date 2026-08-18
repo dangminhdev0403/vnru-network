@@ -16,27 +16,30 @@
 
 ---
 
-## ✦ Overview
+## ✦ Overview `[SOURCE]`
 
-**VN-RU Network** is a bilateral digital platform designed to connect and manage cooperation between Vietnamese and Russian organizations, researchers, students, enterprises, and governance stakeholders.
+**VN-RU Network** is an independent bilateral cooperation initiative founded, owned, coordinated, and operated by the **Traditions and Friendship Foundation**. The Network is not a separate legal entity and serves as the single window connecting Vietnamese and Russian organizations (universities, research institutes, scientific associations, enterprises) and individual scientists.
 
-The platform supports the complete collaboration lifecycle across three canonical architectural layers `[SOURCE]` and a cross-cutting analytics foundation `[DESIGN]`:
+The platform operates across three canonical architectural layers `[SOURCE]` and a cross-cutting analytics foundation `[DESIGN]`:
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │ 1. User Interface & Multilingual Experience Layer (exp)     │
 │    - Trilingual (VI / RU / EN) + AI Translation Assistance  │
-│    - Public Discovery, Persona Workspaces, Review Queue     │
+│    - Three Canonical Access Areas:                          │
+│      * Public / Discovery (Home, News/Events, Search)       │
+│      * Role-based Workspace (Researcher, Reviewer, Enterprise)│
+│      * Governance & Administration (Foundation/Operators)   │
 └──────────────────────────────┬──────────────────────────────┘
                                │
 ┌──────────────────────────────▼──────────────────────────────┐
 │ 2. Business & Platform Services Layer (biz)                 │
-│    - IAM & Governance                                       │
-│    - Knowledge Repository & Expert Directory                │
-│    - Bilateral Grants / PMS & Peer Review                   │
-│    - Academic Exchange & Pushkin Virtual Hub                │
-│    - Technology Transfer & 2+2 Consortium Model             │
-│    - Science Diplomacy Dashboard & Strategic Reporting      │
+│    - Module 1: Identity & Access Governance (IAM)           │
+│    - Module 2: Knowledge Repository & Expert Directory      │
+│    - Module 3: Bilateral Research Funding & Project Mgmt    │
+│    - Module 4: Training, Transfer & Academic Exchange       │
+│    - Module 5: Technology Transfer & 2+2 Consortium Model   │
+│    - Module 6: Internal Monitoring & Reporting Dashboard    │
 └──────────────────────────────┬──────────────────────────────┘
                                │
 ┌──────────────────────────────▼──────────────────────────────┐
@@ -56,8 +59,8 @@ The platform supports the complete collaboration lifecycle across three canonica
 
 | Dimension | Current Implementation State | Planned Target Architecture |
 | :--- | :--- | :--- |
-| **Frontend** | Next.js 16.3 scaffold in `frontend/` with Server Components, TanStack Query, and query-resource integration. | Complete Portal UI across Public Discovery, Persona Workspaces, Review Queue, Governance, and Dashboard. |
-| **Backend** | NestJS 11 scaffold in `services/auth-service/` for Identity, Authentication & RBAC baseline. | Domain-oriented microservice ecosystem (`auth-service`, `organization-service`, `knowledge-service`, `grant-service`, `review-service`, `project-service`, `academic-service`, `technology-service`, `analytics-service`, `api-gateway`). |
+| **Frontend** | Next.js 16.3 scaffold in `frontend/` with Server Components, TanStack Query, and query-resource integration. | Complete Portal UI across Public Discovery, Persona Workspaces, Review Queue, Governance & Admin, and Internal Dashboard. |
+| **Backend** | NestJS 11 scaffold in `services/auth-service/` for Identity, Keycloak OIDC broker & single-context session baseline. | Domain-oriented microservice ecosystem (`auth-service`, `organization-service`, `knowledge-service`, `grant-service`, `review-service`, `project-service`, `academic-service`, `technology-service`, `analytics-service`, `api-gateway`). |
 | **Data & Storage** | Local PostgreSQL database connections per active service. | Database-per-service isolation (`auth_db`, `organization_db`, `grant_db`, etc.) with Redis caching. |
 | **Messaging** | In-process transactional workflows. | Kafka Event Bus with Transactional Outbox pattern for asynchronous domain event propagation and fact streaming. |
 
@@ -67,12 +70,12 @@ The platform supports the complete collaboration lifecycle across three canonica
 
 | Capability | Business Responsibility | Owning Target Service |
 | :--- | :--- | :--- |
-| 🔐 **IAM & Unified Governance** | Identity federation, SSO, 2FA policies, active context resolution & RBAC | `auth-service` *(Current)* |
-| 🏛️ **Knowledge & Expert Directory** | Publications repository, patents, researcher CVs & partner recommendations | `knowledge-service`<br>`organization-service` *(Target)* |
-| 💰 **Bilateral Grants, PMS & Review** | Bilateral calls, paired VN/RU submissions, double-blind review, milestones & acceptance | `grant-service`<br>`review-service`<br>`project-service` *(Target)* |
-| 🎓 **Academic Exchange & Language Hub** | Scholarships, Pushkin Virtual Hub (courses, exams, certs) & youth practice | `academic-service` *(Target)* |
-| 🚀 **Technology Transfer & 2+2** | Technology marketplace, enterprise demands, 2+2 consortiums & IP advisory | `technology-service` *(Target)* |
-| 📊 **Science Diplomacy Dashboard** | Executive bilateral KPIs, collaboration network mapping & strategic reporting | `analytics-service` *(Target, Read-only)* |
+| 🔐 **1. Identity & Access Governance** | Unified identity, Keycloak OIDC authentication, session lifecycle, active context resolution, RBAC policy enforcement, and security audit log. | `auth-service` *(Current)* |
+| 🏛️ **2. Knowledge Repository & Expert Directory** | Publications repository, patents, proceedings, researcher CVs, integrated search, and partner recommendations. | `knowledge-service`<br>`organization-service` *(Target)* |
+| 💰 **3. Bilateral Research Funding & Project Management** | Independent funding opportunities (Foundation/sponsor managed), VN–RU joint proposals, independent/anonymized peer review, decisions within Foundation authority, and project tracking. *(State budget authority remains with competent state bodies).* | `grant-service`<br>`review-service`<br>`project-service` *(Target)* |
+| 🎓 **4. Training, Knowledge Transfer & Academic Exchange** | Seminars, professional activities, conferences/forums (including annual Vietnam–Russia Intellectual Forum), academic exchange, and knowledge dissemination. `[DECISION]` *(No separate financial-support branch).* | `academic-service` *(Target)* |
+| 🚀 **5. Technology Transfer & Enterprise Connection** | Technology marketplace, enterprise demands, expressions of interest (EOI), **2+2 consortium collaborations** (1 VN Inst + 1 VN Ent + 1 RU Inst + 1 RU Ent), and IP/transfer advisory. | `technology-service` *(Target)* |
+| 📊 **6. Internal Monitoring & Reporting Dashboard** | Internal monitoring and strategic reporting for Network leadership and Foundation management; tracks projects, expert connections, and tech transfer. *(Internal workspace only).* | `analytics-service` *(Target, Read-only)* |
 
 ---
 
@@ -142,12 +145,12 @@ vnru-network/
 │   ├── api-gateway/           # Edge routing & rate limiting (Target)
 │   ├── organization-service/  # Institutions & expert directory (Target)
 │   ├── knowledge-service/     # Digital scientific repository (Target)
-│   ├── grant-service/         # Bilateral funding calls & paired proposals (Target)
-│   ├── review-service/        # Double-blind peer review management (Target)
+│   ├── grant-service/         # Bilateral funding opportunities & joint proposals (Target)
+│   ├── review-service/        # Independent peer review management (Target)
 │   ├── project-service/       # Joint research projects & milestones (Target)
-│   ├── academic-service/      # Scholarships & Pushkin language hub (Target)
+│   ├── academic-service/      # Academic activities & knowledge exchange (Target)
 │   ├── technology-service/    # Tech marketplace & 2+2 consortiums (Target)
-│   └── analytics-service/     # Strategic KPI & collaboration analytics (Target)
+│   └── analytics-service/     # Internal monitoring & strategic reporting (Target)
 │
 ├── shared/                    # Shared Technical Contracts
 │   └── api-contract/          # Exported OpenAPI specifications & types
@@ -159,9 +162,9 @@ vnru-network/
 │
 ├── docs/                      # Authoritative Repository & Architecture Docs
 │   ├── README.md              # Documentation index & reading order
-│   ├── ARCHITECTURE.md        # 3-Layer Portal system architecture
+│   ├── ARCHITECTURE.md        # 3-Layer Portal system architecture & 3 access areas
 │   ├── DOMAIN_MAP.md          # Business capability & data ownership map
-│   ├── RBAC_ARCHITECTURE.md   # Persona profiles & permission taxonomy
+│   ├── RBAC_ARCHITECTURE.md   # Personas & permission taxonomy
 │   ├── RULES.md               # Authoritative governance & development rules
 │   ├── API_SPEC.md            # API contract standards & event envelopes
 │   └── OPEN_QUESTIONS.md      # Centralized register of open decisions (OPEN-01..12)
@@ -199,21 +202,21 @@ vnru-network/
 Authentication and authorization are strictly enforced at backend service boundaries:
 
 ```text
-User (Subject) ──> Authenticates (SSO / 2FA)
+User (Subject) ──> Authenticates (Keycloak OIDC Broker)
                          │
                          ▼
              Resolve Active Context
   ┌──────────────────────┬──────────────────────┐
   ▼                      ▼                      ▼
 Context A:             Context B:             Context C:
-Researcher @ Univ X    Reviewer @ Panel Y     Institution Admin @ Univ X
-(grants.proposals.*)   (reviews.evaluations.*) (organization.members.*)
+Researcher @ Univ X    Reviewer @ Board Y     Organization Rep @ Univ X
+(grants.proposals.*)   (reviews.assignments.*)(organization.members.*)
 ```
 
 - **Backend Authority**: Backend services are the single security boundary. Frontend visibility checks are UX conveniences only.
 - **Fail-Closed Security**: Missing authentication, missing permissions, or invalid resource scopes result in `401`/`403`.
 - **Capability Keys**: Permissions use `<domain>.<resource>.<action>` format.
-- **Double-Blind Isolation**: Reviewers only access assigned proposals; author identities and institutional affiliations are strictly stripped.
+- **Independent Review Isolation**: Reviewers only access assigned proposals; author identities and institutional affiliations are masked according to review policy.
 
 ---
 
@@ -236,9 +239,9 @@ auth_db | organization_db | knowledge_db | grant_db | review_db | project_db | a
 | Document | Purpose |
 | :--- | :--- |
 | [docs/README.md](docs/README.md) | Documentation index, reading order & state distinctions |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 3-Layer Portal architecture, topology & data boundaries |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 3-Layer Portal architecture, 3 access areas & data boundaries |
 | [docs/DOMAIN_MAP.md](docs/DOMAIN_MAP.md) | Six business capabilities, model ownership & dependency rules |
-| [docs/RBAC_ARCHITECTURE.md](docs/RBAC_ARCHITECTURE.md) | Personas, capability keys, active context & double-blind review |
+| [docs/RBAC_ARCHITECTURE.md](docs/RBAC_ARCHITECTURE.md) | Personas, capability keys, active context & independent review |
 | [docs/RULES.md](docs/RULES.md) | Authoritative global rules, security & package governance |
 | [docs/API_SPEC.md](docs/API_SPEC.md) | OpenAPI contract policy, REST scopes & versioned event envelopes |
 | [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | Centralized open decisions register (OPEN-01 through OPEN-12) |
@@ -272,4 +275,5 @@ npm --prefix services/auth-service run start:dev
 🇻🇳 Vietnam   ×   🇷🇺 Russia
 
 </div>
+
 

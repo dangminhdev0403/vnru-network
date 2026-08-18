@@ -211,14 +211,15 @@ The following models do **not** belong to `auth-service`:
 Organization
 Researcher
 ExpertProfile
-FundingCall
-Proposal
+FundingOpportunity
+JointProposal
 ReviewAssignment
 Project
-Scholarship
-Technology
+AcademicActivity
+TechnologyProfile
 Publication
 ```
+
 
 If authorization context requires organization/resource scope, store only the stable references needed by IAM; do not copy business records into `auth-service`.
 
@@ -263,26 +264,26 @@ authenticationLevel
 
 Final field names and transport contracts must only be locked when API/session design is implemented and added to OpenAPI.
 
-## 9. Directly Related OPEN Decisions
+## 9. Approved Technical Baseline `[DECISION]`
 
-- **OPEN-01** — exact SSO / Identity Provider selection.
-- **OPEN-02** — final multi-role / multi-context model and switching behavior.
+- **OPEN-01**: Keycloak is the identity broker over OpenID Connect (Authorization Code Flow with PKCE); institution IdPs stay behind Keycloak.
+- **OPEN-02**: Exactly one active context per session. Context switching validates assignment/scope and rotates the session token.
 
-No implementation may silently close these two decisions.
+## 10. Current Implementation Baseline
 
-## 10. Not Implemented Yet
+The approved implementation baseline for Module 1 specifies:
 
-The current base intentionally does not include:
+- PostgreSQL persistence with Prisma migrations;
+- Keycloak OIDC authentication broker integration;
+- Random opaque session tokens in HttpOnly cookies (storing SHA-256 digests in PostgreSQL);
+- Zod validation at trust boundaries;
+- Append-only PostgreSQL security audit logging.
 
-- JWT / Passport;
-- a concrete SSO provider;
-- DB/ORM/Prisma schema or migrations;
-- a concrete 2FA mechanism;
-- role/permission seed data;
-- public authentication endpoints;
-- a separate audit module/service;
-- event publishing;
-- new dependencies/packages.
+Deferred until later slices / multi-service integration:
+- Application-level JWTs / Passport;
+- Cross-service Redis caching and Kafka outbox;
+- Public authentication endpoints before approved slice implementation.
+
 
 ## 11. Implementation Direction
 

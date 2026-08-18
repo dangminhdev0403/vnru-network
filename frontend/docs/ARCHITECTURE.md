@@ -99,45 +99,35 @@ Detailed runtime rules belong in `RUNTIME_UI_GUIDE.md`.
 
 ## 7. Product Surfaces & Route Architecture `[DESIGN]`
 
-The Web experience structure maps the six business capabilities into distinct product surfaces with clear access rules:
+The Web experience structure maps the three canonical access areas and six business capabilities into distinct product surfaces with clear access rules:
 
 ```txt
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ 1. Public / Discovery Surface                                               │
 │    /                   - Home & network highlights                          │
-│    /search             - Global & semantic discovery across entities        │
-│    /knowledge/*        - Digital scientific repository, papers, patents     │
-│    /experts/*          - Expert directory, researcher profiles, matches     │
-│    /grants/*           - Funding programs and bilateral calls catalog       │
-│    /academic/*         - Academic scholarships, Pushkin Hub, youth practice │
-│    /technology/*       - Tech transfer marketplace, enterprise needs        │
+│    /news-events        - News, events, forums & announcements               │
+│    /search             - Integrated global search across entities           │
+│    /knowledge/*        - Knowledge Repository: papers, patents, documents   │
+│    /experts/*          - Expert Directory: researcher CVs, partner matches  │
+│    /opportunities/*    - Collaboration opportunities (Funding/Academic/Tech)│
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 2. Authentication & Session Surface                                         │
-│    /login              - SSO & Identity Provider authentication             │
-│    /security           - 2FA setup, active sessions, credential security    │
+│    /login              - Keycloak OIDC authentication & session bootstrap   │
+│    /security           - 2FA policy status, active sessions, security trail │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 3. Authenticated Persona Workspaces Surface                                  │
 │    /workspace          - Context resolver & workspace dispatcher            │
-│    /workspace/researcher   - Proposals, Co-PI paired signs, active projects │
-│    /workspace/student      - Scholarship applications, courses, exams       │
-│    /workspace/enterprise   - Tech demands, interests, 2+2 consortiums       │
-│    /workspace/organization - Faculty management, institutional proposals    │
-│    /workspace/agency       - Program administration, decisions, disbursals  │
+│    /workspace/researcher   - Profiles, publications, joint proposals, projects│
+│    /workspace/reviewer     - Assigned review queue (anonymized evaluation)  │
+│    /workspace/enterprise   - Tech demands, expressions of interest, 2+2     │
+│    /workspace/organization - Org profile, member verification, org activities│
+│    /workspace/leadership   - Internal KPI dashboards, activity monitoring   │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 4. Double-Blind Peer Review Surface                                         │
-│    /reviews            - Assigned review queue (anonymized)                 │
-│    /reviews/:id        - Double-blind evaluation, rubric scoring, comments  │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ 5. Governance & Administration Surface                                      │
-│    /admin/users        - User and identity management                       │
-│    /admin/access       - Roles, permissions, and context administration     │
+│ 4. Governance & Administration Surface (Foundation & System Operators only) │
+│    /admin/access       - Identity, user management, and role assignments    │
+│    /admin/catalogs     - Data/workflow governance & moderation queues       │
 │    /admin/audit        - Immutable security & action audit review           │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ 6. Science Diplomacy & Strategic Analytics Surface                          │
-│    /dashboard          - Executive bilateral KPIs                           │
-│    /dashboard/network  - Collaboration network graph (cities/institutes)    │
-│    /dashboard/trends   - Emerging technology & scientific topic trends      │
-│    /dashboard/reports  - Strategic report generation & export               │
+│    /admin/kpi          - KPI definition and report administration           │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -145,14 +135,13 @@ The Web experience structure maps the six business capabilities into distinct pr
 
 | Persona | Primary Entry Point | Core Flow | Primary CTA |
 | --- | --- | --- | --- |
-| **Visitor** | `/` (Home) / `/search` | Explore repository, view public expert profiles and funding calls | *Search / Explore* |
-| **Researcher** | `/workspace/researcher` | Profile CV maintenance, paired proposal drafting, milestone reporting | *Submit Paired Proposal* |
-| **Student** | `/academic` / `/workspace/student` | Browse scholarships, enroll in Pushkin language hub, register exams | *Apply / Enroll* |
-| **Reviewer** | `/reviews` | Open anonymized assigned proposal, score against rubric, submit | *Score & Submit Review* |
-| **Enterprise** | `/technology` / `/workspace/enterprise` | Search IP/technologies, post demand, form 2+2 consortium | *Express Interest* |
-| **Institution Staff** | `/workspace/organization` | Verify institutional proposals, track department projects | *Verify / Report* |
-| **Agency Officer** | `/workspace/agency` | Publish funding calls, assign reviewers, issue funding decisions | *Review & Approve* |
-| **Science Diplomat** | `/dashboard` | Inspect real-time bilateral KPIs, collaboration maps, export report | *Drill-Down / Export Report* |
+| **Visitor** | `/` (Home) / `/search` | Explore knowledge repository, view public expert profiles, funding opportunities, training events, and tech catalog | *Search / Explore* |
+| **Researcher / Scientist** | `/workspace/researcher` | Profile CV maintenance, VN–RU joint proposal collaboration, project milestone reporting | *Collaborate / Submit Proposal* |
+| **Reviewer** | `/workspace/reviewer` or `/reviews` | Open assigned anonymized proposal, score against rubric, submit evaluation | *Score & Submit Review* |
+| **Organization Representative** | `/workspace/organization` | Manage organization profile, endorse institutional proposals, propose organization-led activities | *Verify / Manage Org* |
+| **Enterprise Representative** | `/workspace/enterprise` | Search IP/technologies, post demand, submit expression of interest (EOI), form 2+2 consortium | *Express Interest / Form 2+2* |
+| **Leadership** | `/workspace/leadership` | Inspect internal bilateral KPIs, activity trends (projects, connections, tech transfer), export internal report | *Monitor KPIs / View Report* |
+| **Governance Administrator** | `/admin/access` | Manage identities, assign roles, govern data catalogs, review audit logs, manage KPI definitions | *Administer Platform* |
 
 ### 7.2. Shared UI State Model `[DESIGN]`
 

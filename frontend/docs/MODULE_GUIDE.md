@@ -103,17 +103,18 @@ Frontend feature modules align with the six business capabilities:
 
 | Feature Module | Business Capability | Key Components & Responsibilities |
 | --- | --- | --- |
-| `features/auth` | IAM & Governance | Sign-in forms, SSO handlers, 2FA verification, session bridge, active context selector. |
-| `features/knowledge` | Knowledge Repository | Publication search, detail viewers, paper upload/indexing forms, topic filters. |
-| `features/organization` | Expert Directory & Institutions | Institution directory, researcher profile/CV, similarity & partner matching UI. |
-| `features/grants` | Bilateral Grants & PMS | Call catalog, paired proposal collaborative editor, Co-PI mutual sign-off, version locking. |
-| `features/reviews` | Multi-Stage Peer Review | Reviewer queue, double-blind proposal view (anonymized), scoring rubrics, comment submission. |
-| `features/projects` | Project Management | Project timeline, milestone status updates, bilateral financial report uploads, overdue alerts. |
-| `features/academic` | Academic Exchange | Scholarship applications, Pushkin Virtual Hub courses/exams/certificates, JINR practice. |
-| `features/technology` | Technology Transfer | Technology marketplace, demand postings, expression of interest forms, 2+2 consortium builder. |
-| `features/analytics` | Science Diplomacy Dashboard | Executive KPI cards, collaboration network graph, topic trend charts, PDF/Excel export trigger. |
-| `features/workspace` | Persona Workspaces | Dynamic workspace shells, persona role dispatching, navigation registry, context switching. |
-| `features/admin` | Governance & Admin | User administration, role/permission matrices, immutable audit log explorer. |
+| `features/auth` | 1. Identity & Access Governance | Sign-in forms, Keycloak OIDC handlers, 2FA status, session bridge, active context selector. |
+| `features/knowledge` | 2. Knowledge Repository | Publication search, detail viewers, paper upload/indexing forms, topic filters. |
+| `features/organization` | 2. Organizations & Expert Directory | Institution directory, researcher profile/CV, similarity & partner matching UI. |
+| `features/grants` | 3. Bilateral Research Funding | Independent funding opportunity catalog, VN–RU joint proposal collaborative editor, mutual participation confirmation. |
+| `features/reviews` | 3. Independent Peer Review | Reviewer queue, anonymized proposal view, scoring rubrics, comment submission. |
+| `features/projects` | 3. Project Management (PMS) | Project timeline, milestone status updates, progress reports, deliverables, outcome links. |
+| `features/academic` | 4. Training & Academic Exchange | Seminar/forum/conference catalog, activity registration, organizer management, material references (`[DECISION]` no financial branch). |
+| `features/technology` | 5. Technology Transfer & 2+2 | Technology marketplace, enterprise demand postings, expression of interest (EOI) forms, 2+2 consortium builder, IP advisory cases. |
+| `features/analytics` | 6. Internal Monitoring & Reporting | Internal KPI cards, collaboration network graph, activity trend charts, internal report run trigger *(Internal only)*. |
+| `features/workspace` | Role-based Workspaces | Dynamic workspace shells, persona role dispatching, navigation registry, context switching. |
+| `features/admin` | Governance & Administration | User administration, role/permission matrices, catalog governance, immutable audit log explorer, KPI definitions. |
+
 
 ---
 

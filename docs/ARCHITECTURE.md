@@ -1,8 +1,12 @@
 # VN-RU Network System Architecture
 
-## 1. Overview & System Purpose
+## 1. Overview & Legal Baseline `[SOURCE]`
 
-The **VN-RU Knowledge Network** is a bilateral knowledge, research, and technology platform connecting researchers, universities, research institutes, government agencies, and enterprises between Vietnam and the Russian Federation.
+The **VN-RU Network Portal** is a bilateral knowledge, research, and technology cooperation platform.
+
+- **Founder & Operator**: The **Traditions and Friendship Foundation** is the founder, owner, coordinator, and operator of the Network and the Portal.
+- **Legal Position**: The Network is an independent cooperation initiative and is **not a separate legal entity**; it must not be assumed to be a portal of the two ministries or an intergovernmental program.
+- **Single Window**: The Portal serves as the Network's "single window" connecting organizations (educational institutions, research institutes, scientific associations, enterprises) and individual scientists across Vietnam and the Russian Federation.
 
 The architecture integrates six core business capabilities across three canonical architectural layers `[SOURCE]` and a cross-cutting analytics and observability foundation `[DESIGN]`.
 
@@ -14,17 +18,21 @@ The architecture integrates six core business capabilities across three canonica
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ 1. User Interface & Multilingual Experience Layer (exp)            [SOURCE] │
 │    - Trilingual (VI / RU / EN) + AI-assisted Terminology Translation        │
-│    - Public Discovery, Persona Workspaces, Review Queue, Governance Console  │
+│    - Three Canonical Access Areas:                                          │
+│      * Public / Discovery (Home, News/Events, Search, Knowledge, Experts,   │
+│        Collaboration Opportunities)                                         │
+│      * Role-based Workspace (Researcher, Reviewer, Enterprise, Org, Leader) │
+│      * Governance & Administration (Foundation & System Operators only)     │
 └──────────────────────────────────────┬──────────────────────────────────────┘
                                        │ HTTP / REST / Session
 ┌──────────────────────────────────────▼──────────────────────────────────────┐
 │ 2. Business & Platform Services Layer (biz)                        [SOURCE] │
-│    - Unified IAM & Governance                                               │
-│    - Knowledge Repository & Expert Directory                                │
-│    - Bilateral Grants / PMS & Multi-Stage Double-Blind Review               │
-│    - Academic Exchange & Pushkin Virtual Hub                                │
-│    - Technology Transfer & 2+2 Consortium Model                             │
-│    - Science Diplomacy Dashboard & Strategic Reporting                      │
+│    - Module 1: Identity & Access Governance (IAM / Security Gateway)        │
+│    - Module 2: Knowledge Repository & Expert Directory                      │
+│    - Module 3: Bilateral Research Funding & Project Management (Independent)│
+│    - Module 4: Training, Knowledge Transfer & Academic Exchange             │
+│    - Module 5: Technology Transfer & Enterprise Connection (inc. 2+2 Model) │
+│    - Module 6: Internal Monitoring & Reporting Dashboard (Leadership/Admin) │
 └──────────────────────────────────────┬──────────────────────────────────────┘
                                        │ Infrastructure APIs / DB Ports
 ┌──────────────────────────────────────▼──────────────────────────────────────┐
@@ -44,17 +52,17 @@ The architecture integrates six core business capabilities across three canonica
 ```
 
 ### 2.1. Layer 1: User Interface & Multilingual Experience (`exp`) `[SOURCE]`
-- **Multilingual Support**: First-class support for Vietnamese, Russian, and English.
+- **Multilingual Support**: First-class support for Vietnamese (`vi`), Russian (`ru`), and English (`en`).
 - **AI-Assisted Translation**: Terminology translation assistance for specialized scientific and technical documents.
-- **Persona-Driven Product Surfaces**:
-  - *Public / Discovery*: Home, global search, digital library, expert directory, opportunity catalogs.
-  - *Authenticated Workspaces*: Tailored workspaces for Researchers, Students, Reviewers, Institutions, Enterprises, and Government Agencies.
-  - *Governance & Administration*: Identity, access control, workflow orchestration, and audit consoles.
-  - *Executive Analytics*: Strategic Science Diplomacy dashboard.
+- **Three Canonical Access Areas `[SOURCE]`**:
+  - *Public / Discovery*: Home, News / Events / Announcements, Global Search, Knowledge Repository, Expert Directory, and Collaboration Opportunities. Unauthenticated visitors can explore all approved public content without login.
+  - *Role-based Workspace*: Authenticated members access workspaces scoped to active role/context (Researcher/Scientist, Reviewer, Enterprise, Organization Representative, Leadership). Organization/Agency users are not system administrators; they only access data/workflows within their granted scope.
+  - *Governance & Administration*: Reserved strictly for Foundation and system operators for identity/access governance, workflow/data governance, security/audit monitoring, and KPI/report administration.
 
 ### 2.2. Layer 2: Business & Platform Services (`biz`) `[SOURCE]`
-- Encapsulates domain workflow engines, business rules, paired submissions, peer-review anonymization, and milestone acceptance.
+- Encapsulates domain workflow engines, business rules, paired submissions, independent/anonymized review, milestone tracking, and technology matching.
 - Implemented as modular, domain-bounded microservices with explicit public contracts.
+- **Authoritative Security Boundary**: Business authorization and resource validation are enforced at backend service boundaries; frontend checks are UX conveniences only.
 
 ### 2.3. Layer 3: Infrastructure & Digital Sovereignty Security (`infra`) `[SOURCE]`
 - Hybrid Cloud infrastructure compliant with data residency and sovereignty requirements of both nations.
@@ -62,30 +70,29 @@ The architecture integrates six core business capabilities across three canonica
 
 ### 2.4. Cross-Cutting: Analytics & KPI Foundation (`analytics`) `[DESIGN]`
 - Standardized fact and metric definitions across all domains from the first module.
-- Consumes domain events and fact snapshots to power strategic dashboards, KPIs, and collaboration graphs.
+- Consumes domain events and fact snapshots to power internal monitoring dashboards, executive KPIs, and collaboration graphs.
 - **Strict Rule**: The Analytics layer is a read-only consumer and MUST NOT act as a transactional source of truth for any business domain.
 
 ---
 
 ## 3. Six Business Capabilities & Domain Microservices
 
-The six source capabilities map to domain-oriented microservices (Target Architecture):
+The six canonical capabilities map to domain-oriented microservices (Target Architecture):
 
 | Module / Capability | Core Business Responsibility `[SOURCE]` | Owning Service & Implementation Status |
 | --- | --- | --- |
-| **1. Unified IAM & Governance** | Identity federation, SSO, 2FA policy, active authorization context resolution, and RBAC policy enforcement. | `auth-service` *(Current Implementation)* |
-| **2. Knowledge & Expert Network** | Digital scientific repository (publications, patents, proceedings), expert mapping, researcher CVs, and partner recommendation signals. | `knowledge-service`<br>`organization-service` *(Target / Planned)* |
-| **3. Bilateral Grants / PMS & Review** | Bilateral funding calls, paired submission confirmation (VN Co-PI + RU Co-PI), double-blind multi-stage peer review, joint project tracking, milestones, bilateral financial reporting, overdue alerts, and acceptance. | `grant-service`<br>`review-service`<br>`project-service` *(Target / Planned)* |
-| **4. Academic Exchange & Language Hub** | Scholarship & quota management, Pushkin Virtual Hub (courses, exams, certifications, events), and young researcher / JINR practice opportunities. | `academic-service` *(Target / Planned)* |
-| **5. Technology Transfer & Enterprise Connection** | Technology catalog, enterprise demand posting, expressions of interest, 2+2 consortium collaborations (1 VN Inst + 1 VN Ent + 1 RU Inst + 1 RU Ent), and bilateral IP/legal advisory catalog. | `technology-service` *(Target / Planned)* |
-| **6. Science Diplomacy Dashboard** | Executive KPIs for Intergovernmental Committee, collaboration network mapping (cities, institutes, emerging topics), trend analysis, and strategic report export. | `analytics-service`<br>(Analytics Layer) *(Target / Planned, Read-only)* |
+| **1. Identity & Access Governance** | Unified identity, authentication, session, active authorization context resolution, RBAC policy enforcement, and security audit trail. Acts as security gateway; does not own business entity state. | `auth-service` *(Current Implementation)* |
+| **2. Knowledge Repository & Expert Directory** | Publications, research outputs (papers, patents, proceedings), expert profiles, scientific CVs, integrated search, and partner recommendation signals. | `knowledge-service`<br>`organization-service` *(Target / Planned)* |
+| **3. Bilateral Research Funding & Project Management** | Independent funding opportunities (raised/managed by Foundation or independent sponsors), VN–RU joint collaboration proposals, independent/anonymized peer review, decisions within Foundation authority, and project milestone/progress tracking. *(State budget authority remains with competent state bodies).* | `grant-service`<br>`review-service`<br>`project-service` *(Target / Planned)* |
+| **4. Training, Knowledge Transfer & Academic Exchange** | Seminars, professional activities, conferences/forums (including annual Vietnam–Russia Intellectual Forum), academic exchange, and knowledge dissemination. `[DECISION]` *(No separate financial-support branch).* | `academic-service` *(Target / Planned)* |
+| **5. Technology Transfer & Enterprise Connection** | Technology catalog, enterprise demand posting, expressions of interest, bilateral collaboration cases, **2+2 consortium model** (1 VN Inst + 1 VN Ent + 1 RU Inst + 1 RU Ent), and IP/legal advisory support. | `technology-service` *(Target / Planned)* |
+| **6. Internal Monitoring & Reporting Dashboard** | Internal dashboard and strategic reporting for Network leadership and Foundation management; tracks projects, expert connections, tech transfer activities, and aggregated KPIs. *(Internal workspace only; not a public area).* | `analytics-service`<br>(Analytics Layer) *(Target / Planned, Read-only)* |
 
 > **State Note**: Currently, `auth-service` is implemented under `services/auth-service/`. Additional domain services and edge infrastructure represent the planned target microservices architecture.
 
 ---
 
 ## 4. System Topology & Communication (Target Architecture)
-
 
 ```text
 Frontend (Next.js 16.3) ──[HTTP/REST]──> API Gateway ──[HTTP/REST]──> Microservices (NestJS)
@@ -97,7 +104,7 @@ Frontend (Next.js 16.3) ──[HTTP/REST]──> API Gateway ──[HTTP/REST]�
                                                                            │
                                                                   ┌────────┼────────┐
                                                                   ▼        ▼        ▼
-                                                             Notification Search Analytics
+                                                              Notification Search Analytics
 ```
 
 ### 4.1. Communication Patterns
@@ -119,6 +126,6 @@ Frontend (Next.js 16.3) ──[HTTP/REST]──> API Gateway ──[HTTP/REST]�
 
 ## 6. Unresolved Architecture Decisions
 
-Architectural decisions requiring stakeholder confirmation (such as IdP selection, multi-context switching, semantic search engine, and paired proposal concurrency) are tracked in the centralized register:
+Architectural decisions requiring stakeholder confirmation (such as semantic search engine, paired proposal draft concurrency, double-blind unmasking rules, and 2+2 confirmation workflows) are tracked in the centralized register:
 -> See [Open Decisions Register](OPEN_QUESTIONS.md).
 

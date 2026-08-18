@@ -8,24 +8,24 @@ Key architectural tenets:
 - **Backend Authority**: Backend services are the single security and authorization authority. Frontend permission checks are UX conveniences (hiding buttons/menus) only.
 - **Fail-Closed Security**: Missing authentication, missing permissions, or invalid resource scopes MUST result in immediate access denial (`403 Forbidden` / `401 Unauthorized`).
 - **Capability-Based Permissions**: Permissions follow a stable, administrator-friendly hierarchy: `<domain>.<resource>.<action>`.
+- **Three Access Areas `[SOURCE]`**: Public / Discovery, Role-based Workspace, and Governance & Administration.
 - **Context-Bound Authorization**: Permissions are evaluated against the user's **Active Authorization Context** (e.g., active institution, active role persona) rather than an unconstrained combination of all historically granted roles.
 
 ---
 
-## 2. Portal Personas & Capability Matrix `[SOURCE]`
+## 2. Portal Personas & Access Areas `[SOURCE]`
 
-The Portal serves eight primary user personas:
+The Portal serves seven normalized actor groups across the three canonical access areas:
 
-| Persona | Primary Needs & Business Scope | Default Product Surface | Example Capabilities |
+| Persona | Access Area & Default Surface | Business Scope & Primary Needs | Example Capabilities |
 | --- | --- | --- | --- |
-| **Visitor (Public)** | Discover publications, search public expert directory, browse funding opportunities & technology marketplace. | Public Discovery (`/`, `/search`, `/knowledge`) | `knowledge.publications.view_public`<br>`experts.profiles.view_public`<br>`grants.calls.view_public` |
-| **Researcher** | Manage CV, index publications, initiate/sign paired proposals (VN/RU), track assigned projects and milestones. | Researcher Workspace (`/workspace/researcher`) | `experts.profiles.update_own`<br>`grants.proposals.create`<br>`grants.proposals.sign_paired`<br>`projects.milestones.update` |
-| **Student / Young Scholar** | Apply for scholarships/quotas, enroll in Pushkin Hub language courses/exams, apply for JINR practice. | Academic Hub (`/academic`, `/workspace/student`) | `academic.scholarships.apply`<br>`academic.courses.enroll`<br>`academic.practice.apply` |
-| **Reviewer / Evaluation Expert** | Access assigned double-blind proposals, evaluate against rubrics, submit scores/comments. | Reviewer Queue (`/reviews`) | `reviews.evaluations.view_assigned`<br>`reviews.evaluations.score`<br>`reviews.evaluations.submit` |
-| **Enterprise Representative** | Post technology needs, discover IP/patents, express interest, form 2+2 consortiums. | Enterprise Workspace (`/workspace/enterprise`) | `technology.demands.create`<br>`technology.interests.submit`<br>`technology.consortium.create_2plus2` |
-| **Institution Staff / Manager** | Manage organization faculty/researchers, verify institutional proposals, monitor active project milestones. | Organization Workspace (`/workspace/organization`) | `organization.members.manage`<br>`grants.proposals.verify_institutional`<br>`projects.reports.review_institutional` |
-| **Government / Agency Officer** | Publish funding calls, verify paired eligibility, assign review panels, approve disbursements, export reports. | Agency Workspace (`/workspace/agency`) | `grants.calls.publish`<br>`reviews.assignments.manage`<br>`grants.decisions.issue`<br>`projects.disbursements.approve` |
-| **Leadership / Science Diplomat** | Inspect real-time executive KPIs, explore collaboration network maps, export bilateral strategic reports. | Science Diplomacy Dashboard (`/dashboard`) | `analytics.kpi.view_executive`<br>`analytics.collaboration_map.view`<br>`analytics.reports.export_strategic` |
+| **Visitor (Public)** | Public / Discovery (`/`, `/search`, `/knowledge`, `/experts`, `/opportunities`) | Unauthenticated exploration of published papers, expert profiles, funding opportunities, training events, and technology catalog. | `knowledge.publications.view_public`<br>`experts.profiles.view_public`<br>`grants.opportunities.view_public`<br>`technology.listings.view_public` |
+| **Researcher / Scientist** | Role-based Workspace (`/workspace/researcher`) | Manage CV/profile, index publications, initiate/collaborate on VN–RU joint proposals, track approved projects and milestones. | `experts.profiles.update_own`<br>`grants.proposals.create`<br>`grants.proposals.confirm_paired`<br>`projects.milestones.update` |
+| **Reviewer** | Role-based Workspace (`/workspace/reviewer` or `/reviews`) | Access assigned records only; perform independent/anonymized peer review against rubrics and submit evaluations. | `reviews.assignments.view_assigned`<br>`reviews.evaluations.score`<br>`reviews.evaluations.submit` |
+| **Organization Representative** | Role-based Workspace (`/workspace/organization`) | Manage organization profile, endorse institutional proposals/projects, propose and coordinate organization-led academic activities. | `organization.members.manage`<br>`grants.proposals.endorse`<br>`academic.activities.manage_org`<br>`projects.reports.view_org` |
+| **Enterprise Representative** | Role-based Workspace (`/workspace/enterprise`) | Post enterprise R&D demands, submit expressions of interest (EOI), form 2+2 bilateral consortiums, and access IP/transfer advisory. | `technology.demands.create`<br>`technology.interests.submit`<br>`technology.consortium.create_2plus2` |
+| **Leadership** | Role-based Workspace (`/workspace/leadership` or `/dashboard`) | Inspect aggregated internal KPIs, monitor Network activities (projects, connections, tech transfer), and view approved internal reports. | `analytics.kpi.view_leadership`<br>`analytics.collaboration_map.view`<br>`analytics.reports.view_internal` |
+| **System / Governance Administrator** | Governance & Administration (`/admin/access`, `/admin/users`, `/admin/audit`) | Foundation and system operations staff managing user identity/access, data/workflow catalogs, audit trails, and KPI definitions. *(Not available to ordinary member organizations).* | `iam.users.manage`<br>`iam.roles.manage`<br>`iam.audit.view`<br>`analytics.kpi.manage_definitions` |
 
 ---
 
@@ -34,29 +34,34 @@ The Portal serves eight primary user personas:
 Permissions are formatted as `<domain>.<resource>.<action>` across the six business capabilities:
 
 ```txt
-# 1. IAM & Governance
+# 1. Identity & Access Governance (IAM)
 iam.users.view | iam.users.manage | iam.roles.manage | iam.audit.view
+iam.sessions.revoke | iam.security_policy.manage
 
-# 2. Knowledge & Expert
+# 2. Knowledge Repository & Expert Directory
 knowledge.publications.submit | knowledge.publications.publish | knowledge.publications.archive
 experts.profiles.update_own | experts.profiles.manage | experts.matches.view
 
-# 3. Bilateral Grants / PMS & Review
-grants.calls.create | grants.calls.publish
-grants.proposals.create | grants.proposals.sign_paired | grants.proposals.lock | grants.proposals.verify
-reviews.assignments.manage | reviews.evaluations.view_assigned | reviews.evaluations.score | reviews.evaluations.submit
-projects.milestones.update | projects.reports.submit | projects.reports.approve | projects.acceptance.sign
+# 3. Bilateral Research Funding & Project Management (Module 3)
+grants.opportunities.create | grants.opportunities.publish
+grants.proposals.create | grants.proposals.confirm_paired | grants.proposals.submit | grants.proposals.endorse
+reviews.assignments.manage | reviews.assignments.view_assigned | reviews.evaluations.score | reviews.evaluations.submit
+grants.decisions.issue_foundation
+projects.projects.view | projects.milestones.update | projects.reports.submit | projects.reports.approve
 
-# 4. Academic Exchange & Language Hub
-academic.scholarships.apply | academic.scholarships.award
-academic.courses.enroll | academic.exams.register | academic.certificates.issue | academic.practice.manage
+# 4. Training, Knowledge Transfer & Academic Exchange (Module 4 - [DECISION] No financial branch)
+academic.activities.view_public | academic.activities.create | academic.activities.publish | academic.activities.manage_org
+academic.participations.register | academic.participations.decide | academic.materials.link
 
-# 5. Technology Transfer & 2+2
-technology.listings.publish | technology.demands.create | technology.interests.submit
-technology.consortium.create_2plus2 | technology.ip.advisory_view
+# 5. Technology Transfer & Enterprise Connection (Module 5 - inc. 2+2 Model)
+technology.listings.create | technology.listings.publish
+technology.demands.create | technology.demands.publish | technology.interests.submit
+technology.cases.manage | technology.consortium.create_2plus2 | technology.consortium.confirm_slot
+technology.advisory.view | technology.outcomes.record
 
-# 6. Science Diplomacy & Analytics
-analytics.kpi.view_public | analytics.kpi.view_executive | analytics.collaboration_map.view | analytics.reports.export_strategic
+# 6. Internal Monitoring & Reporting Dashboard (Module 6 - Internal Only)
+analytics.kpi.view_leadership | analytics.collaboration_map.view | analytics.reports.view_internal
+analytics.reports.export_internal | analytics.kpi.manage_definitions
 ```
 
 ---
@@ -64,35 +69,37 @@ analytics.kpi.view_public | analytics.kpi.view_executive | analytics.collaborati
 ## 4. Active Authorization Context & Context Switching
 
 ```txt
-User (Subject) ──> Authenticates (SSO / 2FA)
+User (Subject) ──> Authenticates (Keycloak OIDC Broker)
                          │
                          ▼
              Resolve Active Context
   ┌──────────────────────┬──────────────────────┐
   ▼                      ▼                      ▼
 Context A:             Context B:             Context C:
-Researcher @ Univ X    Reviewer @ Panel Y     Institution Admin @ Univ X
-(grants.proposals.*)   (reviews.evaluations.*) (organization.members.*)
+Researcher @ Univ X    Reviewer @ Board Y     Organization Rep @ Univ X
+(grants.proposals.*)   (reviews.assignments.*)(organization.members.*)
 ```
 
-1. **Context Resolution**: When a user logs in, `auth-service` issues a session with an active context representing their current role and organization scope.
-2. **Context Switching**: If a user holds multiple roles (e.g., Researcher in Institution A and Reviewer on Panel B), the user explicitly switches context in the workspace UI.
-3. **Token / Context Validation**: The backend evaluates access strictly against the active context in the request token, preventing unintended permission aggregation across unrelated roles.
+1. **Context Resolution**: When a user logs in, `auth-service` issues a session bound to exactly one active context representing their current role and organization scope.
+2. **Context Switching**: If a user holds multiple roles (e.g., Researcher in Institution A and Reviewer on Board B), the user explicitly switches context in the workspace UI.
+3. **Session Token Rotation**: Context switching replaces that session's active context after assignment/scope validation and rotates the opaque session token. Permissions are never unioned across contexts.
+4. **Token / Context Validation**: The backend evaluates access strictly against the active context in the request session, preventing unintended permission aggregation across unrelated roles.
 
 ---
 
-## 5. Resource Scope & Double-Blind Review Isolation
+## 5. Resource Scope & Independent Review Isolation
 
 RBAC checks ("Can the user score proposals?") are decoupled from Resource checks ("Can this reviewer score *this* specific proposal?"):
 
 1. **Reviewer Scope Isolation**:
    - A Reviewer may only read proposal data if an active `ReviewAssignment` explicitly assigns them to that proposal ID.
    - Any attempt to access a proposal outside their assignment scope yields `403 Forbidden`.
-2. **Double-Blind Anonymization**:
-   - When serving proposal snapshots to reviewers, `review-service` and `grant-service` MUST strip all author names, Co-PI affiliations, email addresses, and institutional identifiers.
+2. **Review Anonymization**:
+   - When serving proposal snapshots to reviewers, `review-service` and `grant-service` MUST strip author names, Co-PI affiliations, and institutional identifiers according to the approved review policy.
    - Re-identification or unmasking requires explicit administrative authority subject to immutable audit logging.
-3. **Tenant / Institution Scope Isolation**:
-   - Institutional managers can only view proposals, projects, or researcher profiles belonging to their own `organizationId`.
+3. **Tenant / Organization Scope Isolation**:
+   - Organization representatives can only view proposals, projects, activities, or researcher profiles belonging to their own `organizationId`.
+   - Governance administration surfaces are isolated to Foundation/system operators and are not accessible by organization representatives.
 
 ---
 
@@ -103,20 +110,20 @@ Backend NestJS controllers declare required capability keys explicitly:
 ```ts
 @Controller("proposals")
 export class ProposalController {
-  @Post(":id/sign-paired")
-  @RequirePermission("grants.proposals.sign_paired")
+  @Post(":id/confirm-paired")
+  @RequirePermission("grants.proposals.confirm_paired")
   @RequireResourceScope("proposal", "participating_copi")
-  async signPairedProposal(@Param("id") id: string, @ActiveContext() context: AuthContext) {
-    return this.proposalService.signPaired(id, context);
+  async confirmPairedProposal(@Param("id") id: string, @ActiveContext() context: AuthContext) {
+    return this.proposalService.confirmPaired(id, context);
   }
 }
 ```
 
 - **Guard Pipeline**:
-  1. `AuthGuard`: Verifies valid JWT session token.
+  1. `AuthGuard`: Verifies valid opaque session cookie digest in PostgreSQL session store.
   2. `PermissionGuard`: Verifies active context contains the required capability key.
   3. `ResourceScopeGuard`: Verifies the active user/context owns or is assigned to the specific entity.
-- **Fail-Closed Default**: If any guard cannot resolve permission or context, access is denied.
+- **Fail-Closed Default**: If any guard cannot resolve permission or context, access is denied (`401 Unauthorized` or `403 Forbidden`).
 
 ---
 
@@ -127,5 +134,6 @@ export class ProposalController {
 - **Forbidden Actions in Frontend**:
   - Do NOT infer permissions from role names (e.g., `if (role === 'admin')`).
   - Do NOT infer permissions from current URL routes.
-  - Do NOT treat frontend hiding as security; assume all client-side state can be bypassed.
+  - Do NOT treat frontend hiding as security; backend authorization is the sole source of truth.
+
 

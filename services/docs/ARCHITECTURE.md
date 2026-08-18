@@ -36,21 +36,22 @@ Target microservice ecosystem (Currently implemented: `auth-service`):
 
 ```txt
 services/
-  auth-service/         # IAM, SSO federation, 2FA policies, active context, RBAC policies, audit log (Current)
+  auth-service/         # IAM, Keycloak OIDC broker, session lifecycle, active context, RBAC policies, audit log (Current)
   api-gateway/          # Edge routing, rate limiting, request context propagation (Target)
-  organization-service/ # Institutions, departments, researcher CVs, expert mapping, partner matches (Target)
-  knowledge-service/    # Scientific publications, preprints, patents, conference papers repository (Target)
-  grant-service/        # Funding programs, bilateral calls, paired proposals, Co-PI lock (Target)
-  review-service/       # Reviewer pool, double-blind assignments, rubric scoring, aggregated evaluations (Target)
-  project-service/      # Joint research projects, milestones, bilateral financial reports, overdue alerts (Target)
-  academic-service/     # Scholarships, quotas, Pushkin Virtual Hub, JINR youth practice (Target)
-  technology-service/   # Tech transfer marketplace, enterprise needs, 2+2 consortiums, IP advisory (Target)
-  analytics-service/    # Fact ingestion, executive KPIs, collaboration network graph, strategic exports (Target, Read-only)
+  organization-service/ # Institutions, partner agreements, researcher CVs/profiles, expert mapping, partner matches (Target)
+  knowledge-service/    # Scientific publications, preprints, patents, conference documents repository (Target)
+  grant-service/        # Independent funding opportunities, VN–RU joint proposals, mutual confirmation (Target)
+  review-service/       # Independent peer review pool, anonymized assignments, rubric scoring, recommendations (Target)
+  project-service/      # Joint research projects, milestones, progress reports, deliverables, outcome links (Target)
+  academic-service/     # Seminars, conferences/forums, academic exchange, training ([DECISION] no financial branch) (Target)
+  technology-service/   # Tech marketplace, enterprise demands, expressions of interest, 2+2 consortiums, IP advisory (Target)
+  analytics-service/    # Internal fact ingestion, monitoring KPIs, collaboration network graph, internal reports (Target, Read-only)
 ```
 
 `auth-service` implements Module 1 through five internal module boundaries: `identity`, `authentication`, `session`, `access-control`, and `security`. These are modules inside one service deployment boundary, not separate microservices. Detailed responsibilities and flows are documented in `../auth-service/README.md` and `SERVICE_GUIDE.md`.
 
 Each service owns its domain modules and persistence boundary (database-per-service). Cross-service communication uses synchronous REST via OpenAPI contracts or asynchronous Kafka events published via the Transactional Outbox pattern.
+
 
 
 
