@@ -208,9 +208,9 @@
         </div>
 
         <!-- Primary Sign In Action Button -->
-        <a class="w-full h-13 py-3.5 px-6 bg-gradient-to-r from-primary via-primary-container to-primary hover:from-primary-container hover:to-primary text-on-primary font-medium text-base rounded-xl transition-all duration-200 shadow-md hover:shadow-xl hover:shadow-primary/20 active:scale-[0.99] flex items-center justify-center gap-3 group aria-disabled:opacity-60 aria-disabled:pointer-events-none" data-auth-login href="/api/auth/login">
-          <span data-auth-label>Sign in</span>
-          <span class="material-symbols-outlined text-[20px] transition-transform duration-200 group-hover:translate-x-1" data-auth-icon>arrow_forward</span>
+        <a class="w-full h-13 py-3.5 px-6 bg-gradient-to-r from-primary via-primary-container to-primary hover:from-primary-container hover:to-primary text-on-primary font-medium text-base rounded-xl transition-all duration-200 shadow-md hover:shadow-xl hover:shadow-primary/20 active:scale-[0.99] flex items-center justify-center gap-3 group" data-auth-login href="/api/auth/login" target="_top">
+          <span>Sign in</span>
+          <span class="material-symbols-outlined text-[20px] transition-transform duration-200 group-hover:translate-x-1">arrow_forward</span>
         </a>
 
         <!-- Security Guarantee Notice -->
@@ -231,44 +231,6 @@
           if (returnTo && login) {
             login.href += `?returnTo=${encodeURIComponent(returnTo)}`;
           }
-          let popup;
-          let popupTimer;
-          let finishLogin;
-          const resetLogin = () => {
-            clearInterval(popupTimer);
-            if (finishLogin) window.removeEventListener('message', finishLogin);
-            login?.removeAttribute('aria-disabled');
-            document.querySelector('[data-auth-label]').textContent = 'Sign in';
-            const icon = document.querySelector('[data-auth-icon]');
-            icon.textContent = 'arrow_forward';
-            icon.classList.remove('animate-spin');
-          };
-          login?.addEventListener('click', (event) => {
-            event.preventDefault();
-            if (login.getAttribute('aria-disabled') === 'true') return;
-            const target = returnTo && returnTo.startsWith('/') && !returnTo.startsWith('//') ? returnTo : '/';
-            const authUrl = `/api/auth/login?returnTo=${encodeURIComponent('/auth-popup-complete.html')}`;
-            popup = window.open(authUrl, 'vnru-auth', 'popup,width=520,height=700');
-            if (!popup) {
-              window.top.location.assign(login.href);
-              return;
-            }
-            login.setAttribute('aria-disabled', 'true');
-            document.querySelector('[data-auth-label]').textContent = 'Signing in…';
-            const icon = document.querySelector('[data-auth-icon]');
-            icon.textContent = 'progress_activity';
-            icon.classList.add('animate-spin');
-            popupTimer = setInterval(() => {
-              if (popup.closed) resetLogin();
-            }, 500);
-            finishLogin = (message) => {
-              if (message.origin !== location.origin || message.source !== popup || message.data !== 'vnru:authenticated') return;
-              window.removeEventListener('message', finishLogin);
-              clearInterval(popupTimer);
-              window.top.location.assign(target);
-            };
-            window.addEventListener('message', finishLogin);
-          });
           if (params.get('error') === 'configuration-unavailable') {
             const statusEl = document.querySelector('[data-auth-status]');
             if (statusEl) statusEl.classList.remove('hidden');

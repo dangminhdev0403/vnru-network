@@ -14,11 +14,6 @@ const imported = await readFile(
   new URL("./public/stitch/login.html", import.meta.url),
   "utf8",
 );
-const popupComplete = await readFile(
-  new URL("./public/auth-popup-complete.html", import.meta.url),
-  "utf8",
-);
-
 test("login route renders the exported Stitch screen", () => {
   assert.match(route, /\/stitch\/login\.html/);
   assert.equal(imported.match(/href="\/api\/auth\/login"/g)?.length, 1);
@@ -36,15 +31,6 @@ test("login route renders the exported Stitch screen", () => {
   );
   assert.equal(imported, source);
   assert.doesNotMatch(imported, /data-stitch-injected/);
-  assert.match(
-    imported,
-    /window\.open\(authUrl, 'vnru-auth', 'popup,width=520,height=700'\)/,
-  );
-  assert.match(imported, /Signing in…/);
-  assert.match(imported, /if \(popup\.closed\) resetLogin\(\)/);
-  assert.match(imported, /message\.source !== popup/);
-  assert.match(
-    popupComplete,
-    /postMessage\('vnru:authenticated', location\.origin\)/,
-  );
+  assert.match(imported, /target="_top"/);
+  assert.doesNotMatch(imported, /window\.open|postMessage|auth-popup-complete/);
 });
