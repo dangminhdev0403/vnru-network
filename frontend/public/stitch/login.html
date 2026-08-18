@@ -119,17 +119,7 @@
 <h1 class="font-headline-md text-headline-md font-semibold text-primary hidden md:block">Mạng lưới Tri thức Nga - Việt</h1>
 <h1 class="font-headline-md text-headline-md font-semibold text-primary md:hidden">RVKN</h1>
 </div>
-<div class="flex items-center gap-4 text-primary">
-<div class="flex items-center gap-4 font-body-sm text-body-sm text-on-surface-variant">
-<button class="hover:text-primary transition-colors text-on-surface font-bold border-b-2 border-primary h-16 flex items-center px-1">EN</button>
-<button class="hover:text-primary transition-colors h-16 flex items-center px-1">RU</button>
-<button class="hover:text-primary transition-colors h-16 flex items-center px-1">VN</button>
-</div>
-<div class="h-6 w-px bg-outline-variant mx-2"></div>
-<button class="hover:text-primary text-on-surface-variant transition-colors flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high duration-150 active:scale-95">
-<span class="material-symbols-outlined text-[20px]">help_outline</span>
-</button>
-</div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Secure access</span>
 </div>
 </header>
 <!-- Main Content: Split Screen Layout -->
@@ -141,7 +131,7 @@
 <!-- Overlay to ensure text readability -->
 <div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent opacity-80"></div>
 <div class="relative z-10 max-w-xl">
-<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant block mb-stack-compact">Institutional Access</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant block mb-stack-compact">Member Workspace</span>
 <h2 class="font-display-lg text-display-lg text-primary mb-6">Russia–Vietnam Knowledge Network</h2>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-md">
                     Facilitating bilateral scientific cooperation, academic exchange, and rigorous transnational research initiatives.
@@ -153,22 +143,27 @@
 </div>
 </section>
 <!-- Right Side: Login Canvas -->
-<section class="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-margin-mobile md:p-12 lg:p-16 min-h-[calc(100vh-64px-64px)]">
-<div class="w-full max-w-md bg-surface-container-lowest">
+<section class="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-margin-mobile md:p-12 lg:p-16 min-h-[calc(100vh-64px-64px)] bg-surface-container-low">
+<div class="w-full max-w-md bg-surface-container-lowest border border-outline-variant rounded-xl p-8 md:p-10 shadow-xl shadow-primary/5">
+<div class="w-12 h-12 mb-6 rounded-lg bg-primary text-on-primary flex items-center justify-center" aria-hidden="true">
+<span class="material-symbols-outlined">lock</span>
+</div>
 <div class="mb-stack-section">
-<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-compact">Secure Sign In</h2>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Access the institutional repository and collaborative workspace.</p>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary block mb-stack-compact">VN-RU secure access</span>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-compact">Welcome back</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Continue to your authorized workspace through the VN-RU identity service.</p>
 </div>
 <p class="hidden mb-5 border border-error/30 bg-error-container p-3 font-body-sm text-body-sm text-on-error-container" data-auth-status role="alert">
                     Sign in is unavailable because Keycloak is not configured for this environment.
                 </p>
-<a class="w-full h-11 bg-primary text-on-primary font-body-md text-body-md font-medium rounded-DEFAULT hover:bg-inverse-surface transition-colors active:scale-[0.98] duration-150 flex items-center justify-center gap-2 shadow-sm" data-auth-login href="/api/auth/login" target="_top">
+<a class="w-full h-12 bg-primary text-on-primary font-body-md text-body-md font-semibold rounded-lg hover:bg-inverse-surface transition-colors active:scale-[0.99] duration-150 flex items-center justify-center gap-2 shadow-sm" data-auth-login href="/api/auth/login" target="_top">
                     Sign in
                     <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                 </a>
-<p class="mt-4 font-body-sm text-body-sm text-on-surface-variant">
-                    Authentication is handled by Keycloak. VN-RU never receives your password.
-                </p>
+<div class="mt-6 pt-5 border-t border-outline-variant flex items-start gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] mt-0.5" aria-hidden="true">verified_user</span>
+<p class="font-body-sm text-body-sm">Authentication is handled by Keycloak. VN-RU never receives your password.</p>
+</div>
 <script>
 const params = new URLSearchParams(location.search);
 const login = document.querySelector('[data-auth-login]');
@@ -179,13 +174,6 @@ if (params.get('error') === 'configuration-unavailable') {
   login.remove();
 }
 </script>
-<!-- Footer Link inside card area -->
-<div class="mt-stack-section pt-stack-section border-t border-outline-variant text-center">
-<p class="font-body-sm text-body-sm text-on-surface-variant">
-                        Don't have an account?
-                        <a class="text-secondary hover:text-on-secondary-fixed-variant font-medium hover:underline transition-colors" href="#">Request access</a>
-</p>
-</div>
 </div>
 </section>
 </main>
@@ -193,13 +181,9 @@ if (params.get('error') === 'configuration-unavailable') {
 <footer class="bg-surface border-t border-outline-variant w-full mt-auto">
 <div class="flex flex-col md:flex-row justify-between items-center py-stack-compact px-margin-mobile md:px-gutter max-w-container-max mx-auto w-full min-h-[64px] gap-4 md:gap-0">
 <span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant text-center md:text-left">
-                © 2024 Russia–Vietnam Knowledge Network. Institutional Modernism Framework.
+                © 2026 Russia–Vietnam Knowledge Network
             </span>
-<div class="flex flex-wrap justify-center gap-4 md:gap-6 font-label-caps text-label-caps">
-<a class="text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Institutional Access</a>
-</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Secure member access</span>
 </div>
 </footer>
 </body></html>
