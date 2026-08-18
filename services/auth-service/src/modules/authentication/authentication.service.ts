@@ -32,6 +32,7 @@ export interface AuthenticatedUser {
   sessionId: string;
   activeContext: { contextType: string; contextId: string } | null;
   capabilities: string[];
+  authenticationLevel: 'PASSWORD' | 'MFA';
 }
 
 interface TransientStateEntry {
@@ -153,6 +154,7 @@ export class AuthenticationService {
     const sessionResult = await this.sessionService.createSession({
       userId: user.id,
       ttlMs: DEFAULT_MAX_SESSION_TTL_MS,
+      authenticationLevel: oidcUser.authenticationLevel,
     });
 
     return {
@@ -197,6 +199,7 @@ export class AuthenticationService {
       sessionId: session.id,
       activeContext,
       capabilities,
+      authenticationLevel: session.authenticationLevel,
     };
   }
 

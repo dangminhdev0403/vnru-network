@@ -8,11 +8,17 @@ import { AuthenticationService } from './authentication.service';
 import {
   AuthenticatedRequestGuard,
   RequirePermission,
+  RequireMfa,
 } from './authenticated-request-context';
 
-function context(request: object, permission?: string): ExecutionContext {
+function context(
+  request: object,
+  permission?: string,
+  requireMfa?: boolean,
+): ExecutionContext {
   const handler = () => undefined;
   if (permission) RequirePermission(permission)(handler);
+  if (requireMfa) RequireMfa()(handler);
   return {
     switchToHttp: () => ({ getRequest: () => request }),
     getHandler: () => handler,
@@ -41,6 +47,7 @@ describe('AuthenticatedRequestGuard', () => {
       sessionId: 'sess-1',
       activeContext: { contextType: 'ORG', contextId: 'org-1' },
       capabilities: ['research.read'],
+      authenticationLevel: 'PASSWORD',
     });
     await expect(
       guard.canActivate(
@@ -56,10 +63,44 @@ describe('AuthenticatedRequestGuard', () => {
       sessionId: 'sess-1',
       activeContext: { contextType: 'ORG', contextId: 'org-1' },
       capabilities: ['research.read'],
+      authenticationLevel: 'PASSWORD',
     };
     authService.getCurrentUser.mockResolvedValue(authContext);
     await expect(
       guard.canActivate(context(request, 'research.read')),
+    ).resolves.toBe(true);
+    expect(request).toMatchObject({ authContext });
+  });
+
+  it('rejects request requiring MFA if session only has PASSWORD level', async () => {
+    authService.getCurrentUser.mockResolvedValue({
+      userId: 'usr-1',
+      sessionId: 'sess-1',
+      activeContext: null,
+      capabilities: [],
+      authenticationLevel: 'PASSWORD',
+    });
+    await expect(
+      guard.canActivate(
+        context({ cookies: { vnru_session: 'opaque-token' } }, undefined, true),
+      ),
+    ).rejects.toThrow(
+      new ForbiddenException('Multi-factor authentication required'),
+    );
+  });
+
+  it('allows request requiring MFA if session has MFA level', async () => {
+    const request = { cookies: { vnru_session: 'opaque-token' } };
+    const authContext = {
+      userId: 'usr-1',
+      sessionId: 'sess-1',
+      activeContext: null,
+      capabilities: [],
+      authenticationLevel: 'MFA',
+    };
+    authService.getCurrentUser.mockResolvedValue(authContext);
+    await expect(
+      guard.canActivate(context(request, undefined, true)),
     ).resolves.toBe(true);
     expect(request).toMatchObject({ authContext });
   });
