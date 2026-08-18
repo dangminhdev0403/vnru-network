@@ -46,7 +46,7 @@ This document serves as the **single source of truth** for open architectural an
 
 ### Approved package changes for the first implementation slices
 
-Runtime dependencies: `@prisma/client`, `openid-client`, `zod`, `cookie-parser`.
+Runtime dependencies: `@prisma/client`, `@prisma/adapter-pg`, `pg`, `openid-client`, `zod`, `cookie-parser`.
 
 Development dependencies: `prisma`, `@types/cookie-parser`.
 
