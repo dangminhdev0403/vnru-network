@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { Client, Issuer } from 'openid-client';
+import * as client from 'openid-client';
 import { validateConfig } from '../../config';
 import { IdentityModule } from '../identity/identity.module';
 import { SessionModule } from '../session/session.module';
@@ -23,23 +23,20 @@ import {
       useFactory: (): OidcClientBoundary => {
         const config = validateConfig();
         const configuredRedirectUri = config.KEYCLOAK_REDIRECT_URI;
-        let clientPromise: Promise<Client> | null = null;
-        const getClient = (): Promise<Client> => {
-          if (!clientPromise) {
-            clientPromise = Issuer.discover(config.KEYCLOAK_ISSUER_URL)
-              .then((issuer) => {
-                const client = new issuer.Client({
-                  client_id: config.KEYCLOAK_CLIENT_ID,
-                  token_endpoint_auth_method: 'none',
-                });
-                return client;
-              })
+        let configPromise: Promise<client.Configuration> | null = null;
+        const getConfig = (): Promise<client.Configuration> => {
+          if (!configPromise) {
+            configPromise = client
+              .discovery(
+                new URL(config.KEYCLOAK_ISSUER_URL),
+                config.KEYCLOAK_CLIENT_ID,
+              )
               .catch((err) => {
-                clientPromise = null;
+                configPromise = null;
                 throw err;
               });
           }
-          return clientPromise;
+          return configPromise;
         };
 
         return {
@@ -49,8 +46,8 @@ import {
             if (params.redirectUri !== configuredRedirectUri) {
               throw new Error('Redirect URI mismatch');
             }
-            const client = await getClient();
-            return client.authorizationUrl({
+            const oidcConfig = await getConfig();
+            const authorizationUrl = client.buildAuthorizationUrl(oidcConfig, {
               redirect_uri: configuredRedirectUri,
               state: params.state,
               nonce: params.nonce,
@@ -58,6 +55,7 @@ import {
               code_challenge_method: params.codeChallengeMethod,
               scope: params.scope,
             });
+            return authorizationUrl.href;
           },
           async processCallback(
             params: OidcProcessCallbackParams,
@@ -70,15 +68,14 @@ import {
               throw new Error('Redirect URI mismatch');
             }
 
-            const client = await getClient();
-            const callbackParams = client.callbackParams(params.currentUrl);
-            const tokenSet = await client.callback(
-              configuredRedirectUri,
-              callbackParams,
+            const oidcConfig = await getConfig();
+            const tokenSet = await client.authorizationCodeGrant(
+              oidcConfig,
+              currentUrl,
               {
-                state: params.expectedState,
-                nonce: params.expectedNonce,
-                code_verifier: params.codeVerifier,
+                pkceCodeVerifier: params.codeVerifier,
+                expectedState: params.expectedState,
+                expectedNonce: params.expectedNonce,
               },
             );
 
