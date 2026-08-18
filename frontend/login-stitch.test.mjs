@@ -7,7 +7,9 @@ const source = await readFile(new URL("./stitch/login.html", import.meta.url), "
 const imported = await readFile(new URL("./public/stitch/login.html", import.meta.url), "utf8");
 
 test("login route renders the exported Stitch screen", () => {
-  assert.match(route, /src="\/stitch\/login\.html"/);
+  assert.match(route, /\/stitch\/login\.html/);
+  assert.match(imported, /href="\/api\/auth\/login"/);
+  assert.doesNotMatch(imported, /type="password"/);
   assert.match(source, /<title>Login \| Russia–Vietnam Knowledge Network<\/title>/);
   assert.equal(imported, source);
   assert.doesNotMatch(imported, /data-stitch-injected/);
