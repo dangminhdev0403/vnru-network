@@ -4,7 +4,10 @@ import test from "node:test";
 import { sanitizeReturnTo } from "./features/auth/server.ts";
 
 test("return URL accepts only same-origin paths", () => {
-  assert.equal(sanitizeReturnTo("/workspace/reviewer?tab=pending"), "/workspace/reviewer?tab=pending");
+  assert.equal(
+    sanitizeReturnTo("/workspace/reviewer?tab=pending"),
+    "/workspace/reviewer?tab=pending",
+  );
   assert.equal(sanitizeReturnTo("https://evil.example/steal"), "/");
   assert.equal(sanitizeReturnTo("//evil.example/steal"), "/");
   assert.equal(sanitizeReturnTo("javascript:alert(1)"), "/");
@@ -20,7 +23,11 @@ test("auth flow keeps provider tokens out of the frontend", async () => {
     "./app/api/auth/logout/route.ts",
     "./proxy.ts",
   ];
-  const source = await Promise.all(files.map((file) => readFile(new URL(file, import.meta.url), "utf8")));
+  const source = await Promise.all(
+    files.map((file) => readFile(new URL(file, import.meta.url), "utf8")),
+  );
 
   assert.doesNotMatch(source.join("\n"), /refresh[_T]oken|access[_T]oken/);
+  assert.match(source[0], /redirect:\s*"manual"/);
+  assert.match(source[0], /configuration-unavailable/);
 });

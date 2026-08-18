@@ -159,14 +159,25 @@
 <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-compact">Secure Sign In</h2>
 <p class="font-body-sm text-body-sm text-on-surface-variant">Access the institutional repository and collaborative workspace.</p>
 </div>
+<p class="hidden mb-5 border border-error/30 bg-error-container p-3 font-body-sm text-body-sm text-on-error-container" data-auth-status role="alert">
+                    Sign in is unavailable because Keycloak is not configured for this environment.
+                </p>
 <a class="w-full h-11 bg-primary text-on-primary font-body-md text-body-md font-medium rounded-DEFAULT hover:bg-inverse-surface transition-colors active:scale-[0.98] duration-150 flex items-center justify-center gap-2 shadow-sm" data-auth-login href="/api/auth/login" target="_top">
-<span class="material-symbols-outlined text-[18px]">account_balance</span>
-                        Continue with Institutional SSO
-                    </a>
+                    Sign in
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </a>
+<p class="mt-4 font-body-sm text-body-sm text-on-surface-variant">
+                    Authentication is handled by Keycloak. VN-RU never receives your password.
+                </p>
 <script>
+const params = new URLSearchParams(location.search);
 const login = document.querySelector('[data-auth-login]');
-const returnTo = new URLSearchParams(location.search).get('returnTo');
+const returnTo = params.get('returnTo');
 if (returnTo) login.href += `?returnTo=${encodeURIComponent(returnTo)}`;
+if (params.get('error') === 'configuration-unavailable') {
+  document.querySelector('[data-auth-status]').classList.remove('hidden');
+  login.remove();
+}
 </script>
 <!-- Footer Link inside card area -->
 <div class="mt-stack-section pt-stack-section border-t border-outline-variant text-center">
@@ -191,5 +202,4 @@ if (returnTo) login.href += `?returnTo=${encodeURIComponent(returnTo)}`;
 </div>
 </div>
 </footer>
-
 </body></html>
