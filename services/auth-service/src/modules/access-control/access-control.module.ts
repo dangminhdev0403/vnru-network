@@ -6,6 +6,7 @@ import {
   ACCESS_CONTROL_PRISMA,
   AccessControlService,
 } from './access-control.service';
+import { IamAdminService } from './iam-admin.service';
 
 @Module({
   providers: [
@@ -18,7 +19,8 @@ import {
       },
     },
     AccessControlService,
+    IamAdminService,
   ],
-  exports: [AccessControlService],
+  exports: [AccessControlService, IamAdminService],
 })
 export class AccessControlModule {}
