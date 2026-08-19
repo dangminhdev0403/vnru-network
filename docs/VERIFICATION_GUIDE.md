@@ -1,32 +1,32 @@
-# Verification Guide — Selectable Test Profiles
+# Pro-Max Verification Guide — Selectable Test Profiles
 
-This guide defines how agents respond to repository verification requests such as `kiểm tra và test module 1`, `test module 2`, or `verify <feature>`.
+This is the repository's **Pro-Max verification framework**. `Pro-Max` describes the quality and completeness of this guide itself; it is **not** a command suffix the user must type.
 
-Verification is a separate workflow from implementation. A test run must prove the current behavior before proposing any source change.
+When the user says `kiểm tra và test module 1`, `test module 2`, `verify <feature>`, or an equivalent request, this guide determines how the agent offers and executes verification. Verification is separate from implementation: prove the current behavior first, then report defects before proposing source changes.
 
 ## 1. Command dispatch
 
-When the user asks to test, verify, check, smoke-test, or validate a module/feature **without naming a test profile**, do not immediately run the full suite. First return this selector and wait for the user's choice:
+When the user asks to test, verify, check, smoke-test, or validate a module/feature **without naming a test profile**, first return this selector and wait for the user's choice:
 
 | Select | Profile | Static/tests | Real backend/API | Auth/security | Real browser UI | Perf sanity |
 | --- | --- | --- | --- | --- | --- | --- |
 | `1` | **Quick** | Yes, focused | Smoke only if required | Focused | No | No |
 | `2` | **Integration** | Yes | Yes | Yes | No | No |
 | `3` | **Browser UI** | Focused prerequisites | Required dependencies only | Relevant flows | **Yes — Chrome DevTools MCP** | Basic |
-| `4` | **Pro-Max** *(recommended before declaring a module ready)* | **Full relevant validation** | **Yes** | **Yes** | **Yes — Chrome DevTools MCP** | **Yes, sanity only** |
+| `4` | **Full** *(recommended before declaring a module ready)* | **Full relevant validation** | **Yes** | **Yes** | **Yes — Chrome DevTools MCP** | **Yes, sanity only** |
 | `5` | **Custom** | User-selected | User-selected | User-selected | User-selected | User-selected |
 
-The selector response must explicitly say whether real browser interaction is included. Do not hide browser testing behind a generic phrase such as “UI tests”.
+The selector response must explicitly say whether real browser interaction is included. Never hide browser testing behind a generic phrase such as `UI tests`.
 
 If the user already names a profile, do not ask again:
 
 - `test module 1 quick` → Quick.
 - `test module 1 integration` → Integration.
 - `test module 1 ui` / `browser` → Browser UI.
-- `test module 1 pro-max` / `full` / `toàn diện` → Pro-Max.
+- `test module 1 full` / `toàn diện` → Full.
 - `test module 1 custom: ...` → Custom.
 
-`Pro-Max` is the default recommendation for post-merge verification, release-readiness checks, and any request asking whether a module is “complete”, “ready”, or “production/integration ready”.
+The **Full** profile is the default recommendation for post-merge verification, release-readiness checks, and any request asking whether a module is complete, ready, production-ready, or integration-ready.
 
 ## 2. Common verification rules
 
@@ -101,9 +101,9 @@ If Chrome DevTools MCP is unavailable or cannot connect, mark browser verificati
 
 Real browser interaction: **Yes — mandatory for web UI targets.**
 
-### 3.4 Pro-Max
+### 3.4 Full
 
-Use for the strongest practical verification before calling a module integration-ready.
+Use for the strongest practical verification before calling a module integration-ready. This is the fullest execution profile defined by the Pro-Max guide.
 
 Run the relevant gates in order:
 
@@ -143,11 +143,11 @@ Real browser interaction: **Yes — mandatory for web UI targets.**
 
 After a profile is selected, discover the module's real runtime surface and show a short execution manifest before running destructive or expensive operations.
 
-Example for a Module 1 request:
+Example for a Module 1 request after the user chooses `4`:
 
 ```text
 Target: Module 01 IAM
-Profile: Pro-Max
+Profile: Full
 Planned surfaces discovered from current source:
 - auth/session service and its existing contracts
 - /workspace/iam
@@ -205,14 +205,16 @@ Select verification profile:
 1. Quick — focused tests/build; Browser UI: NO
 2. Integration — backend/API/auth integration; Browser UI: NO
 3. Browser UI — real UI interaction via Chrome DevTools MCP; Browser UI: YES
-4. Pro-Max — full relevant static + runtime + integration + auth + real browser + regression; Browser UI: YES (recommended)
+4. Full — static + runtime + integration + auth + real browser + regression; Browser UI: YES (recommended)
 5. Custom — choose specific checks
 ```
+
+The user does **not** need to type `pro-max`. Pro-Max is the verification framework defined by this file.
 
 User:
 
 ```text
-test module 1 pro-max
+test module 1 full
 ```
 
-Action: execute Pro-Max directly; do not ask for profile selection again.
+Action: execute Full directly; do not ask for profile selection again.
