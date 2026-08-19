@@ -14,7 +14,7 @@ Welcome to the VN-RU Network governance, architecture, and portal documentation.
 8. Scope Documentation:
    - **Frontend**: [Frontend Architecture](../frontend/docs/ARCHITECTURE.md) | [Frontend Rules](../frontend/docs/RULES.md) | [Module Guide](../frontend/docs/MODULE_GUIDE.md) | [Runtime UI Guide](../frontend/docs/RUNTIME_UI_GUIDE.md) | [Contract Guide](../frontend/docs/CONTRACT_GUIDE.md)
    - **Backend Services**: [Services Architecture](../services/docs/ARCHITECTURE.md) | [Services Rules](../services/docs/RULES.md) | [Service Guide](../services/docs/SERVICE_GUIDE.md)
-9. [Verification Guide](VERIFICATION_GUIDE.md): Selectable Quick / Integration / Browser UI / Pro-Max / Custom verification profiles, Chrome DevTools MCP browser requirements, failure-stop policy, and evidence matrix. Use this task guide whenever the user asks to test, verify, check, smoke-test, or validate a module/feature.
+9. [Pro-Max Verification Guide](VERIFICATION_GUIDE.md): Repository-wide selectable Quick / Integration / Browser UI / Full / Custom verification profiles, Chrome DevTools MCP browser requirements, failure-stop policy, and evidence matrix. `Pro-Max` names the guide/framework; users can simply ask to test or verify a module and then choose a profile.
 
 ## Portal Architectural Overview `[SOURCE]`
 
