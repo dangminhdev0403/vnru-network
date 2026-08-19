@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+model Publication {
+  id              String                 @id @default(uuid()) @db.Uuid
+  title           String
+  abstract        String?
+  type            String
+  language        String
+  year            Int
+  country         String
+  organizationRef String?
+  visibility      Visibility
+  version         Int                    @default(1)
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+  topics          PublicationTopic[]
+  authors         PublicationAuthorRef[]
+
+  @@index([visibility, createdAt, id])
+}
+
+model KnowledgeTopic {
+  id           String             @id @default(uuid()) @db.Uuid
+  slug         String             @unique
+  labels       Json
+  publications PublicationTopic[]
+}
+
+model PublicationTopic {
+  publicationId String         @db.Uuid
+  topicId       String         @db.Uuid
+  publication   Publication    @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  topic         KnowledgeTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([publicationId, topicId])
+  @@index([topicId])
+}
+
+model PublicationAuthorRef {
+  id            String      @id @default(uuid()) @db.Uuid
+  publicationId String      @db.Uuid
+  expertRef     String
+  displayOrder  Int
+  publication   Publication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+
+  @@unique([publicationId, expertRef])
+  @@index([publicationId, displayOrder])
+}
