@@ -28,6 +28,24 @@ Do not edit until this gate is complete. In the final report, list `Docs read:` 
 - Mark a deliberate ceiling only when real: `ponytail: <ceiling>; upgrade when <measured condition>`.
 - Backend authorization is authoritative; frontend visibility is not a security boundary.
 
+## Mandatory UI/UX quality routing
+
+For any task whose primary intent is UI inspection, UI repair, visual polish, responsive stabilization, UX review, typography/icon/layout correction, redesign of an existing surface, or rendered-browser quality, load and follow:
+
+- `.agents/skills/ui-quality-promax/SKILL.md`
+
+The UI Quality Pro-Max skill is mandatory even when the user does not name it explicitly. Natural-language requests such as `soi lại giao diện`, `fix UI`, `polish`, `responsive`, `review UX`, `ổn định workspace`, or `kiểm tra giao diện` trigger it.
+
+When present locally, the following taste skills may be consulted as supporting design heuristics as directed by UI Quality Pro-Max:
+
+- `.agents/skills/design-taste-frontend/`
+- `.agents/skills/design-taste-frontend-v1/`
+- `.agents/skills/high-end-visual-design/`
+- `.agents/skills/redesign-existing-projects/`
+- `.agents/skills/stitch-design-taste/`
+
+UI is not considered verified merely because tests/build pass. For web UI work, final rendered-browser inspection through Chrome DevTools MCP is required by the skill. Browser screenshots are evidence, not decoration: the agent must visually inspect the rendered result after the final source change.
+
 ## Navigation
 
 When `graphify-out/graph.json` exists: Graphify query/impact first, scoped Repomix second, exact source last. Otherwise use focused symbol/path search; never broad-scan by default.
