@@ -199,11 +199,14 @@ export function parseExpertQuery(input: unknown): ParsedExpertQuery {
   const stringFilters = ['q', 'country', 'organization', 'topic', 'language'] as const;
   for (const filter of stringFilters) {
     if (filter in input && input[filter] !== undefined) {
-      if (typeof input[filter] !== 'string') {
-        throw new Error(`Filter ${filter} must be a string`);
+      if (typeof input[filter] !== 'string' || !input[filter].trim()) {
+        throw new Error(`Filter ${filter} must be a non-empty string`);
       }
-      result[filter] = input[filter];
+      result[filter] = input[filter].trim();
     }
+  }
+  if (result.organization !== undefined && !uuidRegex.test(result.organization)) {
+    throw new Error('Filter organization must be a UUID');
   }
 
   return Object.freeze(result);

@@ -1,0 +1,1 @@
+import{NestFactory}from '@nestjs/core';import{AppModule}from './app.module';import{SafeHttpExceptionFilter}from './http-exception.filter';async function bootstrap(){const app=await NestFactory.create(AppModule);app.useGlobalFilters(new SafeHttpExceptionFilter());await app.listen(process.env.PORT??3002);}void bootstrap();

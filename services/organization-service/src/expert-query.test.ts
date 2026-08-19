@@ -67,13 +67,13 @@ test('2. Optional filters and extra keys', async (t) => {
     const res = parseExpertQuery({
       q: 'search term',
       country: 'VN',
-      organization: 'Traditions and Friendship Foundation',
+      organization: 'e1d5a7d3-7d1a-47ef-b203-d2d89f7db387',
       topic: 'AI and bilateral research',
       language: 'vi'
     });
     assert.strictEqual(res.q, 'search term');
     assert.strictEqual(res.country, 'VN');
-    assert.strictEqual(res.organization, 'Traditions and Friendship Foundation');
+    assert.strictEqual(res.organization, 'e1d5a7d3-7d1a-47ef-b203-d2d89f7db387');
     assert.strictEqual(res.topic, 'AI and bilateral research');
     assert.strictEqual(res.language, 'vi');
     assert.strictEqual(res.limit, 20); // default
