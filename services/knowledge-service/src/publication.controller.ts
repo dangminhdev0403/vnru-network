@@ -7,12 +7,12 @@ export class PublicationController {
   constructor(private readonly service: PublicationService) {}
   @Get()
   async list(@Query() raw: Record<string, unknown>) {
-    try { return await this.service.list(parsePublicationQuery(raw)); }
-    catch (error) {
-      if (error instanceof Error && /Invalid|Unknown/.test(error.message)) {
-        throw new BadRequestException({ error: { code: 'INVALID_QUERY', message: 'Invalid request query' } });
-      }
-      throw error;
+    let query;
+    try {
+      query = parsePublicationQuery({ ...raw });
+    } catch {
+      throw new BadRequestException({ error: { code: 'INVALID_QUERY', message: 'Invalid request query' } });
     }
+    return await this.service.list(query);
   }
 }
