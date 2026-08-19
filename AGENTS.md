@@ -18,11 +18,14 @@ Do not edit until this gate is complete. In the final report, list `Docs read:` 
 
 ## Execution rules
 
+- **Ponytail full is always active**, including corrective runs: understand the flow first; then stop at the first sufficient rung: delete/skip, reuse existing code, standard library, native platform, installed dependency, one line, minimum new code.
 - Preserve unrelated dirty/untracked work. Never reset, checkout, overwrite, or delete it.
 - No dependency, `package.json`, or lockfile change without explicit approval.
-- Fix the shared root cause; inspect every caller of a changed shared symbol.
-- Use the smallest working diff. No speculative services, packages, abstractions, or docs.
-- Run the smallest reliable validation first. Never claim an unrun command passed.
+- Fix the shared root cause; inspect every caller of a changed shared symbol. Never patch only the reported symptom.
+- Use the smallest working diff. No speculative services, packages, interfaces, factories, configuration, boilerplate, scaffolding, or docs.
+- Never simplify security, trust-boundary validation, data-loss prevention, or accessibility.
+- Non-trivial logic requires one smallest runnable check. Never claim an unrun command passed.
+- Mark a deliberate ceiling only when real: `ponytail: <ceiling>; upgrade when <measured condition>`.
 - Backend authorization is authoritative; frontend visibility is not a security boundary.
 
 ## Navigation
