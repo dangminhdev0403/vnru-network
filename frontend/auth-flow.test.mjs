@@ -30,4 +30,5 @@ test("auth flow keeps provider tokens out of the frontend", async () => {
   assert.doesNotMatch(source.join("\n"), /refresh[_T]oken|access[_T]oken/);
   assert.match(source[0], /redirect:\s*"manual"/);
   assert.match(source[0], /configuration-unavailable/);
+  assert.match(source[3], /await backend\.json\(\)/);
 });

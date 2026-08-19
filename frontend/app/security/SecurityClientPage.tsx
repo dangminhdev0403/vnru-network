@@ -132,7 +132,8 @@ export default function SecurityClientPage() {
     try {
       const res = await fetch("/api/auth/logout", { method: "POST" });
       if (res.ok) {
-        router.push("/login");
+        const { logoutUrl } = (await res.json()) as { logoutUrl: string };
+        window.location.assign(logoutUrl);
       }
     } catch (err) {
       console.error("Logout failed:", err);

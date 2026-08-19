@@ -7,7 +7,8 @@ export async function POST(request: NextRequest) {
     cache: "no-store",
     headers: backendHeaders(request),
   });
-  const response = NextResponse.json({ ok: backend.ok }, { status: backend.ok ? 200 : backend.status });
+  const payload = backend.ok ? await backend.json() : { ok: false };
+  const response = NextResponse.json(payload, { status: backend.ok ? 200 : backend.status });
   forwardSessionCookie(backend, response.headers);
   response.cookies.delete(SESSION_COOKIE_NAME);
   return response;

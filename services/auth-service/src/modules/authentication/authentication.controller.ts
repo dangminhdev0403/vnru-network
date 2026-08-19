@@ -142,7 +142,7 @@ export class AuthenticationController {
   async logout(
     @Req() req: RequestWithCookies,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<{ ok: boolean }> {
+  ): Promise<{ ok: boolean; logoutUrl: string }> {
     const token = extractSessionCookie(req) ?? '';
     await this.authService.logout(token);
 
@@ -153,7 +153,21 @@ export class AuthenticationController {
       path: '/',
     });
 
-    return { ok: true };
+    const config = validateConfig();
+    const postLogoutRedirectUri = new URL(
+      '/login',
+      config.KEYCLOAK_REDIRECT_URI,
+    );
+    const logoutUrl = new URL(
+      `${config.KEYCLOAK_ISSUER_URL.replace(/\/$/, '')}/protocol/openid-connect/logout`,
+    );
+    logoutUrl.searchParams.set('client_id', config.KEYCLOAK_CLIENT_ID);
+    logoutUrl.searchParams.set(
+      'post_logout_redirect_uri',
+      postLogoutRedirectUri.href,
+    );
+
+    return { ok: true, logoutUrl: logoutUrl.href };
   }
 
   @Get('sessions')

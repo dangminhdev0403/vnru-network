@@ -59,6 +59,7 @@ test("Security client page handles UI actions without raw backend URL exposure",
 
   // Must use BFF endpoints only (no direct backend access)
   assert.match(fileContent, /"\/api\/auth\/sessions"/);
+  assert.match(fileContent, /window\.location\.assign\(logoutUrl\)/);
   assert.match(
     fileContent,
     /`\/api\/auth\/sessions\/\$\{sessionToRevoke\.id\}`/,
