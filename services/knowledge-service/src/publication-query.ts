@@ -78,10 +78,10 @@ function parseStringParam(value: unknown, name: string): string | undefined {
   if (value === undefined) {
     return undefined;
   }
-  if (typeof value !== 'string') {
-    throw new Error(`Invalid ${name}: must be a string`);
+  if (typeof value !== 'string' || !value.trim()) {
+    throw new Error(`Invalid ${name}: must be a non-empty string`);
   }
-  return value;
+  return value.trim();
 }
 
 function validateCursorObject(obj: unknown): Cursor {
