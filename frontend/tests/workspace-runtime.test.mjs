@@ -34,8 +34,9 @@ test("IAM view preserves backend authorization as authoritative", () => {
   assert.match(iamView, /Keycloak\/OIDC/);
 });
 
-test("Knowledge view stays visual-only until approved frontend contracts exist", () => {
-  assert.match(knowledgeView, /Preview data/);
-  assert.match(knowledgeView, /chưa gọi endpoint chưa tồn tại/i);
+test("Knowledge view renders independent real discovery states while matching stays pending", () => {
+  assert.match(knowledgeView, /publications\.status/);
+  assert.match(knowledgeView, /experts\.status/);
+  assert.match(knowledgeView, /Expert Matching.*Pending/s);
   assert.doesNotMatch(knowledgeView, /fetch\(/);
 });
