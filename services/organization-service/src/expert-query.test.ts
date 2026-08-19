@@ -144,7 +144,7 @@ test('3. Cursor validation and parsing', async (t) => {
     // {"createdAt":"2026-08-20T00:42:57.000Z","id":"123e4567-e89b-12d3-a456-426614174000"}
     const jsonStr = JSON.stringify({ createdAt: validISO, id: validUUID });
     const stdBase64 = Buffer.from(jsonStr, 'utf8').toString('base64');
-    
+
     if (stdBase64.includes('=') || stdBase64.includes('+') || stdBase64.includes('/')) {
       // The encoded string is highly likely to contain '=' or '+' or '/'
       assert.throws(() => parseCursor(stdBase64), /base64url/i);

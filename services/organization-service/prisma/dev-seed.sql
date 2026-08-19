@@ -2,7 +2,7 @@
 
 -- 1. Insert Organizations (VN and RU public organizations)
 INSERT INTO "Organization" ("id", "name", "country", "visibility", "version", "createdAt", "updatedAt")
-VALUES 
+VALUES
   ('e1d5a7d3-7d1a-47ef-b203-d2d89f7db387', 'Vietnam National University', 'VN', 'PUBLIC', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
   ('a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7', 'Lomonosov Moscow State University', 'RU', 'PUBLIC', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 ON CONFLICT ("id") DO UPDATE SET

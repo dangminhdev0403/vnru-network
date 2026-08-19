@@ -88,7 +88,7 @@ test('Cursor encoding/decoding and strict boundary validations', () => {
   const encoded = encodeCursor(validCursor);
   // Verify standard base64url characters only (no +, /, = padding)
   assert.match(encoded, /^[A-Za-z0-9_-]+$/);
-  
+
   const decoded = decodeCursor(encoded);
   assert.deepEqual(decoded, validCursor);
   assert.ok(Object.isFrozen(decoded));
