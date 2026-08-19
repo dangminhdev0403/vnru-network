@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="RU–VN integrated workspace dashboard visual template." />
+  <title>Workspace Dashboard · RU–VN Network</title>
+  <link rel="stylesheet" href="promax.css" />
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>RU–VN Network<small>Research Collaboration Portal</small></span></a>
+      <div class="module-switch"><a href="iam.html">Module 01 · IAM</a><a href="knowledge-workspace.html">Module 02 · Knowledge</a></div>
+      <div class="nav-label">Workspace</div>
+      <nav class="nav">
+        <a class="active" href="dashboard.html"><span class="ico">⌂</span>Tổng quan</a>
+        <a href="knowledge-workspace.html"><span class="ico">⌕</span>Khám phá tri thức</a>
+        <a href="knowledge-workspace.html#experts"><span class="ico">◎</span>Chuyên gia & Matching</a>
+        <a href="iam.html"><span class="ico">◈</span>IAM / Governance</a>
+      </nav>
+      <div class="nav-label">Collaboration</div>
+      <nav class="nav">
+        <a href="#pipeline"><span class="ico">2+2</span>Hợp tác 2+2</a>
+        <a href="#saved"><span class="ico">▤</span>Đã lưu</a>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="context-mini"><small>Active context</small><b>Researcher · Institution A</b><span>Identity resolved by Module 01</span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="menuBtn" aria-label="Mở menu">☰</button>
+        <div class="breadcrumbs"><b>Workspace</b><span>›</span><span>Overview</span></div>
+        <div class="top-search"><input id="globalSearch" placeholder="Tìm chuyên gia, công bố, chủ đề…" aria-label="Tìm kiếm toàn cổng" /></div>
+        <button class="context-chip"><span class="context-dot"></span>Researcher · Institution A</button>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div><h1>Xin chào, Minh.</h1><p>Workspace hợp nhất identity/context từ IAM với discovery, expert matching và collaboration của Knowledge.</p></div>
+          <span class="demo-pill">UI demo data</span>
+        </div>
+
+        <section class="hero">
+          <div class="hero-content">
+            <span class="eyebrow">RU–VN Knowledge Workspace</span>
+            <h2>Từ một truy vấn đến một quan hệ hợp tác có thể hành động.</h2>
+            <p>Tìm tri thức, hiểu mạng lưới chuyên gia, xem lý do ghép nối và chuyển kết nối phù hợp sang workflow hợp tác song phương.</p>
+            <div class="hero-actions"><a class="btn btn-primary" href="knowledge-workspace.html">Khám phá tri thức →</a><a class="btn btn-soft" href="iam.html">Xem access context</a></div>
+          </div>
+        </section>
+
+        <section class="grid grid-4" style="margin-top:18px" aria-label="Chỉ số minh họa">
+          <div class="metric"><small>Gợi ý đối tác mới</small><b>05</b><span class="tag">Demo</span></div>
+          <div class="metric"><small>Công bố đã lưu</small><b>18</b><span class="tag">Demo</span></div>
+          <div class="metric"><small>Chủ đề theo dõi</small><b>07</b><span class="tag">Demo</span></div>
+          <div class="metric"><small>Hợp tác quan tâm</small><b>03</b><span class="tag">Demo</span></div>
+        </section>
+
+        <section class="dashboard-grid">
+          <div class="stack">
+            <article class="panel" id="experts">
+              <div class="panel-head"><div><h3>Đối tác được đề xuất</h3><p>Giải thích dựa trên chủ đề, công bố và hướng nghiên cứu.</p></div><a class="status-pill ok" href="knowledge-workspace.html#experts">Expert matching</a></div>
+              <div class="list">
+                <div class="row"><div class="row-icon">AK</div><div><b>Alexander Kuznetsov</b><small>Advanced Materials · Research Institute · RU</small><span class="chip">4 chủ đề tương đồng</span> <span class="chip">12 công bố liên quan</span></div><span class="score">92%</span></div>
+                <div class="row"><div class="row-icon">NS</div><div><b>Natalia Sokolova</b><small>Energy Systems · University · RU</small><span class="chip">3 chủ đề tương đồng</span> <span class="chip">Cùng hướng nghiên cứu</span></div><span class="score">86%</span></div>
+                <div class="row"><div class="row-icon">VN</div><div><b>Nhóm nghiên cứu Công nghệ Vật liệu</b><small>Research Group · Việt Nam</small><span class="chip">Technology fit</span> <span class="chip">Project potential</span></div><span class="score">81%</span></div>
+              </div>
+            </article>
+
+            <article class="panel" id="pipeline">
+              <div class="panel-head"><div><h3>2+2 Collaboration Pipeline</h3><p>Minh họa trạng thái hình thành đủ bốn nhóm thành phần.</p></div></div>
+              <div class="grid grid-4">
+                <div class="metric"><small>RU Research</small><b style="font-size:18px">Viện / Trường Nga</b><span class="tag">Ready</span></div>
+                <div class="metric"><small>RU Industry</small><b style="font-size:18px">Doanh nghiệp Nga</b><span class="tag">Ready</span></div>
+                <div class="metric"><small>VN Research</small><b style="font-size:18px">Viện / Trường VN</b><span class="tag">Candidate</span></div>
+                <div class="metric"><small>VN Industry</small><b style="font-size:18px">Doanh nghiệp VN</b><span class="chip">Partner needed</span></div>
+              </div>
+              <div class="note"><b>Business-state note:</b> UI chỉ mô tả cấu trúc; điều kiện đủ 2+2 phải được service sở hữu workflow xác nhận ở backend.</div>
+            </article>
+
+            <article class="panel" id="saved">
+              <div class="panel-head"><div><h3>Tri thức đã lưu</h3><p>Các đối tượng đánh dấu để tiếp tục khám phá.</p></div></div>
+              <div class="list">
+                <div class="row"><div class="row-icon">PB</div><div><b>High-temperature materials for energy systems</b><small>Publication · Advanced Materials · 2025</small></div><span class="chip">PUBLICATION</span></div>
+                <div class="row"><div class="row-icon">TP</div><div><b>Vật liệu chịu nhiệt cho lò phản ứng</b><small>Topic · Energy & Materials</small></div><span class="chip">TOPIC</span></div>
+                <div class="row"><div class="row-icon">OR</div><div><b>Institute of Advanced Energy Technology</b><small>Organization · Russian Federation</small></div><span class="chip">ORG</span></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="stack">
+            <article class="panel">
+              <div class="panel-head"><div><h3>Hành động nhanh</h3><p>Các capability chính của workspace.</p></div></div>
+              <div class="quick-actions">
+                <a class="quick" href="knowledge-workspace.html"><b>⌕ Tìm tri thức</b><span>Search toàn Portal</span></a>
+                <a class="quick" href="knowledge-workspace.html#experts"><b>◎ Tìm chuyên gia</b><span>Expert discovery</span></a>
+                <a class="quick" href="knowledge-workspace.html#matches"><b>◉ Xem matches</b><span>Partner recommendations</span></a>
+                <a class="quick" href="#pipeline"><b>2+2 Hợp tác</b><span>Collaboration structure</span></a>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head"><div><h3>Access context</h3><p>Frontend capability state từ Module 01.</p></div><a href="iam.html" class="status-pill ok">Active</a></div>
+              <div class="list">
+                <div class="row"><div class="row-icon">ID</div><div><b>Authenticated identity</b><small>Minh Đặng</small></div><span class="chip">resolved</span></div>
+                <div class="row"><div class="row-icon">CX</div><div><b>Active context</b><small>Researcher · Institution A</small></div><span class="chip">ctx01</span></div>
+                <div class="row"><div class="row-icon">P</div><div><b>Capabilities</b><small>Search · Save · Match · Collaborate</small></div><span class="chip">UX only</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="promax.js"></script>
+</body>
+</html>

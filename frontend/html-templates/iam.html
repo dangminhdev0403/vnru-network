@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="RU–VN IAM / Governance visual workspace template." />
+  <title>IAM / Governance · RU–VN Network</title>
+  <link rel="stylesheet" href="promax.css" />
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>RU–VN Network<small>Research Collaboration Portal</small></span></a>
+      <div class="module-switch"><a class="active" href="iam.html">Module 01 · IAM</a><a href="knowledge-workspace.html">Module 02 · Knowledge</a></div>
+      <div class="nav-label">Identity & Access</div>
+      <nav class="nav">
+        <a href="dashboard.html"><span class="ico">⌂</span>Tổng quan</a>
+        <a class="active" href="#overview"><span class="ico">◈</span>IAM Overview</a>
+        <a href="#permissions"><span class="ico">◇</span>Permissions & Scope</a>
+        <a href="#sessions"><span class="ico">◉</span>Sessions & Security</a>
+        <a href="#admin"><span class="ico">⌘</span>Access Administration</a>
+        <a href="#audit"><span class="ico">▤</span>Audit</a>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="context-mini"><small>Security boundary</small><b>Backend enforced</b><span>Frontend capability checks are UX only</span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="menuBtn" aria-label="Mở menu">☰</button>
+        <div class="breadcrumbs"><a href="dashboard.html">Workspace</a><span>›</span><b>IAM / Governance</b></div>
+        <div class="top-search"><input id="globalSearch" placeholder="Tìm user, permission, audit event…" aria-label="Tìm trong IAM" /></div>
+        <button class="context-chip"><span class="context-dot"></span>Researcher · Institution A</button>
+      </header>
+
+      <div class="content">
+        <div class="page-head" id="overview">
+          <div><h1>Identity & Access Governance</h1><p>Module 01 xác định user là ai, active context nào đang được dùng, capability/resource scope nào được cấp và session nào đang hoạt động. Business state không thuộc IAM.</p></div>
+          <span class="demo-pill">Design template</span>
+        </div>
+
+        <section class="hero">
+          <div class="hero-content">
+            <span class="eyebrow">Security gateway · Module 01</span>
+            <h2>Identity → Context → Permission → Resource Scope.</h2>
+            <p>Frontend chỉ hiển thị capability phù hợp. Backend vẫn là security boundary và phải kiểm tra authorization ở mọi service boundary.</p>
+            <div class="hero-actions"><a class="btn btn-primary" href="#permissions">Xem authorization model →</a><a class="btn btn-soft" href="knowledge-workspace.html">Mở Module 02</a></div>
+          </div>
+        </section>
+
+        <section class="grid grid-4" style="margin-top:18px">
+          <div class="metric"><small>Identity</small><b style="font-size:20px">Minh Đặng</b><span class="tag">Authenticated</span></div>
+          <div class="metric"><small>Active context</small><b style="font-size:20px">Researcher</b><span class="tag">ctx01</span></div>
+          <div class="metric"><small>Session</small><b style="font-size:20px">Browser · Current</b><span class="tag">Active</span></div>
+          <div class="metric"><small>Permission version</small><b style="font-size:20px">v17</b><span class="chip">Demo</span></div>
+        </section>
+
+        <section class="dashboard-grid">
+          <div class="stack">
+            <article class="panel" id="permissions">
+              <div class="panel-head"><div><h3>Authorization decision flow</h3><p>Tách authentication, authorization và business validation.</p></div><span class="status-pill ok">Backend enforced</span></div>
+              <div class="flow">
+                <div class="flow-step"><span class="num">01</span><div><b>Authenticate</b><small>Resolve identity/session through Keycloak OIDC boundary.</small></div><span class="chip">401 if missing</span></div>
+                <div class="flow-step"><span class="num">02</span><div><b>Resolve active context</b><small>Role/context determines current workspace scope.</small></div><span class="chip">context</span></div>
+                <div class="flow-step"><span class="num">03</span><div><b>Authorize permission + resource scope</b><small>Check requested action against granted capability and resource assignment.</small></div><span class="chip">403 if denied</span></div>
+                <div class="flow-step"><span class="num">04</span><div><b>Business service validation</b><small>Domain service validates state, concurrency and business rules.</small></div><span class="chip">409 / 422</span></div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head"><div><h3>Permissions & Resource Scope</h3><p>Permission name không thay thế resource-level authorization.</p></div></div>
+              <div class="permission-grid">
+                <div class="permission"><code>IAM.USER.READ</code><p>Đọc account/user theo scope quản trị được cấp.</p></div>
+                <div class="permission"><code>GRANT.PROPOSAL.READ</code><p>Đọc proposal nếu resource nằm trong scope/context.</p></div>
+                <div class="permission"><code>REVIEW.ASSIGNMENT.READ</code><p>Reviewer chỉ thấy assignment được phân công.</p></div>
+                <div class="permission"><code>PROJECT.PROJECT.READ</code><p>Project access phụ thuộc organization/project scope.</p></div>
+              </div>
+              <div class="note"><b>Anti-pattern:</b> không dùng <code>role === "ADMIN"</code> hoặc dữ liệu localStorage làm security boundary.</div>
+            </article>
+
+            <article class="panel" id="sessions">
+              <div class="panel-head"><div><h3>Sessions & Security</h3><p>Một user có thể có nhiều session đồng thời; revoke phải có hiệu lực ở backend.</p></div><span class="chip">2FA by policy</span></div>
+              <table class="table">
+                <thead><tr><th>Session</th><th>Context</th><th>Status</th><th>Action</th></tr></thead>
+                <tbody>
+                  <tr><td>Chrome · Windows</td><td>Researcher · Institution A</td><td><span class="status-pill ok">Current</span></td><td>—</td></tr>
+                  <tr><td>Safari · macOS</td><td>Researcher</td><td><span class="chip">Active</span></td><td>Revoke</td></tr>
+                  <tr><td>Mobile</td><td>Researcher</td><td><span class="chip">Active</span></td><td>Revoke</td></tr>
+                </tbody>
+              </table>
+              <div class="note"><b>Provider note:</b> Keycloak/OIDC is the runtime authentication boundary in the current frontend architecture. Google may be configured as an upstream identity-provider option without hardcoding provider credentials in frontend source.</div>
+            </article>
+          </div>
+
+          <div class="stack">
+            <article class="panel" id="admin">
+              <div class="panel-head"><div><h3>Access Administration</h3><p>Governance surface dành cho Foundation/System Operators.</p></div><span class="chip">scoped</span></div>
+              <div class="list">
+                <div class="row"><div class="row-icon">U</div><div><b>User management</b><small>Identity/account lookup and access status</small></div><span class="chip">IAM.USER.*</span></div>
+                <div class="row"><div class="row-icon">R</div><div><b>Role assignment</b><small>Assign/revoke roles without embedding business state</small></div><span class="chip">IAM.ROLE.ASSIGN</span></div>
+                <div class="row"><div class="row-icon">S</div><div><b>Resource scope</b><small>Constrain actions to assigned resources/context</small></div><span class="chip">scope</span></div>
+              </div>
+            </article>
+
+            <article class="panel" id="audit">
+              <div class="panel-head"><div><h3>Security Audit</h3><p>Minh họa immutable security/action trail.</p></div></div>
+              <div class="list">
+                <div class="row"><div class="row-icon">✓</div><div><b>AUTH_LOGIN_SUCCESS</b><small>actor=u123 · request=req-101</small></div><span class="chip">allow</span></div>
+                <div class="row"><div class="row-icon">!</div><div><b>AUTHORIZATION_DENIED</b><small>REVIEW.ASSIGNMENT.READ · resource=R100</small></div><span class="chip">deny</span></div>
+                <div class="row"><div class="row-icon">R</div><div><b>ROLE_ASSIGNED</b><small>actor=admin01 · target=u123</small></div><span class="chip">audit</span></div>
+              </div>
+            </article>
+
+            <article class="panel dark">
+              <div class="panel-head"><div><h3>Open decisions</h3><p>Không tự đóng trong template.</p></div></div>
+              <div class="list">
+                <div class="row" style="border-color:rgba(255,255,255,.08)"><div class="row-icon">01</div><div><b style="color:#fff">SSO / IdP configuration</b><small>Provider/federation details follow runtime configuration.</small></div><span class="chip">OPEN</span></div>
+                <div class="row" style="border-color:rgba(255,255,255,.08)"><div class="row-icon">02</div><div><b style="color:#fff">Single role vs multi-context</b><small>Impacts workspace navigation and session context.</small></div><span class="chip">OPEN</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="promax.js"></script>
+</body>
+</html>
