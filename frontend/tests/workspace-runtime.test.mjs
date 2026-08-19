@@ -8,6 +8,7 @@ const iamRoute = await readFile(new URL("../app/workspace/iam/page.tsx", import.
 const knowledgeRoute = await readFile(new URL("../app/workspace/knowledge/page.tsx", import.meta.url), "utf8");
 const iamView = await readFile(new URL("../features/auth/components/IamWorkspaceView.tsx", import.meta.url), "utf8");
 const knowledgeView = await readFile(new URL("../features/knowledge/components/KnowledgeWorkspaceView.tsx", import.meta.url), "utf8");
+const dashboardView = await readFile(new URL("../features/workspace/components/DashboardView.tsx", import.meta.url), "utf8");
 const proxy = await readFile(new URL("../proxy.ts", import.meta.url), "utf8");
 
 test("runtime workspace routes compose feature-owned views", () => {
@@ -34,8 +35,16 @@ test("IAM view preserves backend authorization as authoritative", () => {
   assert.match(iamView, /Keycloak\/OIDC/);
 });
 
-test("Knowledge view stays visual-only until approved frontend contracts exist", () => {
-  assert.match(knowledgeView, /Preview data/);
-  assert.match(knowledgeView, /chưa gọi endpoint chưa tồn tại/i);
+test("Knowledge view renders independent real discovery states while matching stays pending", () => {
+  assert.match(knowledgeView, /publications\.status/);
+  assert.match(knowledgeView, /experts\.status/);
+  assert.match(knowledgeView, /Expert Matching.*Pending/s);
   assert.doesNotMatch(knowledgeView, /fetch\(/);
+});
+
+test("dashboard uses discovery samples without inventing aggregate totals", () => {
+  assert.match(dashboardRoute, /getPublications/);
+  assert.match(dashboardRoute, /getExperts/);
+  assert.match(dashboardView, /No aggregate contract/);
+  assert.doesNotMatch(dashboardView, /92%|87%|81%|value:\s*"\d/);
 });
