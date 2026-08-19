@@ -88,13 +88,6 @@ textarea {
   font-family: var(--font-sans);
 }
 
-.stitch-page {
-  display: block;
-  width: 100%;
-  height: 100dvh;
-  border: 0;
-}
-
 /* Animations & Keyframes */
 @keyframes fadeInUp {
   from {

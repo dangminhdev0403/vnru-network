@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 
-const manifest = JSON.parse(await readFile(new URL("./stitch/manifest.json", import.meta.url), "utf8"));
+const manifest = JSON.parse(await readFile(new URL("./html-templates/manifest.json", import.meta.url), "utf8"));
 const required = {
   "workspace-shell": "Workspace Context Switcher",
   security: "Security &amp; Sessions",
@@ -10,12 +10,12 @@ const required = {
   "system-states": "Authentication &amp; System State Templates",
 };
 
-test("Module 1 Stitch sources are tracked without fabricated credential flows", async () => {
+test("Module 1 HTML templates are tracked without fabricated credential flows", async () => {
   for (const [name, title] of Object.entries(required)) {
     assert.ok(manifest.screens[name]);
-    const html = await readFile(new URL(`./stitch/${name}.html`, import.meta.url), "utf8");
+    const html = await readFile(new URL(`./html-templates/${name}.html`, import.meta.url), "utf8");
     assert.match(html, new RegExp(`<title>${title}`));
-    assert.doesNotMatch(html, /data-stitch-injected|type=["']password|access[_-]?token|refresh[_-]?token/i);
+    assert.doesNotMatch(html, /data-template-injected|type=["']password|access[_-]?token|refresh[_-]?token/i);
   }
 });
 

@@ -18,7 +18,7 @@ test("login route delegates credential UI directly to Keycloak", async () => {
   const { readFile } = await import("node:fs/promises");
   const page = await readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8");
   assert.match(page, /\/api\/auth\/login\?returnTo=/);
-  assert.doesNotMatch(page, /iframe|password|stitch\/login/);
+  assert.doesNotMatch(page, /iframe|password|html-templates\/login/);
 });
 
 test("login and home use backend-authoritative session state", async () => {

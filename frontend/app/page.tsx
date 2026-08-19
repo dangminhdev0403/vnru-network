@@ -6,11 +6,11 @@ import { getCurrentSession, SESSION_COOKIE_NAME } from "../features/auth/server"
 
 export default async function Home() {
   const isAuthenticated = Boolean(await getCurrentSession((await cookies()).get(SESSION_COOKIE_NAME)?.value));
-  const html = await readFile(path.join(process.cwd(), "stitch/index.html"), "utf8");
+  const html = await readFile(path.join(process.cwd(), "html-templates/index.html"), "utf8");
   const styles = html.match(/<style>([\s\S]*?)<\/style>/)?.[1];
   const body = html.match(/<body>([\s\S]*?)<\/body>/)?.[1]?.replace('<a href="#cooperation">Hợp tác 2+2</a>', '<a href="#cooperation">Hợp tác 2+2</a><span id="language-switcher-slot"></span>');
 
-  if (!styles || !body) throw new Error("stitch/index.html must contain <style> and <body>");
+  if (!styles || !body) throw new Error("html-templates/index.html must contain <style> and <body>");
 
   return <>
     <style dangerouslySetInnerHTML={{ __html: styles }} />
