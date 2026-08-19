@@ -7,5 +7,7 @@ const css = await readFile(new URL("resources/css/login.css", root), "utf8");
 
 assert.match(properties, /^parent=keycloak\.v2$/m);
 assert.match(properties, /^styles=css\/login\.css$/m);
-assert.match(css, /VN-RU Knowledge Network/);
+assert.match(css, /Russia–Vietnam Knowledge Network/);
+assert.match(css, /#kc-form-login|#kc-login/);
+assert.match(css, /grid-template-areas/);
 console.log("Keycloak theme smoke: pass");

@@ -1,42 +1,226 @@
 :root {
-  --pf-v5-global--primary-color--100: #0b1c30;
-  --pf-v5-global--primary-color--200: #13243d;
+  --vnru-navy: #0b1c30;
+  --vnru-navy-2: #12304b;
+  --vnru-cyan: #36b9d4;
+  --vnru-mint: #55d6b1;
+  --vnru-surface: #f5f8fa;
+  --vnru-border: #dbe4e8;
 }
 
-body {
-  background: #f8fafc;
+html.login-pf,
+body#keycloak-bg {
+  min-height: 100%;
+  margin: 0;
+  background: var(--vnru-surface);
   color: #0f172a;
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
-.login-pf body {
-  background: linear-gradient(135deg, #0b1c30 0 42%, #f8fafc 42% 100%);
+body#keycloak-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0 42% 0 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 20% 25%, rgb(85 214 177 / 15%) 0 1px, transparent 2px) 0 0 / 25px 25px,
+    linear-gradient(135deg, var(--vnru-navy), #123a48);
 }
 
-.card-pf {
-  border: 1px solid #e2e8f0;
-  border-radius: 18px;
-  box-shadow: 0 20px 48px rgb(15 23 42 / 18%);
+.pf-v5-c-login {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.pf-v5-c-login__container {
+  display: grid;
+  grid-template-columns: minmax(460px, 3fr) minmax(400px, 2fr);
+  grid-template-areas:
+    "header header"
+    "intro main";
+  grid-template-rows: 72px 1fr;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  padding: 0;
+}
+
+#kc-header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  padding: 0 5vw;
+  background: rgb(255 255 255 / 96%);
+  border-bottom: 1px solid var(--vnru-border);
+  box-shadow: 0 1px 12px rgb(15 23 42 / 5%);
 }
 
 #kc-header-wrapper {
-  color: #fff;
+  display: block;
+  color: var(--vnru-navy);
   font-size: 0;
 }
 
-#kc-header-wrapper::after {
-  content: "VN-RU Knowledge Network";
-  font: 700 28px/1.2 Georgia, serif;
+#kc-header-wrapper::before {
+  content: "VN-RU";
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding-left: 54px;
+  background: linear-gradient(135deg, var(--vnru-navy), #1b4c63);
+  background-clip: text;
+  color: transparent;
+  font: 800 22px/40px "Segoe UI", sans-serif;
+  letter-spacing: -0.03em;
 }
 
-.pf-v5-c-button.pf-m-primary,
-#kc-login {
-  background: #0b1c30;
-  border-radius: 10px;
+#kc-header-wrapper::after {
+  content: "NETWORK  ·  Russia–Vietnam Knowledge Network";
+  margin-left: 10px;
+  color: #526273;
+  font: 600 12px/1.2 "Segoe UI", sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.pf-v5-c-login__container::before {
+  content: "Independent Bilateral Cooperation Initiative\A \A Connecting Science, Innovation & Academic Heritage\A \A The official single window for joint research grants, peer reviews, technology transfer, and bilateral scientific exchange between Vietnam and the Russian Federation.\A \A 400+  Joint Research Proposals     1,850+  Bilateral Verified Experts";
+  grid-area: intro;
+  align-self: center;
+  max-width: 650px;
+  padding: 5vw 7vw;
+  color: rgb(255 255 255 / 78%);
+  white-space: pre-wrap;
+  font: 400 15px/1.65 "Segoe UI", sans-serif;
+}
+
+.pf-v5-c-login__main {
+  grid-area: main;
+  align-self: center;
+  justify-self: center;
+  width: min(420px, calc(100% - 48px));
+  margin: 32px;
+  padding: 34px;
+  background: rgb(255 255 255 / 97%);
+  border: 1px solid var(--vnru-border);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgb(15 23 42 / 16%);
+}
+
+.pf-v5-c-login__main-header,
+.pf-v5-c-login__main-body,
+.pf-v5-c-login__main-footer {
+  padding: 0;
+}
+
+#kc-page-title {
+  color: var(--vnru-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.pf-v5-c-form__label-text {
+  color: #34465a;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .pf-v5-c-form-control,
 input[type="text"],
 input[type="password"] {
+  min-height: 44px;
+  border-color: #c9d6dd;
   border-radius: 10px;
+  background: #fbfdfe;
+}
+
+.pf-v5-c-form-control:focus,
+input:focus {
+  border-color: var(--vnru-cyan);
+  box-shadow: 0 0 0 3px rgb(54 185 212 / 16%);
+}
+
+.pf-v5-c-button.pf-m-primary,
+#kc-login {
+  min-height: 44px;
+  background: linear-gradient(90deg, var(--vnru-navy), var(--vnru-navy-2));
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgb(11 28 48 / 18%);
+  font-weight: 700;
+}
+
+a {
+  color: #087d96;
+}
+
+/* Override parent keycloak.v2 layout/theme selectors. */
+html.login-pf body#keycloak-bg {
+  background: var(--vnru-surface);
+  color: #0f172a;
+}
+
+body#keycloak-bg .pf-v5-c-login {
+  display: block;
+  background: transparent;
+}
+
+body#keycloak-bg .pf-v5-c-login__container {
+  position: fixed;
+  inset: 0;
+  grid-template-columns: minmax(460px, 3fr) minmax(400px, 2fr);
+  grid-template-areas:
+    "header header"
+    "intro main";
+  grid-template-rows: 72px minmax(0, 1fr);
+  align-content: stretch;
+  height: 100vh;
+}
+
+body#keycloak-bg #kc-header {
+  grid-area: header;
+  width: auto;
+  max-width: none;
+  min-height: 72px;
+  padding: 0 5vw;
+  color: var(--vnru-navy);
+}
+
+body#keycloak-bg .pf-v5-c-login__main {
+  grid-area: main;
+  width: min(420px, calc(100% - 48px));
+  max-width: none;
+  background: rgb(255 255 255 / 97%);
+  color: #0f172a;
+}
+
+body#keycloak-bg #kc-page-title,
+body#keycloak-bg .pf-v5-c-form__label,
+body#keycloak-bg .pf-v5-c-form__label-text,
+body#keycloak-bg .pf-v5-c-check__label {
+  color: #0f172a;
+}
+
+@media (max-width: 800px) {
+  body#keycloak-bg::before,
+  .pf-v5-c-login__container::before {
+    display: none;
+  }
+
+  body#keycloak-bg .pf-v5-c-login__container {
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "main";
+  }
+
+  body#keycloak-bg #kc-header {
+    padding: 0 20px;
+  }
+
+  #kc-header-wrapper::after {
+    content: "NETWORK";
+  }
+
+  .pf-v5-c-login__main {
+    margin: 24px auto;
+  }
 }

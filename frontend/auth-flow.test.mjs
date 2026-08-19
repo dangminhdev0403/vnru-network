@@ -14,6 +14,13 @@ test("return URL accepts only same-origin paths", () => {
   assert.equal(sanitizeReturnTo(undefined), "/");
 });
 
+test("login route delegates credential UI directly to Keycloak", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const page = await readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8");
+  assert.match(page, /redirect\(`\/api\/auth\/login\?returnTo=/);
+  assert.doesNotMatch(page, /iframe|password|stitch\/login/);
+});
+
 test("auth flow keeps provider tokens out of the frontend", async () => {
   const { readFile } = await import("node:fs/promises");
   const files = [
