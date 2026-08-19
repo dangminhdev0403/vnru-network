@@ -33,6 +33,7 @@ import {
               .then((issuer) => {
                 return new issuer.Client({
                   client_id: config.KEYCLOAK_CLIENT_ID,
+                  token_endpoint_auth_method: 'none',
                   redirect_uris: [configuredRedirectUri],
                   response_types: ['code'],
                 });

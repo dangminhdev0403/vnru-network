@@ -64,6 +64,25 @@ describe('OidcClientBoundary Factory (v5 API adapter)', () => {
     expect(client.Issuer.discover).not.toHaveBeenCalled();
   });
 
+  it('configures a public PKCE client without a client secret', async () => {
+    mockClientInstance.authorizationUrl.mockReturnValueOnce('https://auth.url');
+    await boundary.buildAuthorizationUrl({
+      redirectUri: 'https://portal.example.com/auth/callback',
+      state: 'state',
+      nonce: 'nonce',
+      codeChallenge: 'challenge',
+      codeChallengeMethod: 'S256',
+      scope: 'openid profile email',
+    });
+
+    expect(mockIssuerInstance.Client).toHaveBeenCalledWith({
+      client_id: 'vnru-auth',
+      token_endpoint_auth_method: 'none',
+      redirect_uris: ['https://portal.example.com/auth/callback'],
+      response_types: ['code'],
+    });
+  });
+
   it('memoizes discovery and clears cache after rejection', async () => {
     const discoverSpy = jest.spyOn(client.Issuer, 'discover');
 
