@@ -17,8 +17,23 @@ test("return URL accepts only same-origin paths", () => {
 test("login route delegates credential UI directly to Keycloak", async () => {
   const { readFile } = await import("node:fs/promises");
   const page = await readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8");
-  assert.match(page, /redirect\(`\/api\/auth\/login\?returnTo=/);
+  assert.match(page, /\/api\/auth\/login\?returnTo=/);
   assert.doesNotMatch(page, /iframe|password|stitch\/login/);
+});
+
+test("login and home use backend-authoritative session state", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const [server, login, home, motion] = await Promise.all([
+    readFile(new URL("./features/auth/server.ts", import.meta.url), "utf8"),
+    readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./app/HomeMotion.tsx", import.meta.url), "utf8"),
+  ]);
+  assert.match(server, /getCurrentSession/);
+  assert.match(login, /getCurrentSession/);
+  assert.match(home, /isAuthenticated/);
+  assert.match(motion, /\/api\/auth\/logout/);
+  assert.match(motion, /window\.location\.assign\(logoutUrl \|\| "\/"\)/);
 });
 
 test("auth flow keeps provider tokens out of the frontend", async () => {

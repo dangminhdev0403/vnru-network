@@ -23,3 +23,12 @@ export function forwardSessionCookie(source: Response, target: Headers): void {
   if (!cookie) return;
   target.append("set-cookie", process.env.NODE_ENV === "production" ? cookie : cookie.replace(/;\s*Secure/gi, ""));
 }
+
+export async function getCurrentSession(token?: string): Promise<unknown | null> {
+  if (!token) return null;
+  const response = await fetch(authServiceUrl("api/v1/auth/me"), {
+    cache: "no-store",
+    headers: { cookie: `${SESSION_COOKIE_NAME}=${encodeURIComponent(token)}` },
+  }).catch(() => null);
+  return response?.ok ? response.json() : null;
+}

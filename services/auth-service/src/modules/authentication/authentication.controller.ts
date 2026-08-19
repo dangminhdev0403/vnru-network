@@ -154,10 +154,7 @@ export class AuthenticationController {
     });
 
     const config = validateConfig();
-    const postLogoutRedirectUri = new URL(
-      '/login',
-      config.KEYCLOAK_REDIRECT_URI,
-    );
+    const postLogoutRedirectUri = new URL('/', config.KEYCLOAK_REDIRECT_URI);
     const logoutUrl = new URL(
       `${config.KEYCLOAK_ISSUER_URL.replace(/\/$/, '')}/protocol/openid-connect/logout`,
     );

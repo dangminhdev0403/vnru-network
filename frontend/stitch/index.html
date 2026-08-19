@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="RU–VN Portal — nền tảng kết nối tri thức, chuyên gia và hợp tác nghiên cứu Nga – Việt." />
+  <title>RU–VN Portal — Mạng lưới tri thức Nga–Việt & hợp tác 2+2</title>
+  <style>
+    :root {
+      --ink: #0d1a2b;
+      --muted: #637086;
+      --paper: #f6f8fc;
+      --white: #ffffff;
+      --line: #dbe3ef;
+      --blue: #1c57d7;
+      --blue-2: #0b3da8;
+      --red: #d62b3d;
+      --navy: #07182f;
+      --cyan: #45c6e8;
+      --shadow: 0 24px 70px rgba(18, 47, 92, .12);
+      --radius: 24px;
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 84% 4%, rgba(69,198,232,.13), transparent 26%),
+        radial-gradient(circle at 10% 18%, rgba(28,87,215,.08), transparent 24%),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .container { width: min(calc(100% - 40px), var(--max)); margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; gap: 8px; align-items: center;
+      padding: 7px 12px; border-radius: 999px;
+      background: rgba(28,87,215,.08); color: var(--blue-2);
+      font-weight: 800; font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+    }
+    .eyebrow::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--red); }
+    .section-title { font-size: clamp(34px, 4vw, 58px); line-height: 1.03; letter-spacing: -.035em; margin: 14px 0 18px; }
+    .section-lead { color: var(--muted); font-size: 18px; max-width: 760px; }
+    .nav-wrap {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(246,248,252,.82);
+      border-bottom: 1px solid rgba(219,227,239,.7);
+    }
+    nav { height: 74px; display:flex; align-items:center; justify-content:space-between; gap: 28px; }
+    .brand { display:flex; align-items:center; gap: 12px; font-weight: 900; letter-spacing: -.03em; }
+    .brand-mark { width:42px; height:42px; border-radius:14px; position:relative; overflow:hidden; box-shadow: 0 12px 28px rgba(28,87,215,.2); background:var(--white); border:1px solid var(--line); }
+    .brand-mark::before, .brand-mark::after { content:""; position:absolute; inset:0; clip-path: polygon(0 0, 66% 0, 34% 100%, 0 100%); background:var(--blue); }
+    .brand-mark::after { clip-path: polygon(66% 0, 100% 0, 100% 100%, 34% 100%); background:var(--red); opacity:.92; }
+    .brand small { display:block; color:var(--muted); font-size:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; margin-top:-4px; }
+    .nav-links { display:flex; align-items:center; gap:24px; color:#43516a; font-weight:700; font-size:14px; }
+    .nav-links a:hover { color: var(--blue); }
+    .btn { border:0; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:10px; border-radius:14px; padding:13px 18px; font-weight:800; transition:.22s ease; }
+    .btn-primary { color:white; background:linear-gradient(135deg,var(--blue),var(--blue-2)); box-shadow: 0 14px 30px rgba(28,87,215,.25); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 36px rgba(28,87,215,.32); }
+    .btn-soft { color:var(--ink); background:white; border:1px solid var(--line); }
+    .hero { padding: 76px 0 72px; overflow:hidden; }
+    .hero-grid { display:grid; grid-template-columns: 1.02fr .98fr; gap:56px; align-items:center; }
+    .hero-copy { position:relative; z-index:4; max-width:720px; }
+    .hero-copy::before { content:""; position:absolute; inset:-26px -34px -30px -18px; border-radius:34px; background:linear-gradient(90deg, rgba(3,16,39,.92) 0%, rgba(3,16,39,.84) 54%, rgba(3,16,39,.34) 78%, rgba(3,16,39,0) 100%); filter:blur(4px); z-index:-1; }
+    h1 { font-size: clamp(48px, 6.1vw, 82px); line-height:.98; letter-spacing:-.055em; margin:18px 0 22px; max-width: 720px; }
+    .hero .accent { color: var(--blue); }
+    .hero p { font-size:19px; color:var(--muted); max-width:680px; }
+    .hero-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:30px; }
+    .hero-meta { display:flex; flex-wrap:wrap; gap:24px; margin-top:38px; color:#43516a; font-weight:700; font-size:13px; }
+    .hero-meta span { display:flex; align-items:center; gap:9px; }
+    .dot { width:8px; height:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 0 6px rgba(69,198,232,.15); }
+    .portal-stage { position:relative; min-height: 520px; }
+    .orb { position:absolute; border-radius:50%; filter: blur(1px); }
+    .orb.one { width:300px; height:300px; top:20px; right:-20px; background:linear-gradient(145deg,rgba(28,87,215,.18),rgba(69,198,232,.06)); }
+    .orb.two { width:160px; height:160px; bottom:30px; left:28px; background:rgba(214,43,61,.1); }
+    .portal-card { position:absolute; background:rgba(255,255,255,.9); border:1px solid rgba(219,227,239,.92); border-radius:22px; box-shadow:var(--shadow); backdrop-filter: blur(16px); }
+    .search-card { inset: 42px 18px auto 36px; padding:24px; }
+    .searchbar { display:flex; gap:12px; align-items:center; border:1px solid var(--line); border-radius:15px; padding:12px 14px; background:#fafcff; color:#8290a7; }
+    .searchbar b { margin-left:auto; color:var(--blue); font-size:12px; }
+    .result { margin-top:16px; padding:15px; border:1px solid var(--line); border-radius:16px; display:flex; gap:13px; align-items:flex-start; }
+    .result-icon { width:38px; height:38px; border-radius:12px; display:grid; place-items:center; background:rgba(28,87,215,.08); color:var(--blue); flex:0 0 auto; font-weight:900; }
+    .result strong { display:block; font-size:14px; }
+    .result small { color:var(--muted); }
+    .match-card { right:0; bottom:52px; width:58%; padding:22px; transform:rotate(1.5deg); }
+    .match-score { display:flex; justify-content:space-between; align-items:end; }
+    .match-score b { font-size:42px; color:var(--blue); line-height:1; }
+    .chips { display:flex; flex-wrap:wrap; gap:7px; margin-top:15px; }
+    .chip { padding:7px 9px; font-size:11px; font-weight:800; border-radius:999px; background:#eef3fb; color:#52647f; }
+    .flags-card { left:0; bottom:28px; padding:18px 20px; width:46%; transform:rotate(-2.5deg); }
+    .flags { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; }
+    .country { padding:13px; border-radius:15px; background:#f8fafc; text-align:center; font-weight:900; }
+    .country small { display:block; color:var(--muted); font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.08em; }
+    .bridge { width:38px; height:4px; border-radius:10px; background:linear-gradient(90deg,var(--blue),var(--red)); }
+    .trust { padding: 18px 0 28px; }
+    .trustbar { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .trustitem { background:white; border:1px solid var(--line); border-radius:18px; padding:20px; }
+    .trustitem b { font-size:26px; letter-spacing:-.03em; }
+    .trustitem span { display:block; color:var(--muted); margin-top:4px; font-size:13px; }
+    section { padding: 92px 0; }
+    .cards-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:38px; }
+    .module-card { padding:28px; border-radius:var(--radius); background:white; border:1px solid var(--line); box-shadow:0 18px 44px rgba(33,61,104,.06); min-height:330px; display:flex; flex-direction:column; }
+    .module-index { color:var(--blue); font-weight:900; font-size:12px; letter-spacing:.14em; }
+    .module-card h3 { margin:16px 0 10px; font-size:26px; line-height:1.1; letter-spacing:-.03em; }
+    .module-card p { color:var(--muted); margin-top:0; }
+    .module-card ul { padding-left:18px; margin:10px 0 0; color:#42516b; }
+    .module-card li { margin:7px 0; }
+    .module-card a { margin-top:auto; padding-top:22px; color:var(--blue); font-weight:900; }
+    .knowledge { background:var(--navy); color:white; position:relative; overflow:hidden; }
+    .knowledge::before { content:""; position:absolute; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle, rgba(69,198,232,.16), transparent 67%); right:-140px; top:-120px; }
+    .knowledge-grid { display:grid; grid-template-columns:.92fr 1.08fr; gap:50px; align-items:center; position:relative; }
+    .knowledge .eyebrow { background:rgba(255,255,255,.08); color:#a9dff0; }
+    .knowledge .section-lead { color:#a8b5c9; }
+    .search-demo { border:1px solid rgba(255,255,255,.14); border-radius:28px; padding:22px; background:rgba(255,255,255,.06); box-shadow:0 30px 80px rgba(0,0,0,.25); }
+    .demo-search { background:white; color:var(--ink); border-radius:16px; padding:15px 16px; display:flex; align-items:center; gap:10px; font-weight:700; }
+    .demo-filter { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 18px; }
+    .demo-filter span { border:1px solid rgba(255,255,255,.15); border-radius:999px; padding:7px 10px; font-size:11px; color:#c9d4e4; }
+    .demo-result { display:grid; grid-template-columns:auto 1fr auto; gap:13px; align-items:center; padding:15px; border-top:1px solid rgba(255,255,255,.1); }
+    .demo-avatar { width:44px; height:44px; border-radius:14px; background:linear-gradient(145deg,#315fbd,#59c3dd); display:grid; place-items:center; font-weight:900; }
+    .demo-result small { color:#9fb0c8; }
+    .demo-tag { color:#9fe1f1; font-weight:800; font-size:11px; }
+    .two-plus-two { position:relative; overflow:hidden; color:white; background:linear-gradient(135deg,#071833 0%,#0b2148 52%,#0a1833 100%); }
+    .two-plus-two::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 18% 28%,rgba(61,132,255,.24),transparent 24%),radial-gradient(circle at 50% 50%,rgba(96,184,255,.08),transparent 30%),radial-gradient(circle at 82% 70%,rgba(217,52,83,.14),transparent 24%); }
+    .two-plus-two::after { content:""; position:absolute; inset:0; opacity:.14; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px); background-size:42px 42px; mask-image:linear-gradient(to bottom, transparent, black 14%, black 86%, transparent); }
+    .two-plus-two .eyebrow { color:#c7e8ff; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.09); }
+    .two-plus-two .section-title { max-width:980px; color:#f5f9ff; }
+    .two-plus-two .section-lead { color:#c1d0e4; max-width:860px; }
+    .coop-topline { position:relative; z-index:2; display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+    .coop-pill { display:inline-flex; align-items:center; gap:8px; padding:9px 13px; border-radius:999px; border:1px solid rgba(165,215,255,.18); background:rgba(255,255,255,.08); color:#e5effb; font-size:12px; font-weight:800; letter-spacing:.03em; box-shadow:0 10px 24px rgba(0,0,0,.08); }
+    .coop-pill::before { content:""; width:7px; height:7px; border-radius:50%; background:#63cfff; box-shadow:0 0 0 5px rgba(99,207,255,.12); }
+    .consortium { position:relative; z-index:2; margin-top:46px; display:grid; grid-template-columns:1fr 180px 1fr; gap:22px; align-items:center; }
+    .consortium::before { content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:320px; height:320px; border-radius:50%; background:radial-gradient(circle, rgba(101,194,255,.12), rgba(101,194,255,0) 70%); pointer-events:none; }
+    .country-stack { position:relative; border:1px solid rgba(146,210,255,.22); border-radius:30px; padding:30px; background:linear-gradient(180deg,rgba(18,42,84,.92),rgba(10,28,58,.90)); box-shadow:0 28px 72px rgba(0,0,0,.26); }
+    .country-stack::before { content:""; position:absolute; inset:0; border-radius:30px; padding:1px; background:linear-gradient(180deg,rgba(151,218,255,.34),rgba(255,255,255,0)); -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; }
+    .country-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .country-stack h3 { font-size:34px; margin:0; letter-spacing:-.03em; color:#f7fbff; }
+    .country-kicker { font-size:12px; text-transform:uppercase; letter-spacing:.14em; color:#9db9da; font-weight:800; }
+    .country-badge { padding:8px 10px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(167,219,255,.18); color:#eff6ff; font-size:11px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
+    .country-summary { color:#c8d6e8; font-size:15px; line-height:1.75; margin:0 0 20px; }
+    .stack-role { position:relative; overflow:hidden; background:rgba(255,255,255,.07); border:1px solid rgba(167,218,255,.16); border-radius:22px; padding:22px 20px 20px; margin-top:14px; box-shadow:inset 0 1px 0 rgba(255,255,255,.04); }
+    .stack-role::after { content:""; position:absolute; inset:auto 18px 0; height:3px; border-radius:8px; background:linear-gradient(90deg,rgba(111,204,255,.95),rgba(111,204,255,0)); }
+    .stack-role.role-industry::after { background:linear-gradient(90deg,rgba(255,130,148,.92),rgba(255,130,148,0)); }
+    .role-icon { width:44px; height:44px; border-radius:14px; display:grid; place-items:center; background:rgba(82,156,255,.16); color:#86d8ff; border:1px solid rgba(116,205,255,.22); font-size:20px; }
+    .role-industry .role-icon { background:rgba(255,108,126,.12); color:#ff9dac; border-color:rgba(255,145,160,.22); }
+    .stack-role-head { display:flex; align-items:flex-start; gap:14px; }
+    .stack-role b { display:block; font-size:28px; letter-spacing:-.03em; color:#9fd9ff; }
+    .stack-role strong { display:block; font-size:23px; line-height:1.05; letter-spacing:-.02em; color:#f6faff; }
+    .stack-role span { color:#c2d2e6; font-size:14px; line-height:1.68; display:block; margin-top:8px; }
+    .role-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .role-tags i { font-style:normal; padding:6px 9px; border-radius:999px; font-size:11px; font-weight:800; color:#e0ebf9; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.10); }
+    .plus { display:grid; place-items:center; margin:10px auto 2px; width:38px; height:38px; border-radius:50%; background:rgba(76,143,255,.18); border:1px solid rgba(112,196,255,.24); color:#a3e4ff; font-size:24px; font-weight:900; box-shadow:0 0 24px rgba(83,182,255,.10); }
+    .connector { display:grid; place-items:center; }
+    .connector-core { width:100%; position:relative; min-height:380px; }
+    .connector-core::before { content:""; position:absolute; top:50%; left:10px; right:10px; height:2px; border-radius:8px; background:linear-gradient(90deg,rgba(107,197,255,.38),rgba(255,111,137,.72),rgba(107,197,255,.38)); box-shadow:0 0 18px rgba(93,181,255,.18); }
+    .connector-core::after { content:""; position:absolute; top:20px; bottom:20px; left:50%; width:1px; background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.24),rgba(255,255,255,0)); opacity:.7; }
+    .connector-badge { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:154px; height:154px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; border-radius:50%; background:radial-gradient(circle at 34% 24%, #2870de, #0a1c39 68%); color:white; border:10px solid rgba(255,255,255,.96); box-shadow:0 0 0 24px rgba(107,197,255,.08),0 22px 64px rgba(0,0,0,.34), 0 0 42px rgba(80,177,255,.22); text-align:center; }
+    .connector-badge::before { content:""; position:absolute; inset:-16px; border-radius:50%; border:1px solid rgba(114,205,255,.28); }
+    .connector-mark { display:block; font-size:21px; line-height:1; font-weight:950; letter-spacing:.06em; }
+    .connector-plus { display:block; font-size:34px; line-height:1; font-weight:950; color:#f8fbff; }
+    .connector-caption { position:absolute; left:50%; bottom:20px; transform:translateX(-50%); width:190px; text-align:center; color:#c0d1e5; font-size:12px; line-height:1.55; }
+    .connector-caption b { display:block; color:#fff; margin-bottom:4px; font-size:12px; text-transform:uppercase; letter-spacing:.14em; }
+    .coop-bottom { position:relative; z-index:2; margin-top:24px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .coop-bottom-card { padding:17px 18px; border-radius:18px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.10); }
+    .coop-bottom-card b { display:block; margin-bottom:5px; }
+    .coop-bottom-card span { color:#c0cfe1; font-size:13px; line-height:1.6; }
+    .principles { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px; }
+    .principle { padding:18px; border:1px solid var(--line); border-radius:18px; background:white; }
+    .principle b { display:block; margin-bottom:5px; }
+    .principle span { color:var(--muted); font-size:13px; }
+
+    .module-footnote { margin-top:auto; padding-top:22px; color:#728099; font-weight:800; font-size:13px; }
+
+    /* Collaboration section — visual direction inspired by the user's reference */
+    .collaboration { position:relative; overflow:hidden; color:white; background:linear-gradient(135deg,#041126 0%,#061a38 58%,#07142f 100%); padding:108px 0; }
+    .collaboration::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 70% 40%,rgba(31,102,255,.20),transparent 30%),radial-gradient(circle at 92% 72%,rgba(72,191,255,.08),transparent 26%); }
+    .collaboration::after { content:""; position:absolute; inset:0; opacity:.14; pointer-events:none; background-image:radial-gradient(circle,rgba(111,194,255,.34) 1px,transparent 1px); background-size:46px 46px; mask-image:linear-gradient(90deg,transparent 25%,black 58%,transparent 100%); }
+    .collaboration-grid { position:relative; z-index:2; display:grid; grid-template-columns:.82fr 1.18fr; gap:64px; align-items:center; }
+    .collaboration .eyebrow { color:#c6e8ff; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.09); }
+    .collaboration .section-title { max-width:620px; font-size:clamp(38px,4.6vw,66px); }
+    .collaboration .section-lead { color:#a9bad0; max-width:610px; }
+    .collab-note { margin-top:30px; display:flex; gap:14px; align-items:center; max-width:470px; padding:15px 0; border-top:1px solid rgba(255,255,255,.10); }
+    .collab-note-icon { width:40px; height:40px; flex:0 0 auto; border-radius:12px; display:grid; place-items:center; color:#74cfff; background:rgba(63,143,255,.10); border:1px solid rgba(112,197,255,.18); font-weight:900; }
+    .collab-note b { display:block; }
+    .collab-note small { display:block; color:#8fa4bf; margin-top:2px; }
+    .collaboration-flow { display:grid; grid-template-columns:1fr 48px 1fr 48px 1fr; align-items:center; }
+    .collab-step { position:relative; min-height:300px; padding:28px 24px; border-radius:22px; border:1px solid rgba(116,183,255,.16); background:rgba(9,31,65,.66); backdrop-filter:blur(14px); transition:.25s ease; }
+    .collab-step:hover { transform:translateY(-5px); border-color:rgba(116,207,255,.34); background:rgba(10,38,80,.76); }
+    .collab-step.featured { background:linear-gradient(180deg,rgba(18,55,111,.82),rgba(8,29,63,.78)); border-color:rgba(111,204,255,.32); }
+    .collab-index { position:absolute; top:18px; right:18px; color:#66809f; font-size:11px; letter-spacing:.14em; font-weight:900; }
+    .collab-icon { width:48px; height:48px; border-radius:14px; display:grid; place-items:center; color:#67c9ff; background:rgba(64,145,255,.10); border:1px solid rgba(105,190,255,.18); font-weight:900; font-size:18px; }
+    .collab-step h3 { margin:48px 0 10px; font-size:24px; letter-spacing:-.02em; }
+    .collab-step p { margin:0; color:#9eb0c8; font-size:14px; line-height:1.7; }
+    .collab-link { height:2px; position:relative; background:linear-gradient(90deg,rgba(93,195,255,.15),rgba(93,195,255,.55),rgba(93,195,255,.15)); }
+    .collab-link span { position:absolute; width:8px; height:8px; border-radius:50%; top:50%; left:0; transform:translate(-50%,-50%); background:#66cfff; box-shadow:0 0 18px rgba(102,207,255,.75); animation:travelDot 3.8s linear infinite; }
+    @keyframes travelDot { from { left:0; } to { left:100%; } }
+
+    .cta { padding: 60px 0 96px; }
+    .cta-box { border-radius:34px; padding:48px; color:white; background:linear-gradient(135deg,#0b2c63,#0f5ec6 60%,#1f78d0); position:relative; overflow:hidden; }
+    .cta-box::after { content:""; width:360px; height:360px; border-radius:50%; position:absolute; right:-90px; top:-140px; border:1px solid rgba(255,255,255,.16); box-shadow:0 0 0 58px rgba(255,255,255,.03),0 0 0 116px rgba(255,255,255,.03); }
+    .cta-grid { display:grid; grid-template-columns:1fr auto; gap:32px; align-items:center; position:relative; z-index:1; }
+    .cta h2 { font-size:clamp(32px,4vw,52px); line-height:1.04; letter-spacing:-.04em; margin:0 0 12px; }
+    .cta p { color:#c7daf5; max-width:720px; margin:0; }
+    footer { padding:30px 0 42px; color:#6f7d91; font-size:13px; }
+    .footer-grid { display:flex; justify-content:space-between; gap:24px; align-items:center; border-top:1px solid var(--line); padding-top:28px; }
+    .mini-links { display:flex; gap:18px; }
+    .mobile-toggle { display:none; border:0; background:white; border:1px solid var(--line); width:42px; height:42px; border-radius:12px; }
+    @media (max-width: 960px) {
+      .hero-grid,.knowledge-grid { grid-template-columns:1fr; }
+      .hero-copy::before { inset:-20px -18px -18px -12px; }
+      .portal-stage { margin-left:0; }
+      .portal-stage { min-height:470px; }
+      .cards-3 { grid-template-columns:1fr; }
+      .trustbar { grid-template-columns:1fr 1fr; }
+      .consortium { grid-template-columns:1fr; }
+      .connector { min-height:170px; }
+      .connector-core { min-height:170px; }
+      .connector-core::before { top:14px; bottom:14px; left:50%; width:2px; height:auto; right:auto; background:linear-gradient(180deg,rgba(107,197,255,.2),rgba(255,111,137,.45),rgba(107,197,255,.2)); }
+      .connector-core::after { display:none; }
+      .connector-caption { bottom:6px; width:100%; }
+      .coop-bottom { grid-template-columns:1fr; }
+      .cta-grid { grid-template-columns:1fr; }
+      .nav-links { display:none; }
+      .mobile-toggle { display:grid; place-items:center; }
+    }
+    @media (max-width: 620px) {
+      .container { width:min(calc(100% - 24px),var(--max)); }
+      nav { height:66px; }
+      .brand small { display:none; }
+      .hero { padding:54px 0 44px; }
+      h1 { font-size:46px; }
+      .hero p,.section-lead { font-size:16px; }
+      .portal-stage { min-height:450px; margin-top:10px; }
+      .search-card { left:0; right:0; }
+      .match-card { width:68%; right:0; }
+      .flags-card { width:58%; left:0; }
+      .trustbar { grid-template-columns:1fr; }
+      section { padding:70px 0; }
+      .principles { grid-template-columns:1fr; }
+      .cta-box { padding:34px 26px; }
+      .footer-grid { flex-direction:column; align-items:flex-start; }
+    }
+
+    /* Premium visual upgrade: RU–VN knowledge network */
+    .nav-wrap { background:rgba(5,17,36,.82); border-bottom-color:rgba(255,255,255,.08); }
+    .nav-wrap .brand { color:#fff; }
+    .nav-wrap .brand small, .nav-wrap .nav-links { color:#aebbd0; }
+    .nav-wrap .nav-links a:hover { color:#fff; }
+    .hero {
+      min-height:820px; color:#fff; position:relative;
+      background:
+        radial-gradient(circle at 78% 22%, rgba(43,104,255,.32), transparent 28%),
+        radial-gradient(circle at 88% 72%, rgba(220,39,62,.22), transparent 27%),
+        linear-gradient(135deg,#041126 0%,#071a38 48%,#09142c 100%);
+    }
+    .hero::before { content:""; position:absolute; inset:0; opacity:.18; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px); background-size:52px 52px; mask-image:linear-gradient(to bottom,black,transparent 92%); }
+    .hero::after { content:""; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(90deg, rgba(2,11,28,.88) 0%, rgba(2,11,28,.76) 28%, rgba(2,11,28,.46) 48%, rgba(2,11,28,.14) 66%, rgba(2,11,28,0) 82%); }
+    .hero-grid { position:relative; z-index:3; }
+    .hero .eyebrow { color:#d7ecff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08); font-size:11px; letter-spacing:.14em; max-width:100%; }
+    .hero h1 { max-width:690px; font-size:clamp(50px,5.4vw,82px); line-height:1.02; }
+    .hero .accent { background:linear-gradient(90deg,#61b6ff,#86ecff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .hero p { color:#b8c5d8; max-width:610px; font-size:18px; }
+    .hero .btn-soft { background:rgba(255,255,255,.07); color:#fff; border-color:rgba(255,255,255,.15); backdrop-filter:blur(14px); }
+    .hero-meta { color:#c7d1df; }
+    .hero-meta .dot { background:#65dbff; }
+    .portal-stage { min-height:600px; margin-left:18px; }
+    .portal-stage::before { content:""; position:absolute; inset:4% -6%; border-radius:50%; border:1px solid rgba(111,189,255,.15); transform:rotate(-13deg); box-shadow:0 0 0 80px rgba(61,126,255,.025),0 0 0 160px rgba(61,126,255,.02); }
+    .portal-card { background:rgba(8,25,53,.78); border-color:rgba(255,255,255,.12); color:#fff; box-shadow:0 28px 80px rgba(0,0,0,.34); }
+    .searchbar { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.12); color:#aebbd0; }
+    .result { border-color:rgba(255,255,255,.1); background:rgba(255,255,255,.035); }
+    .result small, .match-card small { color:#9fb0c8; }
+    .result-icon { background:rgba(79,159,255,.13); color:#79c5ff; }
+    .country { background:rgba(255,255,255,.06); }
+    .country small { color:#93a6c2; }
+    .chip { background:rgba(255,255,255,.08); color:#c6d3e5; }
+    .match-score b { color:#7bdcff; }
+    .trust { background:#07142c; padding:0 0 36px; }
+    .trustbar { position:relative; z-index:3; margin-top:-2px; }
+    .trustitem { position:relative; background:transparent; border:0; border-right:1px solid rgba(255,255,255,.09); color:#fff; padding:18px 22px 18px 0; }
+    .trustitem:last-child { border-right:0; }
+    .trustitem span { color:#95a8c3; }
+    .trustitem b { color:#fff; font-size:24px; }
+
+    .network-section { background:#06152e; color:#fff; position:relative; overflow:hidden; padding:112px 0; }
+    .network-section::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 24% 48%,rgba(41,104,255,.17),transparent 30%),radial-gradient(circle at 80% 55%,rgba(220,39,62,.12),transparent 29%); }
+    .network-head { position:relative; z-index:2; display:grid; grid-template-columns:.9fr 1.1fr; gap:60px; align-items:start; }
+    .network-section .eyebrow { color:#a8dcff; background:rgba(255,255,255,.07); }
+    .network-section .section-lead { color:#9eafc7; }
+    .network-copy strong { color:#fff; }
+    .network-points { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:28px; }
+    .network-point { padding:18px; border-radius:18px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.045); }
+    .network-point b { display:block; margin-bottom:5px; }
+    .network-point span { color:#97aac4; font-size:13px; }
+    .network-map { position:relative; z-index:2; margin-top:58px; min-height:610px; border:1px solid rgba(255,255,255,.11); border-radius:34px; overflow:hidden; background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02)); box-shadow:0 40px 100px rgba(0,0,0,.28); }
+    .network-map::before { content:""; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,.12) 1px,transparent 1px); background-size:26px 26px; opacity:.38; mask-image:radial-gradient(circle at 50% 50%,black,transparent 76%); }
+    .network-svg { position:absolute; inset:0; width:100%; height:100%; }
+    .network-svg path { fill:none; stroke-linecap:round; }
+    .network-svg .link { stroke:rgba(116,178,255,.30); stroke-width:1.4; stroke-dasharray:5 10; animation:dash 22s linear infinite; }
+    .network-svg .link.hot { stroke:url(#bridgeGradient); stroke-width:2.2; stroke-dasharray:none; opacity:.85; }
+    @keyframes dash { to { stroke-dashoffset:-300; } }
+    .network-node { position:absolute; transform:translate(-50%,-50%); min-width:132px; padding:13px 15px; border-radius:16px; background:rgba(7,25,55,.88); border:1px solid rgba(255,255,255,.13); box-shadow:0 18px 45px rgba(0,0,0,.26); backdrop-filter:blur(14px); }
+    .network-node::before { content:""; position:absolute; width:8px; height:8px; border-radius:50%; top:-5px; left:50%; box-shadow:0 0 0 7px rgba(93,197,255,.10),0 0 24px rgba(93,197,255,.65); background:#73d5ff; }
+    .network-node.ru::before { background:#ff647b; box-shadow:0 0 0 7px rgba(255,100,123,.1),0 0 24px rgba(255,100,123,.55); }
+    .network-node b { display:block; font-size:13px; }
+    .network-node small { color:#92a5c1; font-size:11px; }
+    .network-node.core { width:196px; min-height:104px; display:grid; place-items:center; text-align:center; border-radius:26px; background:linear-gradient(145deg,rgba(25,83,171,.93),rgba(12,39,84,.94)); border-color:rgba(111,207,255,.38); box-shadow:0 0 0 12px rgba(91,177,255,.035),0 24px 70px rgba(12,80,174,.30); }
+    .network-node.core::before { width:10px; height:10px; top:-6px; }
+    .network-node.core b { font-size:16px; }
+    .network-node.core small { color:#c3e9ff; }
+    .network-caption { position:absolute; left:28px; bottom:24px; right:28px; display:flex; justify-content:space-between; gap:20px; align-items:center; z-index:4; padding:15px 18px; border-radius:16px; background:rgba(2,12,29,.75); border:1px solid rgba(255,255,255,.09); color:#9fb0c8; font-size:12px; }
+    .network-caption b { color:#fff; }
+    .network-legend { display:flex; gap:14px; flex-wrap:wrap; }
+    .network-legend span { display:flex; align-items:center; gap:7px; }
+    .legend-dot { width:7px; height:7px; border-radius:50%; background:#73d5ff; }
+    .legend-dot.ru { background:#ff647b; }
+    .legend-dot.cross { background:linear-gradient(90deg,#73d5ff,#ff647b); }
+
+    .module-card { transition:.25s ease; }
+    .module-card:hover { transform:translateY(-7px); box-shadow:0 28px 70px rgba(33,61,104,.13); }
+    .knowledge { background:linear-gradient(145deg,#07182f,#081f43); }
+    .two-plus-two { background:linear-gradient(135deg,#071833 0%,#0b2148 52%,#0a1833 100%); }
+
+    @media (max-width:960px) {
+      .network-head { grid-template-columns:1fr; gap:28px; }
+      .network-map { min-height:720px; }
+      .network-node { min-width:116px; }
+      .network-caption { flex-direction:column; align-items:flex-start; }
+    }
+    @media (max-width:620px) {
+      .hero { min-height:auto; }
+      .collaboration { padding:76px 0; }
+      .collab-step { min-height:auto; }
+      .network-section { padding:78px 0; }
+      .network-points { grid-template-columns:1fr; }
+      .network-map { min-height:760px; border-radius:24px; }
+      .network-node { min-width:104px; padding:10px 11px; }
+      .network-node b { font-size:11px; }
+      .network-node small { font-size:9px; }
+      .network-node.core { width:152px; min-height:88px; }
+      .network-caption { left:12px; right:12px; bottom:12px; }
+    }
+
+
+    /* RU–VN map background, ticker and motion system */
+    .hero-map-bg { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+    .hero-map-bg svg { position:absolute; inset:-2% -4%; width:108%; height:104%; transform:translateX(88px) scale(1.03); transform-origin:center; }
+    .hero-map-bg .map-land { fill:rgba(255,255,255,.018); stroke:rgba(120,194,255,.12); stroke-width:2; }
+    .hero-map-bg .map-land.ru { fill:rgba(255,255,255,.016); stroke:rgba(255,116,136,.12); }
+    .hero-map-bg .map-node { fill:#7bdcff; opacity:.95; filter:drop-shadow(0 0 8px rgba(123,220,255,.55)); animation:nodePulse 3.4s ease-in-out infinite; }
+    .hero-map-bg .map-node.ru { fill:#ff6f86; filter:drop-shadow(0 0 8px rgba(255,111,134,.45)); }
+    .hero-map-bg .map-link { fill:none; stroke:rgba(120,190,255,.14); stroke-width:1.5; stroke-dasharray:7 12; animation:dash 18s linear infinite; }
+    .hero-map-bg .map-link.bridge { stroke:url(#heroBridge); stroke-width:2.2; stroke-dasharray:none; opacity:.72; }
+    .hero-map-bg .map-grid { opacity:.18; }
+    .hero-map-bg .map-label { fill:#c9d9ef; font:700 18px/1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing:.18em; text-transform:uppercase; opacity:.38; }
+    .hero-map-bg .map-label-sub { fill:#8ea3c0; font:600 11px/1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing:.12em; text-transform:uppercase; opacity:.32; }
+    .hero-map-bg .glow-a { fill:#2d7cff; opacity:.12; filter:blur(42px); }
+    .hero-map-bg .glow-b { fill:#ff5f79; opacity:.10; filter:blur(42px); }
+    .hero-float-tag { position:absolute; z-index:3; padding:10px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(8,25,53,.72); color:#d8e8fb; font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; backdrop-filter:blur(16px); box-shadow:0 16px 34px rgba(0,0,0,.24); animation:floatTag 6.8s ease-in-out infinite; }
+    .hero-float-tag strong { color:#fff; }
+    .hero-float-tag.tag-a { left:10px; top:28px; }
+    .hero-float-tag.tag-b { right:10px; top:182px; animation-delay:-2s; }
+    .hero-float-tag.tag-c { left:44px; bottom:8px; animation-delay:-4.5s; }
+    .portal-card { animation:cardFloat 8s ease-in-out infinite; }
+    .match-card { animation-delay:-2.2s; }
+    .flags-card { animation-delay:-4.4s; }
+    .network-node { animation:nodeDrift 8.6s ease-in-out infinite; }
+    .network-node.core { animation:corePulse 4.8s ease-in-out infinite; }
+    .network-node:nth-of-type(odd) { animation-delay:-1.6s; }
+    .network-node:nth-of-type(3n) { animation-delay:-3.2s; }
+    @keyframes floatTag { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+    @keyframes cardFloat { 0%,100% { transform:translateY(0) rotate(0deg); } 50% { transform:translateY(-8px) rotate(.4deg); } }
+    @keyframes nodeDrift { 0%,100% { transform:translate(-50%,-50%); } 50% { transform:translate(calc(-50% + 2px), calc(-50% - 6px)); } }
+    @keyframes corePulse { 0%,100% { transform:translate(-50%,-50%) scale(1); box-shadow:0 0 0 12px rgba(91,177,255,.035),0 24px 70px rgba(12,80,174,.30); } 50% { transform:translate(-50%,-50%) scale(1.02); box-shadow:0 0 0 18px rgba(91,177,255,.045),0 28px 90px rgba(12,80,174,.36); } }
+    @keyframes nodePulse { 0%,100% { opacity:.95; } 50% { opacity:.56; } }
+    @media (prefers-reduced-motion: reduce) {
+      .portal-card,.network-node,.hero-float-tag,.hero-map-bg .map-link,.hero-map-bg .map-node,.network-svg .link { animation:none !important; }
+    }
+    @media (max-width: 960px) {
+      .hero-map-bg svg { inset:-6% -12%; width:124%; transform:translateX(54px) scale(1.02); }
+      .hero-float-tag.tag-b { top:auto; bottom:152px; }
+      .connector-badge { width:132px; height:132px; border-width:8px; }
+      .connector-mark { font-size:19px; }
+      .connector-plus { font-size:28px; }
+      .country-stack h3 { font-size:29px; }
+    }
+    @media (max-width: 620px) {
+      .hero-map-bg { opacity:.78; }
+      .hero-map-bg svg { inset:0 -18%; width:136%; height:100%; transform:translateX(24px) scale(1.01); }
+      .hero-float-tag { display:none; }
+      .hero .eyebrow { font-size:10px; letter-spacing:.11em; padding:6px 10px; }
+      .hero-copy::before { inset:-14px -8px -14px -8px; border-radius:24px; }
+      .connector-badge { width:116px; height:116px; border-width:7px; }
+      .connector-mark { font-size:15px; }
+      .connector-plus { font-size:24px; }
+      .country-stack { padding:20px; }
+      .country-stack h3 { font-size:24px; }
+      .stack-role strong { font-size:20px; }
+      .country-summary { font-size:14px; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="nav-wrap">
+    <div class="container">
+      <nav aria-label="Điều hướng chính">
+        <a class="brand" href="#top" aria-label="RU-VN Portal">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>RU–VN Portal<small>Science · Technology · Cooperation</small></span>
+        </a>
+        <div class="nav-links">
+          <a href="#network">Mạng lưới tri thức</a>
+          <a href="#modules">Năng lực</a>
+          <a href="#knowledge">Kho tri thức</a>
+          <a href="#cooperation">Hợp tác 2+2</a>
+        </div>
+        <a class="btn btn-primary" href="/login">Đăng nhập →</a>
+      </nav>
+    </div>
+  </div>
+
+  <main id="top">
+    <header class="hero">
+      <div class="hero-map-bg" aria-hidden="true">
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="heroBridge" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#72d8ff"/>
+              <stop offset="1" stop-color="#ff6c84"/>
+            </linearGradient>
+          </defs>
+          <g class="map-grid">
+            <path d="M0 740 H1600" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+            <path d="M0 120 H1600" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+            <path d="M220 0 V900" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+            <path d="M1180 0 V900" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+          </g>
+          <ellipse class="glow-a" cx="470" cy="450" rx="200" ry="180"></ellipse>
+          <ellipse class="glow-b" cx="1160" cy="300" rx="240" ry="160"></ellipse>
+          <path class="map-land" fill-rule="evenodd" d="M679.6,228.0 L666.4,232.7 L663.6,235.5 L663.6,240.2 L658.0,243.9 L656.1,243.0 L649.6,246.7 L644.0,243.9 L634.6,251.4 L626.2,245.8 L622.4,247.7 L617.8,244.9 L615.9,248.6 L607.5,255.1 L602.8,253.3 L599.0,248.6 L591.6,245.8 L588.7,249.5 L585.0,251.4 L585.0,263.6 L591.6,268.3 L597.2,278.6 L601.9,276.7 L606.5,279.5 L606.5,283.2 L602.8,293.5 L611.2,305.7 L615.9,308.5 L620.6,308.5 L627.1,311.3 L629.9,307.6 L642.1,303.8 L650.5,308.5 L655.2,313.2 L655.2,316.9 L648.7,321.6 L656.1,324.4 L658.0,328.2 L664.6,331.0 L666.4,332.9 L666.4,336.6 L662.7,339.4 L662.7,342.2 L653.3,349.7 L647.7,347.8 L641.2,347.8 L639.3,349.7 L638.4,355.3 L634.6,359.1 L645.9,364.7 L658.0,374.0 L671.1,379.7 L670.2,387.1 L673.0,392.8 L684.2,401.2 L688.9,412.4 L703.0,426.5 L705.8,427.4 L710.4,433.0 L715.1,435.8 L715.1,446.1 L718.9,453.6 L725.4,455.5 L729.2,459.2 L731.0,458.3 L736.7,462.0 L736.7,464.9 L742.3,468.6 L742.3,473.3 L736.7,477.0 L736.7,479.8 L740.4,485.4 L748.8,490.1 L747.9,501.4 L744.1,504.2 L746.0,506.0 L746.0,517.3 L741.3,524.8 L739.5,534.1 L743.2,536.9 L743.2,542.6 L747.0,546.3 L748.8,553.8 L748.8,558.5 L744.1,565.0 L744.1,570.6 L746.0,572.5 L746.0,586.6 L739.5,591.2 L735.7,590.3 L725.4,597.8 L720.7,597.8 L715.1,601.5 L711.4,601.5 L709.5,604.3 L709.5,608.1 L704.8,610.9 L701.1,609.0 L695.5,609.0 L690.8,612.8 L690.8,621.2 L694.5,625.9 L701.1,630.6 L700.1,639.0 L693.6,640.9 L688.9,638.0 L687.0,632.4 L675.8,635.2 L671.1,638.0 L667.4,637.1 L666.4,640.9 L661.8,643.7 L659.0,647.4 L655.2,649.3 L649.6,648.3 L644.9,652.1 L648.7,654.9 L649.6,659.6 L652.4,657.7 L656.1,659.6 L658.0,662.4 L659.0,661.4 L663.6,664.3 L663.6,668.0 L657.1,672.7 L656.1,688.6 L658.0,690.5 L658.0,695.1 L656.1,697.0 L655.2,701.7 L657.1,705.4 L657.1,709.2 L655.2,711.1 L656.1,712.0 L663.6,710.1 L669.3,705.4 L675.8,695.1 L686.1,690.5 L697.3,687.7 L700.1,682.0 L704.8,679.2 L710.4,680.2 L712.3,677.4 L712.3,671.7 L715.1,669.9 L715.1,661.4 L719.8,651.1 L725.4,648.3 L730.1,651.1 L732.9,651.1 L754.4,641.8 L758.2,641.8 L761.9,636.2 L767.6,633.4 L768.5,634.3 L775.0,627.7 L781.6,625.9 L784.4,622.1 L788.1,620.3 L791.0,621.2 L791.9,615.6 L798.4,609.0 L799.4,601.5 L795.6,598.7 L795.6,595.0 L797.5,593.1 L797.5,587.5 L800.3,585.6 L799.4,579.1 L804.1,576.3 L803.1,571.6 L805.0,569.7 L801.3,564.1 L797.5,545.4 L797.5,536.9 L799.4,535.1 L796.6,532.3 L797.5,525.7 L793.8,520.1 L793.8,513.5 L788.1,504.2 L787.2,493.9 L780.7,491.1 L776.9,486.4 L776.9,483.6 L769.4,472.3 L770.4,466.7 L762.9,464.9 L760.1,461.1 L757.3,462.0 L753.5,460.2 L751.6,456.4 L743.2,450.8 L742.3,447.1 L735.7,442.4 L726.4,433.0 L726.4,431.1 L717.9,423.7 L711.4,413.4 L711.4,403.1 L695.5,390.9 L688.9,380.6 L688.0,375.9 L685.2,373.1 L685.2,366.6 L689.9,360.9 L690.8,350.6 L694.5,341.3 L700.1,337.5 L703.0,337.5 L706.7,333.8 L708.6,329.1 L715.1,325.4 L715.1,317.9 L720.7,313.2 L719.8,305.7 L724.5,302.9 L727.3,304.8 L731.0,302.9 L734.8,304.8 L737.6,303.8 L740.4,300.1 L740.4,294.5 L744.1,292.6 L745.1,293.5 L748.8,289.8 L757.3,286.0 L755.4,284.2 L745.1,286.0 L732.0,279.5 L719.8,270.1 L719.8,262.6 L716.1,259.8 L716.1,253.3 L717.9,251.4 L717.9,248.6 L722.6,245.8 L717.0,242.0 L711.4,243.9 L704.8,239.2 L700.1,239.2 L696.4,241.1 L685.2,234.6 L683.3,230.8 Z M632.7,654.0 L629.9,655.8 L633.7,660.5 L634.6,655.8 Z"></path>
+          <path class="map-land ru" fill-rule="evenodd" d="M1440.6,260.7 L1445.0,259.3 L1445.0,261.7 L1441.2,261.8 L1440.6,260.7 Z M991.9,346.2 L990.3,348.3 L987.0,348.9 L983.5,352.4 L986.7,355.7 L986.3,358.1 L990.1,362.1 L990.1,362.1 L988.1,363.5 L987.5,364.4 L985.9,364.2 L983.6,362.1 L982.6,361.9 L980.4,361.1 L979.3,359.7 L976.1,359.0 L974.0,359.5 L973.4,358.9 L968.7,357.2 L963.6,356.7 L960.7,356.1 L960.3,356.5 L955.8,353.6 L951.9,352.3 L948.9,350.2 L951.4,349.7 L954.3,346.8 L952.4,345.4 L957.5,344.0 L957.4,343.2 L954.3,343.8 L954.4,342.3 L956.2,341.3 L959.5,341.0 L960.0,339.9 L959.3,338.0 L960.7,336.2 L960.6,335.2 L955.5,334.0 L953.5,334.1 L951.4,332.4 L948.7,333.0 L944.3,331.8 L944.4,331.1 L943.2,329.6 L940.4,329.4 L940.1,328.4 L941.0,327.7 L938.8,325.7 L935.2,326.0 L934.1,325.9 L933.3,326.6 L932.0,326.5 L932.0,326.5 L931.1,324.3 L930.3,323.1 L931.0,322.8 L933.8,322.9 L935.1,322.2 L934.1,321.2 L931.8,320.6 L932.0,320.0 L930.6,319.4 L928.4,317.1 L929.2,316.2 L928.8,314.6 L925.4,313.7 L923.6,314.1 L923.1,313.3 L919.5,312.4 L918.4,310.4 L918.1,308.7 L916.4,307.9 L917.9,306.8 L916.9,303.6 L919.3,301.6 L918.8,301.0 L918.8,301.0 L922.7,299.1 L919.1,297.4 L919.1,297.4 L926.5,293.0 L929.7,291.0 L931.0,289.2 L925.9,286.9 L927.3,284.6 L924.2,282.0 L926.5,279.1 L922.5,275.1 L925.7,272.5 L920.4,270.2 L920.9,267.8 L923.7,267.5 L929.6,266.1 L929.6,266.1 L933.2,264.9 L938.9,267.0 L948.3,267.8 L961.4,271.7 L964.1,273.3 L964.3,275.6 L960.5,277.5 L954.8,278.4 L939.4,275.8 L936.8,276.2 L942.5,278.7 L942.7,280.3 L942.9,283.9 L947.4,284.9 L950.1,285.8 L950.5,284.2 L948.4,282.7 L950.6,281.4 L959.0,283.5 L961.9,282.7 L959.6,280.1 L967.7,276.7 L970.8,276.9 L974.1,278.1 L976.1,275.8 L973.2,273.7 L974.9,271.6 L972.4,269.5 L982.0,270.6 L984.0,272.5 L979.6,273.0 L979.7,274.9 L982.4,276.1 L987.7,275.3 L988.6,273.1 L995.8,271.5 L1007.9,268.5 L1010.5,268.7 L1007.1,270.8 L1011.4,271.1 L1013.9,269.9 L1020.4,269.8 L1025.5,268.4 L1029.4,270.5 L1033.4,268.2 L1029.7,266.2 L1031.5,265.1 L1041.8,266.1 L1046.6,267.2 L1059.1,271.1 L1061.4,269.3 L1057.9,267.5 L1057.8,266.8 L1053.6,266.4 L1054.8,264.8 L1052.9,262.1 L1052.8,261.0 L1059.2,257.8 L1061.5,254.7 L1064.0,254.0 L1073.2,254.9 L1073.9,256.9 L1070.7,259.7 L1072.8,260.8 L1073.9,263.2 L1073.1,267.9 L1077.0,270.1 L1075.5,272.4 L1068.7,277.3 L1072.6,277.8 L1074.0,276.5 L1077.8,275.7 L1078.7,273.9 L1081.7,272.3 L1079.7,270.3 L1081.3,268.0 L1077.6,267.8 L1076.7,265.8 L1079.5,262.4 L1075.0,259.5 L1081.2,257.2 L1080.4,254.7 L1082.1,254.7 L1083.9,256.6 L1082.6,259.9 L1086.3,260.5 L1084.7,258.1 L1090.5,256.7 L1097.7,256.5 L1104.1,258.5 L1101.0,255.6 L1100.6,251.9 L1106.7,251.2 L1115.0,251.4 L1122.5,250.9 L1119.7,249.1 L1123.7,246.8 L1127.7,246.7 L1134.4,245.0 L1143.5,244.6 L1144.7,243.6 L1153.8,243.3 L1156.6,244.1 L1164.4,242.2 L1170.7,242.3 L1171.7,240.8 L1175.0,239.3 L1183.2,237.9 L1189.1,239.0 L1184.4,239.9 L1192.2,240.4 L1193.2,242.1 L1196.3,241.3 L1206.5,241.3 L1214.3,243.0 L1217.0,244.3 L1216.2,246.1 L1212.3,247.1 L1203.2,249.0 L1200.6,250.1 L1204.9,250.6 L1210.1,251.4 L1213.2,250.8 L1214.9,253.0 L1216.5,252.1 L1222.0,251.5 L1233.1,252.1 L1233.9,253.7 L1248.4,254.3 L1248.6,251.6 L1256.0,252.2 L1261.5,252.2 L1267.1,254.0 L1268.7,256.2 L1266.6,257.7 L1271.0,260.4 L1276.4,261.8 L1279.8,258.2 L1285.3,259.7 L1291.2,258.8 L1297.9,259.9 L1300.5,258.9 L1306.1,259.4 L1303.6,256.2 L1308.2,254.7 L1339.5,256.9 L1342.4,259.0 L1351.5,261.6 L1365.4,261.0 L1372.3,261.5 L1375.2,263.0 L1374.8,265.5 L1379.1,266.5 L1383.7,265.8 L1389.8,265.7 L1396.4,266.4 L1402.9,266.0 L1409.0,269.1 L1413.2,268.0 L1410.4,265.7 L1412.0,264.2 L1423.0,265.2 L1430.2,265.0 L1440.2,266.6 L1445.0,268.1 L1445.0,281.9 L1445.0,281.9 L1440.6,283.5 L1436.1,283.2 L1439.2,285.0 L1441.3,287.9 L1442.9,288.8 L1443.3,290.3 L1442.4,291.2 L1435.9,290.4 L1426.2,293.0 L1423.2,293.4 L1417.9,295.9 L1412.8,298.0 L1411.6,299.6 L1406.6,297.2 L1397.6,299.9 L1396.0,298.6 L1392.7,300.1 L1388.1,299.6 L1386.9,301.9 L1382.8,305.2 L1382.9,306.6 L1386.9,307.4 L1386.4,312.5 L1383.2,312.6 L1381.7,315.5 L1383.1,317.0 L1377.1,318.7 L1375.9,322.7 L1370.7,323.5 L1369.7,327.0 L1364.7,330.3 L1363.4,327.9 L1361.9,322.8 L1360.0,315.1 L1361.7,310.3 L1364.6,308.3 L1364.8,306.7 L1370.1,305.9 L1376.3,301.5 L1382.3,298.0 L1388.5,295.2 L1391.3,290.3 L1387.1,290.6 L1385.0,293.5 L1376.2,297.3 L1373.4,293.0 L1364.5,294.2 L1355.8,300.0 L1358.6,302.1 L1350.9,303.0 L1345.6,303.4 L1345.8,300.9 L1340.4,300.3 L1336.1,302.0 L1325.6,301.5 L1314.2,302.5 L1303.0,309.2 L1289.7,317.4 L1295.2,317.8 L1296.9,320.0 L1300.2,320.8 L1302.4,319.0 L1306.2,319.3 L1311.2,323.1 L1311.3,326.0 L1308.6,329.5 L1308.3,333.6 L1306.8,339.2 L1301.6,344.2 L1300.4,346.6 L1295.7,350.6 L1291.0,354.6 L1288.8,356.6 L1284.2,358.7 L1282.0,358.7 L1279.8,357.0 L1275.2,359.6 L1274.7,360.7 L1274.7,360.7 L1274.7,360.7 L1274.7,360.7 L1274.2,360.1 L1274.2,360.1 L1274.1,358.3 L1275.9,358.2 L1276.4,354.2 L1275.5,351.2 L1278.5,350.0 L1282.7,350.6 L1285.0,347.2 L1286.2,343.4 L1287.5,342.2 L1289.4,339.0 L1283.6,340.1 L1280.6,341.4 L1275.4,341.4 L1274.0,338.2 L1269.9,335.7 L1263.8,334.6 L1262.6,331.2 L1261.4,329.1 L1260.1,327.6 L1257.9,324.1 L1254.9,322.8 L1249.7,321.8 L1245.1,321.9 L1240.8,322.5 L1238.0,324.2 L1239.9,325.1 L1239.9,327.0 L1238.0,328.1 L1234.8,331.8 L1234.9,333.3 L1230.0,335.5 L1225.8,334.2 L1221.7,334.4 L1219.9,333.3 L1217.8,332.9 L1212.8,335.4 L1208.2,335.9 L1205.0,336.8 L1200.7,336.2 L1197.4,336.3 L1195.3,334.5 L1192.0,332.8 L1188.5,332.4 L1184.1,332.8 L1180.8,333.5 L1175.9,332.0 L1175.3,329.4 L1171.2,328.5 L1168.0,328.1 L1164.2,326.7 L1160.6,330.3 L1162.0,332.3 L1158.6,334.7 L1153.6,333.9 L1150.2,333.7 L1147.8,332.1 L1144.2,332.1 L1141.2,331.0 L1136.0,332.6 L1129.4,335.6 L1125.7,336.2 L1124.4,336.5 L1122.5,334.4 L1118.1,334.8 L1116.6,333.4 L1114.2,332.7 L1112.5,330.7 L1110.6,330.1 L1105.6,331.0 L1100.8,329.0 L1099.0,330.8 L1091.3,322.0 L1086.8,319.3 L1088.1,318.2 L1079.4,321.5 L1076.1,321.7 L1076.4,319.8 L1072.0,318.6 L1068.3,319.5 L1067.3,315.9 L1061.0,315.1 L1057.9,316.6 L1049.3,317.8 L1047.6,318.7 L1034.6,319.9 L1033.0,321.1 L1035.5,323.5 L1032.2,324.4 L1032.8,325.3 L1029.5,327.0 L1035.1,329.4 L1034.3,331.0 L1029.4,330.9 L1028.4,331.9 L1024.0,330.1 L1018.5,330.2 L1014.8,331.6 L1010.7,330.2 L1003.1,327.8 L997.7,327.9 L990.5,331.7 L990.1,334.2 L986.5,332.2 L983.8,336.0 L984.8,336.7 L982.8,339.3 L985.7,341.7 L988.3,341.6 L990.5,343.9 L990.2,345.7 L991.9,346.2 Z M1146.6,226.4 L1154.1,225.6 L1160.8,227.3 L1168.8,230.7 L1167.9,233.8 L1160.3,234.2 L1150.7,233.2 L1145.0,231.9 L1142.3,229.4 L1137.6,228.7 L1146.6,226.4 Z M1177.9,232.4 L1186.7,234.4 L1185.7,235.8 L1166.2,237.1 L1172.5,232.6 L1175.3,232.2 L1177.9,232.4 Z M1302.5,243.3 L1311.7,243.4 L1324.2,245.3 L1321.5,247.9 L1308.7,247.8 L1303.0,248.6 L1296.1,246.3 L1298.0,243.9 L1302.5,243.3 Z M1335.0,246.0 L1343.7,246.9 L1339.7,248.3 L1334.2,248.0 L1327.8,246.6 L1328.6,245.5 L1335.0,246.0 Z M1306.1,252.9 L1309.4,251.5 L1313.7,251.2 L1318.6,252.5 L1319.0,253.4 L1313.8,253.4 L1306.7,253.1 L1306.1,252.9 Z M977.2,227.9 L983.9,227.3 L989.2,227.2 L989.9,228.1 L991.9,227.3 L995.2,226.7 L1000.3,227.5 L999.0,228.0 L994.3,228.5 L991.2,228.7 L990.7,229.3 L986.7,229.9 L982.9,229.1 L984.9,228.0 L977.2,227.9 Z M900.6,318.8 L894.3,318.8 L890.0,318.5 L890.8,316.9 L895.6,315.8 L899.2,316.4 L900.7,317.0 L900.4,317.9 L900.6,318.8 Z M1007.2,251.6 L1015.5,248.5 L1014.5,247.0 L1022.3,245.1 L1033.7,242.9 L1045.2,242.3 L1051.1,241.0 L1057.9,240.5 L1060.3,241.9 L1058.0,243.0 L1045.7,244.7 L1035.1,246.3 L1024.4,249.6 L1019.2,253.0 L1013.8,256.3 L1014.5,259.2 L1021.1,262.0 L1019.1,262.4 L1007.8,261.9 L1006.8,260.4 L1000.6,259.4 L1000.1,257.6 L1003.6,256.8 L1003.5,254.9 L1010.4,252.0 L1007.2,251.6 Z M1316.7,320.9 L1317.9,324.3 L1317.8,327.7 L1319.2,331.2 L1322.7,337.3 L1317.6,336.2 L1315.4,341.2 L1318.8,344.7 L1318.7,347.1 L1316.1,345.1 L1313.8,347.7 L1313.2,344.8 L1313.6,341.5 L1313.2,337.7 L1314.0,335.1 L1314.1,330.5 L1312.1,327.1 L1312.4,322.3 L1315.6,320.8 L1314.2,319.1 L1315.8,318.7 L1316.7,320.9 Z M1462.6,274.2 L1462.3,276.4 L1464.6,277.2 L1463.8,274.7 L1473.2,275.2 L1480.0,278.5 L1476.6,280.0 L1470.9,280.3 L1470.8,283.7 L1469.4,284.4 L1466.2,284.3 L1463.5,283.1 L1458.9,282.1 L1458.2,280.6 L1454.7,280.0 L1450.7,280.5 L1448.8,279.3 L1449.6,278.0 L1445.4,278.8 L1447.0,280.5 L1445.0,281.9 L1445.0,268.1 L1453.5,270.8 L1462.6,274.2 Z M1449.6,261.4 L1445.0,261.7 L1445.0,259.3 L1445.5,259.1 L1448.4,259.2 L1453.4,260.1 L1453.1,260.6 L1449.6,261.4 Z M937.7,347.7 L938.6,346.9 L941.1,347.6 L942.2,347.7 L942.6,348.4 L943.1,348.5 L943.2,348.8 L944.9,349.7 L948.4,349.5 L947.7,350.7 L943.9,351.3 L939.2,353.3 L937.3,352.6 L938.1,351.0 L934.3,349.9 L934.9,349.3 L938.2,348.1 L937.7,347.7 Z"><path class="map-link" d="M620 288 C650 315 670 340 690 376"/>
+          <path class="map-link" d="M650 465 C680 450 705 435 735 418"/>
+          <path class="map-link" d="M635 612 C685 565 725 505 765 445"/>
+          <path class="map-link bridge" d="M700 390 C820 344 925 322 1045 300"/>
+          <path class="map-link bridge" d="M735 468 C850 440 970 421 1115 410"/>
+          <path class="map-link" d="M1045 300 C1135 266 1220 252 1320 258"/>
+          <path class="map-link" d="M1115 410 C1205 396 1280 390 1370 402"/>
+          <circle class="map-node" cx="520" cy="248" r="5"></circle>
+          <circle class="map-node" cx="493" cy="390" r="5"></circle>
+          <circle class="map-node" cx="515" cy="605" r="5"></circle>
+          <circle class="map-node" cx="650" cy="354" r="5"></circle>
+          <circle class="map-node" cx="698" cy="456" r="5"></circle>
+          <circle class="map-node ru" cx="1038" cy="196" r="5"></circle>
+          <circle class="map-node ru" cx="1126" cy="322" r="5"></circle>
+          <circle class="map-node ru" cx="1188" cy="466" r="5"></circle>
+          <circle class="map-node ru" cx="1310" cy="256" r="5"></circle>
+          <circle class="map-node ru" cx="1356" cy="336" r="5"></circle>
+        </svg>
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">RU–VN Knowledge Network</span>
+          <h1>Mạng lưới <span class="accent">tri thức Nga–Việt</span> với bản đồ kết nối sống động.</h1>
+          <p>RU–VN Portal kết nối nhà khoa học, công bố, chủ đề nghiên cứu, tổ chức, doanh nghiệp và dự án thành một mạng tri thức xuyên biên giới — nơi bản đồ Nga–Việt không chỉ để nhìn thấy địa lý, mà để nhìn thấy các luồng liên kết, tín hiệu hợp tác và cơ hội hình thành consortium thực sự.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#network">Khám phá mạng tri thức</a>
+            <a class="btn btn-soft" href="#cooperation">Tìm hiểu mô hình 2+2</a>
+          </div>
+          <div class="hero-meta">
+            <span><i class="dot"></i> Tri thức liên kết xuyên Nga – Việt</span>
+            <span><i class="dot"></i> Gợi ý đối tác có lý do giải thích</span>
+            <span><i class="dot"></i> Semantic search · expert matching</span>
+          </div>
+        </div>
+
+        <div class="portal-stage" aria-label="Minh họa trải nghiệm RU-VN Portal">
+          <div class="orb one"></div><div class="orb two"></div>
+          <div class="hero-float-tag tag-a"><strong>RU–VN</strong> Knowledge Graph</div>
+          <div class="hero-float-tag tag-b">Expert Matching · Semantic Search</div>
+          <div class="hero-float-tag tag-c">2+2 Cooperation Signals</div>
+          <div class="portal-card search-card">
+            <div class="searchbar">⌕ <span>vật liệu chịu nhiệt cho lò phản ứng</span><b>Tìm kiếm</b></div>
+            <div class="result">
+              <div class="result-icon">P</div>
+              <div><strong>Công bố liên quan đến vật liệu nhiệt độ cao</strong><small>Chủ đề · Công bố · Việt Nam</small></div>
+            </div>
+            <div class="result">
+              <div class="result-icon">E</div>
+              <div><strong>Chuyên gia nghiên cứu vật liệu & năng lượng</strong><small>Chuyên môn · Công bố · Tổ chức</small></div>
+            </div>
+          </div>
+          <div class="portal-card flags-card">
+            <div class="flags">
+              <div class="country">RU<small>Liên bang Nga</small></div><div class="bridge"></div><div class="country">VN<small>Việt Nam</small></div>
+            </div>
+          </div>
+          <div class="portal-card match-card">
+            <div class="match-score"><div><small>Đối tác đề xuất</small><strong style="display:block;margin-top:4px">Research Partner</strong></div><b>92%</b></div>
+            <div class="chips"><span class="chip">Chủ đề tương đồng</span><span class="chip">Công bố liên quan</span><span class="chip">Bổ sung chuyên môn</span></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="trust">
+      <div class="container trustbar">
+        <div class="trustitem"><b>03</b><span>module lõi của Portal</span></div>
+        <div class="trustitem"><b>04</b><span>nhóm thành phần tối thiểu trong mô hình 2+2</span></div>
+        <div class="trustitem"><b>01</b><span>cổng danh tính & phân quyền thống nhất</span></div>
+        <div class="trustitem"><b>∞</b><span>mối liên kết tri thức có thể khám phá</span></div>
+      </div>
+    </div>
+
+
+    <section class="network-section" id="network">
+      <div class="container">
+        <div class="network-head">
+          <div>
+            <span class="eyebrow">Russia × Vietnam Knowledge Network</span>
+            <h2 class="section-title">Không phải bản đồ tĩnh.<br>Một mạng tri thức Nga–Việt đang chuyển động.</h2>
+          </div>
+          <div class="network-copy">
+            <p class="section-lead"><strong>Mỗi chuyên gia không đứng một mình.</strong> Hồ sơ của họ được đặt trong ngữ cảnh của công bố, chủ đề nghiên cứu, tổ chức, dự án và những chuyên gia liên quan. Từ một điểm dữ liệu, Portal mở ra toàn bộ chuỗi quan hệ để người dùng khám phá tri thức và tìm cơ hội hợp tác Nga – Việt.</p>
+            <div class="network-points">
+              <div class="network-point"><b>Tri thức có ngữ cảnh</b><span>Công bố → tác giả → chủ đề → tổ chức → dự án.</span></div>
+              <div class="network-point"><b>Chuyên gia có quan hệ</b><span>Chuyên môn, hướng nghiên cứu và công bố tạo tín hiệu ghép nối.</span></div>
+              <div class="network-point"><b>Kết nối xuyên biên giới</b><span>Khám phá các quan hệ phù hợp giữa hệ sinh thái Việt Nam và Liên bang Nga.</span></div>
+              <div class="network-point"><b>Từ khám phá đến hợp tác</b><span>Mạng lưới tri thức là lớp dẫn đường tới đối tác, consortium và dự án song phương.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="network-map" aria-label="Mô hình mạng lưới tri thức Nga - Việt">
+          <svg class="network-svg" viewBox="0 0 1180 610" preserveAspectRatio="none" aria-hidden="true">
+            <defs><linearGradient id="bridgeGradient" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#70d7ff"/><stop offset="1" stop-color="#ff657d"/></linearGradient></defs>
+            <path class="link" d="M135 130 C250 145,270 265,430 290"/>
+            <path class="link" d="M160 300 C270 290,320 305,430 290"/>
+            <path class="link" d="M145 475 C250 430,320 350,430 290"/>
+            <path class="link" d="M390 108 C420 170,445 220,505 268"/>
+            <path class="link" d="M390 500 C435 430,470 365,505 320"/>
+            <path class="link hot" d="M505 292 C590 250,660 250,745 292"/>
+            <path class="link" d="M745 292 C855 250,900 150,1010 125"/>
+            <path class="link" d="M745 292 C875 292,900 300,1035 300"/>
+            <path class="link" d="M745 292 C850 350,900 430,1015 485"/>
+            <path class="link" d="M680 268 C725 210,760 165,805 105"/>
+            <path class="link" d="M680 320 C720 382,755 445,805 510"/>
+            <path class="link" d="M160 300 C360 380,810 380,1035 300"/>
+          </svg>
+
+          <div class="network-node" style="left:11%;top:21%"><b>Công bố khoa học</b><small>Publication · VN</small></div>
+          <div class="network-node" style="left:13%;top:49%"><b>Chuyên gia Việt Nam</b><small>Expert · Researcher</small></div>
+          <div class="network-node" style="left:12%;top:77%"><b>Viện / Trường VN</b><small>Organization</small></div>
+          <div class="network-node" style="left:33%;top:17%"><b>Chủ đề nghiên cứu</b><small>Knowledge Topic</small></div>
+          <div class="network-node" style="left:33%;top:81%"><b>Dự án & Công nghệ</b><small>Project · Technology</small></div>
+
+          <div class="network-node core" style="left:50%;top:48%"><div><b>RU–VN Knowledge Network</b><small>Identity · Knowledge · Expertise · Cooperation</small></div></div>
+
+          <div class="network-node ru" style="left:68%;top:17%"><b>Research Domain</b><small>Shared expertise</small></div>
+          <div class="network-node ru" style="left:68%;top:82%"><b>Joint Project</b><small>Cooperation opportunity</small></div>
+          <div class="network-node ru" style="left:86%;top:20%"><b>Scientific Publication</b><small>Publication · RU</small></div>
+          <div class="network-node ru" style="left:88%;top:49%"><b>Chuyên gia Liên bang Nga</b><small>Expert · Researcher</small></div>
+          <div class="network-node ru" style="left:86%;top:79%"><b>Viện / Trường Nga</b><small>Organization</small></div>
+
+          <div class="network-caption">
+            <div><b>Mạng lưới tri thức Nga–Việt</b> · từ dữ liệu khoa học phân tán đến quan hệ có thể khám phá và hành động.</div>
+            <div class="network-legend"><span><i class="legend-dot"></i> Việt Nam</span><span><i class="legend-dot ru"></i> Liên bang Nga</span><span><i class="legend-dot cross"></i> Liên kết song phương</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="modules">
+      <div class="container">
+        <span class="eyebrow">Năng lực cốt lõi</span>
+        <h2 class="section-title">Một hạ tầng số. Ba năng lực chiến lược.</h2>
+        <p class="section-lead">Danh tính và governance tạo nền tin cậy. Mạng lưới tri thức tạo năng lực khám phá. Quy trình 2+2 biến kết nối thành cấu trúc hợp tác nghiên cứu – doanh nghiệp song phương.</p>
+        <div class="cards-3">
+          <article class="module-card">
+            <span class="module-index">MODULE 01</span>
+            <h3>IAM / Governance</h3>
+            <p>Cổng danh tính thống nhất cho toàn Portal, xác định người dùng là ai, đang ở context nào và được phép làm gì.</p>
+            <ul><li>SSO / Identity Provider</li><li>Role, permission & resource scope</li><li>Session, 2FA theo policy, audit</li></ul>
+            <span class="module-footnote">Nền tảng truy cập thống nhất</span>
+          </article>
+          <article class="module-card">
+            <span class="module-index">MODULE 02</span>
+            <h3>Kho tri thức & Chuyên gia</h3>
+            <p>Biến dữ liệu khoa học phân tán thành mạng tri thức có thể tìm kiếm, liên kết và hỗ trợ ghép nối đối tác.</p>
+            <ul><li>Công bố, bằng sáng chế, tài liệu</li><li>Hồ sơ chuyên gia & hướng nghiên cứu</li><li>Tìm kiếm ngữ nghĩa & gợi ý đối tác</li></ul>
+            <a href="#knowledge">Khám phá kho tri thức →</a>
+          </article>
+          <article class="module-card">
+            <span class="module-index">MODULE 03</span>
+            <h3>Tài trợ & Dự án 2+2</h3>
+            <p>Hình thành cấu trúc hợp tác cân bằng giữa khối nghiên cứu và doanh nghiệp của cả Việt Nam và Liên bang Nga.</p>
+            <ul><li>Viện/Trường Việt Nam</li><li>Doanh nghiệp Việt Nam</li><li>Viện/Trường Nga + Doanh nghiệp Nga</li></ul>
+            <a href="#cooperation">Xem mô hình 2+2 →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="knowledge" id="knowledge">
+      <div class="container knowledge-grid">
+        <div>
+          <span class="eyebrow">Kho tri thức thông minh</span>
+          <h2 class="section-title">Đi từ một truy vấn đến cả hệ sinh thái tri thức.</h2>
+          <p class="section-lead">Người dùng không cần biết dữ liệu nằm ở “kho” nào. Một trải nghiệm tìm kiếm toàn cổng có thể dẫn từ công bố đến tác giả, chủ đề, tổ chức, dự án và những chuyên gia liên quan trong toàn mạng lưới Nga–Việt.</p>
+          <div class="principles">
+            <div class="principle" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)"><b>Tìm kiếm ngữ nghĩa</b><span style="color:#a8b5c9">Khám phá nội dung theo ý nghĩa, không chỉ khớp từ khóa.</span></div>
+            <div class="principle" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)"><b>Ghép nối giải thích được</b><span style="color:#a8b5c9">Hiển thị lý do phù hợp: chủ đề, công bố, hướng nghiên cứu.</span></div>
+          </div>
+        </div>
+        <div class="search-demo">
+          <div class="demo-search">⌕ &nbsp; Tìm chuyên gia, công bố, chủ đề… <span style="margin-left:auto;color:#1c57d7">↵</span></div>
+          <div class="demo-filter"><span>Lĩnh vực</span><span>Tổ chức</span><span>Quốc gia</span><span>Chủ đề</span><span>Ngôn ngữ</span><span>Năm</span></div>
+          <div class="demo-result"><div class="demo-avatar">EX</div><div><strong>Chuyên gia vật liệu tiên tiến</strong><small>18 công bố liên quan · Nghiên cứu vật liệu</small></div><span class="demo-tag">CHUYÊN GIA</span></div>
+          <div class="demo-result"><div class="demo-avatar">PB</div><div><strong>High-temperature materials for energy systems</strong><small>Công bố · Chủ đề liên quan · 2025</small></div><span class="demo-tag">CÔNG BỐ</span></div>
+          <div class="demo-result"><div class="demo-avatar">OR</div><div><strong>Viện nghiên cứu công nghệ & năng lượng</strong><small>Tổ chức · Nga / Việt Nam</small></div><span class="demo-tag">TỔ CHỨC</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="two-plus-two" id="cooperation">
+      <div class="container">
+        <span class="eyebrow">Hợp tác nghiên cứu song phương</span>
+        <h2 class="section-title">Mô hình 2+2: cấu trúc hợp tác chiến lược giữa nghiên cứu và ứng dụng.</h2>
+        <p class="section-lead">2+2 không chỉ là bốn ô thông tin. Đây là khung hợp tác tối thiểu để kết nối một viện/trường và một doanh nghiệp của Liên bang Nga với một viện/trường và một doanh nghiệp của Việt Nam — tạo ra một hệ hợp tác cân bằng, có năng lực nghiên cứu, thử nghiệm, ứng dụng và thương mại hóa.</p>
+        <div class="coop-topline">
+          <span class="coop-pill">2 quốc gia · 4 thành phần cốt lõi</span>
+          <span class="coop-pill">Research + Industry trên cả hai phía</span>
+          <span class="coop-pill">Từ tri thức đến hợp tác có thể triển khai</span>
+        </div>
+
+        <div class="consortium">
+          <div class="country-stack">
+            <div class="country-top">
+              <div>
+                <div class="country-kicker">RU ecosystem</div>
+                <h3>🇷🇺 Liên bang Nga</h3>
+              </div>
+              <span class="country-badge">Research + Industry</span>
+            </div>
+            <p class="country-summary">Phía Nga cung cấp năng lực nghiên cứu chuyên sâu, cơ sở thí nghiệm, công nghệ nền và khả năng ứng dụng – công nghiệp hóa trong hệ sinh thái doanh nghiệp.</p>
+
+            <div class="stack-role">
+              <div class="stack-role-head">
+                <div class="role-icon">⌘</div>
+                <div>
+                  <b>01</b>
+                  <strong>Viện / Trường</strong>
+                  <span>Bổ sung chuyên môn, công nghệ, phòng thí nghiệm và đội ngũ nghiên cứu.</span>
+                </div>
+              </div>
+              <div class="role-tags"><i>Lab & R&D</i><i>Scientific expertise</i><i>Technology base</i></div>
+            </div>
+
+            <div class="plus">+</div>
+
+            <div class="stack-role role-industry">
+              <div class="stack-role-head">
+                <div class="role-icon">◫</div>
+                <div>
+                  <b>02</b>
+                  <strong>Doanh nghiệp</strong>
+                  <span>Năng lực ứng dụng, công nghiệp hóa và tiếp cận thị trường Nga.</span>
+                </div>
+              </div>
+              <div class="role-tags"><i>Industrial partner</i><i>Commercialization</i><i>Market access</i></div>
+            </div>
+          </div>
+
+          <div class="connector">
+            <div class="connector-core">
+              <div class="connector-badge"><span class="connector-mark">RU–VN</span><span class="connector-plus">2+2</span></div>
+              <div class="connector-caption"><b>Strategic collaboration</b>Một cấu trúc hợp tác tối thiểu nhưng đủ để đi từ nghiên cứu tới ứng dụng thực tế.</div>
+            </div>
+          </div>
+
+          <div class="country-stack">
+            <div class="country-top">
+              <div>
+                <div class="country-kicker">VN ecosystem</div>
+                <h3>🇻🇳 Việt Nam</h3>
+              </div>
+              <span class="country-badge">Research + Industry</span>
+            </div>
+            <p class="country-summary">Phía Việt Nam mang vào bài toán năng lực nghiên cứu, phát triển tri thức, thử nghiệm ứng dụng và mạng lưới doanh nghiệp có nhu cầu triển khai, sản xuất và mở rộng thị trường.</p>
+
+            <div class="stack-role">
+              <div class="stack-role-head">
+                <div class="role-icon">⌘</div>
+                <div>
+                  <b>03</b>
+                  <strong>Viện / Trường</strong>
+                  <span>Tạo và phát triển tri thức, công nghệ, năng lực nghiên cứu.</span>
+                </div>
+              </div>
+              <div class="role-tags"><i>Research capacity</i><i>Knowledge creation</i><i>Applied science</i></div>
+            </div>
+
+            <div class="plus">+</div>
+
+            <div class="stack-role role-industry">
+              <div class="stack-role-head">
+                <div class="role-icon">◫</div>
+                <div>
+                  <b>04</b>
+                  <strong>Doanh nghiệp</strong>
+                  <span>Nhu cầu ứng dụng, thử nghiệm, sản xuất và thị trường.</span>
+                </div>
+              </div>
+              <div class="role-tags"><i>Pilot deployment</i><i>Production</i><i>Demand signal</i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="coop-bottom">
+          <div class="coop-bottom-card"><b>Cân bằng hai phía</b><span>Mỗi quốc gia đều có một khối nghiên cứu và một khối doanh nghiệp, giúp hợp tác không dừng ở trao đổi học thuật.</span></div>
+          <div class="coop-bottom-card"><b>Gắn với công nghệ / mục tiêu chung</b><span>Cấu trúc 2+2 phù hợp để xoay quanh một chủ đề, một công nghệ hoặc một nhu cầu ứng dụng cụ thể.</span></div>
+          <div class="coop-bottom-card"><b>Từ kết nối đến triển khai</b><span>Portal không chỉ ghép nối đối tác mà còn dẫn tới một cấu trúc hợp tác có thể hình thành consortium song phương.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collaboration" id="collaboration">
+      <div class="container collaboration-grid">
+        <div class="collaboration-copy">
+          <span class="eyebrow">Stronger together</span>
+          <h2 class="section-title">Từ một điểm tri thức đến một quan hệ hợp tác thực sự.</h2>
+          <p class="section-lead">RU–VN Portal không dừng ở việc hiển thị hồ sơ hay công bố. Mạng lưới tri thức giúp người dùng đi từ khám phá chủ đề, tìm chuyên gia phù hợp, hiểu lý do ghép nối và tiến tới cấu trúc hợp tác song phương 2+2.</p>
+          <div class="collab-note">
+            <span class="collab-note-icon">↗</span>
+            <div><b>Khám phá có định hướng</b><small>Từ công bố → chuyên gia → tổ chức → cơ hội hợp tác.</small></div>
+          </div>
+        </div>
+        <div class="collaboration-flow" aria-label="Luồng từ khám phá tri thức đến hợp tác 2+2">
+          <article class="collab-step">
+            <span class="collab-index">01</span>
+            <div class="collab-icon">⌕</div>
+            <h3>Discover</h3>
+            <p>Tìm kiếm toàn cổng theo chủ đề, lĩnh vực, tổ chức, quốc gia và đối tượng tri thức.</p>
+          </article>
+          <div class="collab-link" aria-hidden="true"><span></span></div>
+          <article class="collab-step featured">
+            <span class="collab-index">02</span>
+            <div class="collab-icon">◎</div>
+            <h3>Match</h3>
+            <p>Gợi ý chuyên gia và đối tác dựa trên công bố, hướng nghiên cứu và các tín hiệu tương đồng có thể giải thích.</p>
+          </article>
+          <div class="collab-link" aria-hidden="true"><span></span></div>
+          <article class="collab-step">
+            <span class="collab-index">03</span>
+            <div class="collab-icon">2+2</div>
+            <h3>Collaborate</h3>
+            <p>Chuyển kết nối phù hợp thành cấu trúc nghiên cứu – doanh nghiệp Nga–Việt quanh một mục tiêu hoặc công nghệ chung.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="explore">
+      <div class="container">
+        <div class="cta-box">
+          <div class="cta-grid">
+            <div><h2>Biến mạng tri thức Nga–Việt thành năng lực hợp tác có thể hành động.</h2><p>RU–VN Portal không dừng ở việc số hóa dữ liệu. Portal tạo một lớp kết nối giữa con người, tri thức, tổ chức và dự án — để từ một công bố có thể tìm ra chuyên gia, từ chuyên gia tìm ra đối tác, và từ đối tác hình thành cấu trúc hợp tác Nga–Việt có thể triển khai thực tế.</p></div>
+            <a class="btn btn-soft" href="#top">Bắt đầu khám phá ↑</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="brand"><span class="brand-mark" style="width:34px;height:34px;border-radius:11px"></span><span>RU–VN Portal</span></div>
+      <div class="mini-links"><a href="#network">Mạng lưới tri thức</a><a href="#modules">Năng lực</a><a href="#knowledge">Tri thức</a><a href="#cooperation">2+2</a><a href="#collaboration">Hợp tác</a></div>
+      <div>Concept landing page · dựa trên tài liệu phân tích RU–VN Portal</div>
+    </div>
+  </footer>
+</body>
+</html>

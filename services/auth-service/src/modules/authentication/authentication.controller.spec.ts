@@ -301,11 +301,17 @@ describe('AuthenticationController', () => {
         },
       };
 
-      await controller.logout(mockReq, mockResponse as unknown as Response);
+      const result = await controller.logout(
+        mockReq,
+        mockResponse as unknown as Response,
+      );
 
       expect(authService.logout).toHaveBeenCalledWith(
         'session-token-to-revoke',
       );
+      expect(
+        new URL(result.logoutUrl).searchParams.get('post_logout_redirect_uri'),
+      ).toBe('https://portal.example.com/');
       expect(mockResponse.clearCookie).toHaveBeenCalledTimes(1);
       const firstCall = mockResponse.clearCookie.mock.calls[0];
       if (!firstCall) {
