@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { create } from "zustand";
@@ -13,10 +13,101 @@ export const useLocale = create<{ locale: Locale; setLocale: (locale: Locale) =>
   persist((set) => ({ locale: "vi", setLocale: (locale) => set({ locale }) }), { name: "vnru-locale" })
 );
 
+const HERO_SEQUENCES: Record<Locale, [string, string]> = {
+  vi: [
+    "Kết nối tri thức Nga–Việt, mở rộng mạng lưới nghiên cứu xuyên biên giới.",
+    "Từ chuyên gia và công bố đến những cơ hội hợp tác có thể triển khai thực tế.",
+  ],
+  ru: [
+    "Объединяя знания России и Вьетнама, расширяя трансграничные исследования.",
+    "От экспертов и публикаций к практическим возможностям сотрудничества.",
+  ],
+  en: [
+    "Bridging Russian–Vietnamese knowledge, expanding cross-border research networks.",
+    "From experts and publications to actionable collaborative opportunities.",
+  ],
+};
+
+function useHeroSequence(locale: Locale) {
+  const shouldReduceMotion = useReducedMotion();
+  const [displayedText, setDisplayedText] = useState("");
+  const [showCaret, setShowCaret] = useState(true);
+
+  const [phrase1, phrase2] = HERO_SEQUENCES[locale] || HERO_SEQUENCES.vi;
+
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      return;
+    }
+
+    let isMounted = true;
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    let step: "TYPE_1" | "HOLD_1" | "ERASE_1" | "PAUSE" | "TYPE_2" | "DONE" = "TYPE_1";
+    let charIdx = 0;
+
+    const run = () => {
+      if (!isMounted) return;
+
+      if (step === "TYPE_1") {
+        if (charIdx < phrase1.length) {
+          charIdx++;
+          setDisplayedText(phrase1.slice(0, charIdx));
+          timeoutId = setTimeout(run, 36);
+        } else {
+          step = "HOLD_1";
+          timeoutId = setTimeout(run, 2000);
+        }
+      } else if (step === "HOLD_1") {
+        step = "ERASE_1";
+        timeoutId = setTimeout(run, 60);
+      } else if (step === "ERASE_1") {
+        if (charIdx > 0) {
+          charIdx--;
+          setDisplayedText(phrase1.slice(0, charIdx));
+          timeoutId = setTimeout(run, 18);
+        } else {
+          step = "PAUSE";
+          timeoutId = setTimeout(run, 300);
+        }
+      } else if (step === "PAUSE") {
+        step = "TYPE_2";
+        charIdx = 0;
+        timeoutId = setTimeout(run, 60);
+      } else if (step === "TYPE_2") {
+        if (charIdx < phrase2.length) {
+          charIdx++;
+          setDisplayedText(phrase2.slice(0, charIdx));
+          timeoutId = setTimeout(run, 36);
+        } else {
+          step = "DONE";
+          timeoutId = setTimeout(() => {
+            if (isMounted) setShowCaret(false);
+          }, 1800);
+        }
+      }
+    };
+
+    timeoutId = setTimeout(run, 350);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+    };
+  }, [locale, phrase1, phrase2, shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return { text: phrase2, showCaret: false };
+  }
+
+  return { text: displayedText, showCaret };
+}
+
 export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: boolean }>) {
   const { locale, setLocale } = useLocale();
   const shouldReduceMotion = useReducedMotion();
   const [loggingOut, setLoggingOut] = useState(false);
+  const { text: heroText, showCaret } = useHeroSequence(locale);
 
   const t = (key: string): string => {
     const dict = (translations as Record<Locale, Record<string, string>>)[locale] || translations.vi;
@@ -114,12 +205,14 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="max-w-2xl"
               >
-                <h1 className="font-serif text-3xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-                  {t("Mạng lưới")}{" "}
-                  <span className="text-white underline decoration-[#3b82f6] decoration-4 underline-offset-8">
-                    {t("tri thức Nga–Việt")}
-                  </span>{" "}
-                  {t("với bản đồ kết nối sống động.")}
+                <h1 className="font-serif text-3xl font-bold leading-[1.22] tracking-tight text-white sm:text-5xl lg:text-6xl min-h-36 sm:min-h-48 lg:min-h-56">
+                  <span>{heroText}</span>
+                  {showCaret && (
+                    <span
+                      className="inline-block w-0.75 sm:w-1 h-[0.88em] ml-1 bg-[#60a5fa] animate-pulse align-middle"
+                      aria-hidden="true"
+                    />
+                  )}
                 </h1>
                 <p className="mt-6 text-base leading-relaxed text-white/90 sm:text-lg">
                   {t("RU–VN Portal kết nối nhà khoa học, công bố, chủ đề nghiên cứu, tổ chức, doanh nghiệp và dự án thành một mạng tri thức xuyên biên giới — nơi bản đồ Nga–Việt không chỉ để nhìn thấy địa lý, mà để nhìn thấy các luồng liên kết, tín hiệu hợp tác và cơ hội hình thành consortium thực sự.")}
@@ -157,7 +250,7 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
               </motion.div>
 
               {/* ─── Hero Visual Stage ─── */}
-              <div className="relative min-h-[440px] rounded-3xl border border-white/15 bg-[#0c1e38] p-6 shadow-2xl backdrop-blur-xl">
+              <div className="relative min-h-110 rounded-3xl border border-white/15 bg-[#0c1e38] p-6 shadow-2xl backdrop-blur-xl">
                 {/* Search Mock Card */}
                 <div className="rounded-2xl border border-white/15 bg-white/5 p-4">
                   <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-xs text-white">
@@ -187,7 +280,7 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
                     <strong className="block text-sm font-bold text-white">{t("RU")}</strong>
                     <span className="text-[10px] text-slate-300">{t("Liên bang Nga")}</span>
                   </div>
-                  <div className="h-1 w-10 rounded-full bg-linear-to-r from-[#2563eb] to-[#dc2626]" />
+                  <div className="h-1 w-10 rounded-full bg-linear-to-r from-[#2563eb] to-error" />
                   <div className="rounded-xl bg-white/10 p-2">
                     <strong className="block text-sm font-bold text-white">{t("VN")}</strong>
                     <span className="text-[10px] text-slate-300">{t("Việt Nam")}</span>
@@ -526,7 +619,7 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
           <div className="flex items-center gap-2 font-bold text-white">
             <span className="relative grid h-6 w-6 shrink-0 place-items-center overflow-hidden rounded-md border border-white/20 bg-white">
               <span className="absolute inset-y-0 left-0 w-[64%] -skew-x-12 bg-[#1d4ed8]" />
-              <span className="absolute inset-y-0 right-0 w-[48%] -skew-x-12 bg-[#dc2626]" />
+              <span className="absolute inset-y-0 right-0 w-[48%] -skew-x-12 bg-error" />
             </span>
             <span>RU–VN Portal</span>
           </div>
