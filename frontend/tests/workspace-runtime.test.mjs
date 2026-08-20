@@ -42,6 +42,32 @@ test("Knowledge view renders independent real discovery states while matching st
   assert.doesNotMatch(knowledgeView, /fetch\(/);
 });
 
+test("Knowledge view exposes filter controls for already-supported query params", () => {
+  assert.match(knowledgeView, /name="country"/);
+  assert.match(knowledgeView, /name="organization"/);
+  assert.match(knowledgeView, /name="topic"/);
+  assert.match(knowledgeView, /name="language"/);
+  assert.match(knowledgeView, /name="year"/);
+});
+
+test("Knowledge view uses cursor-based next navigation", () => {
+  assert.match(knowledgeView, /nextCursor/);
+  assert.match(knowledgeView, /Trang tiếp/);
+});
+
+test("Knowledge retry links preserve current query", () => {
+  assert.match(knowledgeView, /retryHref/);
+  assert.match(knowledgeView, /buildHref/);
+});
+
+const knowledgeRepo = await readFile(new URL("../features/knowledge/repositories/module2.repository.ts", import.meta.url), "utf8");
+
+test("Repository applies runtime shape guards at the server boundary", () => {
+  assert.match(knowledgeRepo, /isPublicPublication/);
+  assert.match(knowledgeRepo, /isPublicExpert/);
+  assert.match(knowledgeRepo, /guard/);
+});
+
 test("dashboard uses discovery samples without inventing aggregate totals", () => {
   assert.match(dashboardRoute, /getPublications/);
   assert.match(dashboardRoute, /getExperts/);
