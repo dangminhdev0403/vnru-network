@@ -687,114 +687,282 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
         </section>
 
         {/* ─── 2+2 Cooperation Model ─── */}
-        <section id="cooperation" className="bg-[#040d1e] px-4 py-20 text-white sm:px-6 sm:py-28">
+        <section id="cooperation" className="bg-[#051124] px-4 py-20 text-white sm:px-6 sm:py-28">
           <div className="mx-auto max-w-6xl">
             <h2 className="font-serif text-3xl font-bold tracking-tight sm:text-4xl">
               {t("Mô hình 2+2: cấu trúc hợp tác chiến lược giữa nghiên cứu và ứng dụng.")}
             </h2>
-            <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/90">
+            <p className="mt-4 max-w-4xl text-base leading-relaxed text-slate-300">
               {t("2+2 không chỉ là bốn ô thông tin. Đây là khung hợp tác tối thiểu để kết nối một viện/trường và một doanh nghiệp của Liên bang Nga với một viện/trường và một doanh nghiệp của Việt Nam — tạo ra một hệ hợp tác cân bằng, có năng lực nghiên cứu, thử nghiệm, ứng dụng và thương mại hóa.")}
             </p>
 
-            <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              <span className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#60a5fa]" />
+                {t("2 quốc gia · 4 thành phần cốt lõi")}
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#60a5fa]" />
+                {t("Research + Industry trên cả hai phía")}
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#60a5fa]" />
+                {t("Từ tri thức đến hợp tác có thể triển khai")}
+              </span>
+            </div>
+
+            <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_160px_1fr] lg:items-center">
               {/* Russia Ecosystem */}
-              <div className="rounded-3xl border border-white/15 bg-[#0c1e38] p-6 shadow-xl">
-                <div className="flex items-center justify-between">
+              <div className="rounded-3xl border border-white/15 bg-[#0c1e38]/95 p-6 shadow-2xl backdrop-blur-xl">
+                <div className="flex items-center justify-between gap-3">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300">{t("RU ecosystem")}</span>
-                    <h3 className="font-serif text-xl font-bold text-white">{t("🇷🇺 Liên bang Nga")}</h3>
+                    <h3 className="font-serif text-2xl font-bold text-white">{t("🇷🇺 Liên bang Nga")}</h3>
                   </div>
                   <span className="rounded-lg border border-white/20 bg-white/10 px-2.5 py-1 text-xs font-bold text-white">
                     {t("Research + Industry")}
                   </span>
                 </div>
-                <p className="mt-3 text-xs leading-relaxed text-white/90">
+                <p className="mt-3 text-sm leading-relaxed text-slate-300">
                   {t("Phía Nga cung cấp năng lực nghiên cứu chuyên sâu, cơ sở thí nghiệm, công nghệ nền và khả năng ứng dụng – công nghiệp hóa trong hệ sinh thái doanh nghiệp.")}
                 </p>
 
-                <div className="mt-5 space-y-3">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5">
-                    <strong className="block text-xs font-bold text-white">01 · {t("Viện / Trường")}</strong>
-                    <span className="mt-1 block text-[11px] text-white/80">{t("Bổ sung chuyên môn, công nghệ, phòng thí nghiệm và đội ngũ nghiên cứu.")}</span>
+                {/* Role 01 */}
+                <div className="mt-4 rounded-2xl border border-white/12 bg-white/5 p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#1c57d7] text-base font-bold text-white">
+                      ⌘
+                    </div>
+                    <div>
+                      <span className="font-serif text-lg font-bold text-white">01</span>
+                      <strong className="block text-base font-bold text-white">{t("Viện / Trường")}</strong>
+                      <span className="mt-1 block text-sm leading-relaxed text-slate-300">
+                        {t("Bổ sung chuyên môn, công nghệ, phòng thí nghiệm và đội ngũ nghiên cứu.")}
+                      </span>
+                    </div>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5">
-                    <strong className="block text-xs font-bold text-white">02 · {t("Doanh nghiệp")}</strong>
-                    <span className="mt-1 block text-[11px] text-white/80">{t("Năng lực ứng dụng, công nghiệp hóa và tiếp cận thị trường Nga.")}</span>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Lab & R&D")}
+                    </span>
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Scientific expertise")}
+                    </span>
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Technology base")}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Plus */}
+                <div className="my-2 grid place-items-center">
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white/10 text-lg font-bold text-white">
+                    +
+                  </span>
+                </div>
+
+                {/* Role 02 */}
+                <div className="rounded-2xl border border-white/12 bg-white/5 p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#dc2626] text-base font-bold text-white">
+                      ◫
+                    </div>
+                    <div>
+                      <span className="font-serif text-lg font-bold text-white">02</span>
+                      <strong className="block text-base font-bold text-white">{t("Doanh nghiệp")}</strong>
+                      <span className="mt-1 block text-sm leading-relaxed text-slate-300">
+                        {t("Năng lực ứng dụng, công nghiệp hóa và tiếp cận thị trường Nga.")}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Industrial partner")}
+                    </span>
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Commercialization")}
+                    </span>
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Market access")}
+                    </span>
                   </div>
                 </div>
               </div>
 
-              {/* Center 2+2 Symbol */}
-              <div className="grid place-items-center py-4 lg:py-0">
-                <div className="flex h-20 w-20 flex-col items-center justify-center rounded-full border-2 border-white/20 bg-[#06152f] text-center shadow-lg">
-                  <span className="text-xs font-bold text-slate-300">{t("RU–VN")}</span>
-                  <span className="text-lg font-black text-white">{t("2+2")}</span>
+              {/* Center 2+2 Connector */}
+              <div className="flex flex-col items-center justify-center py-4 text-center lg:py-0">
+                <div className="flex h-28 w-28 flex-col items-center justify-center rounded-full border-3 border-white/30 bg-[#071831] shadow-2xl">
+                  <span className="text-sm font-bold text-slate-200">{t("RU–VN")}</span>
+                  <span className="text-2xl font-black text-white">{t("2+2")}</span>
+                </div>
+                <div className="mt-4 max-w-[140px] text-xs leading-relaxed text-slate-300">
+                  <b className="block text-xs font-bold text-white">{t("Strategic collaboration")}</b>
+                  <span>{t("Một cấu trúc hợp tác tối thiểu nhưng đủ để đi từ nghiên cứu tới ứng dụng thực tế.")}</span>
                 </div>
               </div>
 
               {/* Vietnam Ecosystem */}
-              <div className="rounded-3xl border border-white/15 bg-[#0c1e38] p-6 shadow-xl">
-                <div className="flex items-center justify-between">
+              <div className="rounded-3xl border border-white/15 bg-[#0c1e38]/95 p-6 shadow-2xl backdrop-blur-xl">
+                <div className="flex items-center justify-between gap-3">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300">{t("VN ecosystem")}</span>
-                    <h3 className="font-serif text-xl font-bold text-white">{t("🇻🇳 Việt Nam")}</h3>
+                    <h3 className="font-serif text-2xl font-bold text-white">{t("🇻🇳 Việt Nam")}</h3>
                   </div>
                   <span className="rounded-lg border border-white/20 bg-white/10 px-2.5 py-1 text-xs font-bold text-white">
                     {t("Research + Industry")}
                   </span>
                 </div>
-                <p className="mt-3 text-xs leading-relaxed text-white/90">
+                <p className="mt-3 text-sm leading-relaxed text-slate-300">
                   {t("Phía Việt Nam mang vào bài toán năng lực nghiên cứu, phát triển tri thức, thử nghiệm ứng dụng và mạng lưới doanh nghiệp có nhu cầu triển khai, sản xuất và mở rộng thị trường.")}
                 </p>
 
-                <div className="mt-5 space-y-3">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5">
-                    <strong className="block text-xs font-bold text-white">03 · {t("Viện / Trường")}</strong>
-                    <span className="mt-1 block text-[11px] text-white/80">{t("Tạo và phát triển tri thức, công nghệ, năng lực nghiên cứu.")}</span>
+                {/* Role 03 */}
+                <div className="mt-4 rounded-2xl border border-white/12 bg-white/5 p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#1c57d7] text-base font-bold text-white">
+                      ⌘
+                    </div>
+                    <div>
+                      <span className="font-serif text-lg font-bold text-white">03</span>
+                      <strong className="block text-base font-bold text-white">{t("Viện / Trường")}</strong>
+                      <span className="mt-1 block text-sm leading-relaxed text-slate-300">
+                        {t("Tạo và phát triển tri thức, công nghệ, năng lực nghiên cứu.")}
+                      </span>
+                    </div>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5">
-                    <strong className="block text-xs font-bold text-white">04 · {t("Doanh nghiệp")}</strong>
-                    <span className="mt-1 block text-[11px] text-white/80">{t("Nhu cầu ứng dụng, thử nghiệm, sản xuất và thị trường.")}</span>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Research capacity")}
+                    </span>
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Knowledge creation")}
+                    </span>
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Applied science")}
+                    </span>
                   </div>
                 </div>
+
+                {/* Plus */}
+                <div className="my-2 grid place-items-center">
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white/10 text-lg font-bold text-white">
+                    +
+                  </span>
+                </div>
+
+                {/* Role 04 */}
+                <div className="rounded-2xl border border-white/12 bg-white/5 p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#dc2626] text-base font-bold text-white">
+                      ◫
+                    </div>
+                    <div>
+                      <span className="font-serif text-lg font-bold text-white">04</span>
+                      <strong className="block text-base font-bold text-white">{t("Doanh nghiệp")}</strong>
+                      <span className="mt-1 block text-sm leading-relaxed text-slate-300">
+                        {t("Nhu cầu ứng dụng, thử nghiệm, sản xuất và thị trường.")}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Pilot deployment")}
+                    </span>
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Production")}
+                    </span>
+                    <span className="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                      {t("Demand signal")}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom 3 Cards */}
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              <div className="rounded-2xl border border-white/12 bg-white/5 p-4">
+                <b className="block text-sm font-bold text-white">{t("Cân bằng hai phía")}</b>
+                <span className="mt-1 block text-sm leading-relaxed text-slate-300">
+                  {t("Mỗi quốc gia đều có một khối nghiên cứu và một khối doanh nghiệp, giúp hợp tác không dừng ở trao đổi học thuật.")}
+                </span>
+              </div>
+              <div className="rounded-2xl border border-white/12 bg-white/5 p-4">
+                <b className="block text-sm font-bold text-white">{t("Gắn với công nghệ / mục tiêu chung")}</b>
+                <span className="mt-1 block text-sm leading-relaxed text-slate-300">
+                  {t("Cấu trúc 2+2 phù hợp để xoay quanh một chủ đề, một công nghệ hoặc một nhu cầu ứng dụng cụ thể.")}
+                </span>
+              </div>
+              <div className="rounded-2xl border border-white/12 bg-white/5 p-4">
+                <b className="block text-sm font-bold text-white">{t("Từ kết nối đến triển khai")}</b>
+                <span className="mt-1 block text-sm leading-relaxed text-slate-300">
+                  {t("Portal không chỉ ghép nối đối tác mà còn dẫn tới một cấu trúc hợp tác có thể hình thành consortium song phương.")}
+                </span>
               </div>
             </div>
           </div>
         </section>
 
         {/* ─── Collaboration Flow ─── */}
-        <section id="collaboration" className="bg-[#06152f] px-4 py-20 text-white sm:px-6 sm:py-28">
+        <section id="collaboration" className="bg-[#071831] px-4 py-20 text-white sm:px-6 sm:py-28">
           <div className="mx-auto max-w-6xl">
-            <h2 className="font-serif text-3xl font-bold tracking-tight sm:text-4xl">
-              {t("Từ một điểm tri thức đến một quan hệ hợp tác thực sự.")}
-            </h2>
-            <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/90">
-              {t("RU–VN Portal không dừng ở việc hiển thị hồ sơ hay công bố. Mạng lưới tri thức giúp người dùng đi từ khám phá chủ đề, tìm chuyên gia phù hợp, hiểu lý do ghép nối và tiến tới cấu trúc hợp tác song phương 2+2.")}
-            </p>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
-              <div className="rounded-3xl border border-white/15 bg-[#0c1e38] p-6 shadow-xl">
-                <span className="text-xs font-black uppercase tracking-wider text-slate-400">01</span>
-                <h3 className="mt-3 font-serif text-2xl font-bold text-white">{t("Discover")}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-white/90">
-                  {t("Tìm kiếm toàn cổng theo chủ đề, lĩnh vực, tổ chức, quốc gia và đối tượng tri thức.")}
+            <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr]">
+              <div>
+                <h2 className="font-serif text-3xl font-bold tracking-tight sm:text-4xl">
+                  {t("Từ một điểm tri thức đến một quan hệ hợp tác thực sự.")}
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-slate-300">
+                  {t("RU–VN Portal không dừng ở việc hiển thị hồ sơ hay công bố. Mạng lưới tri thức giúp người dùng đi từ khám phá chủ đề, tìm chuyên gia phù hợp, hiểu lý do ghép nối và tiến tới cấu trúc hợp tác song phương 2+2.")}
                 </p>
+
+                <div className="mt-6 flex items-center gap-3 border-t border-white/12 pt-4">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#1c57d7] text-base font-bold text-white">
+                    ↗
+                  </span>
+                  <div>
+                    <b className="block text-sm font-bold text-white">{t("Khám phá có định hướng")}</b>
+                    <small className="block text-xs text-slate-300">
+                      {t("Từ công bố → chuyên gia → tổ chức → cơ hội hợp tác.")}
+                    </small>
+                  </div>
+                </div>
               </div>
 
-              <div className="rounded-3xl border border-white/30 bg-[#1d4ed8]/20 p-6 shadow-xl">
-                <span className="text-xs font-black uppercase tracking-wider text-slate-300">02</span>
-                <h3 className="mt-3 font-serif text-2xl font-bold text-white">{t("Match")}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-white/90">
-                  {t("Gợi ý chuyên gia và đối tác dựa trên công bố, hướng nghiên cứu và các tín hiệu tương đồng có thể giải thích.")}
-                </p>
-              </div>
+              {/* 3 Step Cards */}
+              <div className="grid gap-4 sm:grid-cols-3">
+                {/* Step 1 */}
+                <article className="relative flex flex-col justify-between rounded-2xl border border-white/15 bg-[#0c1e38]/85 p-5 shadow-xl backdrop-blur-md">
+                  <span className="absolute top-4 right-4 text-xs font-bold text-slate-400">01</span>
+                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-white/10 text-base font-bold text-white">
+                    ⌕
+                  </div>
+                  <h3 className="mt-6 font-serif text-2xl font-bold text-white">{t("Discover")}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-300">
+                    {t("Tìm kiếm toàn cổng theo chủ đề, lĩnh vực, tổ chức, quốc gia và đối tượng tri thức.")}
+                  </p>
+                </article>
 
-              <div className="rounded-3xl border border-white/15 bg-[#0c1e38] p-6 shadow-xl">
-                <span className="text-xs font-black uppercase tracking-wider text-slate-400">03</span>
-                <h3 className="mt-3 font-serif text-2xl font-bold text-white">{t("Collaborate")}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-white/90">
-                  {t("Chuyển kết nối phù hợp thành cấu trúc nghiên cứu – doanh nghiệp Nga–Việt quanh một mục tiêu hoặc công nghệ chung.")}
-                </p>
+                {/* Step 2 - Featured */}
+                <article className="relative flex flex-col justify-between rounded-2xl border border-white/30 bg-[#1c57d7]/35 p-5 shadow-xl backdrop-blur-md">
+                  <span className="absolute top-4 right-4 text-xs font-bold text-white/80">02</span>
+                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-white/20 text-base font-bold text-white">
+                    ◎
+                  </div>
+                  <h3 className="mt-6 font-serif text-2xl font-bold text-white">{t("Match")}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-200">
+                    {t("Gợi ý chuyên gia và đối tác dựa trên công bố, hướng nghiên cứu và các tín hiệu tương đồng có thể giải thích.")}
+                  </p>
+                </article>
+
+                {/* Step 3 */}
+                <article className="relative flex flex-col justify-between rounded-2xl border border-white/15 bg-[#0c1e38]/85 p-5 shadow-xl backdrop-blur-md">
+                  <span className="absolute top-4 right-4 text-xs font-bold text-slate-400">03</span>
+                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-white/10 text-base font-bold text-white">
+                    2+2
+                  </div>
+                  <h3 className="mt-6 font-serif text-2xl font-bold text-white">{t("Collaborate")}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-300">
+                    {t("Chuyển kết nối phù hợp thành cấu trúc nghiên cứu – doanh nghiệp Nga–Việt quanh một mục tiêu hoặc công nghệ chung.")}
+                  </p>
+                </article>
               </div>
             </div>
           </div>
