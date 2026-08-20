@@ -1,5 +1,6 @@
 import type { PublicPublication, PublicPublicationDetail, DiscoveryResult, DetailResult } from "./types";
 
+
 function serviceUrl(path: string): string | null {
   const base = process.env.KNOWLEDGE_SERVICE_URL;
   if (!base) return null;
@@ -7,8 +8,8 @@ function serviceUrl(path: string): string | null {
 }
 
 const ERR_UNAVAILABLE = { status: "error", kind: "integration", message: "Knowledge service unavailable" } as const;
-const isObject = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null;
-const isPublication = (v: unknown): v is PublicPublication => isObject(v) && v.visibility === "PUBLIC" && typeof v.id === "string" && typeof v.title === "string" && Array.isArray(v.authors) && Array.isArray(v.topics);
+const isPublication = (v: unknown): v is PublicPublication => !!v && typeof v === "object" && (v as Record<string, unknown>).visibility === "PUBLIC" && typeof (v as Record<string, unknown>).id === "string" && typeof (v as Record<string, unknown>).title === "string" && typeof (v as Record<string, unknown>).language === "string" && Array.isArray((v as Record<string, unknown>).authors) && Array.isArray((v as Record<string, unknown>).topics);
+
 
 export async function getPublications(query: Record<string, string | undefined> = {}): Promise<DiscoveryResult<PublicPublication>> {
   const base = serviceUrl("api/v1/publications");

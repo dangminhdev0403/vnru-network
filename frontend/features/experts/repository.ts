@@ -1,9 +1,10 @@
 import type { DiscoveryResult, ExpertDetailResult, ExpertMatchesResult, PublicExpert, ExpertDetail, ExpertMatch } from "./types";
 
+
 type Fetcher = (input: string, init?: RequestInit) => Promise<Response>;
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null;
-const isExpert = (v: unknown): v is ExpertDetail => isObject(v) && v.visibility === "PUBLIC" && typeof v.id === "string" && typeof v.displayName === "string" && isObject(v.organization) && Array.isArray(v.expertises);
-const isMatch = (v: unknown): v is ExpertMatch => isObject(v) && isExpert(v.expert) && Array.isArray(v.reasons) && v.reasons.every((r) => isObject(r) && typeof r.id === "string" && typeof r.slug === "string" && isObject(r.labels));
+const isExpert = (v: unknown): v is ExpertDetail => isObject(v) && v.visibility === "PUBLIC" && typeof v.id === "string" && typeof v.displayName === "string" && isObject(v.organization) && typeof v.organization.id === "string" && typeof v.organization.name === "string" && typeof v.organization.country === "string" && Array.isArray(v.expertises) && v.expertises.every((x) => isObject(x) && typeof x.id === "string" && typeof x.slug === "string" && isObject(x.labels) && Object.values(x.labels).every((label) => typeof label === "string"));
+const isMatch = (v: unknown): v is ExpertMatch => isObject(v) && isExpert(v.expert) && Array.isArray(v.reasons) && v.reasons.every((r) => isObject(r) && typeof r.id === "string" && typeof r.slug === "string" && isObject(r.labels) && Object.values(r.labels).every((label) => typeof label === "string"));
 
 function serviceUrl(path: string): string | null {
   const base = process.env.ORGANIZATION_SERVICE_URL;

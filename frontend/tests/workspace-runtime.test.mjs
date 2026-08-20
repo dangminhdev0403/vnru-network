@@ -35,10 +35,10 @@ test("IAM view preserves backend authorization as authoritative", () => {
   assert.match(iamView, /Keycloak\/OIDC/);
 });
 
-test("Knowledge view renders independent real discovery states while matching stays pending", () => {
+test("Knowledge view renders independent real discovery and matching states", () => {
   assert.match(knowledgeView, /publications\.status/);
   assert.match(knowledgeView, /experts\.status/);
-  assert.match(knowledgeView, /Expert Matching.*Pending/s);
+  assert.match(knowledgeView, /Expert Matching.*organization-service/s);
   assert.doesNotMatch(knowledgeView, /fetch\(/);
 });
 
@@ -51,8 +51,15 @@ test("Knowledge view exposes filter controls for already-supported query params"
 });
 
 test("Knowledge view uses cursor-based next navigation", () => {
-  assert.match(knowledgeView, /nextCursor/);
+  assert.match(knowledgeView, /publicationCursor/);
+  assert.match(knowledgeView, /expertCursor/);
   assert.match(knowledgeView, /Trang tiếp/);
+});
+
+test("Workspace sections paginate independently", () => {
+  assert.match(knowledgeRoute, /publicationCursor/);
+  assert.match(knowledgeRoute, /expertCursor/);
+  assert.doesNotMatch(knowledgeRoute, /raw\.cursor/);
 });
 
 test("Knowledge retry links preserve current query", () => {
