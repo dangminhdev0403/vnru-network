@@ -34,7 +34,25 @@ For any task whose primary intent is UI inspection, UI repair, visual polish, re
 
 - `.agents/skills/ui-quality-promax/SKILL.md`
 
-The UI Quality Pro-Max skill is mandatory even when the user does not name it explicitly. Natural-language requests such as `soi lại giao diện`, `fix UI`, `polish`, `responsive`, `review UX`, `ổn định workspace`, or `kiểm tra giao diện` trigger it.
+The UI Quality Pro-Max skill is mandatory even when the user does not name it explicitly. Natural-language requests such as `soi lại giao diện`, `fix UI`, `fix UX`, `polish`, `responsive`, `review UX`, `ổn định giao diện`, `soi và fix toàn bộ UI/UX`, or `kiểm tra giao diện` trigger it.
+
+### Default UI scope
+
+When a UI/UX request is generic and does **not** explicitly name a module, route, page, or component, treat the target as the **complete currently implemented frontend product**, not Module 01 or any single workspace.
+
+The agent must discover the actual current surfaces and include, where implemented:
+
+- public/landing/discovery;
+- login/auth transitions where visually relevant;
+- authenticated workspace shell;
+- all implemented module workspaces;
+- governance/admin;
+- security/session;
+- shared navigation/layout/typography/icons/forms/tables/dialogs/states.
+
+Before editing, show a concise discovered surface manifest. Do not silently narrow a generic UI request to one module because that module was discussed previously.
+
+If the user explicitly scopes the request to a module/page/component, follow that narrower scope plus directly affected shared-shell neighbors.
 
 When present locally, the following taste skills may be consulted as supporting design heuristics as directed by UI Quality Pro-Max:
 
