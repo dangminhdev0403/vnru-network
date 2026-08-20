@@ -15,15 +15,15 @@ export const useLocale = create<{ locale: Locale; setLocale: (locale: Locale) =>
 
 const HERO_SEQUENCES: Record<Locale, [string, string]> = {
   vi: [
-    "Kết nối chuyên gia, công bố và cơ hội hợp tác Nga–Việt.",
+    "Mạng lưới tri thức Nga–Việt",
     "Mở rộng mạng lưới nghiên cứu và hình thành đối tác thực chất.",
   ],
   ru: [
-    "Объединяя экспертов, публикации и возможности сотрудничества Россия–Вьетнам.",
+    "Сеть знаний Россия–Вьетнам",
     "Расширяя исследовательскую сеть и формируя реальные партнерства.",
   ],
   en: [
-    "Connecting experts, publications, and Russian–Vietnamese collaboration.",
+    "RU–VN Knowledge Network",
     "Expanding research networks and fostering impactful partnerships.",
   ],
 };
@@ -34,7 +34,7 @@ function useHeroSequence(locale: Locale) {
   const [opacity, setOpacity] = useState(1);
   const [showCaret, setShowCaret] = useState(true);
 
-  const [phrase1, phrase2] = HERO_SEQUENCES[locale] || HERO_SEQUENCES.vi;
+  const phrases = HERO_SEQUENCES[locale] || HERO_SEQUENCES.vi;
 
   useEffect(() => {
     if (shouldReduceMotion) {
@@ -44,45 +44,38 @@ function useHeroSequence(locale: Locale) {
     let isMounted = true;
     let timeoutId: ReturnType<typeof setTimeout>;
 
-    let step: "TYPE_1" | "HOLD_1" | "FADE_1" | "PAUSE" | "TYPE_2" | "DONE" = "TYPE_1";
+    let phraseIdx = 0;
     let charIdx = 0;
+    let step: "TYPE" | "HOLD" | "FADE" | "PAUSE" = "TYPE";
 
     const run = () => {
       if (!isMounted) return;
 
-      if (step === "TYPE_1") {
-        if (charIdx < phrase1.length) {
+      const currentPhrase = phrases[phraseIdx];
+
+      if (step === "TYPE") {
+        if (charIdx < currentPhrase.length) {
           charIdx++;
-          setDisplayedText(phrase1.slice(0, charIdx));
-          timeoutId = setTimeout(run, 70);
+          setDisplayedText(currentPhrase.slice(0, charIdx));
+          timeoutId = setTimeout(run, 65);
         } else {
-          step = "HOLD_1";
-          timeoutId = setTimeout(run, 1800);
+          step = "HOLD";
+          timeoutId = setTimeout(run, 2000);
         }
-      } else if (step === "HOLD_1") {
-        step = "FADE_1";
+      } else if (step === "HOLD") {
+        step = "FADE";
         setOpacity(0);
-        timeoutId = setTimeout(run, 550);
-      } else if (step === "FADE_1") {
+        timeoutId = setTimeout(run, 500);
+      } else if (step === "FADE") {
         step = "PAUSE";
         setDisplayedText("");
         setOpacity(1);
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        charIdx = 0;
         timeoutId = setTimeout(run, 250);
       } else if (step === "PAUSE") {
-        step = "TYPE_2";
-        charIdx = 0;
-        timeoutId = setTimeout(run, 70);
-      } else if (step === "TYPE_2") {
-        if (charIdx < phrase2.length) {
-          charIdx++;
-          setDisplayedText(phrase2.slice(0, charIdx));
-          timeoutId = setTimeout(run, 70);
-        } else {
-          step = "DONE";
-          timeoutId = setTimeout(() => {
-            if (isMounted) setShowCaret(false);
-          }, 1500);
-        }
+        step = "TYPE";
+        timeoutId = setTimeout(run, 50);
       }
     };
 
@@ -92,10 +85,10 @@ function useHeroSequence(locale: Locale) {
       isMounted = false;
       clearTimeout(timeoutId);
     };
-  }, [locale, phrase1, phrase2, shouldReduceMotion]);
+  }, [locale, phrases, shouldReduceMotion]);
 
   if (shouldReduceMotion) {
-    return { text: phrase2, opacity: 1, showCaret: false };
+    return { text: phrases[0], opacity: 1, showCaret: false };
   }
 
   return { text: displayedText, opacity, showCaret };
