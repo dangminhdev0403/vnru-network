@@ -15,22 +15,23 @@ export const useLocale = create<{ locale: Locale; setLocale: (locale: Locale) =>
 
 const HERO_SEQUENCES: Record<Locale, [string, string]> = {
   vi: [
-    "Kết nối tri thức Nga–Việt, mở rộng mạng lưới nghiên cứu xuyên biên giới.",
-    "Từ chuyên gia và công bố đến những cơ hội hợp tác có thể triển khai thực tế.",
+    "Kết nối chuyên gia, công bố và cơ hội hợp tác Nga–Việt.",
+    "Mở rộng mạng lưới nghiên cứu và hình thành đối tác thực chất.",
   ],
   ru: [
-    "Объединяя знания России и Вьетнама, расширяя трансграничные исследования.",
-    "От экспертов и публикаций к практическим возможностям сотрудничества.",
+    "Объединяя экспертов, публикации и возможности сотрудничества Россия–Вьетнам.",
+    "Расширяя исследовательскую сеть и формируя реальные партнерства.",
   ],
   en: [
-    "Bridging Russian–Vietnamese knowledge, expanding cross-border research networks.",
-    "From experts and publications to actionable collaborative opportunities.",
+    "Connecting experts, publications, and Russian–Vietnamese collaboration.",
+    "Expanding research networks and fostering impactful partnerships.",
   ],
 };
 
 function useHeroSequence(locale: Locale) {
   const shouldReduceMotion = useReducedMotion();
   const [displayedText, setDisplayedText] = useState("");
+  const [opacity, setOpacity] = useState(1);
   const [showCaret, setShowCaret] = useState(true);
 
   const [phrase1, phrase2] = HERO_SEQUENCES[locale] || HERO_SEQUENCES.vi;
@@ -43,7 +44,7 @@ function useHeroSequence(locale: Locale) {
     let isMounted = true;
     let timeoutId: ReturnType<typeof setTimeout>;
 
-    let step: "TYPE_1" | "HOLD_1" | "ERASE_1" | "PAUSE" | "TYPE_2" | "DONE" = "TYPE_1";
+    let step: "TYPE_1" | "HOLD_1" | "FADE_1" | "PAUSE" | "TYPE_2" | "DONE" = "TYPE_1";
     let charIdx = 0;
 
     const run = () => {
@@ -53,37 +54,34 @@ function useHeroSequence(locale: Locale) {
         if (charIdx < phrase1.length) {
           charIdx++;
           setDisplayedText(phrase1.slice(0, charIdx));
-          timeoutId = setTimeout(run, 36);
+          timeoutId = setTimeout(run, 70);
         } else {
           step = "HOLD_1";
-          timeoutId = setTimeout(run, 2000);
+          timeoutId = setTimeout(run, 1800);
         }
       } else if (step === "HOLD_1") {
-        step = "ERASE_1";
-        timeoutId = setTimeout(run, 60);
-      } else if (step === "ERASE_1") {
-        if (charIdx > 0) {
-          charIdx--;
-          setDisplayedText(phrase1.slice(0, charIdx));
-          timeoutId = setTimeout(run, 18);
-        } else {
-          step = "PAUSE";
-          timeoutId = setTimeout(run, 300);
-        }
+        step = "FADE_1";
+        setOpacity(0);
+        timeoutId = setTimeout(run, 550);
+      } else if (step === "FADE_1") {
+        step = "PAUSE";
+        setDisplayedText("");
+        setOpacity(1);
+        timeoutId = setTimeout(run, 250);
       } else if (step === "PAUSE") {
         step = "TYPE_2";
         charIdx = 0;
-        timeoutId = setTimeout(run, 60);
+        timeoutId = setTimeout(run, 70);
       } else if (step === "TYPE_2") {
         if (charIdx < phrase2.length) {
           charIdx++;
           setDisplayedText(phrase2.slice(0, charIdx));
-          timeoutId = setTimeout(run, 36);
+          timeoutId = setTimeout(run, 70);
         } else {
           step = "DONE";
           timeoutId = setTimeout(() => {
             if (isMounted) setShowCaret(false);
-          }, 1800);
+          }, 1500);
         }
       }
     };
@@ -97,17 +95,17 @@ function useHeroSequence(locale: Locale) {
   }, [locale, phrase1, phrase2, shouldReduceMotion]);
 
   if (shouldReduceMotion) {
-    return { text: phrase2, showCaret: false };
+    return { text: phrase2, opacity: 1, showCaret: false };
   }
 
-  return { text: displayedText, showCaret };
+  return { text: displayedText, opacity, showCaret };
 }
 
 export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: boolean }>) {
   const { locale, setLocale } = useLocale();
   const shouldReduceMotion = useReducedMotion();
   const [loggingOut, setLoggingOut] = useState(false);
-  const { text: heroText, showCaret } = useHeroSequence(locale);
+  const { text: heroText, opacity: heroOpacity, showCaret } = useHeroSequence(locale);
 
   const t = (key: string): string => {
     const dict = (translations as Record<Locale, Record<string, string>>)[locale] || translations.vi;
@@ -205,8 +203,13 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="max-w-2xl"
               >
-                <h1 className="font-serif text-3xl font-bold leading-[1.22] tracking-tight text-white sm:text-5xl lg:text-6xl min-h-36 sm:min-h-48 lg:min-h-56">
-                  <span>{heroText}</span>
+                <h1 className="font-serif text-3xl font-bold leading-[1.2] tracking-tight text-white sm:text-4xl lg:text-[46px] min-h-24 sm:min-h-32 lg:min-h-36">
+                  <span
+                    className="inline transition-opacity duration-500 ease-in-out"
+                    style={{ opacity: heroOpacity }}
+                  >
+                    {heroText}
+                  </span>
                   {showCaret && (
                     <span
                       className="inline-block w-0.75 sm:w-1 h-[0.88em] ml-1 bg-[#60a5fa] animate-pulse align-middle"
