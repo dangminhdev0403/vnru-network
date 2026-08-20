@@ -38,8 +38,8 @@ test("guard rejects envelopes containing invalid shapes", async () => {
 
 test("guard passes all valid expert items", async () => {
   const items = [
-    { id: "e1", displayName: "Dr A", country: "RU", organization: { id: "o1", name: "Org", country: "RU" }, expertises: [] },
-    { id: "e2", displayName: "Dr B", country: "VN", organization: { id: "o2", name: "Org2", country: "VN" }, expertises: [{ id: "x1", slug: "ai", labels: {} }] },
+    { id: "e1", displayName: "Dr A", country: "RU", visibility: "PUBLIC", organization: { id: "o1", name: "Org", country: "RU" }, expertises: [] },
+    { id: "e2", displayName: "Dr B", country: "VN", visibility: "PUBLIC", organization: { id: "o2", name: "Org2", country: "VN" }, expertises: [{ id: "x1", slug: "ai", labels: {} }] },
   ];
   const result = await fetchDiscoverySection(
     "http://service/api/v1/experts",
@@ -58,6 +58,11 @@ test("isPublicPublication rejects non-objects", () => {
   assert.equal(isPublicPublication(null), false);
   assert.equal(isPublicPublication("string"), false);
   assert.equal(isPublicPublication(42), false);
+});
+
+test("public guards reject non-PUBLIC and malformed nested DTOs", () => {
+  assert.equal(isPublicPublication({ id: "p", title: "T", type: "ARTICLE", language: "en", year: 2026, country: "VN", visibility: "PRIVATE", authors: [], topics: [] }), false);
+  assert.equal(isPublicExpert({ id: "e", displayName: "E", country: "VN", visibility: "PUBLIC", organization: { id: "o", name: "O", country: "VN" }, expertises: [{ id: "x", slug: "ai", labels: { en: 1 } }] }), false);
 });
 
 test("isPublicExpert rejects missing organization", () => {

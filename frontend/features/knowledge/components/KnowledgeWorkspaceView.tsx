@@ -17,7 +17,7 @@ function buildHref(query: Record<string, string | undefined>, overrides: Record<
 }
 
 export default function KnowledgeWorkspaceView({ publications, experts, query }: Props) {
-  const retryHref = buildHref(query, { cursor: undefined });
+  const retryHref = buildHref(query);
   const hasActiveFilters = !!(query.q || query.country || query.organization || query.topic || query.language || query.year);
 
   return (
@@ -109,7 +109,7 @@ export default function KnowledgeWorkspaceView({ publications, experts, query }:
               </div>
               {publications.nextCursor && (
                 <Link
-                  href={buildHref(query, { cursor: publications.nextCursor })}
+                  href={buildHref(query, { publicationCursor: publications.nextCursor })}
                   className="mt-4 inline-block rounded-xl border border-slate-300 bg-slate-50 px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 transition"
                 >
                   Trang tiếp →
@@ -163,7 +163,7 @@ export default function KnowledgeWorkspaceView({ publications, experts, query }:
               </div>
               {experts.nextCursor && (
                 <Link
-                  href={buildHref(query, { cursor: experts.nextCursor })}
+                  href={buildHref(query, { expertCursor: experts.nextCursor })}
                   className="mt-4 inline-block rounded-xl border border-slate-300 bg-slate-50 px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 transition"
                 >
                   Trang tiếp →
@@ -178,10 +178,10 @@ export default function KnowledgeWorkspaceView({ publications, experts, query }:
         <section className="rounded-3xl border border-amber-200 bg-amber-50/90 p-6">
           <div className="flex justify-between">
             <h3 className="font-black text-amber-950">Expert Matching</h3>
-            <span className="text-xs font-black text-amber-900">Pending</span>
+            <Link href="/experts" className="text-xs font-black text-amber-900 hover:underline">Khám phá →</Link>
           </div>
           <p className="mt-2 text-xs text-amber-950">
-            Chưa có HTTP contract được phê duyệt. Không hiển thị điểm hoặc dữ liệu mô phỏng.
+            Matching dùng organization-service và hiển thị lý do chuyên môn chung trong hồ sơ chuyên gia.
           </p>
         </section>
         <section className="rounded-3xl border border-slate-200 bg-white p-6">
