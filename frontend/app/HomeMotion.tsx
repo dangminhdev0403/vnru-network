@@ -15,16 +15,16 @@ export const useLocale = create<{ locale: Locale; setLocale: (locale: Locale) =>
 
 const HERO_SEQUENCES: Record<Locale, [string, string]> = {
   vi: [
-    "Mạng lưới tri thức Nga–Việt, kết nối nghiên cứu và ứng dụng.",
-    "Từ chuyên gia và công bố đến các cơ hội hợp tác thực chất.",
+    "Mạng lưới tri thức Nga–Việt",
+    "Mở rộng mạng lưới nghiên cứu và hình thành đối tác thực chất.",
   ],
   ru: [
-    "Сеть знаний Россия–Вьетнам, связь науки và технологий.",
-    "От экспертов và публикаций к реальному сотрудничеству.",
+    "Сеть знаний Россия–Вьетнам",
+    "Расширяя исследовательскую сеть и формируя реальные партнерства.",
   ],
   en: [
-    "RU–VN Knowledge Network, bridging research and application.",
-    "From experts and publications to impactful collaboration.",
+    "RU–VN Knowledge Network",
+    "Expanding research networks and fostering impactful partnerships.",
   ],
 };
 
