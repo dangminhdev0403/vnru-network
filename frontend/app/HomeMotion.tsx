@@ -13,72 +13,105 @@ export const useLocale = create<{ locale: Locale; setLocale: (locale: Locale) =>
   persist((set) => ({ locale: "vi", setLocale: (locale) => set({ locale }) }), { name: "vnru-locale" })
 );
 
-const TYPING_PHRASES: Record<Locale, string[]> = {
+interface HeadlineItem {
+  prefix: string;
+  highlight: string;
+  suffix: string;
+}
+
+const TYPING_HEADLINES: Record<Locale, HeadlineItem[]> = {
   vi: [
-    "tri thức Nga–Việt",
-    "hợp tác nghiên cứu 2+2",
-    "chuyên gia & viện trường",
-    "kết nối đổi mới sáng tạo",
+    { prefix: "Mạng lưới ", highlight: "tri thức Nga–Việt", suffix: " với bản đồ kết nối sống động." },
+    { prefix: "Mạng lưới ", highlight: "hợp tác nghiên cứu 2+2", suffix: " giữa viện trường & doanh nghiệp." },
+    { prefix: "Mạng lưới ", highlight: "chuyên gia & công nghệ", suffix: " với tìm kiếm ngữ nghĩa toàn diện." },
+    { prefix: "Mạng lưới ", highlight: "đổi mới sáng tạo", suffix: " kết nối viện trường và công nghiệp." },
   ],
   ru: [
-    "знаний Россия–Вьетнам",
-    "сотрудничества 2+2",
-    "экспертов и институтов",
-    "инноваций и технологий",
+    { prefix: "Сеть ", highlight: "знаний Россия–Вьетнам", suffix: " с интерактивной картой связей." },
+    { prefix: "Сеть ", highlight: "сотрудничества 2+2", suffix: " между институтами и предприятиями." },
+    { prefix: "Сеть ", highlight: "экспертов и технологий", suffix: " с семантическим поиском." },
+    { prefix: "Сеть ", highlight: "инноваций и трансфера", suffix: " для науки и промышленности." },
   ],
   en: [
-    "RU–VN Knowledge Network",
-    "2+2 Research Cooperation",
-    "Experts & Institutions",
-    "Cross-Border Innovation",
+    { prefix: "A network of ", highlight: "RU–VN knowledge", suffix: " with interactive connection maps." },
+    { prefix: "A network of ", highlight: "2+2 research cooperation", suffix: " for academia & industry." },
+    { prefix: "A network of ", highlight: "experts & technologies", suffix: " with semantic search." },
+    { prefix: "A network of ", highlight: "cross-border innovation", suffix: " bridging science and business." },
   ],
 };
 
-function useTypewriter(words: string[], typingSpeed = 65, deletingSpeed = 35, pauseTime = 2400) {
+function useHeadlineTypewriter(items: HeadlineItem[], typingSpeed = 45, deletingSpeed = 25, pauseTime = 3000) {
   const [index, setIndex] = useState(0);
-  const [subIndex, setSubIndex] = useState(0);
+  const [charCount, setCharCount] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
+  const currentItem = items[index % items.length] || items[0];
+  const totalLength = currentItem.prefix.length + currentItem.highlight.length + currentItem.suffix.length;
+
   useEffect(() => {
-    if (shouldReduceMotion || words.length === 0) return;
+    if (shouldReduceMotion || items.length === 0) return;
 
-    const currentWord = words[index % words.length];
-
-    if (!isDeleting && subIndex === currentWord.length) {
+    if (!isDeleting && charCount === totalLength) {
       const timeout = setTimeout(() => setIsDeleting(true), pauseTime);
       return () => clearTimeout(timeout);
     }
 
-    if (isDeleting && subIndex === 0) {
+    if (isDeleting && charCount === 0) {
       const timeout = setTimeout(() => {
         setIsDeleting(false);
-        setIndex((prev) => (prev + 1) % words.length);
-      }, 200);
+        setIndex((prev) => (prev + 1) % items.length);
+      }, 300);
       return () => clearTimeout(timeout);
     }
 
     const timeout = setTimeout(() => {
-      setSubIndex((prev) => prev + (isDeleting ? -1 : 1));
+      setCharCount((prev) => prev + (isDeleting ? -1 : 1));
     }, isDeleting ? deletingSpeed : typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [subIndex, isDeleting, index, words, typingSpeed, deletingSpeed, pauseTime, shouldReduceMotion]);
+  }, [charCount, isDeleting, index, items, totalLength, typingSpeed, deletingSpeed, pauseTime, shouldReduceMotion]);
 
-  if (shouldReduceMotion || words.length === 0) {
-    return words[0] || "";
+  if (shouldReduceMotion) {
+    return {
+      prefix: currentItem.prefix,
+      highlight: currentItem.highlight,
+      suffix: currentItem.suffix,
+    };
   }
 
-  return words[index % words.length].substring(0, subIndex);
+  const pLen = currentItem.prefix.length;
+  const hLen = currentItem.highlight.length;
+
+  let renderedPrefix = "";
+  let renderedHighlight = "";
+  let renderedSuffix = "";
+
+  if (charCount <= pLen) {
+    renderedPrefix = currentItem.prefix.substring(0, charCount);
+  } else if (charCount <= pLen + hLen) {
+    renderedPrefix = currentItem.prefix;
+    renderedHighlight = currentItem.highlight.substring(0, charCount - pLen);
+  } else {
+    renderedPrefix = currentItem.prefix;
+    renderedHighlight = currentItem.highlight;
+    renderedSuffix = currentItem.suffix.substring(0, charCount - pLen - hLen);
+  }
+
+  return {
+    prefix: renderedPrefix,
+    highlight: renderedHighlight,
+    suffix: renderedSuffix,
+  };
 }
 
-export function HomeMotion({ isAuthenticated }: { isAuthenticated: boolean }) {
+export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: boolean }>) {
   const { locale, setLocale } = useLocale();
   const shouldReduceMotion = useReducedMotion();
   const [loggingOut, setLoggingOut] = useState(false);
 
-  const phrases = TYPING_PHRASES[locale] || TYPING_PHRASES.vi;
-  const typedText = useTypewriter(phrases);
+  const headlines = TYPING_HEADLINES[locale] || TYPING_HEADLINES.vi;
+  const headline = useHeadlineTypewriter(headlines);
 
   const t = (key: string): string => {
     const dict = (translations as Record<Locale, Record<string, string>>)[locale] || translations.vi;
@@ -106,7 +139,7 @@ export function HomeMotion({ isAuthenticated }: { isAuthenticated: boolean }) {
           <Link href="#top" className="flex items-center gap-3" aria-label="RU-VN Portal">
             <span className="relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-xl border border-white/20 bg-white shadow-md">
               <span className="absolute inset-y-0 left-0 w-[64%] -skew-x-12 bg-[#1d4ed8]" />
-              <span className="absolute inset-y-0 right-0 w-[48%] -skew-x-12 bg-[#dc2626]" />
+              <span className="absolute inset-y-0 right-0 w-[48%] -skew-x-12 bg-error" />
             </span>
             <span className="leading-tight">
               <strong className="block text-base font-bold tracking-tight text-white">{t("RU–VN Portal")}</strong>
@@ -176,15 +209,17 @@ export function HomeMotion({ isAuthenticated }: { isAuthenticated: boolean }) {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="max-w-2xl"
               >
-                <h1 className="font-serif text-3xl font-bold leading-[1.25] tracking-tight text-white sm:text-5xl lg:text-6xl">
-                  {t("Mạng lưới")}{" "}
-                  <span className="inline-block rounded-2xl bg-blue-600/25 border border-blue-400/30 px-3 py-1 text-white shadow-inner backdrop-blur-md">
-                    <span className="bg-linear-to-r from-white via-sky-100 to-blue-200 bg-clip-text text-transparent font-bold">
-                      {typedText}
+                <h1 className="font-serif text-3xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl min-h-[140px] sm:min-h-[180px] lg:min-h-[220px]">
+                  <span>{headline.prefix}</span>
+                  {headline.highlight && (
+                    <span className="inline-block rounded-2xl bg-blue-600/25 border border-blue-400/30 px-3 py-1 text-white shadow-inner backdrop-blur-md mx-1 align-baseline">
+                      <span className="bg-linear-to-r from-white via-sky-100 to-blue-200 bg-clip-text text-transparent font-bold">
+                        {headline.highlight}
+                      </span>
                     </span>
-                    <span className="inline-block w-[3px] h-[0.8em] ml-1.5 bg-sky-400 animate-pulse align-middle" />
-                  </span>{" "}
-                  {t("với bản đồ kết nối sống động.")}
+                  )}
+                  <span>{headline.suffix}</span>
+                  <span className="inline-block w-1 h-[0.85em] ml-1 bg-sky-400 animate-pulse align-middle" />
                 </h1>
                 <p className="mt-6 text-base leading-relaxed text-white/90 sm:text-lg">
                   {t("RU–VN Portal kết nối nhà khoa học, công bố, chủ đề nghiên cứu, tổ chức, doanh nghiệp và dự án thành một mạng tri thức xuyên biên giới — nơi bản đồ Nga–Việt không chỉ để nhìn thấy địa lý, mà để nhìn thấy các luồng liên kết, tín hiệu hợp tác và cơ hội hình thành consortium thực sự.")}
