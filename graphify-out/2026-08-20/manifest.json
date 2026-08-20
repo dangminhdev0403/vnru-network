@@ -1,7 +1,7 @@
 {
   "frontend/app/layout.tsx": {
-    "mtime": 1787148338.6787214,
-    "ast_hash": "bd6a7a4528c2fbdee4b869db898f67f7",
+    "mtime": 1787184219.236992,
+    "ast_hash": "c354d6134421212fe44baddbe34c9a87",
     "semantic_hash": ""
   },
   "frontend/app/page.tsx": {
@@ -250,8 +250,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1787162464.604487,
-    "ast_hash": "64dde14fe39e0b6b92d99a248b948184",
+    "mtime": 1787183668.2397354,
+    "ast_hash": "bbed4aa37bc3ad97d100d3198bfa0e42",
     "semantic_hash": ""
   },
   "CLAUDE.md": {
@@ -625,8 +625,8 @@
     "semantic_hash": ""
   },
   "frontend/features/knowledge/components/KnowledgeWorkspaceView.tsx": {
-    "mtime": 1787171100.7342732,
-    "ast_hash": "cb6cfacbc7b550010ada4172618e6284",
+    "mtime": 1787184231.1905258,
+    "ast_hash": "8784d095e5b298b4b4d5460824d735c0",
     "semantic_hash": ""
   },
   "frontend/features/knowledge/repositories/module2.repository.ts": {
@@ -640,8 +640,8 @@
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/DashboardView.tsx": {
-    "mtime": 1787171100.777331,
-    "ast_hash": "2a537b2d2faf037444a0f567634d0938",
+    "mtime": 1787184239.580107,
+    "ast_hash": "f7428ce7dae4a5b9b11ffc5a3895b557",
     "semantic_hash": ""
   },
   "frontend/home-i18n.test.mjs": {
@@ -1082,6 +1082,46 @@
   "frontend/public/images/login-library-bg.jpg": {
     "mtime": 1787125656.7237992,
     "ast_hash": "1eab5b6297db840e9cfa94ec55d892dc",
+    "semantic_hash": ""
+  },
+  "skills-lock.json": {
+    "mtime": 1787183411.4214158,
+    "ast_hash": "7edce6640587d68ff0391f9a716883f3",
+    "semantic_hash": ""
+  },
+  ".agents/skills/design-taste-frontend-v1/SKILL.md": {
+    "mtime": 1787183243.2491932,
+    "ast_hash": "05b271f9985412ac9c081a0511bb6cbe",
+    "semantic_hash": ""
+  },
+  ".agents/skills/design-taste-frontend/SKILL.md": {
+    "mtime": 1787183243.2501934,
+    "ast_hash": "648c8bf98f84fbe7f14bf2da035c57fe",
+    "semantic_hash": ""
+  },
+  ".agents/skills/high-end-visual-design/SKILL.md": {
+    "mtime": 1787183243.2471933,
+    "ast_hash": "64f7c1069a5a3d18797950d8fac7b63a",
+    "semantic_hash": ""
+  },
+  ".agents/skills/redesign-existing-projects/SKILL.md": {
+    "mtime": 1787183243.2471933,
+    "ast_hash": "c8d729e3e807df37dcd5e6262c9b8843",
+    "semantic_hash": ""
+  },
+  ".agents/skills/stitch-design-taste/DESIGN.md": {
+    "mtime": 1787183243.2481933,
+    "ast_hash": "7f8c91aeecc8983b687965c2fc23438c",
+    "semantic_hash": ""
+  },
+  ".agents/skills/stitch-design-taste/SKILL.md": {
+    "mtime": 1787183243.2481933,
+    "ast_hash": "fcbb4f37d67a66a53013b484dcfc9f25",
+    "semantic_hash": ""
+  },
+  ".agents/skills/ui-quality-promax/SKILL.md": {
+    "mtime": 1787183668.2386367,
+    "ast_hash": "3ed6918bde7864255332d49d549bde72",
     "semantic_hash": ""
   }
 }

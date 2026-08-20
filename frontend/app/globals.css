@@ -244,3 +244,100 @@ textarea {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* Custom SweetAlert2 ProMax Theme */
+.vnru-swal-popup {
+  border-radius: 24px !important;
+  padding: 24px !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 25px 50px -12px rgba(11, 28, 48, 0.25) !important;
+  font-family: var(--font-sans) !important;
+}
+
+.vnru-swal-popup-dark {
+  border-radius: 24px !important;
+  padding: 24px !important;
+  background: rgba(6, 21, 47, 0.95) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.6) !important;
+  color: #f8fafc !important;
+  font-family: var(--font-sans) !important;
+}
+
+.vnru-swal-title {
+  font-family: var(--font-serif) !important;
+  font-weight: 700 !important;
+  font-size: 1.35rem !important;
+  color: #0b1c30 !important;
+  letter-spacing: -0.02em;
+}
+
+.vnru-swal-popup-dark .vnru-swal-title {
+  color: #ffffff !important;
+}
+
+.vnru-swal-html {
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
+  color: #475569 !important;
+}
+
+.vnru-swal-popup-dark .vnru-swal-html {
+  color: #cbd5e1 !important;
+}
+
+.vnru-swal-confirm-btn {
+  border-radius: 14px !important;
+  padding: 10px 22px !important;
+  font-size: 0.8125rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
+  background: #0b1c30 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(11, 28, 48, 0.2) !important;
+  transition: all 0.2s ease !important;
+}
+
+.vnru-swal-confirm-btn:hover {
+  background: #13243d !important;
+  transform: translateY(-1px) !important;
+}
+
+.vnru-swal-cancel-btn {
+  border-radius: 14px !important;
+  padding: 10px 20px !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.vnru-swal-cancel-btn:hover {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.vnru-swal-danger-btn {
+  background: #dc2626 !important;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25) !important;
+}
+
+.vnru-swal-danger-btn:hover {
+  background: #b91c1c !important;
+}
+
+.vnru-swal-toast {
+  border-radius: 16px !important;
+  padding: 12px 18px !important;
+  box-shadow: 0 10px 30px -5px rgba(11, 28, 48, 0.15) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+}

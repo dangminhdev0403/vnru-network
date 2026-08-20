@@ -20,8 +20,8 @@
     "semantic_hash": "9b77af189a21a7a64e4bd7a426f64176"
   },
   "frontend/package.json": {
-    "mtime": 1787133453.4933338,
-    "ast_hash": "83e68a531bcde8d2648f6f53b10ba208",
+    "mtime": 1787184622.0951939,
+    "ast_hash": "9e7daa437b3242a8afafcf7ffbec9f40",
     "semantic_hash": ""
   },
   "frontend/postcss.config.mjs": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "frontend/app/admin/iam/IamClientPage.tsx": {
-    "mtime": 1787182992.535984,
-    "ast_hash": "655ef7a00138bd74b0d917c83cbfdbc4",
+    "mtime": 1787184839.5638795,
+    "ast_hash": "302f2a5bc8aa4d7ca26b2c779decef31",
     "semantic_hash": ""
   },
   "frontend/app/admin/iam/page.tsx": {
@@ -570,8 +570,8 @@
     "semantic_hash": ""
   },
   "frontend/app/security/SecurityClientPage.tsx": {
-    "mtime": 1787183001.2345567,
-    "ast_hash": "58fab3722f1a26e735ea93597f1b3595",
+    "mtime": 1787184720.786557,
+    "ast_hash": "ef736150afcd73e5470fe86a74f52afd",
     "semantic_hash": ""
   },
   "frontend/app/security/page.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/components/shared/WorkspaceShell.tsx": {
-    "mtime": 1787182984.116762,
-    "ast_hash": "c269eac95f7b112a9df8ceb4794fb77f",
+    "mtime": 1787184796.9615648,
+    "ast_hash": "aed43689ab0d7da428e2d006d600dabe",
     "semantic_hash": ""
   },
   "frontend/features/auth/components/IamWorkspaceView.tsx": {
@@ -1122,6 +1122,11 @@
   ".agents/skills/ui-quality-promax/SKILL.md": {
     "mtime": 1787183668.2386367,
     "ast_hash": "3ed6918bde7864255332d49d549bde72",
+    "semantic_hash": ""
+  },
+  "frontend/lib/alerts.ts": {
+    "mtime": 1787184653.0625846,
+    "ast_hash": "4eb8798127f3f12dd5d6c81595450872",
     "semantic_hash": ""
   }
 }

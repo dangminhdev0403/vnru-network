@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { showToast, showError } from "@/lib/alerts";
 
 interface Session {
   id: string;
@@ -89,6 +90,10 @@ export default function SecurityClientPage() {
       }
 
       setShowRevokeDialog(false);
+      showToast({
+        title: "Đã thu hồi phiên đăng nhập thành công",
+        icon: "success",
+      });
 
       if (sessionToRevoke.current) {
         router.push("/login");
@@ -99,6 +104,7 @@ export default function SecurityClientPage() {
       const msg =
         err instanceof Error ? err.message : "Failed to revoke session";
       setActionError(msg);
+      showError("Thu hồi phiên thất bại", msg);
     } finally {
       setActionLoading(false);
       setSessionToRevoke(null);
@@ -118,11 +124,16 @@ export default function SecurityClientPage() {
       }
 
       setShowRevokeOthersDialog(false);
+      showToast({
+        title: "Đã đăng xuất khỏi tất cả thiết bị khác",
+        icon: "success",
+      });
       triggerRefresh();
     } catch (err: unknown) {
       const msg =
         err instanceof Error ? err.message : "Failed to revoke other sessions";
       setActionError(msg);
+      showError("Thu hồi phiên thất bại", msg);
     } finally {
       setActionLoading(false);
     }

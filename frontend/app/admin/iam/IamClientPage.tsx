@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { showToast, showError } from "@/lib/alerts";
 
 interface User {
   id: string;
@@ -164,9 +165,15 @@ export default function IamClientPage() {
 
       setStatusTargetUser(null);
       setGlobalSuccessMessage(`User status updated to ${newStatus} successfully.`);
+      showToast({
+        title: `Đã cập nhật trạng thái người dùng sang ${newStatus}`,
+        icon: "success",
+      });
       triggerRefresh();
     } catch (err: unknown) {
-      setStatusMutationError(err instanceof Error ? err.message : "An error occurred while updating status");
+      const msg = err instanceof Error ? err.message : "An error occurred while updating status";
+      setStatusMutationError(msg);
+      showError("Cập nhật trạng thái thất bại", msg);
     } finally {
       setStatusMutationPending(false);
     }
@@ -176,7 +183,9 @@ export default function IamClientPage() {
   const handleAssignRole = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!assignUser || !assignRole) {
-      setAssignmentError("Please specify both a user ID and a role.");
+      const msg = "Vui lòng chỉ định cả người dùng và vai trò.";
+      setAssignmentError(msg);
+      showError("Thiếu thông tin", msg);
       return;
     }
 
@@ -206,8 +215,14 @@ export default function IamClientPage() {
       setAssignContextType("");
       setAssignContextId("");
       setGlobalSuccessMessage("Role assigned successfully.");
+      showToast({
+        title: "Đã gán vai trò người dùng thành công!",
+        icon: "success",
+      });
     } catch (err: unknown) {
-      setAssignmentError(err instanceof Error ? err.message : "An error occurred during role assignment");
+      const msg = err instanceof Error ? err.message : "An error occurred during role assignment";
+      setAssignmentError(msg);
+      showError("Gán vai trò thất bại", msg);
     } finally {
       setAssignmentPending(false);
     }

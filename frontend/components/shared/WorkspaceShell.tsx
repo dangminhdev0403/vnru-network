@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
 const primaryNavigation = [
   { href: "/workspace", label: "Tổng quan", icon: "space_dashboard" },
@@ -101,12 +102,30 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
     <div className="min-h-screen bg-[#f4f7fb] text-slate-950 lg:grid lg:grid-cols-[272px_minmax(0,1fr)]">
       <div className="fixed inset-y-0 left-0 z-40 hidden lg:block">{sidebar}</div>
 
-      {open ? (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <button type="button" aria-label="Đóng menu" className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm" onClick={() => setOpen(false)} />
-          <div className="relative h-full w-[272px]">{sidebar}</div>
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {open ? (
+          <div className="fixed inset-0 z-50 lg:hidden">
+            <motion.button
+              type="button"
+              aria-label="Đóng menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm"
+              onClick={() => setOpen(false)}
+            />
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 300 }}
+              className="relative h-full w-[272px]"
+            >
+              {sidebar}
+            </motion.div>
+          </div>
+        ) : null}
+      </AnimatePresence>
 
       <main className="min-w-0 lg:col-start-2">
         <header className="sticky top-0 z-30 flex h-[74px] items-center gap-3 border-b border-slate-200/80 bg-[#f4f7fb]/90 px-4 backdrop-blur-xl sm:px-6 lg:px-8">

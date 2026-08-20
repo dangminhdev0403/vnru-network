@@ -1,16 +1,16 @@
 # Graph Report - vnru-network  (2026-08-20)
 
 ## Corpus Check
-- 199 files · ~166,575 words
+- 200 files · ~167,051 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1735 nodes · 2127 edges · 145 communities (127 shown, 18 thin omitted)
+- 1744 nodes · 2145 edges · 147 communities (129 shown, 18 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a6e827ee`
+- Built from commit: `97001001`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -38,7 +38,6 @@
 - MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION
 - MODULE 4 — TRAINING, KNOWLEDGE TRANSFER & ACADEMIC EXCHANGE
 - Module 1 Antigravity Assignment Plan
-- docs/README.md
 - session-public.ts
 - Frontend Architecture
 - AuthenticationController
@@ -140,6 +139,8 @@
 - 5. CONTEXT-AWARE PROACTIVITY
 - 8. DARK MODE PROTOCOL
 - 7. DIAL DEFINITIONS (Technical Reference)
+- alerts.ts
+- VN-RU Network Global Rules (Authoritative)
 
 ## God Nodes (most connected - your core abstractions)
 1. `MODULE 1 — IAM / GOVERNANCE` - 42 edges
@@ -168,15 +169,15 @@
 ## Import Cycles
 - None detected.
 
-## Communities (145 total, 18 thin omitted)
+## Communities (147 total, 18 thin omitted)
 
 ### Community 0 - "devDependencies"
 Cohesion: 0.04
 Nodes (49): eslint-config-prettier, @eslint/eslintrc, @eslint/js, eslint-plugin-prettier, globals, @nestjs/schematics, @nestjs/testing, prettier (+41 more)
 
 ### Community 1 - "app.module.ts"
-Cohesion: 0.14
-Nodes (15): AppModule, Module, configSchema, validateConfig(), bootstrap(), AccessControlModule, Module, AuthenticationModule (+7 more)
+Cohesion: 0.18
+Nodes (9): AppModule, Module, configSchema, validateConfig(), bootstrap(), AccessControlModule, Module, SecurityModule (+1 more)
 
 ### Community 2 - "compilerOptions"
 Cohesion: 0.09
@@ -184,7 +185,7 @@ Nodes (22): compilerOptions, allowSyntheticDefaultImports, baseUrl, declaration,
 
 ### Community 3 - "devDependencies"
 Cohesion: 0.04
-Nodes (45): @dangminhdev04032005/query-resource, eslint-config-next, dependencies, @dangminhdev04032005/query-resource, i18next, motion, next, react (+37 more)
+Nodes (47): @dangminhdev04032005/query-resource, eslint-config-next, dependencies, @dangminhdev04032005/query-resource, i18next, motion, next, react (+39 more)
 
 ### Community 4 - "Auth Service Specification — Module 1"
 Cohesion: 0.05
@@ -219,8 +220,8 @@ Cohesion: 0.40
 Nodes (3): metadata, sans, serif
 
 ### Community 12 - "page.tsx"
-Cohesion: 0.09
-Nodes (28): Role, User, POST(), GET(), PATCH(), GET(), GET(), POST() (+20 more)
+Cohesion: 0.13
+Nodes (25): POST(), GET(), PATCH(), GET(), GET(), POST(), GET(), POST() (+17 more)
 
 ### Community 17 - "MODULE 1 — IAM / GOVERNANCE"
 Cohesion: 0.05
@@ -250,21 +251,17 @@ Nodes (19): 10. Conceptual data model, 11. Authorization, 12. UI capability, 13.
 Cohesion: 0.10
 Nodes (20): Approval boundary, Assignment model, Dispatch constraints, Git workflow, Module 1 Antigravity Assignment Plan, Ponytail deletions from the earlier plan, Slice 1A — Prisma + Zod foundation, Slice 1B — Internal identity (+12 more)
 
-### Community 24 - "docs/README.md"
-Cohesion: 0.16
-Nodes (7): 1. Security & Authentication Boundaries, 2. Data Ownership & Microservice Boundaries, 3. Package & Dependency Governance, 4. API & Resource Design, 5. Working Tree & Scope Constraints, 6. Verification Request Dispatch, VN-RU Network Global Rules (Authoritative)
-
 ### Community 25 - "session-public.ts"
-Cohesion: 0.16
-Nodes (14): AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord, Inject (+6 more)
+Cohesion: 0.11
+Nodes (20): Optional, AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord (+12 more)
 
 ### Community 26 - "Frontend Architecture"
 Cohesion: 0.11
 Nodes (18): 10. State Management, 11. Frontend and Backend Boundary, 12. Performance Principles, 13. Dependency Direction, 14. Architecture Rules Summary, 1. Purpose, 2. Docs Index, 3. Core Principles (+10 more)
 
 ### Community 27 - "AuthenticationController"
-Cohesion: 0.10
-Nodes (15): Delete, Optional, Res, AuthenticationController, Body, Controller, Get, Param (+7 more)
+Cohesion: 0.15
+Nodes (8): Delete, Res, AuthenticationController, Controller, Get, Param, Query, UseGuards
 
 ### Community 28 - "🇻🇳🇷🇺 VN-RU Network"
 Cohesion: 0.12
@@ -275,16 +272,16 @@ Cohesion: 0.13
 Nodes (15): Anti-patterns, Authentication and Session, Authorization Context, Caching, Contract Rules, Error Contract, Frontend API Contract Guide, Generated Contracts (+7 more)
 
 ### Community 31 - "identity-public.ts"
-Cohesion: 0.32
-Nodes (7): ExternalIdentityRecord, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput, Inject, Injectable
+Cohesion: 0.26
+Nodes (9): IdentityModule, Module, ExternalIdentityRecord, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput, Inject (+1 more)
 
 ### Community 32 - "authentication.service.ts"
-Cohesion: 0.17
-Nodes (18): AuthenticatedRequest, AuthenticatedRequestGuard, extractSessionCookie(), isRecord(), RequestWithCookies, RequireMfa(), RequirePermission(), context() (+10 more)
+Cohesion: 0.12
+Nodes (25): paginationSchema, roleAssignmentSchema, userStatusSchema, uuidSchema, AuthenticatedRequest, AuthenticatedRequestGuard, extractSessionCookie(), isRecord() (+17 more)
 
 ### Community 33 - "authentication.module.ts"
-Cohesion: 0.12
-Nodes (16): mockClientInstance, mockIssuerInstance, MockIdentityService, MockOidcService, MockSessionService, CreateAuthorizationRequestParams, HandleCallbackParams, KeycloakOidcService (+8 more)
+Cohesion: 0.11
+Nodes (18): AuthenticationModule, mockClientInstance, mockIssuerInstance, Module, MockIdentityService, MockOidcService, MockSessionService, CreateAuthorizationRequestParams (+10 more)
 
 ### Community 34 - "VN-RU Network System Architecture"
 Cohesion: 0.17
@@ -367,8 +364,8 @@ Cohesion: 0.10
 Nodes (22): AppModule, Module, ExpertController, Controller, Get, Query, isPlainObject(), isValidISODate() (+14 more)
 
 ### Community 72 - "iam-admin.service.ts"
-Cohesion: 0.08
-Nodes (27): Patch, IamAdminController, paginationSchema, roleAssignmentSchema, Body, Controller, Get, Param (+19 more)
+Cohesion: 0.09
+Nodes (23): Patch, IamAdminController, Body, Controller, Get, Param, Post, Query (+15 more)
 
 ### Community 73 - "Module 2 — AGY Swarm Implementation Plan"
 Cohesion: 0.06
@@ -598,8 +595,16 @@ Nodes (5): 8.A Token Strategy (pick one, stick to it), 8.B Do Not Prescribe Spec
 Cohesion: 0.50
 Nodes (4): 7. DIAL DEFINITIONS (Technical Reference), DESIGN_VARIANCE (Level 1-10), MOTION_INTENSITY (Level 1-10), VISUAL_DENSITY (Level 1-10)
 
+### Community 145 - "alerts.ts"
+Cohesion: 0.16
+Nodes (9): IamClientPage(), Role, User, SecurityClientPage(), Session, ConfirmActionOptions, showError(), showToast() (+1 more)
+
+### Community 146 - "VN-RU Network Global Rules (Authoritative)"
+Cohesion: 0.25
+Nodes (7): 1. Security & Authentication Boundaries, 2. Data Ownership & Microservice Boundaries, 3. Package & Dependency Governance, 4. API & Resource Design, 5. Working Tree & Scope Constraints, 6. Verification Request Dispatch, VN-RU Network Global Rules (Authoritative)
+
 ## Knowledge Gaps
-- **1033 isolated node(s):** `Locale`, `resources`, `Locale`, `Translation`, `translations` (+1028 more)
+- **1036 isolated node(s):** `Locale`, `resources`, `Locale`, `Translation`, `translations` (+1031 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -608,15 +613,15 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `MODULE 1 — IAM / GOVERNANCE` connect `MODULE 1 — IAM / GOVERNANCE` to `29. API Contract`, `23. IAM — detailed domain model`, `38. Acceptance Criteria — IAM`, `16. IAM UI`, `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
   _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Why does `MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION` connect `MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION` to `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY` connect `MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY` to `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **Why does `MODULE 3 — BILATERAL RESEARCH FUNDING & PROJECT MANAGEMENT` connect `MODULE 3 — BILATERAL RESEARCH FUNDING & PROJECT MANAGEMENT` to `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `Locale`, `resources`, `Locale` to the rest of the system?**
-  _1033 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1036 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
-- **Should `app.module.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.14245014245014245 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
+- **Should `devDependencies` be split into smaller, more focused modules?**
+  _Cohesion score 0.041666666666666664 - nodes in this community are weakly interconnected._
