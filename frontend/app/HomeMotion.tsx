@@ -21,19 +21,22 @@ const HERO_STATIC_TITLE: Record<Locale, string> = {
 
 const HERO_DYNAMIC_PHRASES: Record<Locale, string[]> = {
   vi: [
-    "mở rộng mạng lưới nghiên cứu và hình thành đối tác thực chất.",
-    "kết nối chuyên gia, công bố và cơ hội hợp tác song phương.",
-    "thúc đẩy liên kết viện trường, doanh nghiệp và dự án 2+2.",
+    "với bản đồ kết nối sống động.",
+    "kết nối nghiên cứu và ứng dụng.",
+    "cầu nối chuyên gia và công bố.",
+    "thúc đẩy hợp tác thực chất 2+2.",
   ],
   ru: [
-    "расширяя исследовательскую сеть và формируя реальные партнерства.",
-    "объединяя экспертов, публикации và возможности сотрудничества.",
-    "развивая связи университетов, предприятий và проектов 2+2.",
+    "с интерактивной картой связей.",
+    "связь науки и прикладных задач.",
+    "мост между экспертами и наукой.",
+    "развивая сотрудничество 2+2.",
   ],
   en: [
-    "expanding research networks and fostering impactful partnerships.",
-    "connecting experts, publications, and collaborative opportunities.",
-    "advancing bilateral academic, enterprise, and 2+2 project ties.",
+    "with dynamic knowledge mapping.",
+    "bridging research and application.",
+    "connecting experts and publications.",
+    "fostering impactful 2+2 partnerships.",
   ],
 };
 
@@ -211,11 +214,11 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="max-w-2xl"
               >
-                <h1 className="font-serif text-3xl font-bold leading-[1.24] tracking-tight sm:text-4xl lg:text-[44px] min-h-28 sm:min-h-32 lg:min-h-36 text-balance">
+                <h1 className="font-serif text-3xl font-bold leading-[1.2] tracking-tight sm:text-4xl lg:text-[44px] min-h-24 sm:min-h-28 lg:min-h-30 text-balance">
                   <span className="block text-white">
                     {staticTitle}
                   </span>
-                  <span className="mt-1.5 block text-[#93c5fd] text-2xl sm:text-3xl lg:text-[38px] font-semibold leading-[1.3]">
+                  <span className="mt-1 block text-[#93c5fd] text-2xl sm:text-3xl lg:text-[38px] font-semibold leading-[1.2]">
                     <span
                       className="inline transition-opacity duration-500 ease-in-out"
                       style={{ opacity: dynamicOpacity }}
