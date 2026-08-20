@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SESSION_COOKIE_NAME } from "../../features/auth/server";
 import SecurityClientPage from "./SecurityClientPage";
+import WorkspaceShell from "../../components/shared/WorkspaceShell";
 
 export default async function SecurityPage() {
   const cookieStore = await cookies();
@@ -11,5 +12,9 @@ export default async function SecurityPage() {
     redirect("/api/auth/login?returnTo=/security");
   }
 
-  return <SecurityClientPage />;
+  return (
+    <WorkspaceShell>
+      <SecurityClientPage />
+    </WorkspaceShell>
+  );
 }

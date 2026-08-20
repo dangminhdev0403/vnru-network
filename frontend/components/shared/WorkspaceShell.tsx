@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 const primaryNavigation = [
@@ -24,16 +24,15 @@ function isActive(pathname: string, href: string) {
 export default function WorkspaceShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const searchRef = useRef<HTMLInputElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        searchRef.current?.focus();
+      if (event.key === "Escape") {
+        setOpen(false);
       }
     };
+
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
@@ -42,7 +41,7 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
 
   const sidebar = (
     <aside className="flex h-full w-68 flex-col border-r border-white/10 bg-[#06152f] px-4 py-5 text-white shadow-2xl">
-      <Link href="/" className="flex items-center gap-3 rounded-2xl px-2 py-2">
+      <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-2xl px-2 py-2">
         <span className="relative grid h-10 w-10 place-items-center overflow-hidden rounded-xl border border-white/15 bg-white shadow-lg">
           <span className="absolute inset-y-0 left-0 w-[62%] -skew-x-12 bg-[#2370ff]" />
           <span className="absolute inset-y-0 right-0 w-[48%] -skew-x-12 bg-[#e74762]" />
@@ -54,10 +53,10 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
       </Link>
 
       <div className="mt-3 grid grid-cols-2 gap-1 rounded-2xl border border-white/10 bg-white/5 p-1">
-        <Link href="/workspace/iam" className={`rounded-xl px-2 py-2 text-center text-xs font-black ${pathname.startsWith("/workspace/iam") ? "bg-white/10 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}>
+        <Link href="/workspace/iam" onClick={() => setOpen(false)} className={`rounded-xl px-2 py-2 text-center text-xs font-black ${pathname.startsWith("/workspace/iam") ? "bg-white/10 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}>
           Module 01 · IAM
         </Link>
-        <Link href="/workspace/knowledge" className={`rounded-xl px-2 py-2 text-center text-xs font-black ${pathname.startsWith("/workspace/knowledge") ? "bg-white/10 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}>
+        <Link href="/workspace/knowledge" onClick={() => setOpen(false)} className={`rounded-xl px-2 py-2 text-center text-xs font-black ${pathname.startsWith("/workspace/knowledge") ? "bg-white/10 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}>
           Module 02 · Knowledge
         </Link>
       </div>
@@ -140,16 +139,10 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
             <strong className="text-slate-700">{current?.label ?? "RU–VN Portal"}</strong>
           </div>
 
-          <label className="relative ml-auto hidden w-[min(460px,44vw)] md:block">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-xl text-slate-400">search</span>
-            <input ref={searchRef} type="search" aria-label="Tìm kiếm toàn Portal" placeholder="Tìm chuyên gia, công bố, chủ đề…" className="h-11 w-full rounded-2xl border border-slate-200 bg-white pl-10 pr-16 text-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100" />
-            <kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-bold text-slate-500">⌘K</kbd>
-          </label>
-
-          <div className="flex h-11 items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 text-xs font-black text-slate-700">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100" />
-            <span className="hidden xl:inline">Context active</span>
-          </div>
+          <Link href="/workspace/knowledge" className="ml-auto inline-flex min-h-11 items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:border-blue-300 hover:text-blue-700">
+            <span className="material-symbols-outlined text-xl">search</span>
+            <span className="hidden sm:inline">Tìm tri thức &amp; chuyên gia</span>
+          </Link>
         </header>
 
         {children}

@@ -175,43 +175,7 @@ export default function SecurityClientPage() {
   const otherSessions = sessions?.filter((s) => !s.current) || [];
 
   return (
-    <div className="bg-background text-on-background min-h-screen flex flex-col font-sans antialiased">
-      {/* Top Header */}
-      <header className="bg-white/95 backdrop-blur-md border-b border-outline-variant w-full sticky top-0 z-40">
-        <div className="flex justify-between items-center px-6 lg:px-10 h-16 max-w-7xl mx-auto w-full">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary via-primary-container to-secondary flex items-center justify-center text-white font-serif font-bold text-sm shadow-sm">
-              VR
-            </div>
-            <div>
-              <span className="font-serif font-bold text-base text-primary tracking-tight">VN-RU Security Center</span>
-              <p className="text-xs text-on-surface-variant hidden sm:block">Cryptographic Token &amp; Session Management</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg bg-surface-container border border-outline-variant text-on-surface-variant">
-              <span className="text-primary font-bold">VN</span>
-              <span>/</span>
-              <span>RU</span>
-              <span>/</span>
-              <span>EN</span>
-            </div>
-            <button
-              type="button"
-              onClick={handleSignOut}
-              className="px-3.5 py-1.5 rounded-lg border border-outline-variant hover:bg-surface-container-low text-xs font-semibold text-primary transition-all flex items-center gap-1.5"
-            >
-              <span className="material-symbols-outlined text-base">logout</span>
-              <span>Sign Out</span>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <div className="flex flex-1 max-w-7xl mx-auto w-full">
-        {/* Main Content Area */}
-        <main className="flex-1 p-6 lg:p-10 space-y-8 animate-fade-in-up">
+    <div className="mx-auto max-w-[1580px] px-4 py-7 sm:px-6 lg:px-8 lg:py-8 space-y-8 animate-fade-in-up">
           {/* Page Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-outline-variant">
             <div>
@@ -224,14 +188,24 @@ export default function SecurityClientPage() {
                 Monitor cryptographic browser sessions and ensure identity boundaries across bilateral services.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={triggerRefresh}
-              className="px-4 py-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-outline-variant text-xs font-semibold text-primary transition-all flex items-center gap-2"
-            >
-              <span className="material-symbols-outlined text-base">refresh</span>
-              <span>Refresh Status</span>
-            </button>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={triggerRefresh}
+                className="min-h-11 px-4 py-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-outline-variant text-xs font-semibold text-primary transition-all flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined text-base">refresh</span>
+                <span>Refresh Status</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="min-h-11 px-4 py-2 rounded-xl border border-outline-variant hover:bg-surface-container-low text-xs font-semibold text-primary transition-all flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined text-base">logout</span>
+                <span>Sign Out</span>
+              </button>
+            </div>
           </div>
 
           {/* MFA Status Banner */}
@@ -382,8 +356,6 @@ export default function SecurityClientPage() {
               </div>
             )}
           </div>
-        </main>
-      </div>
 
       {/* Revoke Single Session Modal */}
       {showRevokeDialog && sessionToRevoke && (

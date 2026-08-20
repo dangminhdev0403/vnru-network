@@ -78,6 +78,13 @@ test("Repository applies runtime shape guards at the server boundary", () => {
 test("dashboard uses discovery samples without inventing aggregate totals", () => {
   assert.match(dashboardRoute, /getPublications/);
   assert.match(dashboardRoute, /getExperts/);
-  assert.match(dashboardView, /No aggregate contract/);
+  assert.doesNotMatch(dashboardView, /Đối tác đang theo dõi|No aggregate contract|Pending KPI/);
   assert.doesNotMatch(dashboardView, /92%|87%|81%|value:\s*"\d/);
+});
+
+test("admin/iam and security routes are owned by WorkspaceShell", async () => {
+  const adminPage = await readFile(new URL("../app/admin/iam/page.tsx", import.meta.url), "utf8");
+  const securityPage = await readFile(new URL("../app/security/page.tsx", import.meta.url), "utf8");
+  assert.match(adminPage, /WorkspaceShell/);
+  assert.match(securityPage, /WorkspaceShell/);
 });
