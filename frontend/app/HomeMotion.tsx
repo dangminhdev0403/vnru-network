@@ -166,6 +166,7 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
             <div className="flex items-center rounded-xl border border-white/15 bg-white/5 p-1 text-xs font-bold" role="group" aria-label="Ngôn ngữ / Language / Язык">
               {(["vi", "en", "ru"] as const).map((code) => {
                 const active = locale === code;
+                const flagLabel = code === "vi" ? "🇻🇳 VI" : code === "en" ? "🇬🇧 EN" : "🇷🇺 RU";
                 return (
                   <button
                     key={code}
@@ -176,7 +177,7 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
                     }`}
                     aria-pressed={active}
                   >
-                    {code.toUpperCase()}
+                    {flagLabel}
                   </button>
                 );
               })}
@@ -206,6 +207,7 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
       <main id="top">
         {/* ─── Hero Section ─── */}
         <section className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:py-28">
+          <div className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-120 w-full max-w-6xl -translate-x-1/2 bg-[radial-gradient(ellipse_at_top,rgba(29,78,216,0.25),transparent_70%)] blur-2xl" />
           <div className="mx-auto max-w-6xl">
             <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
               <motion.div
@@ -214,6 +216,14 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="max-w-2xl"
               >
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-400/25 bg-blue-500/10 px-3.5 py-1.5 text-xs font-semibold text-blue-300 backdrop-blur-md shadow-xs">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
+                  </span>
+                  <span>{t("Nền tảng Hợp tác Nghiên cứu & Đổi mới Sáng tạo Song phương")}</span>
+                </div>
+
                 <h1 className="font-serif text-3xl font-bold leading-[1.2] tracking-tight sm:text-4xl lg:text-[44px] min-h-24 sm:min-h-28 lg:min-h-30 text-balance">
                   <span className="block text-white">
                     {staticTitle}
@@ -240,13 +250,13 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <a
                     href="#network"
-                    className="inline-flex items-center justify-center rounded-xl bg-[#1d4ed8] px-5 py-3 text-sm font-bold text-white shadow-md transition hover:bg-[#1e40af]"
+                    className="inline-flex items-center justify-center rounded-xl bg-linear-to-r from-[#1d4ed8] to-[#2563eb] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/25 transition-all duration-200 hover:from-[#1e40af] hover:to-[#1d4ed8] hover:shadow-blue-600/40 hover:-translate-y-0.5"
                   >
                     {t("Khám phá mạng tri thức")}
                   </a>
                   <a
                     href="#cooperation"
-                    className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/10 px-5 py-3 text-sm font-bold text-white backdrop-blur-md transition hover:bg-white/20"
+                    className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-bold text-white backdrop-blur-md transition-all duration-200 hover:bg-white/20 hover:-translate-y-0.5"
                   >
                     {t("Tìm hiểu mô hình 2+2")}
                   </a>
@@ -254,15 +264,15 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
 
                 <div className="mt-10 flex flex-wrap items-center gap-6 text-xs font-semibold text-white/90">
                   <span className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-white" />
+                    <span className="grid h-4 w-4 place-items-center rounded-full bg-blue-500/20 text-[10px] text-blue-400">✓</span>
                     {t("Tri thức liên kết xuyên Nga – Việt")}
                   </span>
                   <span className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-white" />
+                    <span className="grid h-4 w-4 place-items-center rounded-full bg-blue-500/20 text-[10px] text-blue-400">✓</span>
                     {t("Gợi ý đối tác có lý do giải thích")}
                   </span>
                   <span className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-white" />
+                    <span className="grid h-4 w-4 place-items-center rounded-full bg-blue-500/20 text-[10px] text-blue-400">✓</span>
                     {t("Semantic search · expert matching")}
                   </span>
                 </div>
