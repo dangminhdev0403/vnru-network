@@ -72,3 +72,20 @@ test("Security client page handles UI actions without raw backend URL exposure",
   // Must not hardcode private tokens
   assert.doesNotMatch(fileContent, /accessToken|refreshToken/i);
 });
+
+test("BFF context switch route proxies correctly and forwards rotated session cookie", async () => {
+  const fileContent = await readFile(
+    new URL("../app/api/auth/context/route.ts", import.meta.url),
+    "utf8",
+  );
+
+  // Must use authServiceUrl helper
+  assert.match(fileContent, /authServiceUrl\("api\/v1\/auth\/context"\)/);
+  // Must pass backendHeaders
+  assert.match(fileContent, /backendHeaders\(request\)/);
+  // Must forward rotated session cookie
+  assert.match(fileContent, /forwardSessionCookie\(backendRes,\s*response\.headers\)/);
+  // Must not bypass cookie flow
+  assert.doesNotMatch(fileContent, /accessToken|refreshToken/i);
+});
+

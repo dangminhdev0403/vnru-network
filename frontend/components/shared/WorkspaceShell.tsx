@@ -73,7 +73,16 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
       <p className="px-3 pb-2 pt-6 text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">Governance</p>
       <nav className="grid gap-1">
         {governanceNavigation.map((item) => (
-          <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-2xl border border-transparent px-3 py-3 text-sm font-bold text-slate-300 transition hover:bg-white/5 hover:text-white">
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={() => setOpen(false)}
+            className={`flex items-center gap-3 rounded-2xl border px-3 py-3 text-sm font-bold transition ${
+              isActive(pathname, item.href)
+                ? "border-sky-400/15 bg-gradient-to-r from-blue-500/20 to-blue-500/5 text-white"
+                : "border-transparent text-slate-300 hover:bg-white/5 hover:text-white"
+            }`}
+          >
             <span className="material-symbols-outlined text-[20px] text-sky-300">{item.icon}</span>
             {item.label}
           </Link>
@@ -94,7 +103,7 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
 
       {open ? (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <button aria-label="Đóng menu" className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm" onClick={() => setOpen(false)} />
+          <button type="button" aria-label="Đóng menu" className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm" onClick={() => setOpen(false)} />
           <div className="relative h-full w-[272px]">{sidebar}</div>
         </div>
       ) : null}

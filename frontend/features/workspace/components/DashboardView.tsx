@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { DiscoveryResult, PublicExpert, PublicPublication } from "../../knowledge/types";
 
-type Props={publications:DiscoveryResult<PublicPublication>;experts:DiscoveryResult<PublicExpert>};
+type Props=Readonly<{publications:DiscoveryResult<PublicPublication>;experts:DiscoveryResult<PublicExpert>}>;
 const metrics=["Đối tác đang theo dõi","Công bố đã lưu","Expert matches","2+2 opportunities"];
 export default function DashboardView({publications,experts}:Props){return <div className="mx-auto max-w-[1580px] px-4 py-7 sm:px-6 lg:px-8 lg:py-8">
   <div className="mb-6 flex flex-wrap items-start justify-between gap-4"><div><span className="inline-flex rounded-full border border-slate-200 bg-white px-3 py-2 text-[10px] font-black uppercase text-slate-500">Runtime workspace · real PUBLIC discovery</span><h1 className="mt-4 text-3xl font-black sm:text-4xl">Workspace Nga–Việt</h1><p className="mt-2 text-sm text-slate-600">Identity/context từ Module 01. Publications/Experts PUBLIC từ Module 02.</p></div><Link href="/workspace/knowledge" className="rounded-2xl bg-blue-600 px-4 py-3 text-sm font-black text-white">Khám phá Module 02 →</Link></div>

@@ -370,12 +370,17 @@ export default function SecurityClientPage() {
 
       {/* Revoke Single Session Modal */}
       {showRevokeDialog && sessionToRevoke && (
-        <div className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="revoke-single-title"
+          className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        >
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-outline-variant space-y-4 animate-scale-in">
             <div className="w-12 h-12 rounded-2xl bg-error-container text-on-error-container flex items-center justify-center">
               <span className="material-symbols-outlined text-[24px] text-error">logout</span>
             </div>
-            <h3 className="font-serif font-bold text-xl text-primary">
+            <h3 id="revoke-single-title" className="font-serif font-bold text-xl text-primary">
               {sessionToRevoke.current ? "Sign Out of Current Session?" : "Revoke Session Token?"}
             </h3>
             <p className="text-xs text-on-surface-variant leading-relaxed">
@@ -385,6 +390,7 @@ export default function SecurityClientPage() {
             </p>
             <div className="flex justify-end gap-3 pt-2">
               <button
+                type="button"
                 disabled={actionLoading}
                 onClick={() => setShowRevokeDialog(false)}
                 className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface"
@@ -392,6 +398,7 @@ export default function SecurityClientPage() {
                 Cancel
               </button>
               <button
+                type="button"
                 disabled={actionLoading}
                 onClick={handleRevokeSession}
                 className="px-5 py-2 rounded-xl bg-error text-white text-xs font-semibold hover:bg-error/90 transition-all flex items-center gap-2"
@@ -406,17 +413,23 @@ export default function SecurityClientPage() {
 
       {/* Revoke Others Modal */}
       {showRevokeOthersDialog && (
-        <div className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="revoke-others-title"
+          className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        >
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-outline-variant space-y-4 animate-scale-in">
             <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center">
               <span className="material-symbols-outlined text-[24px]">power_settings_new</span>
             </div>
-            <h3 className="font-serif font-bold text-xl text-primary">Revoke All Other Sessions?</h3>
+            <h3 id="revoke-others-title" className="font-serif font-bold text-xl text-primary">Revoke All Other Sessions?</h3>
             <p className="text-xs text-on-surface-variant leading-relaxed">
               All other active devices will be signed out immediately. Your current session will remain active.
             </p>
             <div className="flex justify-end gap-3 pt-2">
               <button
+                type="button"
                 disabled={actionLoading}
                 onClick={() => setShowRevokeOthersDialog(false)}
                 className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface"
@@ -424,6 +437,7 @@ export default function SecurityClientPage() {
                 Cancel
               </button>
               <button
+                type="button"
                 disabled={actionLoading}
                 onClick={handleRevokeOthers}
                 className="px-5 py-2 rounded-xl bg-error text-white text-xs font-semibold hover:bg-error/90 transition-all flex items-center gap-2"

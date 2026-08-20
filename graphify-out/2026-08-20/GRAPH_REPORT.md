@@ -1,16 +1,16 @@
 # Graph Report - vnru-network  (2026-08-20)
 
 ## Corpus Check
-- 199 files · ~166,575 words
+- 191 files · ~141,159 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1735 nodes · 2127 edges · 145 communities (127 shown, 18 thin omitted)
+- 1499 nodes · 1898 edges · 127 communities (109 shown, 18 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a6e827ee`
+- Built from commit: `5b152ddc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -38,7 +38,6 @@
 - MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION
 - MODULE 4 — TRAINING, KNOWLEDGE TRANSFER & ACADEMIC EXCHANGE
 - Module 1 Antigravity Assignment Plan
-- docs/README.md
 - session-public.ts
 - Frontend Architecture
 - AuthenticationController
@@ -122,36 +121,18 @@
 - home-i18n.test.mjs
 - README.md
 - rxjs
-- UI Quality Pro-Max
-- Appendix B - Canonical Sources (read these before reinventing)
-- Design Audit
-- Analysis & Synthesis Instructions
-- Agent Skill: Principal UI/UX Architect & Motion Choreographer (Awwwards-Tier)
-- Design System: Taste Standard
-- 4. DESIGN ENGINEERING DIRECTIVES (Bias Correction)
-- 10. REFERENCE VOCABULARY (Pattern Names the Agent Should Know)
-- tasteskill: Anti-Slop Frontend Skill
-- 9. AI TELLS (Forbidden Patterns)
-- 11. REDESIGN PROTOCOL
-- 3. DEFAULT ARCHITECTURE & CONVENTIONS
-- 6. PERFORMANCE & ACCESSIBILITY GUARDRAILS
-- 0. BRIEF INFERENCE (Read the Room Before Anything Else)
-- 12. THE BLOCK LIBRARY (Contract - Implementations Land Here Iteratively)
-- 5. CONTEXT-AWARE PROACTIVITY
-- 8. DARK MODE PROTOCOL
-- 7. DIAL DEFINITIONS (Technical Reference)
 
 ## God Nodes (most connected - your core abstractions)
 1. `MODULE 1 — IAM / GOVERNANCE` - 42 edges
 2. `authServiceUrl()` - 29 edges
 3. `MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY` - 29 edges
-4. `UI Quality Pro-Max` - 24 edges
-5. `backendHeaders()` - 22 edges
-6. `compilerOptions` - 22 edges
-7. `MODULE 3 — BILATERAL RESEARCH FUNDING & PROJECT MANAGEMENT` - 22 edges
-8. `MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION` - 22 edges
-9. `SessionService` - 21 edges
-10. `MODULE 4 — TRAINING, KNOWLEDGE TRANSFER & ACADEMIC EXCHANGE` - 20 edges
+4. `backendHeaders()` - 22 edges
+5. `compilerOptions` - 22 edges
+6. `MODULE 3 — BILATERAL RESEARCH FUNDING & PROJECT MANAGEMENT` - 22 edges
+7. `MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION` - 22 edges
+8. `SessionService` - 21 edges
+9. `MODULE 4 — TRAINING, KNOWLEDGE TRANSFER & ACADEMIC EXCHANGE` - 20 edges
+10. `MODULE 6 — INTERNAL MONITORING & REPORTING DASHBOARD` - 20 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `bootstrap()` --indirect_call--> `AppModule`  [INFERRED]
@@ -168,15 +149,15 @@
 ## Import Cycles
 - None detected.
 
-## Communities (145 total, 18 thin omitted)
+## Communities (127 total, 18 thin omitted)
 
 ### Community 0 - "devDependencies"
 Cohesion: 0.04
 Nodes (49): eslint-config-prettier, @eslint/eslintrc, @eslint/js, eslint-plugin-prettier, globals, @nestjs/schematics, @nestjs/testing, prettier (+41 more)
 
 ### Community 1 - "app.module.ts"
-Cohesion: 0.14
-Nodes (15): AppModule, Module, configSchema, validateConfig(), bootstrap(), AccessControlModule, Module, AuthenticationModule (+7 more)
+Cohesion: 0.18
+Nodes (9): AppModule, Module, configSchema, validateConfig(), bootstrap(), AccessControlModule, Module, SecurityModule (+1 more)
 
 ### Community 2 - "compilerOptions"
 Cohesion: 0.09
@@ -250,21 +231,17 @@ Nodes (19): 10. Conceptual data model, 11. Authorization, 12. UI capability, 13.
 Cohesion: 0.10
 Nodes (20): Approval boundary, Assignment model, Dispatch constraints, Git workflow, Module 1 Antigravity Assignment Plan, Ponytail deletions from the earlier plan, Slice 1A — Prisma + Zod foundation, Slice 1B — Internal identity (+12 more)
 
-### Community 24 - "docs/README.md"
-Cohesion: 0.16
-Nodes (7): 1. Security & Authentication Boundaries, 2. Data Ownership & Microservice Boundaries, 3. Package & Dependency Governance, 4. API & Resource Design, 5. Working Tree & Scope Constraints, 6. Verification Request Dispatch, VN-RU Network Global Rules (Authoritative)
-
 ### Community 25 - "session-public.ts"
-Cohesion: 0.16
-Nodes (14): AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord, Inject (+6 more)
+Cohesion: 0.11
+Nodes (20): Optional, AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord (+12 more)
 
 ### Community 26 - "Frontend Architecture"
 Cohesion: 0.11
 Nodes (18): 10. State Management, 11. Frontend and Backend Boundary, 12. Performance Principles, 13. Dependency Direction, 14. Architecture Rules Summary, 1. Purpose, 2. Docs Index, 3. Core Principles (+10 more)
 
 ### Community 27 - "AuthenticationController"
-Cohesion: 0.10
-Nodes (15): Delete, Optional, Res, AuthenticationController, Body, Controller, Get, Param (+7 more)
+Cohesion: 0.15
+Nodes (8): Delete, Res, AuthenticationController, Controller, Get, Param, Query, UseGuards
 
 ### Community 28 - "🇻🇳🇷🇺 VN-RU Network"
 Cohesion: 0.12
@@ -275,16 +252,16 @@ Cohesion: 0.13
 Nodes (15): Anti-patterns, Authentication and Session, Authorization Context, Caching, Contract Rules, Error Contract, Frontend API Contract Guide, Generated Contracts (+7 more)
 
 ### Community 31 - "identity-public.ts"
-Cohesion: 0.32
-Nodes (7): ExternalIdentityRecord, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput, Inject, Injectable
+Cohesion: 0.26
+Nodes (9): IdentityModule, Module, ExternalIdentityRecord, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput, Inject (+1 more)
 
 ### Community 32 - "authentication.service.ts"
-Cohesion: 0.17
-Nodes (18): AuthenticatedRequest, AuthenticatedRequestGuard, extractSessionCookie(), isRecord(), RequestWithCookies, RequireMfa(), RequirePermission(), context() (+10 more)
+Cohesion: 0.12
+Nodes (25): paginationSchema, roleAssignmentSchema, userStatusSchema, uuidSchema, AuthenticatedRequest, AuthenticatedRequestGuard, extractSessionCookie(), isRecord() (+17 more)
 
 ### Community 33 - "authentication.module.ts"
-Cohesion: 0.12
-Nodes (16): mockClientInstance, mockIssuerInstance, MockIdentityService, MockOidcService, MockSessionService, CreateAuthorizationRequestParams, HandleCallbackParams, KeycloakOidcService (+8 more)
+Cohesion: 0.11
+Nodes (18): AuthenticationModule, mockClientInstance, mockIssuerInstance, Module, MockIdentityService, MockOidcService, MockSessionService, CreateAuthorizationRequestParams (+10 more)
 
 ### Community 34 - "VN-RU Network System Architecture"
 Cohesion: 0.17
@@ -343,8 +320,8 @@ Cohesion: 0.33
 Nodes (6): 38. Acceptance Criteria — IAM, Authentication, Authorization, Integration, Security, Workspace
 
 ### Community 48 - "Agent Instructions — VN-RU Network"
-Cohesion: 0.33
-Nodes (5): Agent Instructions — VN-RU Network, Execution rules, Mandatory pre-code gate, Mandatory UI/UX quality routing, Navigation
+Cohesion: 0.40
+Nodes (4): Agent Instructions — VN-RU Network, Execution rules, Mandatory pre-code gate, Navigation
 
 ### Community 49 - "VN-RU Network — Centralized Open Decisions & Unresolved Questions"
 Cohesion: 0.40
@@ -367,8 +344,8 @@ Cohesion: 0.10
 Nodes (22): AppModule, Module, ExpertController, Controller, Get, Query, isPlainObject(), isValidISODate() (+14 more)
 
 ### Community 72 - "iam-admin.service.ts"
-Cohesion: 0.08
-Nodes (27): Patch, IamAdminController, paginationSchema, roleAssignmentSchema, Body, Controller, Get, Param (+19 more)
+Cohesion: 0.09
+Nodes (23): Patch, IamAdminController, Body, Controller, Get, Param, Post, Query (+15 more)
 
 ### Community 73 - "Module 2 — AGY Swarm Implementation Plan"
 Cohesion: 0.06
@@ -451,8 +428,8 @@ Cohesion: 0.22
 Nodes (8): 0.1. Three canonical access areas, 0.2. Actors and participation forms, 0.3. Portal-level onboarding flow, 0.4. Canonical module scope after the update, 0.5. Replacements that must be treated as canonical, 0.6. Confidence labels, 0. PORTAL-WIDE IMPLEMENTATION BASELINE AFTER REVIEW, SOURCE UPDATE — NEW BOUNDARIES TO APPLY
 
 ### Community 93 - "VN-RU Network Global Rules (Authoritative)"
-Cohesion: 0.06
-Nodes (30): 10. FINAL PRE-FLIGHT CHECK, 1. ACTIVE BASELINE CONFIGURATION, 2. DEFAULT ARCHITECTURE & CONVENTIONS, 3. DESIGN ENGINEERING DIRECTIVES (Bias Correction), 4. CREATIVE PROACTIVITY (Anti-Slop Implementation), 5. PERFORMANCE GUARDRAILS, 6. TECHNICAL REFERENCE (Dial Definitions), 7. AI TELLS (Forbidden Patterns) (+22 more)
+Cohesion: 0.25
+Nodes (7): 1. Security & Authentication Boundaries, 2. Data Ownership & Microservice Boundaries, 3. Package & Dependency Governance, 4. API & Resource Design, 5. Working Tree & Scope Constraints, 6. Verification Request Dispatch, VN-RU Network Global Rules (Authoritative)
 
 ### Community 94 - "NotFoundClient.tsx"
 Cohesion: 0.29
@@ -526,80 +503,8 @@ Nodes (4): moduleFileExtensions, js, json, ts
 Cohesion: 0.50
 Nodes (4): 3.1. Public / Discovery, 3.2. Role-based Workspace, 3.3. Governance & Administration, 3. Public / Workspace / Governance
 
-### Community 127 - "UI Quality Pro-Max"
-Cohesion: 0.08
-Nodes (24): 10. Color and visual hierarchy audit, 11. Icons and imagery audit, 12. Information architecture and UX audit, 13. State-completeness audit, 14. Interaction audit, 15. Accessibility baseline, 16. Runtime and performance-stability audit, 17. Security-sensitive UI rules (+16 more)
-
-### Community 128 - "Appendix B - Canonical Sources (read these before reinventing)"
-Cohesion: 0.09
-Nodes (21): APPENDICES - Real Source-Backed Reference Material, Appendix A - Install Commands per Design System, Appendix B - Canonical Sources (read these before reinventing), Appendix C - Apple Liquid Glass: Honest Web Approximation, Apple Liquid Glass (Apple platforms only), Atlassian, Bootstrap, Carbon (+13 more)
-
-### Community 129 - "Design Audit"
-Cohesion: 0.10
-Nodes (19): Code Quality, Color and Surfaces, Component Patterns, Content, Design Audit, Fix Priority, How This Works, Iconography (+11 more)
-
-### Community 130 - "Analysis & Synthesis Instructions"
-Cohesion: 0.11
-Nodes (18): 1. Define the Atmosphere, 2. Map the Color Palette, 3. Establish Typography Rules, 4. Define the Hero Section, 5. Describe Component Stylings, 6. Define Layout Principles, 7. Define Responsive Rules, 8. Encode Motion Philosophy (+10 more)
-
-### Community 131 - "Agent Skill: Principal UI/UX Architect & Motion Choreographer (Awwwards-Tier)"
-Cohesion: 0.11
-Nodes (17): 1. Meta Information & Core Directive, 2. THE "ABSOLUTE ZERO" DIRECTIVE (STRICT ANTI-PATTERNS), 3. THE CREATIVE VARIANCE ENGINE, 4. HAPTIC MICRO-AESTHETICS (COMPONENT MASTERY), 5. MOTION CHOREOGRAPHY (FLUID DYNAMICS), 6. PERFORMANCE GUARDRAILS, 7. EXECUTION PROTOCOL, 8. PRE-OUTPUT CHECKLIST (+9 more)
-
-### Community 132 - "Design System: Taste Standard"
-Cohesion: 0.13
-Nodes (14): 1. Visual Theme & Atmosphere, 2. Color Palette & Roles, 3. Typography Rules, 4. Component Stylings, 5. Hero Section, 6. Layout Principles, 7. Responsive Rules, 8. Motion & Interaction (Code-Phase Intent) (+6 more)
-
-### Community 133 - "4. DESIGN ENGINEERING DIRECTIVES (Bias Correction)"
-Cohesion: 0.17
-Nodes (12): 4.10 Quotes & Testimonials, 4.11 Page Theme Lock (Light / Dark Mode Consistency), 4.1 Typography, 4.2 Color Calibration, 4.3 Layout Diversification, 4.4 Materiality, Shadows, Cards, 4.5 Interactive UI States, 4.6 Data & Form Patterns (+4 more)
-
-### Community 134 - "10. REFERENCE VOCABULARY (Pattern Names the Agent Should Know)"
-Cohesion: 0.20
-Nodes (10): 10. REFERENCE VOCABULARY (Pattern Names the Agent Should Know), Animation Library Choice, Cards & Containers, Galleries & Media, Hero Paradigms, Layout & Grids, Micro-Interactions & Effects, Navigation & Menus (+2 more)
-
-### Community 135 - "tasteskill: Anti-Slop Frontend Skill"
-Cohesion: 0.20
-Nodes (10): 13. OUT OF SCOPE, 14. FINAL PRE-FLIGHT CHECK, 1.A Dial Inference (design read → dial values), 1.B Use-Case Presets, 1.C How the Dials Drive Output, 1. THE THREE DIALS (Core Configuration), 2.A When to reach for a real design system (use official packages), 2.B When the brief is an aesthetic, not a system (+2 more)
-
-### Community 136 - "9. AI TELLS (Forbidden Patterns)"
-Cohesion: 0.25
-Nodes (8): 9.A Visual & CSS, 9. AI TELLS (Forbidden Patterns), 9.B Typography, 9.C Layout & Spacing, 9.D Content & Data ("Jane Doe" Effect), 9.E External Resources & Components, 9.F Production-Test Tells (banned outright), 9.G EM-DASH BAN (the single most-violated Tell)
-
-### Community 137 - "11. REDESIGN PROTOCOL"
-Cohesion: 0.29
-Nodes (7): 11.A Detect the Mode (first action), 11.B Audit Before Touching, 11.C Preservation Rules, 11.D Modernisation Levers (priority order), 11.E Decision Tree: Targeted Evolution vs Full Redesign, 11.F What Never Changes Silently, 11. REDESIGN PROTOCOL
-
-### Community 138 - "3. DEFAULT ARCHITECTURE & CONVENTIONS"
-Cohesion: 0.29
-Nodes (7): 3.A Stack, 3.B State, 3.C Icons, 3.D Emoji Policy, 3. DEFAULT ARCHITECTURE & CONVENTIONS, 3.E Responsiveness & Layout Mechanics, 3.F Dependency Verification (mandatory)
-
-### Community 139 - "6. PERFORMANCE & ACCESSIBILITY GUARDRAILS"
-Cohesion: 0.29
-Nodes (7): 6.A Hardware Acceleration, 6.B Reduced Motion (mandatory), 6.C Dark Mode (mandatory for any consumer-facing page), 6.D Core Web Vitals Targets, 6.E DOM Cost, 6.F Z-Index Restraint, 6. PERFORMANCE & ACCESSIBILITY GUARDRAILS
-
-### Community 140 - "0. BRIEF INFERENCE (Read the Room Before Anything Else)"
-Cohesion: 0.40
-Nodes (5): 0.A Read these signals first, 0.B Output a one-line "Design Read" before generating, 0. BRIEF INFERENCE (Read the Room Before Anything Else), 0.C If the brief is ambiguous, ask one question, do not guess, 0.D Anti-Default Discipline
-
-### Community 141 - "12. THE BLOCK LIBRARY (Contract - Implementations Land Here Iteratively)"
-Cohesion: 0.40
-Nodes (5): 12.A File Location, 12.B Required Frontmatter, 12.C Required Body Sections, 12.D Block-Library Discipline, 12. THE BLOCK LIBRARY (Contract - Implementations Land Here Iteratively)
-
-### Community 142 - "5. CONTEXT-AWARE PROACTIVITY"
-Cohesion: 0.40
-Nodes (5): 5.A Sticky-Stack - Canonical Skeleton, 5.B Horizontal-Pan - Canonical Skeleton, 5.C Scroll-Reveal Stagger - Canonical Skeleton (lighter alternative), 5. CONTEXT-AWARE PROACTIVITY, 5.D Forbidden Animation Patterns
-
-### Community 143 - "8. DARK MODE PROTOCOL"
-Cohesion: 0.40
-Nodes (5): 8.A Token Strategy (pick one, stick to it), 8.B Do Not Prescribe Specific Colors Here, 8.C Default Mode, 8.D Test in Both Modes Before Finishing, 8. DARK MODE PROTOCOL
-
-### Community 144 - "7. DIAL DEFINITIONS (Technical Reference)"
-Cohesion: 0.50
-Nodes (4): 7. DIAL DEFINITIONS (Technical Reference), DESIGN_VARIANCE (Level 1-10), MOTION_INTENSITY (Level 1-10), VISUAL_DENSITY (Level 1-10)
-
 ## Knowledge Gaps
-- **1033 isolated node(s):** `Locale`, `resources`, `Locale`, `Translation`, `translations` (+1028 more)
+- **839 isolated node(s):** `Locale`, `resources`, `Locale`, `Translation`, `translations` (+834 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -607,16 +512,16 @@ Nodes (4): 7. DIAL DEFINITIONS (Technical Reference), DESIGN_VARIANCE (Level 1-1
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `MODULE 1 — IAM / GOVERNANCE` connect `MODULE 1 — IAM / GOVERNANCE` to `29. API Contract`, `23. IAM — detailed domain model`, `38. Acceptance Criteria — IAM`, `16. IAM UI`, `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Why does `MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION` connect `MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION` to `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Why does `MODULE 3 — BILATERAL RESEARCH FUNDING & PROJECT MANAGEMENT` connect `MODULE 3 — BILATERAL RESEARCH FUNDING & PROJECT MANAGEMENT` to `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **Why does `MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY` connect `MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY` to `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `Locale`, `resources`, `Locale` to the rest of the system?**
-  _1033 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _839 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
-- **Should `app.module.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.14245014245014245 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
+- **Should `devDependencies` be split into smaller, more focused modules?**
+  _Cohesion score 0.043478260869565216 - nodes in this community are weakly interconnected._

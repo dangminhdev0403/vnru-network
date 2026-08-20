@@ -617,9 +617,14 @@ export default function IamClientPage() {
 
       {/* Status Change Confirmation Modal */}
       {statusTargetUser && (
-        <div className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="status-modal-title"
+          className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        >
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-outline-variant space-y-4 animate-scale-in">
-            <h3 className="font-serif font-bold text-xl text-primary">
+            <h3 id="status-modal-title" className="font-serif font-bold text-xl text-primary">
               {statusTargetUser.status === "ACTIVE" ? "Deactivate User Identity?" : "Activate User Identity?"}
             </h3>
             <p className="text-xs text-on-surface-variant leading-relaxed">
