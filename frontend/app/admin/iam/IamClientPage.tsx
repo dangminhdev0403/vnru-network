@@ -231,7 +231,7 @@ export default function IamClientPage() {
   // 403 Access Denied State (Authoritative Backend Boundary)
   if (accessDenied) {
     return (
-      <div className="min-h-screen bg-surface flex flex-col items-center justify-center p-6 text-on-surface antialiased font-sans">
+      <div className="flex flex-col items-center justify-center p-6 text-on-surface antialiased font-sans py-12">
         <div className="max-w-md w-full bg-white rounded-3xl border border-outline-variant p-8 shadow-xl text-center space-y-4 animate-scale-in">
           <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mx-auto">
             <span className="material-symbols-outlined text-3xl">shield_person</span>
@@ -255,29 +255,7 @@ export default function IamClientPage() {
   }
 
   return (
-    <div className="bg-background text-on-background min-h-screen flex flex-col font-sans antialiased">
-      {/* Top Header */}
-      <header className="bg-primary text-white sticky top-0 z-40 border-b border-primary-container">
-        <div className="flex justify-between items-center px-6 lg:px-10 h-16 max-w-7xl mx-auto w-full">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-secondary flex items-center justify-center text-white font-serif font-bold text-sm shadow-sm">
-              VR
-            </div>
-            <div>
-              <span className="font-serif font-bold text-base tracking-tight">IAM Governance Console</span>
-              <p className="text-[10px] text-white/70 hidden sm:block">Module 1 Identity &amp; Access Administration</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 text-xs">
-            <span className="text-white/80 hidden md:inline">Traditions and Friendship Foundation</span>
-            <Link href="/" className="px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold transition-all">
-              Exit Console
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-6 lg:px-10 py-8 flex-grow w-full space-y-6 animate-fade-in-up">
+    <div className="mx-auto max-w-[1580px] px-4 py-7 sm:px-6 lg:px-8 lg:py-8 space-y-6 animate-fade-in-up">
         {/* Success Toast */}
         {globalSuccessMessage && (
           <div className="p-4 bg-emerald-50 text-emerald-800 rounded-2xl border border-emerald-200 flex items-center justify-between shadow-xs">
@@ -628,7 +606,6 @@ export default function IamClientPage() {
             </form>
           </div>
         )}
-      </main>
 
       {/* Status Change Confirmation Modal */}
       {statusTargetUser && (
