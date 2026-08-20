@@ -13,28 +13,38 @@ export const useLocale = create<{ locale: Locale; setLocale: (locale: Locale) =>
   persist((set) => ({ locale: "vi", setLocale: (locale) => set({ locale }) }), { name: "vnru-locale" })
 );
 
-const HERO_SEQUENCES: Record<Locale, [string, string]> = {
+const HERO_STATIC_TITLE: Record<Locale, string> = {
+  vi: "Mạng lưới tri thức Nga–Việt",
+  ru: "Сеть знаний Россия–Вьетнам",
+  en: "RU–VN Knowledge Network",
+};
+
+const HERO_DYNAMIC_PHRASES: Record<Locale, string[]> = {
   vi: [
-    "Mạng lưới tri thức Nga–Việt",
-    "Mở rộng mạng lưới nghiên cứu và hình thành đối tác thực chất.",
+    "mở rộng mạng lưới nghiên cứu và hình thành đối tác thực chất.",
+    "kết nối chuyên gia, công bố và cơ hội hợp tác song phương.",
+    "thúc đẩy liên kết viện trường, doanh nghiệp và dự án 2+2.",
   ],
   ru: [
-    "Сеть знаний Россия–Вьетнам",
-    "Расширяя исследовательскую сеть и формируя реальные партнерства.",
+    "расширяя исследовательскую сеть và формируя реальные партнерства.",
+    "объединяя экспертов, публикации và возможности сотрудничества.",
+    "развивая связи университетов, предприятий và проектов 2+2.",
   ],
   en: [
-    "RU–VN Knowledge Network",
-    "Expanding research networks and fostering impactful partnerships.",
+    "expanding research networks and fostering impactful partnerships.",
+    "connecting experts, publications, and collaborative opportunities.",
+    "advancing bilateral academic, enterprise, and 2+2 project ties.",
   ],
 };
 
-function useHeroSequence(locale: Locale) {
+function useHeroDynamicText(locale: Locale) {
   const shouldReduceMotion = useReducedMotion();
   const [displayedText, setDisplayedText] = useState("");
   const [opacity, setOpacity] = useState(1);
   const showCaret = true;
 
-  const phrases = HERO_SEQUENCES[locale] || HERO_SEQUENCES.vi;
+  const staticTitle = HERO_STATIC_TITLE[locale] || HERO_STATIC_TITLE.vi;
+  const phrases = HERO_DYNAMIC_PHRASES[locale] || HERO_DYNAMIC_PHRASES.vi;
 
   useEffect(() => {
     if (shouldReduceMotion) {
@@ -57,29 +67,29 @@ function useHeroSequence(locale: Locale) {
         if (charIdx < currentPhrase.length) {
           charIdx++;
           setDisplayedText(currentPhrase.slice(0, charIdx));
-          timeoutId = setTimeout(run, 65);
+          timeoutId = setTimeout(run, 60);
         } else {
           step = "HOLD";
-          timeoutId = setTimeout(run, 2000);
+          timeoutId = setTimeout(run, 2200);
         }
       } else if (step === "HOLD") {
         step = "FADE";
         setOpacity(0);
-        timeoutId = setTimeout(run, 500);
+        timeoutId = setTimeout(run, 450);
       } else if (step === "FADE") {
         step = "PAUSE";
         setDisplayedText("");
         setOpacity(1);
         phraseIdx = (phraseIdx + 1) % phrases.length;
         charIdx = 0;
-        timeoutId = setTimeout(run, 250);
+        timeoutId = setTimeout(run, 200);
       } else if (step === "PAUSE") {
         step = "TYPE";
         timeoutId = setTimeout(run, 50);
       }
     };
 
-    timeoutId = setTimeout(run, 350);
+    timeoutId = setTimeout(run, 400);
 
     return () => {
       isMounted = false;
@@ -88,17 +98,22 @@ function useHeroSequence(locale: Locale) {
   }, [locale, phrases, shouldReduceMotion]);
 
   if (shouldReduceMotion) {
-    return { text: phrases[0], opacity: 1, showCaret: false };
+    return {
+      staticTitle,
+      dynamicText: phrases[0],
+      opacity: 1,
+      showCaret: false,
+    };
   }
 
-  return { text: displayedText, opacity, showCaret };
+  return { staticTitle, dynamicText: displayedText, opacity, showCaret };
 }
 
 export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: boolean }>) {
   const { locale, setLocale } = useLocale();
   const shouldReduceMotion = useReducedMotion();
   const [loggingOut, setLoggingOut] = useState(false);
-  const { text: heroText, opacity: heroOpacity, showCaret } = useHeroSequence(locale);
+  const { staticTitle, dynamicText, opacity: dynamicOpacity, showCaret } = useHeroDynamicText(locale);
 
   const t = (key: string): string => {
     const dict = (translations as Record<Locale, Record<string, string>>)[locale] || translations.vi;
@@ -196,19 +211,24 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="max-w-2xl"
               >
-                <h1 className="font-serif text-3xl font-bold leading-[1.24] tracking-tight text-white sm:text-4xl lg:text-[44px] min-h-24 sm:min-h-32 lg:min-h-36 text-balance">
-                  <span
-                    className="inline transition-opacity duration-500 ease-in-out"
-                    style={{ opacity: heroOpacity }}
-                  >
-                    {heroText}
+                <h1 className="font-serif text-3xl font-bold leading-[1.24] tracking-tight sm:text-4xl lg:text-[44px] min-h-28 sm:min-h-32 lg:min-h-36 text-balance">
+                  <span className="block text-white">
+                    {staticTitle}
                   </span>
-                  {showCaret && (
+                  <span className="mt-1.5 block text-[#93c5fd] text-2xl sm:text-3xl lg:text-[38px] font-semibold leading-[1.3]">
                     <span
-                      className="inline-block w-0.75 sm:w-1 h-[0.88em] ml-1 bg-[#60a5fa] animate-pulse align-middle"
-                      aria-hidden="true"
-                    />
-                  )}
+                      className="inline transition-opacity duration-500 ease-in-out"
+                      style={{ opacity: dynamicOpacity }}
+                    >
+                      {dynamicText}
+                    </span>
+                    {showCaret && (
+                      <span
+                        className="inline-block w-0.75 sm:w-1 h-[0.85em] ml-1.5 bg-[#60a5fa] animate-pulse align-middle"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </span>
                 </h1>
                 <p className="mt-6 text-base leading-relaxed text-white/90 sm:text-lg">
                   {t("RU–VN Portal kết nối nhà khoa học, công bố, chủ đề nghiên cứu, tổ chức, doanh nghiệp và dự án thành một mạng tri thức xuyên biên giới — nơi bản đồ Nga–Việt không chỉ để nhìn thấy địa lý, mà để nhìn thấy các luồng liên kết, tín hiệu hợp tác và cơ hội hình thành consortium thực sự.")}
