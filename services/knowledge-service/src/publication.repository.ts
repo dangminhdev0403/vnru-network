@@ -26,4 +26,11 @@ export class PublicationRepository {
       include: { authors: { orderBy: { displayOrder: 'asc' } }, topics: { include: { topic: true } } },
     });
   }
+
+  findOnePublic(id: string) {
+    return this.prisma.publication.findFirst({
+      where: { id, visibility: 'PUBLIC' },
+      include: { authors: { orderBy: { displayOrder: 'asc' } }, topics: { include: { topic: true } } },
+    });
+  }
 }
