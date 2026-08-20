@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { create } from "zustand";
@@ -13,10 +13,72 @@ export const useLocale = create<{ locale: Locale; setLocale: (locale: Locale) =>
   persist((set) => ({ locale: "vi", setLocale: (locale) => set({ locale }) }), { name: "vnru-locale" })
 );
 
+const TYPING_PHRASES: Record<Locale, string[]> = {
+  vi: [
+    "tri thức Nga–Việt",
+    "hợp tác nghiên cứu 2+2",
+    "chuyên gia & viện trường",
+    "kết nối đổi mới sáng tạo",
+  ],
+  ru: [
+    "знаний Россия–Вьетнам",
+    "сотрудничества 2+2",
+    "экспертов и институтов",
+    "инноваций и технологий",
+  ],
+  en: [
+    "RU–VN Knowledge Network",
+    "2+2 Research Cooperation",
+    "Experts & Institutions",
+    "Cross-Border Innovation",
+  ],
+};
+
+function useTypewriter(words: string[], typingSpeed = 65, deletingSpeed = 35, pauseTime = 2400) {
+  const [index, setIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (shouldReduceMotion || words.length === 0) return;
+
+    const currentWord = words[index % words.length];
+
+    if (!isDeleting && subIndex === currentWord.length) {
+      const timeout = setTimeout(() => setIsDeleting(true), pauseTime);
+      return () => clearTimeout(timeout);
+    }
+
+    if (isDeleting && subIndex === 0) {
+      const timeout = setTimeout(() => {
+        setIsDeleting(false);
+        setIndex((prev) => (prev + 1) % words.length);
+      }, 200);
+      return () => clearTimeout(timeout);
+    }
+
+    const timeout = setTimeout(() => {
+      setSubIndex((prev) => prev + (isDeleting ? -1 : 1));
+    }, isDeleting ? deletingSpeed : typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [subIndex, isDeleting, index, words, typingSpeed, deletingSpeed, pauseTime, shouldReduceMotion]);
+
+  if (shouldReduceMotion || words.length === 0) {
+    return words[0] || "";
+  }
+
+  return words[index % words.length].substring(0, subIndex);
+}
+
 export function HomeMotion({ isAuthenticated }: { isAuthenticated: boolean }) {
   const { locale, setLocale } = useLocale();
   const shouldReduceMotion = useReducedMotion();
   const [loggingOut, setLoggingOut] = useState(false);
+
+  const phrases = TYPING_PHRASES[locale] || TYPING_PHRASES.vi;
+  const typedText = useTypewriter(phrases);
 
   const t = (key: string): string => {
     const dict = (translations as Record<Locale, Record<string, string>>)[locale] || translations.vi;
@@ -114,10 +176,13 @@ export function HomeMotion({ isAuthenticated }: { isAuthenticated: boolean }) {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="max-w-2xl"
               >
-                <h1 className="font-serif text-3xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+                <h1 className="font-serif text-3xl font-bold leading-[1.25] tracking-tight text-white sm:text-5xl lg:text-6xl">
                   {t("Mạng lưới")}{" "}
-                  <span className="text-white underline decoration-[#3b82f6] decoration-4 underline-offset-8">
-                    {t("tri thức Nga–Việt")}
+                  <span className="inline-block rounded-2xl bg-blue-600/25 border border-blue-400/30 px-3 py-1 text-white shadow-inner backdrop-blur-md">
+                    <span className="bg-linear-to-r from-white via-sky-100 to-blue-200 bg-clip-text text-transparent font-bold">
+                      {typedText}
+                    </span>
+                    <span className="inline-block w-[3px] h-[0.8em] ml-1.5 bg-sky-400 animate-pulse align-middle" />
                   </span>{" "}
                   {t("với bản đồ kết nối sống động.")}
                 </h1>
