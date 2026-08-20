@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { encodeCursor, type PublicationQuery } from './publication-query';
-import { projectSummary } from './publication-public';
+import { projectSummary, projectDetail } from './publication-public';
 import { PublicationRepository } from './publication.repository';
 
 @Injectable()
@@ -17,5 +17,11 @@ export class PublicationService {
       }),
       nextCursor: hasMore ? encodeCursor({ createdAt: visible.at(-1)!.createdAt.toISOString(), id: visible.at(-1)!.id }) : null,
     };
+  }
+  async findOne(id: string) {
+    const row = await this.repository.findOnePublic(id);
+    if (!row) return null;
+    const projected = projectDetail(row);
+    return { ...projected, topics: (projected.topics ?? []).map((entry: any) => entry.topic) };
   }
 }
