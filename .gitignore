@@ -41,3 +41,13 @@ graphify-out/cache/
 # nested repository backups
 **/.git.backup
 **/.git.backup.zip
+
+# Agent runtime & local supervisor artifacts
+.agy-supervisor/
+**/.agy-supervisor/
+.hermes/
+**/.hermes/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+

@@ -39,7 +39,7 @@ export default function DashboardView({ publications, experts }: Props) {
 
       <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {metrics.map((label) => (
-          <article key={label} className="rounded-[20px] border border-slate-200 bg-white p-5">
+          <article key={label} className="rounded-2xl border border-slate-200 bg-white p-5">
             <span className="text-xs font-bold text-slate-600">{label}</span>
             <strong className="mt-2 block text-xl font-black text-slate-400">Pending</strong>
             <span className="mt-3 inline-flex rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-xs font-black text-amber-900">
@@ -50,7 +50,7 @@ export default function DashboardView({ publications, experts }: Props) {
       </div>
 
       <div className="mt-5 grid gap-5 lg:grid-cols-2">
-        <section className="rounded-[24px] border border-slate-200 bg-white p-6">
+        <section className="rounded-3xl border border-slate-200 bg-white p-6">
           <div className="flex justify-between">
             <h3 className="text-lg font-black text-slate-900">Publications</h3>
             <Link href="/workspace/knowledge" className="text-xs font-black text-blue-600 hover:underline">
@@ -73,7 +73,7 @@ export default function DashboardView({ publications, experts }: Props) {
           )}
         </section>
 
-        <section className="rounded-[24px] border border-slate-200 bg-white p-6">
+        <section className="rounded-3xl border border-slate-200 bg-white p-6">
           <div className="flex justify-between">
             <h3 className="text-lg font-black text-slate-900">Experts</h3>
             <span className="text-xs font-black text-amber-900">Matching pending</span>

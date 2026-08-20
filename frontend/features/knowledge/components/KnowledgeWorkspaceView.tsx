@@ -53,7 +53,7 @@ export default function KnowledgeWorkspaceView({ publications, experts, query }:
       </section>
 
       <div className="mt-5 grid gap-5 lg:grid-cols-2">
-        <section className="rounded-[24px] border border-slate-200 bg-white p-6">
+        <section className="rounded-3xl border border-slate-200 bg-white p-6">
           <h3 className="text-lg font-black text-slate-900">Publications &amp; research outputs</h3>
           {publications.status === "error" ? (
             <div className="mt-4 rounded-2xl bg-rose-50 border border-rose-200 p-4 text-sm text-rose-950">
@@ -86,7 +86,7 @@ export default function KnowledgeWorkspaceView({ publications, experts, query }:
           )}
         </section>
 
-        <section className="rounded-[24px] border border-slate-200 bg-white p-6">
+        <section className="rounded-3xl border border-slate-200 bg-white p-6">
           <h3 className="text-lg font-black text-slate-900">Experts</h3>
           {experts.status === "error" ? (
             <div className="mt-4 rounded-2xl bg-rose-50 border border-rose-200 p-4 text-sm text-rose-950">
@@ -122,7 +122,7 @@ export default function KnowledgeWorkspaceView({ publications, experts, query }:
       </div>
 
       <div className="mt-5 grid gap-5 lg:grid-cols-2">
-        <section className="rounded-[24px] border border-amber-200 bg-amber-50/90 p-6">
+        <section className="rounded-3xl border border-amber-200 bg-amber-50/90 p-6">
           <div className="flex justify-between">
             <h3 className="font-black text-amber-950">Expert Matching</h3>
             <span className="text-xs font-black text-amber-900">Pending</span>
@@ -131,7 +131,7 @@ export default function KnowledgeWorkspaceView({ publications, experts, query }:
             Chưa có HTTP contract được phê duyệt. Không hiển thị điểm hoặc dữ liệu mô phỏng.
           </p>
         </section>
-        <section className="rounded-[24px] border border-slate-200 bg-white p-6">
+        <section className="rounded-3xl border border-slate-200 bg-white p-6">
           <h3 className="font-black text-slate-900">Knowledge graph &amp; Index Ops</h3>
           <span className="mt-2 block text-xs text-slate-500">Pending backend contracts</span>
         </section>
