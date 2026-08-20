@@ -15,16 +15,16 @@ export const useLocale = create<{ locale: Locale; setLocale: (locale: Locale) =>
 
 const HERO_SEQUENCES: Record<Locale, [string, string]> = {
   vi: [
-    "Mạng lưới tri thức Nga–Việt",
-    "Mở rộng mạng lưới nghiên cứu và hình thành đối tác thực chất.",
+    "Mạng lưới tri thức Nga–Việt, kết nối nghiên cứu và ứng dụng.",
+    "Từ chuyên gia và công bố đến các cơ hội hợp tác thực chất.",
   ],
   ru: [
-    "Сеть знаний Россия–Вьетнам",
-    "Расширяя исследовательскую сеть и формируя реальные партнерства.",
+    "Сеть знаний Россия–Вьетнам, связь науки và технологий.",
+    "От экспертов và публикаций к реальному сотрудничеству.",
   ],
   en: [
-    "RU–VN Knowledge Network",
-    "Expanding research networks and fostering impactful partnerships.",
+    "RU–VN Knowledge Network, bridging research and application.",
+    "From experts and publications to impactful collaboration.",
   ],
 };
 
@@ -32,7 +32,7 @@ function useHeroSequence(locale: Locale) {
   const shouldReduceMotion = useReducedMotion();
   const [displayedText, setDisplayedText] = useState("");
   const [opacity, setOpacity] = useState(1);
-  const [showCaret, setShowCaret] = useState(true);
+  const showCaret = true;
 
   const phrases = HERO_SEQUENCES[locale] || HERO_SEQUENCES.vi;
 
@@ -196,7 +196,7 @@ export function HomeMotion({ isAuthenticated }: Readonly<{ isAuthenticated: bool
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="max-w-2xl"
               >
-                <h1 className="font-serif text-3xl font-bold leading-[1.2] tracking-tight text-white sm:text-4xl lg:text-[46px] min-h-24 sm:min-h-32 lg:min-h-36">
+                <h1 className="font-serif text-3xl font-bold leading-[1.24] tracking-tight text-white sm:text-4xl lg:text-[44px] min-h-24 sm:min-h-32 lg:min-h-36 text-balance">
                   <span
                     className="inline transition-opacity duration-500 ease-in-out"
                     style={{ opacity: heroOpacity }}
