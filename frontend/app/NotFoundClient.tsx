@@ -128,7 +128,7 @@ export function NotFoundClient() {
                   {t.brandTitle}
                 </span>
               </div>
-              <p className="text-[11px] text-[#475569] hidden sm:block">
+              <p className="text-xs text-[#475569] hidden sm:block">
                 {t.brandSubtitle}
               </p>
             </div>
@@ -170,7 +170,7 @@ export function NotFoundClient() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
           </span>
-          <span className="tracking-wide uppercase text-[11px] font-bold">{t.badge}</span>
+          <span className="tracking-wide uppercase text-xs font-bold">{t.badge}</span>
         </div>
 
         {/* Sculptural 404 Artwork */}
@@ -179,7 +179,7 @@ export function NotFoundClient() {
           <div className="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-[#0284c7]/15 via-[#1e3a8a]/10 to-[#059669]/10 blur-3xl pointer-events-none"></div>
 
           {/* Large Typographic 404 */}
-          <div className="relative font-serif text-8xl sm:text-9xl md:text-[11rem] font-extrabold tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-b from-[#071426] via-[#1e3a8a] to-[#0284c7] drop-shadow-sm">
+          <div className="relative font-serif text-8xl sm:text-9xl md:text-9xl font-extrabold tracking-tighter leading-none text-[#071426]">
             404
           </div>
 
@@ -208,7 +208,7 @@ export function NotFoundClient() {
         <div className="my-8 w-full max-w-lg bg-white rounded-2xl border border-[#e2e8f0] p-4 sm:p-5 shadow-2xs text-left">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div>
-              <span className="text-[#64748b] block text-[11px] font-medium uppercase tracking-wider">
+              <span className="text-[#64748b] block text-xs font-medium uppercase tracking-wider">
                 {t.technicalDetails.statusLabel}
               </span>
               <span className="font-semibold text-red-600">
@@ -216,7 +216,7 @@ export function NotFoundClient() {
               </span>
             </div>
             <div>
-              <span className="text-[#64748b] block text-[11px] font-medium uppercase tracking-wider">
+              <span className="text-[#64748b] block text-xs font-medium uppercase tracking-wider">
                 {t.technicalDetails.networkLabel}
               </span>
               <span className="font-semibold text-[#071426]">

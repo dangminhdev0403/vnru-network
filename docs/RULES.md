@@ -38,3 +38,7 @@ This document contains the authoritative governance, security, data-ownership, a
 - **Full-profile browser requirement**: For a target with a web UI, the Full profile MUST include actual browser interaction through the configured Chrome DevTools MCP, including relevant user actions plus Network and Console inspection. Code inspection or manual clicking is not an equivalent substitute. If the MCP is unavailable, mark the browser gate `BLOCKED` rather than claiming a full PASS.
 - **Verification before repair**: Verification is not permission to edit source. When a real source defect is found, report the failure, root cause, affected code, minimal proposed fix, and regression risk before changing source, unless the user has explicitly authorized repair in the same request.
 - **Evidence over claims**: A full-module PASS MUST be supported by the gates required by the selected profile. Unit tests or build success alone cannot be reported as Full verification when runtime or browser evidence is required.
+
+## 7. UI Quality & Impeccable Gate
+
+- **Mandatory Anti-Pattern Check**: After modifying, updating, or creating any UI component, the Agent is required to manually run `npx impeccable detect` and automatically resolve all anti-patterns (font scale, contrast, explicit button types, reduced motion) before completing the task.

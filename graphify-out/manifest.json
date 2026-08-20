@@ -234,24 +234,9 @@
     "ast_hash": "7f12d758e02d2379a8f3a27620bc7e22",
     "semantic_hash": ""
   },
-  ".hermes/plans/2026-08-09_030312-vnru-core-baseline-antigravity.md": {
-    "mtime": 1786219668.2618482,
-    "ast_hash": "5d8afa8c244594339d5db6d59082ed09",
-    "semantic_hash": ""
-  },
-  ".hermes/plans/2026-08-18_000935-module-1-antigravity-git-workflow.md": {
-    "mtime": 1786987064.6529534,
-    "ast_hash": "d0755872136e1897f14e19ab3b043a90",
-    "semantic_hash": ""
-  },
-  ".hermes/plans/2026-08-18_005815-module-1-agy-assignment.md": {
-    "mtime": 1786989550.8873856,
-    "ast_hash": "ce9cee8c6ab6136d120cf87a332198c6",
-    "semantic_hash": ""
-  },
   "AGENTS.md": {
-    "mtime": 1787183668.2397354,
-    "ast_hash": "bbed4aa37bc3ad97d100d3198bfa0e42",
+    "mtime": 1787186659.4429348,
+    "ast_hash": "0f8d80160104108e6089b2f983594915",
     "semantic_hash": ""
   },
   "CLAUDE.md": {
@@ -310,8 +295,8 @@
     "semantic_hash": ""
   },
   "docs/RULES.md": {
-    "mtime": 1787181762.6318955,
-    "ast_hash": "788c1c2c9586ed760eae58f3953def03",
+    "mtime": 1787186675.2043066,
+    "ast_hash": "4e28b3901764a84168f53cb4875a400b",
     "semantic_hash": ""
   },
   "frontend/AGENTS.md": {
@@ -355,8 +340,8 @@
     "semantic_hash": ""
   },
   "frontend/docs/RULES.md": {
-    "mtime": 1786223308.0413425,
-    "ast_hash": "97ba7f832253cd88eb25fc4554de8f0e",
+    "mtime": 1787186666.3778057,
+    "ast_hash": "f5ec1eeb09beccf8a189e210788033b0",
     "semantic_hash": ""
   },
   "frontend/docs/RUNTIME_UI_GUIDE.md": {
@@ -454,39 +439,14 @@
     "ast_hash": "a2760511c65806022ad20adf74370ff3",
     "semantic_hash": ""
   },
-  ".agy-supervisor/dashboard.py": {
-    "mtime": 1787162610.3327472,
-    "ast_hash": "52ddde407892db774e94d74a97dae518",
-    "semantic_hash": ""
-  },
-  ".agy-supervisor/state.json": {
-    "mtime": 1787170999.0051272,
-    "ast_hash": "76e1727bccaa5de96b5f86ce336d48bd",
-    "semantic_hash": ""
-  },
-  ".hermes/backups/keycloak-module1-20260819/events.json": {
-    "mtime": 1787158103.8660789,
-    "ast_hash": "65a5369508bdc9b34186beb21d5a4059",
-    "semantic_hash": ""
-  },
-  ".hermes/backups/keycloak-module1-20260819/realm.json": {
-    "mtime": 1787158102.9202707,
-    "ast_hash": "cada631d1d577f9a5eb54735bb8521c0",
-    "semantic_hash": ""
-  },
-  ".hermes/backups/keycloak-module1-20260819/required-actions.json": {
-    "mtime": 1787158104.859823,
-    "ast_hash": "624ee333dba216523bbc716efdb2abb7",
-    "semantic_hash": ""
-  },
   "frontend/app/HomeMotion.tsx": {
-    "mtime": 1787155250.4061089,
-    "ast_hash": "3e7095f3dfb6b4bde632f14e6bfec34d",
+    "mtime": 1787185453.8199227,
+    "ast_hash": "f5615715fbabbf6f95f8857613d1055d",
     "semantic_hash": ""
   },
   "frontend/app/NotFoundClient.tsx": {
-    "mtime": 1787147103.9418616,
-    "ast_hash": "a78eea997e38633ff1d928250c713f1e",
+    "mtime": 1787185443.746348,
+    "ast_hash": "ff9db97d42af72502dc0f6f12344d857",
     "semantic_hash": ""
   },
   "frontend/app/admin/iam/IamClientPage.tsx": {
@@ -570,8 +530,8 @@
     "semantic_hash": ""
   },
   "frontend/app/security/SecurityClientPage.tsx": {
-    "mtime": 1787184720.786557,
-    "ast_hash": "ef736150afcd73e5470fe86a74f52afd",
+    "mtime": 1787185431.5706744,
+    "ast_hash": "19046f952c932e24af7817c1f70f4618",
     "semantic_hash": ""
   },
   "frontend/app/security/page.tsx": {
@@ -615,8 +575,8 @@
     "semantic_hash": ""
   },
   "frontend/features/auth/components/IamWorkspaceView.tsx": {
-    "mtime": 1787165552.358575,
-    "ast_hash": "fad346d44e717c8703137dc9d2591f68",
+    "mtime": 1787185413.2737978,
+    "ast_hash": "a56e5b0e6b0da972ef353db1ef81c879",
     "semantic_hash": ""
   },
   "frontend/features/auth/server.ts": {
@@ -625,8 +585,8 @@
     "semantic_hash": ""
   },
   "frontend/features/knowledge/components/KnowledgeWorkspaceView.tsx": {
-    "mtime": 1787184231.1905258,
-    "ast_hash": "8784d095e5b298b4b4d5460824d735c0",
+    "mtime": 1787185501.982927,
+    "ast_hash": "34ac63742375293fab43702668e0e8ec",
     "semantic_hash": ""
   },
   "frontend/features/knowledge/repositories/module2.repository.ts": {
@@ -640,8 +600,8 @@
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/DashboardView.tsx": {
-    "mtime": 1787184239.580107,
-    "ast_hash": "f7428ce7dae4a5b9b11ffc5a3895b557",
+    "mtime": 1787185507.5611317,
+    "ast_hash": "342e6003170c3c545d59f62cae419384",
     "semantic_hash": ""
   },
   "frontend/home-i18n.test.mjs": {
@@ -954,21 +914,6 @@
     "ast_hash": "9834c560d1a940d5ad7bce6600c29edd",
     "semantic_hash": ""
   },
-  ".hermes/plans/2026-08-19_183305-vn-ru-landing-auth-ui.md": {
-    "mtime": 1787139251.0844882,
-    "ast_hash": "dd402797b7c74f76e1786c7ce6c67aeb",
-    "semantic_hash": ""
-  },
-  ".hermes/plans/2026-08-20_000810-module-2-agy-assignment.md": {
-    "mtime": 1787159373.2992148,
-    "ast_hash": "06249d5fc55ca208d32568af9a9a082a",
-    "semantic_hash": ""
-  },
-  ".hermes/plans/2026-08-20_001238-module-2-agy-swarm.md": {
-    "mtime": 1787159662.078203,
-    "ast_hash": "84fd3c57b875dc8a20b42ccc7e975290",
-    "semantic_hash": ""
-  },
   "docs/VERIFICATION_GUIDE.md": {
     "mtime": 1787181762.6318955,
     "ast_hash": "d7fe20daadb26435211ae6da0ec1f74e",
@@ -1120,13 +1065,18 @@
     "semantic_hash": ""
   },
   ".agents/skills/ui-quality-promax/SKILL.md": {
-    "mtime": 1787183668.2386367,
-    "ast_hash": "3ed6918bde7864255332d49d549bde72",
+    "mtime": 1787185332.723855,
+    "ast_hash": "32275def072b17832cad73b68453aea7",
     "semantic_hash": ""
   },
   "frontend/lib/alerts.ts": {
     "mtime": 1787184653.0625846,
     "ast_hash": "4eb8798127f3f12dd5d6c81595450872",
+    "semantic_hash": ""
+  },
+  ".agents/rules/impeccable.md": {
+    "mtime": 1787186680.2896998,
+    "ast_hash": "274de94f0a42c1de2056072a6d433270",
     "semantic_hash": ""
   }
 }

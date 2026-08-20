@@ -1,7 +1,7 @@
 "use client";
 
 import i18n from "i18next";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { initReactI18next } from "react-i18next";
@@ -18,6 +18,7 @@ const useLocale = create<{ locale: Locale; setLocale: (locale: Locale) => void }
 
 export function HomeMotion({ body, isAuthenticated }: { body: string; isAuthenticated: boolean }) {
   const { locale, setLocale } = useLocale();
+  const shouldReduceMotion = useReducedMotion();
   const root = useRef<HTMLDivElement>(null);
   const originals = useRef(new Map<Text, string>());
   const [switcherSlot, setSwitcherSlot] = useState<HTMLElement | null>(null);
@@ -54,6 +55,12 @@ export function HomeMotion({ body, isAuthenticated }: { body: string; isAuthenti
     {switcherSlot && createPortal(<div className="language-switcher" role="group" aria-label="Ngôn ngữ / Language / Язык">
       {(["vi", "en", "ru"] as const).map((value) => <button key={value} type="button" aria-pressed={locale === value} onClick={() => setLocale(value)}>{value.toUpperCase()}</button>)}
     </div>, switcherSlot)}
-    <motion.div ref={(node) => { root.current = node; if (node && !switcherSlot) setSwitcherSlot(node.querySelector<HTMLElement>("#language-switcher-slot")); }} initial={{ filter: "blur(10px)", opacity: 0, y: 20 }} animate={{ filter: "blur(0px)", opacity: 1, y: 0 }} transition={{ duration: .8, ease: "easeOut" }} dangerouslySetInnerHTML={{ __html: body }} />
+    <motion.div
+      ref={(node) => { root.current = node; if (node && !switcherSlot) setSwitcherSlot(node.querySelector<HTMLElement>("#language-switcher-slot")); }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { filter: "blur(10px)", opacity: 0, y: 20 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { filter: "blur(0px)", opacity: 1, y: 0 }}
+      transition={{ duration: shouldReduceMotion ? 0.2 : 0.8, ease: "easeOut" }}
+      dangerouslySetInnerHTML={{ __html: body }}
+    />
   </>;
 }

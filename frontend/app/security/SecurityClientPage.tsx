@@ -185,7 +185,7 @@ export default function SecurityClientPage() {
             </div>
             <div>
               <span className="font-serif font-bold text-base text-primary tracking-tight">VN-RU Security Center</span>
-              <p className="text-[10px] text-on-surface-variant hidden sm:block">Cryptographic Token &amp; Session Management</p>
+              <p className="text-xs text-on-surface-variant hidden sm:block">Cryptographic Token &amp; Session Management</p>
             </div>
           </div>
 
@@ -198,10 +198,11 @@ export default function SecurityClientPage() {
               <span>EN</span>
             </div>
             <button
+              type="button"
               onClick={handleSignOut}
               className="px-3.5 py-1.5 rounded-lg border border-outline-variant hover:bg-surface-container-low text-xs font-semibold text-primary transition-all flex items-center gap-1.5"
             >
-              <span className="material-symbols-outlined text-[16px]">logout</span>
+              <span className="material-symbols-outlined text-base">logout</span>
               <span>Sign Out</span>
             </button>
           </div>
@@ -214,7 +215,7 @@ export default function SecurityClientPage() {
           {/* Page Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-outline-variant">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold mb-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold mb-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 Keycloak OIDC Security Gate
               </div>
@@ -224,10 +225,11 @@ export default function SecurityClientPage() {
               </p>
             </div>
             <button
+              type="button"
               onClick={triggerRefresh}
               className="px-4 py-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-outline-variant text-xs font-semibold text-primary transition-all flex items-center gap-2"
             >
-              <span className="material-symbols-outlined text-[16px]">refresh</span>
+              <span className="material-symbols-outlined text-base">refresh</span>
               <span>Refresh Status</span>
             </button>
           </div>
@@ -238,12 +240,12 @@ export default function SecurityClientPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pl-2">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-[24px]">shield_lock</span>
+                  <span className="material-symbols-outlined text-2xl">shield_lock</span>
                 </div>
                 <div>
                   <div className="flex items-center gap-2.5 mb-1">
                     <h2 className="font-serif font-bold text-lg text-primary">Multi-Factor Authentication (MFA)</h2>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                    <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
                       Enforced
                     </span>
                   </div>
@@ -253,6 +255,7 @@ export default function SecurityClientPage() {
                 </div>
               </div>
               <button
+                type="button"
                 disabled
                 className="px-4 py-2 rounded-xl bg-surface-container text-on-surface-variant cursor-not-allowed text-xs font-semibold shrink-0"
                 title="MFA is managed by institutional identity providers"
@@ -265,7 +268,7 @@ export default function SecurityClientPage() {
           {/* Action Error Alert */}
           {actionError && (
             <div className="p-4 bg-error-container text-on-error-container rounded-xl border border-error/30 flex items-start gap-3 text-xs">
-              <span className="material-symbols-outlined text-error text-[18px]">error</span>
+              <span className="material-symbols-outlined text-error text-lg">error</span>
               <div className="font-medium">{actionError}</div>
             </div>
           )}
@@ -279,10 +282,11 @@ export default function SecurityClientPage() {
               </div>
               {sessions && otherSessions.length > 0 && (
                 <button
+                  type="button"
                   onClick={() => setShowRevokeOthersDialog(true)}
                   className="px-4 py-2 rounded-xl bg-error-container text-on-error-container hover:bg-error-container/80 text-xs font-semibold transition-colors flex items-center gap-1.5"
                 >
-                  <span className="material-symbols-outlined text-[16px]">logout</span>
+                  <span className="material-symbols-outlined text-base">logout</span>
                   <span>Revoke All Other Sessions</span>
                 </button>
               )}
@@ -306,6 +310,7 @@ export default function SecurityClientPage() {
                 <h3 className="font-serif font-bold text-lg text-primary">Failed to load active sessions</h3>
                 <p className="text-xs text-on-surface-variant max-w-sm mx-auto">{error}</p>
                 <button
+                  type="button"
                   onClick={triggerRefresh}
                   className="px-4 py-2 rounded-xl bg-primary text-white text-xs font-semibold"
                 >
@@ -331,7 +336,7 @@ export default function SecurityClientPage() {
                             : "bg-surface-container text-on-surface-variant"
                         }`}
                       >
-                        <span className="material-symbols-outlined text-[22px]">
+                        <span className="material-symbols-outlined text-2xl">
                           {session.current ? "laptop_mac" : "devices"}
                         </span>
                       </div>
@@ -341,17 +346,17 @@ export default function SecurityClientPage() {
                             {session.current ? "Current Active Device" : "Authenticated Session"}
                           </span>
                           {session.current && (
-                            <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold flex items-center gap-1">
+                            <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center gap-1">
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
                               Current
                             </span>
                           )}
                         </div>
                         <div className="text-xs text-on-surface-variant mt-1 space-y-0.5">
-                          <p className="font-mono text-[11px]">
+                          <p className="font-mono text-xs">
                             Session: <span className="text-primary">{maskSessionId(session.id)}</span>
                           </p>
-                          <p className="text-[11px]">
+                          <p className="text-xs">
                             Created: {formatDate(session.createdAt)} • Expires: {formatDate(session.expiresAt)}
                           </p>
                         </div>
@@ -359,6 +364,7 @@ export default function SecurityClientPage() {
                     </div>
 
                     <button
+                      type="button"
                       onClick={() => {
                         setSessionToRevoke(session);
                         setShowRevokeDialog(true);

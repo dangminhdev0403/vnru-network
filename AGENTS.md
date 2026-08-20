@@ -64,6 +64,10 @@ When present locally, the following taste skills may be consulted as supporting 
 
 UI is not considered verified merely because tests/build pass. For web UI work, final rendered-browser inspection through Chrome DevTools MCP is required by the skill. Browser screenshots are evidence, not decoration: the agent must visually inspect the rendered result after the final source change.
 
+## UI Quality & Impeccable Gate
+
+- After modifying, updating, or creating any UI component, the Agent is required to manually run `npx impeccable detect` and automatically resolve all anti-patterns (font scale, contrast, explicit button types, reduced motion) before completing the task.
+
 ## Navigation
 
 When `graphify-out/graph.json` exists: Graphify query/impact first, scoped Repomix second, exact source last. Otherwise use focused symbol/path search; never broad-scan by default.

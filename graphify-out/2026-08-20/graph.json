@@ -285,41 +285,41 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_admin_iam_iamclientpage",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "iamclientpage.tsx"
     },
     {
       "label": "User",
       "file_type": "code",
       "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_app_admin_iam_iamclientpage_user",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "user"
     },
     {
       "label": "Role",
       "file_type": "code",
       "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_app_admin_iam_iamclientpage_role",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "role"
     },
     {
       "label": "IamClientPage()",
       "file_type": "code",
       "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "frontend_app_admin_iam_iamclientpage_iamclientpage",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "iamclientpage()"
     },
     {
@@ -329,8 +329,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_admin_iam_page",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "page.tsx"
     },
     {
@@ -340,8 +340,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_app_admin_iam_page_iamadminpage",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "iamadminpage()"
     },
     {
@@ -736,30 +736,30 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_security_securityclientpage",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "securityclientpage.tsx"
     },
     {
       "label": "Session",
       "file_type": "code",
       "source_file": "frontend/app/security/SecurityClientPage.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "_origin": "ast",
       "id": "frontend_app_security_securityclientpage_session",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "session"
     },
     {
       "label": "SecurityClientPage()",
       "file_type": "code",
       "source_file": "frontend/app/security/SecurityClientPage.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "frontend_app_security_securityclientpage_securityclientpage",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "securityclientpage()"
     },
     {
@@ -769,8 +769,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_security_page",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "page.tsx"
     },
     {
@@ -780,8 +780,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_app_security_page_securitypage",
-      "community": 12,
-      "community_name": "page.tsx",
+      "community": 145,
+      "community_name": "alerts.ts",
       "norm_label": "securitypage()"
     },
     {
@@ -953,7 +953,7 @@
       "label": "primaryNavigation",
       "file_type": "code",
       "source_file": "frontend/components/shared/WorkspaceShell.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_components_shared_workspaceshell_primarynavigation",
       "community": 95,
@@ -964,7 +964,7 @@
       "label": "governanceNavigation",
       "file_type": "code",
       "source_file": "frontend/components/shared/WorkspaceShell.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_components_shared_workspaceshell_governancenavigation",
       "community": 95,
@@ -975,7 +975,7 @@
       "label": "isActive()",
       "file_type": "code",
       "source_file": "frontend/components/shared/WorkspaceShell.tsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "frontend_components_shared_workspaceshell_isactive",
       "community": 95,
@@ -986,7 +986,7 @@
       "label": "WorkspaceShell()",
       "file_type": "code",
       "source_file": "frontend/components/shared/WorkspaceShell.tsx",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_components_shared_workspaceshell_workspaceshell",
       "community": 95,
@@ -1555,6 +1555,83 @@
       "norm_label": "promax.js"
     },
     {
+      "label": "alerts.ts",
+      "file_type": "code",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "frontend_lib_alerts",
+      "community": 145,
+      "community_name": "alerts.ts",
+      "norm_label": "alerts.ts"
+    },
+    {
+      "label": "ConfirmActionOptions",
+      "file_type": "code",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "frontend_lib_alerts_confirmactionoptions",
+      "community": 145,
+      "community_name": "alerts.ts",
+      "norm_label": "confirmactionoptions"
+    },
+    {
+      "label": "ToastOptions",
+      "file_type": "code",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "frontend_lib_alerts_toastoptions",
+      "community": 145,
+      "community_name": "alerts.ts",
+      "norm_label": "toastoptions"
+    },
+    {
+      "label": "confirmAction()",
+      "file_type": "code",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "frontend_lib_alerts_confirmaction",
+      "community": 145,
+      "community_name": "alerts.ts",
+      "norm_label": "confirmaction()"
+    },
+    {
+      "label": "showToast()",
+      "file_type": "code",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L68",
+      "_origin": "ast",
+      "id": "frontend_lib_alerts_showtoast",
+      "community": 145,
+      "community_name": "alerts.ts",
+      "norm_label": "showtoast()"
+    },
+    {
+      "label": "showSuccess()",
+      "file_type": "code",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L98",
+      "_origin": "ast",
+      "id": "frontend_lib_alerts_showsuccess",
+      "community": 145,
+      "community_name": "alerts.ts",
+      "norm_label": "showsuccess()"
+    },
+    {
+      "label": "showError()",
+      "file_type": "code",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L117",
+      "_origin": "ast",
+      "id": "frontend_lib_alerts_showerror",
+      "community": 145,
+      "community_name": "alerts.ts",
+      "norm_label": "showerror()"
+    },
+    {
       "label": "login-template.test.mjs",
       "file_type": "code",
       "source_file": "frontend/login-template.test.mjs",
@@ -1907,10 +1984,32 @@
       "norm_label": "react-i18next"
     },
     {
-      "label": "zustand",
+      "label": "sweetalert2",
       "file_type": "code",
       "source_file": "frontend/package.json",
       "source_location": "L20",
+      "_origin": "ast",
+      "id": "frontend_package_dependencies_sweetalert2",
+      "community": 3,
+      "community_name": "devDependencies",
+      "norm_label": "sweetalert2"
+    },
+    {
+      "label": "sweetalert2",
+      "file_type": "concept",
+      "source_file": "frontend/package.json",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "sweetalert2",
+      "community": 3,
+      "community_name": "devDependencies",
+      "norm_label": "sweetalert2"
+    },
+    {
+      "label": "zustand",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_package_dependencies_zustand",
       "community": 3,
@@ -1921,7 +2020,7 @@
       "label": "zustand",
       "file_type": "concept",
       "source_file": "frontend/package.json",
-      "source_location": "L20",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "zustand",
       "community": 3,
@@ -1932,7 +2031,7 @@
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "frontend_package_devdependencies",
       "community": 3,
@@ -1943,7 +2042,7 @@
       "label": "@tailwindcss/postcss",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_package_devdependencies_tailwindcss_postcss",
       "community": 3,
@@ -1954,7 +2053,7 @@
       "label": "@tailwindcss/postcss",
       "file_type": "concept",
       "source_file": "frontend/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "tailwindcss_postcss",
       "community": 3,
@@ -1965,7 +2064,7 @@
       "label": "@types/node",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "frontend_package_devdependencies_types_node",
       "community": 3,
@@ -1976,7 +2075,7 @@
       "label": "@types/node",
       "file_type": "concept",
       "source_file": "frontend/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "frontend_package_json_types_node",
       "community": 3,
@@ -1987,7 +2086,7 @@
       "label": "@types/react",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "frontend_package_devdependencies_types_react",
       "community": 3,
@@ -1998,7 +2097,7 @@
       "label": "@types/react",
       "file_type": "concept",
       "source_file": "frontend/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "types_react",
       "community": 3,
@@ -2009,7 +2108,7 @@
       "label": "@types/react-dom",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "frontend_package_devdependencies_types_react_dom",
       "community": 3,
@@ -2020,7 +2119,7 @@
       "label": "@types/react-dom",
       "file_type": "concept",
       "source_file": "frontend/package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "types_react_dom",
       "community": 3,
@@ -2031,7 +2130,7 @@
       "label": "eslint",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "frontend_package_devdependencies_eslint",
       "community": 3,
@@ -2042,7 +2141,7 @@
       "label": "eslint",
       "file_type": "concept",
       "source_file": "frontend/package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "frontend_package_json_eslint",
       "community": 3,
@@ -2053,7 +2152,7 @@
       "label": "eslint-config-next",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "frontend_package_devdependencies_eslint_config_next",
       "community": 3,
@@ -2064,7 +2163,7 @@
       "label": "eslint-config-next",
       "file_type": "concept",
       "source_file": "frontend/package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "eslint_config_next",
       "community": 3,
@@ -2075,7 +2174,7 @@
       "label": "tailwindcss",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "frontend_package_devdependencies_tailwindcss",
       "community": 3,
@@ -2086,7 +2185,7 @@
       "label": "tailwindcss",
       "file_type": "concept",
       "source_file": "frontend/package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "tailwindcss",
       "community": 3,
@@ -2097,7 +2196,7 @@
       "label": "typescript",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "frontend_package_devdependencies_typescript",
       "community": 3,
@@ -2108,7 +2207,7 @@
       "label": "typescript",
       "file_type": "concept",
       "source_file": "frontend/package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "frontend_package_json_typescript",
       "community": 3,
@@ -2119,7 +2218,7 @@
       "label": "packageManager",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L32",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "frontend_package_packagemanager",
       "community": 3,
@@ -4234,8 +4333,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller",
-      "community": 72,
-      "community_name": "iam-admin.service.ts",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": "iam-admin.controller.ts"
     },
     {
@@ -4245,8 +4344,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_paginationschema",
-      "community": 72,
-      "community_name": "iam-admin.service.ts",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": "paginationschema"
     },
     {
@@ -4256,8 +4355,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_userstatusschema",
-      "community": 72,
-      "community_name": "iam-admin.service.ts",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": "userstatusschema"
     },
     {
@@ -4267,8 +4366,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_uuidschema",
-      "community": 72,
-      "community_name": "iam-admin.service.ts",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": "uuidschema"
     },
     {
@@ -4278,8 +4377,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_roleassignmentschema",
-      "community": 72,
-      "community_name": "iam-admin.service.ts",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": "roleassignmentschema"
     },
     {
@@ -4806,8 +4905,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authenticated_request_context_authenticatedrequestguard_constructor",
-      "community": 32,
-      "community_name": "authentication.service.ts",
+      "community": 29,
+      "community_name": "AuthenticationService",
       "norm_label": ".constructor()"
     },
     {
@@ -4938,8 +5037,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_ts_req",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": "req"
     },
     {
@@ -4949,8 +5048,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_ts_post",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": "post"
     },
     {
@@ -4960,8 +5059,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_ts_body",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": "body"
     },
     {
@@ -5048,8 +5147,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_me",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": ".me()"
     },
     {
@@ -5059,8 +5158,8 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_switchcontext",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": ".switchcontext()"
     },
     {
@@ -5070,8 +5169,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_logout",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 32,
+      "community_name": "authentication.service.ts",
       "norm_label": ".logout()"
     },
     {
@@ -5147,8 +5246,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_module",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 33,
+      "community_name": "authentication.module.ts",
       "norm_label": "authentication.module.ts"
     },
     {
@@ -5158,8 +5257,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_module_buildauthorizationurl",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 33,
+      "community_name": "authentication.module.ts",
       "norm_label": "buildauthorizationurl()"
     },
     {
@@ -5169,8 +5268,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_module_processcallback",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 33,
+      "community_name": "authentication.module.ts",
       "norm_label": "processcallback()"
     },
     {
@@ -5180,8 +5279,8 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_module_authenticationmodule",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 33,
+      "community_name": "authentication.module.ts",
       "norm_label": "authenticationmodule"
     },
     {
@@ -5191,8 +5290,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_module_ts_module",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 33,
+      "community_name": "authentication.module.ts",
       "norm_label": "module"
     },
     {
@@ -5345,8 +5444,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_authenticationservice_constructor",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 33,
+      "community_name": "authentication.module.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -5587,8 +5686,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_keycloak_oidc_service_keycloakoidcservice_handlecallback",
-      "community": 33,
-      "community_name": "authentication.module.ts",
+      "community": 29,
+      "community_name": "AuthenticationService",
       "norm_label": ".handlecallback()"
     },
     {
@@ -5609,8 +5708,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_module",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 31,
+      "community_name": "identity-public.ts",
       "norm_label": "identity.module.ts"
     },
     {
@@ -5620,8 +5719,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_module_identitymodule",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 31,
+      "community_name": "identity-public.ts",
       "norm_label": "identitymodule"
     },
     {
@@ -5631,8 +5730,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_module_ts_module",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 31,
+      "community_name": "identity-public.ts",
       "norm_label": "module"
     },
     {
@@ -5818,8 +5917,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_module",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 25,
+      "community_name": "session-public.ts",
       "norm_label": "session.module.ts"
     },
     {
@@ -5829,8 +5928,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_module_sessionmodule",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 25,
+      "community_name": "session-public.ts",
       "norm_label": "sessionmodule"
     },
     {
@@ -5840,8 +5939,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_module_ts_module",
-      "community": 1,
-      "community_name": "app.module.ts",
+      "community": 25,
+      "community_name": "session-public.ts",
       "norm_label": "module"
     },
     {
@@ -5928,8 +6027,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 25,
+      "community_name": "session-public.ts",
       "norm_label": "sessionservice"
     },
     {
@@ -5939,8 +6038,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_ts_injectable",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 25,
+      "community_name": "session-public.ts",
       "norm_label": "injectable"
     },
     {
@@ -5950,8 +6049,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_ts_inject",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 25,
+      "community_name": "session-public.ts",
       "norm_label": "inject"
     },
     {
@@ -5961,8 +6060,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "optional",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 25,
+      "community_name": "session-public.ts",
       "norm_label": "optional"
     },
     {
@@ -5972,8 +6071,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_constructor",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 25,
+      "community_name": "session-public.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -5983,8 +6082,8 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_createsession",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 29,
+      "community_name": "AuthenticationService",
       "norm_label": ".createsession()"
     },
     {
@@ -6016,8 +6115,8 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_revokeallforuser",
-      "community": 27,
-      "community_name": "AuthenticationController",
+      "community": 25,
+      "community_name": "session-public.ts",
       "norm_label": ".revokeallforuser()"
     },
     {
@@ -16884,8 +16983,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_rules",
-      "community": 24,
-      "community_name": "docs/README.md",
+      "community": 146,
+      "community_name": "VN-RU Network Global Rules (Authoritative)",
       "norm_label": "rules.md"
     },
     {
@@ -16895,8 +16994,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_rules_vn_ru_network_global_rules_authoritative",
-      "community": 24,
-      "community_name": "docs/README.md",
+      "community": 146,
+      "community_name": "VN-RU Network Global Rules (Authoritative)",
       "norm_label": "vn-ru network global rules (authoritative)"
     },
     {
@@ -16906,8 +17005,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "docs_rules_1_security_authentication_boundaries",
-      "community": 24,
-      "community_name": "docs/README.md",
+      "community": 146,
+      "community_name": "VN-RU Network Global Rules (Authoritative)",
       "norm_label": "1. security & authentication boundaries"
     },
     {
@@ -16917,8 +17016,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "docs_rules_2_data_ownership_microservice_boundaries",
-      "community": 24,
-      "community_name": "docs/README.md",
+      "community": 146,
+      "community_name": "VN-RU Network Global Rules (Authoritative)",
       "norm_label": "2. data ownership & microservice boundaries"
     },
     {
@@ -16928,8 +17027,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "docs_rules_3_package_dependency_governance",
-      "community": 24,
-      "community_name": "docs/README.md",
+      "community": 146,
+      "community_name": "VN-RU Network Global Rules (Authoritative)",
       "norm_label": "3. package & dependency governance"
     },
     {
@@ -16939,8 +17038,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "docs_rules_4_api_resource_design",
-      "community": 24,
-      "community_name": "docs/README.md",
+      "community": 146,
+      "community_name": "VN-RU Network Global Rules (Authoritative)",
       "norm_label": "4. api & resource design"
     },
     {
@@ -16950,8 +17049,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "docs_rules_5_working_tree_scope_constraints",
-      "community": 24,
-      "community_name": "docs/README.md",
+      "community": 146,
+      "community_name": "VN-RU Network Global Rules (Authoritative)",
       "norm_label": "5. working tree & scope constraints"
     },
     {
@@ -16961,8 +17060,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "docs_rules_6_verification_request_dispatch",
-      "community": 24,
-      "community_name": "docs/README.md",
+      "community": 146,
+      "community_name": "VN-RU Network Global Rules (Authoritative)",
       "norm_label": "6. verification request dispatch"
     },
     {
@@ -19589,7 +19688,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_app_admin_iam_iamclientpage",
@@ -19600,7 +19699,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_app_admin_iam_iamclientpage",
@@ -19611,11 +19710,47 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_app_admin_iam_iamclientpage",
       "target": "frontend_app_admin_iam_iamclientpage_user",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_app_admin_iam_iamclientpage",
+      "target": "frontend_lib_alerts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_app_admin_iam_iamclientpage",
+      "target": "frontend_lib_alerts_showerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_app_admin_iam_iamclientpage",
+      "target": "frontend_lib_alerts_showtoast",
       "confidence_score": 1.0
     },
     {
@@ -19629,6 +19764,30 @@
       "source": "frontend_app_admin_iam_page",
       "target": "frontend_app_admin_iam_iamclientpage",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
+      "source_location": "L176",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_app_admin_iam_iamclientpage_iamclientpage",
+      "target": "frontend_lib_alerts_showerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/app/admin/iam/IamClientPage.tsx",
+      "source_location": "L168",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_app_admin_iam_iamclientpage_iamclientpage",
+      "target": "frontend_lib_alerts_showtoast"
     },
     {
       "relation": "contains",
@@ -20789,7 +20948,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/app/security/SecurityClientPage.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_app_security_securityclientpage",
@@ -20800,12 +20959,72 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/app/security/SecurityClientPage.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_app_security_securityclientpage",
       "target": "frontend_app_security_securityclientpage_session",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/security/SecurityClientPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_app_security_securityclientpage",
+      "target": "frontend_lib_alerts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/security/SecurityClientPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_app_security_securityclientpage",
+      "target": "frontend_lib_alerts_showerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/security/SecurityClientPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_app_security_securityclientpage",
+      "target": "frontend_lib_alerts_showtoast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/app/security/SecurityClientPage.tsx",
+      "source_location": "L107",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_app_security_securityclientpage_securityclientpage",
+      "target": "frontend_lib_alerts_showerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/app/security/SecurityClientPage.tsx",
+      "source_location": "L93",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_app_security_securityclientpage_securityclientpage",
+      "target": "frontend_lib_alerts_showtoast"
     },
     {
       "relation": "contains",
@@ -21138,7 +21357,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/components/shared/WorkspaceShell.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_components_shared_workspaceshell",
@@ -21149,7 +21368,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/components/shared/WorkspaceShell.tsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_components_shared_workspaceshell",
@@ -21160,7 +21379,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/components/shared/WorkspaceShell.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_components_shared_workspaceshell",
@@ -21171,7 +21390,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/components/shared/WorkspaceShell.tsx",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_components_shared_workspaceshell",
@@ -21183,7 +21402,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/components/shared/WorkspaceShell.tsx",
-      "source_location": "L39",
+      "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_components_shared_workspaceshell_workspaceshell",
@@ -21956,6 +22175,72 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_lib_alerts",
+      "target": "frontend_lib_alerts_confirmaction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_lib_alerts",
+      "target": "frontend_lib_alerts_confirmactionoptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L117",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_lib_alerts",
+      "target": "frontend_lib_alerts_showerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L98",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_lib_alerts",
+      "target": "frontend_lib_alerts_showsuccess",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_lib_alerts",
+      "target": "frontend_lib_alerts_showtoast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/lib/alerts.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_lib_alerts",
+      "target": "frontend_lib_alerts_toastoptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/module1-template.test.mjs",
       "source_location": "L5",
       "weight": 1.0,
@@ -22001,7 +22286,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_package",
@@ -22023,7 +22308,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_package",
@@ -22188,6 +22473,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_package_dependencies",
+      "target": "frontend_package_dependencies_sweetalert2",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
@@ -22199,7 +22495,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_package_dependencies",
@@ -22310,19 +22606,20 @@
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
-      "source": "frontend_package_dependencies_zustand",
-      "target": "zustand",
+      "source": "frontend_package_dependencies_sweetalert2",
+      "target": "sweetalert2",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L27",
+      "source_location": "L21",
       "weight": 1.0,
+      "context": "import",
       "_origin": "ast",
-      "source": "frontend_package_devdependencies",
-      "target": "frontend_package_devdependencies_eslint",
+      "source": "frontend_package_dependencies_zustand",
+      "target": "zustand",
       "confidence_score": 1.0
     },
     {
@@ -22333,7 +22630,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_package_devdependencies",
-      "target": "frontend_package_devdependencies_eslint_config_next",
+      "target": "frontend_package_devdependencies_eslint",
       "confidence_score": 1.0
     },
     {
@@ -22344,51 +22641,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_package_devdependencies",
-      "target": "frontend_package_devdependencies_tailwindcss",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/package.json",
-      "source_location": "L23",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_package_devdependencies",
-      "target": "frontend_package_devdependencies_tailwindcss_postcss",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/package.json",
-      "source_location": "L24",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_package_devdependencies",
-      "target": "frontend_package_devdependencies_types_node",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/package.json",
-      "source_location": "L25",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_package_devdependencies",
-      "target": "frontend_package_devdependencies_types_react",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/package.json",
-      "source_location": "L26",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_package_devdependencies",
-      "target": "frontend_package_devdependencies_types_react_dom",
+      "target": "frontend_package_devdependencies_eslint_config_next",
       "confidence_score": 1.0
     },
     {
@@ -22399,6 +22652,61 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_tailwindcss",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_tailwindcss_postcss",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_types_node",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_types_react",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_types_react_dom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_package_devdependencies",
       "target": "frontend_package_devdependencies_typescript",
       "confidence_score": 1.0
     },
@@ -22406,7 +22714,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -22418,7 +22726,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -22430,7 +22738,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -22442,7 +22750,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -22454,7 +22762,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -22466,7 +22774,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -22478,7 +22786,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -22490,7 +22798,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -43211,5 +43519,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "a6e827ee4cb1bb935e19d0332f76feac66a8cd11"
+  "built_at_commit": "970010017ca739af239375dc7d95220c9421e622"
 }

@@ -37,6 +37,10 @@ Do not add a local query-resource copy or second cache abstraction. Add an app-l
 - Local interaction uses React state.
 - Cross-route persistent client state uses an existing store/storage utility only when current source already provides one or the task explicitly adds it.
 
+## UI Quality & Impeccable Gate
+
+- After modifying, updating, or creating any UI component, the Agent is required to manually run `npx impeccable detect` and automatically resolve all anti-patterns (font scale, contrast, explicit button types, reduced motion) before completing the task.
+
 ## Completion
 
 Run the smallest available lint/typecheck/test/build gate for touched behavior. Final report must include `Docs read:`, changed files, exact commands/results, and blockers. Do not update plans unless milestone state actually changed.

@@ -1,16 +1,16 @@
 # Graph Report - vnru-network  (2026-08-20)
 
 ## Corpus Check
-- 200 files · ~167,051 words
+- 190 files · ~155,478 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1744 nodes · 2145 edges · 147 communities (129 shown, 18 thin omitted)
+- 1605 nodes · 1995 edges · 141 communities (122 shown, 19 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `97001001`
+- Built from commit: `4e089ac8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -37,7 +37,6 @@
 - Module 1 IAM Implementation Plan
 - MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION
 - MODULE 4 — TRAINING, KNOWLEDGE TRANSFER & ACADEMIC EXCHANGE
-- Module 1 Antigravity Assignment Plan
 - session-public.ts
 - Frontend Architecture
 - AuthenticationController
@@ -48,7 +47,6 @@
 - authentication.service.ts
 - authentication.module.ts
 - VN-RU Network System Architecture
-- VN-RU Core Baseline Adoption Plan
 - Frontend Runtime and UI Guide
 - authentication.controller.ts
 - VN-RU Network Backend Service Guide
@@ -76,19 +74,15 @@
 - 23. IAM — detailed domain model
 - expert-query.ts
 - iam-admin.service.ts
-- Module 2 — AGY Swarm Implementation Plan
 - module2.repository.ts
-- Module 2 Knowledge & Expert Discovery — AGY Assignment Plan
 - 3.4 Full
 - dependencies
 - compilerOptions
 - dependencies
 - compilerOptions
 - screens
-- dashboard.py
 - devDependencies
 - devDependencies
-- Decisions
 - AppService
 - PORTAL-WIDE FLOW SUMMARY — IMPLEMENTATION BASELINE
 - style.md
@@ -146,7 +140,7 @@
 1. `MODULE 1 — IAM / GOVERNANCE` - 42 edges
 2. `authServiceUrl()` - 29 edges
 3. `MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY` - 29 edges
-4. `UI Quality Pro-Max` - 24 edges
+4. `UI Quality Pro-Max — VN-RU Portal` - 27 edges
 5. `backendHeaders()` - 22 edges
 6. `compilerOptions` - 22 edges
 7. `MODULE 3 — BILATERAL RESEARCH FUNDING & PROJECT MANAGEMENT` - 22 edges
@@ -169,7 +163,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (147 total, 18 thin omitted)
+## Communities (141 total, 19 thin omitted)
 
 ### Community 0 - "devDependencies"
 Cohesion: 0.04
@@ -177,7 +171,7 @@ Nodes (49): eslint-config-prettier, @eslint/eslintrc, @eslint/js, eslint-plugin-
 
 ### Community 1 - "app.module.ts"
 Cohesion: 0.18
-Nodes (9): AppModule, Module, configSchema, validateConfig(), bootstrap(), AccessControlModule, Module, SecurityModule (+1 more)
+Nodes (11): configSchema, validateConfig(), AccessControlModule, Module, AuthenticationModule, Module, OidcAuthorizationUrlParams, OidcCallbackResult (+3 more)
 
 ### Community 2 - "compilerOptions"
 Cohesion: 0.09
@@ -235,10 +229,6 @@ Nodes (36): 10. Why use a dedicated search engine?, 11. Semantic search, 12. Exp
 Cohesion: 0.06
 Nodes (35): 10. State models must remain separate, 11. Conceptual data model, 12. Authorization, 13. UI capability, 14. API capability proposal, 15. Events and audit, 16. Concurrency and idempotency, 17. Acceptance Criteria — Module 3 (+27 more)
 
-### Community 20 - "Module 1 IAM Implementation Plan"
-Cohesion: 0.06
-Nodes (33): Antigravity dispatch contract, Approval boundary, Default: sequential short-lived PRs, Docs read, Failure handling, Git workflow, In scope, Module 1 IAM Implementation Plan (+25 more)
-
 ### Community 21 - "MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION"
 Cohesion: 0.08
 Nodes (25): 10. IP / legal / advisory boundary, 11. State model, 12. Conceptual data model, 13. Authorization, 14. UI capability, 15. API capability proposal, 16. Events and audit, 17. Concurrency / idempotency (+17 more)
@@ -247,21 +237,17 @@ Nodes (25): 10. IP / legal / advisory boundary, 11. State model, 12. Conceptual 
 Cohesion: 0.11
 Nodes (19): 10. Conceptual data model, 11. Authorization, 12. UI capability, 13. API capability proposal, 14. Events and audit, 15. Concurrency / idempotency, 16. Integration, 17. Acceptance Criteria — Module 4 (+11 more)
 
-### Community 23 - "Module 1 Antigravity Assignment Plan"
-Cohesion: 0.10
-Nodes (20): Approval boundary, Assignment model, Dispatch constraints, Git workflow, Module 1 Antigravity Assignment Plan, Ponytail deletions from the earlier plan, Slice 1A — Prisma + Zod foundation, Slice 1B — Internal identity (+12 more)
-
 ### Community 25 - "session-public.ts"
-Cohesion: 0.11
-Nodes (20): Optional, AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord (+12 more)
+Cohesion: 0.16
+Nodes (14): AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord, Inject (+6 more)
 
 ### Community 26 - "Frontend Architecture"
 Cohesion: 0.11
 Nodes (18): 10. State Management, 11. Frontend and Backend Boundary, 12. Performance Principles, 13. Dependency Direction, 14. Architecture Rules Summary, 1. Purpose, 2. Docs Index, 3. Core Principles (+10 more)
 
 ### Community 27 - "AuthenticationController"
-Cohesion: 0.15
-Nodes (8): Delete, Res, AuthenticationController, Controller, Get, Param, Query, UseGuards
+Cohesion: 0.09
+Nodes (17): Delete, Optional, Res, extractSessionCookie(), isRecord(), AuthenticationController, Body, Controller (+9 more)
 
 ### Community 28 - "🇻🇳🇷🇺 VN-RU Network"
 Cohesion: 0.12
@@ -276,20 +262,16 @@ Cohesion: 0.26
 Nodes (9): IdentityModule, Module, ExternalIdentityRecord, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput, Inject (+1 more)
 
 ### Community 32 - "authentication.service.ts"
-Cohesion: 0.12
-Nodes (25): paginationSchema, roleAssignmentSchema, userStatusSchema, uuidSchema, AuthenticatedRequest, AuthenticatedRequestGuard, extractSessionCookie(), isRecord() (+17 more)
+Cohesion: 0.15
+Nodes (20): paginationSchema, roleAssignmentSchema, userStatusSchema, uuidSchema, AuthenticatedRequest, AuthenticatedRequestGuard, RequestWithCookies, RequireMfa() (+12 more)
 
 ### Community 33 - "authentication.module.ts"
-Cohesion: 0.11
-Nodes (18): AuthenticationModule, mockClientInstance, mockIssuerInstance, Module, MockIdentityService, MockOidcService, MockSessionService, CreateAuthorizationRequestParams (+10 more)
+Cohesion: 0.14
+Nodes (13): mockClientInstance, mockIssuerInstance, MockIdentityService, MockOidcService, MockSessionService, CreateAuthorizationRequestParams, HandleCallbackParams, KeycloakOidcService (+5 more)
 
 ### Community 34 - "VN-RU Network System Architecture"
 Cohesion: 0.17
 Nodes (12): 1. Overview & Legal Baseline `[SOURCE]`, 2.1. Layer 1: User Interface & Multilingual Experience (`exp`) `[SOURCE]`, 2.2. Layer 2: Business & Platform Services (`biz`) `[SOURCE]`, 2.3. Layer 3: Infrastructure & Digital Sovereignty Security (`infra`) `[SOURCE]`, 2.4. Cross-Cutting: Analytics & KPI Foundation (`analytics`) `[DESIGN]`, 2. Three-Layer Portal Architecture, 3. Six Business Capabilities & Domain Microservices, 4.1. Communication Patterns (+4 more)
-
-### Community 35 - "VN-RU Core Baseline Adoption Plan"
-Cohesion: 0.18
-Nodes (10): Antigravity bounded dispatch, Approval required, Copy/adapt matrix, Deferred slice: first real frontend API module, Explicitly do not copy, Risks / trade-offs, Rollback, Task 1: Create the eight-file governance baseline (+2 more)
 
 ### Community 36 - "Frontend Runtime and UI Guide"
 Cohesion: 0.20
@@ -304,7 +286,7 @@ Cohesion: 0.20
 Nodes (9): `auth-service` Internal Module Base, Cross-service dependency rule, Public vs internal files, Purpose, Recommended service/module shapes, Refactor workflow, Service boundaries (Target Architecture), Service ownership (+1 more)
 
 ### Community 39 - "VN-RU Network API Specification & Event Contracts"
-Cohesion: 0.22
+Cohesion: 0.25
 Nodes (8): 1. Contract Source of Truth, 2.1. Resource Modeling & URI Structure, 2.2. Bounded Collection Responses, 2. API Design Conventions, 3.1. Canonical Domain Events, 3.2. Audit Logging Events, 3. Asynchronous Event Contracts & Envelope Standard, VN-RU Network API Specification & Event Contracts
 
 ### Community 40 - "Frontend Feature Guide"
@@ -324,12 +306,12 @@ Cohesion: 0.25
 Nodes (7): Backend Service Rules, Before code, Boundaries, Contracts and events, Data, Testing and completion, Trust boundaries
 
 ### Community 44 - "VN-RU Network Domain Map"
-Cohesion: 0.29
+Cohesion: 0.33
 Nodes (6): 1. Purpose, 2. Six Business Capabilities & Domain Mapping, 3. Data Ownership & Source-of-Truth Rules, 4. Inter-Domain Dependency & Communication Rules, 5. Service Extraction Readiness, VN-RU Network Domain Map
 
 ### Community 45 - "Frontend Rules"
-Cohesion: 0.33
-Nodes (6): Before code, Boundaries, Completion, Frontend Rules, Server state, State
+Cohesion: 0.25
+Nodes (7): Before code, Boundaries, Completion, Frontend Rules, Server state, State, UI Quality & Impeccable Gate
 
 ### Community 46 - "29. API Contract"
 Cohesion: 0.33
@@ -340,8 +322,8 @@ Cohesion: 0.33
 Nodes (6): 38. Acceptance Criteria — IAM, Authentication, Authorization, Integration, Security, Workspace
 
 ### Community 48 - "Agent Instructions — VN-RU Network"
-Cohesion: 0.33
-Nodes (5): Agent Instructions — VN-RU Network, Execution rules, Mandatory pre-code gate, Mandatory UI/UX quality routing, Navigation
+Cohesion: 0.25
+Nodes (7): Agent Instructions — VN-RU Network, Default UI scope, Execution rules, Mandatory pre-code gate, Mandatory UI/UX quality routing, Navigation, UI Quality & Impeccable Gate
 
 ### Community 49 - "VN-RU Network — Centralized Open Decisions & Unresolved Questions"
 Cohesion: 0.40
@@ -367,17 +349,9 @@ Nodes (22): AppModule, Module, ExpertController, Controller, Get, Query, isPlain
 Cohesion: 0.09
 Nodes (23): Patch, IamAdminController, Body, Controller, Get, Param, Post, Query (+15 more)
 
-### Community 73 - "Module 2 — AGY Swarm Implementation Plan"
-Cohesion: 0.06
-Nodes (32): Agent ownership, AGY-01 — Knowledge backend, AGY-01 Slice K1, AGY-01 Slice K2, AGY-02 — Expert backend, AGY-02 Slice E1, AGY-02 Slice E2, AGY-03/04 read-only contract review (+24 more)
-
 ### Community 74 - "module2.repository.ts"
 Cohesion: 0.15
-Nodes (18): KnowledgeWorkspacePage(), one(), Params, WorkspacePage(), Props, fetchDiscoverySection(), Fetcher, getExperts() (+10 more)
-
-### Community 75 - "Module 2 Knowledge & Expert Discovery — AGY Assignment Plan"
-Cohesion: 0.08
-Nodes (24): AGY-01 — Slice 1A: publication read model, AGY-01 — Slice 2A: native publication search, AGY-02 — Slice 1B: organization/expert read model, AGY-02 — Slice 2B: publication references in expert detail, AGY ownership, Approval boundary, Decision Gate 0 — stakeholder input required, Definition of done (+16 more)
+Nodes (17): KnowledgeWorkspacePage(), one(), Params, WorkspacePage(), Props, fetchDiscoverySection(), Fetcher, getExperts() (+9 more)
 
 ### Community 76 - "3.4 Full"
 Cohesion: 0.11
@@ -403,10 +377,6 @@ Nodes (16): compilerOptions, declaration, emitDecoratorMetadata, esModuleInterop
 Cohesion: 0.12
 Nodes (15): projectId, screens, experts, governance, home, iam-admin, knowledge, login (+7 more)
 
-### Community 82 - "dashboard.py"
-Cohesion: 0.29
-Nodes (12): board(), git_events(), Handler, lane_state(), latest_log(), processes(), redact(), run() (+4 more)
-
 ### Community 83 - "devDependencies"
 Cohesion: 0.13
 Nodes (15): devDependencies, jest, @nestjs/cli, prisma, ts-jest, @types/jest, @types/node, typescript (+7 more)
@@ -415,13 +385,9 @@ Nodes (15): devDependencies, jest, @nestjs/cli, prisma, ts-jest, @types/jest, @t
 Cohesion: 0.13
 Nodes (15): devDependencies, jest, @nestjs/cli, prisma, ts-jest, @types/jest, @types/node, typescript (+7 more)
 
-### Community 85 - "Decisions"
-Cohesion: 0.17
-Nodes (11): Approval gate, Decisions, Explicitly skipped, Inspection result, Likely production file delta, Task 1: Lock the source contract with focused smoke checks, Task 2: Port the downloaded login composition into the Keycloak template, Task 3: Replace brittle generated-content CSS with direct responsive styling (+3 more)
-
 ### Community 86 - "AppService"
-Cohesion: 0.29
-Nodes (5): AppController, Controller, Get, AppService, Injectable
+Cohesion: 0.17
+Nodes (10): AppController, Controller, Get, AppModule, Module, AppService, Injectable, bootstrap() (+2 more)
 
 ### Community 87 - "PORTAL-WIDE FLOW SUMMARY — IMPLEMENTATION BASELINE"
 Cohesion: 0.18
@@ -524,8 +490,8 @@ Cohesion: 0.50
 Nodes (4): 3.1. Public / Discovery, 3.2. Role-based Workspace, 3.3. Governance & Administration, 3. Public / Workspace / Governance
 
 ### Community 127 - "UI Quality Pro-Max"
-Cohesion: 0.08
-Nodes (24): 10. Color and visual hierarchy audit, 11. Icons and imagery audit, 12. Information architecture and UX audit, 13. State-completeness audit, 14. Interaction audit, 15. Accessibility baseline, 16. Runtime and performance-stability audit, 17. Security-sensitive UI rules (+16 more)
+Cohesion: 0.06
+Nodes (30): 10. Spacing, geometry, and visual rhythm, 11. Color, hierarchy, and state styling, 12. Icons and imagery, 13. UX and information architecture, 14. Forms, tables, dialogs, menus, and data-dense surfaces, 15. Async/state completeness, 16. Accessibility baseline, 17. Zoom and content stress (+22 more)
 
 ### Community 128 - "Appendix B - Canonical Sources (read these before reinventing)"
 Cohesion: 0.09
@@ -601,24 +567,24 @@ Nodes (9): IamClientPage(), Role, User, SecurityClientPage(), Session, ConfirmAc
 
 ### Community 146 - "VN-RU Network Global Rules (Authoritative)"
 Cohesion: 0.25
-Nodes (7): 1. Security & Authentication Boundaries, 2. Data Ownership & Microservice Boundaries, 3. Package & Dependency Governance, 4. API & Resource Design, 5. Working Tree & Scope Constraints, 6. Verification Request Dispatch, VN-RU Network Global Rules (Authoritative)
+Nodes (8): 1. Security & Authentication Boundaries, 2. Data Ownership & Microservice Boundaries, 3. Package & Dependency Governance, 4. API & Resource Design, 5. Working Tree & Scope Constraints, 6. Verification Request Dispatch, 7. UI Quality & Impeccable Gate, VN-RU Network Global Rules (Authoritative)
 
 ## Knowledge Gaps
-- **1036 isolated node(s):** `Locale`, `resources`, `Locale`, `Translation`, `translations` (+1031 more)
+- **943 isolated node(s):** `Locale`, `resources`, `Locale`, `Translation`, `translations` (+938 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **19 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `MODULE 1 — IAM / GOVERNANCE` connect `MODULE 1 — IAM / GOVERNANCE` to `29. API Contract`, `23. IAM — detailed domain model`, `38. Acceptance Criteria — IAM`, `16. IAM UI`, `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **Why does `MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY` connect `MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY` to `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `MODULE 3 — BILATERAL RESEARCH FUNDING & PROJECT MANAGEMENT` connect `MODULE 3 — BILATERAL RESEARCH FUNDING & PROJECT MANAGEMENT` to `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+  _High betweenness centrality (0.008) - this node is a cross-community bridge._
+- **Why does `MODULE 1 — IAM / GOVERNANCE` connect `MODULE 1 — IAM / GOVERNANCE` to `29. API Contract`, `23. IAM — detailed domain model`, `38. Acceptance Criteria — IAM`, `16. IAM UI`, `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
+  _High betweenness centrality (0.008) - this node is a cross-community bridge._
+- **Why does `MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION` connect `MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION` to `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **What connects `Locale`, `resources`, `Locale` to the rest of the system?**
-  _1036 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _943 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
