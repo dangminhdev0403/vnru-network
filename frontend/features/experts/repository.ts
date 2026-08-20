@@ -1,6 +1,9 @@
 import type { DiscoveryResult, ExpertDetailResult, ExpertMatchesResult, PublicExpert, ExpertDetail, ExpertMatch } from "./types";
 
 type Fetcher = (input: string, init?: RequestInit) => Promise<Response>;
+const isObject = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null;
+const isExpert = (v: unknown): v is ExpertDetail => isObject(v) && v.visibility === "PUBLIC" && typeof v.id === "string" && typeof v.displayName === "string" && isObject(v.organization) && Array.isArray(v.expertises);
+const isMatch = (v: unknown): v is ExpertMatch => isObject(v) && isExpert(v.expert) && Array.isArray(v.reasons) && v.reasons.every((r) => isObject(r) && typeof r.id === "string" && typeof r.slug === "string" && isObject(r.labels));
 
 function serviceUrl(path: string): string | null {
   const base = process.env.ORGANIZATION_SERVICE_URL;
@@ -23,7 +26,7 @@ export async function getExperts(
     const body: unknown = await res.json();
     if (!body || typeof body !== "object") throw new Error("bad");
     const envelope = body as { items?: unknown; nextCursor?: unknown };
-    if (!Array.isArray(envelope.items)) throw new Error("bad");
+    if (!Array.isArray(envelope.items) || !envelope.items.every(isExpert)) throw new Error("bad");
     return { status: "success", items: envelope.items as PublicExpert[], nextCursor: typeof envelope.nextCursor === "string" ? envelope.nextCursor : null };
   } catch { return { status: "error", kind: "integration", message: "Expert service unavailable" }; }
 }
@@ -38,7 +41,8 @@ export async function getExpertById(
     const res = await fetcher(url, { cache: "no-store", headers: { accept: "application/json" } });
     if (res.status === 404) return { status: "error", kind: "not_found", message: "Expert not found" };
     if (!res.ok) return { status: "error", kind: "integration", message: "Expert service unavailable" };
-    const expert: ExpertDetail = await res.json();
+    const expert: unknown = await res.json();
+    if (!isExpert(expert)) throw new Error("bad");
     return { status: "success", expert };
   } catch { return { status: "error", kind: "integration", message: "Expert service unavailable" }; }
 }
@@ -53,7 +57,7 @@ export async function getExpertMatches(
     const res = await fetcher(url, { cache: "no-store", headers: { accept: "application/json" } });
     if (!res.ok) return { status: "error", kind: "integration", message: "Matching service unavailable" };
     const body: unknown = await res.json();
-    if (!body || typeof body !== "object" || !Array.isArray((body as { items?: unknown }).items)) {
+    if (!body || typeof body !== "object" || !Array.isArray((body as { items?: unknown }).items) || !(body as { items: unknown[] }).items.every(isMatch)) {
       throw new Error("bad");
     }
     return { status: "success", items: (body as { items: ExpertMatch[] }).items };

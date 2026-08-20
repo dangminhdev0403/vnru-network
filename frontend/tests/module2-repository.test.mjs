@@ -21,7 +21,7 @@ test("malformed envelope stays inside the section error state", async () => {
   assert.equal(result.status, "error");
 });
 
-test("guard filters out items with invalid shapes", async () => {
+test("guard rejects envelopes containing invalid shapes", async () => {
   const items = [
     { id: "ok", title: "Paper", type: "article", year: 2024, country: "VN", topics: [] },
     { id: "bad" }, // missing required fields
@@ -33,11 +33,7 @@ test("guard filters out items with invalid shapes", async () => {
     async () => Response.json({ items, nextCursor: null }),
     isPublicPublication,
   );
-  assert.equal(result.status, "success");
-  if (result.status === "success") {
-    assert.equal(result.items.length, 1);
-    assert.equal(result.items[0].id, "ok");
-  }
+  assert.equal(result.status, "error");
 });
 
 test("guard passes all valid expert items", async () => {

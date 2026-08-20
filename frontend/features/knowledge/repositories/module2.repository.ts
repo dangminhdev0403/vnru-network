@@ -16,8 +16,8 @@ export async function fetchDiscoverySection<T>(baseUrl:string, query:Record<stri
     if(!body||typeof body!=="object") throw new Error("Invalid Module 02 response");
     const envelope=body as {items?:unknown;nextCursor?:unknown};
     if(!Array.isArray(envelope.items)||!(envelope.nextCursor===null||typeof envelope.nextCursor==="string")) throw new Error("Invalid Module 02 response");
-    // ponytail: filter-only validation; upgrade to hard-reject when contract is stable
-    const items = guard ? envelope.items.filter(guard) : envelope.items as T[];
+    if (guard && !envelope.items.every(guard)) throw new Error("Invalid Module 02 item");
+    const items = envelope.items as T[];
     return {status:"success",items,nextCursor:envelope.nextCursor};
   } catch { return {status:"error",kind:"integration",message:"Module 02 service unavailable"}; }
 }

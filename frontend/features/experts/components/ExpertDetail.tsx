@@ -103,13 +103,13 @@ export default function ExpertDetail({ expertResult, matchesResult, id, locale =
             <div className="mt-4 divide-y divide-slate-100">
               {matchesResult.items.map((m) => (
                 <Link
-                  key={m.candidateId}
-                  href={`/experts/${m.candidateId}`}
+                  key={m.expert.id}
+                  href={`/experts/${m.expert.id}`}
                   className="block py-3 transition hover:bg-slate-50 -mx-2 px-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <span className="text-sm font-semibold text-blue-700">{m.candidateId}</span>
+                  <span className="text-sm font-semibold text-blue-700">{m.expert.displayName}</span>
                   <p className="mt-1 text-xs text-slate-500">
-                    {t.sharedExpertise}: {m.reasons.map((r) => r.label).join(", ")}
+                    {t.sharedExpertise}: {m.reasons.map((r) => r.labels[locale] ?? r.labels.en ?? r.slug).join(", ")}
                   </p>
                 </Link>
               ))}

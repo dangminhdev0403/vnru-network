@@ -19,8 +19,8 @@ export type ExpertDetail = {
 
 /** A partner suggestion from GET /api/v1/experts/:id/matches */
 export type ExpertMatch = {
-  candidateId: string;
-  reasons: Array<{ id: string; slug: string; label: string }>;
+  expert: ExpertDetail;
+  reasons: Array<{ id: string; slug: string; labels: Record<string, string> }>;
 };
 
 export type ExpertDetailResult =

@@ -34,12 +34,12 @@ after(async () => {
 });
 
 test('seed-twice produces stable PUBLIC count', async () => {
-  const { rows } = await pool.query(`SELECT count(*)::int AS n FROM "Publication" WHERE visibility = 'PUBLIC' AND id LIKE 'b0000000-0000-4000-8000-00000000000%'`);
+  const { rows } = await pool.query(`SELECT count(*)::int AS n FROM "Publication" WHERE visibility = 'PUBLIC' AND id::text LIKE 'b0000000-0000-4000-8000-00000000000%'`);
   assert.equal(rows[0].n, 2, 'Expected exactly 2 PUBLIC seed publications');
 });
 
 test('seed-twice produces stable PRIVATE count', async () => {
-  const { rows } = await pool.query(`SELECT count(*)::int AS n FROM "Publication" WHERE visibility = 'PRIVATE' AND id LIKE 'b0000000-0000-4000-8000-00000000000%'`);
+  const { rows } = await pool.query(`SELECT count(*)::int AS n FROM "Publication" WHERE visibility = 'PRIVATE' AND id::text LIKE 'b0000000-0000-4000-8000-00000000000%'`);
   assert.equal(rows[0].n, 1, 'Expected exactly 1 PRIVATE seed publication');
 });
 
@@ -61,11 +61,11 @@ test('PUBLIC publication retrievable by id', async () => {
 });
 
 test('seed topics are stable', async () => {
-  const { rows } = await pool.query(`SELECT count(*)::int AS n FROM "KnowledgeTopic" WHERE id LIKE 'a0000000-0000-4000-8000-00000000000%'`);
+  const { rows } = await pool.query(`SELECT count(*)::int AS n FROM "KnowledgeTopic" WHERE id::text LIKE 'a0000000-0000-4000-8000-00000000000%'`);
   assert.equal(rows[0].n, 2);
 });
 
 test('seed authors are stable', async () => {
-  const { rows } = await pool.query(`SELECT count(*)::int AS n FROM "PublicationAuthorRef" WHERE id LIKE 'c0000000-0000-4000-8000-00000000000%'`);
+  const { rows } = await pool.query(`SELECT count(*)::int AS n FROM "PublicationAuthorRef" WHERE id::text LIKE 'c0000000-0000-4000-8000-00000000000%'`);
   assert.equal(rows[0].n, 4);
 });

@@ -11,9 +11,10 @@ test("getExperts: valid envelope returns success", async () => {
     assert.equal(u.pathname, "/api/v1/experts");
     assert.equal(u.searchParams.get("q"), "test");
     assert.equal(u.searchParams.get("limit"), "5");
-    return Response.json({ items: [{ id: "e1" }], nextCursor: "abc" });
+    return Response.json({ items: [{ id: "e1", displayName: "Test", bio: null, country: "VN", language: null, visibility: "PUBLIC", organization: { id: "o1", name: "Org", country: "VN" }, expertises: [] }], nextCursor: "abc" });
   });
-  assert.deepEqual(result, { status: "success", items: [{ id: "e1" }], nextCursor: "abc" });
+  assert.equal(result.status, "success");
+  if (result.status === "success") assert.equal(result.items[0].id, "e1");
 });
 
 test("getExperts: HTTP error maps to integration error", async () => {
@@ -63,7 +64,8 @@ test("getExpertById: 500 returns integration error", async () => {
 
 test("getExpertMatches: valid response returns success", async () => {
   process.env.ORGANIZATION_SERVICE_URL = "http://org-svc";
-  const items = [{ candidateId: "e2", reasons: [{ id: "x1", slug: "ai", label: "AI" }] }];
+  const expert = { id: "e2", displayName: "Partner", bio: null, country: "RU", language: null, visibility: "PUBLIC", organization: { id: "o2", name: "Org", country: "RU" }, expertises: [] };
+  const items = [{ expert, reasons: [{ id: "x1", slug: "ai", labels: { en: "AI" } }] }];
   const result = await getExpertMatches("e1", async (url) => {
     assert.ok(url.endsWith("/api/v1/experts/e1/matches"));
     return Response.json({ items });
