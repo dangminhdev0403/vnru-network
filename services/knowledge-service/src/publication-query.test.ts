@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parsePublicationQuery, decodeCursor, encodeCursor } from './publication-query.ts';
-import type { Cursor } from './publication-query.ts';
+import { parsePublicationQuery, decodeCursor, encodeCursor } from './publication-query';
+import type { Cursor } from './publication-query';
 
 test('Limit validation and defaults', () => {
   // Default value when limit is not specified

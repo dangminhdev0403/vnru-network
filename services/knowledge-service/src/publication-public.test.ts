@@ -8,7 +8,7 @@ import {
   projectPublicationSummary,
   projectDetail,
   projectPublicationDetail,
-} from './publication-public.ts';
+} from './publication-public';
 
 describe('Publication Public Helpers', () => {
   describe('PUBLIC_VISIBILITY Constant', () => {
