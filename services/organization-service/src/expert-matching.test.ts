@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import { matchExperts } from './expert-matching.ts';
-import type { Expert } from './expert-matching.ts';
+import { matchExperts } from './expert-matching';
+import type { Expert } from './expert-matching';
 
 test('expert matching - basic matchmaking', () => {
   const currentExpert: Expert = {

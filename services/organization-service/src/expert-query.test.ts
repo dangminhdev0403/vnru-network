@@ -4,7 +4,7 @@ import {
   parseExpertQuery,
   parseCursor,
   serializeCursor
-} from './expert-query.ts';
+} from './expert-query';
 
 test('1. Limit validation and parsing', async (t) => {
   await t.test('uses default limit of 20 when limit is not provided', () => {
