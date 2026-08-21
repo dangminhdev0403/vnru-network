@@ -5,8 +5,8 @@
     "semantic_hash": ""
   },
   "frontend/app/page.tsx": {
-    "mtime": 1787163136.7568514,
-    "ast_hash": "b634fc4fd69f6cb504869a7337abda5e",
+    "mtime": 1787187532.0039604,
+    "ast_hash": "9c21725f9797d9b3e1e7de17e22aab89",
     "semantic_hash": ""
   },
   "frontend/eslint.config.mjs": {
@@ -440,8 +440,8 @@
     "semantic_hash": ""
   },
   "frontend/app/HomeMotion.tsx": {
-    "mtime": 1787185453.8199227,
-    "ast_hash": "f5615715fbabbf6f95f8857613d1055d",
+    "mtime": 1787189578.6666484,
+    "ast_hash": "8952b7574f73d7f5ec21f80d4de55c71",
     "semantic_hash": ""
   },
   "frontend/app/NotFoundClient.tsx": {
@@ -515,8 +515,8 @@
     "semantic_hash": ""
   },
   "frontend/app/home-translations.json": {
-    "mtime": 1787137010.1132295,
-    "ast_hash": "f2ae4551d84cc7d28fd84a10a1187f20",
+    "mtime": 1787189091.889083,
+    "ast_hash": "9b6a4dfb7b56e36e03d46d4f9860ab05",
     "semantic_hash": ""
   },
   "frontend/app/login/page.tsx": {
@@ -570,8 +570,8 @@
     "semantic_hash": ""
   },
   "frontend/components/shared/WorkspaceShell.tsx": {
-    "mtime": 1787184796.9615648,
-    "ast_hash": "aed43689ab0d7da428e2d006d600dabe",
+    "mtime": 1787187017.3750994,
+    "ast_hash": "659ec96d96d87589e957ccc7aeea3f4b",
     "semantic_hash": ""
   },
   "frontend/features/auth/components/IamWorkspaceView.tsx": {
@@ -585,8 +585,8 @@
     "semantic_hash": ""
   },
   "frontend/features/knowledge/components/KnowledgeWorkspaceView.tsx": {
-    "mtime": 1787185501.982927,
-    "ast_hash": "34ac63742375293fab43702668e0e8ec",
+    "mtime": 1787187028.0377588,
+    "ast_hash": "c63f0190076148f9f62d1f512544a7da",
     "semantic_hash": ""
   },
   "frontend/features/knowledge/repositories/module2.repository.ts": {
@@ -600,8 +600,8 @@
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/DashboardView.tsx": {
-    "mtime": 1787185507.5611317,
-    "ast_hash": "342e6003170c3c545d59f62cae419384",
+    "mtime": 1787187035.732108,
+    "ast_hash": "ae17ca33b10092a2d5fbadbdde8dfcc2",
     "semantic_hash": ""
   },
   "frontend/home-i18n.test.mjs": {
@@ -955,8 +955,8 @@
     "semantic_hash": ""
   },
   "frontend/html-templates/index.html": {
-    "mtime": 1787160804.5631046,
-    "ast_hash": "2a88fe74623b80931f2e6142f5e5e6ed",
+    "mtime": 1787189463.0616794,
+    "ast_hash": "fdfaa109ca1800e46612f44d062dfb8a",
     "semantic_hash": ""
   },
   "frontend/html-templates/knowledge-workspace.html": {

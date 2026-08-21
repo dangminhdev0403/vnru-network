@@ -1,6 +1,6 @@
-# VN-RU Network — Web Portal Frontend
+# Russia-Vietnam Science-Technology Intelligence Network — Web Portal Frontend
 
-The Next.js 16.3 Web Portal frontend for the **VN-RU Network**, connecting research, education, institutions, experts, and technology between Vietnam and Russia.
+The Next.js 16.3 Web Portal frontend for the **Russia-Vietnam Science-Technology Intelligence Network**, connecting research, education, institutions, experts, and technology between Vietnam and Russia.
 
 ## Product Surfaces `[SOURCE]`
 

@@ -29,7 +29,7 @@ interface Translation {
 
 const translations: Record<Locale, Translation> = {
   vi: {
-    brandTitle: "Mạng lưới tri thức Nga – Việt",
+    brandTitle: "Russia-Vietnam Science-Technology Intelligence Network",
     brandSubtitle: "Cổng thông tin hợp tác song phương",
     badge: "Lỗi điều hướng • HTTP 404",
     errorCode: "404",
@@ -40,7 +40,7 @@ const translations: Record<Locale, Translation> = {
       statusLabel: "Mã trạng thái",
       statusValue: "404 Not Found",
       networkLabel: "Hệ thống",
-      networkValue: "Cổng thông tin Tri thức VN-RU",
+      networkValue: "Russia-Vietnam Science-Technology Intelligence Network",
       actionLabel: "Khuyến nghị",
       actionValue: "Quay lại trang trước hoặc về trang chủ",
     },
@@ -50,7 +50,7 @@ const translations: Record<Locale, Translation> = {
     operatorOrg: "Quỹ Truyền thống và Hữu nghị",
   },
   ru: {
-    brandTitle: "Российско-Вьетнамская сеть знаний",
+    brandTitle: "Russia-Vietnam Science-Technology Intelligence Network",
     brandSubtitle: "Портал двустороннего сотрудничества",
     badge: "Ошибка навигации • HTTP 404",
     errorCode: "404",
@@ -61,7 +61,7 @@ const translations: Record<Locale, Translation> = {
       statusLabel: "Код ошибки",
       statusValue: "404 Not Found",
       networkLabel: "Система",
-      networkValue: "Портал сети знаний VN-RU",
+      networkValue: "Russia-Vietnam Science-Technology Intelligence Network",
       actionLabel: "Рекомендация",
       actionValue: "Вернуться назад или перейти на главную",
     },
@@ -71,7 +71,7 @@ const translations: Record<Locale, Translation> = {
     operatorOrg: "Фондом «Традиции и дружба»",
   },
   en: {
-    brandTitle: "VN-RU Knowledge Network",
+    brandTitle: "Russia-Vietnam Science-Technology Intelligence Network",
     brandSubtitle: "Bilateral Cooperation Portal",
     badge: "Navigation Error • HTTP 404",
     errorCode: "404",
@@ -82,7 +82,7 @@ const translations: Record<Locale, Translation> = {
       statusLabel: "Status Code",
       statusValue: "404 Not Found",
       networkLabel: "System",
-      networkValue: "VN-RU Knowledge Network Portal",
+      networkValue: "Russia-Vietnam Science-Technology Intelligence Network",
       actionLabel: "Recommended Action",
       actionValue: "Go back to previous page or return to homepage",
     },

@@ -46,7 +46,7 @@ export default function PublicationDetail({ data, labels: t, lang }: Props) {
 
       <article>
         <header>
-          <h1 className="text-2xl font-black tracking-tight text-on-surface sm:text-3xl">
+          <h1 className="font-serif text-2xl font-bold tracking-tight text-on-surface sm:text-3xl">
             {pub.title}
           </h1>
           <p className="mt-2 text-sm text-on-surface-variant">

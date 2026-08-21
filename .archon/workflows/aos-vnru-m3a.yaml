@@ -1,0 +1,55 @@
+name: aos-vnru-m3a
+description: |
+  Approval-gated AOS Flow for VN-RU Module 3A public funding opportunities.
+  Shows exact Orca/Supervisor paths and ephemeral PostgreSQL lifecycle,
+  then launches the approved AGY foundation wave visibly in Orca.
+interactive: true
+worktree:
+  enabled: false
+nodes:
+  - id: execution-plan
+    bash: |
+      cat <<'PLAN'
+      Orca Desktop: C:\Users\Dangminhdev0403\AppData\Local\Programs\orca\Orca.exe
+      Orca CLI:     C:\Users\Dangminhdev0403\AppData\Local\Programs\orca\resources\bin\orca.exe
+      Supervisor:   C:\Users\Dangminhdev0403\agent-orchestrator\supervisor.py
+
+      Protected PostgreSQL — NEVER TOUCH:
+        container: postgres-local
+        port: 5432
+        volume: postgres-local-data
+
+      Approval-gated ephemeral PostgreSQL:
+        container: vnru-aos-m3-postgres
+        image: postgres:latest
+        port: 55433
+        storage: tmpfs /var/lib/postgresql
+        database: vnru_aos_grant
+        cleanup: immediately after PASS, FAIL, timeout, or cancellation evidence
+
+      Wave A: m3a-foundation only.
+      Base: 51ca47d.
+      Scope: minimal grant-service package/lock/schema/migration/schema check.
+      No proposal/review/decision/project, push, merge, deploy, or production DB.
+      After Wave A, host reviews/rewrites/integrates before Wave B starts.
+      PLAN
+    timeout: 10000
+
+  - id: approve-execution
+    approval:
+      message: |
+        Approved scope was confirmed in chat. Confirm this concrete runtime launch.
+        $execution-plan.output
+    depends_on: [execution-plan]
+
+  - id: run-visible-orca
+    bash: |
+      ORCA='C:/Users/Dangminhdev0403/AppData/Local/Programs/orca/resources/bin/orca.exe'
+      "$ORCA" open --json >/dev/null
+      "$ORCA" terminal create \
+        --worktree 'path:C:/Users/Dangminhdev0403/Desktop/workspace/vnru-network' \
+        --title 'AOS VN-RU MODULE 3A FOUNDATION' \
+        --command 'python C:\Users\Dangminhdev0403\agent-orchestrator\run_vnru_m3a.py foundation --approved' \
+        --json
+    depends_on: [approve-execution]
+    timeout: 120000

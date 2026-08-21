@@ -1,0 +1,52 @@
+name: aos-vnru-m12-backend
+description: |
+  Approval-gated AOS Flow for VN-RU Module 1+2 backend closure only.
+  Shows exact Orca/Supervisor paths and ephemeral PostgreSQL lifecycle,
+  then launches the existing supervisor visibly in Orca after approval.
+interactive: true
+worktree:
+  enabled: false
+nodes:
+  - id: execution-plan
+    bash: |
+      cat <<'PLAN'
+      Orca Desktop: C:\Users\Dangminhdev0403\AppData\Local\Programs\orca\Orca.exe
+      Orca CLI:     C:\Users\Dangminhdev0403\AppData\Local\Programs\orca\resources\bin\orca.exe
+      Supervisor:   C:\Users\Dangminhdev0403\agent-orchestrator\supervisor.py
+
+      Protected PostgreSQL — NEVER TOUCH:
+        container: postgres-local
+        port: 5432
+        volume: postgres-local-data
+
+      Approval-gated ephemeral PostgreSQL:
+        container: vnru-aos-m12-postgres
+        image: postgres:latest
+        port: 55432
+        storage: tmpfs /var/lib/postgresql (PostgreSQL 18 data_directory parent)
+        databases: vnru_aos_auth, vnru_aos_knowledge, vnru_aos_organization
+        cleanup: immediately after PASS, FAIL, timeout, or cancellation evidence
+
+      AGY DAG: m1-compile-closure || m2-knowledge-closure || m2-organization-closure
+      Scope: backend test closure only; no UI/package/lockfile/schema/migration/deploy.
+      PLAN
+    timeout: 10000
+
+  - id: approve-execution
+    approval:
+      message: |
+        Approve this exact AOS execution. No container, worktree, or AGY lane starts before approval.
+        $execution-plan.output
+    depends_on: [execution-plan]
+
+  - id: run-visible-orca
+    bash: |
+      ORCA='C:/Users/Dangminhdev0403/AppData/Local/Programs/orca/resources/bin/orca.exe'
+      "$ORCA" open --json >/dev/null
+      "$ORCA" terminal create \
+        --worktree 'path:C:/Users/Dangminhdev0403/Desktop/workspace/vnru-network' \
+        --title 'AOS M1+M2 BACKEND' \
+        --command 'python C:\Users\Dangminhdev0403\agent-orchestrator\run_vnru_m12_backend.py --approved' \
+        --focus --json
+    depends_on: [approve-execution]
+    timeout: 120000

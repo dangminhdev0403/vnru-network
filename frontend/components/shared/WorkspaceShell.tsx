@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { type Locale, useLocale } from "@/app/HomeMotion";
+import { useLocale, type Locale } from "@/app/HomeMotion";
+import { SheetContent, SheetOverlay, SheetTitle } from "@/components/tailgrids/core/sheet";
+import { cn } from "@/lib/cn";
+import React, { useState } from "react";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 const shellCopy: Record<Locale, Record<string, string>> = {
   vi: { brand: "Mạng lưới KH&CN Việt - Nga", subtitle: "Khoa học · Công nghệ · Hợp tác" },
@@ -12,157 +13,62 @@ const shellCopy: Record<Locale, Record<string, string>> = {
   ru: { brand: "Научно-технологическая сеть Россия — Вьетнам", subtitle: "Наука · Технологии · Сотрудничество" },
 };
 
-const primaryNavigation = [
-  { href: "/workspace", label: "Tổng quan", icon: "space_dashboard" },
-  { href: "/workspace/iam", label: "IAM & Governance", icon: "shield_person" },
-  { href: "/workspace/knowledge", label: "Kho tri thức & Chuyên gia", icon: "hub" },
-];
-
-const governanceNavigation = [
-  { href: "/security", label: "Security & Sessions", icon: "verified_user" },
-  { href: "/admin/iam", label: "IAM Administration", icon: "admin_panel_settings" },
-];
-
-function isActive(pathname: string, href: string) {
-  if (href === "/workspace") return pathname === href;
-  return pathname.startsWith(href);
-}
-
-export default function WorkspaceShell({ children }: Readonly<{ children: React.ReactNode }>) {
-  const pathname = usePathname();
+export default function WorkspaceShell({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   const { locale } = useLocale();
   const brand = shellCopy[locale];
-  const [open, setOpen] = useState(false);
-  const searchRef = useRef<HTMLInputElement>(null);
-  const shouldReduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        searchRef.current?.focus();
-      }
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
+  // Desktop sidebar (xl+) expand/collapse state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  // Mobile sheet open state (< xl breakpoint)
+  const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
 
-  const current = [...primaryNavigation, ...governanceNavigation].find((item) => isActive(pathname, item.href));
-
-  const sidebar = (
-    <aside className="signal-surface flex h-full w-68 flex-col border-r border-white/10 px-4 py-5 text-white shadow-2xl">
-      <Link href="/" className="flex items-center gap-3 rounded-2xl px-2 py-2">
-        <span className="relative grid h-10 w-10 place-items-center overflow-hidden rounded-xl border border-white/15 bg-white shadow-lg">
-          <span className="absolute inset-y-0 left-0 w-[62%] -skew-x-12 bg-[#2370ff]" />
-          <span className="absolute inset-y-0 right-0 w-[48%] -skew-x-12 bg-[#e74762]" />
-        </span>
-        <span className="min-w-0 leading-tight">
-          <strong className="block truncate text-sm tracking-tight">{brand.brand}</strong>
-          <small className="text-xs font-bold uppercase tracking-wider text-slate-400">{brand.subtitle}</small>
-        </span>
-      </Link>
-
-      <div className="mt-3 grid grid-cols-2 gap-1 rounded-2xl border border-white/10 bg-white/5 p-1">
-        <Link href="/workspace/iam" className={`rounded-xl px-2 py-2 text-center text-xs font-black ${pathname.startsWith("/workspace/iam") ? "bg-white/10 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}>
-          Module 01 · IAM
-        </Link>
-        <Link href="/workspace/knowledge" className={`rounded-xl px-2 py-2 text-center text-xs font-black ${pathname.startsWith("/workspace/knowledge") ? "bg-white/10 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}>
-          Module 02 · Knowledge
-        </Link>
-      </div>
-
-      <p className="px-3 pb-2 pt-6 text-xs font-black uppercase tracking-wider text-slate-400">Workspace</p>
-      <nav className="grid gap-1">
-        {primaryNavigation.map((item) => (
-          <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className={`relative flex items-center gap-3 rounded-xl border px-3 py-3 text-sm font-bold transition ${isActive(pathname, item.href) ? "border-sky-400/25 bg-blue-500/15 text-white before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-sky-300" : "border-transparent text-white/75 hover:bg-white/5 hover:text-white"}`}>
-            <span className="material-symbols-outlined text-xl text-sky-300">{item.icon}</span>
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-
-      <p className="px-3 pb-2 pt-6 text-xs font-black uppercase tracking-wider text-slate-400">Governance</p>
-      <nav className="grid gap-1">
-        {governanceNavigation.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            onClick={() => setOpen(false)}
-            className={`flex items-center gap-3 rounded-2xl border px-3 py-3 text-sm font-bold transition ${
-              isActive(pathname, item.href)
-                ? "border-sky-400/25 bg-blue-500/15 text-white"
-                : "border-transparent text-white/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <span className="material-symbols-outlined text-xl text-sky-300">{item.icon}</span>
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-
-      <div className="mt-auto rounded-2xl border border-white/10 bg-white/5 p-4">
-        <p className="text-xs font-black uppercase tracking-wider text-slate-400">Active context</p>
-        <strong className="mt-2 block text-sm">Authenticated workspace</strong>
-        <span className="mt-1 block text-xs leading-5 text-slate-300">Identity, context và capability do Module 01 cung cấp. Backend vẫn là security boundary.</span>
-      </div>
-    </aside>
-  );
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   return (
-    <div className="min-h-[100dvh] bg-background text-on-background lg:grid lg:grid-cols-[272px_minmax(0,1fr)]">
-      <div className="fixed inset-y-0 left-0 z-40 hidden lg:block">{sidebar}</div>
+    <div className="flex min-h-screen bg-background text-on-background">
+      {/* Desktop sidebar (xl+) — always in DOM, transitions width */}
+      <aside
+        style={{
+          width: isSidebarOpen ? "272px" : "72px",
+          minWidth: isSidebarOpen ? "272px" : "72px",
+          transition: "width 300ms cubic-bezier(0.4, 0, 0.2, 1), min-width 300ms cubic-bezier(0.4, 0, 0.2, 1)",
+        }}
+        className="hidden shrink-0 overflow-hidden xl:block fixed inset-y-0 left-0 z-40"
+      >
+        <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      </aside>
 
-      <AnimatePresence>
-        {open ? (
-          <div className="fixed inset-0 z-50 lg:hidden">
-            <motion.button
-              type="button"
-              aria-label="Đóng menu"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm"
-              onClick={() => setOpen(false)}
-            />
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { x: "-100%" }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { x: 0 }}
-              exit={shouldReduceMotion ? { opacity: 0 } : { x: "-100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 300 }}
-              className="relative h-full w-68"
-            >
-              {sidebar}
-            </motion.div>
-          </div>
-        ) : null}
-      </AnimatePresence>
+      {/* Mobile sidebar (< xl) — Sheet sliding from left */}
+      <SheetOverlay isOpen={isMobileSheetOpen} onOpenChange={setIsMobileSheetOpen}>
+        <SheetContent
+          side="left"
+          showCloseButton={false}
+          className="w-72 max-w-72 border-r border-card-border bg-card-surface-area p-0"
+        >
+          <SheetTitle className="sr-only">{brand.brand}</SheetTitle>
+          <Sidebar
+            isSidebarOpen={true}
+            toggleSidebar={() => setIsMobileSheetOpen(false)}
+            onItemClick={() => setIsMobileSheetOpen(false)}
+            isMobile
+          />
+        </SheetContent>
+      </SheetOverlay>
 
-      <main className="min-w-0 lg:col-start-2">
-        <header className="sticky top-0 z-30 flex h-18 items-center gap-3 border-b border-outline-variant bg-background/90 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
-          <button type="button" aria-label="Mở menu" onClick={() => setOpen(true)} className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 lg:hidden">
-            <span className="material-symbols-outlined text-xl">menu</span>
-          </button>
-
-          <div className="hidden items-center gap-2 text-xs text-slate-500 sm:flex">
-            <Link href="/workspace" className="hover:text-blue-600">Workspace</Link>
-            <span>/</span>
-            <strong className="text-slate-700">{current?.label ?? "Russia-Vietnam Science-Technology Intelligence Network"}</strong>
-          </div>
-
-          <label className="relative ml-auto hidden w-[min(460px,44vw)] md:block">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-xl text-slate-400">search</span>
-            <input ref={searchRef} type="search" aria-label="Tìm kiếm toàn Portal" placeholder="Tìm chuyên gia, công bố, chủ đề…" className="h-11 w-full rounded-2xl border border-slate-200 bg-white pl-10 pr-16 text-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100" />
-            <kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-bold text-slate-500">⌘K</kbd>
-          </label>
-
-          <div className="flex h-11 items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 text-xs font-black text-slate-700">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100" />
-            <span className="hidden xl:inline">Context active</span>
-          </div>
-        </header>
-
-        {children}
-      </main>
+      {/* Main content column with dynamic margin */}
+      <div
+        className={cn(
+          "min-w-0 flex-1 flex flex-col transition-all duration-300",
+          isSidebarOpen ? "xl:ml-[272px]" : "xl:ml-[72px]"
+        )}
+      >
+        <Header onMenuClick={() => setIsMobileSheetOpen(true)} />
+        <main className="flex-1 overflow-y-auto">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

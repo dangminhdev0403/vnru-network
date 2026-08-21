@@ -1,8 +1,8 @@
-# VN-RU Network Domain Map
+# Russia-Vietnam Science-Technology Intelligence Network Domain Map
 
 ## 1. Purpose
 
-This document maps business domains, capability ownership, and persistent data boundaries across the VN-RU Network microservices.
+This document maps business domains, capability ownership, and persistent data boundaries across the Russia-Vietnam Science-Technology Intelligence Network microservices.
 
 It enforces the fundamental architectural principle: **Every business state has exactly one owning service.** No domain or dashboard may directly mutate or own another domain's state.
 

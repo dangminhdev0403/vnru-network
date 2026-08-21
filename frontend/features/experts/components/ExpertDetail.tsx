@@ -43,8 +43,8 @@ export default function ExpertDetail({ expertResult, matchesResult, id, locale =
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[2fr_1fr]">
         {/* Main info */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6">
-          <h1 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
+        <div className="app-panel p-6">
+          <h1 className="font-serif text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
             {expert.displayName}
           </h1>
 
@@ -90,7 +90,7 @@ export default function ExpertDetail({ expertResult, matchesResult, id, locale =
         </div>
 
         {/* Partner suggestions */}
-        <aside className="rounded-2xl border border-slate-200 bg-white p-6">
+        <aside className="app-panel p-6">
           <h2 className="text-lg font-black text-slate-900">{t.partners}</h2>
 
           {matchesResult.status === "error" ? (

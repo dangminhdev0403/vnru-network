@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-`auth-service` implements Module 1: **Unified Administration, Identity & Authentication** for VN-RU Network.
+`auth-service` implements Module 1: **Unified Administration, Identity & Authentication** for Russia-Vietnam Science-Technology Intelligence Network.
 
 This service is the platform-level source of truth for IAM: internal identities, authentication, login sessions, access context, roles/permissions, and authentication-related security policies.
 
@@ -27,7 +27,7 @@ These modules are registered in `AppModule`, but no domain entities, controllers
 
 ### 3.1 `identity`
 
-Owns the internal identity of a user in VN-RU Network.
+Owns the internal identity of a user in Russia-Vietnam Science-Technology Intelligence Network.
 
 Responsibilities:
 
@@ -44,7 +44,7 @@ Does not own:
 - roles/permissions;
 - provider-specific authentication flows.
 
-Primary question: **Who is this person inside VN-RU Network?**
+Primary question: **Who is this person inside Russia-Vietnam Science-Technology Intelligence Network?**
 
 ### 3.2 `authentication`
 

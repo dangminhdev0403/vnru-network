@@ -4,7 +4,7 @@
 -- Topics
 INSERT INTO "KnowledgeTopic" (id, slug, labels)
 VALUES
-  ('a0000000-0000-4000-8000-000000000001', 'artificial-intelligence', '{"en":"Artificial Intelligence","vi":"Trí tuệ nhân tạo","ru":"Искусственный интеллект"}'),
+  ('a0000000-0000-4000-8000-000000000001', 'artificial-intelligence', '{"en":"Artificial Intelligence","vi":"Trí thứcnhân tạo","ru":"Искусственный интеллект"}'),
   ('a0000000-0000-4000-8000-000000000002', 'materials-science', '{"en":"Materials Science","vi":"Khoa học vật liệu","ru":"Материаловедение"}')
 ON CONFLICT (id) DO NOTHING;
 

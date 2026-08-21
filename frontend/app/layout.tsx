@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk, Source_Serif_4 } from "next/font/google";
-import RouteMotion from "../components/shared/RouteMotion";
+import { ThemeProvider } from "../components/providers/ThemeProvider";
 import "./globals.css";
 
 const sans = Hanken_Grotesk({
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${serif.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -35,7 +35,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body className="font-sans antialiased bg-background text-on-background min-h-screen">
-        <RouteMotion>{children}</RouteMotion>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

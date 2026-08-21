@@ -117,12 +117,18 @@ export class SessionService {
     const tokenDigest = this.hashToken(token);
     const now = this.now();
     const expiresAt = new Date(now.getTime() + effectiveTtlMs);
+    const activeContext =
+      await this.accessControlService.resolveSoleActiveContext(input.userId);
 
     const session = await this.prisma.session.create({
       data: {
         tokenDigest,
         userId: input.userId,
         expiresAt,
+        ...(activeContext && {
+          activeContextType: activeContext.contextType,
+          activeContextId: activeContext.contextId,
+        }),
         authenticationLevel: input.authenticationLevel ?? 'PASSWORD',
       },
     });

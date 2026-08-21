@@ -1,8 +1,8 @@
-# VN-RU Network System Architecture
+# Russia-Vietnam Science-Technology Intelligence Network System Architecture
 
 ## 1. Overview & Legal Baseline `[SOURCE]`
 
-The **VN-RU Network Portal** is a bilateral knowledge, research, and technology cooperation platform.
+The **Russia-Vietnam Science-Technology Intelligence Network** is a bilateral knowledge, research, and technology cooperation platform.
 
 - **Founder & Operator**: The **Traditions and Friendship Foundation** is the founder, owner, coordinator, and operator of the Network and the Portal.
 - **Legal Position**: The Network is an independent cooperation initiative and is **not a separate legal entity**; it must not be assumed to be a portal of the two ministries or an intergovernmental program.

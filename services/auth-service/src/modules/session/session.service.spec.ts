@@ -18,6 +18,7 @@ describe('SessionService', () => {
   };
   let accessControlService: {
     hasActiveAssignment: jest.Mock;
+    resolveSoleActiveContext: jest.Mock;
   };
   let tokenSequence: string[];
   let tokenIndex: number;
@@ -42,6 +43,7 @@ describe('SessionService', () => {
 
     accessControlService = {
       hasActiveAssignment: jest.fn(),
+      resolveSoleActiveContext: jest.fn().mockResolvedValue(null),
     };
 
     tokenSequence = [];
@@ -102,6 +104,30 @@ describe('SessionService', () => {
       expect(result).toEqual({
         token: syntheticToken,
         session: createdRecord,
+      });
+    });
+
+    it('uses the sole active authorization context for a new session', async () => {
+      accessControlService.resolveSoleActiveContext.mockResolvedValue({
+        contextType: 'PLATFORM',
+        contextId: 'GLOBAL',
+      });
+      prisma.session.create.mockImplementation(({ data }) =>
+        Promise.resolve({
+          id: 'sess-admin',
+          createdAt: fixedNow,
+          revokedAt: null,
+          ...data,
+        }),
+      );
+
+      await service.createSession({ userId: 'usr-admin', ttlMs: 60_000 });
+
+      expect(prisma.session.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({
+          activeContextType: 'PLATFORM',
+          activeContextId: 'GLOBAL',
+        }),
       });
     });
 

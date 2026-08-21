@@ -22,6 +22,7 @@
   "20": "Module 1 IAM Implementation Plan",
   "21": "MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION",
   "22": "MODULE 4 — TRAINING, KNOWLEDGE TRANSFER & ACADEMIC EXCHANGE",
+  "23": "1. THE THREE DIALS (Core Configuration)",
   "24": "docs/README.md",
   "25": "session-public.ts",
   "26": "Frontend Architecture",
@@ -137,7 +138,6 @@
   "141": "12. THE BLOCK LIBRARY (Contract - Implementations Land Here Iteratively)",
   "142": "5. CONTEXT-AWARE PROACTIVITY",
   "143": "8. DARK MODE PROTOCOL",
-  "144": "7. DIAL DEFINITIONS (Technical Reference)",
   "145": "alerts.ts",
   "146": "VN-RU Network Global Rules (Authoritative)"
 }

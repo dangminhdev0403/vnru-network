@@ -1,6 +1,6 @@
-# VN-RU Network Global Rules (Authoritative)
+# Russia-Vietnam Science-Technology Intelligence Network Global Rules (Authoritative)
 
-This document contains the authoritative governance, security, data-ownership, and development rules for the VN-RU Network repository. All domain-specific rule files defer to this document.
+This document contains the authoritative governance, security, data-ownership, and development rules for the Russia-Vietnam Science-Technology Intelligence Network repository. All domain-specific rule files defer to this document.
 
 ## 1. Security & Authentication Boundaries
 

@@ -1,6 +1,6 @@
-# 🇻🇳🇷🇺 VN-RU Network
+# 🇻🇳🇷🇺 Russia-Vietnam Science-Technology Intelligence Network
 
-### Vietnam–Russia Knowledge Network Platform
+### Russia-Vietnam Science-Technology Intelligence Network
 
 > A digital platform connecting **research, education, institutions, experts, and technology** between Vietnam and Russia.
 
@@ -18,7 +18,7 @@
 
 ## ✦ Overview `[SOURCE]`
 
-**VN-RU Network** is an independent bilateral cooperation initiative founded, owned, coordinated, and operated by the **Traditions and Friendship Foundation**. The Network is not a separate legal entity and serves as the single window connecting Vietnamese and Russian organizations (universities, research institutes, scientific associations, enterprises) and individual scientists.
+**Russia-Vietnam Science-Technology Intelligence Network** is an independent bilateral cooperation initiative founded, owned, coordinated, and operated by the **Traditions and Friendship Foundation**. The Network is not a separate legal entity and serves as the single window connecting Vietnamese and Russian organizations (universities, research institutes, scientific associations, enterprises) and individual scientists.
 
 The platform operates across three canonical architectural layers `[SOURCE]` and a cross-cutting analytics foundation `[DESIGN]`:
 
@@ -268,7 +268,7 @@ npm --prefix services/auth-service run start:dev
 
 <div align="center">
 
-### VN-RU Network
+### Russia-Vietnam Science-Technology Intelligence Network
 
 **Connecting Knowledge · Research · Education · Technology**
 

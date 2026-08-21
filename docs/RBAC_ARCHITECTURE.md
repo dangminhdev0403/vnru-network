@@ -2,7 +2,7 @@
 
 ## 1. Overview & Core Principles
 
-VN-RU Network enforces fine-grained, business-capability authorization managed and verified at backend service boundaries.
+Russia-Vietnam Science-Technology Intelligence Network enforces fine-grained, business-capability authorization managed and verified at backend service boundaries.
 
 Key architectural tenets:
 - **Backend Authority**: Backend services are the single security and authorization authority. Frontend permission checks are UX conveniences (hiding buttons/menus) only.

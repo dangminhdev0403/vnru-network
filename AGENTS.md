@@ -1,4 +1,4 @@
-# Agent Instructions — VN-RU Network
+# Agent Instructions — Russia-Vietnam Science-Technology Intelligence Network
 
 `AGENTS.md` is the repository entry point. Rules remain canonical in their existing docs; this file only routes agents to them.
 
@@ -71,3 +71,13 @@ UI is not considered verified merely because tests/build pass. For web UI work, 
 ## Navigation
 
 When `graphify-out/graph.json` exists: Graphify query/impact first, scoped Repomix second, exact source last. Otherwise use focused symbol/path search; never broad-scan by default.
+
+## AGY / Ponytail execution policy
+
+- `PONYTAIL.md` is mandatory for every coding agent and corrective run. Read it before editing; Ponytail `full` remains active unless the user explicitly disables it.
+- AGY runs exactly one focused check covering its changed behavior. AGY must not run full lint, the full test suite, or a full build.
+- Host verification runs each slice's targeted gate in parallel.
+- Integration cherry-picks accepted slices without rerunning module-wide gates after every commit.
+- After all slices integrate, run affected/module lint, tests, and build once via the orchestrator final gate. Run the full merge gate once before PR/merge when required.
+- Never skip trust-boundary validation, security, accessibility, or data-loss prevention to save time.
+- Preserve unrelated dirty/untracked work. Dependency, lockfile, migration, destructive, deploy, and production changes remain approval-gated.

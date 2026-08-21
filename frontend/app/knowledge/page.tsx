@@ -5,7 +5,7 @@ import PublicationList from "@/features/publications/components/PublicationList"
 type Params = Record<string, string | string[] | undefined>;
 const one = (v: string | string[] | undefined) => (typeof v === "string" ? v : undefined);
 
-export const metadata = { title: "Knowledge Repository — VN-RU Network" };
+export const metadata = { title: "Knowledge Repository — Russia-Vietnam Science-Technology Intelligence Network" };
 
 export default async function KnowledgePage({ searchParams }: { searchParams: Promise<Params> }) {
   const raw = await searchParams;
@@ -26,13 +26,13 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
   return (
     <main className="mx-auto max-w-[1280px] px-4 py-8 sm:px-6 lg:px-8">
       <header className="mb-6">
-        <h1 className="text-3xl font-black tracking-tight text-on-surface sm:text-4xl">
+        <h1 className="font-serif text-3xl font-bold tracking-tight text-on-surface sm:text-4xl">
           {t.pageTitle}
         </h1>
         <p className="mt-2 text-sm text-on-surface-variant">{t.pageDesc}</p>
       </header>
 
-      <form className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_auto]" role="search">
+      <form className="app-panel mb-6 grid gap-3 p-5 sm:grid-cols-2 lg:grid-cols-[1fr_auto]" role="search">
         <input
           name="q"
           defaultValue={query.q}

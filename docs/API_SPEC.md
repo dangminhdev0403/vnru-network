@@ -1,8 +1,8 @@
-# VN-RU Network API Specification & Event Contracts
+# Russia-Vietnam Science-Technology Intelligence Network API Specification & Event Contracts
 
 ## 1. Contract Source of Truth
 
-The single source of truth for HTTP/REST contracts in VN-RU Network is the **OpenAPI specification exported from backend services**:
+The single source of truth for HTTP/REST contracts in Russia-Vietnam Science-Technology Intelligence Network is the **OpenAPI specification exported from backend services**:
 
 ```bash
 npm run openapi:export

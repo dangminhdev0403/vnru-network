@@ -1,16 +1,16 @@
 # Graph Report - vnru-network  (2026-08-20)
 
 ## Corpus Check
-- 190 files · ~155,478 words
+- 190 files · ~157,202 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1605 nodes · 1995 edges · 141 communities (122 shown, 19 thin omitted)
+- 1607 nodes · 1998 edges · 141 communities (122 shown, 19 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4e089ac8`
+- Built from commit: `3a601967`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -37,6 +37,7 @@
 - Module 1 IAM Implementation Plan
 - MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION
 - MODULE 4 — TRAINING, KNOWLEDGE TRANSFER & ACADEMIC EXCHANGE
+- 1. THE THREE DIALS (Core Configuration)
 - session-public.ts
 - Frontend Architecture
 - AuthenticationController
@@ -132,7 +133,6 @@
 - 12. THE BLOCK LIBRARY (Contract - Implementations Land Here Iteratively)
 - 5. CONTEXT-AWARE PROACTIVITY
 - 8. DARK MODE PROTOCOL
-- 7. DIAL DEFINITIONS (Technical Reference)
 - alerts.ts
 - VN-RU Network Global Rules (Authoritative)
 
@@ -214,8 +214,8 @@ Cohesion: 0.40
 Nodes (3): metadata, sans, serif
 
 ### Community 12 - "page.tsx"
-Cohesion: 0.13
-Nodes (25): POST(), GET(), PATCH(), GET(), GET(), POST(), GET(), POST() (+17 more)
+Cohesion: 0.12
+Nodes (27): POST(), GET(), PATCH(), GET(), GET(), POST(), GET(), POST() (+19 more)
 
 ### Community 17 - "MODULE 1 — IAM / GOVERNANCE"
 Cohesion: 0.05
@@ -236,6 +236,10 @@ Nodes (25): 10. IP / legal / advisory boundary, 11. State model, 12. Conceptual 
 ### Community 22 - "MODULE 4 — TRAINING, KNOWLEDGE TRANSFER & ACADEMIC EXCHANGE"
 Cohesion: 0.11
 Nodes (19): 10. Conceptual data model, 11. Authorization, 12. UI capability, 13. API capability proposal, 14. Events and audit, 15. Concurrency / idempotency, 16. Integration, 17. Acceptance Criteria — Module 4 (+11 more)
+
+### Community 23 - "1. THE THREE DIALS (Core Configuration)"
+Cohesion: 0.50
+Nodes (4): 7. DIAL DEFINITIONS (Technical Reference), DESIGN_VARIANCE (Level 1-10), MOTION_INTENSITY (Level 1-10), VISUAL_DENSITY (Level 1-10)
 
 ### Community 25 - "session-public.ts"
 Cohesion: 0.16
@@ -557,10 +561,6 @@ Nodes (5): 5.A Sticky-Stack - Canonical Skeleton, 5.B Horizontal-Pan - Canonical
 Cohesion: 0.40
 Nodes (5): 8.A Token Strategy (pick one, stick to it), 8.B Do Not Prescribe Specific Colors Here, 8.C Default Mode, 8.D Test in Both Modes Before Finishing, 8. DARK MODE PROTOCOL
 
-### Community 144 - "7. DIAL DEFINITIONS (Technical Reference)"
-Cohesion: 0.50
-Nodes (4): 7. DIAL DEFINITIONS (Technical Reference), DESIGN_VARIANCE (Level 1-10), MOTION_INTENSITY (Level 1-10), VISUAL_DENSITY (Level 1-10)
-
 ### Community 145 - "alerts.ts"
 Cohesion: 0.16
 Nodes (9): IamClientPage(), Role, User, SecurityClientPage(), Session, ConfirmActionOptions, showError(), showToast() (+1 more)
@@ -570,7 +570,7 @@ Cohesion: 0.25
 Nodes (8): 1. Security & Authentication Boundaries, 2. Data Ownership & Microservice Boundaries, 3. Package & Dependency Governance, 4. API & Resource Design, 5. Working Tree & Scope Constraints, 6. Verification Request Dispatch, 7. UI Quality & Impeccable Gate, VN-RU Network Global Rules (Authoritative)
 
 ## Knowledge Gaps
-- **943 isolated node(s):** `Locale`, `resources`, `Locale`, `Translation`, `translations` (+938 more)
+- **944 isolated node(s):** `Locale`, `HERO_STATIC_TITLE`, `HERO_DYNAMIC_PHRASES`, `Locale`, `Translation` (+939 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **19 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -583,8 +583,8 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **Why does `MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION` connect `MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION` to `VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md`?**
   _High betweenness centrality (0.007) - this node is a cross-community bridge._
-- **What connects `Locale`, `resources`, `Locale` to the rest of the system?**
-  _943 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `Locale`, `HERO_STATIC_TITLE`, `HERO_DYNAMIC_PHRASES` to the rest of the system?**
+  _944 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**

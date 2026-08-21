@@ -403,7 +403,7 @@ export default function SecurityClientPage() {
             <p className="text-xs text-on-surface-variant leading-relaxed">
               {sessionToRevoke.current
                 ? "You will be redirected to the sign-in portal and your session will be invalidated immediately."
-                : "This device will be immediately disconnected from the VN-RU Knowledge Network."}
+                : "This device will be immediately disconnected from the Russia-Vietnam Science-Technology Intelligence Network."}
             </p>
             <div className="flex justify-end gap-3 pt-2">
               <button

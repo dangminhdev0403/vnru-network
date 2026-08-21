@@ -14,7 +14,7 @@ ON CONFLICT ("id") DO UPDATE SET
 -- 2. Insert Expertise Areas (with multilingual labels vi/ru/en)
 INSERT INTO "ExpertiseArea" ("id", "slug", "labels")
 VALUES
-  ('b001a1a1-1111-4444-8888-abcdefabcdef', 'ai-machine-learning', '{"vi": "Trí tuệ nhân tạo & Học máy", "en": "Artificial Intelligence & Machine Learning", "ru": "Искусственный интеллект и машинное обучение"}'::jsonb),
+  ('b001a1a1-1111-4444-8888-abcdefabcdef', 'ai-machine-learning', '{"vi": "Trí thứcnhân tạo & Học máy", "en": "Artificial Intelligence & Machine Learning", "ru": "Искусственный интеллект и машинное обучение"}'::jsonb),
   ('b002a2a2-2222-4444-8888-abcdefabcdef', 'material-science', '{"vi": "Khoa học vật liệu", "en": "Material Science", "ru": "Материаловедение"}'::jsonb),
   ('b003a3a3-3333-4444-8888-abcdefabcdef', 'nuclear-physics', '{"vi": "Vật lý hạt nhân", "en": "Nuclear Physics", "ru": "Ядерная физика"}'::jsonb)
 ON CONFLICT ("id") DO UPDATE SET

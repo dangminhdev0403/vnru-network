@@ -1,8 +1,8 @@
-# VN-RU Network Backend Architecture
+# Russia-Vietnam Science-Technology Intelligence Network Backend Architecture
 
 ## 1. Purpose
 
-This document defines the reusable backend architecture standard for VN-RU Network backend code. The backend runtime is organized as microservices under `services/`, with each service owning its domain boundary.
+This document defines the reusable backend architecture standard for Russia-Vietnam Science-Technology Intelligence Network backend code. The backend runtime is organized as microservices under `services/`, with each service owning its domain boundary.
 
 Keep this file short. Detailed conventions live in topic-specific docs in this same `docs/` folder.
 

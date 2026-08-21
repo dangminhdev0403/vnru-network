@@ -41,8 +41,8 @@ export interface AccessControlPrismaClient {
     findMany: (args: {
       where: {
         userId: string;
-        contextType: string;
-        contextId: string;
+        contextType?: string;
+        contextId?: string;
         status: string;
       };
       include?: {
@@ -115,6 +115,23 @@ export class AccessControlService {
     }
 
     return Array.from(permissionKeys).sort();
+  }
+
+  async resolveSoleActiveContext(
+    userId: string,
+  ): Promise<{ contextType: string; contextId: string } | null> {
+    if (!userId) return null;
+
+    const assignments = await this.prisma.roleAssignment.findMany({
+      where: { userId, status: 'ACTIVE' },
+    });
+    const contexts = new Map(
+      assignments.map(({ contextType, contextId }) => [
+        `${contextType}\0${contextId}`,
+        { contextType, contextId },
+      ]),
+    );
+    return contexts.size === 1 ? [...contexts.values()][0] : null;
   }
 
   async hasActiveAssignment(

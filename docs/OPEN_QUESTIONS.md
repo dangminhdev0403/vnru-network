@@ -1,6 +1,6 @@
-# VN-RU Network — Centralized Open Decisions & Unresolved Questions
+# Russia-Vietnam Science-Technology Intelligence Network — Centralized Open Decisions & Unresolved Questions
 
-This document serves as the **single source of truth** for open architectural and product decisions identified across the VN-RU Network Portal analysis.
+This document serves as the **single source of truth** for open architectural and product decisions identified across the Russia-Vietnam Science-Technology Intelligence Network analysis.
 
 > **Rule**: Agents and engineers must **not** silently make implementation decisions for items marked `[OPEN]`. Each item must be explicitly resolved with stakeholders before locking production schema or contracts.
 

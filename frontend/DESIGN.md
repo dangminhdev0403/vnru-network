@@ -1,5 +1,5 @@
 ---
-name: Russia–Vietnam Knowledge Network
+name: Russia-Vietnam Science-Technology Intelligence Network
 colors:
   surface: '#f7f9fb'
   surface-dim: '#d8dadc'

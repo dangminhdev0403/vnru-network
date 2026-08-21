@@ -1,0 +1,235 @@
+[data-theme="dark"],
+.dark {
+  --primary-50: #eff3ff;
+  --primary-100: #dae2ff;
+  --primary-200: #becdff;
+  --primary-300: #91aeff;
+  --primary-400: #5e84fc;
+  --primary-500: #3b82f6;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --primary-800: #1e40af;
+  --primary-900: #1e3a8a;
+  --primary-950: #0f172a;
+
+  --primary-text: #ffffff;
+  --neutral-brand-color: #60a5fa;
+
+  /* Text Color */
+  --title-50: #f8fafc;
+  --text-50: #94a3b8;
+  --text-100: #94a3b8;
+  --text-200: #64748b;
+  --text-300: #e2e8f0;
+
+  /* White */
+  --white-100: #ffffff;
+  --white-90: #ffffffcc;
+  --white-80: #ffffffcc;
+  --white-70: #ffffffb3;
+  --white-60: #ffffff99;
+
+  /* Context Color */
+  --error-500: #ef4444;
+  --success-500: #22c55e;
+  --warning-500: #eab308;
+  --info-500: #0ea5e9;
+
+  /* Border Color */
+  --border-color-base-50: #1e293b;
+  --border-color-base-100: #0f172a;
+  --border-color-base-200: #334155;
+  --border-color-base-300: #1e293b;
+
+  --chart-line: #1e293b;
+
+  /* Foreground Color */
+  --foreground-50: #ffffff;
+  --foreground-100: #f8fafc;
+
+  --foreground-soft-50: #f8fafc;
+  --foreground-soft-100: #f1f5f9;
+  --foreground-soft-200: #e2e8f0;
+  --foreground-soft-300: #cbd5e1;
+  --foreground-soft-400: #94a3b8;
+  --foreground-soft-500: #64748b;
+
+  /* Background Color */
+  --background-50: #030712;
+  --background-100: #0b1324;
+  --background-soft-50: #0b1324;
+  --background-soft-100: #0f172a;
+  --background-soft-200: #1e293b;
+  --background-soft-300: #030712;
+  --background-soft-400: #1e293b;
+  --background-soft-500: #334155;
+
+  --background-success-600: #16a34a;
+
+  /* ======== Button Color For Dark =========*/
+  --button-primary-background: #2563eb;
+  --button-primary-hover-background: #1d4ed8;
+  --button-primary-text: #ffffff;
+  --button-primary-focus-ring: rgba(37, 99, 235, 0.3);
+
+  --button-outline-background: #0f172a;
+  --button-outline-hover-background: #1e293b;
+  --button-outline-border: #334155;
+  --button-outline-focus-ring: rgba(148, 163, 184, 0.2);
+  --button-outline-text: #f1f5f9;
+  --button-outline-hover-text: #ffffff;
+  --button-outline-disabled-background: #1e293b;
+  --button-outline-disabled-text: #475569;
+  --button-outline-disabled-border: #1e293b;
+
+  --button-disabled-background: #1e293b;
+  --button-disabled-border: #1e293b;
+  --button-disabled-text: #475569;
+
+  --button-error-background: #dc2626;
+  --button-error-hover-background: #b91c1c;
+  --button-error-border: #ef4444;
+  --button-error-text: #ffffff;
+  --button-error-focus-ring: rgba(220, 38, 38, 0.25);
+
+  --button-error-outline-background: rgba(239, 68, 68, 0.1);
+  --button-error-outline-border: #7f1d1d;
+  --button-error-outline-focus-border: #991b1b;
+  --button-error-outline-hover-background: rgba(239, 68, 68, 0.2);
+  --button-error-outline-text: #ef4444;
+  --button-error-outline-hover-text: #f87171;
+  --button-error-outline-focus-ring: rgba(220, 38, 38, 0.25);
+
+  --button-success-background: #16a34a;
+  --button-success-border: #22c55e;
+  --button-success-hover-background: #15803d;
+  --button-success-text: #ffffff;
+  --button-success-focus-ring: rgba(22, 163, 74, 0.25);
+
+  --button-success-outline-background: rgba(34, 197, 94, 0.1);
+  --button-success-outline-border: #14532d;
+  --button-success-outline-focus-border: #166534;
+  --button-success-outline-hover-background: rgba(34, 197, 94, 0.2);
+  --button-success-outline-text: #22c55e;
+  --button-success-outline-hover-text: #4ade80;
+  --button-success-outline-focus-ring: rgba(22, 163, 74, 0.25);
+
+  --button-ghost-text: #94a3b8;
+  --button-ghost-hover-text: #f8fafc;
+  --button-ghost-hover-background: #1e293b;
+
+  /* ======== Badge Color For Dark =========*/
+  --badge-neutral-background: #334155;
+  --badge-neutral-text: #f1f5f9;
+  --badge-neutral-icon-color: #f1f5f9;
+
+  --badge-primary-background: rgba(37, 99, 235, 0.2);
+  --badge-primary-text: #60a5fa;
+  --badge-primary-icon-color: #60a5fa;
+
+  --badge-error-background: rgba(239, 68, 68, 0.2);
+  --badge-error-text: #ef4444;
+  --badge-error-icon-color: #f87171;
+
+  --badge-warning-background: rgba(245, 158, 11, 0.2);
+  --badge-warning-text: #fbbf24;
+  --badge-warning-icon-color: #fbbf24;
+
+  --badge-success-background: rgba(34, 197, 94, 0.2);
+  --badge-success-text: #4ade80;
+  --badge-success-icon-color: #4ade80;
+
+  --badge-cyan-background: rgba(6, 182, 212, 0.2);
+  --badge-cyan-text: #22d3ee;
+  --badge-cyan-icon-color: #22d3ee;
+
+  --badge-sky-background: rgba(14, 165, 233, 0.2);
+  --badge-sky-text: #38bdf8;
+  --badge-sky-icon-color: #38bdf8;
+
+  --badge-blue-background: rgba(59, 130, 246, 0.2);
+  --badge-blue-text: #60a5fa;
+  --badge-blue-icon-color: #60a5fa;
+
+  /* ======== Sidebar For Dark =========*/
+  --sidebar-nav-default-background: #060e1d;
+  --sidebar-nav-hover-background: rgba(255, 255, 255, 0.05);
+  --sidebar-nav-secondary-hover-background: rgba(255, 255, 255, 0.08);
+  --sidebar-nav-hover-text: #f8fafc;
+  --sidebar-nav-active-text: #60a5fa;
+  --sidebar-nav-active-background: rgba(37, 99, 235, 0.15);
+  --sidebar-nav-focused-background: rgba(37, 99, 235, 0.15);
+  --sidebar-nav-default-text: #cbd5e1;
+  --sidebar-nav-icon: #94a3b8;
+
+  --sidebar-badge-background: #2563eb;
+  --sidebar-badge-text: #ffffff;
+
+  --sidebar-footer-background: rgba(255, 255, 255, 0.04);
+  --sidebar-footer-title: #ffffff;
+  --sidebar-footer-subtitle: #94a3b8;
+  --sidebar-footer-button-text: #ffffff;
+
+  /* ======== Card Color For Dark =========*/
+  --card-background-50: #030712;
+  --card-background-100: #0f172a;
+  --card-background-200: rgba(255, 255, 255, 0.04);
+  --card-background-300: #1e293b;
+
+  /* ======== Next Admin Dashboard Dark Semantic Colors ======== */
+  --background-gray-secondary_alt_2: #020617;
+  --background-gray-secondary_alt: #0f172a;
+  --background-gray-primary: #0b1324;
+  --background-gray-secondary: #0f172a;
+  --background-gray-tertiary: #1e293b;
+  --dropdowns-background: #0f172a;
+  --input-background: rgba(255, 255, 255, 0.05);
+  --card-background: #0b1324;
+  --background-white-secondary: #0f172a;
+  --card-surface-area: #060e1d;
+  --sidebar-navigation-nav-item-nav-hover-background: rgba(255, 255, 255, 0.06);
+  --button-primary-outline-background: rgba(255, 255, 255, 0.05);
+  --button-primary-outline-hover-background: #1e293b;
+  --background-white-primary: #030712;
+  --tooltip-background: #1e293b;
+  --button-error-outline-background: rgba(239, 68, 68, 0.1);
+  --badge-gray-background: #334155;
+  --badge-gray-icon: #cbd5e1;
+  --background-gray-quaternary: #334155;
+
+  /* General color */
+  --brand-100: #1e3a8a;
+  --brand-200: #1d4ed8;
+  --brand-300: #2563eb;
+  --brand-400: #3b82f6;
+  --brand-500: #60a5fa;
+  --brand-600: #93c5fd;
+  --base-white: #ffffff;
+
+  /* Text */
+  --text-tertiary: #94a3b8;
+  --text-secondary: #cbd5e1;
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --input-placeholder-text-color: #64748b;
+  --button-primary-outline-text: #f1f5f9;
+  --logo-text: #ffffff;
+  --tooltip-text-color: #ffffff;
+  --button-error-outline-text: #f87171;
+  --input-label-text-color: #cbd5e1;
+  --text-disable: #64748b;
+
+  /* Icons */
+  --icon-tertiary: #64748b;
+  --icon-secondary: #94a3b8;
+  --icon-primary: #ffffff;
+
+  /* Borders */
+  --input-border: rgba(255, 255, 255, 0.08);
+  --card-border: #1e293b;
+  --card-surface-border: #1e293b;
+  --border-secondary-alt: #334155;
+  --border-primary: #1e293b;
+  --border-secondary: #0f172a;
+  --button-primary-outline-stroke: #334155;
+  --button-error-outline-stroke: #ef4444;
+}

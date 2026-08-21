@@ -16,13 +16,13 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const partial = publications.status === "error" || experts.status === "error";
 
   return (
-    <main className="mx-auto max-w-[1280px] px-4 py-8 sm:px-6 lg:px-8">
+    <main className="mx-auto max-w-[1280px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <header className="max-w-2xl">
-        <h1 className="text-3xl font-black tracking-tight text-on-surface sm:text-4xl">Integrated search</h1>
+        <h1 className="font-serif text-3xl font-bold tracking-tight text-on-surface sm:text-4xl">Integrated search</h1>
         <p className="mt-2 text-sm text-on-surface-variant">Search public publications and experts from one place.</p>
       </header>
 
-      <form action="/search" className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto_auto]" role="search">
+      <form action="/search" className="app-panel mt-6 grid gap-3 p-5 sm:grid-cols-[1fr_auto_auto]" role="search">
         <label className="grid gap-2 text-sm font-semibold text-on-surface">
           Search
           <input name="q" defaultValue={q} type="search" placeholder="Publication, expert or topic" className="h-11 rounded-xl border border-outline-variant bg-surface px-4 font-normal focus:outline-none focus:ring-2 focus:ring-secondary" />

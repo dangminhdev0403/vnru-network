@@ -108,3 +108,9 @@ test("collaboration cards tolerate long translated words", async () => {
   assert.equal((source.match(/<article className="relative min-w-0/g) || []).length, 3);
   assert.equal((source.match(/\[overflow-wrap:anywhere\]/g) || []).length >= 6, true);
 });
+
+test("root layout preserves nested workspace layouts during client navigation", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("./app/layout.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /RouteMotion|key=\{pathname\}/);
+});

@@ -1,6 +1,6 @@
-# VN-RU Network Documentation Index
+# Russia-Vietnam Science-Technology Intelligence Network Documentation Index
 
-Welcome to the VN-RU Network governance, architecture, and portal documentation.
+Welcome to the Russia-Vietnam Science-Technology Intelligence Network governance, architecture, and portal documentation.
 
 ## Recommended Read Order
 
@@ -18,7 +18,7 @@ Welcome to the VN-RU Network governance, architecture, and portal documentation.
 
 ## Portal Architectural Overview `[SOURCE]`
 
-The VN-RU Network Portal is operated by the Traditions and Friendship Foundation as an independent bilateral cooperation initiative. The Portal operates across three canonical layers `[SOURCE]` plus a cross-cutting analytics layer `[DESIGN]`:
+The Russia-Vietnam Science-Technology Intelligence Network is operated by the Traditions and Friendship Foundation as an independent bilateral cooperation initiative. The Portal operates across three canonical layers `[SOURCE]` plus a cross-cutting analytics layer `[DESIGN]`:
 
 1. **User Interface & Multilingual Experience Layer (`exp`)**: Trilingual support (VI / RU / EN) with AI translation assistance across three canonical access areas:
    - *Public / Discovery*: Home, News/Events, Global Search, Knowledge Repository, Expert Directory, and Collaboration Opportunities.

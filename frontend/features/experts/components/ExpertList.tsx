@@ -30,7 +30,7 @@ export default function ExpertList({ result, query, locale = "vi" }: Props) {
 
   return (
     <div className="mx-auto max-w-[1580px] px-4 py-7 sm:px-6 lg:px-8 lg:py-8">
-      <h1 className="text-3xl font-black tracking-tight sm:text-4xl text-slate-900">
+      <h1 className="font-serif text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
         {t.title}
       </h1>
 
@@ -107,7 +107,7 @@ export default function ExpertList({ result, query, locale = "vi" }: Props) {
               <Link
                 key={e.id}
                 href={`/experts/${e.id}`}
-                className="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-blue-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="app-panel card-hover-lift group p-5 transition hover:border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <strong className="text-sm font-bold text-slate-900 group-hover:text-blue-700">{e.displayName}</strong>
                 <p className="mt-1 text-xs text-slate-500">
