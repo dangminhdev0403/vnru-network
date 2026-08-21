@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import {
   authServiceUrl,
   getCurrentSession,
+  LOCALE_COOKIE_NAME,
+  sanitizeLocale,
   sanitizeReturnTo,
   SESSION_COOKIE_NAME,
 } from "../../features/auth/server";
@@ -15,7 +17,8 @@ export default async function LoginPage({
 }>) {
   const { returnTo, error: errorParam } = await searchParams;
   const destination = sanitizeReturnTo(typeof returnTo === "string" ? returnTo : undefined);
-  const session = await getCurrentSession((await cookies()).get(SESSION_COOKIE_NAME)?.value);
+  const cookieStore = await cookies();
+  const session = await getCurrentSession(cookieStore.get(SESSION_COOKIE_NAME)?.value);
 
   if (session) {
     redirect(destination);
@@ -33,7 +36,12 @@ export default async function LoginPage({
       if (backend.status < 300 || backend.status >= 400 || !location) {
         error = "configuration-unavailable";
       } else {
-        targetLocation = location;
+        const authorizationUrl = new URL(location);
+        authorizationUrl.searchParams.set(
+          "ui_locales",
+          sanitizeLocale(cookieStore.get(LOCALE_COOKIE_NAME)?.value),
+        );
+        targetLocation = authorizationUrl.href;
       }
     } catch {
       error = "configuration-unavailable";

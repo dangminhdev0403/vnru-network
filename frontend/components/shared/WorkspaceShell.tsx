@@ -4,6 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { type Locale, useLocale } from "@/app/HomeMotion";
+
+const shellCopy: Record<Locale, Record<string, string>> = {
+  vi: { brand: "Mạng lưới KH&CN Việt - Nga", subtitle: "Khoa học · Công nghệ · Hợp tác" },
+  en: { brand: "VN-RU Science & Technology Network", subtitle: "Science · Technology · Cooperation" },
+  ru: { brand: "Научно-технологическая сеть Россия — Вьетнам", subtitle: "Наука · Технологии · Сотрудничество" },
+};
 
 const primaryNavigation = [
   { href: "/workspace", label: "Tổng quan", icon: "space_dashboard" },
@@ -13,7 +20,7 @@ const primaryNavigation = [
 
 const governanceNavigation = [
   { href: "/security", label: "Security & Sessions", icon: "verified_user" },
-  { href: "/admin/iam", label: "Access Administration", icon: "admin_panel_settings" },
+  { href: "/admin/iam", label: "IAM Administration", icon: "admin_panel_settings" },
 ];
 
 function isActive(pathname: string, href: string) {
@@ -23,6 +30,8 @@ function isActive(pathname: string, href: string) {
 
 export default function WorkspaceShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
+  const { locale } = useLocale();
+  const brand = shellCopy[locale];
   const [open, setOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -41,15 +50,15 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
   const current = [...primaryNavigation, ...governanceNavigation].find((item) => isActive(pathname, item.href));
 
   const sidebar = (
-    <aside className="flex h-full w-68 flex-col border-r border-white/10 bg-[#06152f] px-4 py-5 text-white shadow-2xl">
+    <aside className="signal-surface flex h-full w-68 flex-col border-r border-white/10 px-4 py-5 text-white shadow-2xl">
       <Link href="/" className="flex items-center gap-3 rounded-2xl px-2 py-2">
         <span className="relative grid h-10 w-10 place-items-center overflow-hidden rounded-xl border border-white/15 bg-white shadow-lg">
           <span className="absolute inset-y-0 left-0 w-[62%] -skew-x-12 bg-[#2370ff]" />
           <span className="absolute inset-y-0 right-0 w-[48%] -skew-x-12 bg-[#e74762]" />
         </span>
-        <span className="leading-tight">
-          <strong className="block text-sm tracking-tight">RU–VN Portal</strong>
-          <small className="text-xs font-bold uppercase tracking-wider text-slate-400">Knowledge Network</small>
+        <span className="min-w-0 leading-tight">
+          <strong className="block truncate text-sm tracking-tight">{brand.brand}</strong>
+          <small className="text-xs font-bold uppercase tracking-wider text-slate-400">{brand.subtitle}</small>
         </span>
       </Link>
 
@@ -65,7 +74,7 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
       <p className="px-3 pb-2 pt-6 text-xs font-black uppercase tracking-wider text-slate-400">Workspace</p>
       <nav className="grid gap-1">
         {primaryNavigation.map((item) => (
-          <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className={`flex items-center gap-3 rounded-2xl border px-3 py-3 text-sm font-bold transition ${isActive(pathname, item.href) ? "border-sky-400/15 bg-linear-to-r from-blue-500/20 to-blue-500/5 text-white" : "border-transparent text-slate-300 hover:bg-white/5 hover:text-white"}`}>
+          <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className={`relative flex items-center gap-3 rounded-xl border px-3 py-3 text-sm font-bold transition ${isActive(pathname, item.href) ? "border-sky-400/25 bg-blue-500/15 text-white before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-sky-300" : "border-transparent text-white/75 hover:bg-white/5 hover:text-white"}`}>
             <span className="material-symbols-outlined text-xl text-sky-300">{item.icon}</span>
             {item.label}
           </Link>
@@ -81,8 +90,8 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
             onClick={() => setOpen(false)}
             className={`flex items-center gap-3 rounded-2xl border px-3 py-3 text-sm font-bold transition ${
               isActive(pathname, item.href)
-                ? "border-sky-400/15 bg-linear-to-r from-blue-500/20 to-blue-500/5 text-white"
-                : "border-transparent text-slate-300 hover:bg-white/5 hover:text-white"
+                ? "border-sky-400/25 bg-blue-500/15 text-white"
+                : "border-transparent text-white/75 hover:bg-white/5 hover:text-white"
             }`}
           >
             <span className="material-symbols-outlined text-xl text-sky-300">{item.icon}</span>
@@ -100,7 +109,7 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
   );
 
   return (
-    <div className="min-h-screen bg-[#f4f7fb] text-slate-950 lg:grid lg:grid-cols-[272px_minmax(0,1fr)]">
+    <div className="min-h-[100dvh] bg-background text-on-background lg:grid lg:grid-cols-[272px_minmax(0,1fr)]">
       <div className="fixed inset-y-0 left-0 z-40 hidden lg:block">{sidebar}</div>
 
       <AnimatePresence>
@@ -129,7 +138,7 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
       </AnimatePresence>
 
       <main className="min-w-0 lg:col-start-2">
-        <header className="sticky top-0 z-30 flex h-18.5 items-center gap-3 border-b border-slate-200/80 bg-[#f4f7fb]/90 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
+        <header className="sticky top-0 z-30 flex h-18 items-center gap-3 border-b border-outline-variant bg-background/90 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
           <button type="button" aria-label="Mở menu" onClick={() => setOpen(true)} className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 lg:hidden">
             <span className="material-symbols-outlined text-xl">menu</span>
           </button>
@@ -137,7 +146,7 @@ export default function WorkspaceShell({ children }: Readonly<{ children: React.
           <div className="hidden items-center gap-2 text-xs text-slate-500 sm:flex">
             <Link href="/workspace" className="hover:text-blue-600">Workspace</Link>
             <span>/</span>
-            <strong className="text-slate-700">{current?.label ?? "RU–VN Portal"}</strong>
+            <strong className="text-slate-700">{current?.label ?? "Russia-Vietnam Science-Technology Intelligence Network"}</strong>
           </div>
 
           <label className="relative ml-auto hidden w-[min(460px,44vw)] md:block">

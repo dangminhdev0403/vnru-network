@@ -6,8 +6,8 @@
   <#if section = "header">
     ${msg("loginTitle")}
   <#elseif section = "form">
-    <section class="vnru-auth-hero" aria-label="RU–VN Knowledge Network">
-      <a class="vnru-auth-brand" href="http://localhost:3000/"><span class="vnru-brand-mark" aria-hidden="true"></span><span>RU–VN Portal<small>${msg("brandTagline")}</small></span></a>
+    <section class="vnru-auth-hero" aria-label="${msg("networkName")}">
+      <a class="vnru-auth-brand" href="http://localhost:3000/"><span class="vnru-brand-mark" aria-hidden="true"></span><span>${msg("networkName")}<small>${msg("brandTagline")}</small></span></a>
       <div class="vnru-network-scene" aria-hidden="true">
         <svg viewBox="0 0 700 700" preserveAspectRatio="xMidYMid meet">
           <defs><linearGradient id="vnruAuthGrad"><stop offset="0" stop-color="#69d1ff"/><stop offset="1" stop-color="#ff7188"/></linearGradient></defs>
@@ -17,11 +17,11 @@
       </div>
       <div class="vnru-auth-copy">
         <span class="vnru-eyebrow">${msg("secureAccess")}</span>
-        <h1>${msg("heroTitleLead")} <span>${msg("heroTitleAccent")}</span></h1>
+        <h1>${msg("heroTitleLead")} <span class="vnru-title-accent">${msg("heroTitleAccent")}</span></h1>
         <p>${msg("heroDescription")}</p>
-        <div class="vnru-capabilities"><div><b>Knowledge</b><span>${msg("knowledgeDescription")}</span></div><div><b>Experts</b><span>${msg("expertsDescription")}</span></div><div><b>2+2</b><span>${msg("cooperationDescription")}</span></div></div>
+        <div class="vnru-capabilities"><div><b>${msg("knowledgeTitle")}</b><span>${msg("knowledgeDescription")}</span></div><div><b>${msg("expertsTitle")}</b><span>${msg("expertsDescription")}</span></div><div><b>${msg("cooperationTitle")}</b><span>${msg("cooperationDescription")}</span></div></div>
       </div>
-      <div class="vnru-visual-foot"><span>● ${msg("identityProtected")}</span><span>● ${msg("researchEcosystem")}</span></div>
+      <div class="vnru-visual-foot"><span>${msg("identityProtected")}</span><span>${msg("researchEcosystem")}</span></div>
     </section>
     <a class="vnru-back-link" href="http://localhost:3000/">${msg("backHome")}</a>
     <div class="vnru-form-head"><h2>${msg("welcomeBack")}</h2><#if realm.registrationAllowed && !registrationDisabled??><p>${msg("noAccount")} <a href="${url.registrationUrl}">${msg("createAccount")}</a></p></#if></div>
@@ -55,9 +55,8 @@
           <div class="${properties.kcFormHelperTextClass}" aria-live="polite"><span class="${properties.kcInputErrorMessageClass}">${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}</span></div>
         </#if>
         <input type="hidden" id="id-hidden-input" name="credentialId" <#if auth.selectedCredential?has_content>value="${auth.selectedCredential}"</#if>/>
-        <button class="${properties.kcButtonPrimaryClass} ${properties.kcButtonBlockClass}" name="login" id="kc-login" type="submit">${msg("portalLogin")} <span aria-hidden="true">→</span></button>
+        <button class="${properties.kcButtonPrimaryClass} ${properties.kcButtonBlockClass}" name="login" id="kc-login" type="submit">${msg("portalLogin")}</button>
       </form>
-      <button class="vnru-google-button" type="button" disabled aria-label="${msg("googleLogin")} — ${msg("comingSoon")}"><span aria-hidden="true">G</span>${msg("googleLogin")}<small>${msg("comingSoon")}</small></button>
       <p class="vnru-terms">${msg("termsNotice")}</p>
       <div class="vnru-security-note"><span aria-hidden="true">◇</span><div><b>${msg("secureLoginTitle")}</b> ${msg("secureLoginDescription")}</div></div>
     </#if>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk, Source_Serif_4 } from "next/font/google";
+import RouteMotion from "../components/shared/RouteMotion";
 import "./globals.css";
 
 const sans = Hanken_Grotesk({
@@ -17,7 +18,7 @@ const serif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  title: "VN-RU Knowledge Network",
+  title: "Russia-Vietnam Science-Technology Intelligence Network",
   description: "Independent Vietnam–Russia knowledge and collaboration portal.",
 };
 
@@ -34,7 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body className="font-sans antialiased bg-background text-on-background min-h-screen">
-        {children}
+        <RouteMotion>{children}</RouteMotion>
       </body>
     </html>
   );

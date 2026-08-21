@@ -1,8 +1,13 @@
 export const SESSION_COOKIE_NAME = "vnru_session";
 export const RETURN_TO_COOKIE_NAME = "vnru_return_to";
+export const LOCALE_COOKIE_NAME = "vnru_locale";
+
+export function sanitizeLocale(value: string | null | undefined): "vi" | "en" | "ru" {
+  return value === "en" || value === "ru" ? value : "vi";
+}
 
 export function sanitizeReturnTo(value: string | null | undefined): string {
-  return value?.startsWith("/") && !value.startsWith("//") ? value : "/";
+  return value?.startsWith("/") && !value.startsWith("//") ? value : "/workspace";
 }
 
 export function authServiceUrl(path: string): URL {
