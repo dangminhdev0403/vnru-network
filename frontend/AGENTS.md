@@ -15,7 +15,7 @@ Before frontend code changes, read in order:
 
 1. `../docs/RULES.md` and `../docs/ARCHITECTURE.md`
 2. `docs/ARCHITECTURE.md` and `docs/RULES.md`
-3. One matching guide: `docs/MODULE_GUIDE.md`, `docs/CONTRACT_GUIDE.md`, or `docs/RUNTIME_UI_GUIDE.md`
+3. One matching guide: `docs/MODULE_GUIDE.md`, `docs/CONTRACT_GUIDE.md`, `docs/RUNTIME_UI_GUIDE.md`, or `docs/DASHBOARD_UI_REUSE_GUIDE.md` for dashboard/module UI composition and template-porting work
 4. Relevant Next.js 16.3 documentation under `node_modules/next/dist/docs/`
 
 Current `package.json` is capability truth. Do not use or document an uninstalled package as active. Final report must list exact docs read.
