@@ -81,19 +81,26 @@ test("IAM page route redirects unauthenticated users", async () => {
     "utf8",
   );
   assert.match(clientContent, /status === 403/);
-  assert.match(clientContent, /Access Denied/);
+  assert.match(clientContent, /Không có quyền truy cập/);
 });
 
-test("IAM client page handles UI actions without raw backend URL exposure", async () => {
+test("IAM client uses the approved flow UI with real BFF data only", async () => {
   const fileContent = await readFile(
     new URL("../app/admin/iam/IamClientPage.tsx", import.meta.url),
     "utf8",
   );
 
-  // Must use BFF endpoints only (no direct backend access)
+  assert.match(fileContent, /Identity → Context → Role → Backend decision/);
   assert.match(fileContent, /\/api\/admin\/users/);
   assert.match(fileContent, /\/api\/admin\/roles/);
   assert.match(fileContent, /\/api\/admin\/role-assignments/);
-  // Must not hardcode private tokens
-  assert.doesNotMatch(fileContent, /accessToken|refreshToken/i);
+  assert.doesNotMatch(fileContent, /localStorage|roleSeed|fake|accessToken|refreshToken/i);
+});
+
+test("IAM live route does not depend on static HTML templates", async () => {
+  const pageContent = await readFile(
+    new URL("../app/admin/iam/page.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.doesNotMatch(pageContent, /html-templates|dangerouslySetInnerHTML/);
 });
