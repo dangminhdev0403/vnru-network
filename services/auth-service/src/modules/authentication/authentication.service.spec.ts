@@ -226,6 +226,8 @@ describe('AuthenticationService', () => {
           expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
           createdAt: new Date(),
           revokedAt: null,
+          activeContextType: null,
+          activeContextId: null,
           authenticationLevel: 'PASSWORD',
         },
       };
@@ -317,6 +319,8 @@ describe('AuthenticationService', () => {
           expiresAt: new Date(Date.now() + 60000),
           createdAt: new Date(),
           revokedAt: null,
+          activeContextType: null,
+          activeContextId: null,
           authenticationLevel: 'PASSWORD',
         },
       });
@@ -436,6 +440,8 @@ describe('AuthenticationService', () => {
           expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
           createdAt: new Date(),
           revokedAt: null,
+          activeContextType: null,
+          activeContextId: null,
           authenticationLevel: 'MFA',
         },
       };
@@ -468,6 +474,8 @@ describe('AuthenticationService', () => {
         expiresAt: new Date(Date.now() + 60000),
         createdAt: new Date(),
         revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
         authenticationLevel: 'PASSWORD',
       };
       sessionService.validateSession.mockResolvedValue(activeSession);
@@ -538,6 +546,8 @@ describe('AuthenticationService', () => {
         expiresAt: new Date(Date.now() + 60000),
         createdAt: new Date(),
         revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
         authenticationLevel: 'PASSWORD',
       };
       sessionService.validateSession.mockResolvedValue(activeSession);
@@ -564,6 +574,8 @@ describe('AuthenticationService', () => {
         expiresAt: new Date(Date.now() + 60000),
         createdAt: new Date(),
         revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
         authenticationLevel: 'PASSWORD',
       };
       sessionService.validateSession.mockResolvedValue(activeSession);

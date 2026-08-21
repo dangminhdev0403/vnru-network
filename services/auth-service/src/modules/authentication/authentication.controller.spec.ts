@@ -205,6 +205,7 @@ describe('AuthenticationController', () => {
         sessionId: 'sess-001',
         activeContext: null,
         capabilities: [],
+        authenticationLevel: 'PASSWORD',
       });
 
       const mockReq: RequestWithCookies = {
@@ -223,6 +224,7 @@ describe('AuthenticationController', () => {
         sessionId: 'sess-001',
         activeContext: null,
         capabilities: [],
+        authenticationLevel: 'PASSWORD',
       });
     });
 
@@ -342,13 +344,15 @@ describe('AuthenticationController', () => {
 
   describe('getSessions', () => {
     it('returns bounded active sessions of the user with current boolean set correctly', async () => {
-      const authContext = {
-        userId: 'usr-1',
-        sessionId: 'sess-current',
-        activeContext: null,
-        capabilities: [],
+      const mockReq: AuthenticatedRequest = {
+        authContext: {
+          userId: 'usr-1',
+          sessionId: 'sess-current',
+          activeContext: null,
+          capabilities: [],
+          authenticationLevel: 'PASSWORD',
+        },
       };
-      const mockReq = { authContext };
 
       const mockSessions = [
         {
@@ -358,6 +362,7 @@ describe('AuthenticationController', () => {
           activeContextType: 'ORGANIZATION',
           activeContextId: 'org-1',
           userId: 'usr-1',
+          authenticationLevel: 'PASSWORD',
         },
         {
           id: 'sess-other',
@@ -366,6 +371,7 @@ describe('AuthenticationController', () => {
           activeContextType: null,
           activeContextId: null,
           userId: 'usr-1',
+          authenticationLevel: 'PASSWORD',
         },
       ];
       sessionService.getActiveSessionsForUser.mockResolvedValue(mockSessions);
@@ -406,17 +412,22 @@ describe('AuthenticationController', () => {
 
   describe('revokeSession', () => {
     it('revokes owned session by id and returns ok', async () => {
-      const authContext = {
-        userId: 'usr-1',
-        sessionId: 'sess-current',
-        activeContext: null,
-        capabilities: [],
+      const mockReq: AuthenticatedRequest = {
+        authContext: {
+          userId: 'usr-1',
+          sessionId: 'sess-current',
+          activeContext: null,
+          capabilities: [],
+          authenticationLevel: 'PASSWORD',
+        },
       };
-      const mockReq = { authContext };
 
       sessionService.getSessionById.mockResolvedValue({
         id: 'sess-target',
         userId: 'usr-1',
+        authenticationLevel: 'PASSWORD',
+        activeContextType: null,
+        activeContextId: null,
       });
       sessionService.revokeSessionByIdForUser.mockResolvedValue(true);
 
@@ -436,17 +447,22 @@ describe('AuthenticationController', () => {
     });
 
     it('clears session cookie when current session is revoked', async () => {
-      const authContext = {
-        userId: 'usr-1',
-        sessionId: 'sess-current',
-        activeContext: null,
-        capabilities: [],
+      const mockReq: AuthenticatedRequest = {
+        authContext: {
+          userId: 'usr-1',
+          sessionId: 'sess-current',
+          activeContext: null,
+          capabilities: [],
+          authenticationLevel: 'PASSWORD',
+        },
       };
-      const mockReq = { authContext };
 
       sessionService.getSessionById.mockResolvedValue({
         id: 'sess-current',
         userId: 'usr-1',
+        authenticationLevel: 'PASSWORD',
+        activeContextType: null,
+        activeContextId: null,
       });
       sessionService.revokeSessionByIdForUser.mockResolvedValue(true);
 
@@ -501,6 +517,9 @@ describe('AuthenticationController', () => {
       sessionService.getSessionById.mockResolvedValue({
         id: 'sess-other',
         userId: 'usr-other',
+        authenticationLevel: 'PASSWORD',
+        activeContextType: null,
+        activeContextId: null,
       });
 
       await expect(
@@ -516,13 +535,15 @@ describe('AuthenticationController', () => {
 
   describe('revokeOtherSessions', () => {
     it('revokes other sessions and returns ok', async () => {
-      const authContext = {
-        userId: 'usr-1',
-        sessionId: 'sess-current',
-        activeContext: null,
-        capabilities: [],
+      const mockReq: AuthenticatedRequest = {
+        authContext: {
+          userId: 'usr-1',
+          sessionId: 'sess-current',
+          activeContext: null,
+          capabilities: [],
+          authenticationLevel: 'PASSWORD',
+        },
       };
-      const mockReq = { authContext };
 
       sessionService.revokeOtherSessionsForUser.mockResolvedValue(undefined);
 

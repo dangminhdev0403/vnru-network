@@ -77,6 +77,8 @@ describe('SessionService', () => {
         expiresAt: expectedExpiresAt,
         createdAt: fixedNow,
         revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
         authenticationLevel: 'PASSWORD',
       };
 
@@ -141,6 +143,8 @@ describe('SessionService', () => {
         expiresAt: expectedExpiresAt,
         createdAt: fixedNow,
         revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
         authenticationLevel: 'PASSWORD',
       };
       prisma.session.create.mockResolvedValue(createdRecord);
@@ -173,6 +177,8 @@ describe('SessionService', () => {
         expiresAt: new Date(Date.now() + 10000),
         createdAt: new Date(),
         revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
         authenticationLevel: 'PASSWORD',
       };
       prisma.session.create.mockResolvedValue(createdRecord);
@@ -197,6 +203,8 @@ describe('SessionService', () => {
         expiresAt: new Date(fixedNow.getTime() + 60000),
         createdAt: fixedNow,
         revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
         authenticationLevel: 'PASSWORD',
       };
 
@@ -226,6 +234,8 @@ describe('SessionService', () => {
         expiresAt: new Date(fixedNow.getTime() - 1000),
         createdAt: new Date(fixedNow.getTime() - 10000),
         revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
         authenticationLevel: 'PASSWORD',
       };
 
@@ -244,6 +254,8 @@ describe('SessionService', () => {
         expiresAt: fixedNow,
         createdAt: new Date(fixedNow.getTime() - 10000),
         revokedAt: null,
+        activeContextType: null,
+        activeContextId: null,
         authenticationLevel: 'PASSWORD',
       };
 
@@ -262,6 +274,8 @@ describe('SessionService', () => {
         expiresAt: new Date(fixedNow.getTime() + 60000),
         createdAt: fixedNow,
         revokedAt: new Date(fixedNow.getTime() - 500),
+        activeContextType: null,
+        activeContextId: null,
         authenticationLevel: 'PASSWORD',
       };
 
@@ -321,6 +335,7 @@ describe('SessionService', () => {
           revokedAt: null,
           activeContextType: null,
           activeContextId: null,
+          authenticationLevel: 'PASSWORD',
         },
       ];
       prisma.session.findMany.mockResolvedValue(activeSessions);
@@ -351,6 +366,7 @@ describe('SessionService', () => {
         revokedAt: null,
         activeContextType: null,
         activeContextId: null,
+        authenticationLevel: 'PASSWORD',
       };
       prisma.session.findUnique.mockResolvedValue(targetSession);
       prisma.session.updateMany.mockResolvedValue({ count: 1 });
@@ -398,6 +414,7 @@ describe('SessionService', () => {
         revokedAt: null,
         activeContextType: null,
         activeContextId: null,
+        authenticationLevel: 'PASSWORD',
       };
       prisma.session.findUnique.mockResolvedValue(targetSession);
 
@@ -442,6 +459,7 @@ describe('SessionService', () => {
         revokedAt: null,
         activeContextType: null,
         activeContextId: null,
+        authenticationLevel: 'PASSWORD',
       };
       prisma.session.findUnique.mockResolvedValue(targetSession);
 
