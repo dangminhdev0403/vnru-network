@@ -26,12 +26,18 @@ export function useIamAdministration() {
       onSuccess: ({ client, cache }) => cache.queries.users.invalidateAll(client),
     }),
   );
+  const replaceRolePermissions = useMutation(
+    iam.mutations.replaceRolePermissions.options({
+      onSuccess: ({ client, cache }) => cache.queries.roles.invalidateAll(client),
+    }),
+  );
 
   return {
     users,
     roles,
     updateUserStatus,
     assignRole,
+    replaceRolePermissions,
     refresh: () => Promise.all([users.refetch(), roles.refetch()]),
     isFetching: users.isFetching || roles.isFetching,
     hasStaleData: (users.isError && Boolean(users.data)) || (roles.isError && Boolean(roles.data)),

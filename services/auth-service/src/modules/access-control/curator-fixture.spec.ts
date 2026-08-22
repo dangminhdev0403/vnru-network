@@ -91,9 +91,9 @@ describe('Workflow Role Fixtures Importer', () => {
       }),
     );
     const researcherPermissions = [
-      'grants.proposals.create',
-      'grants.proposals.confirm_paired',
-      'grants.proposals.submit',
+      'collab.proposals.create',
+      'collab.proposals.confirm_paired',
+      'collab.proposals.submit',
       'projects.projects.view',
       'projects.milestones.update',
       'projects.reports.submit',
@@ -131,7 +131,7 @@ describe('Workflow Role Fixtures Importer', () => {
     );
     expect(mockPrisma.permission.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { key: 'grants.proposals.endorse' },
+        where: { key: 'collab.proposals.endorse' },
       }),
     );
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
@@ -176,7 +176,7 @@ describe('Workflow Role Fixtures Importer', () => {
       }),
     );
 
-    // 5. PROGRAM_MANAGER Checks
+    // 5. COLLABORATION_MANAGER Checks
     expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: { id: '7809a72b-8a8e-49b8-897b-aa663ee38007' },
@@ -184,7 +184,7 @@ describe('Workflow Role Fixtures Importer', () => {
     );
     expect(mockPrisma.role.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { name: 'PROGRAM_MANAGER' },
+        where: { name: 'COLLABORATION_MANAGER' },
       }),
     );
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
@@ -193,8 +193,8 @@ describe('Workflow Role Fixtures Importer', () => {
           userId_roleId_contextType_contextId: {
             userId: '7809a72b-8a8e-49b8-897b-aa663ee38007',
             roleId: '7809a72b-8a8e-49b8-897b-ff663ee38004',
-            contextType: 'FUNDING_PROGRAM',
-            contextId: 'PROGRAM_001',
+            contextType: 'PLATFORM',
+            contextId: 'GLOBAL',
           },
         },
       }),
@@ -213,7 +213,7 @@ describe('Workflow Role Fixtures Importer', () => {
     );
     expect(mockPrisma.permission.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { key: 'grants.decisions.issue_foundation' },
+        where: { key: 'collab.decisions.issue_foundation' },
       }),
     );
 

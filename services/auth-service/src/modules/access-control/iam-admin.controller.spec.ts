@@ -20,6 +20,7 @@ describe('IamAdminController', () => {
     listUsers: jest.Mock;
     setUserStatus: jest.Mock;
     listRoles: jest.Mock;
+    replaceRolePermissions: jest.Mock;
     upsertRoleAssignment: jest.Mock;
   };
   let authServiceMock: Record<string, unknown>;
@@ -29,6 +30,7 @@ describe('IamAdminController', () => {
       listUsers: jest.fn(),
       setUserStatus: jest.fn(),
       listRoles: jest.fn(),
+      replaceRolePermissions: jest.fn(),
       upsertRoleAssignment: jest.fn(),
     };
 

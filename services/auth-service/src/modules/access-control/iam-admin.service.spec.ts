@@ -15,6 +15,8 @@ describe('IamAdminService', () => {
       findMany: jest.Mock;
       findUnique: jest.Mock;
     };
+    permission: { findMany: jest.Mock };
+    rolePermission: { deleteMany: jest.Mock; createMany: jest.Mock };
     roleAssignment: {
       findMany: jest.Mock;
       upsert: jest.Mock;
@@ -43,6 +45,8 @@ describe('IamAdminService', () => {
         findMany: jest.fn(),
         findUnique: jest.fn(),
       },
+      permission: { findMany: jest.fn() },
+      rolePermission: { deleteMany: jest.fn(), createMany: jest.fn() },
       roleAssignment: {
         findMany: jest.fn().mockResolvedValue([]),
         upsert: jest.fn(),
@@ -361,6 +365,39 @@ describe('IamAdminService', () => {
           permissions: ['knowledge.publications.submit'],
         },
       ]);
+    });
+  });
+
+  describe('replaceRolePermissions', () => {
+    it('replaces mappings and audits in one transaction', async () => {
+      prismaMock.role.findUnique.mockResolvedValue({ id: 'role-1', name: 'RESEARCHER' });
+      prismaMock.permission.findMany.mockResolvedValue([
+        { id: 'perm-1', key: 'collab.proposals.create' },
+      ]);
+      prismaMock.rolePermission.deleteMany.mockResolvedValue({ count: 1 });
+      prismaMock.rolePermission.createMany.mockResolvedValue({ count: 1 });
+
+      await expect(service.replaceRolePermissions(
+        'role-1',
+        ['collab.proposals.create'],
+        'actor-1',
+      )).resolves.toEqual({
+        id: 'role-1',
+        name: 'RESEARCHER',
+        permissions: ['collab.proposals.create'],
+      });
+      expect(prismaMock.rolePermission.deleteMany).toHaveBeenCalledWith({ where: { roleId: 'role-1' } });
+      expect(prismaMock.rolePermission.createMany).toHaveBeenCalledWith({
+        data: [{ roleId: 'role-1', permissionId: 'perm-1' }],
+      });
+      expect(prismaMock.securityAuditEvent.create).toHaveBeenCalledWith({
+        data: {
+          event: 'IAM_ROLE_PERMISSIONS_CHANGED',
+          actorId: 'actor-1',
+          targetId: 'role-1',
+          context: { permissions: ['collab.proposals.create'] },
+        },
+      });
     });
   });
 

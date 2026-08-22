@@ -36,3 +36,32 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const body: unknown = await request.json();
+    if (
+      !body ||
+      typeof body !== "object" ||
+      !("roleId" in body) ||
+      typeof body.roleId !== "string" ||
+      !("permissions" in body) ||
+      !Array.isArray(body.permissions) ||
+      !body.permissions.every((permission) => typeof permission === "string")
+    ) {
+      return NextResponse.json({ error: "Invalid role permissions" }, { status: 400 });
+    }
+    const { roleId, permissions } = body;
+    const backendRes = await fetch(
+      authServiceUrl(`api/v1/admin/roles/${encodeURIComponent(roleId)}/permissions`),
+      {
+        method: "PATCH",
+        headers: { ...backendHeaders(request), "content-type": "application/json" },
+        body: JSON.stringify({ permissions }),
+      },
+    );
+    return NextResponse.json(await backendRes.json(), { status: backendRes.status });
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}

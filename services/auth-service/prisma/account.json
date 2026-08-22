@@ -54,15 +54,15 @@
       "permissions": [
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38001",
-          "key": "grants.proposals.create"
+          "key": "collab.proposals.create"
         },
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38002",
-          "key": "grants.proposals.confirm_paired"
+          "key": "collab.proposals.confirm_paired"
         },
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38003",
-          "key": "grants.proposals.submit"
+          "key": "collab.proposals.submit"
         },
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
@@ -102,7 +102,7 @@
       "permissions": [
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38007",
-          "key": "grants.proposals.endorse"
+          "key": "collab.proposals.endorse"
         },
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
@@ -169,20 +169,20 @@
       },
       "role": {
         "id": "7809a72b-8a8e-49b8-897b-ff663ee38004",
-        "name": "PROGRAM_MANAGER"
+        "name": "COLLABORATION_MANAGER"
       },
       "permissions": [
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38012",
-          "key": "grants.opportunities.create"
+          "key": "collab.opportunities.create"
         },
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38013",
-          "key": "grants.opportunities.publish"
+          "key": "collab.opportunities.publish"
         },
         {
           "id": "343736e9-fa64-487f-b7ea-17e563591ad7",
-          "key": "grants.proposals.screen"
+          "key": "collab.proposals.screen"
         },
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38014",
@@ -199,8 +199,8 @@
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38004",
-        "contextType": "FUNDING_PROGRAM",
-        "contextId": "PROGRAM_001",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
         "status": "ACTIVE"
       }
     },
@@ -222,7 +222,7 @@
       "permissions": [
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38016",
-          "key": "grants.decisions.issue_foundation"
+          "key": "collab.decisions.issue_foundation"
         },
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
@@ -231,8 +231,8 @@
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38005",
-        "contextType": "FUNDING_PROGRAM",
-        "contextId": "PROGRAM_001",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
         "status": "ACTIVE"
       }
     }

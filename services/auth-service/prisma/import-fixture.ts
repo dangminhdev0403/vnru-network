@@ -7,23 +7,23 @@ import { z } from 'zod';
 const ALLOWED_CAPABILITIES = [
   'knowledge.workspace.view',
   'experts.matches.view',
-  'grants.proposals.create',
-  'grants.proposals.confirm_paired',
-  'grants.proposals.submit',
+  'collab.proposals.create',
+  'collab.proposals.confirm_paired',
+  'collab.proposals.submit',
   'projects.projects.view',
   'projects.milestones.update',
   'projects.reports.submit',
-  'grants.proposals.endorse',
+  'collab.proposals.endorse',
   'projects.reports.view_org',
   'reviews.assignments.view_assigned',
   'reviews.evaluations.score',
   'reviews.evaluations.submit',
-  'grants.opportunities.create',
-  'grants.opportunities.publish',
-  'grants.proposals.screen',
+  'collab.opportunities.create',
+  'collab.opportunities.publish',
+  'collab.proposals.screen',
   'reviews.assignments.manage',
   'projects.reports.approve',
-  'grants.decisions.issue_foundation',
+  'collab.decisions.issue_foundation',
 ] as const;
 
 const ALLOWED_ROLES = [
@@ -31,7 +31,7 @@ const ALLOWED_ROLES = [
   'RESEARCHER',
   'ORGANIZATION_REPRESENTATIVE',
   'REVIEWER',
-  'PROGRAM_MANAGER',
+  'COLLABORATION_MANAGER',
   'FOUNDATION_DECISION_MAKER',
 ] as const;
 
@@ -39,7 +39,6 @@ const ALLOWED_CONTEXT_TYPES = [
   'PLATFORM',
   'ORGANIZATION',
   'REVIEW_BOARD',
-  'FUNDING_PROGRAM',
 ] as const;
 
 const ROLE_POLICIES: Record<(typeof ALLOWED_ROLES)[number], {
@@ -47,11 +46,11 @@ const ROLE_POLICIES: Record<(typeof ALLOWED_ROLES)[number], {
   capabilities: readonly (typeof ALLOWED_CAPABILITIES)[number][];
 }> = {
   KNOWLEDGE_CURATOR: { contextType: 'PLATFORM', capabilities: ['knowledge.workspace.view', 'experts.matches.view'] },
-  RESEARCHER: { contextType: 'ORGANIZATION', capabilities: ['grants.proposals.create', 'grants.proposals.confirm_paired', 'grants.proposals.submit', 'projects.projects.view', 'projects.milestones.update', 'projects.reports.submit'] },
-  ORGANIZATION_REPRESENTATIVE: { contextType: 'ORGANIZATION', capabilities: ['grants.proposals.endorse', 'projects.projects.view', 'projects.reports.view_org'] },
+  RESEARCHER: { contextType: 'ORGANIZATION', capabilities: ['collab.proposals.create', 'collab.proposals.confirm_paired', 'collab.proposals.submit', 'projects.projects.view', 'projects.milestones.update', 'projects.reports.submit'] },
+  ORGANIZATION_REPRESENTATIVE: { contextType: 'ORGANIZATION', capabilities: ['collab.proposals.endorse', 'projects.projects.view', 'projects.reports.view_org'] },
   REVIEWER: { contextType: 'REVIEW_BOARD', capabilities: ['reviews.assignments.view_assigned', 'reviews.evaluations.score', 'reviews.evaluations.submit'] },
-  PROGRAM_MANAGER: { contextType: 'FUNDING_PROGRAM', capabilities: ['grants.opportunities.create', 'grants.opportunities.publish', 'grants.proposals.screen', 'reviews.assignments.manage', 'projects.projects.view', 'projects.reports.approve'] },
-  FOUNDATION_DECISION_MAKER: { contextType: 'FUNDING_PROGRAM', capabilities: ['grants.decisions.issue_foundation', 'projects.projects.view'] },
+  COLLABORATION_MANAGER: { contextType: 'PLATFORM', capabilities: ['collab.opportunities.create', 'collab.opportunities.publish', 'collab.proposals.screen', 'reviews.assignments.manage', 'projects.projects.view', 'projects.reports.approve'] },
+  FOUNDATION_DECISION_MAKER: { contextType: 'PLATFORM', capabilities: ['collab.decisions.issue_foundation', 'projects.projects.view'] },
 };
 
 const singleFixtureSchema = z.object({

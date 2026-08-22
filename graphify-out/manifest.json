@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/access-control/access-control.service.spec.ts": {
-    "mtime": 1787385763.2246656,
-    "ast_hash": "9bccf8e6637978855e2e2f88d253a1ec",
+    "mtime": 1787411595.4172845,
+    "ast_hash": "e83ed33f1a44698667f17efaafabedf0",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/access-control/access-control.service.ts": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "services/docs/PLANS.md": {
-    "mtime": 1786221019.7507093,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "mtime": 1787404169.4745593,
+    "ast_hash": "0726410c27dab91c174b6aa0f9f36934",
     "semantic_hash": ""
   },
   "services/docs/RULES.md": {
@@ -920,8 +920,8 @@
     "semantic_hash": ""
   },
   "frontend/app/(workspace)/workspace/iam/admin/IamClientPage.tsx": {
-    "mtime": 1787391471.0424185,
-    "ast_hash": "922651a96c5c39ce2c810d9e87ed8494",
+    "mtime": 1787411977.3702538,
+    "ast_hash": "26981b705762a0d99725b15de9a43137",
     "semantic_hash": ""
   },
   "frontend/app/(workspace)/workspace/iam/admin/page.tsx": {
@@ -1200,18 +1200,18 @@
     "semantic_hash": ""
   },
   "services/auth-service/prisma/account.json": {
-    "mtime": 1787393641.8927782,
-    "ast_hash": "43ef62498ed0bff1b6e0bb7b70c6b075",
+    "mtime": 1787411746.6568167,
+    "ast_hash": "024c1deb7f624715c6d65e18e4039cfa",
     "semantic_hash": ""
   },
   "services/auth-service/prisma/import-fixture.ts": {
-    "mtime": 1787393641.893778,
-    "ast_hash": "a0eb4b4502015dd0e768f571a9787b5f",
+    "mtime": 1787411705.3934674,
+    "ast_hash": "f884e0c533b077bdbf7bd9939115d8b6",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/access-control/curator-fixture.spec.ts": {
-    "mtime": 1787380376.9069219,
-    "ast_hash": "49fa3a007094cbf6e7da01b4376e5de3",
+    "mtime": 1787411730.3834345,
+    "ast_hash": "5b3d66cc02797d7e618fb8ce7bb96bf1",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/authentication/keycloak-profile.service.spec.ts": {
@@ -1790,18 +1790,23 @@
     "semantic_hash": ""
   },
   "frontend/app/(workspace)/workspace/iam/admin/RolePermissionsPage.tsx": {
-    "mtime": 1787399698.7867591,
-    "ast_hash": "5ed4bdfb37d313e84b31ad9bfd8337db",
+    "mtime": 1787411796.0853343,
+    "ast_hash": "78270d2ee143fe551a3d886f16178fff",
     "semantic_hash": ""
   },
   "frontend/app/(workspace)/workspace/iam/admin/RolePermissionsConsole.tsx": {
-    "mtime": 1787401093.4768858,
-    "ast_hash": "5b64f47b0d46bb8a437feb99e3f84772",
+    "mtime": 1787411781.8879552,
+    "ast_hash": "38199fe44749eedac835747e0a75e4d1",
     "semantic_hash": ""
   },
   "VN-RU_Portal_Architecture_Business_Analysis_NO_FINANCIAL_DOMAIN.md": {
     "mtime": 1787403259.8708923,
     "ast_hash": "90c7863fb1fa9d15a5162525892ff31d",
+    "semantic_hash": ""
+  },
+  "services/auth-service/prisma/migrations/20260822170000_align_module3_collaboration_rbac/migration.sql": {
+    "mtime": 1787411918.2258682,
+    "ast_hash": "130e4b75b07c97aa81f3d308f55cbc0d",
     "semantic_hash": ""
   }
 }

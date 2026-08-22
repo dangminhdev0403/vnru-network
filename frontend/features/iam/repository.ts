@@ -33,6 +33,12 @@ export const iamRepository = {
     json<IamUser[]>("/api/admin/users?limit=100&offset=0", { signal }),
   roles: (signal?: AbortSignal) =>
     json<IamRole[]>("/api/admin/roles?limit=100&offset=0", { signal }),
+  replaceRolePermissions: (input: { roleId: string; permissions: string[] }) =>
+    json<IamRole>("/api/admin/roles", {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(input),
+    }),
   sessions: (signal?: AbortSignal) =>
     json<IamSession[]>("/api/auth/sessions", { signal }),
   profile: (signal?: AbortSignal) => json<Profile>("/api/auth/profile", { signal }),

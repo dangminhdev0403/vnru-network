@@ -57,7 +57,7 @@ describe('AccessControlService', () => {
             {
               permission: {
                 id: 'perm-2',
-                key: 'grants.proposals.verify_institutional',
+                key: 'collab.proposals.verify_institutional',
               },
             },
           ],
@@ -88,7 +88,7 @@ describe('AccessControlService', () => {
     });
 
     expect(capabilities).toEqual([
-      'grants.proposals.verify_institutional',
+      'collab.proposals.verify_institutional',
       'organization.members.manage',
     ]);
   });
@@ -126,7 +126,7 @@ describe('AccessControlService', () => {
                   {
                     permission: {
                       id: 'perm-res',
-                      key: 'grants.proposals.create',
+                      key: 'collab.proposals.create',
                     },
                   },
                 ],
@@ -169,7 +169,7 @@ describe('AccessControlService', () => {
     );
 
     const orgCapabilities = await service.resolveCapabilities(orgInput);
-    expect(orgCapabilities).toEqual(['grants.proposals.create']);
+    expect(orgCapabilities).toEqual(['collab.proposals.create']);
     expect(orgCapabilities).not.toContain('reviews.evaluations.score');
 
     const panelCapabilities = await service.resolveCapabilities({
@@ -178,7 +178,7 @@ describe('AccessControlService', () => {
       contextId: 'panel-200',
     });
     expect(panelCapabilities).toEqual(['reviews.evaluations.score']);
-    expect(panelCapabilities).not.toContain('grants.proposals.create');
+    expect(panelCapabilities).not.toContain('collab.proposals.create');
   });
 
   it('fails closed and returns an empty list when assignment is missing or non-existent', async () => {
@@ -221,7 +221,7 @@ describe('AccessControlService', () => {
             {
               permission: {
                 id: 'p-1',
-                key: 'grants.proposals.create',
+                key: 'collab.proposals.create',
               },
             },
             {
@@ -246,7 +246,7 @@ describe('AccessControlService', () => {
             {
               permission: {
                 id: 'p-1',
-                key: 'grants.proposals.create', // duplicate permission key across roles in same context
+                key: 'collab.proposals.create', // duplicate permission key across roles in same context
               },
             },
             {
@@ -268,7 +268,7 @@ describe('AccessControlService', () => {
 
     // Output must only contain capability keys, never role names (e.g. no 'FACULTY_MEMBER' or 'LAB_LEAD')
     expect(capabilities).toEqual([
-      'grants.proposals.create',
+      'collab.proposals.create',
       'knowledge.publications.submit',
       'projects.milestones.update',
     ]);

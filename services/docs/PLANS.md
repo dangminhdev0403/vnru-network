@@ -1,0 +1,207 @@
+# No-Financial Domain Refactor Plan
+
+Status: **planned**
+
+Baseline: `ad4708d`
+
+Scope decision: monetary and financial workflows are outside implementation.
+
+## Objective
+
+Align current Module 3 code with the canonical boundaries:
+
+```text
+collaboration-service -> research opportunities, joint proposals, confirmations,
+                         organization endorsements, non-financial screening,
+                         collaboration decisions
+review-service        -> anonymized assignments, scoring, recommendations
+project-service       -> projects created from approved collaboration decisions,
+                         milestones, reports, deliverables, outcomes
+auth-service          -> identity, session, active context, capability projection only
+```
+
+No implementation may model funding instruments, funding programs, budgets, payments, disbursement, accounting, sponsor administration, financial reports, deal values, ROI, royalties, or fees.
+
+## Current boundary violations
+
+| Area | Current state | Required state |
+| --- | --- | --- |
+| Service ownership | `services/grant-service` owns opportunities/proposals plus funding decisions | Rename boundary to `collaboration-service`; keep only collaboration workflows |
+| IAM capability namespace | `grants.*` | `collab.*` |
+| IAM active context | `FUNDING_PROGRAM` | Existing `PLATFORM`, `ORGANIZATION`, or `REVIEW_BOARD`; do not add a speculative replacement context |
+| Collaboration persistence | `FundingOpportunity`, `FundingDecision`, `fundingProgramRef` | `ResearchOpportunity`, `CollaborationDecision`; remove funding-program state |
+| Review persistence | `fundingProgramRef` scopes assignments/recommendations | `boardRef` scopes review work; `proposalRef` links immutable collaboration snapshots |
+| Project persistence | `fundingProgramId` scopes project access/bootstrap | `decisionRef` and `proposalRef` establish provenance; project membership/organization scope controls access |
+| Project bootstrap | `grants.decisions.issue_foundation` + `FUNDING_PROGRAM` | approved collaboration decision + `collab.decisions.issue_foundation`; use current explicit HTTP contract until event infrastructure exists |
+| Frontend IAM labels | hard-coded `grants.*` funding labels | render `collab.*` non-financial labels from backend permission data |
+| Workflow config | `.archon/workflows/aos-vnru-m3a.yaml` provisions grant DB/service | retire or replace with collaboration-scoped workflow only when that workflow is actively used |
+
+Technical OAuth terms such as `grant_type`, and ordinary authorization wording such as “Granted/Đã cấp”, are not financial-domain violations.
+
+## Canonical replacements
+
+```text
+grant-service                         -> collaboration-service
+/api/v1/grants                        -> /api/v1/collab
+grants.opportunities.*                -> collab.opportunities.*
+grants.proposals.*                    -> collab.proposals.*
+grants.decisions.issue_foundation     -> collab.decisions.issue_foundation
+grants.proposal.submitted             -> collab.proposal.submitted
+grants.decision.approved              -> collab.decision.approved
+FundingOpportunity                    -> ResearchOpportunity
+FundingDecision                       -> CollaborationDecision
+fundingProgramRef / fundingProgramId   -> remove; do not mechanically rename
+FUNDING_PROGRAM                       -> remove; authorize against existing context and resource scope
+```
+
+`PROGRAM_MANAGER` should become `COLLABORATION_MANAGER`. `FOUNDATION_DECISION_MAKER` remains valid but moves to `PLATFORM` context. Exact production role-assignment migration requires a data backup and dry-run before deployment.
+
+## Migration slices
+
+### Slice 0 — Boundary guard
+
+Add one repository check that fails when implementation/config introduces forbidden financial vocabulary or legacy identifiers outside an explicit allowlist for:
+
+- architecture/source-history documents;
+- OAuth `grant_type`;
+- authorization status wording such as `granted`;
+- migration files retained only for applied-schema history during transition.
+
+The check must cover source, Prisma schemas, active fixtures, route names, permissions, events, and workflow config. It is the smallest regression preventing reintroduction.
+
+**Exit:** check fails on `grant-service`, `grants.*`, `FUNDING_PROGRAM`, `FundingOpportunity`, `FundingDecision`, and funding-program fields in active implementation.
+
+### Slice 1 — IAM vocabulary and fixtures
+
+Change `auth-service` first because every downstream guard consumes its context/capability projection.
+
+1. Replace active fixture capabilities `grants.*` with canonical `collab.*` keys.
+2. Remove `FUNDING_PROGRAM` from active context types.
+3. Rename `PROGRAM_MANAGER` to `COLLABORATION_MANAGER`, scoped to `PLATFORM`.
+4. Keep researcher and organization-representative proposal capabilities scoped to `ORGANIZATION`.
+5. Keep reviewer capabilities scoped to `REVIEW_BOARD`.
+6. Move Foundation collaboration-decision capability to the existing `PLATFORM` context.
+7. Update access-control tests and fixture importer validation atomically.
+8. Add a data migration for persisted permission keys, role name, and role assignments; no dual legacy/new capability aliases.
+
+**Exit:** authenticated context contains no `grants.*` or `FUNDING_PROGRAM`; authorization remains fail-closed.
+
+### Slice 2 — Collaboration service boundary
+
+Rename/move `services/grant-service` to `services/collaboration-service` in one commit so package, imports, tests, schema, and lockfile stay coherent.
+
+Keep:
+
+- research opportunities;
+- VN–RU joint proposals;
+- participant confirmation;
+- organization endorsement;
+- non-financial eligibility/scope screening;
+- Foundation collaboration decision.
+
+Remove/replace:
+
+- `fundingProgramRef` and funding-program context checks;
+- funding terminology in types, routes, errors, tests, DB names, and events;
+- `FundingOpportunity` -> `ResearchOpportunity`;
+- `FundingDecision` -> `CollaborationDecision`;
+- `EligibilityScreening` -> `ProposalScreening` if screening remains behaviorally required.
+
+Authorization:
+
+- public reads: published opportunities only;
+- opportunity publish/screen/decision: `PLATFORM` plus explicit `collab.*` capability;
+- proposal create/confirm: participant and active `ORGANIZATION` scope;
+- endorsement: matching organization scope;
+- backend resource checks remain authoritative.
+
+Migration policy:
+
+- development-only disposable DB: replace initial migration before shared deployment;
+- deployed/shared DB: add non-destructive rename/drop migration after backup; never edit an applied migration.
+
+**Exit:** `/api/v1/collab/*`, `collab.*` events, service tests/build pass; no active grant/funding model remains.
+
+### Slice 3 — Review service decoupling
+
+1. Remove `fundingProgramRef` from DTOs, schema, repository filters, indexes, and errors.
+2. Manage assignments using `PLATFORM` + `reviews.assignments.manage`.
+3. Keep reviewer access bound to `REVIEW_BOARD`, `reviewerId`, and `boardRef`.
+4. Resolve recommendations by `proposalRef`; preserve anonymized immutable snapshot validation.
+5. Consume only proposal snapshots/IDs, never collaboration persistence internals.
+6. Add migration and targeted tests for cross-board denial and reviewer isolation.
+
+**Exit:** review service has no financial context and still fails closed on assignment/resource scope.
+
+### Slice 4 — Project service provenance and scope
+
+1. Remove `fundingProgramId` from project schema, DTOs, repository filters, outbox payloads, and tests.
+2. Keep `decisionRef` and `proposalRef` as immutable cross-domain provenance.
+3. Bootstrap only from an approved collaboration decision.
+4. Until Kafka/outbox delivery is wired repository-wide, retain one explicit authenticated internal HTTP bootstrap contract; do not build a broker or compatibility adapter now.
+5. Authorize project reads/writes by project membership, organization scope, and explicit `projects.*` capabilities.
+6. Keep milestone/report acceptance authority unresolved beyond the current tested baseline (`OPEN-07`); do not add a new workflow.
+7. Add migration preserving existing project IDs and operational data.
+
+**Exit:** project service contains no funding field/context/capability; provenance remains auditable.
+
+### Slice 5 — Frontend and admin projection
+
+1. Remove hard-coded `grants.*` maps from all active IAM role consoles.
+2. Replace with localized `collab.*` labels (VI/RU/EN), preferably in the existing feature i18n boundary.
+3. Remove “research funding/funding opportunity/funding proposal” UI copy; use “research collaboration/opportunity/joint proposal/collaboration decision”.
+4. Keep frontend capability checks as presentation only; backend remains authoritative.
+5. Confirm the active roles view uses one implementation; delete superseded duplicate role-console components only after route/caller verification.
+
+**Exit:** browser role/permission surfaces expose no financial workflow and render all three locales.
+
+### Slice 6 — Retire stale workflow/config and synchronize contracts
+
+1. Remove or rewrite `.archon/workflows/aos-vnru-m3a.yaml` only if it is still an active automation entrypoint; otherwise delete it.
+2. Update current OpenAPI exports/generated clients when exporters exist; do not hand-create generated contracts.
+3. Update event names and consumers atomically.
+4. Update service READMEs, environment examples, operational scripts, and database names that still reference grant/funding scope.
+5. Re-run Graphify and scoped Repomix after source convergence.
+
+**Exit:** repository scan finds no active legacy identifier outside approved historical/migration allowlists.
+
+## Ordering and deploy strategy
+
+```text
+Boundary guard
+  -> IAM migration
+  -> collaboration-service rename/domain migration
+  -> review-service migration
+  -> project-service migration
+  -> frontend projection
+  -> stale workflow/config cleanup
+```
+
+For a coordinated development deployment, ship these as one release and recreate disposable local databases. For persistent/shared environments, use expand/migrate/contract per service, deploy producers before consumers, verify counts/references, then remove old columns. Do not run destructive resets.
+
+## Verification matrix
+
+| Gate | Minimum evidence |
+| --- | --- |
+| Boundary | forbidden-term check passes with narrow allowlist |
+| IAM | fixture import + access-control tests; `collab.*` returned, legacy keys absent |
+| Collaboration | opportunity/proposal/confirmation/endorsement/screening/decision targeted tests; bounded public list |
+| Review | assignment manager scope, reviewer assignment isolation, anonymization, recommendation tests |
+| Project | approved-decision bootstrap, member/org visibility, milestone/report tests |
+| Contracts | route/event snapshots contain `/collab`, `collab.*`; no `/grants` producer/consumer |
+| Migrations | clean DB apply; shared-data dry-run/backfill verification when applicable |
+| Frontend | lint, focused role-console test, VI/RU/EN browser interaction, Network/Console inspection |
+| Final | affected service builds/tests/lint once; repository boundary scan; `git diff --check` |
+
+## Explicit non-goals
+
+- No finance service, ledger, budget, payment, sponsor, reporting, ROI, royalty, or fee model.
+- No alias layer supporting both `grants.*` and `collab.*`.
+- No new shared business package.
+- No Kafka/API Gateway implementation solely for this rename.
+- No speculative workflow for unresolved `OPEN-05`, `OPEN-06`, or `OPEN-07` decisions.
+- No empty target-service scaffolding.
+
+## Completion definition
+
+The refactor is complete only when active source, schemas, fixtures, routes, permissions, events, frontend copy, and automation use collaboration/review/project boundaries; financial-domain terms survive only in historical documentation, explicit scope guards, OAuth protocol fields, authorization-status wording, or immutable applied migration history.

@@ -27,6 +27,9 @@ export const iamResource = createResource<void>()({
       mutationFn: ({ variables }) => iamRepository.assignRole(variables),
 
     }),
+    replaceRolePermissions: defineMutation<void, { roleId: string; permissions: string[] }, import("./repository").IamRole>({
+      mutationFn: ({ variables }) => iamRepository.replaceRolePermissions(variables),
+    }),
   },
 });
 

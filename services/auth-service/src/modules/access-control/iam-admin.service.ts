@@ -70,6 +70,18 @@ export interface IamAdminPrismaClient {
     }): Promise<RoleWithPermissions[]>;
     findUnique(args: { where: { id: string } }): Promise<Role | null>;
   };
+  permission: {
+    findMany(args: {
+      where: { key: { in: string[] } };
+      select: { id: boolean; key: boolean };
+    }): Promise<{ id: string; key: string }[]>;
+  };
+  rolePermission: {
+    deleteMany(args: { where: { roleId: string } }): Promise<{ count: number }>;
+    createMany(args: {
+      data: { roleId: string; permissionId: string }[];
+    }): Promise<{ count: number }>;
+  };
   roleAssignment: {
     findMany(args: {
       where: {
@@ -283,6 +295,61 @@ export class IamAdminService {
         permissions: [...permissionKeys].sort(),
       };
     });
+  }
+
+  async replaceRolePermissions(
+    roleId: string,
+    permissionKeys: string[],
+    actorId: string,
+    activeContext?: { contextType: string; contextId: string },
+  ): Promise<MappedRole> {
+    const role = await this.prisma.role.findUnique({ where: { id: roleId } });
+    if (!role) throw new NotFoundException('Role not found');
+    if (role.name.replace(/[\s_-]/g, '').toUpperCase() === 'SUPERADMIN') {
+      throw new ForbiddenException('SUPER_ADMIN permissions cannot be changed');
+    }
+    if (activeContext) {
+      const actorRoles = await this.prisma.roleAssignment.findMany({
+        where: {
+          userId: actorId,
+          ...activeContext,
+          status: RoleAssignmentStatus.ACTIVE,
+        },
+        select: { roleId: true },
+      });
+      if (actorRoles.some(({ roleId: actorRoleId }) => actorRoleId === roleId)) {
+        throw new ForbiddenException('Users cannot change permissions on their own role');
+      }
+    }
+
+    const permissions = permissionKeys.length
+      ? await this.prisma.permission.findMany({
+          where: { key: { in: permissionKeys } },
+          select: { id: true, key: true },
+        })
+      : [];
+    if (permissions.length !== permissionKeys.length) {
+      throw new NotFoundException('One or more permissions do not exist');
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.rolePermission.deleteMany({ where: { roleId } });
+      if (permissions.length) {
+        await tx.rolePermission.createMany({
+          data: permissions.map(({ id }) => ({ roleId, permissionId: id })),
+        });
+      }
+      await tx.securityAuditEvent.create({
+        data: {
+          event: 'IAM_ROLE_PERMISSIONS_CHANGED',
+          actorId,
+          targetId: roleId,
+          context: { permissions: [...permissionKeys].sort() },
+        },
+      });
+    });
+
+    return { id: role.id, name: role.name, permissions: [...permissionKeys].sort() };
   }
 
   async upsertRoleAssignment(

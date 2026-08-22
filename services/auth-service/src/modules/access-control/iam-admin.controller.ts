@@ -54,6 +54,13 @@ const roleAssignmentSchema = z.object({
   }),
 });
 
+const rolePermissionsSchema = z.object({
+  permissions: z.array(z.string().trim().min(1)).max(200).refine(
+    (permissions) => new Set(permissions).size === permissions.length,
+    { message: 'Permissions must be unique' },
+  ),
+});
+
 @Controller('api/v1/admin')
 @UseGuards(AuthenticatedRequestGuard)
 @RequirePermission('iam.users.manage')
@@ -125,6 +132,30 @@ export class IamAdminController {
     }
     const { limit, offset } = parsed.data;
     return this.iamAdminService.listRoles(limit, offset);
+  }
+
+  @Patch('roles/:id/permissions')
+  @RequirePermission('iam.roles.manage')
+  async replaceRolePermissions(
+    @Param('id') id: string,
+    @Body() body: Record<string, unknown>,
+    @Req() req: AuthenticatedRequest,
+  ): Promise<MappedRole> {
+    const parsedId = uuidSchema.safeParse(id);
+    const parsedBody = rolePermissionsSchema.safeParse(body);
+    if (!parsedId.success || !parsedBody.success) {
+      throw new BadRequestException(
+        parsedId.error?.issues[0]?.message ?? parsedBody.error?.issues[0]?.message,
+      );
+    }
+    const actorId = req.authContext?.userId;
+    if (!actorId) throw new UnauthorizedException('Actor ID not found in request context');
+    return this.iamAdminService.replaceRolePermissions(
+      parsedId.data,
+      parsedBody.data.permissions,
+      actorId,
+      req.authContext?.activeContext ?? undefined,
+    );
   }
 
   @Post('role-assignments')
