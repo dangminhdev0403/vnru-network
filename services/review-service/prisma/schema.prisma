@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AssignmentStatus {
+  PENDING
+  CONFLICT
+  DRAFT
+  SUBMITTED
+}
+
+enum ConflictDeclarationType {
+  CONFLICT
+  NO_CONFLICT
+}
+
+enum ReviewStatus {
+  DRAFT
+  SUBMITTED
+}
+
+enum ScoreDimension {
+  scientificMerit
+  feasibility
+  bilateralValue
+  impact
+}
+
+model ReviewAssignment {
+  id                 String               @id @default(uuid()) @db.Uuid
+  proposalRef        String
+  reviewerId         String
+  boardRef           String
+  fundingProgramRef  String
+  status             AssignmentStatus     @default(PENDING)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  snapshot           ProposalSnapshot?
+  conflict           ConflictDeclaration?
+  reviewRecord       ReviewRecord?
+
+  @@index([reviewerId])
+  @@index([proposalRef])
+}
+
+model ProposalSnapshot {
+  id           String           @id @default(uuid()) @db.Uuid
+  assignmentId String           @unique @db.Uuid
+  proposalRef  String
+  snapshot     Json // Immutable allowlisted proposal fields
+  createdAt    DateTime         @default(now())
+  assignment   ReviewAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+}
+
+model ConflictDeclaration {
+  id           String           @id @default(uuid()) @db.Uuid
+  assignmentId String           @unique @db.Uuid
+  reviewerId   String
+  declaration  ConflictDeclarationType
+  declaredAt   DateTime         @default(now())
+  assignment   ReviewAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+}
+
+model ReviewRecord {
+  id           String            @id @default(uuid()) @db.Uuid
+  assignmentId String            @unique @db.Uuid
+  reviewerId   String
+  status       ReviewStatus      @default(DRAFT)
+  comments     String?
+  submittedAt  DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  scores       EvaluationScore[]
+  assignment   ReviewAssignment  @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+}
+
+model EvaluationScore {
+  id             String       @id @default(uuid()) @db.Uuid
+  reviewRecordId String       @db.Uuid
+  dimension      ScoreDimension
+  score          Int // 1..5
+  reviewRecord   ReviewRecord @relation(fields: [reviewRecordId], references: [id], onDelete: Cascade)
+
+  @@unique([reviewRecordId, dimension])
+}
+
+model EvaluationRecommendation {
+  id                    String   @id @default(uuid()) @db.Uuid
+  proposalRef           String   @unique
+  averageScientificMerit Float
+  averageFeasibility     Float
+  averageBilateralValue  Float
+  averageImpact          Float
+  overallAverage         Float
+  totalReviews           Int
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model OutboxEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  eventType String // reviews.evaluation.submitted
+  payload   Json
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
