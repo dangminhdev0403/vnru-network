@@ -1,16 +1,16 @@
 # Graph Report - vnru-network  (2026-08-23)
 
 ## Corpus Check
-- 363 files · ~266,897 words
+- 372 files · ~274,089 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 3426 nodes · 4672 edges · 278 communities (248 shown, 30 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 12 edges (avg confidence: 0.65)
+- 3597 nodes · 4899 edges · 297 communities (268 shown, 29 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 14 edges (avg confidence: 0.67)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b13abaf9`
+- Built from commit: `89b5eba8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -38,6 +38,7 @@
 - MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION
 - MODULE 6 — INTERNAL MONITORING & REPORTING DASHBOARD
 - 7. DIAL DEFINITIONS (Technical Reference)
+- docs/README.md
 - access-control.service.ts
 - Frontend Architecture
 - SessionService
@@ -73,7 +74,6 @@
 - services/AGENTS.md
 - MIGRATION_GUIDE.md
 - MULTILINGUAL_BACKEND_PLAN.md
-- supertest
 - No-Financial Domain Refactor Plan
 - expert.service.ts
 - iam-admin.service.ts
@@ -267,35 +267,54 @@
 - react-dom
 - @tanstack/react-query
 - rxjs
+- 6. Opportunities response type is currently wrong
+- 7. Create Opportunity request is currently wrong
+- Russia-Vietnam Science-Technology Intelligence Network — Web Portal Frontend
+- 26. Acceptance Criteria
+- 8. Blocker — Admin Catalog and Audit pages are fake/incorrect surfaces
+- 11. Remove inactive Proposal / Screening / Decision tabs from runtime hub
+- 1. Admin shell is still not separated at runtime
+- 20. Add BFF contract tests
+- 2. Wire the registries into real navigation
+- 3. Remove legacy admin links from workspace navigation
+- 4. Remove route-owned component duplication
+- 5. Opportunities GET contract is currently wrong
+- 9. Proposal frontend contract is also mismatched
+- 3. Two business scopes that must remain distinct
+- 7. Blocker — Header forwarding in BFF must preserve session correctly
+- 9. Workspace/persona architecture corrections
+- 14. Admin Audit is still not backed by a read contract
+- 19. Route-level authorization must be tested for real
+- sweetalert2
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 45 edges
+1. `cn()` - 47 edges
 2. `MODULE 1 — IAM / GOVERNANCE` - 42 edges
-3. `backendHeaders()` - 38 edges
-4. `authServiceUrl()` - 30 edges
-5. `MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY` - 29 edges
-6. `UI Quality Pro-Max — VN-RU Portal` - 27 edges
-7. `ProjectService` - 26 edges
-8. `useLocale` - 24 edges
+3. `backendHeaders()` - 37 edges
+4. `useLocale` - 32 edges
+5. `authServiceUrl()` - 30 edges
+6. `MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY` - 29 edges
+7. `UI Quality Pro-Max — VN-RU Portal` - 27 edges
+8. `ProjectService` - 26 edges
 9. `ProjectRepository` - 24 edges
 10. `AuthenticatedUser` - 23 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Breadcrumbs()` --calls--> `cn()`  [EXTRACTED]
-  frontend/components/tailgrids/core/breadcrumbs.tsx → frontend/lib/cn.ts
-- `Collapsible()` --calls--> `cn()`  [EXTRACTED]
-  frontend/components/tailgrids/core/collapsible.tsx → frontend/lib/cn.ts
-- `CollapsibleTrigger()` --calls--> `cn()`  [EXTRACTED]
-  frontend/components/tailgrids/core/collapsible.tsx → frontend/lib/cn.ts
-- `CollapsibleContent()` --calls--> `cn()`  [EXTRACTED]
-  frontend/components/tailgrids/core/collapsible.tsx → frontend/lib/cn.ts
-- `TableBody()` --calls--> `cn()`  [EXTRACTED]
-  frontend/components/tailgrids/core/table.tsx → frontend/lib/cn.ts
+- `DashboardView()` --calls--> `useLocale`  [EXTRACTED]
+  frontend/features/workspace/components/DashboardView.tsx → frontend/app/HomeMotion.tsx
+- `Home()` --calls--> `getCurrentSession()`  [EXTRACTED]
+  frontend/app/page.tsx → frontend/features/auth/server.ts
+- `bootstrap()` --indirect_call--> `AppModule`  [INFERRED]
+  services/auth-service/src/main.ts → services/auth-service/src/app.module.ts
+- `AdminAuditPage()` --calls--> `useLocale`  [EXTRACTED]
+  frontend/app/(admin)/admin/audit/page.tsx → frontend/app/HomeMotion.tsx
+- `AdminCatalogsPage()` --calls--> `useLocale`  [EXTRACTED]
+  frontend/app/(admin)/admin/catalogs/page.tsx → frontend/app/HomeMotion.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (278 total, 30 thin omitted)
+## Communities (297 total, 29 thin omitted)
 
 ### Community 0 - "devDependencies"
 Cohesion: 0.04
@@ -346,24 +365,24 @@ Cohesion: 0.28
 Nodes (5): metadata, sans, serif, QueryProvider(), ThemeProvider()
 
 ### Community 12 - "server.ts"
-Cohesion: 0.07
-Nodes (42): POST(), GET(), PATCH(), PATCH(), GET(), GET(), sections, POST() (+34 more)
+Cohesion: 0.08
+Nodes (40): POST(), GET(), PATCH(), PATCH(), GET(), GET(), sections, POST() (+32 more)
 
 ### Community 17 - "MODULE 2 — KNOWLEDGE REPOSITORY AND EXPERT DIRECTORY"
-Cohesion: 0.06
-Nodes (36): 10. Why use a dedicated search engine?, 11. Semantic search, 12. Expert matching, 13. Suggestions must be explainable, 14. Knowledge relationship model, 15. Pagination, 16. Caching, 17. Synchronization jobs must run in the background (+28 more)
+Cohesion: 0.07
+Nodes (27): 10. Why use a dedicated search engine?, 11. Semantic search, 12. Expert matching, 13. Suggestions must be explainable, 14. Knowledge relationship model, 15. Pagination, 16. Caching, 17. Synchronization jobs must run in the background (+19 more)
 
 ### Community 18 - "MODULE 3 — BILATERAL RESEARCH COLLABORATION & PROJECT MANAGEMENT"
-Cohesion: 0.11
-Nodes (19): 10. Project lifecycle after an accepted decision, 11. State models must remain separate, 12. Conceptual data model, 13. Authorization, 15. API capability proposal, 16. Events and audit, 17. Concurrency and idempotency, 19. Items still requiring confirmation (+11 more)
+Cohesion: 0.06
+Nodes (35): 10. Project lifecycle after an accepted decision, 11. State models must remain separate, 12. Conceptual data model, 13. Authorization, 14. UI capability, 15. API capability proposal, 16. Events and audit, 17. Concurrency and idempotency (+27 more)
 
 ### Community 19 - "@eslint/eslintrc"
 Cohesion: 0.07
 Nodes (29): 10. Workspace registry, 11. Navigation generation, 12. Suggested navigation model, 14. Role composition, 15. Role assignment model, 16. Future extensibility, 17. New feature extensibility, 18. Admin migration plan (+21 more)
 
 ### Community 21 - "MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION"
-Cohesion: 0.09
-Nodes (22): 10. IP / legal / advisory boundary, 11. State model, 12. Conceptual data model, 13. Authorization, 14. UI capability, 15. API capability proposal, 16. Events and audit, 17. Concurrency / idempotency (+14 more)
+Cohesion: 0.08
+Nodes (26): 10. IP / legal / advisory boundary, 11. State model, 12. Conceptual data model, 13. Authorization, 14. UI capability, 15. API capability proposal, 16. Events and audit, 17. Concurrency / idempotency (+18 more)
 
 ### Community 22 - "MODULE 6 — INTERNAL MONITORING & REPORTING DASHBOARD"
 Cohesion: 0.10
@@ -373,9 +392,13 @@ Nodes (20): 10. Conceptual data model, 11. Authorization, 12. UI capability, 13.
 Cohesion: 0.50
 Nodes (4): 7. DIAL DEFINITIONS (Technical Reference), DESIGN_VARIANCE (Level 1-10), MOTION_INTENSITY (Level 1-10), VISUAL_DENSITY (Level 1-10)
 
+### Community 24 - "docs/README.md"
+Cohesion: 0.15
+Nodes (8): 1. Overview & Core Principles, 2. Portal Personas & Access Areas `[SOURCE]`, 3. Business Capability Permission Taxonomy, 4. Active Authorization Context & Context Switching, 5. Resource Scope & Independent Review Isolation, 6. Backend Enforcement & Explicit Decorators, 7. Frontend Permission Projection Rules, RBAC Architecture & Access Governance
+
 ### Community 25 - "access-control.service.ts"
-Cohesion: 0.09
-Nodes (20): Optional, AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord (+12 more)
+Cohesion: 0.16
+Nodes (14): AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord, Inject (+6 more)
 
 ### Community 26 - "Frontend Architecture"
 Cohesion: 0.11
@@ -383,31 +406,31 @@ Nodes (18): 10. State Management, 11. Frontend and Backend Boundary, 12. Perform
 
 ### Community 27 - "SessionService"
 Cohesion: 0.17
-Nodes (15): Delete, Headers, Res, AuthenticatedRequest, RequestWithCookies, AuthenticationController, Body, Controller (+7 more)
+Nodes (16): Delete, Res, AuthenticatedRequest, RequestWithCookies, AuthenticationController, Body, Controller, Get (+8 more)
 
 ### Community 28 - "🇻🇳🇷🇺 Russia-Vietnam Science-Technology Intelligence Network"
 Cohesion: 0.12
 Nodes (16): Backend (Current & Target), 📍 Current State vs. Target Architecture, 🗄️ Data Ownership Principles, 🚀 Development Quickstart, 📖 Documentation Index, Frontend (Current), Infrastructure (Target), ✦ Overview `[SOURCE]` (+8 more)
 
 ### Community 29 - "@nestjs/testing"
-Cohesion: 0.10
-Nodes (20): Header(), headerCopy, HeaderProps, languages, themeModesList, auth, authResource, CurrentUser (+12 more)
+Cohesion: 0.14
+Nodes (20): collabCopy, CollaborationWorkspaceView(), Copy, useOpportunities(), useProposal(), CollabApiError, createOpportunity(), createProposal() (+12 more)
 
 ### Community 30 - "Frontend API Contract Guide"
 Cohesion: 0.13
 Nodes (15): Anti-patterns, Authentication and Session, Authorization Context, Caching, Contract Rules, Error Contract, Frontend API Contract Guide, Generated Contracts (+7 more)
 
 ### Community 31 - "IdentityService"
-Cohesion: 0.26
-Nodes (9): IdentityModule, Module, ExternalIdentityRecord, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput, Inject (+1 more)
+Cohesion: 0.17
+Nodes (16): MockAuthService, MockResponse, AuthenticatedUser, BeginLoginInput, BeginLoginResult, CallbackResult, ExchangeResult, HandleCallbackInput (+8 more)
 
 ### Community 32 - "authentication.service.ts"
-Cohesion: 0.18
-Nodes (14): configSchema, validateConfig(), SESSION_COOKIE_OPTIONS, MockAuthService, MockResponse, AuthenticatedUser, BeginLoginInput, BeginLoginResult (+6 more)
+Cohesion: 0.11
+Nodes (17): 10. Proposal detail route must not be claimed before it exists, 12. Do not render an unsupported proposal-create button, 13. Collaboration vocabulary cleanup, 15. Admin Catalog is informational only, 16. Admin navigation capability mapping must match actual backend capabilities, 17. Workspace registry should not expose legacy admin route, 18. Landing resolver: keep capability-first, but avoid broad prefix assumptions where possible, 21. Error normalization (+9 more)
 
 ### Community 33 - "authentication.module.ts"
-Cohesion: 0.11
-Nodes (18): AuthenticationModule, mockClientInstance, mockIssuerInstance, Module, MockIdentityService, MockOidcService, MockSessionService, CreateAuthorizationRequestParams (+10 more)
+Cohesion: 0.12
+Nodes (16): mockClientInstance, mockIssuerInstance, MockIdentityService, MockOidcService, MockSessionService, CreateAuthorizationRequestParams, HandleCallbackParams, KeycloakOidcService (+8 more)
 
 ### Community 34 - "Russia-Vietnam Science-Technology Intelligence Network System Architecture"
 Cohesion: 0.17
@@ -418,8 +441,8 @@ Cohesion: 0.05
 Nodes (56): AppModule, PRISMA, Module, AuthenticatedUser, AuthGuard, isAuthenticatedUser(), Injectable, SafeHttpExceptionFilter (+48 more)
 
 ### Community 36 - "Frontend Runtime and UI Guide"
-Cohesion: 0.12
-Nodes (15): Component Ownership, Frontend Runtime and UI Guide, Loading, Error, and Standard UI States `[DESIGN]`, Multilingual Support & AI Translation `[SOURCE]`, Purpose, Realtime, Server and Client Components, State Ownership (+7 more)
+Cohesion: 0.20
+Nodes (10): Component Ownership, Frontend Runtime and UI Guide, Loading, Error, and Standard UI States `[DESIGN]`, Multilingual Support & AI Translation `[SOURCE]`, Purpose, Realtime, Server and Client Components, State Ownership (+2 more)
 
 ### Community 37 - "publication-query.ts"
 Cohesion: 0.07
@@ -430,7 +453,7 @@ Cohesion: 0.20
 Nodes (9): `auth-service` Internal Module Base, Cross-service dependency rule, Public vs internal files, Purpose, Recommended service/module shapes, Refactor workflow, Russia-Vietnam Science-Technology Intelligence Network Backend Service Guide, Service boundaries (Target Architecture) (+1 more)
 
 ### Community 39 - "Russia-Vietnam Science-Technology Intelligence Network API Specification & Event Contracts"
-Cohesion: 0.25
+Cohesion: 0.22
 Nodes (8): 1. Contract Source of Truth, 2.1. Resource Modeling & URI Structure, 2.2. Bounded Collection Responses, 2. API Design Conventions, 3.1. Canonical Domain Events, 3.2. Audit Logging Events, 3. Asynchronous Event Contracts & Envelope Standard, Russia-Vietnam Science-Technology Intelligence Network API Specification & Event Contracts
 
 ### Community 40 - "Frontend Feature Guide"
@@ -442,19 +465,19 @@ Cohesion: 0.22
 Nodes (8): 1. Purpose, 2. Docs Index, 3. Core Principles, 4. Target Backend Services & Capability Ownership, 5. Standard Service Boundary, 6. Request and Contract Flow, 7. Backend and Frontend Boundary, Russia-Vietnam Science-Technology Intelligence Network Backend Architecture
 
 ### Community 42 - "RBAC Architecture & Access Governance"
-Cohesion: 0.25
-Nodes (8): 1. Overview & Core Principles, 2. Portal Personas & Access Areas `[SOURCE]`, 3. Business Capability Permission Taxonomy, 4. Active Authorization Context & Context Switching, 5. Resource Scope & Independent Review Isolation, 6. Backend Enforcement & Explicit Decorators, 7. Frontend Permission Projection Rules, RBAC Architecture & Access Governance
+Cohesion: 0.12
+Nodes (16): 0. Purpose, 10. Admin vs business workspace boundary, 11. Recommended target route tree, 12. Recommended frontend feature tree, 13. Collaboration implementation order after blockers, 14. Proposal UI rule, 15. Review UI rule, 16. Project UI rule (+8 more)
 
 ### Community 43 - "Backend Service Rules"
 Cohesion: 0.25
 Nodes (7): Backend Service Rules, Before code, Boundaries, Contracts and events, Data, Testing and completion, Trust boundaries
 
 ### Community 44 - "Russia-Vietnam Science-Technology Intelligence Network Global Rules (Authoritative)"
-Cohesion: 0.25
+Cohesion: 0.22
 Nodes (8): 1. Security & Authentication Boundaries, 2. Data Ownership & Microservice Boundaries, 3. Package & Dependency Governance, 4. API & Resource Design, 5. Working Tree & Scope Constraints, 6. Verification Request Dispatch, 7. UI Quality & Impeccable Gate, Russia-Vietnam Science-Technology Intelligence Network Global Rules (Authoritative)
 
 ### Community 45 - "Frontend Rules"
-Cohesion: 0.25
+Cohesion: 0.29
 Nodes (7): Before code, Boundaries, Completion, Frontend Rules, Server state, State, UI Quality & Impeccable Gate
 
 ### Community 46 - "MODULE 4 — TRAINING, KNOWLEDGE TRANSFER & ACADEMIC EXCHANGE"
@@ -462,12 +485,12 @@ Cohesion: 0.11
 Nodes (19): 10. Conceptual data model, 11. Authorization, 12. UI capability, 13. API capability proposal, 14. Events and audit, 15. Concurrency / idempotency, 16. Integration, 17. Acceptance Criteria — Module 4 (+11 more)
 
 ### Community 47 - "prettier"
-Cohesion: 0.15
-Nodes (12): DiscoveryError, DiscoveryResult, DiscoverySuccess, isPublicExpert(), isPublicPublication(), PublicPublication, Props, Props (+4 more)
+Cohesion: 0.20
+Nodes (10): Props, PublicationPage(), DiscoveryError, DiscoverySuccess, Props, DetailResult, getLabels(), Labels (+2 more)
 
 ### Community 48 - "Agent Instructions — Russia-Vietnam Science-Technology Intelligence Network"
-Cohesion: 0.22
-Nodes (8): Agent Instructions — Russia-Vietnam Science-Technology Intelligence Network, AGY / Ponytail execution policy, Default UI scope, Execution rules, Mandatory pre-code gate, Mandatory UI/UX quality routing, Navigation, UI Quality & Impeccable Gate
+Cohesion: 0.20
+Nodes (9): Agent Instructions — Russia-Vietnam Science-Technology Intelligence Network, AGY / Ponytail execution policy, Default UI scope, Execution rules, Local test accounts, Mandatory pre-code gate, Mandatory UI/UX quality routing, Navigation (+1 more)
 
 ### Community 49 - "Russia-Vietnam Science-Technology Intelligence Network — Centralized Open Decisions & Unresolved Questions"
 Cohesion: 0.40
@@ -478,16 +501,12 @@ Cohesion: 0.05
 Nodes (49): HttpCode, Put, AppModule, Module, AuthenticatedUser, AuthGuard, isAuthenticatedUser(), Public() (+41 more)
 
 ### Community 51 - "useLocale"
-Cohesion: 0.14
-Nodes (18): AdminCatalogsPage(), catalogCopy, HERO_DYNAMIC_PHRASES, HERO_STATIC_TITLE, HomeMotion(), Locale, useHeroTyping(), useLocale (+10 more)
+Cohesion: 0.11
+Nodes (21): AdminAuditPage(), auditCopy, AdminCatalogsPage(), catalogCopy, HERO_DYNAMIC_PHRASES, HERO_STATIC_TITLE, HomeMotion(), useHeroTyping() (+13 more)
 
 ### Community 52 - "Russia-Vietnam Science-Technology Intelligence Network Documentation Index"
 Cohesion: 0.50
 Nodes (4): Portal Architectural Overview `[SOURCE]`, Recommended Read Order, Russia-Vietnam Science-Technology Intelligence Network Documentation Index, State Distinction
-
-### Community 60 - "supertest"
-Cohesion: 0.14
-Nodes (10): View, copy, groupLabels, isSystemRole(), Modal, permissionLabels, roleLabels, RolePermissionsPage() (+2 more)
 
 ### Community 69 - "No-Financial Domain Refactor Plan"
 Cohesion: 0.12
@@ -498,20 +517,20 @@ Cohesion: 0.07
 Nodes (30): AppModule, Module, ExpertController, NOT_FOUND, Controller, Get, Param, Query (+22 more)
 
 ### Community 72 - "iam-admin.service.ts"
-Cohesion: 0.08
-Nodes (30): IamAdminController, paginationSchema, roleAssignmentSchema, rolePermissionsSchema, Body, Controller, Get, Param (+22 more)
+Cohesion: 0.10
+Nodes (25): IamAdminController, Body, Controller, Get, Param, Patch, Post, Query (+17 more)
 
 ### Community 73 - "AuthenticatedUser"
 Cohesion: 0.07
 Nodes (31): CurrentUser, ALLOWED_KEYS, validateProposalSnapshot(), AppModule, Module, AuthenticatedUser, AuthGuard, isAuthenticatedUser() (+23 more)
 
 ### Community 74 - "iam/page.tsx"
-Cohesion: 0.21
-Nodes (11): iam, security, iamRepository, IamRole, IamSession, IamUser, json(), Profile (+3 more)
+Cohesion: 0.32
+Nodes (6): auth, authResource, CurrentUser, json(), json(), httpClient()
 
 ### Community 75 - "cn"
-Cohesion: 0.18
-Nodes (16): Card(), CardAction(), CardContent(), CardDescription(), CardFooter(), CardHeader(), CardTitle(), DropdownContentProps (+8 more)
+Cohesion: 0.06
+Nodes (43): Badge(), BadgeProps, badgeStyles, BreadcrumbItem, Breadcrumbs(), BreadcrumbsProps, Button(), ButtonProps (+35 more)
 
 ### Community 76 - "3.4 Full"
 Cohesion: 0.11
@@ -554,12 +573,12 @@ Cohesion: 0.07
 Nodes (26): 1. Create a Discord Application, 2. Create a Bot, 3. Generate Invite URL, 4. Get Your User ID, 5. Add to `.env` (in the archon repo root), 6. Start the Server, 7. Test, Discord Bot Setup Guide (+18 more)
 
 ### Community 86 - "auth-service/src/app.module.ts"
-Cohesion: 0.15
-Nodes (12): AppController, Controller, Get, AppModule, Module, AppService, Injectable, bootstrap() (+4 more)
+Cohesion: 0.14
+Nodes (15): AppModule, Module, configSchema, validateConfig(), bootstrap(), AccessControlModule, Module, AuthenticationModule (+7 more)
 
 ### Community 87 - "ts-jest"
-Cohesion: 0.20
-Nodes (7): AuthenticatedRequestGuard, extractSessionCookie(), isRecord(), RequireMfa(), RequirePermission(), context(), Injectable
+Cohesion: 0.19
+Nodes (13): paginationSchema, roleAssignmentSchema, rolePermissionsSchema, userStatusSchema, uuidSchema, AuthenticatedRequestGuard, extractSessionCookie(), isRecord() (+5 more)
 
 ### Community 88 - "style.md"
 Cohesion: 0.20
@@ -591,7 +610,7 @@ Nodes (5): metadata, Locale, NotFoundClient(), Translation, translations
 
 ### Community 95 - "WorkspaceShell.tsx"
 Cohesion: 0.16
-Nodes (8): shellCopy, WorkspaceShell(), SheetContent(), SheetContentProps, SheetOverlay(), SheetOverlayProps, SheetProps, SheetTitle()
+Nodes (10): Locale, shellCopy, SheetContent(), SheetContentProps, SheetOverlay(), SheetOverlayProps, SheetProps, SheetTitle() (+2 more)
 
 ### Community 96 - "frontend/DESIGN.md"
 Cohesion: 0.25
@@ -658,8 +677,12 @@ Cohesion: 0.07
 Nodes (29): Advanced Features: Hooks, MCP, Skills, Retry, Sessions, Typed Artifacts, Automatic Tool Wildcards, Claude vs Codex: How Each Gets MCP and Skills, Combining Skills with MCP, Common Patterns, Config File Format, Environment Variable Expansion, Error Classification (+21 more)
 
 ### Community 112 - "@types/express"
-Cohesion: 0.18
-Nodes (9): groupLabels, groupPermissions(), iamAdminCopy, IamClientPage(), permissionLabels, roleLabels, View, useIamAdministration() (+1 more)
+Cohesion: 0.29
+Nodes (5): AppController, Controller, Get, AppService, Injectable
+
+### Community 113 - "AuthenticationService"
+Cohesion: 0.09
+Nodes (7): Headers, Optional, AuthenticationService, Injectable, SessionService, Inject, Injectable
 
 ### Community 115 - "Archon Setup Wizard"
 Cohesion: 0.09
@@ -754,8 +777,8 @@ Cohesion: 0.20
 Nodes (9): 0.1. Three canonical access areas, 0.2. Actors and participation forms, 0.3. Portal-level onboarding flow, 0.4. Canonical module scope after the update, 0.5. Replacements that must be treated as canonical, 0.6. Confidence labels, 0. PORTAL-WIDE IMPLEMENTATION BASELINE AFTER REVIEW, PROJECT-OWNER SCOPE DECISION — FINANCIAL DOMAIN OUT OF IMPLEMENTATION (+1 more)
 
 ### Community 147 - "experts/repository.ts"
-Cohesion: 0.18
-Nodes (18): ExpertDetailPage(), ExpertsPage(), one(), Params, metadata, one(), Params, SearchPage() (+10 more)
+Cohesion: 0.19
+Nodes (16): ExpertDetailPage(), L, Locale, Props, Fetcher, getExpertById(), getExpertMatches(), getExperts() (+8 more)
 
 ### Community 148 - "Common Failure Modes"
 Cohesion: 0.11
@@ -783,7 +806,7 @@ Nodes (16): Archon Configuration Guide, Environment Variable Overrides, For Glob
 
 ### Community 154 - "dependencies"
 Cohesion: 0.12
-Nodes (17): clsx, @dangminhdev04032005/query-resource, dependencies, clsx, @dangminhdev04032005/query-resource, i18next, next, react-i18next (+9 more)
+Nodes (17): clsx, @dangminhdev04032005/query-resource, dependencies, clsx, @dangminhdev04032005/query-resource, i18next, next, next-themes (+9 more)
 
 ### Community 155 - "dependencies"
 Cohesion: 0.12
@@ -806,8 +829,8 @@ Cohesion: 0.12
 Nodes (17): dependencies, @nestjs/common, @nestjs/core, @nestjs/platform-express, pg, @prisma/adapter-pg, @prisma/client, reflect-metadata (+9 more)
 
 ### Community 161 - "knowledge/types.ts"
-Cohesion: 0.15
-Nodes (13): L, Locale, Props, buildHref(), ExpertList(), L, Locale, Props (+5 more)
+Cohesion: 0.11
+Nodes (18): buildHref(), ExpertList(), L, Locale, Props, buildHref(), knowledgeCopy, KnowledgeWorkspaceView() (+10 more)
 
 ### Community 162 - "devDependencies"
 Cohesion: 0.13
@@ -854,8 +877,8 @@ Cohesion: 0.17
 Nodes (11): 1. Invoke the workflow, 2. Monitor for pause, 3. Fetch and relay the output — BE TRANSPARENT, 4. Collect user response and resume, 5. Repeat until workflow completes, Approval Commands, Identifying Interactive Workflows, Interactive Workflow Guide (+3 more)
 
 ### Community 173 - "table.tsx"
-Cohesion: 0.23
-Nodes (11): TableBody(), TableCell(), tableCellStyles, TableHead(), TableHeader(), tableHeaderStyles, tableHeadStyles, TableRoot() (+3 more)
+Cohesion: 0.29
+Nodes (7): 26. Acceptance gate, Admin boundary, Audit/Catalog, Opportunities, Proposal foundation, Verification, Workspace registry
 
 ### Community 174 - "GitHub Webhook Setup Guide"
 Cohesion: 0.18
@@ -1070,11 +1093,11 @@ Cohesion: 0.50
 Nodes (4): Body Semantics, Configuration, Loop Group Nodes, When to use `loop:` vs `loop_group:`
 
 ### Community 227 - "publications/types.ts"
-Cohesion: 0.25
-Nodes (12): KnowledgePage(), metadata, one(), Params, Props, PublicationPage(), ERR_UNAVAILABLE, getPublicationById() (+4 more)
+Cohesion: 0.21
+Nodes (13): KnowledgePage(), metadata, one(), Params, metadata, one(), Params, SearchPage() (+5 more)
 
 ### Community 228 - "Russia-Vietnam Science-Technology Intelligence Network Domain Map"
-Cohesion: 0.33
+Cohesion: 0.29
 Nodes (6): 1. Purpose, 2. Six Business Capabilities & Domain Mapping, 3. Data Ownership & Source-of-Truth Rules, 4. Inter-Domain Dependency & Communication Rules, 5. Service Extraction Readiness, Russia-Vietnam Science-Technology Intelligence Network Domain Map
 
 ### Community 229 - "Synthetic Curator IAM Fixture (Module 2)"
@@ -1089,13 +1112,17 @@ Nodes (6): 38. Acceptance Criteria — IAM, Authentication, Authorization, Integ
 Cohesion: 0.18
 Nodes (11): 1. Collaboration Hub, 2. Opportunities, 3. Proposal Workspace, 4. Review Workspace, 5. Collaboration Decision, 6. Project Workspace, Canonical scope, Module 3 core UI surfaces (+3 more)
 
+### Community 238 - "next-themes"
+Cohesion: 0.38
+Nodes (5): ExpertsPage(), one(), Params, links, PublicHeader()
+
 ### Community 239 - "RolePermissionsPage.tsx"
-Cohesion: 0.21
-Nodes (12): copy, MfaControl(), ProfileDialog(), SecurityClientPage(), securityCopy, useMfa(), useProfile(), useSessions() (+4 more)
+Cohesion: 0.06
+Nodes (39): copy, MfaControl(), ProfileDialog(), SecurityClientPage(), securityCopy, copy, groupLabels, isSystemRole() (+31 more)
 
 ### Community 240 - "sweetalert2"
-Cohesion: 0.27
-Nodes (9): filterNavSections(), hasCapability(), resolveUserPersonas(), WORKSPACE_NAV_REGISTRY, WORKSPACE_PERSONAS, WorkspaceNavEntry, WorkspaceNavSection, WorkspacePersona (+1 more)
+Cohesion: 0.16
+Nodes (14): SidebarProps, useCurrentUser(), labels, WorkspaceSidebar(), WorkspaceSidebarProps, filterNavSections(), hasCapability(), resolveUserPersonas() (+6 more)
 
 ### Community 241 - "tailwind-merge"
 Cohesion: 0.22
@@ -1106,16 +1133,16 @@ Cohesion: 0.25
 Nodes (7): Contract-first workflow, Final rule, PART E — DATA & CONTRACT RULES, PART H — VERIFICATION, PART I — AGENT OUTPUT FORMAT, Standard frontend data flow, Standard UI states
 
 ### Community 245 - "Sidebar.tsx"
-Cohesion: 0.22
-Nodes (8): Copy, NavItem, NavSection, Sidebar(), SidebarProps, Tooltip(), TooltipProps, TooltipTrigger()
+Cohesion: 0.12
+Nodes (16): copy, NavItem, NavSection, SidebarFrame(), SidebarFrameProps, Tooltip(), TooltipProps, TooltipTrigger() (+8 more)
 
 ### Community 246 - "@types/node"
 Cohesion: 0.25
 Nodes (8): 13. Role-to-navigation examples, COLLABORATION_MANAGER, FOUNDATION_DECISION_MAKER, KNOWLEDGE_CURATOR, ORGANIZATION_REPRESENTATIVE, RESEARCHER, REVIEWER, SUPER_ADMIN
 
 ### Community 247 - "typescript"
-Cohesion: 0.29
-Nodes (7): 18. Acceptance Criteria — Module 3, Decision, Project, Proposal, Public, Review, Security / Integration
+Cohesion: 0.33
+Nodes (6): 21. Acceptance criteria, Admin, Admin placeholders, Collaboration, Tests, Workspace
 
 ### Community 248 - "react-i18next"
 Cohesion: 0.33
@@ -1126,12 +1153,12 @@ Cohesion: 0.33
 Nodes (6): PART F — EXECUTION PLAN, Phase 1 — Audit, Phase 2 — Module 1 alignment, Phase 3 — Module 3 contract normalization, Phase 4 — Module 3 UI, Phase 5 — Module 2 bridges
 
 ### Community 250 - "cn.ts"
-Cohesion: 0.25
-Nodes (6): BreadcrumbItem, Breadcrumbs(), BreadcrumbsProps, Button(), ButtonProps, buttonStyles
+Cohesion: 0.40
+Nodes (5): 1. Blocker — Admin boundary is only partially separated, Admin shell, Current problem, Required changes, Target
 
 ### Community 251 - "collapsible.tsx"
-Cohesion: 0.22
-Nodes (7): Collapsible(), CollapsibleContent(), CollapsibleContentProps, CollapsibleGroupProps, CollapsibleProps, CollapsibleTrigger(), CollapsibleTriggerProps
+Cohesion: 0.40
+Nodes (5): 2. Blocker — Workspace registry exists but Sidebar does not consume it, Current problem, Important, Required changes, Target
 
 ### Community 252 - "16. IAM UI"
 Cohesion: 0.40
@@ -1146,8 +1173,8 @@ Cohesion: 0.50
 Nodes (4): 3.1. Public / Discovery, 3.2. Role-based Workspace, 3.3. Governance & Administration, 3. Public / Workspace / Governance
 
 ### Community 260 - "3. Public / Workspace / Governance"
-Cohesion: 0.50
-Nodes (4): 3.1. Public / Discovery, 3.2. Role-based Workspace, 3.3. Governance & Administration, 3. Public / Workspace / Governance
+Cohesion: 0.40
+Nodes (5): 3. Blocker — Admin migration direction is wrong, Current problem, Landing resolver, Required migration, Target
 
 ### Community 262 - "MODULE 1–2–3 ALIGNMENT REFACTOR GUIDE"
 Cohesion: 0.40
@@ -1159,7 +1186,7 @@ Nodes (5): Module 1 target, Module 1 UI changes, PART A — MODULE 1 ALIGNMENT, 
 
 ### Community 264 - "14. UI capability"
 Cohesion: 0.40
-Nodes (5): 14. UI capability, Governance, Public, Research workspace, Reviewer workspace
+Nodes (5): 4. Blocker — Research Collaboration UI still contains forbidden financial/module copy, Correct language, Current problem, Hard rule, Types
 
 ### Community 265 - "PART D — SHARED UX"
 Cohesion: 0.50
@@ -1174,33 +1201,105 @@ Cohesion: 0.50
 Nodes (4): 4.1 System roles, 4.2 Business roles, 4.3 Persona aliases, 4. Role taxonomy
 
 ### Community 268 - "badge.tsx"
-Cohesion: 0.67
-Nodes (3): Badge(), BadgeProps, badgeStyles
+Cohesion: 0.40
+Nodes (5): 5. Blocker — Collaboration runtime surface is still placeholder-only, Current problem, First real collaboration slice, If backend mutation does not exist, Rule
 
 ### Community 269 - "moduleFileExtensions"
 Cohesion: 0.50
 Nodes (4): moduleFileExtensions, js, json, ts
 
 ### Community 270 - "5. Public / Workspace / Governance"
+Cohesion: 0.40
+Nodes (5): 6. Blocker — Frontend BFF contains unsupported/fake backend contracts, Current problem, Decision queue, Proposal list, Required changes
+
+### Community 278 - "6. Opportunities response type is currently wrong"
+Cohesion: 0.40
+Nodes (5): 6. Opportunities response type is currently wrong, Backend response item, Current frontend type expects, Required frontend type, UI change
+
+### Community 279 - "7. Create Opportunity request is currently wrong"
+Cohesion: 0.40
+Nodes (5): 7. Create Opportunity request is currently wrong, Backend request, Create modal, Current frontend sends, Required fix
+
+### Community 280 - "Russia-Vietnam Science-Technology Intelligence Network — Web Portal Frontend"
+Cohesion: 0.40
+Nodes (5): Documentation Index, Getting Started, Product Surfaces `[SOURCE]`, Russia-Vietnam Science-Technology Intelligence Network — Web Portal Frontend, Technology Stack
+
+### Community 281 - "26. Acceptance Criteria"
+Cohesion: 0.40
+Nodes (5): 26. Acceptance Criteria, Expert Directory, Knowledge Repository, Performance, Search
+
+### Community 282 - "8. Blocker — Admin Catalog and Audit pages are fake/incorrect surfaces"
 Cohesion: 0.50
-Nodes (4): 5.1. Public / Discovery, 5.2. Role-based Workspace, 5.3. Governance & Administration, 5. Public / Workspace / Governance
+Nodes (4): 8. Blocker — Admin Catalog and Audit pages are fake/incorrect surfaces, Audit, Catalog, Required action
+
+### Community 283 - "11. Remove inactive Proposal / Screening / Decision tabs from runtime hub"
+Cohesion: 0.50
+Nodes (4): 11. Remove inactive Proposal / Screening / Decision tabs from runtime hub, Current allowed collaboration surface, Current issue, Required behavior
+
+### Community 284 - "1. Admin shell is still not separated at runtime"
+Cohesion: 0.50
+Nodes (4): 1. Admin shell is still not separated at runtime, Current state, Required behavior, Target
+
+### Community 285 - "20. Add BFF contract tests"
+Cohesion: 0.50
+Nodes (4): 20. Add BFF contract tests, Create opportunity, Opportunities, Proposal
+
+### Community 286 - "2. Wire the registries into real navigation"
+Cohesion: 0.50
+Nodes (4): 2. Wire the registries into real navigation, Current problem, Important, Required change
+
+### Community 287 - "3. Remove legacy admin links from workspace navigation"
+Cohesion: 0.50
+Nodes (4): 3. Remove legacy admin links from workspace navigation, Current problem, Migration rule, Target
+
+### Community 288 - "4. Remove route-owned component duplication"
+Cohesion: 0.50
+Nodes (4): 4. Remove route-owned component duplication, Current problem, Required changes, Target dependency direction
+
+### Community 289 - "5. Opportunities GET contract is currently wrong"
+Cohesion: 0.50
+Nodes (4): 5. Opportunities GET contract is currently wrong, Backend source of truth, Current frontend problem, Required fix
+
+### Community 290 - "9. Proposal frontend contract is also mismatched"
+Cohesion: 0.50
+Nodes (4): 9. Proposal frontend contract is also mismatched, Backend create proposal contract, Current frontend repository uses, Required action in this pass
+
+### Community 291 - "3. Two business scopes that must remain distinct"
+Cohesion: 0.50
+Nodes (4): 3.1. Scientific repository, 3.2. Expert directory, 3.3. Public / Discovery according to the updated source, 3. Two business scopes that must remain distinct
+
+### Community 292 - "7. Blocker — Header forwarding in BFF must preserve session correctly"
+Cohesion: 0.67
+Nodes (3): 7. Blocker — Header forwarding in BFF must preserve session correctly, Preferred, Risk
+
+### Community 293 - "9. Workspace/persona architecture corrections"
+Cohesion: 0.67
+Nodes (3): 9. Workspace/persona architecture corrections, Current registry issue, Keep
+
+### Community 294 - "14. Admin Audit is still not backed by a read contract"
+Cohesion: 0.67
+Nodes (3): 14. Admin Audit is still not backed by a read contract, Current UI problem, Required change
+
+### Community 295 - "19. Route-level authorization must be tested for real"
+Cohesion: 0.67
+Nodes (3): 19. Route-level authorization must be tested for real, Current weak test, Required tests
 
 ## Knowledge Gaps
-- **1912 isolated node(s):** `catalogCopy`, `View`, `iamAdminCopy`, `permissionLabels`, `groupLabels` (+1907 more)
+- **2031 isolated node(s):** `auditCopy`, `catalogCopy`, `copy`, `securityCopy`, `Params` (+2026 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **30 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **29 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useLocale` connect `useLocale` to `RolePermissionsPage.tsx`, `@types/express`, `Sidebar.tsx`, `supertest`, `@nestjs/testing`, `WorkspaceShell.tsx`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
-- **Why does `Header()` connect `@nestjs/testing` to `useLocale`?**
+- **Why does `useLocale` connect `useLocale` to `knowledge/types.ts`, `RolePermissionsPage.tsx`, `sweetalert2`, `Sidebar.tsx`, `@nestjs/testing`, `WorkspaceShell.tsx`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **Why does `react` connect `@nestjs/testing` to `dependencies`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **What connects `catalogCopy`, `View`, `iamAdminCopy` to the rest of the system?**
-  _1912 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `dependencies` connect `dependencies` to `class-variance-authority`, `sweetalert2`, `next-auth`, `motion`, `react-aria-components`, `useLocale`, `react-dom`, `frontend/package.json`, `@tanstack/react-query`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Why does `DiscoveryResult` connect `knowledge/types.ts` to `experts/repository.ts`, `prettier`, `module2.repository.ts`, `publications/types.ts`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **What connects `auditCopy`, `catalogCopy`, `copy` to the rest of the system?**
+  _2031 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
 - **Should `button.tsx` be split into smaller, more focused modules?**
