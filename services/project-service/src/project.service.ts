@@ -30,7 +30,6 @@ export class ProjectService {
 
     if (
       !user.capabilities.includes('collab.decisions.issue_foundation') &&
-      !user.capabilities.includes('grants.decisions.issue_foundation') &&
       !user.capabilities.includes('projects.projects.manage')
     ) {
       throw new ForbiddenException('Access denied: Missing foundation decision or projects management capability');

@@ -76,23 +76,6 @@ export class ReviewController {
     return this.reviewService.declareConflict(id, declaration, user);
   }
 
-  // Conflict Declare - direct path
-  @Post('conflict/declare')
-  @RequireContext('REVIEW_BOARD')
-  async declareConflict(
-    @Body() body: { assignmentId?: unknown; declaration?: unknown },
-    @CurrentUser() user: AuthenticatedUser,
-  ) {
-    const assignmentId = body?.assignmentId;
-    const declaration = body?.declaration;
-    if (typeof assignmentId !== 'string' || !assignmentId.trim()) {
-      throw new BadRequestException('assignmentId is required');
-    }
-    if (declaration !== 'CONFLICT' && declaration !== 'NO_CONFLICT') {
-      throw new BadRequestException('declaration must be either CONFLICT or NO_CONFLICT');
-    }
-    return this.reviewService.declareConflict(assignmentId.trim(), declaration, user);
-  }
 
   // Save Evaluation - resource path
   @Post('assignments/:id/evaluation/save')
@@ -112,27 +95,6 @@ export class ReviewController {
     return this.reviewService.saveEvaluation(id, body, body?.comments, user);
   }
 
-  // Save Evaluation - direct path
-  @Post('evaluations/save')
-  @RequireContext('REVIEW_BOARD')
-  async saveEvaluation(
-    @Body()
-    body: {
-      assignmentId?: unknown;
-      scientificMerit?: number;
-      feasibility?: number;
-      bilateralValue?: number;
-      impact?: number;
-      comments?: string;
-    },
-    @CurrentUser() user: AuthenticatedUser,
-  ) {
-    const assignmentId = body?.assignmentId;
-    if (typeof assignmentId !== 'string' || !assignmentId.trim()) {
-      throw new BadRequestException('assignmentId is required');
-    }
-    return this.reviewService.saveEvaluation(assignmentId.trim(), body, body?.comments, user);
-  }
 
   // Submit Evaluation - resource path
   @Post('assignments/:id/evaluation/submit')
@@ -152,27 +114,6 @@ export class ReviewController {
     return this.reviewService.submitEvaluation(id, body, body?.comments, user);
   }
 
-  // Submit Evaluation - direct path
-  @Post('evaluations/submit')
-  @RequireContext('REVIEW_BOARD')
-  async submitEvaluation(
-    @Body()
-    body: {
-      assignmentId?: unknown;
-      scientificMerit: number;
-      feasibility: number;
-      bilateralValue: number;
-      impact: number;
-      comments: string;
-    },
-    @CurrentUser() user: AuthenticatedUser,
-  ) {
-    const assignmentId = body?.assignmentId;
-    if (typeof assignmentId !== 'string' || !assignmentId.trim()) {
-      throw new BadRequestException('assignmentId is required');
-    }
-    return this.reviewService.submitEvaluation(assignmentId.trim(), body, body?.comments, user);
-  }
 
   // Recommendation - path 1
   @Get('proposals/:proposalRef/recommendation')
@@ -187,16 +128,4 @@ export class ReviewController {
     return this.reviewService.getRecommendation(proposalRef.trim(), user);
   }
 
-  // Recommendation - path 2
-  @Get('recommendations/:proposalRef')
-  @RequireCapability('reviews.assignments.manage')
-  async getRecommendationAlternative(
-    @Param('proposalRef') proposalRef: string,
-    @CurrentUser() user: AuthenticatedUser,
-  ) {
-    if (!proposalRef || !proposalRef.trim()) {
-      throw new BadRequestException('proposalRef is required');
-    }
-    return this.reviewService.getRecommendation(proposalRef.trim(), user);
-  }
 }

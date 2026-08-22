@@ -96,6 +96,13 @@ describe('Project Service Invariants', () => {
       );
     });
 
+    it('rejects the obsolete grants capability alias', async () => {
+      await expect(service.bootstrap(bootstrapDto, {
+        ...mockUserMember,
+        capabilities: ['grants.decisions.issue_foundation'],
+      })).rejects.toThrow(ForbiddenException);
+    });
+
     it('bootstrap idempotency: returns existing project if already bootstrapped', async () => {
       repository.bootstrapProject.mockResolvedValue(mockProject);
       const result = await service.bootstrap(bootstrapDto, mockUserPm);
