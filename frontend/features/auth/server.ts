@@ -34,21 +34,17 @@ export function authServiceUrl(path: string): URL {
 }
 
 export function collabServiceUrl(path: string): URL {
-  const baseUrl = process.env.GRANT_SERVICE_URL || process.env.COLLAB_SERVICE_URL;
-  if (!baseUrl) throw new Error("GRANT_SERVICE_URL is required");
+  const baseUrl = process.env.COLLAB_SERVICE_URL;
+  if (!baseUrl) throw new Error("COLLAB_SERVICE_URL is required");
   return new URL(path, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
 }
 
 export function reviewServiceUrl(path: string): URL {
-  const baseUrl = process.env.REVIEW_SERVICE_URL;
-  if (!baseUrl) throw new Error("REVIEW_SERVICE_URL is required");
-  return new URL(path, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
+  return collabServiceUrl(path);
 }
 
 export function projectServiceUrl(path: string): URL {
-  const baseUrl = process.env.PROJECT_SERVICE_URL;
-  if (!baseUrl) throw new Error("PROJECT_SERVICE_URL is required");
-  return new URL(path, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
+  return collabServiceUrl(path);
 }
 
 export function backendHeaders(request: Request): Headers {

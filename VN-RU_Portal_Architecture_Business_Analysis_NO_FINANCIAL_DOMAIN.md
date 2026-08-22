@@ -709,10 +709,10 @@ A sound architectural decision is to make IAM a centralized authentication + aut
 | Session | ✅ | Login session |
 | Resource Scope | ✅/shared reference | Resource boundary |
 | Audit Event | ✅ | Security trail |
-| Organization | ❌ | owned by organization-service |
+| Organization | ❌ | owned by the Knowledge Directory module |
 | Proposal | ❌ | owned by collaboration-service |
-| Review | ❌ | owned by review-service |
-| Project | ❌ | owned by project-service |
+| Review | ❌ | owned by the Collaboration Reviews module |
+| Project | ❌ | owned by the Collaboration Projects module |
 
 Key rule: IAM must not copy business entities into its database.
 
@@ -1350,13 +1350,13 @@ This is how the Portal becomes a knowledge network rather than a simple document
 
 The ownership model below is [DESIGN] at the implementation-architecture level; it is not a legal conclusion from the two latest source documents.
 
-organization-service
+Knowledge Service — Directory module
 
 - Researcher
 - Organization
 - Membership relationship
 
-knowledge-service
+Knowledge Service — Publications module
 
 - Publication
 - Patent
@@ -1364,7 +1364,7 @@ knowledge-service
 - Knowledge topic
 - Knowledge relationship
 
-`knowledge-service` should not duplicate the entire researcher profile as its own data.
+The Publications module should not duplicate the entire researcher profile as its own data.
 
 **It should keep only required references such as:**
 

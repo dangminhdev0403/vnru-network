@@ -5,7 +5,7 @@ import { getExperts, getExpertById, getExpertMatches } from "../features/experts
 // --- getExperts ---
 
 test("getExperts: valid envelope returns success", async () => {
-  process.env.ORGANIZATION_SERVICE_URL = "http://org-svc";
+  process.env.KNOWLEDGE_SERVICE_URL = "http://org-svc";
   const result = await getExperts({ q: "test", limit: "5" }, async (url) => {
     const u = new URL(url);
     assert.equal(u.pathname, "/api/v1/experts");
@@ -18,19 +18,19 @@ test("getExperts: valid envelope returns success", async () => {
 });
 
 test("getExperts: HTTP error maps to integration error", async () => {
-  process.env.ORGANIZATION_SERVICE_URL = "http://org-svc";
+  process.env.KNOWLEDGE_SERVICE_URL = "http://org-svc";
   const result = await getExperts({}, async () => new Response("", { status: 500 }));
   assert.equal(result.status, "error");
 });
 
 test("getExperts: malformed envelope maps to error", async () => {
-  process.env.ORGANIZATION_SERVICE_URL = "http://org-svc";
+  process.env.KNOWLEDGE_SERVICE_URL = "http://org-svc";
   const result = await getExperts({}, async () => Response.json([]));
   assert.equal(result.status, "error");
 });
 
 test("getExperts: missing env returns integration error", async () => {
-  delete process.env.ORGANIZATION_SERVICE_URL;
+  delete process.env.KNOWLEDGE_SERVICE_URL;
   const result = await getExperts({});
   assert.equal(result.status, "error");
 });
@@ -38,7 +38,7 @@ test("getExperts: missing env returns integration error", async () => {
 // --- getExpertById ---
 
 test("getExpertById: 200 returns success", async () => {
-  process.env.ORGANIZATION_SERVICE_URL = "http://org-svc";
+  process.env.KNOWLEDGE_SERVICE_URL = "http://org-svc";
   const expert = { id: "e1", displayName: "Test", bio: null, country: "VN", language: null, visibility: "PUBLIC", organization: { id: "o1", name: "Org", country: "VN" }, expertises: [] };
   const result = await getExpertById("e1", async (url) => {
     assert.ok(url.endsWith("/api/v1/experts/e1"));
@@ -48,13 +48,13 @@ test("getExpertById: 200 returns success", async () => {
 });
 
 test("getExpertById: 404 returns not_found", async () => {
-  process.env.ORGANIZATION_SERVICE_URL = "http://org-svc";
+  process.env.KNOWLEDGE_SERVICE_URL = "http://org-svc";
   const result = await getExpertById("missing", async () => new Response("", { status: 404 }));
   assert.deepEqual(result, { status: "error", kind: "not_found", message: "Expert not found" });
 });
 
 test("getExpertById: 500 returns integration error", async () => {
-  process.env.ORGANIZATION_SERVICE_URL = "http://org-svc";
+  process.env.KNOWLEDGE_SERVICE_URL = "http://org-svc";
   const result = await getExpertById("e1", async () => new Response("", { status: 500 }));
   assert.equal(result.status, "error");
   assert.equal(result.kind, "integration");
@@ -63,7 +63,7 @@ test("getExpertById: 500 returns integration error", async () => {
 // --- getExpertMatches ---
 
 test("getExpertMatches: valid response returns success", async () => {
-  process.env.ORGANIZATION_SERVICE_URL = "http://org-svc";
+  process.env.KNOWLEDGE_SERVICE_URL = "http://org-svc";
   const expert = { id: "e2", displayName: "Partner", bio: null, country: "RU", language: null, visibility: "PUBLIC", organization: { id: "o2", name: "Org", country: "RU" }, expertises: [] };
   const items = [{ expert, reasons: [{ id: "x1", slug: "ai", labels: { en: "AI" } }] }];
   const result = await getExpertMatches("e1", async (url) => {
@@ -74,13 +74,13 @@ test("getExpertMatches: valid response returns success", async () => {
 });
 
 test("getExpertMatches: HTTP error maps to error", async () => {
-  process.env.ORGANIZATION_SERVICE_URL = "http://org-svc";
+  process.env.KNOWLEDGE_SERVICE_URL = "http://org-svc";
   const result = await getExpertMatches("e1", async () => new Response("", { status: 503 }));
   assert.equal(result.status, "error");
 });
 
 test("getExpertMatches: malformed body maps to error", async () => {
-  process.env.ORGANIZATION_SERVICE_URL = "http://org-svc";
+  process.env.KNOWLEDGE_SERVICE_URL = "http://org-svc";
   const result = await getExpertMatches("e1", async () => Response.json({ noItems: true }));
   assert.equal(result.status, "error");
 });

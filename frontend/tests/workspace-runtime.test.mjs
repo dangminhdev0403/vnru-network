@@ -75,7 +75,7 @@ test("IAM view preserves backend authorization as authoritative", () => {
 test("Knowledge view renders independent real discovery and matching states", () => {
   assert.match(knowledgeView, /publications\.status/);
   assert.match(knowledgeView, /experts\.status/);
-  assert.match(knowledgeView, /Expert Matching.*organization-service/s);
+  assert.match(knowledgeView, /Expert Matching.*Directory module/s);
   assert.doesNotMatch(knowledgeView, /fetch\(/);
 });
 

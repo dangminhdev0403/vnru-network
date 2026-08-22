@@ -22,27 +22,23 @@ Rule: do not read all docs by default. Start with this file, then open only the 
 
 ## 3. Core Principles
 
-* Organize services by domain boundaries.
-* Split responsibilities by service ownership, scaling, deployment, security, or integration needs.
+* Organize modules by domain boundaries and deployables by business family.
+* Split a module into a deployable only when scaling, deployment, security, compliance, or ownership justifies it.
 * Keep controllers thin, services workflow-focused, and repositories persistence-focused.
 * Keep repositories internal to their owning service; expose public ports/services for cross-service use.
 * Keep contracts explicit and stable through OpenAPI or versioned event contracts.
 * Keep service data ownership explicit.
 * Do not introduce shared business logic across services without a defined ownership boundary.
 
-## 4. Target Backend Services & Capability Ownership
+## 4. Current Backend Deployables & Capability Ownership
 
-Target microservice ecosystem (Currently implemented: `auth-service`):
+Current modular service topology:
 
 ```txt
 services/
-  auth-service/         # IAM, Keycloak OIDC broker, session lifecycle, active context, RBAC policies, audit log (Current)
-  api-gateway/          # Edge routing, rate limiting, request context propagation (Target)
-  organization-service/ # Institutions, partner agreements, researcher CVs/profiles, expert mapping, partner matches (Target)
-  knowledge-service/    # Scientific publications, preprints, patents, conference documents repository (Target)
-  collaboration-service/# Research opportunities, VN–RU joint proposals, mutual confirmation ([DECISION] no financial domain) (Target)
-  review-service/       # Independent peer review pool, anonymized assignments, rubric scoring, recommendations (Target)
-  project-service/      # Joint research projects, milestones, progress reports, deliverables, outcome links (Target)
+  auth-service/          # IAM trust boundary
+  knowledge-service/     # Publications + expert/organization directory + matching modules
+  collaboration-service/ # Opportunities/proposals/decisions + reviews + projects modules
   academic-service/     # Seminars, conferences/forums, academic exchange, training ([DECISION] no financial branch) (Target)
   technology-service/   # Tech marketplace, enterprise demands, expressions of interest, 2+2 consortiums, IP advisory (Target)
   analytics-service/    # Internal fact ingestion, monitoring KPIs, collaboration network graph, internal reports (Target, Read-only)
@@ -50,7 +46,7 @@ services/
 
 `auth-service` implements Module 1 through five internal module boundaries: `identity`, `authentication`, `session`, `access-control`, and `security`. These are modules inside one service deployment boundary, not separate microservices. Detailed responsibilities and flows are documented in `../auth-service/README.md` and `SERVICE_GUIDE.md`.
 
-Each service owns its domain modules and persistence boundary (database-per-service). Cross-service communication uses synchronous REST via OpenAPI contracts or asynchronous Kafka events published via the Transactional Outbox pattern.
+Every business state has one owning domain module. Process consolidation preserves isolated module persistence. Modules communicate through explicit in-process contracts; deployables use REST or versioned events.
 
 
 

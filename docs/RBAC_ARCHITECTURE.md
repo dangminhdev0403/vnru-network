@@ -95,7 +95,7 @@ RBAC checks ("Can the user score proposals?") are decoupled from Resource checks
    - A Reviewer may only read proposal data if an active `ReviewAssignment` explicitly assigns them to that proposal ID.
    - Any attempt to access a proposal outside their assignment scope yields `403 Forbidden`.
 2. **Review Anonymization**:
-   - When serving proposal snapshots to reviewers, `review-service` and `collaboration-service` MUST strip author names, Co-PI affiliations, and institutional identifiers according to the approved review policy.
+   - When serving proposal snapshots to reviewers, the Collaboration and Reviews modules MUST strip author names, Co-PI affiliations, and institutional identifiers according to the approved review policy.
    - Re-identification or unmasking requires explicit administrative authority subject to immutable audit logging.
 3. **Tenant / Organization Scope Isolation**:
    - Organization representatives can only view proposals, projects, activities, or researcher profiles belonging to their own `organizationId`.

@@ -21,6 +21,6 @@ export async function fetchDiscoverySection<T>(baseUrl:string, query:Record<stri
     return {status:"success",items,nextCursor:envelope.nextCursor};
   } catch { return {status:"error",kind:"integration",message:"Module 02 service unavailable"}; }
 }
-function serviceUrl(name:"KNOWLEDGE_SERVICE_URL"|"ORGANIZATION_SERVICE_URL",path:string){const base=process.env[name];if(!base)return null;return new URL(path,base.endsWith("/")?base:`${base}/`).toString();}
-export function getPublications(query:Record<string,string|undefined>={}){const url=serviceUrl("KNOWLEDGE_SERVICE_URL","api/v1/publications");return url?fetchDiscoverySection<PublicPublication>(url,query,fetch,isPublicPublication):Promise.resolve({status:"error",kind:"integration",message:"Module 02 service unavailable"} as const);}
-export function getExperts(query:Record<string,string|undefined>={}){const url=serviceUrl("ORGANIZATION_SERVICE_URL","api/v1/experts");return url?fetchDiscoverySection<PublicExpert>(url,query,fetch,isPublicExpert):Promise.resolve({status:"error",kind:"integration",message:"Module 02 service unavailable"} as const);}
+function serviceUrl(path:string){const base=process.env.KNOWLEDGE_SERVICE_URL;if(!base)return null;return new URL(path,base.endsWith("/")?base:`${base}/`).toString();}
+export function getPublications(query:Record<string,string|undefined>={}){const url=serviceUrl("api/v1/publications");return url?fetchDiscoverySection<PublicPublication>(url,query,fetch,isPublicPublication):Promise.resolve({status:"error",kind:"integration",message:"Module 02 service unavailable"} as const);}
+export function getExperts(query:Record<string,string|undefined>={}){const url=serviceUrl("api/v1/experts");return url?fetchDiscoverySection<PublicExpert>(url,query,fetch,isPublicExpert):Promise.resolve({status:"error",kind:"integration",message:"Module 02 service unavailable"} as const);}

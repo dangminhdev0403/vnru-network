@@ -1,76 +1,64 @@
 # Russia-Vietnam Science-Technology Intelligence Network Domain Map
 
-## 1. Purpose
+## 1. Ownership rule
 
-This document maps business domains, capability ownership, and persistent data boundaries across the Russia-Vietnam Science-Technology Intelligence Network microservices.
+Every business state has exactly one owning domain module. A domain module may be hosted inside a larger business-family deployable. No other module may directly mutate its owned state.
 
-It enforces the fundamental architectural principle: **Every business state has exactly one owning service.** No domain or dashboard may directly mutate or own another domain's state.
+Domain boundary and deployment boundary are independent decisions.
 
----
+## 2. Deployables and domain modules
 
-## 2. Six Business Capabilities & Domain Mapping
+| Deployable | Domain module | Owned responsibility and state | Status |
+| --- | --- | --- | --- |
+| `auth-service` | Identity & Access Governance | `User`, `ExternalIdentity`, `Session`, `Role`, `Permission`, `RoleAssignment`, `ActiveContext`, `AuditEvent` | Current |
+| `knowledge-service` | Publications | Publications, authors, topics, public knowledge discovery | Current |
+| `knowledge-service` | Directory | Organizations, expert profiles, expertise, deterministic partner matching | Current |
+| `collaboration-service` | Collaboration | Research opportunities, bilateral proposals, participants, confirmations, endorsements, screenings, collaboration decisions | Current |
+| `collaboration-service` | Reviews | Review assignments, conflict declarations, anonymized proposal snapshots, evaluation scores, records, recommendations | Current |
+| `collaboration-service` | Projects | Projects, project members/resource roles, milestones, deliverables, reports, outcomes, completion and termination | Current |
+| `academic-service` | Academic Activities | Seminars, conferences, exchange, participation, dissemination | Target; create only when implemented |
+| `technology-service` | Technology & Enterprise | Technology profiles, enterprise needs, EOI, collaboration cases, 2+2 consortiums, advisory and transfer outcomes | Target; create only when implemented |
+| `analytics-service` | Read-only Analytics | Fact projections, KPIs, collaboration graph, internal report runs | Target; create only when implemented |
 
-| Capability `[SOURCE]` | Domain / Service | Business Responsibility `[SOURCE]` | Owned Models & State (Single Source of Truth) | Allowed Upstream Dependencies | Status |
-| --- | --- | --- | --- | --- | --- |
-| **1. Identity & Access Governance** | `auth-service` | Identity federation, Keycloak OIDC broker, session lifecycle, active context resolution, RBAC baseline, and security audit log. | `User`, `ExternalIdentity`, `Session`, `Role`, `Permission`, `RoleAssignment`, `ActiveContext`, `AuditEvent` | Shared DB / Infra | **Current Implementation** |
-| **2. Knowledge Repository** | `knowledge-service` | Digital scientific publications, patents, conference materials, research documents, and topic taxonomies. | `Publication`, `Patent`, `ConferenceDocument`, `KnowledgeTopic`, `KnowledgeAssetRef` | `auth-service` (context/user check) | **Target / Planned** |
-| **2. Organizations & Expert Directory** | `organization-service` | Institutions, departments, partner bilateral agreements, researcher profiles/CVs, expert mapping, and partner suggestion signals. | `Organization`, `Department`, `PartnerAgreementRef`, `ResearcherProfile`, `ExpertCV`, `ExpertiseArea`, `MatchSignal` | `auth-service` (identity link) | **Target / Planned** |
-| **3. Bilateral Research Collaboration & Proposals** | `collaboration-service` | Research/collaboration opportunities, VN–RU joint proposals, paired participation confirmations, and collaboration decisions. `[DECISION]` *(Financial/funding workflows are outside implementation scope).* | `ResearchOpportunity`, `OpportunityTypeRef`, `JointProposal`, `ProposalParticipant`, `CollaborationConfirmation`, `CollaborationDecision` | `auth-service`, `organization-service` | **Target / Planned** |
-| **3. Independent Peer Review** | `review-service` | Reviewer pool, independent/anonymized assignments, scoring rubrics, review submissions, and evaluation recommendations. | `ReviewerPool`, `ReviewAssignment`, `EvaluationScore`, `ReviewRecord`, `EvaluationRecommendation` | `auth-service`, `collaboration-service` (read proposal snapshot) | **Target / Planned** |
-| **3. Research Project Management (PMS)** | `project-service` | Approved project lifecycle from collaboration decisions, research milestones, progress tracking, deliverables, and closure records. | `Project`, `ProjectMilestone`, `Deliverable`, `ProgressReport`, `ProjectOutcomeRef` | `auth-service`, `collaboration-service` (approved collaboration link) | **Target / Planned** |
-| **4. Training, Knowledge Transfer & Academic Exchange** | `academic-service` | Seminars, professional activities, conferences/forums (including annual Vietnam–Russia Intellectual Forum), academic exchange, participation tracking, and knowledge outcome links. `[DECISION]` *(No financial-support branch).* | `AcademicActivity`, `ActivityType`, `ActivitySchedule`, `Participation`, `ParticipationDecision`, `ActivityMaterialRef`, `KnowledgeOutcomeRef` | `auth-service`, `organization-service` | **Target / Planned** |
-| **5. Technology Transfer & Enterprise Connection** | `technology-service` | Technology catalog, enterprise demand, expressions of interest, bilateral collaboration cases, **2+2 consortiums** (1 VN Inst + 1 VN Ent + 1 RU Inst + 1 RU Ent), and IP/legal advisory cases. | `TechnologyProfile`, `EnterpriseNeed`, `ExpressionOfInterest`, `CollaborationCase`, `Consortium2Plus2`, `ConsortiumSlot`, `AdvisoryCase`, `IPLegalArtifactRef`, `TransferOutcome` | `auth-service`, `organization-service` | **Target / Planned** |
-| **6. Internal Monitoring & Reporting Dashboard** | `analytics-service`<br>(Analytics Layer) | Internal monitoring and strategic reporting for Network leadership/management; KPI definitions, snapshots, collaboration graphs, and internal report runs. | `FactSnapshot`, `FactProject`, `FactExpertConnection`, `FactTechnologyTransfer`, `FactAcademicActivity`, `KpiDefinition`, `KpiSnapshot`, `ReportDefinition`, `ReportRun` *(Read-only projections)* | Event bus / normalized fact streams from all domains | **Target / Planned (Read-only)** |
-| **Edge Gateway** | `api-gateway` | Edge routing, rate limiting, request context propagation, client session termination. | None (stateless routing / Redis rate-limit counters) | Downstream domain HTTP ports | **Target / Planned** |
+## 3. Persistence boundaries
 
----
+1. Owning modules have exclusive write authority.
+2. A shared process does not authorize direct access to another module's repository or Prisma client.
+3. Knowledge currently retains separate publication and directory databases.
+4. Collaboration currently retains separate collaboration, review, and project databases.
+5. Cross-module references use immutable IDs rather than cross-database foreign keys.
+6. Transactions stay inside one module-owned persistence boundary. Distributed multi-database transactions are prohibited.
 
-## 3. Data Ownership & Source-of-Truth Rules
+## 4. Integration rules
 
-1. **Exclusive Write Authority**: Only the owning service may write or mutate its business models.
-2. **No Shared Persistence**: Cross-service database access, database links, or shared database tables are strictly forbidden.
-3. **Cross-Domain References**: Cross-domain relationships MUST use immutable IDs/references (e.g., `organizationId`, `proposalId`, `authorUserId`) rather than foreign-key constraints across service database boundaries.
-4. **Analytics Non-Transactional Rule**: `analytics-service` is a consumer of facts and events. It stores derived projections and metrics for querying, but it NEVER owns or writes back business state to `collaboration-service`, `project-service`, `technology-service`, or any other domain.
-5. **Independent Peer Review Isolation**: `review-service` owns review assignments and scoring data. The anonymized proposal snapshot viewed by reviewers MUST NOT leak author or institution identity outside authorized policy.
-6. **2+2 Model Ownership**: 2+2 consortium collaboration is owned strictly by `technology-service` under Module 5. It must not be placed in the Grant/PMS taxonomy.
-7. **Technology Creation Boundary**: Project completion in `project-service` does NOT automatically create a Technology entity in `technology-service`; candidate proposals require explicit business actions.
-8. **Module 4 Scope Rule**: `academic-service` manages training, academic exchange, and conferences without handling monetary scholarships, quotas, tuition, or financial transactions.
+Inside one deployable, modules use explicit application contracts. Across deployables, use public HTTP contracts or versioned domain events.
 
----
-
-## 4. Inter-Domain Dependency & Communication Rules
-
-```txt
-┌─────────────────────────────────────────────────────────────┐
-│                       api-gateway                           │
-└──────────────┬───────────────────────────────┬──────────────┘
-               │                               │
-       ┌───────▼────────┐             ┌────────▼────────┐
-       │  auth-service  │             │collab-service   │
-       └───────┬────────┘             └────────┬────────┘
-               │                               │
-               │ [Domain Events via Outbox]     │ [Domain Events via Outbox]
-               ▼                               ▼
-       ┌────────────────────────────────────────────────┐
-       │                Kafka Event Bus                 │
-       └───────┬───────────────────────────────┬────────┘
-               │                               │
-       ┌───────▼────────┐             ┌────────▼────────┐
-       │ review-service │             │analytics-service│
-       └────────────────┘             └─────────────────┘
+```text
+Knowledge discovery ──optional reference──> Collaboration
+Collaboration sanitized snapshot ─────────> Reviews
+Approved collaboration decision ──────────> Projects bootstrap
+Domain facts ──────────────────────────────> Analytics / Search / Notifications
 ```
 
-- **Synchronous Invocations**: Allowed only for lightweight verification (e.g., verifying user identity or organization status via public HTTP/REST ports).
-- **Asynchronous Orchestration**: Business workflows spanning multiple domains (e.g., Collaboration Decision Approved → Create Project; Call Closed → Trigger Review Assignment; Collaboration Case Formed → 2+2 Consortium Completed) MUST use versioned domain events via Kafka.
-- **Fail-Safe Isolation**: A failure in `analytics-service`, `notification-service`, or search indexing MUST NOT fail the upstream transactional business operation.
+Knowledge discovery is optional; a proposal may begin directly from a Research Opportunity.
 
----
+Reviews never read Collaboration repositories to resolve hidden participant or organization identities. Reviewer-facing data comes from the sanitized immutable review snapshot.
 
-## 5. Service Extraction Readiness
+Projects own their lifecycle after explicit bootstrap. `LEAD` and `MEMBER` are project resource roles, not IAM roles.
 
-A domain module within a backend service is ready for dedicated service extraction when:
-- It has clear, exclusive data ownership with no cross-schema joins.
-- Its public API and event contracts are stable and versioned.
-- Independent scaling, deployment, security, or compliance boundaries justify the operational overhead.
+Project completion does not automatically create Technology state. Any handoff is an explicit business action.
 
+Analytics is read-only and never mutates transactional state.
 
+## 5. Extraction readiness
+
+A module may become a dedicated microservice only when:
+
+1. state ownership and public contract are clear;
+2. the contract is stable and versioned;
+3. independent scale or deployment cadence is required;
+4. security or compliance requires process isolation;
+5. distinct team ownership exists;
+6. operational overhead is justified.
+
+Having a controller, service, and repository is not sufficient reason to extract a deployable.

@@ -52,7 +52,7 @@ const knowledgeCopy: Record<
     kicker: "Kho Tri thức & Danh bạ Chuyên gia Song phương",
     title: "Kho Tri thức & Danh bạ Chuyên gia",
     subtitle:
-      "Dữ liệu công khai từ knowledge-service và organization-service. Auth-service duy trì quyền hạn phiên.",
+      "Dữ liệu công khai từ các module Publications và Directory của Knowledge Service. Auth-service duy trì quyền hạn phiên.",
     heroHeading: "Chuyên gia ↔ Công bố ↔ Chủ đề ↔ Tổ chức",
     searchPlaceholder: "Tìm kiếm công bố hoặc chuyên gia nghiên cứu…",
     searchButton: "Tìm kiếm",
@@ -73,7 +73,7 @@ const knowledgeCopy: Record<
     expertMatchingTitle: "Ghép cặp & Gợi ý Hợp tác",
     explore: "Khám phá →",
     expertMatchingDesc:
-      "Cơ chế matching tự động dựa trên tín hiệu chuyên môn từ organization-service và danh mục công bố.",
+      "Cơ chế matching tự động dựa trên tín hiệu chuyên môn từ Directory module và danh mục công bố.",
     graphTitle: "Knowledge Graph & Vận hành Chỉ mục",
     graphDesc:
       "Đang hoàn thiện module kết nối đồ thị tri thức đa phương thức và mạng lưới liên kết khoa học.",
@@ -84,7 +84,7 @@ const knowledgeCopy: Record<
     kicker: "Bilateral Knowledge Repository & Expert Directory",
     title: "Knowledge Repository & Expert Directory",
     subtitle:
-      "Verified public research from knowledge-service and organization-service. Auth-service manages sessions.",
+      "Verified public research from the Knowledge Service Publications and Directory modules. Auth-service manages sessions.",
     heroHeading: "Expert ↔ Publication ↔ Topic ↔ Organization",
     searchPlaceholder: "Search research publications or scientific experts…",
     searchButton: "Search",
@@ -105,7 +105,7 @@ const knowledgeCopy: Record<
     expertMatchingTitle: "Expert Matching & Matchmaking",
     explore: "Explore →",
     expertMatchingDesc:
-      "Automated matching engine powered by organization-service capabilities and research publications.",
+      "Automated matching powered by the Directory module and research publications.",
     graphTitle: "Knowledge Graph & Index Operations",
     graphDesc:
       "Pending multimodal knowledge graph indexing and bilateral science connection mesh.",
@@ -116,7 +116,7 @@ const knowledgeCopy: Record<
     kicker: "База знаний и Каталог экспертов РФ — СРВ",
     title: "База знаний и Каталог экспертов",
     subtitle:
-      "Открытые данные из knowledge-service и organization-service. Auth-service управляет сессиями.",
+      "Открытые данные модулей Publications и Directory сервиса Knowledge. Auth-service управляет сессиями.",
     heroHeading: "Эксперт ↔ Публикация ↔ Тема ↔ Организация",
     searchPlaceholder: "Поиск публикаций или научных экспертов…",
     searchButton: "Поиск",
@@ -137,7 +137,7 @@ const knowledgeCopy: Record<
     expertMatchingTitle: "Матчинг экспертов и сотрудничество",
     explore: "Подробнее →",
     expertMatchingDesc:
-      "Механизм подбора экспертов на основе данных organization-service и каталога публикаций.",
+      "Механизм подбора экспертов на основе модуля Directory и каталога публикаций.",
     graphTitle: "Граф знаний и индексация",
     graphDesc:
       "Формирование мультимодального графа научных связей Россия — Вьетнам.",

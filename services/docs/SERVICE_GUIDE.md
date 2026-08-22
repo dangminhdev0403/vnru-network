@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Use this guide when adding or refactoring a service or module inside the backend. The architecture target is domain-oriented microservices.
+Use this guide when adding or refactoring a service or module. The current architecture uses domain-bounded modules hosted by business-family deployables.
 
 ## Service ownership
 
@@ -100,16 +100,13 @@ Do not create empty folders. Let complexity justify structure.
 | --- | --- | --- | --- |
 | `auth-service` | 1. IAM & Governance | Authentication, Keycloak OIDC broker, session lifecycle, active context resolution, RBAC policies, audit log | **Current Implementation** |
 | `api-gateway` | Edge Layer | Route dispatching, rate limiting, request context header propagation | **Target / Planned** |
-| `organization-service` | 2. Knowledge & Experts | Organizations, partner agreements, researcher profiles/CVs, expert mapping, partner matches | **Target / Planned** |
-| `knowledge-service` | 2. Knowledge & Experts | Digital scientific publications, preprints, patents, conference documents repository | **Target / Planned** |
-| `collaboration-service` | 3. Bilateral Collab & Proposals | Research opportunities, joint proposals (VN/RU Co-PIs), mutual confirmation (`[DECISION]` no financial domain) | **Target / Planned** |
-| `review-service` | 3. Independent Peer Review | Reviewer pool, independent/anonymized assignments, rubric scoring, evaluation recommendations | **Target / Planned** |
-| `project-service` | 3. Research Project Management (PMS) | Approved joint collaboration projects, milestones, progress reports, deliverables, outcome links | **Target / Planned** |
+| `knowledge-service` | 2. Knowledge & Experts | Publications plus expert/organization directory and matching modules | **Current Implementation** |
+| `collaboration-service` | 3. Bilateral Collaboration | Opportunities, proposals, decisions, anonymized reviews, and project execution modules | **Current Implementation** |
 | `academic-service` | 4. Training & Academic Exchange | Seminars, conferences/forums (annual forum), academic exchange, participation tracking (`[DECISION]` no financial branch) | **Target / Planned** |
 | `technology-service` | 5. Technology Transfer & 2+2 | Technology marketplace, enterprise needs, expressions of interest, 2+2 consortiums, IP advisory | **Target / Planned** |
 | `analytics-service` | 6. Internal Monitoring Dashboard | Standardized fact ingestion, internal monitoring KPIs, collaboration graph, internal reports *(Read-only)* | **Target / Planned (Read-only)** |
 
-Each service owns its internal modules and persistence details (database-per-service).
+Each domain module owns its state and persistence client. A module may be hosted inside a larger deployable without allowing direct cross-module repository access.
 
 ## `auth-service` Internal Module Base
 

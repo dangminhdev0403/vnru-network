@@ -29,6 +29,7 @@ node_modules
 **/.next
 dist
 **/dist
+**/src/generated
 coverage
 **/coverage
 

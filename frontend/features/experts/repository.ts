@@ -7,7 +7,7 @@ const isExpert = (v: unknown): v is ExpertDetail => isObject(v) && v.visibility 
 const isMatch = (v: unknown): v is ExpertMatch => isObject(v) && isExpert(v.expert) && Array.isArray(v.reasons) && v.reasons.every((r) => isObject(r) && typeof r.id === "string" && typeof r.slug === "string" && isObject(r.labels) && Object.values(r.labels).every((label) => typeof label === "string"));
 
 function serviceUrl(path: string): string | null {
-  const base = process.env.ORGANIZATION_SERVICE_URL;
+  const base = process.env.KNOWLEDGE_SERVICE_URL;
   if (!base) return null;
   return new URL(path, base.endsWith("/") ? base : `${base}/`).toString();
 }

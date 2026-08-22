@@ -61,7 +61,7 @@ The architecture integrates six core business capabilities across three canonica
 
 ### 2.2. Layer 2: Business & Platform Services (`biz`) `[SOURCE]`
 - Encapsulates domain workflow engines, business rules, paired submissions, independent/anonymized review, milestone tracking, and technology matching.
-- Implemented as modular, domain-bounded microservices with explicit public contracts.
+- Implemented as domain-bounded modular backend services grouped into business-family deployables with explicit module contracts.
 - **Authoritative Security Boundary**: Business authorization and resource validation are enforced at backend service boundaries; frontend checks are UX conveniences only.
 
 ### 2.3. Layer 3: Infrastructure & Digital Sovereignty Security (`infra`) `[SOURCE]`
@@ -77,18 +77,18 @@ The architecture integrates six core business capabilities across three canonica
 
 ## 3. Six Business Capabilities & Domain Microservices
 
-The six canonical capabilities map to domain-oriented microservices (Target Architecture):
+The six canonical capabilities map to domain modules hosted by business-family deployables:
 
 | Module / Capability | Core Business Responsibility `[SOURCE]` | Owning Service & Implementation Status |
 | --- | --- | --- |
 | **1. Identity & Access Governance** | Unified identity, authentication, session, active authorization context resolution, RBAC policy enforcement, and security audit trail. Acts as security gateway; does not own business entity state. | `auth-service` *(Current Implementation)* |
-| **2. Knowledge Repository & Expert Directory** | Publications, research outputs (papers, patents, proceedings), expert profiles, scientific CVs, integrated search, and partner recommendation signals. | `knowledge-service`<br>`organization-service` *(Target / Planned)* |
-| **3. Bilateral Research Collaboration & Project Management** | Research/collaboration opportunities, VN–RU joint collaboration proposals, independent/anonymized peer review, collaboration decisions, and project milestone/progress tracking. `[DECISION]` *(Financial/funding workflows are outside implementation scope).* | `collaboration-service`<br>`review-service`<br>`project-service` *(Target / Planned)* |
+| **2. Knowledge Repository & Expert Directory** | Publications, research outputs, expert profiles, organizations, topics, and partner recommendation signals. | `knowledge-service` (`PublicationsModule`, `DirectoryModule`) *(Current)* |
+| **3. Bilateral Research Collaboration & Project Management** | Research opportunities, joint proposals, independent/anonymized peer review, collaboration decisions, and project tracking. `[DECISION]` *(Financial workflows are outside scope).* | `collaboration-service` (`CollaborationModule`, `ReviewsModule`, `ProjectsModule`) *(Current)* |
 | **4. Training, Knowledge Transfer & Academic Exchange** | Seminars, professional activities, conferences/forums (including annual Vietnam–Russia Intellectual Forum), academic exchange, and knowledge dissemination. `[DECISION]` *(No separate financial-support branch).* | `academic-service` *(Target / Planned)* |
 | **5. Technology Transfer & Enterprise Connection** | Technology catalog, enterprise demand posting, expressions of interest, bilateral collaboration cases, **2+2 consortium model** (1 VN Inst + 1 VN Ent + 1 RU Inst + 1 RU Ent), and IP/legal advisory support. | `technology-service` *(Target / Planned)* |
 | **6. Internal Monitoring & Reporting Dashboard** | Internal dashboard and strategic reporting for Network leadership and Foundation management; tracks projects, expert connections, tech transfer activities, and aggregated KPIs. *(Internal workspace only; not a public area).* | `analytics-service`<br>(Analytics Layer) *(Target / Planned, Read-only)* |
 
-> **State Note**: Currently, `auth-service` is implemented under `services/auth-service/`. Additional domain services and edge infrastructure represent the planned target microservices architecture.
+> **State Note**: `auth-service`, `knowledge-service`, and `collaboration-service` are implemented. Academic, Technology, Analytics, and edge infrastructure remain planned.
 
 ---
 
@@ -116,8 +116,8 @@ Frontend (Next.js 16.3) ──[HTTP/REST]──> API Gateway ──[HTTP/REST]�
 
 ## 5. Data Ownership & Storage Principles
 
-1. **Database-per-Service**: Each microservice owns its isolated database schema (e.g., `auth_db`, `organization_db`, `knowledge_db`, `collab_db`, `review_db`, `project_db`, `academic_db`, `technology_db`, `analytics_db`).
-2. **Strict Boundary**: Direct cross-service database access, cross-schema joins, or shared tables are strictly forbidden. Cross-domain data retrieval must use public APIs or domain events.
+1. **Module-Owned Persistence**: Each domain module owns its state. A deployable may host multiple isolated Prisma clients/databases during consolidation.
+2. **Strict Boundary**: Direct cross-module repository/database access is forbidden. Use explicit application contracts in-process or public APIs/events across deployables.
 3. **Transactional Integrity**: Database transactions are strictly local to a single microservice. Distributed multi-service database transactions are prohibited.
 4. **Cache Policy**: Redis is used strictly for transient caching, session lookups, and rate limiting; it is never a primary persistence store.
 5. **Analytics Data Boundary**: `analytics-service` stores materialized views, rollups, and fact tables for querying. It NEVER performs write operations on operational domain stores.

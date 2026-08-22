@@ -19,7 +19,8 @@ test("Module 3 uses real envelopes, routes, capabilities, and fail-closed servic
   assert.match(types, /revision: number/);
   assert.match(types, /"ELIGIBLE"/);
   for (const route of ["collaboration_opportunities", "collaboration_reviews", "collaboration_projects"]) assert.match(registry, new RegExp(route));
-  for (const env of ["GRANT_SERVICE_URL is required", "REVIEW_SERVICE_URL is required", "PROJECT_SERVICE_URL is required"]) assert.match(server, new RegExp(env));
+  assert.match(server, /COLLAB_SERVICE_URL is required/);
+  assert.doesNotMatch(server, /GRANT_SERVICE_URL|REVIEW_SERVICE_URL|PROJECT_SERVICE_URL/);
   assert.match(proposal, /collab\.decisions\.issue_foundation/);
   assert.match(review, /reviews\.evaluations\.submit/);
   assert.match(project, /projects\.reports\.approve/);

@@ -60,7 +60,7 @@ The platform operates across three canonical architectural layers `[SOURCE]` and
 | Dimension | Current Implementation State | Planned Target Architecture |
 | :--- | :--- | :--- |
 | **Frontend** | Next.js 16.3 scaffold in `frontend/` with Server Components, TanStack Query, and query-resource integration. | Complete Portal UI across Public Discovery, Persona Workspaces, Review Queue, Governance & Admin, and Internal Dashboard. |
-| **Backend** | NestJS 11 scaffold in `services/auth-service/` for Identity, Keycloak OIDC broker & single-context session baseline. | Domain-oriented microservice ecosystem (`auth-service`, `organization-service`, `knowledge-service`, `grant-service`, `review-service`, `project-service`, `academic-service`, `technology-service`, `analytics-service`, `api-gateway`). |
+| **Backend** | NestJS 11 business-family deployables: `auth-service`, `knowledge-service`, `collaboration-service`. | Add Academic, Technology, and read-only Analytics deployables only when implemented; extract internal modules when operationally justified. |
 | **Data & Storage** | Local PostgreSQL database connections per active service. | Database-per-service isolation (`auth_db`, `organization_db`, `grant_db`, etc.) with Redis caching. |
 | **Messaging** | In-process transactional workflows. | Kafka Event Bus with Transactional Outbox pattern for asynchronous domain event propagation and fact streaming. |
 
@@ -71,8 +71,8 @@ The platform operates across three canonical architectural layers `[SOURCE]` and
 | Capability | Business Responsibility | Owning Target Service |
 | :--- | :--- | :--- |
 | 🔐 **1. Identity & Access Governance** | Unified identity, Keycloak OIDC authentication, session lifecycle, active context resolution, RBAC policy enforcement, and security audit log. | `auth-service` *(Current)* |
-| 🏛️ **2. Knowledge Repository & Expert Directory** | Publications repository, patents, proceedings, researcher CVs, integrated search, and partner recommendations. | `knowledge-service`<br>`organization-service` *(Target)* |
-| 💰 **3. Bilateral Research Funding & Project Management** | Independent funding opportunities (Foundation/sponsor managed), VN–RU joint proposals, independent/anonymized peer review, decisions within Foundation authority, and project tracking. *(State budget authority remains with competent state bodies).* | `grant-service`<br>`review-service`<br>`project-service` *(Target)* |
+| 🏛️ **2. Knowledge Repository & Expert Directory** | Publications, expert and organization discovery, topics, and partner matching. | `knowledge-service` *(Current)* |
+| 🤝 **3. Bilateral Research Collaboration & Project Management** | Research opportunities, VN–RU joint proposals, independent/anonymized peer review, collaboration decisions, and project tracking. *(Financial workflows are outside scope.)* | `collaboration-service` *(Current)* |
 | 🎓 **4. Training, Knowledge Transfer & Academic Exchange** | Seminars, professional activities, conferences/forums (including annual Vietnam–Russia Intellectual Forum), academic exchange, and knowledge dissemination. `[DECISION]` *(No separate financial-support branch).* | `academic-service` *(Target)* |
 | 🚀 **5. Technology Transfer & Enterprise Connection** | Technology marketplace, enterprise demands, expressions of interest (EOI), **2+2 consortium collaborations** (1 VN Inst + 1 VN Ent + 1 RU Inst + 1 RU Ent), and IP/transfer advisory. | `technology-service` *(Target)* |
 | 📊 **6. Internal Monitoring & Reporting Dashboard** | Internal monitoring and strategic reporting for Network leadership and Foundation management; tracks projects, expert connections, and tech transfer. *(Internal workspace only).* | `analytics-service` *(Target, Read-only)* |
@@ -143,11 +143,8 @@ vnru-network/
 │   │
 │   │  # --- Target / Planned Microservices ---
 │   ├── api-gateway/           # Edge routing & rate limiting (Target)
-│   ├── organization-service/  # Institutions & expert directory (Target)
-│   ├── knowledge-service/     # Digital scientific repository (Target)
-│   ├── grant-service/         # Bilateral funding opportunities & joint proposals (Target)
-│   ├── review-service/        # Independent peer review management (Target)
-│   ├── project-service/       # Joint research projects & milestones (Target)
+│   ├── knowledge-service/     # Publications + expert/organization directory + matching modules
+│   ├── collaboration-service/ # Opportunities/proposals/decisions + reviews + projects modules
 │   ├── academic-service/      # Academic activities & knowledge exchange (Target)
 │   ├── technology-service/    # Tech marketplace & 2+2 consortiums (Target)
 │   └── analytics-service/     # Internal monitoring & strategic reporting (Target)
@@ -187,7 +184,7 @@ vnru-network/
 - **Framework**: NestJS 11
 - **Language**: TypeScript
 - **Contract Standard**: OpenAPI exported from backend code (`npm run openapi:export`)
-- **Architecture**: Modular backend with database-per-service microservice boundaries
+- **Architecture**: Domain-bounded modules hosted by business-family deployables
 
 ### Infrastructure (Target)
 - **Primary Database**: PostgreSQL (isolated database per microservice)
@@ -260,8 +257,10 @@ docker compose -f deploy/docker-compose.dev.yml up -d
 # Start Next.js frontend
 pnpm --dir frontend dev
 
-# Start auth-service backend
+# Start current backend deployables
 npm --prefix services/auth-service run start:dev
+npm --prefix services/knowledge-service start
+npm --prefix services/collaboration-service start
 ```
 
 ---

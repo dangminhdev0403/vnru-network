@@ -5,7 +5,7 @@ Welcome to the Russia-Vietnam Science-Technology Intelligence Network governance
 ## Recommended Read Order
 
 1. [Root AGENTS.md](../AGENTS.md): Workflow requirements, approval rules, and operational constraints.
-2. [Global Architecture](ARCHITECTURE.md): Legal baseline (Traditions and Friendship Foundation operator), 3-Layer Portal architecture, 3 canonical access areas, microservice boundaries, sync/async communication, and data ownership.
+2. [Global Architecture](ARCHITECTURE.md): Legal baseline, portal layers, business-family deployables, module boundaries, communication, and data ownership.
 3. [Domain Map](DOMAIN_MAP.md): Domain ownership, single source-of-truth rules, 6 business capability mappings, and extraction readiness.
 4. [RBAC Architecture](RBAC_ARCHITECTURE.md): Member personas, business capability permissions (`<domain>.<resource>.<action>`), active authorization context, and backend enforcement.
 5. [Global Rules](RULES.md): Authoritative repository policies, security model, data ownership, package management constraints.
@@ -36,5 +36,5 @@ The Russia-Vietnam Science-Technology Intelligence Network is operated by the Tr
 
 ## State Distinction
 
-- **Current State**: Next.js 16.3 scaffold in `frontend/` and NestJS 11 scaffold in `services/auth-service/` (Module 1 approved Keycloak/session baseline).
-- **Target State**: Domain-oriented microservices (`auth-service`, `organization-service`, `knowledge-service`, `collaboration-service`, `review-service`, `project-service`, `academic-service`, `technology-service`, `analytics-service`, `api-gateway`) with PostgreSQL, Redis, and Kafka event bus.
+- **Current State**: Next.js 16.3 frontend plus modular business-family deployables: `auth-service`, `knowledge-service`, and `collaboration-service`.
+- **Target State**: Add `academic-service`, `technology-service`, and read-only `analytics-service` only when implemented. Internal modules remain extraction-ready.

@@ -79,12 +79,12 @@ Cross-service synchronization and analytics ingestion use Kafka domain events fo
 
 | Domain | Event Type | Description | Consumers |
 | --- | --- | --- | --- |
-| `auth` | `iam.user.registered` | New user created via SSO/broker | `organization-service`, `analytics-service` |
+| `auth` | `iam.user.registered` | New user created via SSO/broker | Knowledge Directory module, `analytics-service` |
 | `auth` | `iam.role.assigned` | Role / permission context modified | `audit-service`, `analytics-service` |
 | `collab` | `collab.opportunity.published` | Bilateral research opportunity opened | `notification-service`, `analytics-service` |
-| `collab` | `collab.proposal.submitted` | Joint proposal confirmed by both sides and submitted | `review-service`, `analytics-service` |
+| `collab` | `collab.proposal.submitted` | Joint proposal confirmed by both sides and submitted | Collaboration Reviews module, `analytics-service` |
 | `review` | `reviews.evaluation.submitted` | Reviewer completed evaluation score & comments | `collaboration-service`, `analytics-service` |
-| `collab` | `collab.decision.approved` | Collaboration decision finalized | `project-service`, `notification-service`, `analytics-service` |
+| `collab` | `collab.decision.approved` | Collaboration decision finalized | Collaboration Projects module, `notification-service`, `analytics-service` |
 | `project` | `projects.milestone.updated` | Project milestone progress updated | `notification-service`, `analytics-service` |
 | `academic` | `academic.activity.published` | Training / academic seminar / forum announced | `notification-service`, `analytics-service` |
 | `academic` | `academic.participation.submitted` | Member registered for academic activity | `academic-service`, `notification-service` |

@@ -7,8 +7,8 @@
     "start": "node --env-file-if-exists=.env ./node_modules/@nestjs/cli/bin/nest.js start",
     "start:prod": "node --env-file-if-exists=.env dist/src/main.js",
     "test": "jest --runInBand",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate deploy"
+    "prisma:generate": "prisma generate --config prisma/publications.config.ts && prisma generate --config prisma/directory.config.ts",
+    "prisma:migrate": "prisma migrate deploy --config prisma/publications.config.ts && prisma migrate deploy --config prisma/directory.config.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

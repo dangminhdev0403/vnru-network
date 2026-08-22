@@ -8,11 +8,12 @@ This document contains the authoritative governance, security, data-ownership, a
 - **Frontend non-boundary**: Frontend visual controls, route guards, and hidden buttons are UI conveniences only, never security boundaries.
 - **Secrets Management**: Hardcoding API keys, JWT secrets, passwords, or credentials in source code, default configs, or documentation is strictly forbidden. Use environment variables.
 
-## 2. Data Ownership & Microservice Boundaries
+## 2. Data Ownership & Module Boundaries
 
-- **Isolated Persistence**: Each microservice owns its persistence store. Direct database queries across microservice boundaries are prohibited.
-- **Contract-Based Integration**: Inter-service interaction MUST occur through explicit HTTP/REST contracts or versioned Kafka domain events.
-- **Transactional Integrity**: Database transactions are scoped strictly within a single service boundary. No distributed multi-service database transactions.
+- **Exclusive Ownership**: Every business state has exactly one owning domain module. No other module may directly mutate that state.
+- **Isolated Persistence**: Process consolidation does not authorize cross-module persistence access. Each module uses its own repository/client and owned schema or database.
+- **Contract-Based Integration**: Cross-module interaction uses explicit application contracts inside one deployable; cross-deployable interaction uses HTTP/REST or versioned events.
+- **Transactional Integrity**: Transactions remain scoped to one owning module's persistence boundary. No distributed multi-database transactions.
 
 ## 3. Package & Dependency Governance
 
