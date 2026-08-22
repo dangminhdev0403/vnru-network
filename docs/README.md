@@ -27,7 +27,7 @@ The Russia-Vietnam Science-Technology Intelligence Network is operated by the Tr
 2. **Business & Platform Services Layer (`biz`)**: 6 core business capabilities:
    - Module 1: Identity & Access Governance (IAM / Security Gateway).
    - Module 2: Knowledge Repository & Expert Directory.
-   - Module 3: Bilateral Research Funding & Project Management (Independent funding lifecycle; Foundation manages Foundation funds; state budget authority remains with competent state bodies).
+   - Module 3: Bilateral Research Collaboration & Project Management (VN–RU joint research proposals, independent/anonymized peer review, collaboration decisions, and project milestone/progress tracking. `[DECISION]` Financial/funding workflows are excluded).
    - Module 4: Training, Knowledge Transfer & Academic Exchange (`[DECISION]` no separate financial-support branch).
    - Module 5: Technology Transfer & Enterprise Connection (technology supply, enterprise demand, direct collaboration, 2+2 consortium model, IP/legal advisory).
    - Module 6: Internal Monitoring & Reporting Dashboard (internal leadership/management dashboard; read-only fact consumer).
@@ -37,5 +37,4 @@ The Russia-Vietnam Science-Technology Intelligence Network is operated by the Tr
 ## State Distinction
 
 - **Current State**: Next.js 16.3 scaffold in `frontend/` and NestJS 11 scaffold in `services/auth-service/` (Module 1 approved Keycloak/session baseline).
-- **Target State**: Domain-oriented microservices (`auth-service`, `organization-service`, `knowledge-service`, `grant-service`, `review-service`, `project-service`, `academic-service`, `technology-service`, `analytics-service`, `api-gateway`) with PostgreSQL, Redis, and Kafka event bus.
-
+- **Target State**: Domain-oriented microservices (`auth-service`, `organization-service`, `knowledge-service`, `collaboration-service`, `review-service`, `project-service`, `academic-service`, `technology-service`, `analytics-service`, `api-gateway`) with PostgreSQL, Redis, and Kafka event bus.

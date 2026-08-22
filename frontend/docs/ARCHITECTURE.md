@@ -109,7 +109,7 @@ The Web experience structure maps the three canonical access areas and six busin
 │    /search             - Integrated global search across entities           │
 │    /knowledge/*        - Knowledge Repository: papers, patents, documents   │
 │    /experts/*          - Expert Directory: researcher CVs, partner matches  │
-│    /opportunities/*    - Collaboration opportunities (Funding/Academic/Tech)│
+│    /opportunities/*    - Collaboration opportunities (Research/Academic/Tech)│
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 2. Authentication & Session Surface                                         │
 │    /login              - Keycloak OIDC authentication & session bootstrap   │
@@ -135,7 +135,7 @@ The Web experience structure maps the three canonical access areas and six busin
 
 | Persona | Primary Entry Point | Core Flow | Primary CTA |
 | --- | --- | --- | --- |
-| **Visitor** | `/` (Home) / `/search` | Explore knowledge repository, view public expert profiles, funding opportunities, training events, and tech catalog | *Search / Explore* |
+| **Visitor** | `/` (Home) / `/search` | Explore knowledge repository, view public expert profiles, research collaboration opportunities, training events, and tech catalog | *Search / Explore* |
 | **Researcher / Scientist** | `/workspace/researcher` | Profile CV maintenance, VN–RU joint proposal collaboration, project milestone reporting | *Collaborate / Submit Proposal* |
 | **Reviewer** | `/workspace/reviewer` or `/reviews` | Open assigned anonymized proposal, score against rubric, submit evaluation | *Score & Submit Review* |
 | **Organization Representative** | `/workspace/organization` | Manage organization profile, endorse institutional proposals, propose organization-led activities | *Verify / Manage Org* |

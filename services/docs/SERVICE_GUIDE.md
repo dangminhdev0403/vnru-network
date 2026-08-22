@@ -102,9 +102,9 @@ Do not create empty folders. Let complexity justify structure.
 | `api-gateway` | Edge Layer | Route dispatching, rate limiting, request context header propagation | **Target / Planned** |
 | `organization-service` | 2. Knowledge & Experts | Organizations, partner agreements, researcher profiles/CVs, expert mapping, partner matches | **Target / Planned** |
 | `knowledge-service` | 2. Knowledge & Experts | Digital scientific publications, preprints, patents, conference documents repository | **Target / Planned** |
-| `grant-service` | 3. Bilateral Grants & PMS | Independent funding opportunities, joint proposals (VN/RU Co-PIs), mutual confirmation | **Target / Planned** |
-| `review-service` | 3. Bilateral Grants & PMS | Reviewer pool, independent/anonymized assignments, rubric scoring, evaluation recommendations | **Target / Planned** |
-| `project-service` | 3. Bilateral Grants & PMS | Approved joint projects, milestones, progress reports, deliverables, outcome links | **Target / Planned** |
+| `collaboration-service` | 3. Bilateral Collab & Proposals | Research opportunities, joint proposals (VN/RU Co-PIs), mutual confirmation (`[DECISION]` no financial domain) | **Target / Planned** |
+| `review-service` | 3. Independent Peer Review | Reviewer pool, independent/anonymized assignments, rubric scoring, evaluation recommendations | **Target / Planned** |
+| `project-service` | 3. Research Project Management (PMS) | Approved joint collaboration projects, milestones, progress reports, deliverables, outcome links | **Target / Planned** |
 | `academic-service` | 4. Training & Academic Exchange | Seminars, conferences/forums (annual forum), academic exchange, participation tracking (`[DECISION]` no financial branch) | **Target / Planned** |
 | `technology-service` | 5. Technology Transfer & 2+2 | Technology marketplace, enterprise needs, expressions of interest, 2+2 consortiums, IP advisory | **Target / Planned** |
 | `analytics-service` | 6. Internal Monitoring Dashboard | Standardized fact ingestion, internal monitoring KPIs, collaboration graph, internal reports *(Read-only)* | **Target / Planned (Read-only)** |
@@ -134,7 +134,7 @@ Responsibilities:
 
 The modules remain inside one `auth-service` deployment boundary. This is internal modularization, not additional microservices.
 
-Business services remain authoritative for resource ownership and workflow-state rules. `auth-service` provides identity, session, active context, and baseline permissions; it does not decide whether a grant proposal, review assignment, project milestone, or other business resource is in a valid domain state.
+Business services remain authoritative for resource ownership and workflow-state rules. `auth-service` provides identity, session, active context, and baseline permissions; it does not decide whether a collaboration proposal, review assignment, project milestone, or other business resource is in a valid domain state.
 
 Detailed current notes live in `../auth-service/README.md` and `SERVICE_SPEC.md`.
 

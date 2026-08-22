@@ -106,7 +106,7 @@ Frontend feature modules align with the six business capabilities:
 | `features/auth` | 1. Identity & Access Governance | Sign-in forms, Keycloak OIDC handlers, 2FA status, session bridge, active context selector. |
 | `features/knowledge` | 2. Knowledge Repository | Publication search, detail viewers, paper upload/indexing forms, topic filters. |
 | `features/organization` | 2. Organizations & Expert Directory | Institution directory, researcher profile/CV, similarity & partner matching UI. |
-| `features/grants` | 3. Bilateral Research Funding | Independent funding opportunity catalog, VN–RU joint proposal collaborative editor, mutual participation confirmation. |
+| `features/collaboration` | 3. Bilateral Research Collaboration | Research/collaboration opportunity catalog, VN–RU joint proposal collaborative editor, mutual participation confirmation (`[DECISION]` no financial domain). |
 | `features/reviews` | 3. Independent Peer Review | Reviewer queue, anonymized proposal view, scoring rubrics, comment submission. |
 | `features/projects` | 3. Project Management (PMS) | Project timeline, milestone status updates, progress reports, deliverables, outcome links. |
 | `features/academic` | 4. Training & Academic Exchange | Seminar/forum/conference catalog, activity registration, organizer management, material references (`[DECISION]` no financial branch). |

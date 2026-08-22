@@ -19,10 +19,10 @@ The Portal serves seven normalized actor groups across the three canonical acces
 
 | Persona | Access Area & Default Surface | Business Scope & Primary Needs | Example Capabilities |
 | --- | --- | --- | --- |
-| **Visitor (Public)** | Public / Discovery (`/`, `/search`, `/knowledge`, `/experts`, `/opportunities`) | Unauthenticated exploration of published papers, expert profiles, funding opportunities, training events, and technology catalog. | `knowledge.publications.view_public`<br>`experts.profiles.view_public`<br>`grants.opportunities.view_public`<br>`technology.listings.view_public` |
-| **Researcher / Scientist** | Role-based Workspace (`/workspace/researcher`) | Manage CV/profile, index publications, initiate/collaborate on VN–RU joint proposals, track approved projects and milestones. | `experts.profiles.update_own`<br>`grants.proposals.create`<br>`grants.proposals.confirm_paired`<br>`projects.milestones.update` |
+| **Visitor (Public)** | Public / Discovery (`/`, `/search`, `/knowledge`, `/experts`, `/opportunities`) | Unauthenticated exploration of published papers, expert profiles, research collaboration opportunities, training events, and technology catalog. | `knowledge.publications.view_public`<br>`experts.profiles.view_public`<br>`collab.opportunities.view_public`<br>`technology.listings.view_public` |
+| **Researcher / Scientist** | Role-based Workspace (`/workspace/researcher`) | Manage CV/profile, index publications, initiate/collaborate on VN–RU joint proposals, track approved projects and milestones. | `experts.profiles.update_own`<br>`collab.proposals.create`<br>`collab.proposals.confirm_paired`<br>`projects.milestones.update` |
 | **Reviewer** | Role-based Workspace (`/workspace/reviewer` or `/reviews`) | Access assigned records only; perform independent/anonymized peer review against rubrics and submit evaluations. | `reviews.assignments.view_assigned`<br>`reviews.evaluations.score`<br>`reviews.evaluations.submit` |
-| **Organization Representative** | Role-based Workspace (`/workspace/organization`) | Manage organization profile, endorse institutional proposals/projects, propose and coordinate organization-led academic activities. | `organization.members.manage`<br>`grants.proposals.endorse`<br>`academic.activities.manage_org`<br>`projects.reports.view_org` |
+| **Organization Representative** | Role-based Workspace (`/workspace/organization`) | Manage organization profile, endorse institutional proposals/projects, propose and coordinate organization-led academic activities. | `organization.members.manage`<br>`collab.proposals.endorse`<br>`academic.activities.manage_org`<br>`projects.reports.view_org` |
 | **Enterprise Representative** | Role-based Workspace (`/workspace/enterprise`) | Post enterprise R&D demands, submit expressions of interest (EOI), form 2+2 bilateral consortiums, and access IP/transfer advisory. | `technology.demands.create`<br>`technology.interests.submit`<br>`technology.consortium.create_2plus2` |
 | **Leadership** | Role-based Workspace (`/workspace/leadership` or `/dashboard`) | Inspect aggregated internal KPIs, monitor Network activities (projects, connections, tech transfer), and view approved internal reports. | `analytics.kpi.view_leadership`<br>`analytics.collaboration_map.view`<br>`analytics.reports.view_internal` |
 | **System / Governance Administrator** | Governance & Administration (`/admin/access`, `/admin/users`, `/admin/audit`) | Foundation and system operations staff managing user identity/access, data/workflow catalogs, audit trails, and KPI definitions. *(Not available to ordinary member organizations).* | `iam.users.manage`<br>`iam.roles.manage`<br>`iam.audit.view`<br>`analytics.kpi.manage_definitions` |
@@ -42,11 +42,11 @@ iam.sessions.revoke | iam.security_policy.manage
 knowledge.publications.submit | knowledge.publications.publish | knowledge.publications.archive
 experts.profiles.update_own | experts.profiles.manage | experts.matches.view
 
-# 3. Bilateral Research Funding & Project Management (Module 3)
-grants.opportunities.create | grants.opportunities.publish
-grants.proposals.create | grants.proposals.confirm_paired | grants.proposals.submit | grants.proposals.endorse
+# 3. Bilateral Research Collaboration & Project Management (Module 3 - [DECISION] No financial domain)
+collab.opportunities.create | collab.opportunities.publish | collab.opportunities.view_public
+collab.proposals.create | collab.proposals.confirm_paired | collab.proposals.submit | collab.proposals.endorse
 reviews.assignments.manage | reviews.assignments.view_assigned | reviews.evaluations.score | reviews.evaluations.submit
-grants.decisions.issue_foundation
+collab.decisions.issue_foundation
 projects.projects.view | projects.milestones.update | projects.reports.submit | projects.reports.approve
 
 # 4. Training, Knowledge Transfer & Academic Exchange (Module 4 - [DECISION] No financial branch)
@@ -77,7 +77,7 @@ User (Subject) ──> Authenticates (Keycloak OIDC Broker)
   ▼                      ▼                      ▼
 Context A:             Context B:             Context C:
 Researcher @ Univ X    Reviewer @ Board Y     Organization Rep @ Univ X
-(grants.proposals.*)   (reviews.assignments.*)(organization.members.*)
+(collab.proposals.*)   (reviews.assignments.*)(organization.members.*)
 ```
 
 1. **Context Resolution**: When a user logs in, `auth-service` issues a session bound to exactly one active context representing their current role and organization scope.
@@ -95,7 +95,7 @@ RBAC checks ("Can the user score proposals?") are decoupled from Resource checks
    - A Reviewer may only read proposal data if an active `ReviewAssignment` explicitly assigns them to that proposal ID.
    - Any attempt to access a proposal outside their assignment scope yields `403 Forbidden`.
 2. **Review Anonymization**:
-   - When serving proposal snapshots to reviewers, `review-service` and `grant-service` MUST strip author names, Co-PI affiliations, and institutional identifiers according to the approved review policy.
+   - When serving proposal snapshots to reviewers, `review-service` and `collaboration-service` MUST strip author names, Co-PI affiliations, and institutional identifiers according to the approved review policy.
    - Re-identification or unmasking requires explicit administrative authority subject to immutable audit logging.
 3. **Tenant / Organization Scope Isolation**:
    - Organization representatives can only view proposals, projects, activities, or researcher profiles belonging to their own `organizationId`.
@@ -111,7 +111,7 @@ Backend NestJS controllers declare required capability keys explicitly:
 @Controller("proposals")
 export class ProposalController {
   @Post(":id/confirm-paired")
-  @RequirePermission("grants.proposals.confirm_paired")
+  @RequirePermission("collab.proposals.confirm_paired")
   @RequireResourceScope("proposal", "participating_copi")
   async confirmPairedProposal(@Param("id") id: string, @ActiveContext() context: AuthContext) {
     return this.proposalService.confirmPaired(id, context);

@@ -254,14 +254,19 @@
     "ast_hash": "16aca819f44c13ea0acb2ba77cfefdb6",
     "semantic_hash": ""
   },
+  "VN-RU_Portal_Architecture_Business_Analysis_UPDATED_FINAL_EN.md": {
+    "mtime": 1787031611.4129903,
+    "ast_hash": "4314a87098a766739698b3d355b3ac4f",
+    "semantic_hash": ""
+  },
   "docs/API_SPEC.md": {
-    "mtime": 1787403625.841775,
-    "ast_hash": "15ed7e380ba243a98693389e28b0ba51",
+    "mtime": 1787294766.4081998,
+    "ast_hash": "417543ed93b59c2ce19deeaac8973843",
     "semantic_hash": ""
   },
   "docs/ARCHITECTURE.md": {
-    "mtime": 1787403568.8912694,
-    "ast_hash": "24950f32ce89a6e764b23112a340b19b",
+    "mtime": 1787294766.4081998,
+    "ast_hash": "52daa9d444b452b360965653af7c1bff",
     "semantic_hash": ""
   },
   "docs/DEPLOYMENT.md": {
@@ -270,23 +275,23 @@
     "semantic_hash": ""
   },
   "docs/DOMAIN_MAP.md": {
-    "mtime": 1787403579.5580835,
-    "ast_hash": "da961f11e12b31466f6128ae05b2b740",
+    "mtime": 1787294766.4092002,
+    "ast_hash": "2afb4d6090011e2cb3a47e07423005a1",
     "semantic_hash": ""
   },
   "docs/OPEN_QUESTIONS.md": {
-    "mtime": 1787403589.5410664,
-    "ast_hash": "6d25bee3a9e89a9f7b2f43149774832a",
+    "mtime": 1787294766.410201,
+    "ast_hash": "1cacb6a60734c627b32fa93e02f90cf9",
     "semantic_hash": ""
   },
   "docs/RBAC_ARCHITECTURE.md": {
-    "mtime": 1787403604.7487664,
-    "ast_hash": "b12518ba8e6a26996605478cb1f9dee4",
+    "mtime": 1787294766.410201,
+    "ast_hash": "6bd8ef6416504b6d7d926e35aa536d32",
     "semantic_hash": ""
   },
   "docs/README.md": {
-    "mtime": 1787403553.7958176,
-    "ast_hash": "bf7ea71a24fdbb9832838a6811c45e4c",
+    "mtime": 1787384337.368616,
+    "ast_hash": "b02e21730b031906f64d8ee907be1cb2",
     "semantic_hash": ""
   },
   "docs/RULES.md": {
@@ -315,8 +320,8 @@
     "semantic_hash": ""
   },
   "frontend/docs/ARCHITECTURE.md": {
-    "mtime": 1787403640.521705,
-    "ast_hash": "4c2ea946390bc083b509a8afcd23308b",
+    "mtime": 1787345864.800792,
+    "ast_hash": "18e5096695db75d710d01f615c0b1290",
     "semantic_hash": ""
   },
   "frontend/docs/CONTRACT_GUIDE.md": {
@@ -325,8 +330,8 @@
     "semantic_hash": ""
   },
   "frontend/docs/MODULE_GUIDE.md": {
-    "mtime": 1787403645.5465052,
-    "ast_hash": "f17e64358e4cc75f15614d59ef337634",
+    "mtime": 1787032311.361225,
+    "ast_hash": "913b4662981c8d3ed455d52e11423b4c",
     "semantic_hash": ""
   },
   "frontend/docs/PLANS.md": {
@@ -380,8 +385,8 @@
     "semantic_hash": ""
   },
   "services/docs/ARCHITECTURE.md": {
-    "mtime": 1787403653.4144013,
-    "ast_hash": "3b6e975f8f3eb532edca1fc2de933f47",
+    "mtime": 1787294766.4392006,
+    "ast_hash": "efb65cc55fe5bce0316409ccad674ac2",
     "semantic_hash": ""
   },
   "services/docs/MIGRATION_GUIDE.md": {
@@ -405,8 +410,8 @@
     "semantic_hash": ""
   },
   "services/docs/SERVICE_GUIDE.md": {
-    "mtime": 1787403663.0046294,
-    "ast_hash": "febf8deb8897835b179ac14efd469b06",
+    "mtime": 1787294766.4401996,
+    "ast_hash": "ad742a42b11dfd16e5788e2b1b23f66a",
     "semantic_hash": ""
   },
   "frontend/public/file.svg": {
@@ -510,8 +515,8 @@
     "semantic_hash": ""
   },
   "frontend/auth-flow.test.mjs": {
-    "mtime": 1787403528.7387495,
-    "ast_hash": "8340d42e69684d55415358a09e585359",
+    "mtime": 1787402318.0941317,
+    "ast_hash": "31deedaa681f8343d96a68bb2aba7fd3",
     "semantic_hash": ""
   },
   "frontend/components/shared/WorkspaceShell.tsx": {
@@ -1797,11 +1802,6 @@
   "frontend/app/(workspace)/workspace/iam/admin/RolePermissionsConsole.tsx": {
     "mtime": 1787401093.4768858,
     "ast_hash": "5b64f47b0d46bb8a437feb99e3f84772",
-    "semantic_hash": ""
-  },
-  "VN-RU_Portal_Architecture_Business_Analysis_NO_FINANCIAL_DOMAIN.md": {
-    "mtime": 1787403259.8708923,
-    "ast_hash": "90c7863fb1fa9d15a5162525892ff31d",
     "semantic_hash": ""
   }
 }

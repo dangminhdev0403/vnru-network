@@ -40,7 +40,7 @@ services/
   api-gateway/          # Edge routing, rate limiting, request context propagation (Target)
   organization-service/ # Institutions, partner agreements, researcher CVs/profiles, expert mapping, partner matches (Target)
   knowledge-service/    # Scientific publications, preprints, patents, conference documents repository (Target)
-  grant-service/        # Independent funding opportunities, VN–RU joint proposals, mutual confirmation (Target)
+  collaboration-service/# Research opportunities, VN–RU joint proposals, mutual confirmation ([DECISION] no financial domain) (Target)
   review-service/       # Independent peer review pool, anonymized assignments, rubric scoring, recommendations (Target)
   project-service/      # Joint research projects, milestones, progress reports, deliverables, outcome links (Target)
   academic-service/     # Seminars, conferences/forums, academic exchange, training ([DECISION] no financial branch) (Target)

@@ -29,7 +29,7 @@ The architecture integrates six core business capabilities across three canonica
 │ 2. Business & Platform Services Layer (biz)                        [SOURCE] │
 │    - Module 1: Identity & Access Governance (IAM / Security Gateway)        │
 │    - Module 2: Knowledge Repository & Expert Directory                      │
-│    - Module 3: Bilateral Research Funding & Project Management (Independent)│
+│    - Module 3: Bilateral Research Collaboration & Project Management        │
 │    - Module 4: Training, Knowledge Transfer & Academic Exchange             │
 │    - Module 5: Technology Transfer & Enterprise Connection (inc. 2+2 Model) │
 │    - Module 6: Internal Monitoring & Reporting Dashboard (Leadership/Admin) │
@@ -83,7 +83,7 @@ The six canonical capabilities map to domain-oriented microservices (Target Arch
 | --- | --- | --- |
 | **1. Identity & Access Governance** | Unified identity, authentication, session, active authorization context resolution, RBAC policy enforcement, and security audit trail. Acts as security gateway; does not own business entity state. | `auth-service` *(Current Implementation)* |
 | **2. Knowledge Repository & Expert Directory** | Publications, research outputs (papers, patents, proceedings), expert profiles, scientific CVs, integrated search, and partner recommendation signals. | `knowledge-service`<br>`organization-service` *(Target / Planned)* |
-| **3. Bilateral Research Funding & Project Management** | Independent funding opportunities (raised/managed by Foundation or independent sponsors), VN–RU joint collaboration proposals, independent/anonymized peer review, decisions within Foundation authority, and project milestone/progress tracking. *(State budget authority remains with competent state bodies).* | `grant-service`<br>`review-service`<br>`project-service` *(Target / Planned)* |
+| **3. Bilateral Research Collaboration & Project Management** | Research/collaboration opportunities, VN–RU joint collaboration proposals, independent/anonymized peer review, collaboration decisions, and project milestone/progress tracking. `[DECISION]` *(Financial/funding workflows are outside implementation scope).* | `collaboration-service`<br>`review-service`<br>`project-service` *(Target / Planned)* |
 | **4. Training, Knowledge Transfer & Academic Exchange** | Seminars, professional activities, conferences/forums (including annual Vietnam–Russia Intellectual Forum), academic exchange, and knowledge dissemination. `[DECISION]` *(No separate financial-support branch).* | `academic-service` *(Target / Planned)* |
 | **5. Technology Transfer & Enterprise Connection** | Technology catalog, enterprise demand posting, expressions of interest, bilateral collaboration cases, **2+2 consortium model** (1 VN Inst + 1 VN Ent + 1 RU Inst + 1 RU Ent), and IP/legal advisory support. | `technology-service` *(Target / Planned)* |
 | **6. Internal Monitoring & Reporting Dashboard** | Internal dashboard and strategic reporting for Network leadership and Foundation management; tracks projects, expert connections, tech transfer activities, and aggregated KPIs. *(Internal workspace only; not a public area).* | `analytics-service`<br>(Analytics Layer) *(Target / Planned, Read-only)* |
@@ -116,7 +116,7 @@ Frontend (Next.js 16.3) ──[HTTP/REST]──> API Gateway ──[HTTP/REST]�
 
 ## 5. Data Ownership & Storage Principles
 
-1. **Database-per-Service**: Each microservice owns its isolated database schema (e.g., `auth_db`, `organization_db`, `knowledge_db`, `grant_db`, `review_db`, `project_db`, `academic_db`, `technology_db`, `analytics_db`).
+1. **Database-per-Service**: Each microservice owns its isolated database schema (e.g., `auth_db`, `organization_db`, `knowledge_db`, `collab_db`, `review_db`, `project_db`, `academic_db`, `technology_db`, `analytics_db`).
 2. **Strict Boundary**: Direct cross-service database access, cross-schema joins, or shared tables are strictly forbidden. Cross-domain data retrieval must use public APIs or domain events.
 3. **Transactional Integrity**: Database transactions are strictly local to a single microservice. Distributed multi-service database transactions are prohibited.
 4. **Cache Policy**: Redis is used strictly for transient caching, session lookups, and rate limiting; it is never a primary persistence store.
