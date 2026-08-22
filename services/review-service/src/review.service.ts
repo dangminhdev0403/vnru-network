@@ -12,30 +12,23 @@ export class ReviewService {
       proposalRef: string;
       reviewerId: string;
       boardRef: string;
-      fundingProgramRef: string;
       proposalSnapshot: unknown;
     },
     user: AuthenticatedUser,
   ) {
-    // 1. Verify program manager role/capabilities in the controller, but double-check here as well
-    if (user.activeContext?.contextType !== 'FUNDING_PROGRAM' || !user.capabilities.includes('reviews.assignments.manage')) {
-      throw new ForbiddenException('Only program managers in the funding program context can manage review assignments');
+    if (!user.capabilities.includes('reviews.assignments.manage')) {
+      throw new ForbiddenException('Only users with reviews.assignments.manage capability can manage review assignments');
     }
 
-    // 2. Validate proposal snapshot
+    // Validate proposal snapshot
     if (!validateProposalSnapshot(params.proposalSnapshot)) {
       throw new BadRequestException('Proposal snapshot failed anonymization validation. Keys must only be title, abstract, objectives, methodology, expectedOutcomes, keywords. Values and keys cannot contain identity identifiers.');
-    }
-
-    if (user.activeContext.contextId !== params.fundingProgramRef) {
-      throw new ForbiddenException('Funding program context mismatch');
     }
 
     return this.repository.createAssignment({
       proposalRef: params.proposalRef,
       reviewerId: params.reviewerId,
       boardRef: params.boardRef,
-      fundingProgramRef: params.fundingProgramRef,
       snapshot: params.proposalSnapshot,
     });
   }
@@ -45,15 +38,13 @@ export class ReviewService {
     const boundedLimit = Math.min(Math.max(1, limit), maxLimit);
     const boundedOffset = Math.max(0, offset);
 
-    if (user.activeContext?.contextType === 'FUNDING_PROGRAM' && user.capabilities.includes('reviews.assignments.manage')) {
-      // Program manager can see all assignments
+    if (user.capabilities.includes('reviews.assignments.manage')) {
       return this.repository.findAssignments({
-        fundingProgramRef: user.activeContext.contextId,
+        boardRef: user.activeContext?.contextType === 'REVIEW_BOARD' ? user.activeContext.contextId : undefined,
         limit: boundedLimit,
         offset: boundedOffset,
       });
     } else if (user.activeContext?.contextType === 'REVIEW_BOARD' && user.capabilities.includes('reviews.assignments.view_assigned')) {
-      // Reviewer can see only their assigned records
       return this.repository.findAssignments({
         reviewerId: user.userId,
         boardRef: user.activeContext.contextId,
@@ -68,10 +59,7 @@ export class ReviewService {
   async getAssignmentDetail(id: string, user: AuthenticatedUser) {
     const assignment = await this.repository.findAssignmentById(id);
 
-    if (user.activeContext?.contextType === 'FUNDING_PROGRAM' && user.capabilities.includes('reviews.assignments.manage')) {
-      if (assignment.fundingProgramRef !== user.activeContext.contextId) {
-        throw new ForbiddenException('Assignment belongs to another funding program');
-      }
+    if (user.capabilities.includes('reviews.assignments.manage')) {
       return assignment;
     } else if (user.activeContext?.contextType === 'REVIEW_BOARD' && user.capabilities.includes('reviews.assignments.view_assigned')) {
       if (assignment.reviewerId !== user.userId || assignment.boardRef !== user.activeContext.contextId) {
@@ -84,7 +72,6 @@ export class ReviewService {
   }
 
   async declareConflict(assignmentId: string, declaration: 'CONFLICT' | 'NO_CONFLICT', user: AuthenticatedUser) {
-    // Reviewer active context verification
     if (user.activeContext?.contextType !== 'REVIEW_BOARD' || !user.capabilities.includes('reviews.assignments.view_assigned')) {
       throw new ForbiddenException('Only reviewers in active review board context can declare conflict');
     }
@@ -134,11 +121,11 @@ export class ReviewService {
   }
 
   async getRecommendation(proposalRef: string, user: AuthenticatedUser) {
-    if (user.activeContext?.contextType !== 'FUNDING_PROGRAM' || !user.capabilities.includes('reviews.assignments.manage')) {
-      throw new ForbiddenException('Only program managers in the funding program context can view proposal recommendations');
+    if (!user.capabilities.includes('reviews.assignments.manage') && !user.capabilities.includes('reviews.recommendations.view')) {
+      throw new ForbiddenException('Insufficient permissions to view proposal recommendations');
     }
 
-    const recommendation = await this.repository.getRecommendation(proposalRef, user.activeContext.contextId);
+    const recommendation = await this.repository.getRecommendation(proposalRef);
     if (!recommendation) {
       throw new NotFoundException(`No recommendation found for proposal ${proposalRef}`);
     }

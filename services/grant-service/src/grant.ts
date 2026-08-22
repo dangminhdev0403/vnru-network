@@ -1,6 +1,6 @@
 export type OpportunityState = 'DRAFT' | 'PUBLISHED' | 'CLOSED';
 
-export interface FundingOpportunity {
+export interface ResearchOpportunity {
   readonly id: string;
   readonly state: OpportunityState;
 }
@@ -20,9 +20,9 @@ export interface JointProposal {
 }
 
 /**
- * Creates a new FundingOpportunity in DRAFT state.
+ * Creates a new ResearchOpportunity in DRAFT state.
  */
-export function createOpportunity(id: string): FundingOpportunity {
+export function createOpportunity(id: string): ResearchOpportunity {
   if (!id.trim()) {
     throw new Error('Opportunity ID is required');
   }
@@ -33,9 +33,9 @@ export function createOpportunity(id: string): FundingOpportunity {
 }
 
 /**
- * Transitions FundingOpportunity state from DRAFT to PUBLISHED.
+ * Transitions ResearchOpportunity state from DRAFT to PUBLISHED.
  */
-export function publishOpportunity(opportunity: FundingOpportunity): FundingOpportunity {
+export function publishOpportunity(opportunity: ResearchOpportunity): ResearchOpportunity {
   if (opportunity.state !== 'DRAFT') {
     throw new Error(`Invalid opportunity transition from ${opportunity.state} to PUBLISHED`);
   }
@@ -46,9 +46,9 @@ export function publishOpportunity(opportunity: FundingOpportunity): FundingOppo
 }
 
 /**
- * Transitions FundingOpportunity state from PUBLISHED to CLOSED.
+ * Transitions ResearchOpportunity state from PUBLISHED to CLOSED.
  */
-export function closeOpportunity(opportunity: FundingOpportunity): FundingOpportunity {
+export function closeOpportunity(opportunity: ResearchOpportunity): ResearchOpportunity {
   if (opportunity.state !== 'PUBLISHED') {
     throw new Error(`Invalid opportunity transition from ${opportunity.state} to CLOSED`);
   }
@@ -64,7 +64,7 @@ export function closeOpportunity(opportunity: FundingOpportunity): FundingOpport
  */
 export function createProposal(
   id: string,
-  opportunity: FundingOpportunity,
+  opportunity: ResearchOpportunity,
   vnParticipantId: string,
   ruParticipantId: string,
   content: string
@@ -105,7 +105,7 @@ export function createProposal(
  */
 export function confirmProposal(
   proposal: JointProposal,
-  opportunity: FundingOpportunity,
+  opportunity: ResearchOpportunity,
   participantId: string
 ): JointProposal {
   if (opportunity.id !== proposal.opportunityId) {
@@ -149,7 +149,7 @@ export function confirmProposal(
  */
 export function reviseProposal(
   proposal: JointProposal,
-  opportunity: FundingOpportunity,
+  opportunity: ResearchOpportunity,
   newContent: string,
   expectedRevision: number
 ): JointProposal {
@@ -187,7 +187,7 @@ export function reviseProposal(
  * Submission is only allowed from PAIRED_CONFIRMED state and produces SUBMITTED.
  * Submitted proposals are immutable.
  */
-export function submitProposal(proposal: JointProposal, opportunity: FundingOpportunity): JointProposal {
+export function submitProposal(proposal: JointProposal, opportunity: ResearchOpportunity): JointProposal {
   if (opportunity.id !== proposal.opportunityId) {
     throw new Error('Opportunity ID mismatch');
   }

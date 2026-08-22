@@ -1,0 +1,494 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: services/auth-service/prisma/account.json, services/auth-service/prisma/import-fixture.ts, services/auth-service/prisma/migrations/20260822170000_align_module3_collaboration_rbac/migration.sql, services/auth-service/src/modules/access-control/*.spec.ts, frontend/app/(workspace)/workspace/iam/admin/*.tsx
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+frontend/
+  app/
+    (workspace)/
+      workspace/
+        iam/
+          admin/
+            IamClientPage.tsx
+            page.tsx
+            RolePermissionsConsole.tsx
+            RolePermissionsPage.tsx
+services/
+  auth-service/
+    prisma/
+      migrations/
+        20260822170000_align_module3_collaboration_rbac/
+          migration.sql
+      account.json
+      import-fixture.ts
+    src/
+      modules/
+        access-control/
+          access-control.service.spec.ts
+          curator-fixture.spec.ts
+          iam-admin.controller.spec.ts
+          iam-admin.service.spec.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="services/auth-service/prisma/migrations/20260822170000_align_module3_collaboration_rbac/migration.sql">
+UPDATE "Role"
+SET "name" = 'COLLABORATION_MANAGER'
+WHERE "name" = 'PROGRAM_MANAGER';
+
+UPDATE "Permission"
+SET "key" = regexp_replace("key", '^grants\.', 'collab.')
+WHERE "key" LIKE 'grants.%';
+
+UPDATE "RoleAssignment"
+SET "contextType" = 'PLATFORM', "contextId" = 'GLOBAL'
+WHERE "contextType" = 'FUNDING_PROGRAM';
+</file>
+
+<file path="frontend/app/(workspace)/workspace/iam/admin/IamClientPage.tsx">
+import { useLocale, type Locale } from "@/app/HomeMotion";
+import Link from "next/link";
+⋮----
+import { useMemo, useState } from "react";
+import { showError, showToast } from "@/lib/alerts";
+import { useIamAdministration } from "@/features/iam/hooks";
+import { ApiError, type IamUser as User } from "@/features/iam/repository";
+⋮----
+type View = "overview" | "roles";
+⋮----
+function groupPermissions(permissions: string[] = [], query = "", locale: Locale)
+⋮----
+const updateUserStatus = async () =>
+⋮----
+const assignRole = async (event: React.FormEvent) =>
+⋮----
+key=
+</file>
+
+<file path="frontend/app/(workspace)/workspace/iam/admin/RolePermissionsConsole.tsx">
+import { useMemo, useState } from "react";
+import { useLocale, type Locale } from "@/app/HomeMotion";
+import type { IamRole, IamUser } from "@/features/iam/repository";
+⋮----
+function isSystemRole(role: IamRole)
+⋮----
+export default function RolePermissionsConsole({
+  roles,
+  users,
+  selectedRoleId,
+  onSelectRole,
+  onAssign,
+}: Readonly<{
+  roles: IamRole[];
+  users: IamUser[];
+  selectedRoleId: string;
+onSelectRole: (id: string)
+⋮----
+const chooseRole = (id: string) =>
+const togglePermission = (permission: string) =>
+const cancelEditing = () =>
+const submitAssignment = async () =>
+⋮----
+const roleButton = (role: IamRole) => (
+    <button key={role.id} type="button" onClick={() => chooseRole(role.id)} className={`mb-1 w-full rounded-xl border px-3 py-3 text-left transition ${selectedRole?.id === role.id ? "border-[color-mix(in_srgb,var(--accent-primary)_35%,var(--border))] bg-[color-mix(in_srgb,var(--accent-primary)_9%,var(--surface-secondary))]" : "border-transparent hover:bg-[var(--surface-secondary)]"}`}>
+      <strong className="block truncate text-sm">{role.name}</strong><span className="mt-1 block text-xs text-text-secondary">{role.permissions?.length ?? 0} {t.permissions.toLowerCase()}</span>
+    </button>
+  );
+⋮----
+</file>
+
+<file path="frontend/app/(workspace)/workspace/iam/admin/RolePermissionsPage.tsx">
+import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useLocale, type Locale } from "@/app/HomeMotion";
+import { useIamAdministration } from "@/features/iam/hooks";
+import { ApiError, type IamRole } from "@/features/iam/repository";
+import { showError, showToast } from "@/lib/alerts";
+⋮----
+type Tab = "permissions" | "assignments" | "scope" | "audit";
+type Modal = "add" | "review" | "backend" | "assign" | null;
+⋮----
+function isSystemRole(role: IamRole)
+⋮----
+const chooseRole = (role: IamRole) =>
+const togglePermission = (permission: string) => setStaged((previous) =>
+⋮----
+const assignRole = async (event: FormEvent) =>
+⋮----
+const RoleButton = (
+⋮----
+<article className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]"><div className="flex flex-wrap items-start gap-4 p-5"><span className="material-symbols-outlined grid size-12 place-items-center rounded-[14px] bg-[var(--surface-secondary)] text-2xl text-[var(--accent-primary)]">policy</span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><h2 className="text-2xl font-semibold">
+⋮----
+<article className="min-w-0 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]"><header className="flex flex-wrap items-end justify-between gap-3 border-b border-[var(--border)] p-4"><div><h3 className="text-lg font-semibold">
+</file>
+
+<file path="services/auth-service/src/modules/access-control/access-control.service.spec.ts">
+import {
+  AccessControlPrismaClient,
+  AccessControlService,
+  ResolveCapabilitiesInput,
+} from './access-control.service';
+⋮----
+// When querying for status: 'ACTIVE', inactive records are not returned by the repository query
+⋮----
+key: 'collab.proposals.create', // duplicate permission key across roles in same context
+⋮----
+// Output must only contain capability keys, never role names (e.g. no 'FACULTY_MEMBER' or 'LAB_LEAD')
+</file>
+
+<file path="services/auth-service/src/modules/access-control/curator-fixture.spec.ts">
+import { importFixture } from '../../../prisma/import-fixture';
+⋮----
+// Import fixtures
+⋮----
+// 1. KNOWLEDGE_CURATOR Checks
+⋮----
+// 2. RESEARCHER Checks
+⋮----
+// 3. ORGANIZATION_REPRESENTATIVE Checks
+⋮----
+// 4. REVIEWER Checks
+⋮----
+// 5. COLLABORATION_MANAGER Checks
+⋮----
+// 6. FOUNDATION_DECISION_MAKER Checks
+⋮----
+// Verify no SUPER_ADMIN exists
+⋮----
+// Run again to verify idempotency intent (successive execution should not fail and behave same way)
+⋮----
+name: 'SUPER_ADMIN', // Invalid, not in ALLOWED_ROLES
+⋮----
+key: 'admin.all.access', // Invalid permission key
+</file>
+
+<file path="frontend/app/(workspace)/workspace/iam/admin/page.tsx">
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { SESSION_COOKIE_NAME } from "@/features/auth/server";
+import IamClientPage from "./IamClientPage";
+import RolePermissionsPage from "./RolePermissionsPage";
+⋮----
+type View = "overview" | "roles";
+⋮----
+export default async function IamAdminPage(
+</file>
+
+<file path="services/auth-service/prisma/account.json">
+{
+  "_metadata": {
+    "description": "NON-SECRET synthetic IAM fixtures for Module 2 and Module 3 workflow roles. Matches the Keycloak test identities.",
+    "warning": "This file does not contain passwords or credentials. Keycloak OIDC owns user credentials. To authenticate as these users, Keycloak must be configured with identities matching the issuer and subject specified below."
+  },
+  "fixtures": [
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38711",
+        "email": "curator@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38712",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "curator-keycloak-subject-uuid-1234"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38713",
+        "name": "KNOWLEDGE_CURATOR"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-bb663ee38714",
+          "key": "knowledge.workspace.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-bb663ee38715",
+          "key": "experts.matches.view"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38716",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38001",
+        "email": "researcher@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38002",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "815ecd3d-d4b2-4035-9060-bf96e6997831"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38001",
+        "name": "RESEARCHER"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38001",
+          "key": "collab.proposals.create"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38002",
+          "key": "collab.proposals.confirm_paired"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38003",
+          "key": "collab.proposals.submit"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
+          "key": "projects.projects.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38005",
+          "key": "projects.milestones.update"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38006",
+          "key": "projects.reports.submit"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38001",
+        "contextType": "ORGANIZATION",
+        "contextId": "ORG_001",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38003",
+        "email": "org_rep@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38004",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "fed2a1c0-4417-41ff-b81e-9eb3d01902ed"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38002",
+        "name": "ORGANIZATION_REPRESENTATIVE"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38007",
+          "key": "collab.proposals.endorse"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
+          "key": "projects.projects.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38008",
+          "key": "projects.reports.view_org"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38002",
+        "contextType": "ORGANIZATION",
+        "contextId": "ORG_001",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38005",
+        "email": "reviewer@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38006",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "94f310a1-5eb3-4b4d-9cc4-a9879856fcd7"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38003",
+        "name": "REVIEWER"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38009",
+          "key": "reviews.assignments.view_assigned"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38010",
+          "key": "reviews.evaluations.score"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38011",
+          "key": "reviews.evaluations.submit"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38003",
+        "contextType": "REVIEW_BOARD",
+        "contextId": "BOARD_001",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38007",
+        "email": "program_manager@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38008",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "5499c30e-9183-403b-8e9e-fbc664541096"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38004",
+        "name": "COLLABORATION_MANAGER"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38012",
+          "key": "collab.opportunities.create"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38013",
+          "key": "collab.opportunities.publish"
+        },
+        {
+          "id": "343736e9-fa64-487f-b7ea-17e563591ad7",
+          "key": "collab.proposals.screen"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38014",
+          "key": "reviews.assignments.manage"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
+          "key": "projects.projects.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38015",
+          "key": "projects.reports.approve"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38004",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38009",
+        "email": "decision_maker@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38010",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "13d2c564-39d9-4365-b5bf-8e06ce2ea07b"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38005",
+        "name": "FOUNDATION_DECISION_MAKER"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38016",
+          "key": "collab.decisions.issue_foundation"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
+          "key": "projects.projects.view"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38005",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
+        "status": "ACTIVE"
+      }
+    }
+  ]
+}
+</file>
+
+<file path="services/auth-service/prisma/import-fixture.ts">
+import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+⋮----
+import { z } from 'zod';
+⋮----
+export async function importFixture(prisma: PrismaClient, fixturePath?: string)
+</file>
+
+<file path="services/auth-service/src/modules/access-control/iam-admin.controller.spec.ts">
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import {
+  UserStatus,
+  RoleAssignmentStatus,
+  RoleAssignment,
+} from '@prisma/client';
+import { Reflector } from '@nestjs/core';
+import { Test, TestingModule } from '@nestjs/testing';
+import { IamAdminController } from './iam-admin.controller';
+import { IamAdminService } from './iam-admin.service';
+import {
+  AuthenticatedRequestGuard,
+  AuthenticatedRequest,
+} from '../authentication/authenticated-request-context';
+import { AuthenticationService } from '../authentication/authentication.service';
+</file>
+
+<file path="services/auth-service/src/modules/access-control/iam-admin.service.spec.ts">
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { UserStatus, RoleAssignmentStatus } from '@prisma/client';
+import { IamAdminService } from './iam-admin.service';
+</file>
+
+</files>

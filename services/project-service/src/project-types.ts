@@ -51,7 +51,6 @@ export function validateDate(val: any, fieldName: string): Date {
 export interface BootstrapProjectDto {
   decisionRef: string;
   proposalRef: string;
-  fundingProgramId: string;
   title: string;
   description?: string;
   leadId: string;
@@ -68,7 +67,6 @@ export function parseBootstrapDto(body: any): BootstrapProjectDto {
   return {
     decisionRef: validateString(body.decisionRef, 'decisionRef', 1, 255),
     proposalRef: validateString(body.proposalRef, 'proposalRef', 1, 255),
-    fundingProgramId: validateUuid(body.fundingProgramId, 'fundingProgramId'),
     title: validateString(body.title, 'title', 1, 255),
     description: validateOptionalString(body.description, 'description', 5000),
     leadId: validateUuid(body.leadId, 'leadId'),

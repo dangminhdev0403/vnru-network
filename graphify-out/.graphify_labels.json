@@ -260,5 +260,21 @@
   "258": "review-service/prisma.config.ts",
   "259": "3. Public / Workspace / Governance",
   "260": "3. Public / Workspace / Governance",
-  "261": "23. IAM — detailed domain model"
+  "261": "23. IAM — detailed domain model",
+  "262": "MODULE 1–2–3 ALIGNMENT REFACTOR GUIDE",
+  "263": "PART A — MODULE 1 ALIGNMENT",
+  "264": "14. UI capability",
+  "265": "PART D — SHARED UX",
+  "266": "3. Canonical product surfaces",
+  "267": "4. Role taxonomy",
+  "268": "badge.tsx",
+  "269": "moduleFileExtensions",
+  "270": "5. Public / Workspace / Governance",
+  "271": "project.test.ts",
+  "272": "page.tsx",
+  "273": "motion",
+  "274": "react-aria-components",
+  "275": "react-dom",
+  "276": "@tanstack/react-query",
+  "277": "rxjs"
 }

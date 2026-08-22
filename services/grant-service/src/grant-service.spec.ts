@@ -21,7 +21,7 @@ const VN_REP_UUID = '66666666-6666-6666-6666-666666666666';
 const MANAGER_UUID = '77777777-7777-7777-7777-777777777777';
 const DECISION_MAKER_UUID = '88888888-8888-8888-8888-888888888888';
 
-describe('Grant MVP Service & Controller Tests', () => {
+describe('Collaboration Service & Controller Tests', () => {
   let controller: GrantController;
   let service: GrantService;
   let repository: GrantRepository;
@@ -32,7 +32,7 @@ describe('Grant MVP Service & Controller Tests', () => {
     process.env.AUTH_SERVICE_URL = 'http://localhost:3001';
 
     mockPrisma = {
-      fundingOpportunity: {
+      researchOpportunity: {
         findUnique: jest.fn(),
         create: jest.fn(),
         update: jest.fn(),
@@ -54,10 +54,10 @@ describe('Grant MVP Service & Controller Tests', () => {
         upsert: jest.fn(),
         updateMany: jest.fn(),
       },
-      eligibilityScreening: {
+      proposalScreening: {
         create: jest.fn(),
       },
-      fundingDecision: {
+      collaborationDecision: {
         create: jest.fn(),
       },
       outboxEvent: {
@@ -116,7 +116,7 @@ describe('Grant MVP Service & Controller Tests', () => {
         userId: VN_USER_UUID,
         sessionId: 'session-123',
         activeContext: { contextType: 'ORGANIZATION', contextId: 'org-123' },
-        capabilities: ['grants.proposals.create'],
+        capabilities: ['collab.proposals.create'],
         authenticationLevel: 'PASSWORD',
       };
 
@@ -125,7 +125,7 @@ describe('Grant MVP Service & Controller Tests', () => {
         json: async () => mockUser,
       });
 
-      const context = createMockContext({ authorization: 'Bearer valid-token' }, 'grants.proposals.create');
+      const context = createMockContext({ authorization: 'Bearer valid-token' }, 'collab.proposals.create');
       const canActivate = await guard.canActivate(context);
 
       expect(canActivate).toBe(true);
@@ -159,7 +159,7 @@ describe('Grant MVP Service & Controller Tests', () => {
         userId: VN_USER_UUID,
         sessionId: 'session-123',
         activeContext: null,
-        capabilities: ['grants.proposals.create'],
+        capabilities: ['collab.proposals.create'],
       };
 
       (global.fetch as jest.Mock).mockResolvedValueOnce({
@@ -167,7 +167,7 @@ describe('Grant MVP Service & Controller Tests', () => {
         json: async () => mockUser,
       });
 
-      const context = createMockContext({ cookie: 'session=valid' }, 'grants.proposals.create');
+      const context = createMockContext({ cookie: 'session=valid' }, 'collab.proposals.create');
       await expect(guard.canActivate(context)).rejects.toThrow(ForbiddenException);
     });
 
@@ -184,23 +184,22 @@ describe('Grant MVP Service & Controller Tests', () => {
         json: async () => mockUser,
       });
 
-      const context = createMockContext({ cookie: 'session=valid' }, 'grants.proposals.create');
+      const context = createMockContext({ cookie: 'session=valid' }, 'collab.proposals.create');
       await expect(guard.canActivate(context)).rejects.toThrow(ForbiddenException);
     });
   });
 
-  describe('Funding Opportunity State Transitions & Validation', () => {
+  describe('Research Opportunity State Transitions & Validation', () => {
     const managerUser = {
       userId: MANAGER_UUID,
-      activeContext: { contextType: 'FUNDING_PROGRAM', contextId: 'prog-789' },
-      capabilities: ['grants.opportunities.create', 'grants.opportunities.publish'],
+      activeContext: { contextType: 'PLATFORM', contextId: 'platform_main' },
+      capabilities: ['collab.opportunities.create', 'collab.opportunities.publish'],
     } as any;
 
-    it('should create opportunity in DRAFT state when context matches program ref', async () => {
-      mockPrisma.fundingOpportunity.create.mockResolvedValueOnce({
+    it('should create opportunity in DRAFT state', async () => {
+      mockPrisma.researchOpportunity.create.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
         title: 'Joint Opportunity 2026',
-        fundingProgramRef: 'prog-789',
         state: 'DRAFT',
       });
 
@@ -209,34 +208,19 @@ describe('Grant MVP Service & Controller Tests', () => {
         {
           id: OPPORTUNITY_UUID,
           title: 'Joint Opportunity 2026',
-          fundingProgramRef: 'prog-789',
         },
       );
 
       expect(res.state).toBe('DRAFT');
-      expect(mockPrisma.fundingOpportunity.create).toHaveBeenCalled();
-    });
-
-    it('should fail creating opportunity if user context does not match program ref', async () => {
-      await expect(
-        controller.createOpportunity(
-          { user: managerUser },
-          {
-            id: OPPORTUNITY_UUID,
-            title: 'Opportunity',
-            fundingProgramRef: 'different-prog',
-          },
-        ),
-      ).rejects.toThrow(ForbiddenException);
+      expect(mockPrisma.researchOpportunity.create).toHaveBeenCalled();
     });
 
     it('should publish opportunity only if it is in DRAFT state', async () => {
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
-        fundingProgramRef: 'prog-789',
         state: 'DRAFT',
       });
-      mockPrisma.fundingOpportunity.update.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.update.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
         state: 'PUBLISHED',
       });
@@ -246,12 +230,11 @@ describe('Grant MVP Service & Controller Tests', () => {
     });
 
     it('should close opportunity only if it is in PUBLISHED state', async () => {
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
-        fundingProgramRef: 'prog-789',
         state: 'PUBLISHED',
       });
-      mockPrisma.fundingOpportunity.update.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.update.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
         state: 'CLOSED',
       });
@@ -261,9 +244,8 @@ describe('Grant MVP Service & Controller Tests', () => {
     });
 
     it('should fail transition when closing opportunity from DRAFT (invalid transition)', async () => {
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
-        fundingProgramRef: 'prog-789',
         state: 'DRAFT',
       });
 
@@ -277,23 +259,23 @@ describe('Grant MVP Service & Controller Tests', () => {
     const vnResearcher = {
       userId: VN_USER_UUID,
       activeContext: { contextType: 'ORGANIZATION', contextId: 'vn-org-ref' },
-      capabilities: ['grants.proposals.create'],
+      capabilities: ['collab.proposals.create'],
     } as any;
 
     const ruResearcher = {
       userId: RU_USER_UUID,
       activeContext: { contextType: 'ORGANIZATION', contextId: 'ru-org-ref' },
-      capabilities: ['grants.proposals.create'],
+      capabilities: ['collab.proposals.create'],
     } as any;
 
     const randomResearcher = {
       userId: RANDOM_USER_UUID,
       activeContext: { contextType: 'ORGANIZATION', contextId: 'some-other-org' },
-      capabilities: ['grants.proposals.create'],
+      capabilities: ['collab.proposals.create'],
     } as any;
 
     it('should create proposal only when opportunity is PUBLISHED and caller is a participant matching context', async () => {
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
         state: 'PUBLISHED',
       });
@@ -319,7 +301,7 @@ describe('Grant MVP Service & Controller Tests', () => {
     });
 
     it('should fail creating proposal if caller is not one of the participants', async () => {
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
         state: 'PUBLISHED',
       });
@@ -339,7 +321,7 @@ describe('Grant MVP Service & Controller Tests', () => {
     });
 
     it('should fail creating proposal if caller context does not match organizationRef', async () => {
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
         state: 'PUBLISHED',
       });
@@ -347,7 +329,7 @@ describe('Grant MVP Service & Controller Tests', () => {
       const badVnResearcher = {
         userId: VN_USER_UUID,
         activeContext: { contextType: 'ORGANIZATION', contextId: 'hacked-org-ref' },
-        capabilities: ['grants.proposals.create'],
+        capabilities: ['collab.proposals.create'],
       } as any;
 
       await expect(
@@ -385,7 +367,7 @@ describe('Grant MVP Service & Controller Tests', () => {
       };
 
       mockPrisma.jointProposal.findUnique.mockResolvedValueOnce(proposalDb);
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
       mockPrisma.jointProposal.update.mockResolvedValueOnce({
         ...proposalDb,
         content: 'New Revised Research',
@@ -425,7 +407,7 @@ describe('Grant MVP Service & Controller Tests', () => {
         confirmations: [],
         endorsements: [],
       });
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
         state: 'PUBLISHED',
       });
@@ -459,7 +441,7 @@ describe('Grant MVP Service & Controller Tests', () => {
       };
 
       mockPrisma.jointProposal.findUnique.mockResolvedValueOnce(proposalDb);
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
       mockPrisma.jointProposal.update.mockResolvedValueOnce({
         ...proposalDb,
         state: 'PAIRED_CONFIRMED',
@@ -487,12 +469,12 @@ describe('Grant MVP Service & Controller Tests', () => {
       };
 
       mockPrisma.jointProposal.findUnique.mockResolvedValue(proposalDb);
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
 
       const vnRep = {
         userId: VN_REP_UUID,
         activeContext: { contextType: 'ORGANIZATION', contextId: 'vn-org-ref' },
-        capabilities: ['grants.proposals.endorse'],
+        capabilities: ['collab.proposals.endorse'],
       } as any;
 
       await controller.endorseProposal({ user: vnRep }, PROPOSAL_UUID);
@@ -525,14 +507,14 @@ describe('Grant MVP Service & Controller Tests', () => {
       };
 
       mockPrisma.jointProposal.findUnique.mockResolvedValueOnce(proposalDb);
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
 
       await expect(
         controller.submitProposal({ user: vnResearcher }, PROPOSAL_UUID),
       ).rejects.toThrow(BadRequestException);
     });
 
-    it('should submit proposal, transition state to SUBMITTED, and emit grants.proposal.submitted outbox event', async () => {
+    it('should submit proposal, transition state to SUBMITTED, and emit collab.proposal.submitted outbox event', async () => {
       const proposalDb = {
         id: PROPOSAL_UUID,
         opportunityId: OPPORTUNITY_UUID,
@@ -554,7 +536,7 @@ describe('Grant MVP Service & Controller Tests', () => {
       };
 
       mockPrisma.jointProposal.findUnique.mockResolvedValueOnce(proposalDb);
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
       mockPrisma.jointProposal.update.mockResolvedValueOnce({
         ...proposalDb,
         state: 'SUBMITTED',
@@ -566,7 +548,7 @@ describe('Grant MVP Service & Controller Tests', () => {
       expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            eventType: 'grants.proposal.submitted',
+            eventType: 'collab.proposal.submitted',
             payload: expect.stringContaining(`"proposalId":"${PROPOSAL_UUID}"`),
           }),
         }),
@@ -574,28 +556,27 @@ describe('Grant MVP Service & Controller Tests', () => {
     });
   });
 
-  describe('Eligibility Screening & Funding Decisions', () => {
+  describe('Eligibility Screening & Collaboration Decisions', () => {
     const manager = {
       userId: MANAGER_UUID,
-      activeContext: { contextType: 'FUNDING_PROGRAM', contextId: 'program-abc' },
-      capabilities: ['grants.opportunities.publish'],
+      activeContext: { contextType: 'PLATFORM', contextId: 'platform_main' },
+      capabilities: ['collab.proposals.screen'],
     } as any;
 
     const decisionMaker = {
       userId: DECISION_MAKER_UUID,
-      activeContext: { contextType: 'FUNDING_PROGRAM', contextId: 'program-abc' },
-      capabilities: ['grants.decisions.issue_foundation'],
+      activeContext: { contextType: 'PLATFORM', contextId: 'platform_main' },
+      capabilities: ['collab.decisions.issue_foundation'],
     } as any;
 
-    it('should allow PROGRAM_MANAGER to screen proposal as ELIGIBLE', async () => {
+    it('should allow COLLABORATION_MANAGER to screen proposal as ELIGIBLE', async () => {
       mockPrisma.jointProposal.findUnique.mockResolvedValueOnce({
         id: PROPOSAL_UUID,
         opportunityId: OPPORTUNITY_UUID,
         state: 'SUBMITTED',
       });
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
-        fundingProgramRef: 'program-abc',
       });
       mockPrisma.jointProposal.update.mockResolvedValueOnce({
         id: PROPOSAL_UUID,
@@ -612,41 +593,17 @@ describe('Grant MVP Service & Controller Tests', () => {
       );
 
       expect(res.state).toBe('ELIGIBLE');
-      expect(mockPrisma.eligibilityScreening.create).toHaveBeenCalled();
+      expect(mockPrisma.proposalScreening.create).toHaveBeenCalled();
     });
 
-    it('should fail screening if program context does not match opportunity fundingProgramRef', async () => {
-      mockPrisma.jointProposal.findUnique.mockResolvedValueOnce({
-        id: PROPOSAL_UUID,
-        opportunityId: OPPORTUNITY_UUID,
-        state: 'SUBMITTED',
-      });
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
-        id: OPPORTUNITY_UUID,
-        fundingProgramRef: 'different-program',
-      });
-
-      await expect(
-        controller.screenProposal(
-          { user: manager },
-          PROPOSAL_UUID,
-          {
-            eligible: true,
-            reason: 'Checks',
-          },
-        ),
-      ).rejects.toThrow(ForbiddenException);
-    });
-
-    it('should allow FOUNDATION_DECISION_MAKER to approve ELIGIBLE proposal and emit grants.decision.approved outbox event', async () => {
+    it('should allow FOUNDATION_DECISION_MAKER to approve ELIGIBLE proposal and emit collab.decision.approved outbox event', async () => {
       mockPrisma.jointProposal.findUnique.mockResolvedValueOnce({
         id: PROPOSAL_UUID,
         opportunityId: OPPORTUNITY_UUID,
         state: 'ELIGIBLE',
       });
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
-        fundingProgramRef: 'program-abc',
       });
       mockPrisma.jointProposal.update.mockResolvedValueOnce({
         id: PROPOSAL_UUID,
@@ -664,26 +621,25 @@ describe('Grant MVP Service & Controller Tests', () => {
       );
 
       expect(res.state).toBe('APPROVED');
-      expect(mockPrisma.fundingDecision.create).toHaveBeenCalled();
+      expect(mockPrisma.collaborationDecision.create).toHaveBeenCalled();
       expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            eventType: 'grants.decision.approved',
+            eventType: 'collab.decision.approved',
             payload: expect.stringContaining(`"proposalId":"${PROPOSAL_UUID}"`),
           }),
         }),
       );
     });
 
-    it('should fail funding decision if proposal state is not ELIGIBLE', async () => {
+    it('should fail collaboration decision if proposal state is not ELIGIBLE', async () => {
       mockPrisma.jointProposal.findUnique.mockResolvedValueOnce({
         id: PROPOSAL_UUID,
         opportunityId: OPPORTUNITY_UUID,
         state: 'SUBMITTED',
       });
-      mockPrisma.fundingOpportunity.findUnique.mockResolvedValueOnce({
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
-        fundingProgramRef: 'program-abc',
       });
 
       await expect(

@@ -44,9 +44,16 @@ const headerCopy: Record<
     titles: {
       "/workspace": "Tổng quan",
       "/workspace/knowledge": "Kho tri thức & Chuyên gia",
+      "/workspace/collaboration": "Cộng tác nghiên cứu",
       "/workspace/iam": "Quản trị danh tính & truy cập (IAM)",
       "/workspace/iam/admin": "Quản trị phân quyền",
       "/workspace/iam/security": "Phiên làm việc & Bảo mật",
+      "/admin/access": "Quản trị phân quyền",
+      "/admin/access/users": "Quản lý người dùng",
+      "/admin/access/roles": "Vai trò & quyền",
+      "/admin/access/assignments": "Phân công vai trò",
+      "/admin/audit": "Nhật ký kiểm toán",
+      "/admin/catalogs": "Danh mục chuẩn hóa",
     },
     defaultTitle: "Mạng lưới KH&CN Việt – Nga",
   },
@@ -62,9 +69,16 @@ const headerCopy: Record<
     titles: {
       "/workspace": "Overview",
       "/workspace/knowledge": "Knowledge & Experts",
+      "/workspace/collaboration": "Research Collaboration",
       "/workspace/iam": "Identity & Access Management (IAM)",
       "/workspace/iam/admin": "Access Administration",
       "/workspace/iam/security": "Security & Sessions",
+      "/admin/access": "Access Administration",
+      "/admin/access/users": "User Management",
+      "/admin/access/roles": "Roles & Permissions",
+      "/admin/access/assignments": "Role Assignments",
+      "/admin/audit": "Audit Logs",
+      "/admin/catalogs": "Standardized Catalogs",
     },
     defaultTitle: "VN–RU S&T Network",
   },
@@ -81,13 +95,26 @@ const headerCopy: Record<
     titles: {
       "/workspace": "Обзор",
       "/workspace/knowledge": "База знаний и эксперты",
+      "/workspace/collaboration": "Научное сотрудничество",
       "/workspace/iam": "Управление доступом (IAM)",
       "/workspace/iam/admin": "Администрирование IAM",
       "/workspace/iam/security": "Сессии и безопасность",
+      "/admin/access": "Администрирование IAM",
+      "/admin/access/users": "Управление пользователями",
+      "/admin/access/roles": "Роли и права",
+      "/admin/access/assignments": "Назначение ролей",
+      "/admin/audit": "Журнал аудита",
+      "/admin/catalogs": "Стандартизированные каталоги",
     },
     defaultTitle: "Сеть НТИ РФ — СРВ",
   },
 };
+
+const themeModesList: { value: "light" | "dark" | "system"; key: "light" | "dark" | "system" }[] = [
+  { value: "light", key: "light" },
+  { value: "dark", key: "dark" },
+  { value: "system", key: "system" },
+];
 
 export default function Header({ onMenuClick }: HeaderProps) {
   const pathname = usePathname();
@@ -247,7 +274,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
                 className="absolute right-0 z-50 mt-1.5 w-36 overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface-raised)] p-1.5 shadow-[var(--shadow-soft)]"
                 onMouseLeave={() => setIsThemeOpen(false)}
               >
-                {Object.entries(t.themeModes).map(([mode, label]) => (
+                {themeModesList.map(({ value: mode, key }) => (
                   <button
                     key={mode}
                     type="button"
@@ -261,7 +288,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
                         : "text-text-secondary hover:bg-[var(--surface-secondary)] hover:text-text-primary"
                     }`}
                   >
-                    {label}
+                    {t.themeModes[key]}
                     {theme === mode && <span className="material-symbols-outlined text-base">check</span>}
                   </button>
                 ))}

@@ -3,19 +3,19 @@ import { ReviewService } from './review.service';
 import { validateProposalSnapshot } from './anonymizer';
 import type { AuthenticatedUser } from './auth.guard';
 
-describe('Review MVP MVP Service Logic & Boundary Checks', () => {
+describe('Review Service Logic & Boundary Checks', () => {
   let service: ReviewService;
   let mockRepo: any;
 
   // Pre-configured Test Users
-  const programManagerUser: AuthenticatedUser = {
+  const reviewBoardAdminUser: AuthenticatedUser = {
     userId: '11111111-1111-1111-1111-111111111111',
-    sessionId: 'sess-pm',
+    sessionId: 'sess-admin',
     activeContext: {
-      contextType: 'FUNDING_PROGRAM',
+      contextType: 'REVIEW_BOARD',
       contextId: '22222222-2222-2222-2222-222222222222',
     },
-    capabilities: ['reviews.assignments.manage'],
+    capabilities: ['reviews.assignments.manage', 'reviews.recommendations.view'],
     authenticationLevel: 'PASSWORD',
   };
 
@@ -45,7 +45,7 @@ describe('Review MVP MVP Service Logic & Boundary Checks', () => {
     userId: '99999999-9999-9999-9999-999999999999',
     sessionId: 'sess-unauth',
     activeContext: {
-      contextType: 'RESEARCHER',
+      contextType: 'ORGANIZATION',
       contextId: 'org-ref-99',
     },
     capabilities: [],
@@ -102,47 +102,38 @@ describe('Review MVP MVP Service Logic & Boundary Checks', () => {
         proposalRef: 'prop-123',
         reviewerId: reviewerUserBoardA.userId,
         boardRef: reviewerUserBoardA.activeContext!.contextId,
-        fundingProgramRef: 'prog-777',
         proposalSnapshot: {
           title: 'Quantum Project',
-          authorName: 'Dr. Nguyen', // Invalid key and forbidden keyword
+          authorName: 'Dr. Nguyen', // Invalid key
         },
       };
 
-      await expect(service.createAssignment(body, programManagerUser)).rejects.toThrow(BadRequestException);
+      await expect(service.createAssignment(body, reviewBoardAdminUser)).rejects.toThrow(BadRequestException);
       expect(mockRepo.createAssignment).not.toHaveBeenCalled();
     });
   });
 
   describe('2. Authorization & Board/Reviewer Matching Gate', () => {
-    it('should throw ForbiddenException if creating assignment with non-Program Manager user', async () => {
+    it('should throw ForbiddenException if creating assignment without reviews.assignments.manage capability', async () => {
       const body = {
         proposalRef: 'prop-123',
         reviewerId: reviewerUserBoardA.userId,
         boardRef: reviewerUserBoardA.activeContext!.contextId,
-        fundingProgramRef: 'prog-777',
         proposalSnapshot: { title: 'Valid snapshot' },
       };
 
       await expect(service.createAssignment(body, reviewerUserBoardA)).rejects.toThrow(ForbiddenException);
     });
 
-    it('allows Program Manager to retrieve assignments in their funding program only', async () => {
+    it('allows Manager with reviews.assignments.manage to retrieve assignment details', async () => {
       const mockAssignment = {
         id: 'assign-123',
         reviewerId: 'another-reviewer',
         boardRef: 'board-xyz',
-        fundingProgramRef: programManagerUser.activeContext!.contextId,
       };
       mockRepo.findAssignmentById.mockResolvedValue(mockAssignment);
 
-      await expect(service.getAssignmentDetail('assign-123', programManagerUser)).resolves.toEqual(mockAssignment);
-
-      mockRepo.findAssignmentById.mockResolvedValue({
-        ...mockAssignment,
-        fundingProgramRef: 'cccccccc-cccc-cccc-cccc-cccccccccccc',
-      });
-      await expect(service.getAssignmentDetail('assign-123', programManagerUser)).rejects.toThrow(ForbiddenException);
+      await expect(service.getAssignmentDetail('assign-123', reviewBoardAdminUser)).resolves.toEqual(mockAssignment);
     });
 
     it('should allow Reviewer to view assignment if boardRef matches their active context', async () => {
@@ -235,7 +226,6 @@ describe('Review MVP MVP Service Logic & Boundary Checks', () => {
       };
       mockRepo.findAssignmentById.mockResolvedValue(mockAssignment);
 
-      // Verify delegation
       const invalidScores = { scientificMerit: 6, feasibility: 4 };
       await service.saveEvaluation('assign-123', invalidScores, 'Comments', reviewerUserBoardA);
       expect(mockRepo.saveEvaluation).toHaveBeenCalledWith('assign-123', reviewerUserBoardA.userId, invalidScores, 'Comments');
@@ -289,8 +279,8 @@ describe('Review MVP MVP Service Logic & Boundary Checks', () => {
       };
       mockRepo.getRecommendation.mockResolvedValue(mockRec);
 
-      const res = await service.getRecommendation('prop-123', programManagerUser);
-      expect(mockRepo.getRecommendation).toHaveBeenCalledWith('prop-123', programManagerUser.activeContext!.contextId);
+      const res = await service.getRecommendation('prop-123', reviewBoardAdminUser);
+      expect(mockRepo.getRecommendation).toHaveBeenCalledWith('prop-123');
       expect(res).toEqual(mockRec);
 
       // Unauthorized access

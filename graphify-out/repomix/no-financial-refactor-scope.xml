@@ -1,0 +1,1756 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: services/grant-service/src/**, services/grant-service/prisma/schema.prisma, services/review-service/src/**, services/review-service/prisma/schema.prisma, services/project-service/src/**, services/project-service/prisma/schema.prisma, services/auth-service/prisma/import-fixture.ts, frontend/app/(workspace)/workspace/iam/admin/*.tsx
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+frontend/
+  app/
+    (workspace)/
+      workspace/
+        iam/
+          admin/
+            IamClientPage.tsx
+            page.tsx
+            RolePermissionsConsole.tsx
+            RolePermissionsPage.tsx
+services/
+  auth-service/
+    prisma/
+      import-fixture.ts
+  grant-service/
+    prisma/
+      schema.prisma
+    src/
+      app.module.ts
+      auth.guard.ts
+      grant-service.spec.ts
+      grant.controller.ts
+      grant.repository.ts
+      grant.service.ts
+      grant.test.ts
+      grant.ts
+      http-exception.filter.ts
+      main.ts
+      opportunity-query.ts
+  project-service/
+    prisma/
+      schema.prisma
+    src/
+      app.module.ts
+      auth.guard.ts
+      http-exception.filter.ts
+      main.ts
+      project-types.ts
+      project.controller.ts
+      project.repository.ts
+      project.service.ts
+      project.spec.ts
+  review-service/
+    prisma/
+      schema.prisma
+    src/
+      anonymizer.ts
+      app.module.ts
+      auth.guard.ts
+      decorators.ts
+      http-exception.filter.ts
+      main.ts
+      review.controller.ts
+      review.repository.spec.ts
+      review.repository.ts
+      review.service.spec.ts
+      review.service.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="frontend/app/(workspace)/workspace/iam/admin/IamClientPage.tsx">
+import { useLocale, type Locale } from "@/app/HomeMotion";
+import Link from "next/link";
+⋮----
+import { useMemo, useState } from "react";
+import { showError, showToast } from "@/lib/alerts";
+import { useIamAdministration } from "@/features/iam/hooks";
+import { ApiError, type IamUser as User } from "@/features/iam/repository";
+⋮----
+type View = "overview" | "roles";
+⋮----
+function groupPermissions(permissions: string[] = [], query = "", locale: Locale)
+⋮----
+const updateUserStatus = async () =>
+⋮----
+const assignRole = async (event: React.FormEvent) =>
+⋮----
+key=
+</file>
+
+<file path="frontend/app/(workspace)/workspace/iam/admin/RolePermissionsConsole.tsx">
+import { useMemo, useState } from "react";
+import { useLocale, type Locale } from "@/app/HomeMotion";
+import type { IamRole, IamUser } from "@/features/iam/repository";
+⋮----
+function isSystemRole(role: IamRole)
+⋮----
+export default function RolePermissionsConsole({
+  roles,
+  users,
+  selectedRoleId,
+  onSelectRole,
+  onAssign,
+}: Readonly<{
+  roles: IamRole[];
+  users: IamUser[];
+  selectedRoleId: string;
+onSelectRole: (id: string)
+⋮----
+const chooseRole = (id: string) =>
+const togglePermission = (permission: string) =>
+const cancelEditing = () =>
+const submitAssignment = async () =>
+⋮----
+const roleButton = (role: IamRole) => (
+    <button key={role.id} type="button" onClick={() => chooseRole(role.id)} className={`mb-1 w-full rounded-xl border px-3 py-3 text-left transition ${selectedRole?.id === role.id ? "border-[color-mix(in_srgb,var(--accent-primary)_35%,var(--border))] bg-[color-mix(in_srgb,var(--accent-primary)_9%,var(--surface-secondary))]" : "border-transparent hover:bg-[var(--surface-secondary)]"}`}>
+      <strong className="block truncate text-sm">{role.name}</strong><span className="mt-1 block text-xs text-text-secondary">{role.permissions?.length ?? 0} {t.permissions.toLowerCase()}</span>
+    </button>
+  );
+⋮----
+</file>
+
+<file path="frontend/app/(workspace)/workspace/iam/admin/RolePermissionsPage.tsx">
+import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useLocale, type Locale } from "@/app/HomeMotion";
+import { useIamAdministration } from "@/features/iam/hooks";
+import { ApiError, type IamRole } from "@/features/iam/repository";
+import { showError, showToast } from "@/lib/alerts";
+⋮----
+type Tab = "permissions" | "assignments" | "scope" | "audit";
+type Modal = "add" | "review" | "backend" | "assign" | null;
+⋮----
+function isSystemRole(role: IamRole)
+⋮----
+const chooseRole = (role: IamRole) =>
+const togglePermission = (permission: string) => setStaged((previous) =>
+⋮----
+const assignRole = async (event: FormEvent) =>
+⋮----
+const RoleButton = (
+⋮----
+<article className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]"><div className="flex flex-wrap items-start gap-4 p-5"><span className="material-symbols-outlined grid size-12 place-items-center rounded-[14px] bg-[var(--surface-secondary)] text-2xl text-[var(--accent-primary)]">policy</span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><h2 className="text-2xl font-semibold">
+⋮----
+<article className="min-w-0 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]"><header className="flex flex-wrap items-end justify-between gap-3 border-b border-[var(--border)] p-4"><div><h3 className="text-lg font-semibold">
+</file>
+
+<file path="services/grant-service/prisma/schema.prisma">
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum OpportunityState {
+  DRAFT
+  PUBLISHED
+  CLOSED
+}
+
+enum ProposalState {
+  DRAFT
+  PAIRED_CONFIRMED
+  SUBMITTED
+  ELIGIBLE
+  INELIGIBLE
+  APPROVED
+  REJECTED
+  REVISION_REQUESTED
+}
+
+enum Country {
+  VN
+  RU
+}
+
+model FundingOpportunity {
+  id                 String          @id @default(uuid()) @db.Uuid
+  title              String
+  description        String?
+  fundingProgramRef  String
+  state              OpportunityState
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  proposals          JointProposal[]
+}
+
+model JointProposal {
+  id             String                      @id @default(uuid()) @db.Uuid
+  opportunityId  String                      @db.Uuid
+  opportunity    FundingOpportunity          @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  state          ProposalState
+  content        String
+  revision       Int                         @default(1)
+  createdAt      DateTime                    @default(now())
+  updatedAt      DateTime                    @updatedAt
+  participants   ProposalParticipant[]
+  confirmations  CollaborationConfirmation[]
+  endorsements   OrganizationEndorsement[]
+  screenings     EligibilityScreening[]
+  decisions      FundingDecision[]
+}
+
+model ProposalParticipant {
+  id              String        @id @default(uuid()) @db.Uuid
+  proposalId      String        @db.Uuid
+  proposal        JointProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  userId          String
+  organizationRef String
+  country         Country
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@unique([proposalId, country])
+  @@unique([proposalId, userId])
+}
+
+model CollaborationConfirmation {
+  id            String        @id @default(uuid()) @db.Uuid
+  proposalId    String        @db.Uuid
+  proposal      JointProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  participantId String
+  confirmed     Boolean       @default(false)
+  confirmedAt   DateTime?
+
+  @@unique([proposalId, participantId])
+}
+
+model OrganizationEndorsement {
+  id              String        @id @default(uuid()) @db.Uuid
+  proposalId      String        @db.Uuid
+  proposal        JointProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  organizationRef String
+  country         Country
+  endorsed        Boolean       @default(false)
+  endorsedAt      DateTime?
+
+  @@unique([proposalId, country])
+}
+
+model EligibilityScreening {
+  id         String        @id @default(uuid()) @db.Uuid
+  proposalId String        @db.Uuid
+  proposal   JointProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  eligible   Boolean
+  reason     String
+  screenedBy String
+  createdAt  DateTime      @default(now())
+}
+
+model FundingDecision {
+  id         String        @id @default(uuid()) @db.Uuid
+  proposalId String        @db.Uuid
+  proposal   JointProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  approved   Boolean
+  reason     String
+  decidedBy  String
+  createdAt  DateTime      @default(now())
+}
+
+model OutboxEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  eventType String
+  payload   String   @db.Text
+  processed Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+</file>
+
+<file path="services/grant-service/src/app.module.ts">
+import { Module } from '@nestjs/common';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@prisma/client';
+import { GrantController } from './grant.controller';
+import { GrantRepository, PRISMA } from './grant.repository';
+import { GrantService } from './grant.service';
+⋮----
+export class AppModule {}
+</file>
+
+<file path="services/grant-service/src/auth.guard.ts">
+import {
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Injectable,
+  SetMetadata,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+⋮----
+export interface AuthenticatedUser {
+  userId: string;
+  sessionId: string;
+  activeContext: { contextType: string; contextId: string } | null;
+  capabilities: string[];
+  authenticationLevel: 'PASSWORD' | 'MFA';
+}
+⋮----
+export const RequireCapability = (capability: string)
+export const Public = ()
+⋮----
+function isAuthenticatedUser(value: unknown): value is AuthenticatedUser
+⋮----
+export class AuthGuard implements CanActivate {
+⋮----
+constructor(private readonly reflector: Reflector)
+⋮----
+async canActivate(context: ExecutionContext): Promise<boolean>
+</file>
+
+<file path="services/grant-service/src/grant-service.spec.ts">
+import {
+  BadRequestException,
+  ConflictException,
+  ExecutionContext,
+  ForbiddenException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { AuthGuard } from './auth.guard';
+import { GrantController } from './grant.controller';
+import { GrantRepository } from './grant.repository';
+import { GrantService } from './grant.service';
+⋮----
+const createMockContext = (headers: Record<string, string>, requiredCapability?: string): ExecutionContext =>
+⋮----
+const handler = () =>
+</file>
+
+<file path="services/grant-service/src/grant.controller.ts">
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard, Public, RequireCapability } from './auth.guard';
+import { GrantService } from './grant.service';
+import { parseOpportunityQuery } from './opportunity-query';
+⋮----
+export class GrantController {
+⋮----
+constructor(private readonly service: GrantService)
+⋮----
+async listOpportunities(@Query() raw: Record<string, unknown>)
+⋮----
+async createOpportunity(@Req() req: any, @Body() body: any)
+⋮----
+async publishOpportunity(@Req() req: any, @Param('id') id: string)
+⋮----
+async closeOpportunity(@Req() req: any, @Param('id') id: string)
+⋮----
+async createProposal(@Req() req: any, @Body() body: any)
+⋮----
+async getProposal(@Req() req: any, @Param('id') id: string)
+⋮----
+async reviseProposal(@Req() req: any, @Param('id') id: string, @Body() body: any)
+⋮----
+async confirmProposal(@Req() req: any, @Param('id') id: string)
+⋮----
+async endorseProposal(@Req() req: any, @Param('id') id: string)
+⋮----
+async submitProposal(@Req() req: any, @Param('id') id: string)
+⋮----
+async screenProposal(@Req() req: any, @Param('id') id: string, @Body() body: any)
+⋮----
+async decisionProposal(@Req() req: any, @Param('id') id: string, @Body() body: any)
+</file>
+
+<file path="services/grant-service/src/grant.repository.ts">
+import { Inject, Injectable } from '@nestjs/common';
+import { Country, OpportunityState, PrismaClient, ProposalState } from '@prisma/client';
+⋮----
+export class GrantRepository {
+⋮----
+constructor(@Inject(PRISMA) private readonly prisma: PrismaClient)
+⋮----
+async findPublishedOpportunities(limit: number, cursor?:
+⋮----
+async createOpportunity(data: {
+    id: string;
+    title: string;
+    description?: string;
+    fundingProgramRef: string;
+    state: OpportunityState;
+})
+⋮----
+async updateOpportunityState(id: string, expectedState: OpportunityState, state: OpportunityState, eventType: string)
+⋮----
+async findOpportunityById(id: string)
+⋮----
+async createProposal(data: {
+    id: string;
+    opportunityId: string;
+    state: ProposalState;
+    content: string;
+    revision: number;
+    participants: { userId: string; organizationRef: string; country: Country }[];
+})
+⋮----
+async findProposalById(id: string)
+⋮----
+async executeInTransaction<T>(fn: (tx: any) => Promise<T>): Promise<T>
+</file>
+
+<file path="services/grant-service/src/grant.service.ts">
+import {
+  BadRequestException,
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { AuthenticatedUser } from './auth.guard';
+import {
+  closeOpportunity,
+  confirmProposal,
+  createOpportunity,
+  createProposal,
+  publishOpportunity,
+  reviseProposal,
+  submitProposal,
+} from './grant';
+import { GrantRepository } from './grant.repository';
+import { encodeCursor, OpportunityQuery } from './opportunity-query';
+⋮----
+function validateUuid(id: string, name: string)
+⋮----
+function validateString(val: string, name: string, minLength = 1)
+⋮----
+export class GrantService {
+⋮----
+constructor(private readonly repository: GrantRepository)
+⋮----
+async listOpportunities(query: OpportunityQuery)
+⋮----
+async createOpportunity(
+    user: AuthenticatedUser,
+    dto: { id: string; title: string; description?: string; fundingProgramRef: string },
+)
+⋮----
+async publishOpportunity(user: AuthenticatedUser, id: string)
+⋮----
+async closeOpportunity(user: AuthenticatedUser, id: string)
+⋮----
+async createProposal(
+    user: AuthenticatedUser,
+    dto: {
+      id: string;
+      opportunityId: string;
+      content: string;
+      vnParticipant: { userId: string; organizationRef: string };
+      ruParticipant: { userId: string; organizationRef: string };
+    },
+)
+⋮----
+async getProposal(user: AuthenticatedUser, id: string)
+⋮----
+async reviseProposal(user: AuthenticatedUser, id: string, dto:
+⋮----
+async confirmProposal(user: AuthenticatedUser, id: string)
+⋮----
+async endorseProposal(user: AuthenticatedUser, id: string)
+⋮----
+async submitProposal(user: AuthenticatedUser, id: string)
+⋮----
+async screenProposal(user: AuthenticatedUser, id: string, dto:
+⋮----
+async decisionProposal(
+    user: AuthenticatedUser,
+    id: string,
+    dto: { approved: boolean; reason: string; requestRevision?: boolean },
+)
+</file>
+
+<file path="services/grant-service/src/grant.test.ts">
+import { test, describe } from 'node:test';
+import assert from 'node:assert';
+import {
+  createOpportunity,
+  publishOpportunity,
+  closeOpportunity,
+  createProposal,
+  confirmProposal,
+  reviseProposal,
+  submitProposal,
+} from './grant.ts';
+⋮----
+// DRAFT -> CLOSED (invalid)
+⋮----
+// PUBLISHED -> PUBLISHED (invalid)
+⋮----
+// CLOSED -> PUBLISHED (invalid)
+⋮----
+// CLOSED -> CLOSED (invalid)
+⋮----
+// Confirm VN side
+⋮----
+// Confirm RU side -> yields PAIRED_CONFIRMED
+⋮----
+// Confirm both sides
+⋮----
+// Revise content
+⋮----
+// Attempt submit from DRAFT
+⋮----
+// Confirm one side
+⋮----
+// Confirm second side
+⋮----
+// Submit
+⋮----
+// Try to confirm again
+⋮----
+// Try to revise
+⋮----
+// Try to submit again
+⋮----
+// Try to confirm
+⋮----
+// Try to revise
+⋮----
+// Try to submit
+</file>
+
+<file path="services/grant-service/src/grant.ts">
+export type OpportunityState = 'DRAFT' | 'PUBLISHED' | 'CLOSED';
+⋮----
+export interface FundingOpportunity {
+  readonly id: string;
+  readonly state: OpportunityState;
+}
+⋮----
+export type ProposalState = 'DRAFT' | 'PAIRED_CONFIRMED' | 'SUBMITTED';
+⋮----
+export interface JointProposal {
+  readonly id: string;
+  readonly opportunityId: string;
+  readonly vnParticipantId: string;
+  readonly ruParticipantId: string;
+  readonly vnConfirmed: boolean;
+  readonly ruConfirmed: boolean;
+  readonly state: ProposalState;
+  readonly content: string;
+  readonly revision: number;
+}
+⋮----
+/**
+ * Creates a new FundingOpportunity in DRAFT state.
+ */
+export function createOpportunity(id: string): FundingOpportunity
+⋮----
+/**
+ * Transitions FundingOpportunity state from DRAFT to PUBLISHED.
+ */
+export function publishOpportunity(opportunity: FundingOpportunity): FundingOpportunity
+⋮----
+/**
+ * Transitions FundingOpportunity state from PUBLISHED to CLOSED.
+ */
+export function closeOpportunity(opportunity: FundingOpportunity): FundingOpportunity
+⋮----
+/**
+ * Creates a new JointProposal in DRAFT state.
+ * Can only create proposal for a PUBLISHED opportunity.
+ */
+export function createProposal(
+  id: string,
+  opportunity: FundingOpportunity,
+  vnParticipantId: string,
+  ruParticipantId: string,
+  content: string
+): JointProposal
+⋮----
+/**
+ * Confirms the proposal from a specific participant.
+ * Only the exact VN or RU participant may confirm their own side.
+ * Both confirmations automatically yield PAIRED_CONFIRMED.
+ * Fails closed if opportunity is not PUBLISHED or proposal is already SUBMITTED.
+ */
+export function confirmProposal(
+  proposal: JointProposal,
+  opportunity: FundingOpportunity,
+  participantId: string
+): JointProposal
+⋮----
+/**
+ * Revises the proposal content.
+ * Increments revision and invalidates both confirmations (reverts to DRAFT).
+ * Only allowed when proposal is editable (not SUBMITTED) and opportunity is PUBLISHED.
+ * Enforces optimistic concurrency control using expectedRevision.
+ */
+export function reviseProposal(
+  proposal: JointProposal,
+  opportunity: FundingOpportunity,
+  newContent: string,
+  expectedRevision: number
+): JointProposal
+⋮----
+/**
+ * Submits the proposal.
+ * Submission is only allowed from PAIRED_CONFIRMED state and produces SUBMITTED.
+ * Submitted proposals are immutable.
+ */
+export function submitProposal(proposal: JointProposal, opportunity: FundingOpportunity): JointProposal
+</file>
+
+<file path="services/grant-service/src/http-exception.filter.ts">
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
+⋮----
+export class SafeHttpExceptionFilter implements ExceptionFilter {
+⋮----
+catch(error: unknown, host: ArgumentsHost)
+</file>
+
+<file path="services/grant-service/src/main.ts">
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { SafeHttpExceptionFilter } from './http-exception.filter';
+⋮----
+async function bootstrap()
+</file>
+
+<file path="services/grant-service/src/opportunity-query.ts">
+export interface Cursor {
+  readonly createdAt: string;
+  readonly id: string;
+}
+⋮----
+export interface OpportunityQuery {
+  readonly limit: number;
+  readonly cursor?: Cursor;
+}
+⋮----
+function parseLimit(value: unknown): number
+⋮----
+function validateCursorObject(obj: unknown): Cursor
+⋮----
+export function decodeCursor(cursorStr: string): Cursor
+⋮----
+export function encodeCursor(cursor: Cursor): string
+⋮----
+export function parseOpportunityQuery(input: unknown): OpportunityQuery
+</file>
+
+<file path="services/project-service/prisma/schema.prisma">
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ProjectStatus {
+  ACTIVE
+  COMPLETED
+  TERMINATED
+}
+
+enum ResourceRole {
+  LEAD
+  MEMBER
+}
+
+enum MilestoneStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REVISION_REQUESTED
+}
+
+enum ReportStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REVISION_REQUESTED
+}
+
+model Project {
+  id                String              @id @default(uuid()) @db.Uuid
+  proposalRef       String              @unique
+  decisionRef       String              @unique
+  fundingProgramId  String              @db.Uuid
+  title             String
+  description       String?
+  status            ProjectStatus       @default(ACTIVE)
+  terminationReason String?
+  expectedVersion   Int                 @default(1)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  members           ProjectMember[]
+  milestones        ProjectMilestone[]
+  reports           ProgressReport[]
+  outcomes          ProjectOutcomeRef[]
+
+  @@index([status])
+}
+
+model ProjectMember {
+  id        String       @id @default(uuid()) @db.Uuid
+  projectId String       @db.Uuid
+  userId    String       @db.Uuid
+  role      ResourceRole
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  project   Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+}
+
+model ProjectMilestone {
+  id              String             @id @default(uuid()) @db.Uuid
+  projectId       String             @db.Uuid
+  title           String
+  description     String?
+  dueDate         DateTime
+  status          MilestoneStatus    @default(DRAFT)
+  expectedVersion Int                @default(1)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  project         Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  deliverables    ProjectDeliverable[]
+  decisions       MilestoneDecision[]
+  reports         ProgressReport[]
+
+  @@index([projectId, status])
+}
+
+model ProjectDeliverable {
+  id          String           @id @default(uuid()) @db.Uuid
+  milestoneId String           @db.Uuid
+  title       String
+  description String?
+  url         String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  milestone   ProjectMilestone @relation(fields: [milestoneId], references: [id], onDelete: Cascade)
+}
+
+model ProgressReport {
+  id              String            @id @default(uuid()) @db.Uuid
+  projectId       String            @db.Uuid
+  milestoneId     String?           @db.Uuid
+  title           String
+  content         String
+  status          ReportStatus      @default(DRAFT)
+  expectedVersion Int               @default(1)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  project         Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  milestone       ProjectMilestone? @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
+
+  @@index([projectId, status])
+}
+
+model MilestoneDecision {
+  id          String           @id @default(uuid()) @db.Uuid
+  milestoneId String           @db.Uuid
+  reviewerId  String           @db.Uuid
+  status      MilestoneStatus
+  feedback    String?
+  createdAt   DateTime         @default(now())
+  milestone   ProjectMilestone @relation(fields: [milestoneId], references: [id], onDelete: Cascade)
+}
+
+model ProjectOutcomeRef {
+  id          String   @id @default(uuid()) @db.Uuid
+  projectId   String   @db.Uuid
+  outcomeType String
+  outcomeRef  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, outcomeType, outcomeRef])
+}
+
+model OutboxEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  eventType String
+  payload   Json
+  processed Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+</file>
+
+<file path="services/project-service/src/app.module.ts">
+import { Module } from '@nestjs/common';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@prisma/client';
+import pg from 'pg';
+import { ProjectController } from './project.controller';
+import { ProjectService } from './project.service';
+import { ProjectRepository } from './project.repository';
+⋮----
+export class AppModule {}
+</file>
+
+<file path="services/project-service/src/auth.guard.ts">
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
+⋮----
+export interface AuthenticatedUser {
+  userId: string;
+  sessionId: string;
+  activeContext: { contextType: string; contextId: string } | null;
+  capabilities: string[];
+  authenticationLevel: 'PASSWORD' | 'MFA';
+}
+⋮----
+function isAuthenticatedUser(value: unknown): value is AuthenticatedUser
+⋮----
+export class AuthGuard implements CanActivate {
+⋮----
+async canActivate(context: ExecutionContext): Promise<boolean>
+</file>
+
+<file path="services/project-service/src/http-exception.filter.ts">
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
+⋮----
+export class SafeHttpExceptionFilter implements ExceptionFilter {
+⋮----
+catch(error: unknown, host: ArgumentsHost)
+</file>
+
+<file path="services/project-service/src/main.ts">
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { SafeHttpExceptionFilter } from './http-exception.filter';
+⋮----
+async function bootstrap()
+</file>
+
+<file path="services/project-service/src/project-types.ts">
+import { BadRequestException } from '@nestjs/common';
+⋮----
+export function isUuid(val: any): boolean
+⋮----
+export function isBoundedString(val: any, minLen = 1, maxLen = 255): boolean
+⋮----
+export function validateUuid(val: any, fieldName: string): string
+⋮----
+export function validateString(val: any, fieldName: string, minLen = 1, maxLen = 255): string
+⋮----
+export function validateOptionalString(val: any, fieldName: string, maxLen = 255): string | undefined
+⋮----
+export function validateVersion(val: any, fieldName = 'expectedVersion'): number
+⋮----
+export function validateDate(val: any, fieldName: string): Date
+⋮----
+export interface BootstrapProjectDto {
+  decisionRef: string;
+  proposalRef: string;
+  fundingProgramId: string;
+  title: string;
+  description?: string;
+  leadId: string;
+  approved: boolean;
+}
+⋮----
+export function parseBootstrapDto(body: any): BootstrapProjectDto
+⋮----
+export interface AddMemberDto {
+  userId: string;
+  role: 'LEAD' | 'MEMBER';
+}
+⋮----
+export function parseAddMemberDto(body: any): AddMemberDto
+⋮----
+export interface DeliverableDto {
+  title: string;
+  description?: string;
+  url?: string;
+}
+⋮----
+export interface CreateMilestoneDto {
+  title: string;
+  description?: string;
+  dueDate: string;
+  deliverables?: DeliverableDto[];
+}
+⋮----
+export function parseCreateMilestoneDto(body: any): CreateMilestoneDto
+⋮----
+export interface UpdateMilestoneDto {
+  title?: string;
+  description?: string;
+  dueDate?: string;
+  deliverables?: DeliverableDto[];
+  expectedVersion: number;
+}
+⋮----
+export function parseUpdateMilestoneDto(body: any): UpdateMilestoneDto
+⋮----
+export interface CreateReportDto {
+  milestoneId?: string;
+  title: string;
+  content: string;
+}
+⋮----
+export function parseCreateReportDto(body: any): CreateReportDto
+⋮----
+export interface UpdateReportDto {
+  title?: string;
+  content?: string;
+  expectedVersion: number;
+}
+⋮----
+export function parseUpdateReportDto(body: any): UpdateReportDto
+⋮----
+export interface ReviewDto {
+  approved: boolean;
+  feedback?: string;
+  expectedVersion: number;
+}
+⋮----
+export function parseReviewDto(body: any): ReviewDto
+⋮----
+export interface OutcomeDto {
+  outcomeType: string;
+  outcomeRef: string;
+}
+⋮----
+export function parseOutcomeDto(body: any): OutcomeDto
+⋮----
+export interface TerminateDto {
+  reason: string;
+  expectedVersion: number;
+}
+⋮----
+export function parseTerminateDto(body: any): TerminateDto
+⋮----
+export interface SubmitDto {
+  expectedVersion: number;
+}
+⋮----
+export function parseSubmitDto(body: any): SubmitDto
+⋮----
+export interface CompleteDto {
+  expectedVersion: number;
+}
+⋮----
+export function parseCompleteDto(body: any): CompleteDto
+</file>
+
+<file path="services/project-service/src/project.controller.ts">
+import {
+  Controller,
+  Post,
+  Get,
+  Patch,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+  Req,
+  NotFoundException,
+} from '@nestjs/common';
+import { ProjectService } from './project.service';
+import { AuthGuard } from './auth.guard';
+import {
+  parseBootstrapDto,
+  parseAddMemberDto,
+  parseCreateMilestoneDto,
+  parseUpdateMilestoneDto,
+  parseSubmitDto,
+  parseReviewDto,
+  parseCreateReportDto,
+  parseUpdateReportDto,
+  parseOutcomeDto,
+  parseCompleteDto,
+  parseTerminateDto,
+} from './project-types';
+⋮----
+function checkUuid(id: string, name: string)
+⋮----
+export class ProjectController {
+⋮----
+constructor(private readonly service: ProjectService)
+⋮----
+async bootstrap(@Body() body: any, @Req() req: any)
+⋮----
+async list(@Query() query: any, @Req() req: any)
+⋮----
+async detail(@Param('id') id: string, @Req() req: any)
+⋮----
+async getMembers(@Param('id') id: string, @Req() req: any)
+⋮----
+async addMember(@Param('id') id: string, @Body() body: any, @Req() req: any)
+⋮----
+async createMilestone(@Param('id') id: string, @Body() body: any, @Req() req: any)
+⋮----
+async updateMilestone(
+    @Param('id') id: string,
+    @Param('milestoneId') milestoneId: string,
+    @Body() body: any,
+    @Req() req: any
+)
+⋮----
+async submitMilestone(
+    @Param('id') id: string,
+    @Param('milestoneId') milestoneId: string,
+    @Body() body: any,
+    @Req() req: any
+)
+⋮----
+async reviewMilestone(
+    @Param('id') id: string,
+    @Param('milestoneId') milestoneId: string,
+    @Body() body: any,
+    @Req() req: any
+)
+⋮----
+async createReport(@Param('id') id: string, @Body() body: any, @Req() req: any)
+⋮----
+async updateReport(
+    @Param('id') id: string,
+    @Param('reportId') reportId: string,
+    @Body() body: any,
+    @Req() req: any
+)
+⋮----
+async submitReport(
+    @Param('id') id: string,
+    @Param('reportId') reportId: string,
+    @Body() body: any,
+    @Req() req: any
+)
+⋮----
+async reviewReport(
+    @Param('id') id: string,
+    @Param('reportId') reportId: string,
+    @Body() body: any,
+    @Req() req: any
+)
+⋮----
+async addOutcome(@Param('id') id: string, @Body() body: any, @Req() req: any)
+⋮----
+async complete(@Param('id') id: string, @Body() body: any, @Req() req: any)
+⋮----
+async terminate(@Param('id') id: string, @Body() body: any, @Req() req: any)
+</file>
+
+<file path="services/project-service/src/project.repository.ts">
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import { PrismaClient, ProjectStatus, ResourceRole, MilestoneStatus, ReportStatus } from '@prisma/client';
+import { PRISMA } from './app.module';
+import {
+  BootstrapProjectDto,
+  CreateMilestoneDto,
+  UpdateMilestoneDto,
+  CreateReportDto,
+  UpdateReportDto,
+} from './project-types';
+⋮----
+export class ProjectRepository {
+⋮----
+constructor(@Inject(PRISMA) private readonly prisma: PrismaClient)
+⋮----
+async findByRef(proposalRef: string, decisionRef: string)
+⋮----
+async bootstrapProject(dto: BootstrapProjectDto)
+⋮----
+async findById(id: string)
+⋮----
+async listProjects(
+    filter: { userId?: string; fundingProgramId?: string },
+    limit: number,
+    cursor?: { createdAt: string; id: string }
+)
+⋮----
+async addMember(projectId: string, userId: string, role: ResourceRole)
+⋮----
+async getMembers(projectId: string)
+⋮----
+async createMilestone(projectId: string, dto: CreateMilestoneDto)
+⋮----
+async updateMilestone(milestoneId: string, dto: UpdateMilestoneDto, currentVersion: number)
+⋮----
+// Delete old deliverables
+⋮----
+async submitMilestone(milestoneId: string, currentVersion: number)
+⋮----
+async reviewMilestone(
+    milestoneId: string,
+    approved: boolean,
+    feedback: string | undefined,
+    reviewerId: string,
+    currentVersion: number
+)
+⋮----
+async createReport(projectId: string, dto: CreateReportDto)
+⋮----
+async updateReport(reportId: string, dto: UpdateReportDto, currentVersion: number)
+⋮----
+async submitReport(reportId: string, currentVersion: number)
+⋮----
+async reviewReport(
+    reportId: string,
+    approved: boolean,
+    feedback: string | undefined,
+    currentVersion: number
+)
+⋮----
+async addOutcome(projectId: string, outcomeType: string, outcomeRef: string)
+⋮----
+async completeProject(projectId: string, currentVersion: number)
+⋮----
+async terminateProject(projectId: string, reason: string, currentVersion: number)
+</file>
+
+<file path="services/project-service/src/project.service.ts">
+import {
+  Injectable,
+  ForbiddenException,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
+import { ProjectRepository } from './project.repository';
+import { AuthenticatedUser } from './auth.guard';
+import {
+  BootstrapProjectDto,
+  CreateMilestoneDto,
+  UpdateMilestoneDto,
+  CreateReportDto,
+  UpdateReportDto,
+  ReviewDto,
+  OutcomeDto,
+  TerminateDto,
+} from './project-types';
+import { ProjectStatus, MilestoneStatus, ReportStatus, ResourceRole } from '@prisma/client';
+⋮----
+export class ProjectService {
+⋮----
+constructor(private readonly repository: ProjectRepository)
+⋮----
+async bootstrap(dto: BootstrapProjectDto, user: AuthenticatedUser)
+⋮----
+// "Bootstrap restricted FOUNDATION_DECISION_MAKER in FUNDING_PROGRAM with grants.decisions.issue_foundation"
+⋮----
+// "wrong program denial"
+⋮----
+async findOne(id: string, user: AuthenticatedUser)
+⋮----
+// Authorization checks
+⋮----
+async list(query:
+⋮----
+async getMembers(projectId: string, user: AuthenticatedUser)
+⋮----
+await this.findOne(projectId, user); // checks visibility
+⋮----
+async addMember(projectId: string, targetUserId: string, role: 'LEAD' | 'MEMBER', user: AuthenticatedUser)
+⋮----
+async createMilestone(projectId: string, dto: CreateMilestoneDto, user: AuthenticatedUser)
+⋮----
+async updateMilestone(
+    projectId: string,
+    milestoneId: string,
+    dto: UpdateMilestoneDto,
+    user: AuthenticatedUser
+)
+⋮----
+async submitMilestone(projectId: string, milestoneId: string, expectedVersion: number, user: AuthenticatedUser)
+⋮----
+async reviewMilestone(
+    projectId: string,
+    milestoneId: string,
+    dto: ReviewDto,
+    user: AuthenticatedUser
+)
+⋮----
+async createReport(projectId: string, dto: CreateReportDto, user: AuthenticatedUser)
+⋮----
+async updateReport(
+    projectId: string,
+    reportId: string,
+    dto: UpdateReportDto,
+    user: AuthenticatedUser
+)
+⋮----
+async submitReport(projectId: string, reportId: string, expectedVersion: number, user: AuthenticatedUser)
+⋮----
+async reviewReport(
+    projectId: string,
+    reportId: string,
+    dto: ReviewDto,
+    user: AuthenticatedUser
+)
+⋮----
+async addOutcome(projectId: string, dto: OutcomeDto, user: AuthenticatedUser)
+⋮----
+async complete(projectId: string, expectedVersion: number, user: AuthenticatedUser)
+⋮----
+async terminate(projectId: string, dto: TerminateDto, user: AuthenticatedUser)
+⋮----
+// --- Helper Methods ---
+⋮----
+private requireCapability(user: AuthenticatedUser, capability: string)
+⋮----
+private async checkLead(projectId: string, userId: string)
+⋮----
+private async checkProgramManager(project: any, user: AuthenticatedUser)
+</file>
+
+<file path="services/project-service/src/project.spec.ts">
+import { ProjectService } from './project.service';
+import { ProjectRepository } from './project.repository';
+import { AuthenticatedUser } from './auth.guard';
+import { ProjectStatus, MilestoneStatus, ReportStatus, ResourceRole } from '@prisma/client';
+import { ForbiddenException, BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
+⋮----
+// 1. Submit draft milestone
+⋮----
+// 2. PM requests revision
+⋮----
+// 3. Lead updates milestone (allowed in REVISION_REQUESTED)
+</file>
+
+<file path="services/review-service/prisma/schema.prisma">
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AssignmentStatus {
+  PENDING
+  CONFLICT
+  DRAFT
+  SUBMITTED
+}
+
+enum ConflictDeclarationType {
+  CONFLICT
+  NO_CONFLICT
+}
+
+enum ReviewStatus {
+  DRAFT
+  SUBMITTED
+}
+
+enum ScoreDimension {
+  scientificMerit
+  feasibility
+  bilateralValue
+  impact
+}
+
+model ReviewAssignment {
+  id                 String               @id @default(uuid()) @db.Uuid
+  proposalRef        String
+  reviewerId         String
+  boardRef           String
+  fundingProgramRef  String
+  status             AssignmentStatus     @default(PENDING)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  snapshot           ProposalSnapshot?
+  conflict           ConflictDeclaration?
+  reviewRecord       ReviewRecord?
+
+  @@index([reviewerId])
+  @@index([proposalRef])
+}
+
+model ProposalSnapshot {
+  id           String           @id @default(uuid()) @db.Uuid
+  assignmentId String           @unique @db.Uuid
+  proposalRef  String
+  snapshot     Json // Immutable allowlisted proposal fields
+  createdAt    DateTime         @default(now())
+  assignment   ReviewAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+}
+
+model ConflictDeclaration {
+  id           String           @id @default(uuid()) @db.Uuid
+  assignmentId String           @unique @db.Uuid
+  reviewerId   String
+  declaration  ConflictDeclarationType
+  declaredAt   DateTime         @default(now())
+  assignment   ReviewAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+}
+
+model ReviewRecord {
+  id           String            @id @default(uuid()) @db.Uuid
+  assignmentId String            @unique @db.Uuid
+  reviewerId   String
+  status       ReviewStatus      @default(DRAFT)
+  comments     String?
+  submittedAt  DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  scores       EvaluationScore[]
+  assignment   ReviewAssignment  @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+}
+
+model EvaluationScore {
+  id             String       @id @default(uuid()) @db.Uuid
+  reviewRecordId String       @db.Uuid
+  dimension      ScoreDimension
+  score          Int // 1..5
+  reviewRecord   ReviewRecord @relation(fields: [reviewRecordId], references: [id], onDelete: Cascade)
+
+  @@unique([reviewRecordId, dimension])
+}
+
+model EvaluationRecommendation {
+  id                    String   @id @default(uuid()) @db.Uuid
+  proposalRef           String   @unique
+  averageScientificMerit Float
+  averageFeasibility     Float
+  averageBilateralValue  Float
+  averageImpact          Float
+  overallAverage         Float
+  totalReviews           Int
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model OutboxEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  eventType String // reviews.evaluation.submitted
+  payload   Json
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+</file>
+
+<file path="services/review-service/src/anonymizer.ts">
+export function validateProposalSnapshot(value: unknown): boolean
+</file>
+
+<file path="services/review-service/src/app.module.ts">
+import { Module } from '@nestjs/common';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@prisma/client';
+import { ReviewController } from './review.controller';
+import { PRISMA, ReviewRepository } from './review.repository';
+import { ReviewService } from './review.service';
+⋮----
+export class AppModule {}
+</file>
+
+<file path="services/review-service/src/auth.guard.ts">
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+⋮----
+export interface AuthenticatedUser {
+  userId: string;
+  sessionId: string;
+  activeContext: { contextType: string; contextId: string } | null;
+  capabilities: string[];
+  authenticationLevel: 'PASSWORD' | 'MFA';
+}
+⋮----
+function isAuthenticatedUser(value: unknown): value is AuthenticatedUser
+⋮----
+export class AuthGuard implements CanActivate {
+⋮----
+constructor(private readonly reflector: Reflector)
+⋮----
+async canActivate(context: ExecutionContext): Promise<boolean>
+</file>
+
+<file path="services/review-service/src/decorators.ts">
+import { SetMetadata, createParamDecorator, ExecutionContext } from '@nestjs/common';
+import type { AuthenticatedUser } from './auth.guard';
+⋮----
+export const RequireContext = (contextType: string)
+export const RequireCapability = (capability: string)
+</file>
+
+<file path="services/review-service/src/http-exception.filter.ts">
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
+⋮----
+export class SafeHttpExceptionFilter implements ExceptionFilter {
+⋮----
+catch(error: unknown, host: ArgumentsHost)
+</file>
+
+<file path="services/review-service/src/main.ts">
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { SafeHttpExceptionFilter } from './http-exception.filter';
+⋮----
+async function bootstrap()
+</file>
+
+<file path="services/review-service/src/review.controller.ts">
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Query,
+  Param,
+  UseGuards,
+  BadRequestException,
+} from '@nestjs/common';
+import { AuthGuard } from './auth.guard';
+import { ReviewService } from './review.service';
+import { RequireContext, RequireCapability, CurrentUser } from './decorators';
+import type { AuthenticatedUser } from './auth.guard';
+⋮----
+export class ReviewController {
+⋮----
+constructor(private readonly reviewService: ReviewService)
+⋮----
+async createAssignment(
+    @Body()
+    body: {
+      proposalRef: string;
+      reviewerId: string;
+      boardRef: string;
+      fundingProgramRef: string;
+      proposalSnapshot: unknown;
+    },
+    @CurrentUser() user: AuthenticatedUser,
+)
+⋮----
+async listAssignments(
+    @CurrentUser() user: AuthenticatedUser,
+    @Query('limit') limitStr?: string,
+    @Query('offset') offsetStr?: string,
+)
+⋮----
+async getAssignmentDetail(
+    @Param('id') id: string,
+    @CurrentUser() user: AuthenticatedUser,
+)
+⋮----
+// Conflict Declare - resource path
+⋮----
+async declareConflictForAssignment(
+    @Param('id') id: string,
+    @Body() body: { declaration?: unknown },
+    @CurrentUser() user: AuthenticatedUser,
+)
+⋮----
+// Conflict Declare - direct path
+⋮----
+async declareConflict(
+    @Body() body: { assignmentId?: unknown; declaration?: unknown },
+    @CurrentUser() user: AuthenticatedUser,
+)
+⋮----
+// Save Evaluation - resource path
+⋮----
+async saveEvaluationForAssignment(
+    @Param('id') id: string,
+    @Body()
+    body: {
+      scientificMerit?: number;
+      feasibility?: number;
+      bilateralValue?: number;
+      impact?: number;
+      comments?: string;
+    },
+    @CurrentUser() user: AuthenticatedUser,
+)
+⋮----
+// Save Evaluation - direct path
+⋮----
+async saveEvaluation(
+    @Body()
+    body: {
+      assignmentId?: unknown;
+      scientificMerit?: number;
+      feasibility?: number;
+      bilateralValue?: number;
+      impact?: number;
+      comments?: string;
+    },
+    @CurrentUser() user: AuthenticatedUser,
+)
+⋮----
+// Submit Evaluation - resource path
+⋮----
+async submitEvaluationForAssignment(
+    @Param('id') id: string,
+    @Body()
+    body: {
+      scientificMerit: number;
+      feasibility: number;
+      bilateralValue: number;
+      impact: number;
+      comments: string;
+    },
+    @CurrentUser() user: AuthenticatedUser,
+)
+⋮----
+// Submit Evaluation - direct path
+⋮----
+async submitEvaluation(
+    @Body()
+    body: {
+      assignmentId?: unknown;
+      scientificMerit: number;
+      feasibility: number;
+      bilateralValue: number;
+      impact: number;
+      comments: string;
+    },
+    @CurrentUser() user: AuthenticatedUser,
+)
+⋮----
+// Recommendation - path 1
+⋮----
+async getRecommendation(
+    @Param('proposalRef') proposalRef: string,
+    @CurrentUser() user: AuthenticatedUser,
+)
+⋮----
+// Recommendation - path 2
+⋮----
+async getRecommendationAlternative(
+    @Param('proposalRef') proposalRef: string,
+    @CurrentUser() user: AuthenticatedUser,
+)
+</file>
+
+<file path="services/review-service/src/review.repository.spec.ts">
+import { BadRequestException, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { ReviewRepository } from './review.repository';
+⋮----
+conflict: null, // NO conflict declared yet
+⋮----
+// Mock other submitted reviews for same proposal to test deterministic average calculation
+⋮----
+// Verify evaluation recommendation average scores calculation
+// ScientificMerit: (5 + 4) / 2 = 4.5
+// Feasibility: (4 + 4) / 2 = 4.0
+// BilateralValue: (4 + 2) / 2 = 3.0
+// Impact: (5 + 3) / 2 = 4.0
+// OverallAverage: (4.5 + 4.0 + 3.0 + 4.0) / 4 = 3.875
+⋮----
+// Verify outbox event creation inside the transaction
+</file>
+
+<file path="services/review-service/src/review.repository.ts">
+import { Inject, Injectable, BadRequestException, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+⋮----
+export function isValidUuid(id: string): boolean
+⋮----
+export class ReviewRepository {
+⋮----
+constructor(@Inject(PRISMA) private readonly prisma: PrismaClient)
+⋮----
+async createAssignment(params: {
+    proposalRef: string;
+    reviewerId: string;
+    boardRef: string;
+    fundingProgramRef: string;
+    snapshot: any;
+})
+⋮----
+async findAssignments(filters: {
+    reviewerId?: string;
+    boardRef?: string;
+    fundingProgramRef?: string;
+    limit: number;
+    offset: number;
+})
+⋮----
+async findAssignmentById(id: string)
+⋮----
+async saveConflictDeclaration(assignmentId: string, reviewerId: string, declaration: 'CONFLICT' | 'NO_CONFLICT')
+⋮----
+throw new ForbiddenException('Reviewer mismatch'); // Handled at service layer, throwing here to be safe
+⋮----
+// Update assignment status
+⋮----
+async saveEvaluation(
+    assignmentId: string,
+    reviewerId: string,
+    scores: { scientificMerit?: number; feasibility?: number; bilateralValue?: number; impact?: number },
+    comments?: string,
+)
+⋮----
+// Conflict checks
+⋮----
+// Update assignment status to DRAFT
+⋮----
+// Upsert scores
+⋮----
+async submitEvaluation(
+    assignmentId: string,
+    reviewerId: string,
+    scores: { scientificMerit: number; feasibility: number; bilateralValue: number; impact: number },
+    comments: string,
+)
+⋮----
+// Conflict checks
+⋮----
+// Score validation
+⋮----
+// Update assignment status to SUBMITTED
+⋮----
+// Upsert scores
+⋮----
+// Calculate new averages recursively for proposalRef
+⋮----
+// Create outbox event
+⋮----
+async getRecommendation(proposalRef: string, fundingProgramRef: string)
+</file>
+
+<file path="services/review-service/src/review.service.spec.ts">
+import { BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
+import { ReviewService } from './review.service';
+import { validateProposalSnapshot } from './anonymizer';
+import type { AuthenticatedUser } from './auth.guard';
+⋮----
+// Pre-configured Test Users
+⋮----
+budget: 500000, // Not allowed root key
+⋮----
+authorName: 'Dr. Nguyen', // Invalid key and forbidden keyword
+⋮----
+boardRef: reviewerUserBoardA.activeContext!.contextId, // Board A
+⋮----
+// Reviewer on Board B tries to view Board A assignment
+⋮----
+// Verify delegation
+⋮----
+// Unauthorized access
+</file>
+
+<file path="services/review-service/src/review.service.ts">
+import { Injectable, BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
+import { ReviewRepository } from './review.repository';
+import { validateProposalSnapshot } from './anonymizer';
+import type { AuthenticatedUser } from './auth.guard';
+⋮----
+export class ReviewService {
+⋮----
+constructor(private readonly repository: ReviewRepository)
+⋮----
+async createAssignment(
+    params: {
+      proposalRef: string;
+      reviewerId: string;
+      boardRef: string;
+      fundingProgramRef: string;
+      proposalSnapshot: unknown;
+    },
+    user: AuthenticatedUser,
+)
+⋮----
+// 1. Verify program manager role/capabilities in the controller, but double-check here as well
+⋮----
+// 2. Validate proposal snapshot
+⋮----
+async listAssignments(user: AuthenticatedUser, limit = 10, offset = 0)
+⋮----
+// Program manager can see all assignments
+⋮----
+// Reviewer can see only their assigned records
+⋮----
+async getAssignmentDetail(id: string, user: AuthenticatedUser)
+⋮----
+async declareConflict(assignmentId: string, declaration: 'CONFLICT' | 'NO_CONFLICT', user: AuthenticatedUser)
+⋮----
+// Reviewer active context verification
+⋮----
+async saveEvaluation(
+    assignmentId: string,
+    scores: { scientificMerit?: number; feasibility?: number; bilateralValue?: number; impact?: number },
+    comments: string | undefined,
+    user: AuthenticatedUser,
+)
+⋮----
+async submitEvaluation(
+    assignmentId: string,
+    scores: { scientificMerit: number; feasibility: number; bilateralValue: number; impact: number },
+    comments: string,
+    user: AuthenticatedUser,
+)
+⋮----
+async getRecommendation(proposalRef: string, user: AuthenticatedUser)
+</file>
+
+<file path="frontend/app/(workspace)/workspace/iam/admin/page.tsx">
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { SESSION_COOKIE_NAME } from "@/features/auth/server";
+import IamClientPage from "./IamClientPage";
+import RolePermissionsPage from "./RolePermissionsPage";
+⋮----
+type View = "overview" | "roles";
+⋮----
+export default async function IamAdminPage(
+</file>
+
+<file path="services/auth-service/prisma/import-fixture.ts">
+import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+⋮----
+import { z } from 'zod';
+⋮----
+export async function importFixture(prisma: PrismaClient, fixturePath?: string)
+</file>
+
+</files>

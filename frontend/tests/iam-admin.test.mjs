@@ -99,10 +99,10 @@ test("IAM client uses the approved flow UI with real BFF data only", async () =>
   assert.match(fileContent, /groupPermissions\(selectedRole\?\.permissions, permissionQuery, locale\)/);
   assert.match(fileContent, /permissionLabels\[locale\]\[permission\]/);
   assert.match(fileContent, /groupLabels\[locale\]\[group\.name\]/);
-  assert.match(fileContent, /grants\.proposals\.confirm_paired/);
+  assert.match(fileContent, /collab\.proposals\.confirm_paired/);
   assert.match(fileContent, /Xác nhận hồ sơ đề xuất song phương/);
   assert.match(fileContent, /roleLabels\[locale\]\[role\.name\]/);
-  assert.match(fileContent, /Quản trị quyết định của Quỹ/);
+  assert.match(fileContent, /Quản trị quyết định cộng tác/);
   assert.doesNotMatch(fileContent, /\{role\.name\} ·|\{selectedRole\?\.name\}/);
   assert.doesNotMatch(fileContent, /\{t\.workspace\}|\{t\.refresh\}/);
   assert.match(fileContent, /iam-admin-surface/);

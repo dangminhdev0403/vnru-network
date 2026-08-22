@@ -28,18 +28,12 @@ export class ProjectService {
       throw new ForbiddenException('Active authorization context required');
     }
 
-    // "Bootstrap restricted FOUNDATION_DECISION_MAKER in FUNDING_PROGRAM with grants.decisions.issue_foundation"
-    if (context.contextType !== 'FUNDING_PROGRAM') {
-      throw new ForbiddenException('Bootstrap requires active FUNDING_PROGRAM context');
-    }
-
-    if (!user.capabilities.includes('grants.decisions.issue_foundation')) {
-      throw new ForbiddenException('Access denied: Missing grants.decisions.issue_foundation capability');
-    }
-
-    // "wrong program denial"
-    if (context.contextId !== dto.fundingProgramId) {
-      throw new ForbiddenException('Access denied: Funding program mismatch');
+    if (
+      !user.capabilities.includes('collab.decisions.issue_foundation') &&
+      !user.capabilities.includes('grants.decisions.issue_foundation') &&
+      !user.capabilities.includes('projects.projects.manage')
+    ) {
+      throw new ForbiddenException('Access denied: Missing foundation decision or projects management capability');
     }
 
     return this.repository.bootstrapProject(dto);
@@ -54,21 +48,14 @@ export class ProjectService {
       throw new NotFoundException('Project not found');
     }
 
-    // Authorization checks
-    const context = user.activeContext;
-    if (!context) {
-      throw new ForbiddenException('Active context required');
-    }
+    const isMember = project.members.some((m) => m.userId === user.userId);
+    const isManager =
+      user.capabilities.includes('projects.reports.approve') ||
+      user.capabilities.includes('projects.projects.manage') ||
+      user.capabilities.includes('collab.decisions.issue_foundation');
 
-    if (context.contextType === 'FUNDING_PROGRAM') {
-      if (context.contextId !== project.fundingProgramId) {
-        throw new ForbiddenException('Access denied: Wrong funding program context');
-      }
-    } else {
-      const isMember = project.members.some((m) => m.userId === user.userId);
-      if (!isMember) {
-        throw new ForbiddenException('Access denied: You are not a member of this project');
-      }
+    if (!isMember && !isManager) {
+      throw new ForbiddenException('Access denied: You are not a member or manager of this project');
     }
 
     return project;
@@ -90,15 +77,13 @@ export class ProjectService {
       }
     }
 
-    const context = user.activeContext;
-    if (!context) {
-      throw new ForbiddenException('Active context required');
-    }
+    const isManager =
+      user.capabilities.includes('projects.reports.approve') ||
+      user.capabilities.includes('projects.projects.manage') ||
+      user.capabilities.includes('collab.decisions.issue_foundation');
 
-    const filter: { userId?: string; fundingProgramId?: string } = {};
-    if (context.contextType === 'FUNDING_PROGRAM') {
-      filter.fundingProgramId = context.contextId;
-    } else {
+    const filter: { userId?: string } = {};
+    if (!isManager) {
       filter.userId = user.userId;
     }
 
@@ -125,7 +110,7 @@ export class ProjectService {
   }
 
   async getMembers(projectId: string, user: AuthenticatedUser) {
-    await this.findOne(projectId, user); // checks visibility
+    await this.findOne(projectId, user);
     return this.repository.getMembers(projectId);
   }
 
@@ -374,14 +359,12 @@ export class ProjectService {
   }
 
   private async checkProgramManager(project: any, user: AuthenticatedUser) {
-    const context = user.activeContext;
     if (
-      !context ||
-      context.contextType !== 'FUNDING_PROGRAM' ||
-      context.contextId !== project.fundingProgramId ||
-      !user.capabilities.includes('projects.reports.approve')
+      !user.capabilities.includes('projects.reports.approve') &&
+      !user.capabilities.includes('projects.projects.manage') &&
+      !user.capabilities.includes('collab.decisions.issue_foundation')
     ) {
-      throw new ForbiddenException('Access denied: Program Manager context for this project is required');
+      throw new ForbiddenException('Access denied: Program Manager capability is required');
     }
   }
 }

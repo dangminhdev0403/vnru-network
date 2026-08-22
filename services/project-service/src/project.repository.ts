@@ -36,7 +36,6 @@ export class ProjectRepository {
           data: {
             proposalRef: dto.proposalRef,
             decisionRef: dto.decisionRef,
-            fundingProgramId: dto.fundingProgramId,
             title: dto.title,
             description: dto.description,
             status: ProjectStatus.ACTIVE,
@@ -46,7 +45,7 @@ export class ProjectRepository {
         await tx.outboxEvent.create({
           data: {
             eventType: 'projects.lifecycle.created',
-            payload: { projectId: project.id, proposalRef: project.proposalRef, decisionRef: project.decisionRef, fundingProgramId: project.fundingProgramId, status: ProjectStatus.ACTIVE },
+            payload: { projectId: project.id, proposalRef: project.proposalRef, decisionRef: project.decisionRef, status: ProjectStatus.ACTIVE },
           },
         });
         return tx.project.findUnique({ where: { id: project.id }, include: { members: true } });
@@ -75,15 +74,11 @@ export class ProjectRepository {
   }
 
   async listProjects(
-    filter: { userId?: string; fundingProgramId?: string },
+    filter: { userId?: string },
     limit: number,
     cursor?: { createdAt: string; id: string }
   ) {
     const filters: any[] = [];
-
-    if (filter.fundingProgramId) {
-      filters.push({ fundingProgramId: filter.fundingProgramId });
-    }
 
     if (filter.userId) {
       filters.push({

@@ -10,9 +10,24 @@ export function sanitizeReturnTo(value: string | null | undefined): string {
   return value?.startsWith("/") && !value.startsWith("//") ? value : "/workspace";
 }
 
+export function resolveLandingPath(capabilities: string[] = []): string {
+  if (capabilities.includes("iam.roles.manage") || capabilities.includes("iam.users.manage")) {
+    return "/workspace/iam/admin";
+  }
+  if (capabilities.includes("knowledge.workspace.view")) {
+    return "/workspace/knowledge";
+  }
+  return "/workspace";
+}
+
 export function authServiceUrl(path: string): URL {
   const baseUrl = process.env.AUTH_SERVICE_URL;
   if (!baseUrl) throw new Error("AUTH_SERVICE_URL is required");
+  return new URL(path, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
+}
+
+export function collabServiceUrl(path: string): URL {
+  const baseUrl = process.env.GRANT_SERVICE_URL || process.env.COLLAB_SERVICE_URL || "http://localhost:3003";
   return new URL(path, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
 }
 

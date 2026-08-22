@@ -28,11 +28,10 @@ enum Country {
   RU
 }
 
-model FundingOpportunity {
+model ResearchOpportunity {
   id                 String          @id @default(uuid()) @db.Uuid
   title              String
   description        String?
-  fundingProgramRef  String
   state              OpportunityState
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
@@ -42,7 +41,7 @@ model FundingOpportunity {
 model JointProposal {
   id             String                      @id @default(uuid()) @db.Uuid
   opportunityId  String                      @db.Uuid
-  opportunity    FundingOpportunity          @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunity    ResearchOpportunity         @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
   state          ProposalState
   content        String
   revision       Int                         @default(1)
@@ -51,8 +50,8 @@ model JointProposal {
   participants   ProposalParticipant[]
   confirmations  CollaborationConfirmation[]
   endorsements   OrganizationEndorsement[]
-  screenings     EligibilityScreening[]
-  decisions      FundingDecision[]
+  screenings     ProposalScreening[]
+  decisions      CollaborationDecision[]
 }
 
 model ProposalParticipant {
@@ -92,7 +91,7 @@ model OrganizationEndorsement {
   @@unique([proposalId, country])
 }
 
-model EligibilityScreening {
+model ProposalScreening {
   id         String        @id @default(uuid()) @db.Uuid
   proposalId String        @db.Uuid
   proposal   JointProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
@@ -102,7 +101,7 @@ model EligibilityScreening {
   createdAt  DateTime      @default(now())
 }
 
-model FundingDecision {
+model CollaborationDecision {
   id         String        @id @default(uuid()) @db.Uuid
   proposalId String        @db.Uuid
   proposal   JointProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)

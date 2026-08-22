@@ -4,15 +4,15 @@ import { AuthenticatedUser } from './auth.guard';
 import { ProjectStatus, MilestoneStatus, ReportStatus, ResourceRole } from '@prisma/client';
 import { ForbiddenException, BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
 
-describe('Project Service MVP Invariants', () => {
+describe('Project Service Invariants', () => {
   let service: ProjectService;
   let repository: jest.Mocked<any>;
 
   const mockUserPm: AuthenticatedUser = {
     userId: 'user-pm-1111-1111-1111-111111111111',
     sessionId: 'session-123',
-    activeContext: { contextType: 'FUNDING_PROGRAM', contextId: 'program-9999-9999-9999-999999999999' },
-    capabilities: ['grants.decisions.issue_foundation', 'projects.projects.view', 'projects.reports.approve'],
+    activeContext: { contextType: 'PLATFORM', contextId: 'platform_main' },
+    capabilities: ['collab.decisions.issue_foundation', 'projects.projects.view', 'projects.reports.approve', 'projects.projects.manage'],
     authenticationLevel: 'PASSWORD',
   };
 
@@ -36,7 +36,6 @@ describe('Project Service MVP Invariants', () => {
     id: 'project-uuid-0000-0000-0000-000000000000',
     proposalRef: 'prop-123',
     decisionRef: 'dec-123',
-    fundingProgramId: 'program-9999-9999-9999-999999999999',
     title: 'Joint Scientific Cooperation',
     description: 'Bilateral research project',
     status: ProjectStatus.ACTIVE,
@@ -79,25 +78,20 @@ describe('Project Service MVP Invariants', () => {
     const bootstrapDto = {
       decisionRef: 'dec-123',
       proposalRef: 'prop-123',
-      fundingProgramId: 'program-9999-9999-9999-999999999999',
       title: 'Joint Scientific Cooperation',
       leadId: 'user-lead-2222-2222-2222-222222222222',
       approved: true,
     };
 
-    it('successfully bootstraps a new project', async () => {
+    it('successfully bootstraps a new project with foundation decision capability', async () => {
       repository.bootstrapProject.mockResolvedValue(mockProject);
       const result = await service.bootstrap(bootstrapDto, mockUserPm);
       expect(repository.bootstrapProject).toHaveBeenCalledWith(bootstrapDto);
       expect(result).toEqual(mockProject);
     });
 
-    it('wrong program denial: throws ForbiddenException if funding program does not match active context', async () => {
-      const pmWrongProgram = {
-        ...mockUserPm,
-        activeContext: { contextType: 'FUNDING_PROGRAM', contextId: 'program-wrong-uuid-0000' },
-      };
-      await expect(service.bootstrap(bootstrapDto, pmWrongProgram as any)).rejects.toThrow(
+    it('denies bootstrap if caller lacks foundation decision or project manage capability', async () => {
+      await expect(service.bootstrap(bootstrapDto, mockUserMember)).rejects.toThrow(
         ForbiddenException
       );
     });

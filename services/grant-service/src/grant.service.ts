@@ -52,11 +52,10 @@ export class GrantService {
     const visible = dbOpportunities.slice(0, limit);
 
     return {
-      items: visible.map((o) => ({
+      items: visible.map((o: any) => ({
         id: o.id,
         title: o.title,
         description: o.description,
-        fundingProgramRef: o.fundingProgramRef,
         state: o.state,
         createdAt: o.createdAt.toISOString(),
         updatedAt: o.updatedAt.toISOString(),
@@ -72,17 +71,10 @@ export class GrantService {
 
   async createOpportunity(
     user: AuthenticatedUser,
-    dto: { id: string; title: string; description?: string; fundingProgramRef: string },
+    dto: { id: string; title: string; description?: string },
   ) {
     validateUuid(dto.id, 'id');
     validateString(dto.title, 'title');
-    validateString(dto.fundingProgramRef, 'fundingProgramRef');
-
-    if (user.activeContext?.contextId !== dto.fundingProgramRef) {
-      throw new ForbiddenException({
-        error: { code: 'FORBIDDEN', message: 'Context ID does not match fundingProgramRef' },
-      });
-    }
 
     const domainOpportunity = createOpportunity(dto.id);
 
@@ -91,7 +83,6 @@ export class GrantService {
         id: dto.id,
         title: dto.title.trim(),
         description: dto.description?.trim(),
-        fundingProgramRef: dto.fundingProgramRef.trim(),
         state: domainOpportunity.state,
       });
     } catch (err: any) {
@@ -110,16 +101,10 @@ export class GrantService {
       throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Opportunity not found' } });
     }
 
-    if (user.activeContext?.contextId !== opportunity.fundingProgramRef) {
-      throw new ForbiddenException({
-        error: { code: 'FORBIDDEN', message: 'Context ID does not match opportunity program ref' },
-      });
-    }
-
     const mappedOpportunity = { id: opportunity.id, state: opportunity.state as any };
     try {
       const updatedDomain = publishOpportunity(mappedOpportunity);
-      return await this.repository.updateOpportunityState(id, opportunity.state, updatedDomain.state, 'grants.opportunity.published');
+      return await this.repository.updateOpportunityState(id, opportunity.state, updatedDomain.state, 'collab.opportunity.published');
     } catch (err: any) {
       throw new BadRequestException({ error: { code: 'INVALID_TRANSITION', message: err.message } });
     }
@@ -133,16 +118,10 @@ export class GrantService {
       throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Opportunity not found' } });
     }
 
-    if (user.activeContext?.contextId !== opportunity.fundingProgramRef) {
-      throw new ForbiddenException({
-        error: { code: 'FORBIDDEN', message: 'Context ID does not match opportunity program ref' },
-      });
-    }
-
     const mappedOpportunity = { id: opportunity.id, state: opportunity.state as any };
     try {
       const updatedDomain = closeOpportunity(mappedOpportunity);
-      return await this.repository.updateOpportunityState(id, opportunity.state, updatedDomain.state, 'grants.opportunity.closed');
+      return await this.repository.updateOpportunityState(id, opportunity.state, updatedDomain.state, 'collab.opportunity.closed');
     } catch (err: any) {
       throw new BadRequestException({ error: { code: 'INVALID_TRANSITION', message: err.message } });
     }
@@ -230,11 +209,6 @@ export class GrantService {
       throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Proposal not found' } });
     }
 
-    const opportunity = await this.repository.findOpportunityById(proposal.opportunityId);
-    if (!opportunity) {
-      throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Opportunity not found' } });
-    }
-
     const vnParticipant = proposal.participants.find((p) => p.country === 'VN');
     const ruParticipant = proposal.participants.find((p) => p.country === 'RU');
 
@@ -246,8 +220,8 @@ export class GrantService {
       isAuthorized = user.activeContext?.contextId === vnParticipant?.organizationRef;
     } else if (isRu) {
       isAuthorized = user.activeContext?.contextId === ruParticipant?.organizationRef;
-    } else if (user.activeContext?.contextType === 'FUNDING_PROGRAM') {
-      isAuthorized = user.activeContext?.contextId === opportunity.fundingProgramRef;
+    } else if (user.activeContext?.contextType === 'PLATFORM') {
+      isAuthorized = true;
     }
 
     if (!isAuthorized) {
@@ -268,7 +242,7 @@ export class GrantService {
       });
     }
 
-    return await this.repository.executeInTransaction(async (tx) => {
+    return await this.repository.executeInTransaction(async (tx: any) => {
       const proposal = await tx.jointProposal.findUnique({
         where: { id },
         include: { participants: true, confirmations: true, endorsements: true },
@@ -277,7 +251,7 @@ export class GrantService {
         throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Proposal not found' } });
       }
 
-      const opportunity = await tx.fundingOpportunity.findUnique({
+      const opportunity = await tx.researchOpportunity.findUnique({
         where: { id: proposal.opportunityId },
       });
       if (!opportunity) {
@@ -355,7 +329,7 @@ export class GrantService {
   async confirmProposal(user: AuthenticatedUser, id: string) {
     validateUuid(id, 'id');
 
-    return await this.repository.executeInTransaction(async (tx) => {
+    return await this.repository.executeInTransaction(async (tx: any) => {
       const proposal = await tx.jointProposal.findUnique({
         where: { id },
         include: { participants: true, confirmations: true },
@@ -364,7 +338,7 @@ export class GrantService {
         throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Proposal not found' } });
       }
 
-      const opportunity = await tx.fundingOpportunity.findUnique({
+      const opportunity = await tx.researchOpportunity.findUnique({
         where: { id: proposal.opportunityId },
       });
       if (!opportunity) {
@@ -449,7 +423,7 @@ export class GrantService {
   async endorseProposal(user: AuthenticatedUser, id: string) {
     validateUuid(id, 'id');
 
-    return await this.repository.executeInTransaction(async (tx) => {
+    return await this.repository.executeInTransaction(async (tx: any) => {
       const proposal = await tx.jointProposal.findUnique({
         where: { id },
         include: { participants: true },
@@ -458,7 +432,7 @@ export class GrantService {
         throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Proposal not found' } });
       }
 
-      const opportunity = await tx.fundingOpportunity.findUnique({
+      const opportunity = await tx.researchOpportunity.findUnique({
         where: { id: proposal.opportunityId },
       });
       if (!opportunity) {
@@ -533,7 +507,7 @@ export class GrantService {
   async submitProposal(user: AuthenticatedUser, id: string) {
     validateUuid(id, 'id');
 
-    return await this.repository.executeInTransaction(async (tx) => {
+    return await this.repository.executeInTransaction(async (tx: any) => {
       const proposal = await tx.jointProposal.findUnique({
         where: { id },
         include: { participants: true, confirmations: true, endorsements: true },
@@ -542,7 +516,7 @@ export class GrantService {
         throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Proposal not found' } });
       }
 
-      const opportunity = await tx.fundingOpportunity.findUnique({
+      const opportunity = await tx.researchOpportunity.findUnique({
         where: { id: proposal.opportunityId },
       });
       if (!opportunity) {
@@ -628,7 +602,7 @@ export class GrantService {
 
       await tx.outboxEvent.create({
         data: {
-          eventType: 'grants.proposal.submitted',
+          eventType: 'collab.proposal.submitted',
           payload: JSON.stringify({
             proposalId: updatedProposal.id,
             opportunityId: updatedProposal.opportunityId,
@@ -651,13 +625,7 @@ export class GrantService {
     validateUuid(id, 'id');
     validateString(dto.reason, 'reason');
 
-    if (user.activeContext?.contextType !== 'FUNDING_PROGRAM') {
-      throw new ForbiddenException({
-        error: { code: 'FORBIDDEN', message: 'Screening restricted to PROGRAM_MANAGER at program level' },
-      });
-    }
-
-    return await this.repository.executeInTransaction(async (tx) => {
+    return await this.repository.executeInTransaction(async (tx: any) => {
       const proposal = await tx.jointProposal.findUnique({
         where: { id },
       });
@@ -665,17 +633,11 @@ export class GrantService {
         throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Proposal not found' } });
       }
 
-      const opportunity = await tx.fundingOpportunity.findUnique({
+      const opportunity = await tx.researchOpportunity.findUnique({
         where: { id: proposal.opportunityId },
       });
       if (!opportunity) {
         throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Opportunity not found' } });
-      }
-
-      if (user.activeContext?.contextId !== opportunity.fundingProgramRef) {
-        throw new ForbiddenException({
-          error: { code: 'FORBIDDEN', message: 'Context ID does not match opportunity program ref' },
-        });
       }
 
       if (proposal.state !== 'SUBMITTED') {
@@ -686,7 +648,7 @@ export class GrantService {
 
       const targetState = dto.eligible ? 'ELIGIBLE' : 'INELIGIBLE';
 
-      await tx.eligibilityScreening.create({
+      await tx.proposalScreening.create({
         data: {
           proposalId: id,
           eligible: dto.eligible,
@@ -718,13 +680,7 @@ export class GrantService {
     validateUuid(id, 'id');
     validateString(dto.reason, 'reason');
 
-    if (user.activeContext?.contextType !== 'FUNDING_PROGRAM') {
-      throw new ForbiddenException({
-        error: { code: 'FORBIDDEN', message: 'Decisions restricted to FOUNDATION_DECISION_MAKER at program level' },
-      });
-    }
-
-    return await this.repository.executeInTransaction(async (tx) => {
+    return await this.repository.executeInTransaction(async (tx: any) => {
       const proposal = await tx.jointProposal.findUnique({
         where: { id },
       });
@@ -732,22 +688,16 @@ export class GrantService {
         throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Proposal not found' } });
       }
 
-      const opportunity = await tx.fundingOpportunity.findUnique({
+      const opportunity = await tx.researchOpportunity.findUnique({
         where: { id: proposal.opportunityId },
       });
       if (!opportunity) {
         throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Opportunity not found' } });
       }
 
-      if (user.activeContext?.contextId !== opportunity.fundingProgramRef) {
-        throw new ForbiddenException({
-          error: { code: 'FORBIDDEN', message: 'Context ID does not match opportunity program ref' },
-        });
-      }
-
       if (proposal.state !== 'ELIGIBLE') {
         throw new BadRequestException({
-          error: { code: 'INVALID_STATE', message: 'Funding decision is only allowed for ELIGIBLE proposals' },
+          error: { code: 'INVALID_STATE', message: 'Collaboration decision is only allowed for ELIGIBLE proposals' },
         });
       }
 
@@ -758,7 +708,7 @@ export class GrantService {
         targetState = 'REVISION_REQUESTED';
       }
 
-      await tx.fundingDecision.create({
+      await tx.collaborationDecision.create({
         data: {
           proposalId: id,
           approved: dto.approved,
@@ -784,7 +734,7 @@ export class GrantService {
       if (targetState === 'APPROVED') {
         await tx.outboxEvent.create({
           data: {
-            eventType: 'grants.decision.approved',
+            eventType: 'collab.decision.approved',
             payload: JSON.stringify({
               proposalId: updatedProposal.id,
               opportunityId: updatedProposal.opportunityId,

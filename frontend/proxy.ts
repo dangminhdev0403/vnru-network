@@ -3,6 +3,7 @@ import { auth } from "./auth";
 import {
   authServiceUrl,
   backendHeaders,
+  resolveLandingPath,
   sanitizeReturnTo,
   SESSION_COOKIE_NAME,
 } from "./features/auth/server";
@@ -30,16 +31,29 @@ export default auth(async function proxy(request) {
       return NextResponse.redirect(logout);
     }
 
-    if (session?.ok) return NextResponse.next();
+    if (session?.ok) {
+      if (request.nextUrl.pathname === "/workspace" && !request.nextUrl.search) {
+        const me = (await session.json().catch(() => null)) as { capabilities?: string[] } | null;
+        const landing = resolveLandingPath(me?.capabilities ?? []);
+        if (landing !== "/workspace") {
+          const target = request.nextUrl.clone();
+          target.pathname = landing;
+          return NextResponse.redirect(target);
+        }
+      }
+      return NextResponse.next();
+    }
   }
   const login = new URL("/login", request.url);
   login.searchParams.set(
     "returnTo",
     sanitizeReturnTo(`${request.nextUrl.pathname}${request.nextUrl.search}`),
   );
-  return NextResponse.redirect(login);
+  const response = NextResponse.redirect(login);
+  response.cookies.delete(SESSION_COOKIE_NAME);
+  return response;
 });
 
 export const config = {
-  matcher: ["/workspace/:path*", "/admin/iam", "/security"],
+  matcher: ["/workspace/:path*", "/admin/:path*", "/admin/iam", "/security"],
 };

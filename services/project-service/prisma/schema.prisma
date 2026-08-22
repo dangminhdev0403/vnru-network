@@ -35,7 +35,6 @@ model Project {
   id                String              @id @default(uuid()) @db.Uuid
   proposalRef       String              @unique
   decisionRef       String              @unique
-  fundingProgramId  String              @db.Uuid
   title             String
   description       String?
   status            ProjectStatus       @default(ACTIVE)

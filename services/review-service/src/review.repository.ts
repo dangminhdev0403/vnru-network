@@ -16,7 +16,6 @@ export class ReviewRepository {
     proposalRef: string;
     reviewerId: string;
     boardRef: string;
-    fundingProgramRef: string;
     snapshot: any;
   }) {
     if (!isValidUuid(params.reviewerId)) {
@@ -25,9 +24,6 @@ export class ReviewRepository {
     if (!isValidUuid(params.boardRef)) {
       throw new BadRequestException('boardRef must be a valid UUID');
     }
-    if (!isValidUuid(params.fundingProgramRef)) {
-      throw new BadRequestException('fundingProgramRef must be a valid UUID');
-    }
 
     return this.prisma.$transaction(async (tx) => {
       const assignment = await tx.reviewAssignment.create({
@@ -35,7 +31,6 @@ export class ReviewRepository {
           proposalRef: params.proposalRef,
           reviewerId: params.reviewerId,
           boardRef: params.boardRef,
-          fundingProgramRef: params.fundingProgramRef,
           status: 'PENDING',
         },
       });
@@ -58,7 +53,6 @@ export class ReviewRepository {
   async findAssignments(filters: {
     reviewerId?: string;
     boardRef?: string;
-    fundingProgramRef?: string;
     limit: number;
     offset: number;
   }) {
@@ -74,12 +68,6 @@ export class ReviewRepository {
         throw new BadRequestException('boardRef must be a valid UUID');
       }
       where.boardRef = filters.boardRef;
-    }
-    if (filters.fundingProgramRef) {
-      if (!isValidUuid(filters.fundingProgramRef)) {
-        throw new BadRequestException('fundingProgramRef must be a valid UUID');
-      }
-      where.fundingProgramRef = filters.fundingProgramRef;
     }
 
     const items = await this.prisma.reviewAssignment.findMany({
@@ -423,9 +411,9 @@ export class ReviewRepository {
     });
   }
 
-  async getRecommendation(proposalRef: string, fundingProgramRef: string) {
-    const assignment = await this.prisma.reviewAssignment.findFirst({ where: { proposalRef, fundingProgramRef } });
-    if (!assignment) throw new NotFoundException('Proposal recommendation not found in active funding program');
+  async getRecommendation(proposalRef: string) {
+    const assignment = await this.prisma.reviewAssignment.findFirst({ where: { proposalRef } });
+    if (!assignment) throw new NotFoundException('Proposal recommendation not found');
     return this.prisma.evaluationRecommendation.findUnique({ where: { proposalRef } });
   }
 }

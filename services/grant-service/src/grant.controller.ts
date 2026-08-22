@@ -15,7 +15,7 @@ import { AuthGuard, Public, RequireCapability } from './auth.guard';
 import { GrantService } from './grant.service';
 import { parseOpportunityQuery } from './opportunity-query';
 
-@Controller('api/v1/grants')
+@Controller('api/v1/collab')
 @UseGuards(AuthGuard)
 export class GrantController {
   constructor(private readonly service: GrantService) {}
@@ -35,7 +35,7 @@ export class GrantController {
   }
 
   @Post('opportunities')
-  @RequireCapability('grants.opportunities.create')
+  @RequireCapability('collab.opportunities.create')
   async createOpportunity(@Req() req: any, @Body() body: any) {
     if (!body || typeof body !== 'object') {
       throw new BadRequestException({ error: { code: 'INVALID_BODY', message: 'Request body must be an object' } });
@@ -44,26 +44,25 @@ export class GrantController {
       id: body.id,
       title: body.title,
       description: body.description,
-      fundingProgramRef: body.fundingProgramRef,
     });
   }
 
   @Post('opportunities/:id/publish')
   @HttpCode(200)
-  @RequireCapability('grants.opportunities.publish')
+  @RequireCapability('collab.opportunities.publish')
   async publishOpportunity(@Req() req: any, @Param('id') id: string) {
     return await this.service.publishOpportunity(req.user, id);
   }
 
   @Post('opportunities/:id/close')
   @HttpCode(200)
-  @RequireCapability('grants.opportunities.publish')
+  @RequireCapability('collab.opportunities.publish')
   async closeOpportunity(@Req() req: any, @Param('id') id: string) {
     return await this.service.closeOpportunity(req.user, id);
   }
 
   @Post('proposals')
-  @RequireCapability('grants.proposals.create')
+  @RequireCapability('collab.proposals.create')
   async createProposal(@Req() req: any, @Body() body: any) {
     if (!body || typeof body !== 'object') {
       throw new BadRequestException({ error: { code: 'INVALID_BODY', message: 'Request body must be an object' } });
@@ -83,7 +82,7 @@ export class GrantController {
   }
 
   @Put('proposals/:id')
-  @RequireCapability('grants.proposals.create')
+  @RequireCapability('collab.proposals.create')
   async reviseProposal(@Req() req: any, @Param('id') id: string, @Body() body: any) {
     if (!body || typeof body !== 'object') {
       throw new BadRequestException({ error: { code: 'INVALID_BODY', message: 'Request body must be an object' } });
@@ -96,28 +95,28 @@ export class GrantController {
 
   @Post('proposals/:id/confirm')
   @HttpCode(200)
-  @RequireCapability('grants.proposals.confirm_paired')
+  @RequireCapability('collab.proposals.confirm_paired')
   async confirmProposal(@Req() req: any, @Param('id') id: string) {
     return await this.service.confirmProposal(req.user, id);
   }
 
   @Post('proposals/:id/endorse')
   @HttpCode(200)
-  @RequireCapability('grants.proposals.endorse')
+  @RequireCapability('collab.proposals.endorse')
   async endorseProposal(@Req() req: any, @Param('id') id: string) {
     return await this.service.endorseProposal(req.user, id);
   }
 
   @Post('proposals/:id/submit')
   @HttpCode(200)
-  @RequireCapability('grants.proposals.submit')
+  @RequireCapability('collab.proposals.submit')
   async submitProposal(@Req() req: any, @Param('id') id: string) {
     return await this.service.submitProposal(req.user, id);
   }
 
   @Post('proposals/:id/screen')
   @HttpCode(200)
-  @RequireCapability('grants.proposals.screen')
+  @RequireCapability('collab.proposals.screen')
   async screenProposal(@Req() req: any, @Param('id') id: string, @Body() body: any) {
     if (!body || typeof body !== 'object') {
       throw new BadRequestException({ error: { code: 'INVALID_BODY', message: 'Request body must be an object' } });
@@ -130,7 +129,7 @@ export class GrantController {
 
   @Post('proposals/:id/decision')
   @HttpCode(200)
-  @RequireCapability('grants.decisions.issue_foundation')
+  @RequireCapability('collab.decisions.issue_foundation')
   async decisionProposal(@Req() req: any, @Param('id') id: string, @Body() body: any) {
     if (!body || typeof body !== 'object') {
       throw new BadRequestException({ error: { code: 'INVALID_BODY', message: 'Request body must be an object' } });

@@ -19,7 +19,6 @@ export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
   @Post('assignments')
-  @RequireContext('FUNDING_PROGRAM')
   @RequireCapability('reviews.assignments.manage')
   async createAssignment(
     @Body()
@@ -27,7 +26,6 @@ export class ReviewController {
       proposalRef: string;
       reviewerId: string;
       boardRef: string;
-      fundingProgramRef: string;
       proposalSnapshot: unknown;
     },
     @CurrentUser() user: AuthenticatedUser,
@@ -37,10 +35,9 @@ export class ReviewController {
       typeof body.proposalRef !== 'string' ||
       typeof body.reviewerId !== 'string' ||
       typeof body.boardRef !== 'string' ||
-      typeof body.fundingProgramRef !== 'string' ||
       !body.proposalSnapshot
     ) {
-      throw new BadRequestException('proposalRef, reviewerId, boardRef, fundingProgramRef, and proposalSnapshot are required');
+      throw new BadRequestException('proposalRef, reviewerId, boardRef, and proposalSnapshot are required');
     }
     return this.reviewService.createAssignment(body, user);
   }
@@ -179,7 +176,6 @@ export class ReviewController {
 
   // Recommendation - path 1
   @Get('proposals/:proposalRef/recommendation')
-  @RequireContext('FUNDING_PROGRAM')
   @RequireCapability('reviews.assignments.manage')
   async getRecommendation(
     @Param('proposalRef') proposalRef: string,
@@ -193,7 +189,6 @@ export class ReviewController {
 
   // Recommendation - path 2
   @Get('recommendations/:proposalRef')
-  @RequireContext('FUNDING_PROGRAM')
   @RequireCapability('reviews.assignments.manage')
   async getRecommendationAlternative(
     @Param('proposalRef') proposalRef: string,

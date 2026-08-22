@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import IamWorkspaceView from "@/features/auth/components/IamWorkspaceView";
 
 export default function IamWorkspacePage() {
-  redirect("/workspace");
+  return <IamWorkspaceView />;
 }

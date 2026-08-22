@@ -19,6 +19,7 @@ interface Copy {
   sessions: string;
   workspaceOverview: string;
   knowledge: string;
+  collaboration: string;
   iam: string;
   admin: string;
   currentContext: string;
@@ -34,7 +35,7 @@ const copy: Record<Locale, Copy> = {
     brand: "Mạng lưới KH&CN Việt – Nga", subtitle: "Khoa học · Công nghệ · Hợp tác",
     overview: "TỔNG QUAN", access: "QUẢN LÝ TRUY CẬP", security: "BẢO MẬT", governance: "QUẢN TRỊ",
     iamOverview: "Tổng quan IAM", users: "Quản lý người dùng", roles: "Vai trò & quyền", sessions: "Phiên & bảo mật",
-    workspaceOverview: "Tổng quan", knowledge: "Kho tri thức & Chuyên gia", iam: "Quản trị danh tính & truy cập", admin: "Quản trị phân quyền",
+    workspaceOverview: "Tổng quan", knowledge: "Kho tri thức & Chuyên gia", collaboration: "Cộng tác nghiên cứu", iam: "Quản trị danh tính & truy cập", admin: "Quản trị phân quyền",
     currentContext: "Ngữ cảnh hiện tại", authenticated: "Không gian đã xác thực", active: "Phiên hoạt động",
     collapse: "Thu gọn thanh điều hướng", expand: "Mở rộng thanh điều hướng", close: "Đóng thanh điều hướng",
   },
@@ -42,7 +43,7 @@ const copy: Record<Locale, Copy> = {
     brand: "VN–RU Science & Technology Network", subtitle: "Science · Technology · Cooperation",
     overview: "OVERVIEW", access: "ACCESS MANAGEMENT", security: "SECURITY", governance: "GOVERNANCE",
     iamOverview: "IAM Overview", users: "User Management", roles: "Roles & Permissions", sessions: "Security & Sessions",
-    workspaceOverview: "Overview", knowledge: "Knowledge & Experts", iam: "Identity & Access", admin: "Access Administration",
+    workspaceOverview: "Overview", knowledge: "Knowledge & Experts", collaboration: "Research Collaboration", iam: "Identity & Access", admin: "Access Administration",
     currentContext: "Active context", authenticated: "Authenticated workspace", active: "Session active",
     collapse: "Collapse navigation", expand: "Expand navigation", close: "Close navigation",
   },
@@ -50,7 +51,7 @@ const copy: Record<Locale, Copy> = {
     brand: "Сеть НТИ РФ — СРВ", subtitle: "Наука · Технологии · Сотрудничество",
     overview: "ОБЗОР", access: "УПРАВЛЕНИЕ ДОСТУПОМ", security: "БЕЗОПАСНОСТЬ", governance: "УПРАВЛЕНИЕ",
     iamOverview: "Обзор IAM", users: "Управление пользователями", roles: "Роли и права", sessions: "Сессии и безопасность",
-    workspaceOverview: "Обзор", knowledge: "База знаний и эксперты", iam: "Управление доступом", admin: "Администрирование IAM",
+    workspaceOverview: "Обзор", knowledge: "База знаний и эксперты", collaboration: "Научное сотрудничество", iam: "Управление доступом", admin: "Администрирование IAM",
     currentContext: "Текущий контекст", authenticated: "Защищённое пространство", active: "Сессия активна",
     collapse: "Свернуть панель", expand: "Развернуть панель", close: "Закрыть панель",
   },
@@ -77,6 +78,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar, isMobile = false
     { label: t.overview, items: [
       { href: "/workspace", label: t.workspaceOverview, icon: "dashboard" },
       { href: "/workspace/knowledge", label: t.knowledge, icon: "hub" },
+      { href: "/workspace/collaboration", label: t.collaboration, icon: "handshake" },
       { href: "/workspace/iam", label: t.iam, icon: "badge" },
     ] },
     { label: t.governance, items: [
@@ -93,7 +95,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar, isMobile = false
   };
 
   return (
-    <aside className="relative isolate flex h-full w-full flex-col overflow-hidden border-r border-[#dfe6ef] bg-[#fbfdff] px-3 py-4 text-[#10213a] dark:border-[#253445] dark:bg-[#0e1720] dark:text-[#f4f7fb]">
+    <aside className="relative isolate flex h-full w-full flex-col overflow-hidden border-r border-[#dfe6ef] bg-[#fbfdff] px-3 py-4 text-[#10213a] dark:border-[#253445] dark:bg-[var(--nav-bg)] dark:text-[#f4f7fb]">
       <svg
         aria-hidden="true"
         viewBox="0 0 112 920"

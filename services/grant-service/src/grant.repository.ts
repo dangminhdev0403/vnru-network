@@ -17,7 +17,7 @@ export class GrantRepository {
         ],
       });
     }
-    return this.prisma.fundingOpportunity.findMany({
+    return (this.prisma as any).researchOpportunity.findMany({
       where: { AND: filters },
       take: limit,
       orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
@@ -28,30 +28,28 @@ export class GrantRepository {
     id: string;
     title: string;
     description?: string;
-    fundingProgramRef: string;
     state: OpportunityState;
   }) {
-    return this.prisma.fundingOpportunity.create({
+    return (this.prisma as any).researchOpportunity.create({
       data: {
         id: data.id,
         title: data.title,
         description: data.description,
-        fundingProgramRef: data.fundingProgramRef,
         state: data.state,
       },
     });
   }
 
   async updateOpportunityState(id: string, expectedState: OpportunityState, state: OpportunityState, eventType: string) {
-    return this.prisma.$transaction(async (tx) => {
-      const opportunity = await tx.fundingOpportunity.update({ where: { id, state: expectedState }, data: { state } });
+    return this.prisma.$transaction(async (tx: any) => {
+      const opportunity = await tx.researchOpportunity.update({ where: { id, state: expectedState }, data: { state } });
       await tx.outboxEvent.create({ data: { eventType, payload: JSON.stringify({ opportunityId: id, state }) } });
       return opportunity;
     });
   }
 
   async findOpportunityById(id: string) {
-    return this.prisma.fundingOpportunity.findUnique({
+    return (this.prisma as any).researchOpportunity.findUnique({
       where: { id },
     });
   }
