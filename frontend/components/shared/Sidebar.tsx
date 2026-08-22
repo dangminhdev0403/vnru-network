@@ -98,7 +98,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar, isMobile = false
         aria-hidden="true"
         viewBox="0 0 112 920"
         preserveAspectRatio="none"
-        className="pointer-events-none absolute -right-3 top-16 -z-0 h-[calc(100%-5rem)] w-[112px] text-[#2f7df4] opacity-[0.18] dark:text-[#4c8dff] dark:opacity-[0.16]"
+        className="pointer-events-none absolute -right-3 top-16 z-0 h-[calc(100%-5rem)] w-[112px] text-[#2f7df4] opacity-[0.18] dark:text-[#4c8dff] dark:opacity-[0.16]"
       >
         <g fill="none" stroke="currentColor" strokeWidth="1">
           <path d="M84 5 52 72l42 54-54 66 45 77-52 63 52 75-46 70 44 68-55 78 57 62-48 78 44 69-56 74" />
@@ -156,7 +156,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar, isMobile = false
         </section>)}
       </nav>
 
-      {isSidebarOpen && <div className="relative z-10 shrink-0 rounded-2xl border border-[#dfe6ef] bg-white/88 p-3.5 shadow-[0_10px_30px_-24px_rgba(15,23,42,.45)] backdrop-blur-sm dark:border-[#2b3b4c] dark:bg-[#111d28]/92 dark:shadow-none">
+      {isSidebarOpen && <div className="relative z-10 shrink-0 rounded-2xl border border-[#dfe6ef] bg-white/[0.88] p-3.5 shadow-[0_10px_30px_-24px_rgba(15,23,42,.45)] backdrop-blur-sm dark:border-[#2b3b4c] dark:bg-[#111d28]/[0.92] dark:shadow-none">
         <p className="text-[10px] font-bold uppercase tracking-[.12em] text-[#718198] dark:text-[#8fa2b8]">{t.currentContext}</p>
         <strong className="mt-1.5 block text-sm font-semibold text-[#14243c] dark:text-[#f4f7fb]">{t.authenticated}</strong>
         <p className="mt-2 flex items-center gap-2 border-t border-[#e7edf4] pt-2 text-xs text-[#68788e] dark:border-white/8 dark:text-[#9bacc0]"><span className="size-2 rounded-full bg-[var(--success)]" />{t.active}</p>
