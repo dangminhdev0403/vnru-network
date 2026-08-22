@@ -1,6 +1,6 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { PrismaClient, ProjectStatus, ResourceRole, MilestoneStatus, ReportStatus } from '@prisma/client';
-import { PRISMA } from './app.module';
+
 import {
   BootstrapProjectDto,
   CreateMilestoneDto,
@@ -11,7 +11,7 @@ import {
 
 @Injectable()
 export class ProjectRepository {
-  constructor(@Inject(PRISMA) private readonly prisma: PrismaClient) {}
+  constructor(@Inject('PRISMA') private readonly prisma: PrismaClient) {}
 
   async findByRef(proposalRef: string, decisionRef: string) {
     return this.prisma.project.findFirst({

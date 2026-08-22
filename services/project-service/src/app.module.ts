@@ -6,13 +6,11 @@ import { ProjectController } from './project.controller';
 import { ProjectService } from './project.service';
 import { ProjectRepository } from './project.repository';
 
-export const PRISMA = Symbol('PRISMA');
-
 @Module({
   controllers: [ProjectController],
   providers: [
     {
-      provide: PRISMA,
+      provide: 'PRISMA',
       useFactory: () => {
         const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
         const adapter = new PrismaPg(pool as any);
