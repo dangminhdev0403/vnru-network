@@ -16,6 +16,82 @@ app route
 
 Do not change unrelated domains.
 
+## HARD RULE — COPY ONLY THE CORE PAGE BODY
+
+The repository **already has the approved application layout**. The HTML references contain a fake/static shell only so each design can be previewed standalone.
+
+When integrating into Next.js, the agent must copy/adapt **only the core business content inside the page body**.
+
+### KEEP the existing repository layout
+
+Do not replace, recreate, fork, or restyle these existing runtime responsibilities:
+
+```text
+AdminShell / WorkspaceShell
+Header
+Sidebar / SidebarFrame
+WorkspaceSidebar
+AdminSidebar
+workspace/admin navigation registries
+responsive shell behavior
+light/dark theme system
+global design tokens
+network motif
+locale/language controls
+session/current-user shell behavior
+```
+
+The static HTML shell is **reference scaffolding only**.
+
+### DO NOT copy from HTML into runtime
+
+Do not copy/adapt:
+
+```text
+<aside class="sidebar">...</aside>
+<header class="topbar">...</header>
+prototype breadcrumb shell
+prototype search box
+prototype theme button
+prototype locale/account buttons
+standalone page wrapper/layout dimensions
+prototype navigation links
+prototype network SVG shell
+reference.css global shell rules
+```
+
+Do not create a second navigation/layout system under `features/collaboration`.
+
+### COPY / ADAPT only the core UI
+
+Examples of valid material to adapt:
+
+```text
+page heading / intro block
+work queues
+opportunity list/filter composition
+proposal bilateral team visualization
+proposal tabs/content sections
+review rubric/form composition
+decision form/summary composition
+project milestone/deliverable/progress composition
+knowledge → collaboration bridge controls
+modals/drawers that belong to the business action
+empty/error/loading/forbidden states
+```
+
+The intended integration model is:
+
+```text
+EXISTING WorkspaceShell
+├── EXISTING Header
+├── EXISTING capability-aware WorkspaceSidebar
+└── EXISTING <main>
+      └── NEW CORE BUSINESS UI ONLY
+```
+
+If the HTML reference conflicts with the current repository shell, **the repository shell wins**. Preserve the design intent of the core surface without importing the prototype shell.
+
 ## Route ownership
 
 ```text
