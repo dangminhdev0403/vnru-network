@@ -45,7 +45,7 @@
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38002",
         "issuer": "http://localhost:8081/realms/vnru",
-        "subject": "researcher-keycloak-subject-uuid-1234"
+        "subject": "815ecd3d-d4b2-4035-9060-bf96e6997831"
       },
       "role": {
         "id": "7809a72b-8a8e-49b8-897b-ff663ee38001",
@@ -93,7 +93,7 @@
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38004",
         "issuer": "http://localhost:8081/realms/vnru",
-        "subject": "org-rep-keycloak-subject-uuid-1234"
+        "subject": "fed2a1c0-4417-41ff-b81e-9eb3d01902ed"
       },
       "role": {
         "id": "7809a72b-8a8e-49b8-897b-ff663ee38002",
@@ -129,7 +129,7 @@
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38006",
         "issuer": "http://localhost:8081/realms/vnru",
-        "subject": "reviewer-keycloak-subject-uuid-1234"
+        "subject": "94f310a1-5eb3-4b4d-9cc4-a9879856fcd7"
       },
       "role": {
         "id": "7809a72b-8a8e-49b8-897b-ff663ee38003",
@@ -165,7 +165,7 @@
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38008",
         "issuer": "http://localhost:8081/realms/vnru",
-        "subject": "program-manager-keycloak-subject-uuid-1234"
+        "subject": "5499c30e-9183-403b-8e9e-fbc664541096"
       },
       "role": {
         "id": "7809a72b-8a8e-49b8-897b-ff663ee38004",
@@ -209,7 +209,7 @@
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38010",
         "issuer": "http://localhost:8081/realms/vnru",
-        "subject": "decision-maker-keycloak-subject-uuid-1234"
+        "subject": "13d2c564-39d9-4365-b5bf-8e06ce2ea07b"
       },
       "role": {
         "id": "7809a72b-8a8e-49b8-897b-ff663ee38005",
