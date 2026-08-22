@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="RU–VN Network registration visual template." />
+  <title>Đăng ký · RU–VN Network</title>
+  <link rel="stylesheet" href="promax.css" />
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="auth-visual" aria-label="RU–VN Knowledge Network">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>RU–VN Network<small>Science · Technology · Cooperation</small></span></a>
+      <div class="auth-copy">
+        <span class="eyebrow">Join the network · RU–VN</span>
+        <h1>Trở thành một phần của <span>hệ sinh thái nghiên cứu Nga–Việt.</span></h1>
+        <p>Tạo hồ sơ để khám phá tri thức, tìm chuyên gia phù hợp và mở ra các cơ hội hợp tác nghiên cứu – doanh nghiệp song phương.</p>
+        <div class="grid grid-3" style="margin-top:28px">
+          <div><b>Discover</b><small style="display:block;color:#91a5c0">Tri thức · Chủ đề · Tổ chức</small></div>
+          <div><b>Connect</b><small style="display:block;color:#91a5c0">Experts · Partner matching</small></div>
+          <div><b>Collaborate</b><small style="display:block;color:#91a5c0">RU–VN · 2+2</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="auth-panel">
+      <div class="form-wrap">
+        <a href="login.html" style="color:#61728a;font-size:12px;font-weight:800">← Quay lại đăng nhập</a>
+        <h2 style="margin-top:34px">Tạo tài khoản.</h2>
+        <p>Visual prototype cho luồng đăng ký. Chính sách self-registration chưa được coi là business rule đã chốt.</p>
+
+        <button class="google-btn" type="button" id="googleLogin">◉ &nbsp; Tiếp tục với Google qua Keycloak</button>
+        <div class="divider">hoặc tạo hồ sơ bằng email</div>
+
+        <form id="registerForm" novalidate>
+          <div class="field-row">
+            <div class="field"><label for="firstName">Tên</label><input id="firstName" autocomplete="given-name" placeholder="Minh" /></div>
+            <div class="field"><label for="lastName">Họ</label><input id="lastName" autocomplete="family-name" placeholder="Nguyễn" /></div>
+          </div>
+          <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email" placeholder="name@institution.edu" /></div>
+          <div class="field"><label for="password">Mật khẩu</label><input id="password" type="password" autocomplete="new-password" placeholder="Thiết lập qua policy của IdP" /></div>
+          <div class="field"><label for="confirmPassword">Xác nhận mật khẩu</label><input id="confirmPassword" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu" /></div>
+          <label class="remember"><input type="checkbox" /> Tôi đồng ý với Điều khoản sử dụng và Chính sách bảo mật.</label>
+          <button class="submit-btn" type="submit">Tạo tài khoản RU–VN →</button>
+        </form>
+
+        <div class="note" id="registerNote"><b>Architecture note.</b> Google/provider credentials không nằm trong template. Runtime authentication phải đi qua Keycloak/OIDC và backend authorization vẫn là nguồn sự thật.</div>
+      </div>
+    </section>
+  </main>
+  <script src="promax.js"></script>
+</body>
+</html>

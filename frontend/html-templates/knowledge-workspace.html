@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="RU–VN Knowledge Repository & Expert Directory visual workspace template." />
+  <title>Knowledge & Experts · RU–VN Network</title>
+  <link rel="stylesheet" href="promax.css" />
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>RU–VN Network<small>Research Collaboration Portal</small></span></a>
+      <div class="module-switch"><a href="iam.html">Module 01 · IAM</a><a class="active" href="knowledge-workspace.html">Module 02 · Knowledge</a></div>
+      <div class="nav-label">Knowledge & Experts</div>
+      <nav class="nav">
+        <a href="dashboard.html"><span class="ico">⌂</span>Tổng quan</a>
+        <a class="active" href="#overview"><span class="ico">⌕</span>Knowledge Overview</a>
+        <a href="#search"><span class="ico">◇</span>Semantic Search</a>
+        <a href="#publications"><span class="ico">▤</span>Publications</a>
+        <a href="#experts"><span class="ico">◎</span>Experts</a>
+        <a href="#matches"><span class="ico">◉</span>Expert Matching</a>
+        <a href="#ops"><span class="ico">⌘</span>Data & Index Ops</a>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="context-mini"><small>Access context</small><b>Researcher · Institution A</b><span>Identity/capabilities supplied by Module 01</span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="menuBtn" aria-label="Mở menu">☰</button>
+        <div class="breadcrumbs"><a href="dashboard.html">Workspace</a><span>›</span><b>Knowledge & Experts</b></div>
+        <div class="top-search"><input id="globalSearch" placeholder="Tìm công bố, chuyên gia, chủ đề, tổ chức…" aria-label="Tìm kiếm tri thức" /></div>
+        <button class="context-chip"><span class="context-dot"></span>Researcher · Institution A</button>
+      </header>
+
+      <div class="content">
+        <div class="page-head" id="overview">
+          <div><h1>Kho tri thức & Danh mục chuyên gia</h1><p>Module 02 biến dữ liệu khoa học phân tán thành mạng tri thức có thể tìm kiếm, liên kết và hỗ trợ ghép nối đối tác. Identity/context/permission vẫn đến từ Module 01.</p></div>
+          <span class="demo-pill">Design template</span>
+        </div>
+
+        <section class="hero" id="search">
+          <div class="hero-content">
+            <span class="eyebrow">Knowledge network · Module 02</span>
+            <h2>Một truy vấn. Toàn bộ mạng tri thức Nga–Việt.</h2>
+            <p>Tìm công bố, chuyên gia, tổ chức, chủ đề và các quan hệ liên quan mà không cần biết dữ liệu đang nằm ở kho nào.</p>
+            <div class="hero-actions"><a class="btn btn-primary" href="#experts">Khám phá chuyên gia →</a><a class="btn btn-soft" href="iam.html">Xem access context</a></div>
+          </div>
+        </section>
+
+        <section class="grid grid-4" style="margin-top:18px" aria-label="Chỉ số minh họa">
+          <div class="metric"><small>Publications</small><b>12.4K</b><span class="chip">Demo</span></div>
+          <div class="metric"><small>Experts</small><b>1.8K</b><span class="chip">Demo</span></div>
+          <div class="metric"><small>Indexed records</small><b>18.9K</b><span class="chip">Demo</span></div>
+          <div class="metric"><small>Partner signals</small><b>642</b><span class="chip">Demo</span></div>
+        </section>
+
+        <section class="dashboard-grid">
+          <div class="stack">
+            <article class="panel dark">
+              <div class="panel-head"><div><h3>Knowledge Graph</h3><p>Expert ↔ Publication ↔ Topic ↔ Organization ↔ Project.</p></div><span class="status-pill">conceptual</span></div>
+              <div class="network" aria-label="Mạng quan hệ tri thức minh họa">
+                <svg viewBox="0 0 900 360" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="net-line" d="M120 70 C230 90 280 160 420 175"/><path class="net-line" d="M110 185 C245 180 310 180 420 175"/><path class="net-line" d="M150 295 C270 250 315 205 420 175"/>
+                  <path class="net-line hot" d="M420 175 C525 150 590 150 690 175"/><path class="net-line" d="M690 175 C760 120 795 90 835 70"/><path class="net-line" d="M690 175 C770 188 805 205 850 220"/><path class="net-line" d="M690 175 C760 245 800 280 842 300"/>
+                </svg>
+                <div class="net-node" style="left:13%;top:20%"><b>Publication</b><small>Research output</small></div>
+                <div class="net-node" style="left:12%;top:51%"><b>Expert</b><small>Researcher profile</small></div>
+                <div class="net-node" style="left:16%;top:82%"><b>Organization</b><small>Institution</small></div>
+                <div class="net-node core" style="left:47%;top:49%"><b>RU–VN Knowledge Graph</b><small>Relations & discovery</small></div>
+                <div class="net-node" style="left:76%;top:49%"><b>Topic</b><small>Research domain</small></div>
+                <div class="net-node" style="left:91%;top:20%"><b>Related Expert</b><small>Similarity signal</small></div>
+                <div class="net-node" style="left:92%;top:62%"><b>Project</b><small>Collaboration context</small></div>
+                <div class="net-node" style="left:90%;top:84%"><b>Technology</b><small>Application link</small></div>
+              </div>
+            </article>
+
+            <article class="panel" id="publications">
+              <div class="panel-head"><div><h3>Publications & Research Outputs</h3><p>Publication, patent, conference proceeding và tài liệu khoa học.</p></div><span class="chip">cursor pagination</span></div>
+              <div class="tabs"><button class="tab active">Tất cả</button><button class="tab">Publication</button><button class="tab">Patent</button><button class="tab">Conference</button></div>
+              <div class="list">
+                <div class="row"><div class="row-icon">PB</div><div><b>High-temperature materials for energy systems</b><small>Advanced Materials · 2025 · DOI identity</small><span class="chip">RU–VN topic</span></div><span class="chip">PUBLICATION</span></div>
+                <div class="row"><div class="row-icon">PT</div><div><b>Composite thermal protection structure</b><small>Patent · external identifier available</small><span class="chip">dedup candidate</span></div><span class="chip">PATENT</span></div>
+                <div class="row"><div class="row-icon">CF</div><div><b>Materials & Energy Cooperation Forum</b><small>Conference proceeding · bilingual metadata</small></div><span class="chip">PROCEEDING</span></div>
+              </div>
+              <div class="note"><b>Dedup rule:</b> dùng external identifier/DOI, normalized title, authors và year; bản ghi độ tin cậy thấp nên vào review queue thay vì tự merge.</div>
+            </article>
+
+            <article class="panel" id="experts">
+              <div class="panel-head"><div><h3>Expert Directory</h3><p>Hồ sơ chuyên gia gắn với chuyên môn, hướng nghiên cứu, công bố và tổ chức.</p></div></div>
+              <div class="list">
+                <div class="row"><div class="row-icon">AK</div><div><b>Alexander Kuznetsov</b><small>Advanced Materials · Research Institute · RU</small><span class="chip">18 publications</span> <span class="chip">3 topics</span></div><span class="score">92%</span></div>
+                <div class="row"><div class="row-icon">MD</div><div><b>Minh Đặng</b><small>Energy Materials · Institution A · VN</small><span class="chip">Researcher</span> <span class="chip">Institution member</span></div><span class="chip">current</span></div>
+                <div class="row"><div class="row-icon">NS</div><div><b>Natalia Sokolova</b><small>Energy Systems · University · RU</small><span class="chip">12 publications</span> <span class="chip">Energy</span></div><span class="score">86%</span></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="stack">
+            <article class="panel" id="matches">
+              <div class="panel-head"><div><h3>Expert Matching</h3><p>Recommendation phải giải thích được.</p></div></div>
+              <div class="list">
+                <div class="row"><div class="row-icon">92</div><div><b>Alexander Kuznetsov</b><small>4 chủ đề tương đồng · 12 công bố liên quan · bổ sung chuyên môn</small></div><span class="score">92%</span></div>
+                <div class="row"><div class="row-icon">86</div><div><b>Natalia Sokolova</b><small>3 chủ đề tương đồng · cùng hướng nghiên cứu</small></div><span class="score">86%</span></div>
+              </div>
+              <div class="note">Match score là dữ liệu minh họa UI. Công thức/engine cụ thể chưa được template coi là quyết định kỹ thuật cuối cùng.</div>
+            </article>
+
+            <article class="panel" id="ops">
+              <div class="panel-head"><div><h3>Data & Index Ops</h3><p>Sync lớn chạy nền; DB nghiệp vụ vẫn là source of truth.</p></div></div>
+              <div class="flow">
+                <div class="flow-step"><span class="num">01</span><div><b>External source</b><small>ORCID / configured scientific source / manual input</small></div><span class="chip">ingest</span></div>
+                <div class="flow-step"><span class="num">02</span><div><b>Normalize & deduplicate</b><small>Idempotent processing before canonical write.</small></div><span class="chip">identity</span></div>
+                <div class="flow-step"><span class="num">03</span><div><b>Business data</b><small>Primary source of truth in owning service.</small></div><span class="chip">canonical</span></div>
+                <div class="flow-step"><span class="num">04</span><div><b>Search index / graph</b><small>Discovery projection; retry independently on failure.</small></div><span class="chip">retry</span></div>
+              </div>
+            </article>
+
+            <article class="panel dark">
+              <div class="panel-head"><div><h3>Module boundaries & open decisions</h3><p>Không tự chốt trong frontend template.</p></div></div>
+              <div class="list">
+                <div class="row" style="border-color:rgba(255,255,255,.08)"><div class="row-icon">IAM</div><div><b style="color:#fff">Identity comes from Module 01</b><small>Module 02 không tạo user/role/password riêng.</small></div><span class="chip">boundary</span></div>
+                <div class="row" style="border-color:rgba(255,255,255,.08)"><div class="row-icon">03</div><div><b style="color:#fff">Publish/edit governance</b><small>Ai được sửa/công khai hồ sơ cần policy/contract xác nhận.</small></div><span class="chip">OPEN</span></div>
+                <div class="row" style="border-color:rgba(255,255,255,.08)"><div class="row-icon">04</div><div><b style="color:#fff">Semantic search & matching engine</b><small>Implementation choice remains unresolved in this template.</small></div><span class="chip">OPEN</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="promax.js"></script>
+</body>
+</html>
