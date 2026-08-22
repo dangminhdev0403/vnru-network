@@ -1,0 +1,236 @@
+{
+  "_metadata": {
+    "description": "NON-SECRET synthetic IAM fixtures for Module 2 and Module 3 workflow roles. Matches the Keycloak test identities.",
+    "warning": "This file does not contain passwords or credentials. Keycloak OIDC owns user credentials. To authenticate as these users, Keycloak must be configured with identities matching the issuer and subject specified below."
+  },
+  "fixtures": [
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38711",
+        "email": "curator@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38712",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "curator-keycloak-subject-uuid-1234"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38713",
+        "name": "KNOWLEDGE_CURATOR"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-bb663ee38714",
+          "key": "knowledge.workspace.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-bb663ee38715",
+          "key": "experts.matches.view"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38716",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38001",
+        "email": "researcher@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38002",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "researcher-keycloak-subject-uuid-1234"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38001",
+        "name": "RESEARCHER"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38001",
+          "key": "grants.proposals.create"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38002",
+          "key": "grants.proposals.confirm_paired"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38003",
+          "key": "grants.proposals.submit"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
+          "key": "projects.projects.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38005",
+          "key": "projects.milestones.update"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38006",
+          "key": "projects.reports.submit"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38001",
+        "contextType": "ORGANIZATION",
+        "contextId": "ORG_001",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38003",
+        "email": "org_rep@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38004",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "org-rep-keycloak-subject-uuid-1234"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38002",
+        "name": "ORGANIZATION_REPRESENTATIVE"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38007",
+          "key": "grants.proposals.endorse"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
+          "key": "projects.projects.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38008",
+          "key": "projects.reports.view_org"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38002",
+        "contextType": "ORGANIZATION",
+        "contextId": "ORG_001",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38005",
+        "email": "reviewer@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38006",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "reviewer-keycloak-subject-uuid-1234"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38003",
+        "name": "REVIEWER"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38009",
+          "key": "reviews.assignments.view_assigned"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38010",
+          "key": "reviews.evaluations.score"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38011",
+          "key": "reviews.evaluations.submit"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38003",
+        "contextType": "REVIEW_BOARD",
+        "contextId": "BOARD_001",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38007",
+        "email": "program_manager@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38008",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "program-manager-keycloak-subject-uuid-1234"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38004",
+        "name": "PROGRAM_MANAGER"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38012",
+          "key": "grants.opportunities.create"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38013",
+          "key": "grants.opportunities.publish"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38014",
+          "key": "reviews.assignments.manage"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
+          "key": "projects.projects.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38015",
+          "key": "projects.reports.approve"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38004",
+        "contextType": "FUNDING_PROGRAM",
+        "contextId": "PROGRAM_001",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38009",
+        "email": "decision_maker@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38010",
+        "issuer": "http://localhost:8081/realms/vnru",
+        "subject": "decision-maker-keycloak-subject-uuid-1234"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38005",
+        "name": "FOUNDATION_DECISION_MAKER"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38016",
+          "key": "grants.decisions.issue_foundation"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
+          "key": "projects.projects.view"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38005",
+        "contextType": "FUNDING_PROGRAM",
+        "contextId": "PROGRAM_001",
+        "status": "ACTIVE"
+      }
+    }
+  ]
+}
