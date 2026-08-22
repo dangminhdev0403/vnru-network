@@ -27,6 +27,7 @@ const headerCopy: Record<
     signOut: string;
     openMenu: string;
     themeToggle: (isDark: boolean) => string;
+    themeModes: { light: string; dark: string; system: string };
     titles: Record<string, string>;
     defaultTitle: string;
   }
@@ -39,6 +40,7 @@ const headerCopy: Record<
     signOut: "Đăng xuất",
     openMenu: "Mở menu",
     themeToggle: (isDark) => `Chuyển sang chế độ ${isDark ? "Sáng" : "Tối"}`,
+    themeModes: { light: "Sáng", dark: "Tối", system: "Hệ thống" },
     titles: {
       "/workspace": "Tổng quan",
       "/workspace/knowledge": "Kho tri thức & Chuyên gia",
@@ -56,6 +58,7 @@ const headerCopy: Record<
     signOut: "Sign out",
     openMenu: "Open menu",
     themeToggle: (isDark) => `Switch to ${isDark ? "Light" : "Dark"} mode`,
+    themeModes: { light: "Light", dark: "Dark", system: "System" },
     titles: {
       "/workspace": "Overview",
       "/workspace/knowledge": "Knowledge & Experts",
@@ -74,6 +77,7 @@ const headerCopy: Record<
     openMenu: "Открыть меню",
     themeToggle: (isDark) =>
       `Переключить на ${isDark ? "Светлую" : "Темную"} тему`,
+    themeModes: { light: "Светлая", dark: "Темная", system: "Системная" },
     titles: {
       "/workspace": "Обзор",
       "/workspace/knowledge": "База знаний и эксперты",
@@ -91,6 +95,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
   const { theme, setTheme } = useTheme();
   const { locale, setLocale } = useLocale();
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const [isThemeOpen, setIsThemeOpen] = useState(false);
   const currentUser = useCurrentUser();
   const logout = useLogout();
   const mounted = React.useSyncExternalStore(
@@ -183,7 +188,10 @@ export default function Header({ onMenuClick }: HeaderProps) {
         <div className="relative">
           <button
             type="button"
-            onClick={() => setIsLangOpen(!isLangOpen)}
+            onClick={() => {
+              setIsLangOpen(!isLangOpen);
+              setIsThemeOpen(false);
+            }}
             className="flex h-10 items-center gap-1.5 rounded-xl px-3 text-xs font-bold text-text-primary transition hover:bg-[var(--surface-secondary)]"
             aria-label={
               languages.find((language) => language.code === locale)?.label
@@ -219,23 +227,47 @@ export default function Header({ onMenuClick }: HeaderProps) {
           )}
         </div>
 
-        {/* Native theme mode control keeps light, dark and system explicit. */}
+        {/* Theme mode control */}
         {mounted && (
-          <label className="relative grid size-10 place-items-center rounded-xl hover:bg-[var(--surface-secondary)]">
-            <span className="material-symbols-outlined pointer-events-none text-xl text-text-secondary">contrast</span>
-            <select
+          <div className="relative">
+            <button
+              type="button"
               aria-label={t.themeToggle(theme === "dark")}
-              value={theme || "system"}
-              onChange={(event) => { const mode = event.target.value; setTheme(mode); }}
-              className="absolute inset-0 cursor-pointer opacity-0"
+              aria-expanded={isThemeOpen}
+              onClick={() => {
+                setIsThemeOpen(!isThemeOpen);
+                setIsLangOpen(false);
+              }}
+              className="grid size-10 place-items-center rounded-xl text-text-secondary transition hover:bg-[var(--surface-secondary)] hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]"
             >
-              {[
-                { value: "light", label: "Light" },
-                { value: "dark", label: "Dark" },
-                { value: "system", label: "System" },
-              ].map((mode) => <option key={mode.value} value={mode.value}>{mode.label}</option>)}
-            </select>
-          </label>
+              <span className="material-symbols-outlined text-xl">contrast</span>
+            </button>
+            {isThemeOpen && (
+              <div
+                className="absolute right-0 z-50 mt-1.5 w-36 overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface-raised)] p-1.5 shadow-[var(--shadow-soft)]"
+                onMouseLeave={() => setIsThemeOpen(false)}
+              >
+                {Object.entries(t.themeModes).map(([mode, label]) => (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => {
+                      setTheme(mode);
+                      setIsThemeOpen(false);
+                    }}
+                    className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold transition ${
+                      theme === mode
+                        ? "bg-[var(--accent-primary)] text-white"
+                        : "text-text-secondary hover:bg-[var(--surface-secondary)] hover:text-text-primary"
+                    }`}
+                  >
+                    {label}
+                    {theme === mode && <span className="material-symbols-outlined text-base">check</span>}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         )}
 
         <details className="group relative">

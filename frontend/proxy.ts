@@ -24,19 +24,13 @@ export default auth(async function proxy(request) {
       cache: "no-store",
       headers: backendHeaders(request),
     }).catch(() => null);
-    if (session?.ok) return NextResponse.next();
-
     if ((request.auth as typeof request.auth & { error?: string })?.error) {
-      await fetch(authServiceUrl("api/v1/auth/logout"), {
-        method: "POST",
-        headers: backendHeaders(request),
-      }).catch(() => null);
-      const login = new URL("/login", request.url);
-      login.searchParams.set("error", "RefreshTokenError");
-      const response = NextResponse.redirect(login);
-      response.cookies.delete(SESSION_COOKIE_NAME);
-      return response;
+      const logout = new URL("/api/auth/logout", request.url);
+      logout.searchParams.set("returnTo", `${request.nextUrl.pathname}${request.nextUrl.search}`);
+      return NextResponse.redirect(logout);
     }
+
+    if (session?.ok) return NextResponse.next();
   }
   const login = new URL("/login", request.url);
   login.searchParams.set(

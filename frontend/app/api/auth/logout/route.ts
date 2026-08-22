@@ -3,6 +3,7 @@ import { signOut } from "../../../../auth";
 import {
   authServiceUrl,
   backendHeaders,
+  sanitizeReturnTo,
   SESSION_COOKIE_NAME,
 } from "../../../../features/auth/server";
 
@@ -20,6 +21,20 @@ export async function POST(request: Request) {
     ok: true,
     logoutUrl: new URL("/", request.url).href,
   });
+  response.cookies.delete(SESSION_COOKIE_NAME);
+  return response;
+}
+
+export async function GET(request: Request) {
+  await fetch(authServiceUrl("api/v1/auth/logout"), {
+    method: "POST",
+    headers: backendHeaders(request),
+  }).catch(() => null);
+  await signOut({ redirect: false });
+  const returnTo = sanitizeReturnTo(new URL(request.url).searchParams.get("returnTo"));
+  const login = new URL("/api/auth/login", request.url);
+  login.searchParams.set("returnTo", returnTo);
+  const response = NextResponse.redirect(login);
   response.cookies.delete(SESSION_COOKIE_NAME);
   return response;
 }

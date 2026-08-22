@@ -6,7 +6,7 @@ Normalized analysis baseline — implementation review based on the two latest u
 |---|---|
 | Module 1 | IAM / Governance |
 | Module 2 | Knowledge Repository and Expert Directory |
-| Module 3 | Independent Funding & Bilateral Research Project Management |
+| Module 3 | Bilateral Research Collaboration & Project Management |
 | Module 4 | Training, Knowledge Transfer & Academic Exchange |
 | Module 5 | Technology Transfer & Enterprise Connection |
 | Module 6 | Internal Monitoring & Reporting Dashboard |
@@ -20,17 +20,25 @@ This document has been reviewed against the two latest updated sources: “R-V S
 | Founder / operator | The Traditions and Friendship Foundation is the founder, owner, coordinator, and operator of the Network/Portal; the Network is not a separate legal entity. |
 | Legal position | The Network is an independent cooperation initiative; it must not be assumed to be a portal of the two ministries or an intergovernmental program. |
 | Three access areas | Public / Discovery; Role-based Workspace; Governance & Administration. |
-| Public objectives | Connect experts; disseminate knowledge; independent funding opportunities; knowledge/academic exchange; technology transfer. |
+| Public objectives | Connect experts; disseminate knowledge; research-collaboration opportunities; knowledge/academic exchange; technology transfer. |
 | Members | Two main groups: organizations and individual scientists; participation conditions differ based on capacity and relationship with the governing organization. |
-| Module 3 | Research funding in the Portal focuses on independent sources funded by individuals/organizations; the Foundation only approves funds raised/managed by the Foundation. |
-| State budget | If research is commissioned by a state authority, the Portal/Network only connects and supports; budget allocation/management remains with the competent authority of each country. |
+| Module 3 | Research collaboration, joint proposals, review, collaboration decisions, and project tracking; financial/funding workflows are excluded from implementation. |
+| Financial scope | [DECISION] Funding, investment, budget allocation, disbursement, payment, accounting, sponsor/funding-source administration, and financial reporting are outside the current Portal implementation. |
 | 2+2 model | Belongs to Module 5 — Technology Transfer & Enterprise Connection, not Module 3. |
 
-Priority rule: “170826 Giới thiệu portal VIE” takes priority for experience structure, user groups, and module descriptions; “R-V STIN” takes priority for operator identity, legal model, financial mechanism, Network activities, and the 2+2 model. When the two sources use different wording without changing meaning, use wording that best supports Portal implementation; when they differ in scope, keep the item [OPEN] or apply a direct updated decision from the project owner. Technical content not confirmed by source must retain a [DESIGN] or [OPEN] label.
+Priority rule: “170826 Giới thiệu portal VIE” takes priority for experience structure, user groups, and module descriptions; “R-V STIN” takes priority for operator identity, legal model, Network activities, and the 2+2 model. Financial-mechanism content from source documents is retained only as historical/contextual source information and is intentionally excluded from the implementation scope by project-owner decision. When sources differ in scope, keep the item [OPEN] or apply a direct updated decision from the project owner. Technical content not confirmed by source must retain a [DESIGN] or [OPEN] label.
+
+# PROJECT-OWNER SCOPE DECISION — FINANCIAL DOMAIN OUT OF IMPLEMENTATION
+
+[DECISION] The current VN–RU Portal implementation will **not** model or process money/investment operations. Funding, investment, budgets, disbursement, payments, accounting, sponsor/funding-source administration, financial reporting, deal value, ROI, royalties/fees, and similar monetary workflows are outside scope unless the project owner explicitly reopens them later.
+
+[SOURCE CONTEXT] Some source documents discuss funding mechanisms. Those references may remain as historical/contextual source information, but they must not create UI screens, API contracts, persistence entities, state machines, permissions, KPIs, or workflow requirements in the current implementation.
+
+The implementation focus is therefore: identity/governance → knowledge/expert discovery → research collaboration/proposals/review/projects → academic exchange → technology/enterprise connection → internal operational analytics.
 
 # 0. PORTAL-WIDE IMPLEMENTATION BASELINE AFTER REVIEW
 
-[SOURCE] The Portal is the Network’s “single window”, invested in, built, owned, and operated by the Traditions and Friendship Foundation. The Network is not a separate legal entity and is currently not an intergovernmental program.
+[SOURCE] The Portal is the Network’s “single window”, built, owned, and operated by the Traditions and Friendship Foundation. The Network is not a separate legal entity and is currently not an intergovernmental program.
 
 [SOURCE] The Portal experience is divided into three canonical areas: Public / Discovery, Role-based Workspace, and Governance & Administration. These boundaries must remain consistent across navigation, authorization, and data exposure.
 
@@ -94,7 +102,7 @@ Role-based individual workspace
 
 - Module 2 — Knowledge Repository & Expert Directory: publications, research outputs, expert profiles, search/discovery, and partner suggestion.
 
-- Module 3 — Bilateral Research Funding & Project Management: independent funding opportunities, VN–RU collaboration proposals, review, decisions within funds managed by the Foundation, and project tracking.
+- Module 3 — Bilateral Research Collaboration & Project Management: research/collaboration opportunities, VN–RU joint proposals, independent/anonymized review, collaboration decisions, and project tracking. Financial/funding workflows are excluded.
 
 - Module 4 — Training, Knowledge Transfer & Academic Exchange: seminars, professional activities, training/exchange activities, and knowledge dissemination.
 
@@ -104,9 +112,9 @@ Role-based individual workspace
 
 ## 0.5. Replacements that must be treated as canonical
 
-- [DECISION] Module 4 only retains training, knowledge transfer, and academic exchange scope; do not implement a separate financial-support branch.
+- [DECISION] Module 4 only retains training, knowledge transfer, and academic exchange scope; do not implement financial-support, payment, or funding-management flows.
 
-- [SOURCE] Module 3 funding must not be described as intergovernmental research budget; the Foundation only decides on funds raised/managed by the Foundation.
+- [DECISION] Module 3 does not implement funding, investment, budget, payment, sponsor/funding-source, or financial-reporting workflows. Source references to funding remain contextual only.
 
 - [SOURCE] 2+2 belongs to Module 5, not Module 3.
 
@@ -138,7 +146,15 @@ Login → Logout
 
 **In the VN-RU Portal, IAM is the security gateway for the entire business workflow:**
 
-<img src="media/image1.png" style="width:6.10236in;height:6.15157in" />
+```text
+USER
+  ↓
+IAM — Identity • AuthN • AuthZ • Context • Session • Audit
+  ├─ Knowledge
+  ├─ Collaboration / Projects
+  ├─ Academic
+  └─ Technology
+```
 
 *IAM’s role across the end-to-end business flow*
 
@@ -283,7 +299,9 @@ This is especially important because the documentation requires reviewers to acc
 
 **Example:**
 
-<img src="media/image5.png" style="width:6.10236in;height:0.55252in" />
+```text
+IAM permission → Collaboration Service business validation → allow / deny
+```
 
 *Boundary between IAM permission and business validation*
 
@@ -568,19 +586,25 @@ This is a conceptual contract, not the final API schema.
 
 **IAM sits in front of:**
 
-<img src="media/image15.png" style="width:6.10236in;height:4.40945in" />
+```text
+IAM
+├─ Knowledge
+├─ Collaboration / Review / Project
+├─ Academic
+└─ Technology
+```
 
 *IAM provides identity/context to other domains*
 
 Each module must not create its own identity system.
 
-**For example, Grants must not have:**
+**For example, the Collaboration domain must not have:**
 
-grant_user
+collaboration_user
 
-grant_role
+collaboration_role
 
-grant_password
+collaboration_password
 
 **It only consumes:**
 
@@ -588,7 +612,7 @@ authenticated identity
 
 authorization context
 
-and handles Grant business rules itself.
+and handles Collaboration/Project business rules itself.
 
 Updated operating source: Governance & Administration staff represent the Foundation’s Portal-administration function; do not infer that every Agency/Organization user is an IAM administrator.
 
@@ -613,7 +637,7 @@ Updated operating source: Governance & Administration staff represent the Founda
 - Project state
 - Expert profile
 - Technology state
-- Grant business rules
+- Collaboration/Project business rules
 - Academic application state
 - KPI business facts
 
@@ -686,7 +710,7 @@ A sound architectural decision is to make IAM a centralized authentication + aut
 | Resource Scope | ✅/shared reference | Resource boundary |
 | Audit Event | ✅ | Security trail |
 | Organization | ❌ | owned by organization-service |
-| Proposal | ❌ | owned by grant-service |
+| Proposal | ❌ | owned by collaboration-service |
 | Review | ❌ | owned by review-service |
 | Project | ❌ | owned by project-service |
 
@@ -746,9 +770,9 @@ IAM.ROLE.READ
 
 IAM.ROLE.ASSIGN
 
-GRANT.PROPOSAL.READ
+COLLAB.PROPOSAL.READ
 
-GRANT.PROPOSAL.SUBMIT
+COLLAB.PROPOSAL.SUBMIT
 
 REVIEW.ASSIGNMENT.READ
 
@@ -913,8 +937,8 @@ This is an API design proposal, not an API confirmed by the source. The source o
 "type": "researcher"
 },
 "permissions": [
-"GRANT.PROPOSAL.READ",
-"GRANT.PROPOSAL.SUBMIT"
+"COLLAB.PROPOSAL.READ",
+"COLLAB.PROPOSAL.SUBMIT"
 ]
 }
 
@@ -983,7 +1007,7 @@ This is [DESIGN], not a source requirement.
 {
 "eventType": "AUTHORIZATION_DENIED",
 "actorId": "u123",
-"action": "GRANT.PROPOSAL.READ",
+"action": "COLLAB.PROPOSAL.READ",
 "resourceType": "proposal",
 "resourceId": "p001",
 "contextId": "ctx01",
@@ -1028,7 +1052,7 @@ GET /proposals/P001
 
 - auth.authenticate 2ms
 - authz.cache 1ms
-- grant.getProposal 8ms
+- collaboration.getProposal 8ms
 - response
 
 **If authz cache misses:**
@@ -1057,7 +1081,7 @@ capabilities
 
 **Then UI:**
 
-if can("GRANT.PROPOSAL.SUBMIT")
+if can("COLLAB.PROPOSAL.SUBMIT")
 
 show Submit
 
@@ -1107,13 +1131,15 @@ role=ADMIN
 
 - Wrong
 
-Grant Service
+Collaboration Service
 
 → queries IAM DB directly
 
 - Correct
 
-<img src="media/image21.png" style="width:6.10236in;height:0.65606in" />
+```text
+Request → AuthN → AuthZ → Collaboration/Project Service → business validation
+```
 
 *Correct security boundary: AuthN → AuthZ → business validation*
 
@@ -1948,92 +1974,108 @@ Which engine/mechanism will be used for semantic search and matching?
 
 A suitable architecture for this module is: business data remains in the source-of-truth store; the search engine serves discovery; the graph model serves relationships; ORCID/Scopus sources are processed asynchronously and safely retryable; caching focuses only on public, infrequently changing data. The source documentation points toward Semantic Search, Elasticsearch/Graph DB, ORCID/Scopus, and cursor pagination; remaining implementation details stay in the design space and are not finalized requirements.
 
-# MODULE 3 — BILATERAL RESEARCH FUNDING & PROJECT MANAGEMENT
+# MODULE 3 — BILATERAL RESEARCH COLLABORATION & PROJECT MANAGEMENT
 
-The updated sources clarify the nature of Module 3: the Portal supports the lifecycle of research collaboration funded by independent sources (individuals or organizations), and must not assume an intergovernmental funding program. The Foundation only reviews/approves funds raised and managed by the Foundation; state-budget funding, if any, remains under the authority of the competent state bodies of each country.
+[DECISION] The current implementation scope of Module 3 is research collaboration and project lifecycle management. The project owner has explicitly removed the financial domain from implementation.
+
+[SOURCE CONTEXT] Updated source documents previously described independent funding and Foundation-managed funding mechanisms. Those references remain source context only. They do not produce funding/budget/investment functionality in the current Portal.
 
 ## 1. Business nature of Module 3
 
-This module connects four layers of value:
+Module 3 connects the research-collaboration lifecycle:
 
-- Independent funding opportunities are published for the community to discover.
-- Vietnamese and Russian research teams form a joint collaboration proposal / paired-submission structure.
-- After an appropriate funding decision within the relevant authority, the project is tracked for progress and results on the same Portal.
-- [SOURCE] Commissioned research needs from public organizations/agencies or enterprises may also enter the Portal as collaboration opportunities; the Portal connects and supports implementation, while authority over state-budget allocation, if any, remains with the competent public authority.
+- Public research/collaboration opportunities can be published for discovery.
+- Vietnamese and Russian research teams can form a joint collaboration proposal / paired-submission structure.
+- Assigned reviewers can independently/anonymously evaluate proposals according to the finalized policy.
+- An authorized collaboration decision can move an accepted proposal into project tracking.
+- Projects can be tracked for progress, milestones, outputs, and completion.
 
-Therefore Module 3 is not merely a “grant submission form”. It is a lifecycle from opportunity / research need → collaboration → evaluation → decision within authority → project execution.
+Therefore Module 3 is a lifecycle from:
 
-## 2. Legal and financial boundaries that must be fixed
+research opportunity / research need → partner formation → joint proposal → review → collaboration decision → project execution → results.
 
-| **Case** | **Role of the Portal / Foundation** |
+It is **not** a grant, investment, or financial-management system.
+
+## 2. Hard boundary — NO FINANCIAL DOMAIN
+
+| **In scope** | **Out of scope** |
 |---|---|
-| Funds raised and managed by the Foundation | The Foundation may review and approve funding according to Network rules. |
-| Funds from independent individuals / organizations | May become bilateral funding opportunities if accepted/managed by the Foundation through an appropriate mechanism. |
-| Research commissioned by a state authority | The Network connects and supports implementation; it does not assume authority to allocate state budget. |
-| Vietnam / Russia state budget | Allocation and management belong to the competent authority of each country and remain outside the Foundation’s authority. |
+| Research/collaboration opportunity | Funding opportunity / grant program management |
+| Partner discovery and VN–RU team formation | Investor/funder onboarding |
+| Joint proposal and scientific content | Budget/funding request |
+| Independent/anonymized review | Funding decision / disbursement |
+| Collaboration decision | Sponsor/funding-source administration |
+| Project progress, milestones, outputs | Payment, accounting, reimbursement |
+| Project acceptance/completion status | Financial reporting / financial acceptance |
+| Operational audit and reporting | ROI, deal value, royalties, fees, revenue sharing |
 
-This boundary is mandatory so that UI, workflow, wording, and reporting do not turn the Portal into an assumed “state-budget funding authority”.
+[DECISION] If a future policy reopens financial functionality, it must be designed as a separate scoped workstream rather than silently added to Module 3.
 
 ## 3. Actors and access areas
 
 | **Actor** | **Primary need** |
 |---|---|
-| Visitor | View public funding opportunities, understand conditions and the Network. |
-| Researcher / Scientist | Find opportunities, form collaboration proposals, track own proposals/projects. |
+| Visitor | View public research/collaboration opportunities and understand participation conditions. |
+| Researcher / Scientist | Find partners, form joint proposals, track own proposals/projects. |
 | Organization Representative | Track/endorse proposals and projects within organization scope if required by policy. |
 | Reviewer | Evaluate assigned records only; no access outside assignment. |
-| Foundation Operator / Governance Admin | Manage calls/workflows, perform administrative checks, coordinate review, make decisions within Foundation-managed funding authority, monitor audit. |
-| Leadership | View aggregated reports according to permission; does not replace business workflow. |
+| Foundation Operator / Governance Admin | Manage opportunity/workflow configuration, administrative checks, review coordination, collaboration decisions, and audit. |
+| Leadership | View aggregated operational reports according to permission; does not replace business workflow. |
 
-Funding may come from individuals or organizations, but whether there is a direct authenticated “Funder” actor is not finalized by the updated sources.
+There is no `Investor`, `Funder`, `Sponsor Manager`, or finance-operator actor in the current implementation.
 
-## 3.1. Opportunity types should be separated in the data model
+## 4. Research opportunity model
 
-[DESIGN] To avoid mixing financial authority, an opportunity should carry an explicit type and authority source.
+[DESIGN] An opportunity should represent a research or collaboration need, not a funding instrument.
 
-Opportunity
+ResearchOpportunity
 
-type = INDEPENDENT_FUNDING | COMMISSIONED_RESEARCH | OTHER_APPROVED_TYPE
+type = RESEARCH_COLLABORATION | COMMISSIONED_RESEARCH | OTHER_APPROVED_COLLABORATION
 
-sponsor / requester
+requester / organizer
 
-fundingSource
+topic / field
 
-decisionAuthority
+participationConditions
+
+deadline
 
 publicVisibility
 
 lifecycle
 
-[SOURCE] For commissioned research requested by a state body, the Portal/Foundation must not present itself as the state-budget allocation authority.
+No budget, fundingSource, sponsor amount, investment amount, or payment fields are part of the current model.
 
-## 4. Public / Workspace / Governance
+## 5. Public / Workspace / Governance
 
-### 4.1. Public / Discovery
+### 5.1. Public / Discovery
 
-- Publicly visible funding-opportunity list.
-- Public-level objective, scope, deadline, and participation conditions.
+- Public research/collaboration opportunity list.
+- Public objective, scope, deadline, and participation conditions.
 - Entry points to discover suitable experts/partners before creating a proposal.
 
-### 4.2. Role-based Workspace
+### 5.2. Role-based Workspace
 
 - Draft proposal / joint proposal.
+- Proposal collaboration and confirmation.
 - Proposal status tracking.
 - Reviewer workspace for assignments.
-- Project workspace after approval.
+- Project workspace after an accepted collaboration decision.
 
-### 4.3. Governance & Administration
+### 5.3. Governance & Administration
 
-- Call/workflow management.
+- Opportunity/workflow administration.
 - Administrative / eligibility screening if required by policy.
-- Review coordination and decisions within Foundation authority.
-- Audit, security, and internal reporting.
+- Review coordination and collaboration decisions.
+- Audit, security, and internal operational reporting.
 
-## 5. Standard business flow at capability level
+No finance administration screens exist in this scope.
 
-The [SOURCE + DESIGN] flow should be understood as:
+## 6. Standard business flow at capability level
 
-Public Funding Opportunity
+The [SOURCE + DESIGN + DECISION] flow is:
+
+Public Research / Collaboration Opportunity
 
 ↓
 
@@ -2057,23 +2099,21 @@ Independent / anonymized review
 
 ↓
 
-Funding decision within Foundation authority
+Collaboration decision
 
 ↓
 
-Approved cooperation becomes tracked project
+Accepted cooperation becomes tracked project
 
 ↓
 
-Progress / result monitoring
+Progress / milestone / result monitoring
 
-The updated source confirms publication of opportunities, joint proposals, independent evaluation, and post-approval tracking. Administrative/eligibility screening is [DESIGN] so invalid proposals do not enter scientific review directly.
+The source confirms collaboration proposals, independent evaluation, and project tracking. The financial branch is deliberately omitted by project-owner decision.
 
-## 6. Joint proposal and paired submission
+## 7. Joint proposal and paired submission
 
-The bilingual source states that Module 3 includes a paired-submission mechanism; the Portal VIE source describes a joint proposal between Vietnamese and Russian research teams.
-
-At the domain level, a proposal should not be modeled merely as one user’s form.
+A proposal must not be modeled merely as one user’s form.
 
 Conceptually:
 
@@ -2089,45 +2129,46 @@ organizations / affiliations
 
 scientific content
 
-budget / funding request
+research objectives
+
+expected outputs
+
+work plan
 
 collaboration confirmations
 
 submission state
 
-The confirmation mechanism between the two sides, concurrent-edit rights, and the exact point at which a proposal is locked still require detailed decisions; they must not be finalized implicitly by this source update.
+The confirmation mechanism between the two sides, concurrent-edit rights, and the exact point at which a proposal is locked still require detailed decisions; they must not be finalized implicitly.
 
-## 7. Review
+No budget/funding-request section is part of the current proposal model.
 
-Both updated sources confirm review as a core component: one specifies anonymous peer review; the other specifies independent evaluation by panels from both countries.
+## 8. Review
+
+The updated sources confirm review as a core component: one specifies anonymous peer review; the other specifies independent evaluation by panels from both countries.
 
 - Reviewers may access assigned proposals only.
 - Anonymization must be enforced according to confirmed policy, not merely by hiding names in the frontend.
 - Review state must be separate from Proposal state.
 - Do not infer that “reviewer” is a global IAM role with access to every proposal.
 
-The exact hidden fields, anonymity mechanism, and point of information disclosure, if required by policy, still need a separate specification; do not assume double-blind review when the updated sources have not confirmed it.
+The exact hidden fields, anonymity mechanism, and point of information disclosure still need a separate specification; do not assume double-blind review when the source has not confirmed it.
 
-## 8. Funding decision does not imply state-budget authority
+## 9. Collaboration decision
 
-If funding belongs to sources raised/managed by the Foundation, the workflow may reach a Foundation funding decision according to Network rules.
+After review, the owning business workflow may record a collaboration decision such as:
 
-If the research is associated with a state budget, the Portal must not represent the Foundation as allocating or approving that state budget.
+APPROVED / REJECTED / CONDITIONAL [DESIGN]
 
-UI and API must distinguish at least:
+This decision means only whether the Portal-side collaboration/proposal may proceed to project tracking. It must not be interpreted as a funding, investment, budget, payment, or disbursement decision.
 
-- Portal / Foundation workflow decision;
-- funding source / sponsor;
-- external state-budget authority, when applicable;
-- project execution state.
+UI and API should use neutral wording such as `Collaboration Decision` or `Proposal Decision`, not `Funding Decision`.
 
-## 9. Project lifecycle after approval
-
-The updated source states that Module 3 tracks project progress and results after approval.
+## 10. Project lifecycle after an accepted decision
 
 Conceptual project state [DESIGN]:
 
-APPROVED
+PLANNED
 
 → ACTIVE
 
@@ -2137,25 +2178,34 @@ APPROVED
 
 → CLOSED
 
-Milestone approval, financial reporting, acceptance authority, and overdue policy are not described sufficiently by the two updated sources to finalize the schema/workflow.
+The project domain may track:
 
-## 10. State models must remain separate
+- scope/objectives
+- members/organizations
+- milestones and progress
+- research outputs/results
+- status/acceptance according to policy
+- links to Knowledge and Technology domains where appropriate
+
+It must not track budgets, disbursement, payments, accounting, or financial reports in the current scope.
+
+## 11. State models must remain separate
 
 | **Aggregate** | **Example state** |
 |---|---|
-| Funding Opportunity | DRAFT / PUBLISHED / CLOSED [DESIGN] |
+| Research Opportunity | DRAFT / PUBLISHED / CLOSED [DESIGN] |
 | Proposal | DRAFT / SUBMITTED / SCREENING / REVIEW / DECIDED [DESIGN] |
 | Review Assignment | ASSIGNED / IN_PROGRESS / SUBMITTED [DESIGN] |
-| Funding Decision | APPROVED / REJECTED / CONDITIONAL [DESIGN] |
+| Collaboration Decision | APPROVED / REJECTED / CONDITIONAL [DESIGN] |
 | Project | PLANNED / ACTIVE / COMPLETED / CLOSED [DESIGN] |
 
 Do not use one status column for the entire lifecycle.
 
-## 11. Conceptual data model
+## 12. Conceptual data model
 
 This is [DESIGN], not a persistence schema:
 
-FundingOpportunity
+ResearchOpportunity
 
 Proposal
 
@@ -2167,17 +2217,19 @@ ReviewAssignment
 
 Review
 
-FundingDecision
+CollaborationDecision
 
 Project
 
 ProjectMilestone
 
-FundingSource / SponsorReference
+ProjectOutputRef
 
-Identity, organization, and expert profile remain owned by their respective domains; Module 3 keeps only necessary stable references.
+Identity, organization, expert profile, and knowledge records remain owned by their respective domains; Module 3 keeps only necessary stable references.
 
-## 12. Authorization
+There are no FundingOpportunity, FundingDecision, FundingSource, SponsorReference, Budget, Payment, Investment, or FinancialReport entities in the current implementation.
+
+## 13. Authorization
 
 Real authorization must combine the IAM baseline with resource participation and business state.
 
@@ -2195,13 +2247,13 @@ identity
 
 = effective decision
 
-For example, a reviewer with REVIEW.SUBMIT still cannot submit a review for a proposal that is not assigned to them.
+For example, a reviewer with `REVIEW.SUBMIT` still cannot submit a review for a proposal that is not assigned to them.
 
-## 13. UI capability
+## 14. UI capability
 
 ### Public
 
-- Funding opportunity list / detail.
+- Research/collaboration opportunity list / detail.
 - Understand conditions and deadlines.
 - Discover related experts/partners.
 
@@ -2210,7 +2262,7 @@ For example, a reviewer with REVIEW.SUBMIT still cannot submit a review for a pr
 - My proposals.
 - Joint proposal collaboration.
 - Submission state.
-- Approved projects / progress.
+- Accepted projects / progress.
 
 ### Reviewer workspace
 
@@ -2219,83 +2271,87 @@ For example, a reviewer with REVIEW.SUBMIT still cannot submit a review for a pr
 
 ### Governance
 
-- Opportunity / workflow administration.
+- Opportunity/workflow administration.
 - Screening queue.
 - Review assignment / monitoring.
-- Funding decision within authority.
+- Collaboration/proposal decision.
 
-Concrete routes and screen maps remain [DESIGN], not URLs finalized by the updated sources.
+No Funding, Investment, Budget, Payment, Sponsor, or Financial Report navigation is created.
 
-## 14. API capability proposal
+## 15. API capability proposal
 
 Do not lock final URLs yet, but capability contracts may include:
 
-Funding Opportunity: list / detail / publish
+Research Opportunity: list / detail / publish
 
 Proposal: create / collaborate / submit / status
 
 Review: assignment / read assigned / submit
 
-Decision: record / read
+Collaboration Decision: record / read
 
-Project: create from approved decision / read / progress update
+Project: create from accepted decision / read / progress update / output link
 
 OpenAPI should only be finalized once the state machine and corresponding permissions are confirmed.
 
-## 15. Events and audit
+No financial API surface is included.
+
+## 16. Events and audit
 
 Audit and business events must remain distinct.
 
 - ProposalSubmitted — business event.
 - ProposalEligibleForReview — business event [if screening is confirmed].
 - ReviewSubmitted — business event.
-- FundingDecisionApproved — business event.
-- ProjectCreatedFromApprovedDecision — integration/business event.
+- CollaborationDecisionApproved — business event.
+- ProjectCreatedFromAcceptedDecision — integration/business event.
 - UnauthorizedReviewAccessDenied — security/audit event.
-- FundingDecisionChanged — sensitive audit event.
+- CollaborationDecisionChanged — sensitive audit event.
 
 Do not audit every click/UI interaction.
 
-## 16. Concurrency and idempotency
+## 17. Concurrency and idempotency
 
 Sensitive points include:
 
 - The Vietnam and Russia sides editing the same joint proposal.
 - Retry causing duplicate submit.
 - Reviewer submitting repeatedly.
-- An approved decision triggering Project creation.
+- An accepted decision triggering Project creation.
 
 Use optimistic concurrency/versioning for collaborative updates and idempotency for commands/events that may retry.
 
-Grant approved → Project should be handled asynchronously/idempotently if implemented across services; event replay must not create duplicate Projects.
+Accepted collaboration → Project should be handled asynchronously/idempotently if implemented across services; event replay must not create duplicate Projects.
 
-## 17. Acceptance Criteria — Module 3
+## 18. Acceptance Criteria — Module 3
 
 ### Public
 
-- Visitors can view published funding opportunities without login.
-- Opportunities are not incorrectly labeled as intergovernmental funding programs when the source is independent.
+- Visitors can view published research/collaboration opportunities without login.
+- Public wording does not imply that the Portal is a funding or investment platform.
 
 ### Proposal
 
 - VN–RU collaboration proposals can be formed.
 - Submission state is explicit and retry does not lose data.
 - Invalid proposals do not proceed directly to review when screening is applied.
+- Proposal data does not require budget/funding fields.
 
 ### Review
 
 - Reviewers see only their assignments.
 - Independent/anonymized review follows the finalized policy.
 
-### Decision / Funding
+### Decision
 
-- The Foundation makes funding decisions only within funds raised/managed by the Foundation.
-- The Foundation is not represented as the allocator of Vietnam or Russia state budgets.
+- The system can record a collaboration/proposal decision.
+- A collaboration decision is not represented as a funding, budget, or investment decision.
 
 ### Project
 
-- An approved proposal can transition to project tracking without creating duplicates.
-- Progress and results can be tracked.
+- An accepted proposal can transition to project tracking without creating duplicates.
+- Progress, milestones, outputs, and results can be tracked.
+- No financial reporting/disbursement/accounting capability is created.
 
 ### Security / Integration
 
@@ -2303,37 +2359,34 @@ Grant approved → Project should be handled asynchronously/idempotently if impl
 - No cross-service DB access.
 - Sensitive decision/review actions have appropriate audit.
 
-## 18. Items still requiring confirmation
+## 19. Items still requiring confirmation
 
 - Exact mechanism for Vietnamese and Russian sides to jointly create/confirm a paired proposal.
 - Which fields must be hidden during anonymized review, when information may be revealed, and who may reveal it.
-- Authority for screening, review assignment, and final decision by funding-source type.
-- Project milestone, financial reporting, and acceptance workflow.
-- Representation of sponsor/funding source when funds come from independent individuals or organizations.
-- Boundary between programs directly managed by the Foundation and research commissioned by a state authority.
+- Authority for screening, review assignment, and final collaboration/proposal decision.
+- Project milestone and non-financial acceptance workflow.
+- Rules for linking completed project outputs into Knowledge or Technology.
+- Whether commissioned-research opportunities need a distinct visibility/approval path.
 
-## 19. Important correction: 2+2 does not belong to Module 3
+Financial questions are intentionally not OPEN items; they are out of implementation scope by decision.
 
-The previous analysis incorrectly placed 2+2 under Module 3.
+## 20. Important correction: 2+2 does not belong to Module 3
 
 Both updated sources place 2+2 under Module 5 — Technology Transfer & Enterprise / Institute-University Connection.
 
-Therefore this update removes 2+2 from Module 3. The 2+2 content should be reused under Module 5 with the minimum structure:
-
-- 1 Vietnam institute/university
-- 1 Vietnam enterprise
-- 1 Russia institute/university
-- 1 Russia enterprise
-
-Do not treat 2+2 as a taxonomy of the Grant/Project module.
+Module 3 therefore does not use 2+2 as a Grant/Project taxonomy. If a Module 3 project later participates in technology transfer, it may link to a Module 5 collaboration/2+2 case through an explicit business action.
 
 ## Module 3 summary
 
-After the update, Module 3 is the capability for managing independent funding opportunities and the bilateral research-project lifecycle: public discovery → VN–RU collaboration → joint proposal → independent/anonymized review → decision within Foundation-managed funding authority → project tracking. The legal boundary around state-budget authority must remain explicit in UI, API, workflow, and reporting.
+Module 3 is the capability for bilateral research collaboration and project management:
+
+public discovery → VN–RU partner formation → joint proposal → independent/anonymized review → collaboration decision → project tracking → results.
+
+The financial domain is explicitly outside the current implementation.
 
 # MODULE 4 — TRAINING, KNOWLEDGE TRANSFER & ACADEMIC EXCHANGE
 
-[DECISION] The current implementation scope of Module 4 focuses on training, seminars/professional activities, academic exchange, and knowledge transfer between the Vietnamese and Russian communities; there is no separate financial-support branch.
+[DECISION] The current implementation scope of Module 4 focuses on training, seminars/professional activities, academic exchange, and knowledge transfer between the Vietnamese and Russian communities; there is no financial-support, payment, stipend, grant, or funding-management branch.
 
 ## 1. Business nature
 
@@ -2515,7 +2568,7 @@ Material: attach-reference / list-visible
 - Visitors can view published activities.
 - Members can only manage activities/registrations within scope.
 - Activity state and participation state are clearly separate.
-- There is no separate financial-support flow in the current scope.
+- There is no financial-support, stipend, grant, payment, or funding-management flow in the current scope.
 - Event materials do not automatically become official knowledge records.
 - Sensitive publish/moderation actions are audited.
 - Retry does not create duplicate registrations.
@@ -2535,11 +2588,19 @@ Module 4 should follow the flow public discovery → activity detail → partici
 
 # MODULE 5 — TECHNOLOGY TRANSFER & ENTERPRISE CONNECTION
 
-**[SOURCE]** This module connects research outputs/inventions from institutes and universities with application needs from enterprises in both countries, supports collaboration formation, and provides the advisory steps needed to move toward transfer, application, and commercialization.
+**[SOURCE]** This module connects research outputs/inventions from institutes and universities with application needs from enterprises in both countries, supports collaboration formation, and provides advisory steps toward transfer and application. [DECISION] The current implementation does not model investment, deal finance, pricing, payment, royalties, revenue sharing, or other monetary/commercial transaction mechanics.
 
 ## 1. Business nature
 
-Module 5 should not be treated only as a “technology catalog”. A suitable implementation lifecycle is discovery → interest → matching → collaboration → advisory/IP/legal → transfer outcome.
+Module 5 should not be treated only as a “technology catalog”. A suitable implementation lifecycle is discovery → interest → matching → collaboration → advisory/IP/legal → transfer/application outcome.
+
+### 1.1. Financial boundary
+
+[DECISION] Technology Transfer & Enterprise Connection is **not** an investment marketplace or payment platform.
+
+In scope: technology profiles, enterprise needs, expressions of interest, matching, collaboration cases, 2+2 consortium formation, non-financial advisory/IP/legal references, and transfer/application outcomes.
+
+Out of scope: investor/funder profiles, capital raising, deal value, valuation, pricing, payment, licensing fees, royalties, revenue sharing, ROI, financial negotiation, and investment reporting.
 
 ## 2. Actors
 
@@ -2615,7 +2676,7 @@ Enterprise / partner discovers technology
 
 ## 7. Direct collaboration and 2+2
 
-[SOURCE] Both updated sources place 2+2 in Module 5. Do not place 2+2 in the Grant/Project taxonomy.
+[SOURCE] Both updated sources place 2+2 in Module 5. Do not place 2+2 in the Module 3 research-project taxonomy.
 
 [INHERITED] The previous analysis defined the 2+2 structure as: 1 Vietnam institute/university + 1 Vietnam enterprise + 1 Russia institute/university + 1 Russia enterprise. The two updated sources do not restate this detail but do not contradict it; retain it as an inherited requirement until stakeholders reconfirm it.
 
@@ -2653,15 +2714,16 @@ Technology / enterprise need identified
 
 ↓ Collaboration scope / IP / legal preparation
 
-↓ Active collaboration / transfer process
+↓ Active collaboration / transfer/application process
 
 ## 10. IP / legal / advisory boundary
 
-[SOURCE] The module supports advisory steps needed to move toward transfer and commercialization. The two updated sources do not finalize the detailed legal/IP workflow.
+[SOURCE] The module supports advisory steps needed to move toward transfer/application. The two updated sources do not finalize the detailed legal/IP workflow.
 
 - [DESIGN] Store advisory cases / document references; do not infer IP ownership.
-- [OPEN] Who approves disclosure, NDA, licensing terms, and commercialization agreement.
+- [OPEN] Who approves disclosure, NDA, and other non-financial IP/legal documentation.
 - [OPEN] Whether legal contracts/documents are Portal artifacts or only external references.
+- [DECISION] Pricing, license fees, royalties, revenue sharing, investment terms, and payment execution are outside the current implementation.
 
 ## 11. State model
 
@@ -2764,7 +2826,7 @@ Consortium: add-candidate / confirm-slot / validate-2plus2
 - Who may create/publish a technology profile.
 - Visibility model for enterprise needs and collaboration cases.
 - Detailed EOI/negotiation states.
-- IP/legal, NDA, licensing, and commercialization workflow.
+- IP/legal and NDA/document-reference workflow, excluding monetary/commercial transaction terms.
 - Official confirmation mechanism for each 2+2 member.
 - Conditions for moving collaboration to completed/transfer outcome.
 
@@ -2779,6 +2841,8 @@ Module 5 should be implemented as a workflow connecting technology supply with e
 ## 1. Business nature
 
 Module 6 is a read-oriented analytics/reporting capability. It does not own transactional state for Proposal, Project, Expert, Academic Activity, or Technology.
+
+[DECISION] The current dashboard is operational/scientific-network analytics only. It does not introduce investment, funding, budget, payment, revenue, ROI, disbursement, or other financial KPIs.
 
 ## 2. Audience and access boundary
 
@@ -2962,7 +3026,7 @@ Visitor
 
 ├─ Experts
 
-└─ Opportunities: Funding / Academic / Technology
+└─ Opportunities: Research Collaboration / Academic / Technology
 
 ↓ Learn how to participate OR Sign in
 
@@ -2994,7 +3058,7 @@ Expert / Knowledge discovery
 
 ↓ partner identification
 
-↓ Funding opportunity or commissioned research need
+↓ Research/collaboration opportunity or commissioned research need
 
 ↓ VN–RU proposal collaboration
 
@@ -3030,7 +3094,7 @@ Technology supply OR enterprise demand
 
 ↓ IP/legal/advisory
 
-↓ transfer/commercialization outcome
+↓ transfer/application outcome
 
 ## 7. Analytics journey
 
@@ -3058,7 +3122,7 @@ Domain facts/events
 - Final multi-role/multi-context behavior.
 - Moderation/publish authority for Knowledge, Academic, and Technology.
 - Detailed review-anonymity mechanism; the new source only confirms anonymous/independent review at a high level, not double-blind behavior or information-reveal timing.
-- Project milestone/financial-acceptance workflow.
+- Project milestone/non-financial acceptance workflow.
 - Activity registration/capacity/certificate behavior.
 - IP/legal/licensing workflow.
 - KPI formula, freshness, and export governance.

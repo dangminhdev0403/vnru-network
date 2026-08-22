@@ -50,8 +50,8 @@ export default async function LoginPage({
           Dịch vụ xác thực tạm thời chưa khả dụng
         </h1>
         <p className="mt-3 text-sm text-slate-400">
-          Hệ thống xác thực tập trung (Keycloak / Auth-Service) đang ngoại tuyến
-          hoặc đang được khởi động. Vui lòng thử lại sau.
+          Hệ thống xác thực đang tạm thời ngoại tuyến hoặc đang được khởi động.
+          Vui lòng thử lại sau.
         </p>
         <div className="mt-6 flex flex-col gap-3">
           <a

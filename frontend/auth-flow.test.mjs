@@ -33,7 +33,6 @@ test("login route delegates credential UI directly to Keycloak", async () => {
   const { readFile } = await import("node:fs/promises");
   const page = await readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8");
   assert.match(page, /\/api\/auth\/login\?returnTo=/);
-  assert.match(page, /authorizationUrl\.searchParams\.set\(\s*"ui_locales"/);
   assert.doesNotMatch(page, /iframe|password|html-templates\/login/);
 });
 
@@ -48,7 +47,7 @@ test("login and home use backend-authoritative session state", async () => {
   assert.match(server, /getCurrentSession/);
   assert.match(login, /getCurrentSession/);
   assert.match(home, /isAuthenticated/);
-  assert.match(motion, /\/api\/auth\/logout/);
+  assert.match(motion, /useLogout/);
   assert.match(motion, /window\.location\.assign\(logoutUrl \|\| "\/"\)/);
 });
 
@@ -56,7 +55,7 @@ test("auth flow keeps provider tokens out of the frontend", async () => {
   const { readFile } = await import("node:fs/promises");
   const files = [
     "./app/api/auth/login/route.ts",
-    "./app/api/auth/callback/route.ts",
+    "./app/api/auth/[...nextauth]/route.ts",
     "./app/api/auth/me/route.ts",
     "./app/api/auth/logout/route.ts",
     "./proxy.ts",
@@ -66,27 +65,57 @@ test("auth flow keeps provider tokens out of the frontend", async () => {
   );
 
   assert.doesNotMatch(source.join("\n"), /refresh[_T]oken|access[_T]oken/);
-  assert.match(source[0], /redirect:\s*"manual"/);
-  assert.match(source[0], /configuration-unavailable/);
-  assert.match(source[3], /await backend\.json\(\)/);
+  assert.match(source[0], /signIn\(\s*"keycloak"/);
+  assert.match(source[0], /ui_locales/);
+  assert.match(source[3], /authServiceUrl\("api\/v1\/auth\/logout"\)/);
 });
 
-test("proxy keeps a valid backend session authoritative over provider refresh", async () => {
+test("proxy logs out when provider refresh expires", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("./proxy.ts", import.meta.url), "utf8");
   assert.ok(
-    source.indexOf("if (session?.ok) return NextResponse.next()") <
-      source.indexOf("RefreshTokenError"),
+    source.indexOf("RefreshTokenError") <
+      source.indexOf("if (session?.ok) return NextResponse.next()"),
   );
+  assert.match(source, /new URL\("\/api\/auth\/logout"/);
+  assert.match(source, /logout\.searchParams\.set\("returnTo"/);
+  const logout = await readFile(new URL("./app/api/auth/logout/route.ts", import.meta.url), "utf8");
+  assert.match(logout, /export async function GET/);
+  assert.match(logout, /await signOut\(\{ redirect: false \}\)/);
+  assert.match(logout, /new URL\("\/api\/auth\/login"/);
+  assert.match(logout, /sanitizeReturnTo/);
 });
+
+test("expired refresh skips the intermediate notice", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /Phiên đăng nhập đã hết hạn|expired/);
+});
+
 
 test("workspace header uses the authenticated account menu", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("./components/shared/Header.tsx", import.meta.url), "utf8");
-  assert.match(source, /fetch\("\/api\/auth\/me"\)/);
-  assert.match(source, /href="\/api\/auth\/account\?section=profile"/);
-  assert.match(source, /fetch\("\/api\/auth\/logout", \{ method: "POST" \}\)/);
+  assert.match(source, /useCurrentUser\(\)/);
+  assert.match(source, /href="\/workspace\/iam\/security"/);
+  assert.match(source, /useLogout\(\)/);
   assert.doesNotMatch(source, /\{t\.contextActive\}/);
+});
+
+test("workspace theme modes are localized in VI EN RU", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("./components/shared/Header.tsx", import.meta.url), "utf8");
+  for (const label of ["Hệ thống", "System", "Системная"]) assert.match(source, new RegExp(label));
+  assert.doesNotMatch(source, /label: "(?:Light|Dark|System)"/);
+  assert.doesNotMatch(source, /<select/);
+  assert.match(source, /setIsThemeOpen\(false\)/);
+});
+
+test("IAM overview reuses the workspace dashboard", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("./app/(workspace)/workspace/iam/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /redirect\("\/workspace"\)/);
+  assert.doesNotMatch(source, /IamWorkspaceView/);
 });
 
 test("landing copy has a value in every supported locale", async () => {
