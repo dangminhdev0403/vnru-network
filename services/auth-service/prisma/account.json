@@ -181,6 +181,10 @@
           "key": "grants.opportunities.publish"
         },
         {
+          "id": "343736e9-fa64-487f-b7ea-17e563591ad7",
+          "key": "grants.proposals.screen"
+        },
+        {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38014",
           "key": "reviews.assignments.manage"
         },

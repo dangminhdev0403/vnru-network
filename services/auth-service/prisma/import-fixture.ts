@@ -20,6 +20,7 @@ const ALLOWED_CAPABILITIES = [
   'reviews.evaluations.submit',
   'grants.opportunities.create',
   'grants.opportunities.publish',
+  'grants.proposals.screen',
   'reviews.assignments.manage',
   'projects.reports.approve',
   'grants.decisions.issue_foundation',
@@ -49,7 +50,7 @@ const ROLE_POLICIES: Record<(typeof ALLOWED_ROLES)[number], {
   RESEARCHER: { contextType: 'ORGANIZATION', capabilities: ['grants.proposals.create', 'grants.proposals.confirm_paired', 'grants.proposals.submit', 'projects.projects.view', 'projects.milestones.update', 'projects.reports.submit'] },
   ORGANIZATION_REPRESENTATIVE: { contextType: 'ORGANIZATION', capabilities: ['grants.proposals.endorse', 'projects.projects.view', 'projects.reports.view_org'] },
   REVIEWER: { contextType: 'REVIEW_BOARD', capabilities: ['reviews.assignments.view_assigned', 'reviews.evaluations.score', 'reviews.evaluations.submit'] },
-  PROGRAM_MANAGER: { contextType: 'FUNDING_PROGRAM', capabilities: ['grants.opportunities.create', 'grants.opportunities.publish', 'reviews.assignments.manage', 'projects.projects.view', 'projects.reports.approve'] },
+  PROGRAM_MANAGER: { contextType: 'FUNDING_PROGRAM', capabilities: ['grants.opportunities.create', 'grants.opportunities.publish', 'grants.proposals.screen', 'reviews.assignments.manage', 'projects.projects.view', 'projects.reports.approve'] },
   FOUNDATION_DECISION_MAKER: { contextType: 'FUNDING_PROGRAM', capabilities: ['grants.decisions.issue_foundation', 'projects.projects.view'] },
 };
 
