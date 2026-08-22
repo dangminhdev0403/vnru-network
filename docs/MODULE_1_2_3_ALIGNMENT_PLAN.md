@@ -1,8 +1,8 @@
 # Module 1–2–3 Controlled Alignment Plan
 
-Status: **implemented**
+Status: **IN PROGRESS — Blocker Fix Pass Completed (Canonical Admin separated, Opportunities BFF/Payload aligned, Dead UI purged)**
 
-Baseline: `b13abaf`
+Baseline: `1fc6ab9`
 
 Source guide: `MODULE_1_2_3_ALIGNMENT_REFACTOR_GUIDE.md`
 

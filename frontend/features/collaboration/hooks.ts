@@ -8,12 +8,12 @@ import {
   getProposalById,
 } from "./repository";
 
-export function useOpportunities() {
+export function useOpportunities(cursor?: string, limit: number = 20) {
   const queryClient = useQueryClient();
 
   const opportunitiesQuery = useQuery({
-    queryKey: ["collab", "opportunities"],
-    queryFn: () => listOpportunities(),
+    queryKey: ["collab", "opportunities", cursor, limit],
+    queryFn: () => listOpportunities(cursor, limit),
     staleTime: 30_000,
   });
 
@@ -25,7 +25,8 @@ export function useOpportunities() {
   });
 
   return {
-    opportunities: opportunitiesQuery.data ?? [],
+    opportunities: opportunitiesQuery.data?.data ?? [],
+    nextCursor: opportunitiesQuery.data?.nextCursor ?? null,
     isLoading: opportunitiesQuery.isLoading,
     isError: opportunitiesQuery.isError,
     error: opportunitiesQuery.error,

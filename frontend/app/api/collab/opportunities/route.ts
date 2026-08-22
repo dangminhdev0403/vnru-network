@@ -8,15 +8,18 @@ export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url);
     const limit = url.searchParams.get("limit") || "20";
-    const offset = url.searchParams.get("offset") || "0";
+    const cursor = url.searchParams.get("cursor");
 
-    const backendRes = await fetch(
-      collabServiceUrl(`api/v1/collab/opportunities?limit=${encodeURIComponent(limit)}&offset=${encodeURIComponent(offset)}`),
-      {
-        cache: "no-store",
-        headers: backendHeaders(request),
-      },
-    );
+    const targetUrl = new URL(collabServiceUrl("api/v1/collab/opportunities"));
+    targetUrl.searchParams.set("limit", limit);
+    if (cursor) {
+      targetUrl.searchParams.set("cursor", cursor);
+    }
+
+    const backendRes = await fetch(targetUrl.toString(), {
+      cache: "no-store",
+      headers: backendHeaders(request),
+    });
 
     if (!backendRes.ok) {
       return NextResponse.json(

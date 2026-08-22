@@ -20,7 +20,7 @@ const catalogCopy: Record<
     title: "Danh mục Chuẩn hóa Hệ thống",
     description: "Quản lý các bảng phân loại lĩnh vực nghiên cứu, danh sách tổ chức đối tác, và quy chuẩn dữ liệu song phương.",
     backToAdmin: "← Quay lại Quản trị Phân quyền",
-    statusNote: "Dữ liệu danh mục chuẩn hóa đang được phục vụ trực tiếp từ các dịch vụ miền tương ứng.",
+    statusNote: "Khung phân loại danh mục chuẩn hóa phục vụ tham chiếu kiến trúc hệ thống dữ liệu.",
     categories: [
       { name: "Lĩnh vực nghiên cứu (OECD / FOS)", desc: "Phân loại chuyên ngành KH&CN Việt – Nga theo chuẩn OECD", icon: "category" },
       { name: "Viện / Trường đối tác", desc: "Danh sách pháp nhân tổ chức nghiên cứu đã xác thực", icon: "domain" },

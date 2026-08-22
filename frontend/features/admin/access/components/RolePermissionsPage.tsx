@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import { useLocale, type Locale } from "@/app/HomeMotion";
 import { useIamAdministration } from "@/features/iam/hooks";
 import { ApiError, type IamRole } from "@/features/iam/repository";
@@ -99,9 +99,14 @@ export default function RolePermissionsPage() {
   const { locale } = useLocale(); const t = copy[locale] ?? copy.vi;
   const iam = useIamAdministration(); const roles = useMemo(() => iam.roles.data ?? [], [iam.roles.data]); const users = iam.users.data ?? [];
   const error = iam.roles.error ?? iam.users.error; const denied = error instanceof ApiError && error.status === 403;
-  const [selectedRoleId, setSelectedRoleId] = useState(""); const [roleQuery, setRoleQuery] = useState(""); const [permissionQuery, setPermissionQuery] = useState("");
-  const [moduleFilter, setModuleFilter] = useState(""); const [tab, setTab] = useState<Tab>("permissions"); const [editing, setEditing] = useState(false);
-  const [staged, setStaged] = useState<Set<string>>(new Set()); const [modal, setModal] = useState<Modal>(null);
+  const [selectedRoleId, setSelectedRoleId] = useState("");
+  const [roleQuery, setRoleQuery] = useState("");
+  const [permissionQuery, setPermissionQuery] = useState("");
+  const [moduleFilter, setModuleFilter] = useState("");
+  const [tab, setTab] = useState<Tab>("permissions");
+  const [editing, setEditing] = useState(false);
+  const [staged, setStaged] = useState<Set<string>>(new Set());
+  const [modal, setModal] = useState<Modal>(null);
   const [assignUserId, setAssignUserId] = useState("");
   const [assignContextType, setAssignContextType] = useState("ORGANIZATION");
   const [assignContextId, setAssignContextId] = useState("");
@@ -111,7 +116,13 @@ export default function RolePermissionsPage() {
   const permissionCatalogue = useMemo(() => [...new Set(roles.flatMap((role) => role.permissions ?? []))].sort(), [roles]);
   const modules = useMemo(() => [...new Set(permissionCatalogue.map((permission) => permission.split(".")[0] || "other"))].sort(), [permissionCatalogue]);
 
-  useEffect(() => { setStaged(new Set(selectedRole?.permissions ?? [])); setEditing(false); setExpandedGroup(null); }, [selectedRole?.id, selectedRole?.permissions]);
+  const [prevRoleId, setPrevRoleId] = useState<string | undefined>(selectedRole?.id);
+  if (selectedRole && selectedRole.id !== prevRoleId) {
+    setPrevRoleId(selectedRole.id);
+    setStaged(new Set(selectedRole.permissions ?? []));
+    setEditing(false);
+    setExpandedGroup(null);
+  }
 
   const visibleRoles = roles.filter((role) => `${role.name} ${roleLabels[locale][role.name] ?? role.name}`.toLowerCase().includes(roleQuery.trim().toLowerCase()));
   const systemRoles = visibleRoles.filter(isSystemRole); const businessRoles = visibleRoles.filter((role) => !isSystemRole(role));
@@ -119,7 +130,17 @@ export default function RolePermissionsPage() {
   const groups = useMemo(() => { const map = new Map<string, string[]>(); filteredCatalogue.forEach((permission) => { const group = permission.split(".")[0] || "other"; map.set(group, [...(map.get(group) ?? []), permission]); }); return [...map.entries()].map(([name, items]) => ({ name, items })); }, [filteredCatalogue]);
   const added = [...staged].filter((permission) => !currentPermissions.has(permission)); const removed = [...currentPermissions].filter((permission) => !staged.has(permission)); const dirty = added.length + removed.length > 0;
   const chooseRole = (role: IamRole) => { setSelectedRoleId(role.id); setStaged(new Set(role.permissions ?? [])); setTab("permissions"); setEditing(false); };
-  const togglePermission = (permission: string) => setStaged((previous) => { const next = new Set(previous); next.has(permission) ? next.delete(permission) : next.add(permission); return next; });
+  const togglePermission = (permission: string) => {
+    setStaged((previous) => {
+      const next = new Set(previous);
+      if (next.has(permission)) {
+        next.delete(permission);
+      } else {
+        next.add(permission);
+      }
+      return next;
+    });
+  };
 
   const assignRole = async (event: FormEvent) => {
     event.preventDefault(); if (!assignUserId || !selectedRole) return;

@@ -11,44 +11,48 @@ const auditCopy: Record<
     title: string;
     description: string;
     backToAdmin: string;
-    outboxNote: string;
-    auditCategories: { title: string; desc: string; source: string; icon: string }[];
+    gapNoticeTitle: string;
+    gapNoticeDesc: string;
+    auditCategories: { title: string; desc: string; icon: string; status: string }[];
   }
 > = {
   vi: {
     kicker: "Kiểm toán & Giám sát Nền tảng",
     title: "Nhật ký Kiểm toán Hệ thống",
-    description: "Theo dõi toàn bộ các sự kiện thay đổi phân quyền, quản trị danh tính và các quyết định hệ thống được ghi nhận tại outbox.",
+    description: "Khung kiến trúc theo dõi các sự kiện thay đổi phân quyền, quản trị danh tính và các quyết định hệ thống.",
     backToAdmin: "← Quay lại Quản trị Phân quyền",
-    outboxNote: "Tất cả sự kiện quản trị (IAM mutations, role assignments, status changes) được ghi nhận bất biến và kiểm toán tại transactional outbox của auth-service.",
+    gapNoticeTitle: "Trạng thái tích hợp Backend",
+    gapNoticeDesc: "Giao diện hiện đang ở chế độ đặc tả kiến trúc. Endpoint truy vấn lịch sử kiểm toán chuyên biệt (Audit Query API) chưa được triển khai tại auth-service backend.",
     auditCategories: [
-      { title: "Sự kiện Thay đổi Vai trò & Quyền", desc: "Ghi nhận thao tác cập nhật role-permission matrix và thay đổi quyền", source: "auth-service.role_permission_audit", icon: "policy" },
-      { title: "Sự kiện Phân công Vai trò", desc: "Ghi nhận việc gán vai trò theo ngữ cảnh (PLATFORM, ORGANIZATION, REVIEW_BOARD)", source: "auth-service.role_assignment_audit", icon: "badge" },
-      { title: "Sự kiện Trạng thái Người dùng", desc: "Ghi nhận thao tác khóa / mở khóa tài khoản người dùng nền tảng", source: "auth-service.user_status_audit", icon: "manage_accounts" },
+      { title: "Sự kiện Thay đổi Vai trò & Quyền", desc: "Theo dõi các thao tác cập nhật cấu hình role và phân quyền hệ thống.", icon: "policy", status: "Đang chờ Audit API" },
+      { title: "Sự kiện Phân công Vai trò", desc: "Theo dõi việc gán vai trò theo ngữ cảnh (PLATFORM, ORGANIZATION, REVIEW_BOARD).", icon: "badge", status: "Đang chờ Audit API" },
+      { title: "Sự kiện Trạng thái Người dùng", desc: "Theo dõi thao tác khóa và mở khóa tài khoản người dùng nền tảng.", icon: "manage_accounts", status: "Đang chờ Audit API" },
     ],
   },
   en: {
     kicker: "Platform Audit & Compliance",
     title: "System Audit Logs",
-    description: "Track all role assignment modifications, identity governance events, and system decisions recorded in transactional outboxes.",
+    description: "Architectural specification for tracking role assignment modifications, identity governance events, and system decisions.",
     backToAdmin: "← Back to Access Administration",
-    outboxNote: "All governance mutations (IAM changes, role assignments, status updates) are immutably logged and audited via auth-service transactional outbox.",
+    gapNoticeTitle: "Backend Integration Status",
+    gapNoticeDesc: "This surface is currently in architectural specification mode. Dedicated historical audit log query endpoints have not yet been exposed by the backend services.",
     auditCategories: [
-      { title: "Role & Permission Changes", desc: "Audit logs for role-permission matrix updates and capability changes", source: "auth-service.role_permission_audit", icon: "policy" },
-      { title: "Role Assignment Events", desc: "Audit logs for contextual role assignments (PLATFORM, ORGANIZATION, REVIEW_BOARD)", source: "auth-service.role_assignment_audit", icon: "badge" },
-      { title: "User Status Events", desc: "Audit logs for user account lock and activation actions", source: "auth-service.user_status_audit", icon: "manage_accounts" },
+      { title: "Role & Permission Modifications", desc: "Tracking configuration changes to roles and system capabilities.", icon: "policy", status: "Awaiting Audit API" },
+      { title: "Role Assignment Events", desc: "Tracking contextual role assignments (PLATFORM, ORGANIZATION, REVIEW_BOARD).", icon: "badge", status: "Awaiting Audit API" },
+      { title: "User Status Events", desc: "Tracking account lock and activation actions on platform identities.", icon: "manage_accounts", status: "Awaiting Audit API" },
     ],
   },
   ru: {
     kicker: "Аудит и контроль платформы",
     title: "Системный журнал аудита",
-    description: "Мониторинг всех событий изменения прав доступа, назначения ролей и системных решений в транзакционных outbox.",
+    description: "Архитектурная спецификация мониторинга событий изменения прав доступа, назначения ролей и системных решений.",
     backToAdmin: "← Назад к администрированию",
-    outboxNote: "Все административные действия (изменения IAM, назначение ролей, блокировки) неизменно фиксируются через outbox auth-service.",
+    gapNoticeTitle: "Статус интеграции с бэкендом",
+    gapNoticeDesc: "Страница находится в режиме архитектурной спецификации. Выделенный API для запроса исторических журналов аудита пока не реализован на бэкенде.",
     auditCategories: [
-      { title: "Изменения ролей и прав", desc: "Логирование обновлений матрицы прав и полномочий ролей", source: "auth-service.role_permission_audit", icon: "policy" },
-      { title: "События назначения ролей", desc: "Логирование контекстных назначений ролей (PLATFORM, ORGANIZATION, REVIEW_BOARD)", source: "auth-service.role_assignment_audit", icon: "badge" },
-      { title: "События статусов пользователей", desc: "Логирование блокировки и активации учетных записей", source: "auth-service.user_status_audit", icon: "manage_accounts" },
+      { title: "Изменения ролей и прав", desc: "Мониторинг обновлений конфигурации ролей и полномочий.", icon: "policy", status: "Ожидает Audit API" },
+      { title: "События назначения ролей", desc: "Мониторинг контекстных назначений ролей (PLATFORM, ORGANIZATION, REVIEW_BOARD).", icon: "badge", status: "Ожидает Audit API" },
+      { title: "События статусов пользователей", desc: "Мониторинг блокировки и активации учетных записей.", icon: "manage_accounts", status: "Ожидает Audit API" },
     ],
   },
 };
@@ -80,8 +84,14 @@ export default function AdminAuditPage() {
         </Link>
       </div>
 
-      <div className="mb-6 rounded-xl border border-blue-200 bg-blue-50/50 p-4 text-xs font-medium text-blue-800 dark:border-blue-900/30 dark:bg-blue-950/20 dark:text-blue-300">
-        {t.outboxNote}
+      <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50/70 p-5 text-amber-900 dark:border-amber-900/40 dark:bg-amber-950/20 dark:text-amber-300">
+        <div className="flex items-center gap-2 font-bold text-sm">
+          <span className="material-symbols-outlined text-amber-600 dark:text-amber-400">info</span>
+          <span>{t.gapNoticeTitle}</span>
+        </div>
+        <p className="mt-1.5 text-xs leading-5 text-amber-800 dark:text-amber-400/90">
+          {t.gapNoticeDesc}
+        </p>
       </div>
 
       <div className="space-y-4">
@@ -92,11 +102,13 @@ export default function AdminAuditPage() {
           >
             <span className="material-symbols-outlined text-2xl text-blue-600 dark:text-blue-400 mt-1">{item.icon}</span>
             <div className="min-w-0 flex-1">
-              <strong className="block text-base font-bold text-text-primary">{item.title}</strong>
+              <div className="flex items-center justify-between gap-2">
+                <strong className="block text-base font-bold text-text-primary">{item.title}</strong>
+                <span className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-[11px] font-semibold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
+                  {item.status}
+                </span>
+              </div>
               <p className="mt-1 text-xs text-text-secondary">{item.desc}</p>
-              <code className="mt-2 inline-block rounded-md bg-[var(--surface-secondary)] px-2 py-0.5 text-[11px] font-mono text-text-secondary">
-                Source: {item.source}
-              </code>
             </div>
           </div>
         ))}

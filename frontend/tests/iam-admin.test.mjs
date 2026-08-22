@@ -62,22 +62,17 @@ test("BFF role-assignments route proxies correctly", async () => {
   assert.match(fileContent, /backendHeaders\(request\)/);
 });
 
-test("IAM page route redirects unauthenticated users", async () => {
+test("IAM legacy page route redirects to canonical admin routes", async () => {
   const fileContent = await readFile(
     new URL("../app/(workspace)/workspace/iam/admin/page.tsx", import.meta.url),
     "utf8",
   );
 
-  // Must use cookies() to check session
-  assert.match(fileContent, /cookies\(\)/);
-  // Must redirect to Keycloak login if missing
-  assert.match(
-    fileContent,
-    /redirect\("\/api\/auth\/login\?returnTo=\/workspace\/iam\/admin"\)/,
-  );
+  // Must redirect to canonical admin routes
+  assert.match(fileContent, /redirect\("\/admin\/access/);
   // Backend remains the authorization authority; the client renders a real 403 state.
   const clientContent = await readFile(
-    new URL("../app/(workspace)/workspace/iam/admin/IamClientPage.tsx", import.meta.url),
+    new URL("../features/admin/access/components/UserAdministration.tsx", import.meta.url),
     "utf8",
   );
   assert.match(clientContent, /status === 403/);
@@ -86,11 +81,11 @@ test("IAM page route redirects unauthenticated users", async () => {
 
 test("IAM client uses the approved flow UI with real BFF data only", async () => {
   const fileContent = await readFile(
-    new URL("../app/(workspace)/workspace/iam/admin/IamClientPage.tsx", import.meta.url),
+    new URL("../features/admin/access/components/UserAdministration.tsx", import.meta.url),
     "utf8",
   );
 
-  assert.match(fileContent, /Identity → Context → Role → Backend authoritative decision/);
+  assert.match(fileContent, /Identity → Context → Role → Phán quyết Backend/);
   assert.match(fileContent, /useIamAdministration/);
   assert.match(fileContent, /user\.canManageUser/);
   assert.match(fileContent, /SUPERADMIN/);

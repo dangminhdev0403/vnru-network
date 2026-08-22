@@ -1,5 +1,3 @@
-import type { Locale } from "@/app/HomeMotion";
-
 export interface WorkspaceNavEntry {
   key: string;
   href: string;
@@ -108,7 +106,6 @@ export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
     labelKey: "governance",
     items: [
       { key: "sessions_security", href: "/workspace/iam/security", labelKey: "sessions", icon: "shield_lock" },
-      { key: "access_admin", href: "/workspace/iam/admin", labelKey: "admin", icon: "policy", requiredCapabilities: ["iam.roles.manage", "iam.users.manage"] },
     ],
   },
 ];

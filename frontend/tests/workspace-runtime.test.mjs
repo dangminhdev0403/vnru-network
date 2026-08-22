@@ -2,7 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 
-const shell = await readFile(new URL("../components/shared/Sidebar.tsx", import.meta.url), "utf8");
+const sidebarFrame = await readFile(new URL("../components/shared/SidebarFrame.tsx", import.meta.url), "utf8");
+const workspaceRegistry = await readFile(new URL("../features/workspace/config/workspace-registry.ts", import.meta.url), "utf8");
+const workspaceSidebar = await readFile(new URL("../features/workspace/components/WorkspaceSidebar.tsx", import.meta.url), "utf8");
 const dashboardRoute = await readFile(new URL("../app/(workspace)/workspace/page.tsx", import.meta.url), "utf8");
 const iamRoute = await readFile(new URL("../app/(workspace)/workspace/iam/page.tsx", import.meta.url), "utf8");
 const knowledgeRoute = await readFile(new URL("../app/(workspace)/workspace/knowledge/page.tsx", import.meta.url), "utf8");
@@ -19,20 +21,21 @@ test("runtime workspace routes compose feature-owned views", () => {
 });
 
 test("workspace shell links Module 01, Module 02 and existing governance surfaces", () => {
-  assert.match(shell, /href:\s*"\/workspace\/iam"/);
-  assert.match(shell, /href:\s*"\/workspace\/knowledge"/);
-  assert.match(shell, /href:\s*"\/workspace\/iam\/admin"/);
-  assert.match(shell, /href:\s*"\/workspace\/iam\/security"/);
-  assert.doesNotMatch(shell, /fetch\(/);
-  assert.doesNotMatch(shell, /M01 · IAM|M02 · Knowledge|badge:/);
-  assert.doesNotMatch(shell, /tag:/);
-  assert.match(shell, /flex[^"\n]*min-w-0[^"\n]*flex-1[^"\n]*items-center[^"\n]*gap-3/);
-  assert.match(shell, /overflow-x-hidden/);
+  assert.match(workspaceRegistry, /href:\s*"\/workspace\/iam"/);
+  assert.match(workspaceRegistry, /href:\s*"\/workspace\/knowledge"/);
+  assert.match(workspaceRegistry, /href:\s*"\/workspace\/collaboration"/);
+  assert.match(workspaceRegistry, /href:\s*"\/workspace\/iam\/security"/);
+  assert.doesNotMatch(workspaceRegistry, /href:\s*"\/workspace\/iam\/admin"/);
+  assert.doesNotMatch(sidebarFrame, /fetch\(/);
+  assert.doesNotMatch(sidebarFrame, /M01 · IAM|M02 · Knowledge|badge:/);
+  assert.doesNotMatch(sidebarFrame, /tag:/);
+  assert.match(sidebarFrame, /flex[^"\n]*min-w-0[^"\n]*flex-1[^"\n]*items-center[^"\n]*gap-3/);
+  assert.match(sidebarFrame, /overflow-x-hidden/);
 });
 
-test("Module 01 template navigation lives in the shared vertical sidebar", () => {
-  for (const label of ["Tổng quan IAM", "Quản lý người dùng", "Vai trò & quyền", "Phiên & bảo mật"]) assert.match(shell, new RegExp(label));
-  assert.doesNotMatch(shell, /Gán vai trò cho người dùng|view=assignments/);
+test("Module 01 workspace navigation is defined in the workspace registry and sidebar", () => {
+  for (const label of ["iam", "sessions", "workspaceOverview"]) assert.match(workspaceSidebar, new RegExp(label));
+  assert.doesNotMatch(workspaceSidebar, /Gán vai trò cho người dùng|view=assignments/);
   assert.doesNotMatch(iamView, /Module1Nav/);
 });
 
@@ -56,9 +59,9 @@ test("workspace theme uses centralized institutional light and graphite dark tok
 
 test("shared shell avoids saturated navigation and exposes all theme modes", async () => {
   const header = await readFile(new URL("../components/shared/Header.tsx", import.meta.url), "utf8");
-  assert.doesNotMatch(shell, /bg-gradient|shadow-2xl|#08244a|#061a33|hover:scale|hover:translate/);
-  assert.match(shell, /before:w-\[3px\]/);
-  assert.match(shell, /bg-\[var\(--nav-bg\)\]/);
+  assert.doesNotMatch(sidebarFrame, /bg-gradient|shadow-2xl|#08244a|#061a33|hover:scale|hover:translate/);
+  assert.match(sidebarFrame, /before:w-\[3px\]/);
+  assert.match(sidebarFrame, /bg-\[var\(--nav-bg\)\]/);
   assert.match(header, /setTheme\(mode\)/);
   for (const mode of ["light", "dark", "system"]) assert.match(header, new RegExp(`value: "${mode}"`));
 });

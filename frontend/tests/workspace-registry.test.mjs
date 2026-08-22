@@ -5,7 +5,6 @@ import {
   filterNavSections,
   resolveUserPersonas,
   hasCapability,
-  WORKSPACE_PERSONAS,
 } from "../features/workspace/config/workspace-registry.ts";
 
 test("hasCapability accurately checks single and multiple capability requirements", () => {
@@ -47,9 +46,40 @@ test("canonical admin routes exist and are protected", async () => {
   const proxy = await readFile(new URL("../proxy.ts", import.meta.url), "utf8");
 
   assert.match(adminAccess, /RolePermissionsPage/);
-  assert.match(adminUsers, /UserAdministration|IamClientPage/);
+  assert.match(adminUsers, /UserAdministration/);
   assert.match(adminRoles, /RolePermissionsPage/);
   assert.match(adminAudit, /Nhật ký Kiểm toán|System Audit Logs|AdminAuditPage/);
   assert.match(adminCatalogs, /Danh mục Chuẩn hóa Hệ thống|System Standardized Catalogs/);
   assert.match(proxy, /"\/admin\/:path\*"/);
 });
+
+test("admin-nav-registry filters sections based on admin capabilities", async () => {
+  const { filterAdminNavSections, hasAdminCapability } = await import("../features/admin/config/admin-nav-registry.ts");
+  
+  assert.strictEqual(hasAdminCapability(["iam.roles.manage"], "iam.roles.manage"), true);
+  assert.strictEqual(hasAdminCapability(["collab.proposals.create"], "iam.roles.manage"), false);
+
+  const adminSections = filterAdminNavSections(["iam.roles.manage", "iam.users.manage"]);
+  assert.ok(adminSections.length > 0);
+  const accessSection = adminSections.find((s) => s.key === "access_management");
+  assert.ok(accessSection);
+  assert.ok(accessSection.items.some((i) => i.href === "/admin/access/users"));
+  assert.ok(accessSection.items.some((i) => i.href === "/admin/access/roles"));
+});
+
+test("collaboration BFF route handles limit and cursor without offset", async () => {
+  const bffContent = await readFile(new URL("../app/api/collab/opportunities/route.ts", import.meta.url), "utf8");
+  assert.match(bffContent, /url\.searchParams\.get\("cursor"\)/);
+  assert.match(bffContent, /targetUrl\.searchParams\.set\("limit"/);
+  assert.doesNotMatch(bffContent, /searchParams\.get\("offset"\)/);
+  assert.doesNotMatch(bffContent, /offset=/);
+});
+
+test("collaboration repository formats createOpportunity payload correctly", async () => {
+  const repoContent = await readFile(new URL("../features/collaboration/repository.ts", import.meta.url), "utf8");
+  assert.match(repoContent, /getApiErrorMessage/);
+  assert.match(repoContent, /title:\s*input\.title/);
+  assert.match(repoContent, /description:\s*input\.description/);
+  assert.doesNotMatch(repoContent, /openDate|closeDate|code:/);
+});
+

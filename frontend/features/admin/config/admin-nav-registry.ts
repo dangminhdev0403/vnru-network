@@ -37,3 +37,23 @@ export const ADMIN_NAV_REGISTRY: AdminNavSection[] = [
     ],
   },
 ];
+
+export function hasAdminCapability(userCapabilities: string[], required?: string | string[]): boolean {
+  if (!required || (Array.isArray(required) && required.length === 0)) return true;
+  if (Array.isArray(required)) {
+    return required.some((cap) => userCapabilities.includes(cap));
+  }
+  return userCapabilities.includes(required);
+}
+
+export function filterAdminNavSections(userCapabilities: string[] = []): AdminNavSection[] {
+  return ADMIN_NAV_REGISTRY.map((section) => {
+    const visibleItems = section.items.filter((item) =>
+      hasAdminCapability(userCapabilities, item.requiredCapabilities),
+    );
+    return {
+      ...section,
+      items: visibleItems,
+    };
+  }).filter((section) => section.items.length > 0);
+}
