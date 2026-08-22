@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Kho Tri thức & Danh bạ Chuyên gia → Cộng tác Nghiên cứu Bridges · VN–RU Network UI Prototype</title><link rel="stylesheet" href="reference.css"></head>
+<body>
+<div class="app">
+<aside class="sidebar">
+<svg class="net" viewBox="0 0 120 860" preserveAspectRatio="none"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M92 8 48 78l50 65-59 71 45 79-50 68 51 76-44 74 48 70-58 82 61 65-49 83 44 70-58 70"/><path d="M114 52 48 78l-8 62 58 3-14 150-50 68 80 12-29 64-44 74 80 20-32 50-58 82 88 14-31 51-49 83 77 9-28 61"/></g><g fill="currentColor"><circle cx="92" cy="8" r="3"/><circle cx="48" cy="78" r="4"/><circle cx="98" cy="143" r="3"/><circle cx="39" cy="214" r="3"/><circle cx="84" cy="293" r="4"/><circle cx="34" cy="361" r="3"/><circle cx="85" cy="437" r="3"/><circle cx="41" cy="511" r="4"/><circle cx="89" cy="581" r="3"/><circle cx="31" cy="663" r="3"/><circle cx="92" cy="728" r="4"/><circle cx="39" cy="811" r="3"/></g></svg>
+<div class="brand"><div class="logo"></div><div><b>VN–RU Network</b><small>Khoa học · Công nghệ · Hợp tác</small></div></div>
+<div class="group">CỘNG TÁC NGHIÊN CỨU</div><div class="nav"><a href="01-collaboration-hub.html" class=""><span class="icon">⌂</span><span>Collaboration Hub</span></a>
+<a href="02-opportunities.html" class=""><span class="icon">◎</span><span>Opportunities</span></a>
+<a href="03-proposal-workspace.html" class=""><span class="icon">◇</span><span>Proposal Workspace</span></a>
+<a href="04-review-workspace.html" class=""><span class="icon">✓</span><span>Review Workspace</span></a>
+<a href="05-collaboration-decision.html" class=""><span class="icon">⚑</span><span>Decision Workspace</span></a>
+<a href="06-project-workspace.html" class=""><span class="icon">▦</span><span>Project Workspace</span></a>
+<a href="07-knowledge-collaboration-bridges.html" class="active"><span class="icon">⌕</span><span>Kết nối Tri thức</span></a></div>
+<div class="context"><small>Prototype context</small><div class="ctxrow"><span class="dot"></span><b>Authenticated workspace</b></div><div class="sub" style="margin-top:5px">Illustrative UI only</div></div>
+</aside>
+<main class="main">
+<header class="topbar"><div class="breadcrumb">Workspace / Cộng tác Nghiên cứu / <b>Kho Tri thức & Danh bạ Chuyên gia → Cộng tác Nghiên cứu Bridges</b></div><div class="topactions"><input class="search" placeholder="Tìm trong workspace..."/><button class="ibtn" id="theme">☾</button><button class="ibtn">VI</button><button class="ibtn">A</button></div></header>
+<div class="content">
+<div class="hero"><div><div class="eyebrow">Cross-domain UX</div><h1>Kho Tri thức & Danh bạ Chuyên gia → Cộng tác Nghiên cứu Bridges</h1><p>Các điểm nối cần có sau khi Cộng tác Nghiên cứu ổn định để Kho Tri thức & Danh bạ Chuyên gia không còn chỉ là danh sách dữ liệu.</p></div><div class="actions"><a class="btn" href="index.html" style="display:inline-flex;align-items:center;text-decoration:none">UI Map</a></div></div>
+
+<div class="grid2">
+<section class="card"><div class="cardhead"><div><h3>Expert → Proposal</h3><div class="sub">Kho Tri thức & Danh bạ Chuyên gia expert becomes a selectable collaboration participant</div></div></div><div class="pbody"><div class="personcard"><span class="badge blue">Expert Profile</span><strong style="margin-top:8px">Expert</strong><div class="sub">Organization · Expertise · Publications</div><button class="btn primary" style="margin-top:12px" data-integration-action="attach-expert">Add to proposal</button></div></div></section>
+<section class="card"><div class="cardhead"><div><h3>Publication → Proposal Reference</h3><div class="sub">Knowledge asset becomes proposal evidence/reference</div></div></div><div class="pbody"><div class="personcard"><span class="badge">Publication</span><strong style="margin-top:8px">Research publication</strong><div class="sub">Authors · Topics · Year</div><button class="btn primary" style="margin-top:12px" data-integration-action="attach-publication-reference">Use as reference</button></div></div></section>
+<section class="card"><div class="cardhead"><div><h3>Topic → Opportunity</h3><div class="sub">Topic discovery leads to relevant collaboration opportunities</div></div></div><div class="pbody"><span class="topic">AI</span><span class="topic">Climate</span><span class="topic">Simulation</span><div style="margin-top:12px"><a class="btn" href="02-opportunities.html" style="display:inline-flex;align-items:center;text-decoration:none">View related opportunities</a></div></div></section>
+<section class="card"><div class="cardhead"><div><h3>Organization → Collaboration</h3><div class="sub">Organization context supports partner/team formation</div></div></div><div class="pbody"><b>Organization Profile</b><p class="sub">Experts · Research areas · Existing collaboration participation</p><a class="btn" href="03-proposal-workspace.html" style="display:inline-flex;align-items:center;text-decoration:none">Open proposal context</a></div></section>
+</div>
+<div class="relation"><h4>Cross-domain model</h4><div class="flow"><span>Expert</span><b>→</b><span>Proposal Team</span><span>Publication</span><b>→</b><span>Proposal Reference</span><span>Topic</span><b>→</b><span>Opportunity</span><span>Organization</span><b>→</b><span>Collaboration Context</span></div><p class="sub">Kho Tri thức & Danh bạ Chuyên gia là discovery layer; Cộng tác Nghiên cứu là action/workflow layer.</p></div>
+
+</div></main></div>
+<script>
+document.getElementById("theme").onclick=()=>{const d=document.documentElement.dataset.theme==="dark";document.documentElement.dataset.theme=d?"light":"dark";document.getElementById("theme").textContent=d?"☾":"☀";};
+
+</script>
+</body></html>
