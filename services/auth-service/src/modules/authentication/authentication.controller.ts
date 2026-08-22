@@ -5,8 +5,10 @@ import {
   Delete,
   ForbiddenException,
   Get,
+  Headers,
   NotFoundException,
   Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -26,12 +28,19 @@ import {
 import {
   AuthenticatedRequestGuard,
   extractSessionCookie,
+  RequireMfa,
   SESSION_COOKIE_NAME,
 } from './authenticated-request-context';
 import type {
   AuthenticatedRequest,
   RequestWithCookies,
 } from './authenticated-request-context';
+import { IdentityService } from '../identity/identity.service';
+import {
+  KeycloakProfileService,
+  MfaStatus,
+  UserProfile,
+} from './keycloak-profile.service';
 
 export const SESSION_COOKIE_OPTIONS = {
   httpOnly: true,
@@ -46,7 +55,56 @@ export class AuthenticationController {
   constructor(
     private readonly authService: AuthenticationService,
     private readonly sessionService: SessionService,
+    private readonly identityService: IdentityService,
+    private readonly profileService: KeycloakProfileService,
   ) {}
+
+  private async profileSubject(req: AuthenticatedRequest): Promise<string> {
+    const userId = req.authContext?.userId;
+    if (!userId) throw new UnauthorizedException('Authentication required');
+    const subject = await this.identityService.findExternalSubject(userId);
+    if (!subject) throw new NotFoundException('External identity not found');
+    return subject;
+  }
+
+  @Get('profile')
+  @UseGuards(AuthenticatedRequestGuard)
+  async getProfile(@Req() req: AuthenticatedRequest): Promise<UserProfile> {
+    return this.profileService.get(await this.profileSubject(req));
+  }
+
+  @Patch('profile')
+  @UseGuards(AuthenticatedRequestGuard)
+  async updateProfile(
+    @Body() body: { firstName?: unknown; lastName?: unknown },
+    @Req() req: AuthenticatedRequest,
+  ): Promise<UserProfile> {
+    if (
+      typeof body?.firstName !== 'string' ||
+      typeof body?.lastName !== 'string' ||
+      body.firstName.trim().length > 100 ||
+      body.lastName.trim().length > 100
+    ) {
+      throw new BadRequestException('Invalid profile');
+    }
+    return this.profileService.update(await this.profileSubject(req), {
+      firstName: body.firstName.trim(),
+      lastName: body.lastName.trim(),
+    });
+  }
+
+  @Get('mfa')
+  @UseGuards(AuthenticatedRequestGuard)
+  async getMfaStatus(@Req() req: AuthenticatedRequest): Promise<MfaStatus> {
+    return this.profileService.getMfaStatus(await this.profileSubject(req));
+  }
+
+  @Delete('mfa')
+  @UseGuards(AuthenticatedRequestGuard)
+  @RequireMfa()
+  async disableMfa(@Req() req: AuthenticatedRequest): Promise<MfaStatus> {
+    return this.profileService.disableMfa(await this.profileSubject(req));
+  }
 
   private getConfiguredRedirectUri(): string {
     return validateConfig().KEYCLOAK_REDIRECT_URI;
@@ -89,6 +147,16 @@ export class AuthenticationController {
     return {
       user: result.user,
     };
+  }
+
+  @Post('exchange')
+  async exchange(
+    @Headers('authorization') authorization?: string,
+  ): Promise<{ token: string }> {
+    const accessToken = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
+    if (!accessToken) throw new UnauthorizedException('Bearer token required');
+    const result = await this.authService.exchangeKeycloakToken(accessToken);
+    return { token: result.token };
   }
 
   @Get('me')
@@ -144,6 +212,13 @@ export class AuthenticationController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<{ ok: boolean; logoutUrl: string }> {
     const token = extractSessionCookie(req) ?? '';
+    const currentUser = await this.authService.getCurrentUser(token);
+    if (currentUser) {
+      const subject = await this.identityService.findExternalSubject(
+        currentUser.userId,
+      );
+      if (subject) await this.profileService.logout(subject);
+    }
     await this.authService.logout(token);
 
     res.clearCookie(SESSION_COOKIE_NAME, {
@@ -153,18 +228,7 @@ export class AuthenticationController {
       path: '/',
     });
 
-    const config = validateConfig();
-    const postLogoutRedirectUri = new URL('/', config.KEYCLOAK_REDIRECT_URI);
-    const logoutUrl = new URL(
-      `${config.KEYCLOAK_ISSUER_URL.replace(/\/$/, '')}/protocol/openid-connect/logout`,
-    );
-    logoutUrl.searchParams.set('client_id', config.KEYCLOAK_CLIENT_ID);
-    logoutUrl.searchParams.set(
-      'post_logout_redirect_uri',
-      postLogoutRedirectUri.href,
-    );
-
-    return { ok: true, logoutUrl: logoutUrl.href };
+    return { ok: true, logoutUrl: '/' };
   }
 
   @Get('sessions')

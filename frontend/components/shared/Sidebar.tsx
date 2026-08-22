@@ -4,279 +4,137 @@ import { useLocale, type Locale } from "@/app/HomeMotion";
 import { Tooltip, TooltipTrigger } from "@/components/tailgrids/core/tooltip";
 import { cn } from "@/lib/cn";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
-const brandCopy: Record<Locale, { brand: string; subtitle: string }> = {
+interface Copy {
+  brand: string;
+  subtitle: string;
+  overview: string;
+  access: string;
+  security: string;
+  governance: string;
+  iamOverview: string;
+  users: string;
+  roles: string;
+  sessions: string;
+  workspaceOverview: string;
+  knowledge: string;
+  iam: string;
+  admin: string;
+  currentContext: string;
+  authenticated: string;
+  active: string;
+  collapse: string;
+  expand: string;
+  close: string;
+}
+
+const copy: Record<Locale, Copy> = {
   vi: {
-    brand: "Mạng lưới KH&CN Việt - Nga",
-    subtitle: "Khoa học · Công nghệ · Hợp tác",
+    brand: "Mạng lưới KH&CN Việt – Nga", subtitle: "Khoa học · Công nghệ · Hợp tác",
+    overview: "TỔNG QUAN", access: "QUẢN LÝ TRUY CẬP", security: "BẢO MẬT", governance: "QUẢN TRỊ",
+    iamOverview: "Tổng quan IAM", users: "Quản lý người dùng", roles: "Vai trò & quyền", sessions: "Phiên & bảo mật",
+    workspaceOverview: "Tổng quan", knowledge: "Kho tri thức & Chuyên gia", iam: "Quản trị danh tính & truy cập", admin: "Quản trị phân quyền",
+    currentContext: "Ngữ cảnh hiện tại", authenticated: "Không gian đã xác thực", active: "Phiên hoạt động",
+    collapse: "Thu gọn thanh điều hướng", expand: "Mở rộng thanh điều hướng", close: "Đóng thanh điều hướng",
   },
   en: {
-    brand: "VN-RU Science & Technology Network",
-    subtitle: "Science · Technology · Cooperation",
+    brand: "VN–RU Science & Technology Network", subtitle: "Science · Technology · Cooperation",
+    overview: "OVERVIEW", access: "ACCESS MANAGEMENT", security: "SECURITY", governance: "GOVERNANCE",
+    iamOverview: "IAM Overview", users: "User Management", roles: "Roles & Permissions", sessions: "Security & Sessions",
+    workspaceOverview: "Overview", knowledge: "Knowledge & Experts", iam: "Identity & Access", admin: "Access Administration",
+    currentContext: "Active context", authenticated: "Authenticated workspace", active: "Session active",
+    collapse: "Collapse navigation", expand: "Expand navigation", close: "Close navigation",
   },
   ru: {
-    brand: "Научно-технологическая сеть Россия — Вьетнам",
-    subtitle: "Наука · Технологии · Сотрудничество",
+    brand: "Сеть НТИ РФ — СРВ", subtitle: "Наука · Технологии · Сотрудничество",
+    overview: "ОБЗОР", access: "УПРАВЛЕНИЕ ДОСТУПОМ", security: "БЕЗОПАСНОСТЬ", governance: "УПРАВЛЕНИЕ",
+    iamOverview: "Обзор IAM", users: "Управление пользователями", roles: "Роли и права", sessions: "Сессии и безопасность",
+    workspaceOverview: "Обзор", knowledge: "База знаний и эксперты", iam: "Управление доступом", admin: "Администрирование IAM",
+    currentContext: "Текущий контекст", authenticated: "Защищённое пространство", active: "Сессия активна",
+    collapse: "Свернуть панель", expand: "Развернуть панель", close: "Закрыть панель",
   },
 };
 
-interface NavItemData {
-  href: string;
-  label: string;
-  icon: string;
-  badge?: string;
-}
+interface NavItem { href: string; label: string; icon: string }
+interface NavSection { label: string; items: NavItem[] }
+export interface SidebarProps { isSidebarOpen: boolean; toggleSidebar: () => void; isMobile?: boolean; onItemClick?: () => void }
 
-interface NavSection {
-  label: string;
-  items: NavItemData[];
-}
-
-export interface SidebarProps {
-  isSidebarOpen: boolean;
-  toggleSidebar: () => void;
-  isMobile?: boolean;
-  onItemClick?: () => void;
-}
-
-export default function Sidebar({
-  isSidebarOpen,
-  toggleSidebar,
-  isMobile = false,
-  onItemClick,
-}: SidebarProps) {
+export default function Sidebar({ isSidebarOpen, toggleSidebar, isMobile = false, onItemClick }: SidebarProps) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { locale } = useLocale();
-  const brand = brandCopy[locale] || brandCopy.vi;
-
-  const navSections: NavSection[] = [
-    {
-      label: "WORKSPACE",
-      items: [
-        {
-          href: "/workspace",
-          label: locale === "ru" ? "Обзор" : locale === "en" ? "Overview" : "Tổng quan",
-          icon: "space_dashboard",
-        },
-        {
-          href: "/workspace/knowledge",
-          label: locale === "ru" ? "База знаний & Эксперты" : locale === "en" ? "Knowledge & Experts" : "Kho tri thức & Chuyên gia",
-          icon: "hub",
-          badge: "M02",
-        },
-        {
-          href: "/workspace/iam",
-          label: locale === "ru" ? "IAM & Управление" : locale === "en" ? "IAM & Governance" : "IAM & Governance",
-          icon: "shield_person",
-          badge: "M01",
-        },
-      ],
-    },
-    {
-      label: "GOVERNANCE",
-      items: [
-        {
-          href: "/security",
-          label: locale === "ru" ? "Безопасность & Сессии" : locale === "en" ? "Security & Sessions" : "Security & Sessions",
-          icon: "verified_user",
-        },
-        {
-          href: "/admin/iam",
-          label: locale === "ru" ? "Администрирование IAM" : locale === "en" ? "IAM Administration" : "IAM Administration",
-          icon: "admin_panel_settings",
-        },
-      ],
-    },
+  const t = copy[locale] || copy.vi;
+  const iam = pathname.startsWith("/workspace/iam") || pathname.startsWith("/admin/iam") || pathname.startsWith("/security");
+  const sections: NavSection[] = iam ? [
+    { label: t.overview, items: [{ href: "/workspace/iam", label: t.iamOverview, icon: "dashboard" }] },
+    { label: t.access, items: [
+      { href: "/workspace/iam/admin?view=overview", label: t.users, icon: "group" },
+      { href: "/workspace/iam/admin?view=roles", label: t.roles, icon: "policy" },
+    ] },
+    { label: t.security, items: [{ href: "/workspace/iam/security", label: t.sessions, icon: "shield_lock" }] },
+  ] : [
+    { label: t.overview, items: [
+      { href: "/workspace", label: t.workspaceOverview, icon: "dashboard" },
+      { href: "/workspace/knowledge", label: t.knowledge, icon: "hub" },
+      { href: "/workspace/iam", label: t.iam, icon: "badge" },
+    ] },
+    { label: t.governance, items: [
+      { href: "/workspace/iam/security", label: t.sessions, icon: "shield_lock" },
+      { href: "/workspace/iam/admin", label: t.admin, icon: "policy" },
+    ] },
   ];
 
-  const isLinkActive = (href: string) => {
-    if (href === "/workspace") return pathname === href;
-    return pathname.startsWith(href);
+  const isActive = (href: string) => {
+    const [path, query] = href.split("?");
+    if (query) return pathname === path && searchParams.toString() === query;
+    if (href === "/workspace" || href === "/workspace/iam") return pathname === href && !searchParams.toString();
+    return pathname.startsWith(path);
   };
 
   return (
-    <aside className="signal-surface flex h-full w-full flex-col justify-between overflow-hidden border-r border-white/10 px-4 py-5 text-white shadow-2xl transition-all">
-      {/* Brand Header */}
-      <div>
-        <div
-          className={cn(
-            "flex items-center pb-4",
-            isSidebarOpen ? "justify-between" : "flex-col justify-center gap-3"
-          )}
-        >
-          <Link
-            href="/"
-            onClick={onItemClick}
-            className="flex items-center gap-3 overflow-hidden outline-none rounded-2xl p-1"
-          >
-            {/* Original Flag Badge */}
-            <span className="relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-xl border border-white/15 bg-white shadow-lg">
-              <span className="absolute inset-y-0 left-0 w-[62%] -skew-x-12 bg-[#2370ff]" />
-              <span className="absolute inset-y-0 right-0 w-[48%] -skew-x-12 bg-[#e74762]" />
-            </span>
-            {isSidebarOpen && (
-              <div className="min-w-0 flex-1 leading-tight">
-                <strong className="block truncate text-sm font-bold tracking-tight text-white">
-                  {brand.brand}
-                </strong>
-                <small className="block truncate text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                  {brand.subtitle}
-                </small>
-              </div>
-            )}
-          </Link>
-
-          {!isMobile && (
-            <button
-              type="button"
-              onClick={toggleSidebar}
-              aria-label={isSidebarOpen ? "Thu gọn sidebar" : "Mở rộng sidebar"}
-              className="flex size-8 items-center justify-center rounded-xl text-slate-400 transition hover:bg-white/10 hover:text-white cursor-pointer outline-none"
-            >
-              <span className="material-symbols-outlined text-lg">
-                {isSidebarOpen ? "chevron_left" : "chevron_right"}
-              </span>
-            </button>
-          )}
-
-          {isMobile && (
-            <button
-              type="button"
-              onClick={toggleSidebar}
-              aria-label="Đóng menu"
-              className="flex size-8 items-center justify-center rounded-xl text-slate-400 transition hover:bg-white/10 hover:text-white cursor-pointer outline-none"
-            >
-              <span className="material-symbols-outlined text-xl">close</span>
-            </button>
-          )}
-        </div>
-
-        {/* Module Quick Switch Pills */}
-        {isSidebarOpen && (
-          <div className="my-3 grid grid-cols-2 gap-1 rounded-2xl border border-white/10 bg-white/5 p-1 text-center text-xs font-black">
-            <Link
-              href="/workspace/iam"
-              onClick={onItemClick}
-              className={cn(
-                "rounded-xl px-2 py-2 transition",
-                pathname.startsWith("/workspace/iam")
-                  ? "bg-white/10 text-white shadow-xs"
-                  : "text-slate-400 hover:bg-white/5 hover:text-white"
-              )}
-            >
-              Module 01 · IAM
-            </Link>
-            <Link
-              href="/workspace/knowledge"
-              onClick={onItemClick}
-              className={cn(
-                "rounded-xl px-2 py-2 transition",
-                pathname.startsWith("/workspace/knowledge")
-                  ? "bg-white/10 text-white shadow-xs"
-                  : "text-slate-400 hover:bg-white/5 hover:text-white"
-              )}
-            >
-              Module 02 · Knowledge
-            </Link>
-          </div>
-        )}
-
-        {/* Navigation Sections */}
-        <nav className="mt-4 space-y-6 overflow-y-auto">
-          {navSections.map((section) => (
-            <div key={section.label}>
-              {isSidebarOpen ? (
-                <p className="px-3 pb-2 text-xs font-black uppercase tracking-wider text-slate-400">
-                  {section.label}
-                </p>
-              ) : (
-                <div className="my-2 border-t border-white/10" />
-              )}
-
-              <div className="grid gap-1">
-                {section.items.map((item) => {
-                  const active = isLinkActive(item.href);
-
-                  if (!isSidebarOpen) {
-                    return (
-                      <div key={item.href} className="flex justify-center">
-                        <TooltipTrigger>
-                          <Link
-                            href={item.href}
-                            onClick={onItemClick}
-                            className={cn(
-                              "flex size-10 items-center justify-center rounded-xl transition-all",
-                              active
-                                ? "border border-sky-400/30 bg-blue-500/20 text-white shadow-sm"
-                                : "text-white/70 hover:bg-white/10 hover:text-white"
-                            )}
-                          >
-                            <span className="material-symbols-outlined text-xl text-sky-300">
-                              {item.icon}
-                            </span>
-                          </Link>
-                          <Tooltip placement="right">{item.label}</Tooltip>
-                        </TooltipTrigger>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={onItemClick}
-                      className={cn(
-                        "relative flex items-center justify-between rounded-xl border px-3 py-3 text-sm font-bold transition",
-                        active
-                          ? "border-sky-400/25 bg-blue-500/15 text-white before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-sky-300"
-                          : "border-transparent text-white/75 hover:bg-white/5 hover:text-white"
-                      )}
-                    >
-                      <div className="flex items-center gap-3 min-w-0">
-                        <span className="material-symbols-outlined text-xl text-sky-300 shrink-0">
-                          {item.icon}
-                        </span>
-                        <span className="truncate">{item.label}</span>
-                      </div>
-
-                      {item.badge && (
-                        <span
-                          className={cn(
-                            "rounded-md px-1.5 py-0.5 text-[10px] font-bold uppercase",
-                            active
-                              ? "bg-white/20 text-white"
-                              : "bg-white/10 text-slate-300"
-                          )}
-                        >
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </nav>
+    <aside className="flex h-full w-full flex-col overflow-hidden border-r border-[var(--border)] bg-[var(--nav-bg)] px-3 py-4 text-[#f3f5f7]">
+      <div className={cn("flex shrink-0 items-center border-b border-white/8 pb-4", isSidebarOpen ? "justify-between" : "flex-col gap-2")}>
+        <Link href="/" onClick={onItemClick} className="flex min-w-0 flex-1 items-center gap-3 rounded-xl p-1">
+          <span className="relative grid size-10 shrink-0 overflow-hidden rounded-[14px] bg-white">
+            <span className="absolute -inset-y-1 left-[-8px] w-[65%] -skew-x-12 bg-[var(--accent-primary)]" />
+            <span className="absolute -inset-y-1 right-[-8px] w-[55%] -skew-x-12 bg-[var(--accent-network)]" />
+          </span>
+          {isSidebarOpen && <span className="min-w-0 leading-tight">
+            <strong className="block truncate text-sm font-semibold">{t.brand}</strong>
+            <small className="mt-1 block truncate text-[10px] font-semibold uppercase tracking-[.08em] text-[#a7b0bc]">{t.subtitle}</small>
+          </span>}
+        </Link>
+        <button type="button" onClick={toggleSidebar} aria-label={isMobile ? t.close : isSidebarOpen ? t.collapse : t.expand} className="grid size-9 shrink-0 place-items-center rounded-xl text-[#a7b0bc] hover:bg-[var(--nav-hover)] hover:text-white">
+          <span className="material-symbols-outlined text-xl">{isMobile ? "close" : isSidebarOpen ? "chevron_left" : "chevron_right"}</span>
+        </button>
       </div>
 
-      {/* Bottom Footer Notice */}
-      {isSidebarOpen && (
-        <div className="mt-auto rounded-2xl border border-white/10 bg-white/5 p-4 text-white">
-          <p className="text-xs font-black uppercase tracking-wider text-slate-400">
-            Active Context
-          </p>
-          <strong className="mt-1.5 block text-sm font-bold">
-            Authenticated workspace
-          </strong>
-          <span className="mt-1 block text-xs leading-5 text-slate-300">
-            Identity, context và capability do Module 01 cung cấp. Backend luôn authoritative.
-          </span>
-        </div>
-      )}
+      <nav className="min-h-0 flex-1 space-y-5 overflow-x-hidden overflow-y-auto py-5" aria-label="Workspace navigation">
+        {sections.map((section) => <section key={section.label}>
+          {isSidebarOpen ? <h2 className="px-3 pb-2 text-[10px] font-bold tracking-[.12em] text-[#8f99a7]">{section.label}</h2> : <div className="mb-2 border-t border-white/8" />}
+          <div className="grid gap-1">
+            {section.items.map((item) => {
+              const active = isActive(item.href);
+              const link = <Link href={item.href} onClick={onItemClick} className={cn(
+                "relative flex min-h-11 items-center rounded-xl text-sm font-semibold transition-colors before:absolute before:inset-y-2 before:left-0 before:w-[3px] before:rounded-r-full before:bg-transparent",
+                isSidebarOpen ? "gap-3 px-3" : "justify-center px-0",
+                active ? "bg-[var(--nav-active)] text-white before:bg-[var(--accent-primary)]" : "text-[#c8d0da] hover:bg-[var(--nav-hover)] hover:text-white",
+              )}>
+                <span className={cn("material-symbols-outlined text-[21px]", active ? "text-[#6ea0ff]" : "text-[#8f99a7]")}>{item.icon}</span>
+                {isSidebarOpen && <span className="min-w-0 truncate">{item.label}</span>}
+              </Link>;
+              return isSidebarOpen ? <div key={item.href}>{link}</div> : <div key={item.href}><TooltipTrigger>{link}<Tooltip placement="right">{item.label}</Tooltip></TooltipTrigger></div>;
+            })}
+          </div>
+        </section>)}
+      </nav>
+
+      {isSidebarOpen && <div className="shrink-0 rounded-2xl border border-white/8 bg-[var(--nav-hover)] p-3.5">
+        <p className="text-[10px] font-bold uppercase tracking-[.12em] text-[#8f99a7]">{t.currentContext}</p>
+        <strong className="mt-1.5 block text-sm font-semibold">{t.authenticated}</strong>
+        <p className="mt-2 flex items-center gap-2 border-t border-white/8 pt-2 text-xs text-[#a7b0bc]"><span className="size-2 rounded-full bg-[var(--success)]" />{t.active}</p>
+      </div>}
     </aside>
   );
 }

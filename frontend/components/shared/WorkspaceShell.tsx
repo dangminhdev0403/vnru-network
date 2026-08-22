@@ -3,7 +3,7 @@
 import { useLocale, type Locale } from "@/app/HomeMotion";
 import { SheetContent, SheetOverlay, SheetTitle } from "@/components/tailgrids/core/sheet";
 import { cn } from "@/lib/cn";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
@@ -27,17 +27,18 @@ export default function WorkspaceShell({
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   return (
-    <div className="flex min-h-screen bg-background text-on-background">
+    <div className="workspace-background flex min-h-screen text-on-background">
       {/* Desktop sidebar (xl+) — always in DOM, transitions width */}
       <aside
         style={{
-          width: isSidebarOpen ? "272px" : "72px",
-          minWidth: isSidebarOpen ? "272px" : "72px",
-          transition: "width 300ms cubic-bezier(0.4, 0, 0.2, 1), min-width 300ms cubic-bezier(0.4, 0, 0.2, 1)",
+          width: isSidebarOpen ? "256px" : "76px",
+          minWidth: isSidebarOpen ? "256px" : "76px",
         }}
-        className="hidden shrink-0 overflow-hidden xl:block fixed inset-y-0 left-0 z-40"
+        className="fixed inset-y-0 left-0 z-40 hidden shrink-0 overflow-hidden transition-[width,min-width] duration-500 ease-out motion-reduce:transition-none xl:block"
       >
-        <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <Suspense fallback={null}>
+          <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        </Suspense>
       </aside>
 
       {/* Mobile sidebar (< xl) — Sheet sliding from left */}
@@ -48,20 +49,22 @@ export default function WorkspaceShell({
           className="w-72 max-w-72 border-r border-card-border bg-card-surface-area p-0"
         >
           <SheetTitle className="sr-only">{brand.brand}</SheetTitle>
-          <Sidebar
-            isSidebarOpen={true}
-            toggleSidebar={() => setIsMobileSheetOpen(false)}
-            onItemClick={() => setIsMobileSheetOpen(false)}
-            isMobile
-          />
+          <Suspense fallback={null}>
+            <Sidebar
+              isSidebarOpen={true}
+              toggleSidebar={() => setIsMobileSheetOpen(false)}
+              onItemClick={() => setIsMobileSheetOpen(false)}
+              isMobile
+            />
+          </Suspense>
         </SheetContent>
       </SheetOverlay>
 
       {/* Main content column with dynamic margin */}
       <div
         className={cn(
-          "min-w-0 flex-1 flex flex-col transition-all duration-300",
-          isSidebarOpen ? "xl:ml-[272px]" : "xl:ml-[72px]"
+          "min-w-0 flex-1 flex flex-col transition-[margin] duration-500 ease-out motion-reduce:transition-none",
+          isSidebarOpen ? "xl:ml-[256px]" : "xl:ml-[76px]"
         )}
       >
         <Header onMenuClick={() => setIsMobileSheetOpen(true)} />

@@ -13,9 +13,9 @@ The Portal connects identity, scientific knowledge, experts, organizations, publ
 
 ## Implemented surfaces
 - Public landing and discovery: `/`, `/search`, `/knowledge`, `/experts`, `/experts/[id]`, `/publications/[id]`.
-- Authentication and security: `/login`, `/security`.
+- Authentication and security: `/login`, `/workspace/iam/security`.
 - Authenticated workspaces: `/workspace`, `/workspace/iam`, `/workspace/knowledge`.
-- Governance: `/admin/iam`.
+- Governance: `/workspace/iam/admin`.
 
 ## Product truth
 - Backend authorization is authoritative; frontend permissions only shape UX.

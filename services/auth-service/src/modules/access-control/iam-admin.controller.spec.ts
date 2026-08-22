@@ -45,7 +45,12 @@ describe('IamAdminController', () => {
         serviceMock.listUsers.mockResolvedValue([]);
         const result = await controller.listUsers({ limit: '15', offset: '5' });
 
-        expect(serviceMock.listUsers).toHaveBeenCalledWith(15, 5);
+        expect(serviceMock.listUsers).toHaveBeenCalledWith(
+          15,
+          5,
+          undefined,
+          undefined,
+        );
         expect(result).toEqual([]);
       });
 
@@ -53,7 +58,12 @@ describe('IamAdminController', () => {
         serviceMock.listUsers.mockResolvedValue([]);
         const result = await controller.listUsers({});
 
-        expect(serviceMock.listUsers).toHaveBeenCalledWith(10, 0);
+        expect(serviceMock.listUsers).toHaveBeenCalledWith(
+          10,
+          0,
+          undefined,
+          undefined,
+        );
         expect(result).toEqual([]);
       });
 
@@ -94,6 +104,7 @@ describe('IamAdminController', () => {
           validUuid,
           UserStatus.ACTIVE,
           'actor-usr-123',
+          undefined,
         );
         expect(result).toEqual({
           id: validUuid,

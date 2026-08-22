@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
+import { useLogout } from "@/features/auth/server-state";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import translations from "./home-translations.json";
@@ -94,6 +95,7 @@ export function HomeMotion({
   const { locale, setLocale } = useLocale();
   const shouldReduceMotion = useReducedMotion();
   const [loggingOut, setLoggingOut] = useState(false);
+  const logout = useLogout();
   const staticTitle = HERO_STATIC_TITLE[locale] || HERO_STATIC_TITLE.vi;
   const dynamicText = useHeroTyping(locale, shouldReduceMotion);
 
@@ -123,11 +125,11 @@ export function HomeMotion({
     if (loggingOut) return;
     setLoggingOut(true);
     try {
-      const response = await fetch("/api/auth/logout", { method: "POST" });
-      const { logoutUrl } = (await response.json()) as { logoutUrl?: string };
+      const { logoutUrl } = await logout.mutateAsync();
+      // Keycloak logout may be cross-origin; full-page navigation is required.
       window.location.assign(logoutUrl || "/");
     } catch {
-      window.location.assign("/");
+      window.location.replace("/");
     }
   };
 

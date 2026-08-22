@@ -37,6 +37,9 @@ export interface RoleAssignmentRecord {
 }
 
 export interface AccessControlPrismaClient {
+  permission: {
+    findMany: () => Promise<PermissionRecord[]>;
+  };
   roleAssignment: {
     findMany: (args: {
       where: {
@@ -96,6 +99,12 @@ export class AccessControlService {
 
     if (!assignments || assignments.length === 0) {
       return [];
+    }
+
+    if (assignments.some(({ role }) => role?.name === 'SUPER_ADMIN')) {
+      return (await this.prisma.permission.findMany())
+        .map(({ key }) => key)
+        .sort();
     }
 
     const permissionKeys = new Set<string>();

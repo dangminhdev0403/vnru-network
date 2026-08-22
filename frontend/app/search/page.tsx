@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getPublications } from "@/features/publications/repository";
 import { getExperts } from "@/features/experts/repository";
+import PublicHeader from "@/components/shared/PublicHeader";
 
 const one = (value: string | string[] | undefined) => typeof value === "string" ? value : undefined;
 type Params = Record<string, string | string[] | undefined>;
@@ -16,7 +17,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const partial = publications.status === "error" || experts.status === "error";
 
   return (
-    <main className="mx-auto max-w-[1280px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <>
+      <PublicHeader />
+      <main className="mx-auto max-w-[1280px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <header className="max-w-2xl">
         <h1 className="font-serif text-3xl font-bold tracking-tight text-on-surface sm:text-4xl">Integrated search</h1>
         <p className="mt-2 text-sm text-on-surface-variant">Search public publications and experts from one place.</p>
@@ -80,5 +83,6 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         )}
       </div>
     </main>
+    </>
   );
 }

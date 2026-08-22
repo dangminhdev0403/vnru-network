@@ -27,6 +27,8 @@ export interface CallbackResult {
   user: IdentityUser;
 }
 
+export type ExchangeResult = CallbackResult;
+
 export interface AuthenticatedUser {
   userId: string;
   sessionId: string;
@@ -161,6 +163,52 @@ export class AuthenticationService {
       token: sessionResult.token,
       user,
     };
+  }
+
+  async exchangeKeycloakToken(accessToken: string): Promise<ExchangeResult> {
+    if (!accessToken?.trim()) {
+      throw new UnauthorizedException('Missing access token');
+    }
+
+    const issuer = validateConfig().KEYCLOAK_ISSUER_URL.replace(/\/$/, '');
+    const response = await fetch(`${issuer}/protocol/openid-connect/userinfo`, {
+      headers: { authorization: `Bearer ${accessToken.trim()}` },
+    });
+    if (!response.ok) throw new UnauthorizedException('Invalid access token');
+
+    const claims = (await response.json()) as {
+      sub?: unknown;
+      email?: unknown;
+      amr?: unknown;
+      acr?: unknown;
+    };
+    if (typeof claims.sub !== 'string' || !claims.sub.trim()) {
+      throw new UnauthorizedException('Missing subject');
+    }
+
+    const user = await this.identityService.resolveOrCreateByExternalIdentity({
+      issuer,
+      subject: claims.sub,
+      email: typeof claims.email === 'string' ? claims.email : undefined,
+    });
+    if (user.status !== 'ACTIVE') {
+      throw new UnauthorizedException('Identity is inactive or unauthorized');
+    }
+
+    const factors = Array.isArray(claims.amr) ? claims.amr : [];
+    const authenticationLevel =
+      factors.some(
+        (value) => typeof value === 'string' && /otp|mfa/i.test(value),
+      ) ||
+      (typeof claims.acr === 'string' && /mfa/i.test(claims.acr))
+        ? 'MFA'
+        : 'PASSWORD';
+    const session = await this.sessionService.createSession({
+      userId: user.id,
+      ttlMs: DEFAULT_MAX_SESSION_TTL_MS,
+      authenticationLevel,
+    });
+    return { token: session.token, user };
   }
 
   async getCurrentUser(

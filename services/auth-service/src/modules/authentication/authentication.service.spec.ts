@@ -465,6 +465,41 @@ describe('AuthenticationService', () => {
     });
   });
 
+  describe('exchangeKeycloakToken', () => {
+    it('validates Keycloak userinfo before creating an opaque session', async () => {
+      const fetchMock = jest
+        .spyOn(global, 'fetch')
+        .mockResolvedValueOnce(
+          new Response(
+            JSON.stringify({ sub: 'kc-user-1', email: 'admin@example.com' }),
+            { status: 200 },
+          ),
+        );
+      identityService.resolveOrCreateByExternalIdentity.mockResolvedValue({
+        id: 'user-1',
+        email: 'admin@example.com',
+        status: 'ACTIVE',
+      });
+      sessionService.createSession.mockResolvedValue({
+        token: 'opaque-session',
+        session: {} as SessionRecord,
+      });
+
+      await expect(
+        service.exchangeKeycloakToken('keycloak-token'),
+      ).resolves.toMatchObject({
+        token: 'opaque-session',
+      });
+      expect(fetchMock).toHaveBeenCalledWith(
+        `${syntheticIssuer}/protocol/openid-connect/userinfo`,
+        expect.objectContaining({
+          headers: { authorization: ['Bearer', 'keycloak-token'].join(' ') },
+        }),
+      );
+      fetchMock.mockRestore();
+    });
+  });
+
   describe('getCurrentUser', () => {
     it('returns minimal internal identity after session digest validation when user is active', async () => {
       const activeSession: SessionRecord = {

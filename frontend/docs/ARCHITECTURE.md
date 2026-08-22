@@ -113,7 +113,7 @@ The Web experience structure maps the three canonical access areas and six busin
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 2. Authentication & Session Surface                                         │
 │    /login              - Keycloak OIDC authentication & session bootstrap   │
-│    /security           - 2FA policy status, active sessions, security trail │
+│    /workspace/iam/security           - 2FA policy status, active sessions, security trail │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 3. Authenticated Persona Workspaces Surface                                  │
 │    /workspace          - Context resolver & workspace dispatcher            │

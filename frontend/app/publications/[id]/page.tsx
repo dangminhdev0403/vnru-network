@@ -1,6 +1,7 @@
 import { getPublicationById } from "@/features/publications/repository";
 import { getLabels } from "@/features/publications/types";
 import PublicationDetail from "@/features/publications/components/PublicationDetail";
+import PublicHeader from "@/components/shared/PublicHeader";
 import { notFound } from "next/navigation";
 
 type Props = { params: Promise<{ id: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
@@ -14,8 +15,11 @@ export default async function PublicationPage({ params, searchParams }: Props) {
   if (data.status === "not_found") notFound();
 
   return (
-    <main>
-      <PublicationDetail data={data} labels={t} lang={lang} />
-    </main>
+    <>
+      <PublicHeader />
+      <main>
+        <PublicationDetail data={data} labels={t} lang={lang} />
+      </main>
+    </>
   );
 }

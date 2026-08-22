@@ -1,6 +1,7 @@
 import { getPublications } from "@/features/publications/repository";
 import { getLabels } from "@/features/publications/types";
 import PublicationList from "@/features/publications/components/PublicationList";
+import PublicHeader from "@/components/shared/PublicHeader";
 
 type Params = Record<string, string | string[] | undefined>;
 const one = (v: string | string[] | undefined) => (typeof v === "string" ? v : undefined);
@@ -14,7 +15,6 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
   const query = {
     q: one(raw.q),
     country: one(raw.country),
-    organization: one(raw.organization),
     topic: one(raw.topic),
     language: one(raw.language),
     year: one(raw.year),
@@ -24,13 +24,15 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
   const data = await getPublications(query);
 
   return (
-    <main className="mx-auto max-w-[1280px] px-4 py-8 sm:px-6 lg:px-8">
-      <header className="mb-6">
-        <h1 className="font-serif text-3xl font-bold tracking-tight text-on-surface sm:text-4xl">
-          {t.pageTitle}
-        </h1>
-        <p className="mt-2 text-sm text-on-surface-variant">{t.pageDesc}</p>
-      </header>
+    <>
+      <PublicHeader />
+      <main className="mx-auto max-w-[1280px] px-4 py-8 sm:px-6 lg:px-8">
+        <header className="mb-6">
+          <h1 className="font-serif text-3xl font-bold tracking-tight text-on-surface sm:text-4xl">
+            {t.pageTitle}
+          </h1>
+          <p className="mt-2 text-sm text-on-surface-variant">{t.pageDesc}</p>
+        </header>
 
       <form className="app-panel mb-6 grid gap-3 p-5 sm:grid-cols-2 lg:grid-cols-[1fr_auto]" role="search">
         <input
@@ -51,5 +53,6 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
 
       <PublicationList data={data} query={query} labels={t} lang={lang} />
     </main>
+    </>
   );
 }

@@ -3,8 +3,9 @@
 import { useLocale, type Locale } from "@/app/HomeMotion";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import { useCurrentUser, useLogout } from "@/features/auth/server-state";
 
 interface HeaderProps {
   onMenuClick?: () => void;
@@ -16,25 +17,89 @@ const languages: { code: Locale; label: string; flag: string }[] = [
   { code: "en", label: "English", flag: "🇬🇧" },
 ];
 
-const pageTitles: Record<string, string> = {
-  "/workspace": "Tổng quan",
-  "/workspace/knowledge": "Kho tri thức & Chuyên gia",
-  "/workspace/iam": "IAM & Governance",
-  "/admin/iam": "IAM Administration",
-  "/security": "Security & Sessions",
+const headerCopy: Record<
+  Locale,
+  {
+    workspaceCrumb: string;
+    searchPlaceholder: string;
+    contextActive: string;
+    account: string;
+    signOut: string;
+    openMenu: string;
+    themeToggle: (isDark: boolean) => string;
+    titles: Record<string, string>;
+    defaultTitle: string;
+  }
+> = {
+  vi: {
+    workspaceCrumb: "Không gian làm việc",
+    searchPlaceholder: "Tìm chuyên gia, công bố, chủ đề…",
+    contextActive: "Ngữ cảnh hoạt động",
+    account: "Tài khoản",
+    signOut: "Đăng xuất",
+    openMenu: "Mở menu",
+    themeToggle: (isDark) => `Chuyển sang chế độ ${isDark ? "Sáng" : "Tối"}`,
+    titles: {
+      "/workspace": "Tổng quan",
+      "/workspace/knowledge": "Kho tri thức & Chuyên gia",
+      "/workspace/iam": "Quản trị danh tính & truy cập (IAM)",
+      "/workspace/iam/admin": "Quản trị phân quyền",
+      "/workspace/iam/security": "Phiên làm việc & Bảo mật",
+    },
+    defaultTitle: "Mạng lưới KH&CN Việt – Nga",
+  },
+  en: {
+    workspaceCrumb: "Workspace",
+    searchPlaceholder: "Search experts, publications, topics…",
+    contextActive: "Context active",
+    account: "Account",
+    signOut: "Sign out",
+    openMenu: "Open menu",
+    themeToggle: (isDark) => `Switch to ${isDark ? "Light" : "Dark"} mode`,
+    titles: {
+      "/workspace": "Overview",
+      "/workspace/knowledge": "Knowledge & Experts",
+      "/workspace/iam": "Identity & Access Management (IAM)",
+      "/workspace/iam/admin": "Access Administration",
+      "/workspace/iam/security": "Security & Sessions",
+    },
+    defaultTitle: "VN–RU S&T Network",
+  },
+  ru: {
+    workspaceCrumb: "Рабочее пространство",
+    searchPlaceholder: "Поиск экспертов, публикаций, тем…",
+    contextActive: "Контекст активен",
+    account: "Аккаунт",
+    signOut: "Выйти",
+    openMenu: "Открыть меню",
+    themeToggle: (isDark) =>
+      `Переключить на ${isDark ? "Светлую" : "Темную"} тему`,
+    titles: {
+      "/workspace": "Обзор",
+      "/workspace/knowledge": "База знаний и эксперты",
+      "/workspace/iam": "Управление доступом (IAM)",
+      "/workspace/iam/admin": "Администрирование IAM",
+      "/workspace/iam/security": "Сессии и безопасность",
+    },
+    defaultTitle: "Сеть НТИ РФ — СРВ",
+  },
 };
 
 export default function Header({ onMenuClick }: HeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const { locale, setLocale } = useLocale();
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const currentUser = useCurrentUser();
+  const logout = useLogout();
   const mounted = React.useSyncExternalStore(
     () => () => {},
     () => true,
     () => false,
   );
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const t = headerCopy[locale] || headerCopy.vi;
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -47,24 +112,49 @@ export default function Header({ onMenuClick }: HeaderProps) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  const currentTitle = pageTitles[pathname] || "Russia-Vietnam Science-Technology Intelligence Network";
+  const label = currentUser.data
+    ? [
+        currentUser.data.displayName,
+        currentUser.data.name,
+        currentUser.data.username,
+        currentUser.data.email,
+      ].find(
+        (value): value is string =>
+          typeof value === "string" && value.trim().length > 0,
+      )
+    : undefined;
+  const avatarInitial = label?.trim().charAt(0).toLocaleUpperCase(locale) || "A";
+
+  const signOut = async () => {
+    try {
+      const payload = await logout.mutateAsync();
+      router.push(payload.logoutUrl || "/");
+    } catch {
+      router.push("/");
+    }
+  };
+
+  const currentTitle = t.titles[pathname] || t.defaultTitle;
 
   return (
-    <header className="sticky top-0 z-30 flex h-18 items-center gap-3 border-b border-outline-variant bg-background/90 px-4 backdrop-blur-xl transition-colors sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-30 flex h-[68px] items-center gap-3 border-b border-[var(--border)] bg-[var(--surface)]/95 px-4 backdrop-blur-md sm:px-6 lg:px-8">
       {/* Mobile Menu Button */}
       <button
         type="button"
-        aria-label="Mở menu"
+        aria-label={t.openMenu}
         onClick={onMenuClick}
-        className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-card-border bg-card-background text-on-surface xl:hidden cursor-pointer shadow-xs transition hover:bg-slate-100 dark:hover:bg-slate-800"
+        className="grid size-10 shrink-0 place-items-center rounded-xl text-text-primary transition hover:bg-[var(--surface-secondary)] xl:hidden"
       >
         <span className="material-symbols-outlined text-xl">menu</span>
       </button>
 
       {/* Breadcrumb Path */}
       <div className="hidden items-center gap-2 text-xs text-text-secondary sm:flex">
-        <Link href="/workspace" className="font-semibold text-text-secondary hover:text-blue-600 transition">
-          Workspace
+        <Link
+          href="/workspace"
+          className="font-semibold text-text-secondary transition hover:text-[var(--accent-primary)]"
+        >
+          {t.workspaceCrumb}
         </Link>
         <span>/</span>
         <strong className="text-text-primary font-bold">{currentTitle}</strong>
@@ -78,11 +168,11 @@ export default function Header({ onMenuClick }: HeaderProps) {
         <input
           ref={searchInputRef}
           type="search"
-          aria-label="Tìm kiếm toàn Portal"
-          placeholder="Tìm chuyên gia, công bố, chủ đề…"
-          className="h-11 w-full rounded-2xl border border-card-border bg-card-background pl-10 pr-16 text-sm text-text-primary placeholder:text-text-tertiary outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/15"
+          aria-label={t.searchPlaceholder}
+          placeholder={t.searchPlaceholder}
+          className="h-11 w-full rounded-[14px] border border-[var(--border)] bg-[var(--surface-secondary)] pl-10 pr-16 text-sm text-text-primary placeholder:text-text-tertiary outline-none transition focus:border-[var(--accent-primary)] focus:bg-[var(--surface)] focus:ring-3 focus:ring-blue-500/10"
         />
-        <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-card-border bg-card-surface-area px-2 py-0.5 text-xs font-bold text-text-tertiary">
+        <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded-md bg-[var(--surface)] px-2 py-0.5 text-xs font-semibold text-text-tertiary">
           ⌘K
         </kbd>
       </div>
@@ -94,15 +184,17 @@ export default function Header({ onMenuClick }: HeaderProps) {
           <button
             type="button"
             onClick={() => setIsLangOpen(!isLangOpen)}
-            className="flex h-11 items-center gap-1.5 rounded-2xl border border-card-border bg-card-background px-3 text-xs font-bold text-text-primary transition hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer outline-none shadow-xs"
+            className="flex h-10 items-center gap-1.5 rounded-xl px-3 text-xs font-bold text-text-primary transition hover:bg-[var(--surface-secondary)]"
+            aria-label={
+              languages.find((language) => language.code === locale)?.label
+            }
           >
-            <span>{languages.find((l) => l.code === locale)?.flag}</span>
             <span className="uppercase">{locale}</span>
           </button>
 
           {isLangOpen && (
             <div
-              className="absolute right-0 mt-1.5 w-36 overflow-hidden rounded-2xl border border-card-border bg-card-background p-1.5 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-100"
+              className="absolute right-0 z-50 mt-1.5 w-36 overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface-raised)] p-1.5 shadow-[var(--shadow-soft)]"
               onMouseLeave={() => setIsLangOpen(false)}
             >
               {languages.map((lang) => (
@@ -115,8 +207,8 @@ export default function Header({ onMenuClick }: HeaderProps) {
                   }}
                   className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold transition cursor-pointer ${
                     locale === lang.code
-                      ? "bg-blue-600 text-white font-bold"
-                      : "text-text-secondary hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-text-primary"
+                      ? "bg-[var(--surface-secondary)] text-[var(--accent-primary)] font-bold"
+                      : "text-text-secondary hover:bg-[var(--surface-secondary)] hover:text-text-primary"
                   }`}
                 >
                   <span>{lang.flag}</span>
@@ -127,25 +219,48 @@ export default function Header({ onMenuClick }: HeaderProps) {
           )}
         </div>
 
-        {/* Theme Toggle */}
+        {/* Native theme mode control keeps light, dark and system explicit. */}
         {mounted && (
-          <button
-            type="button"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            aria-label={`Chuyển sang chế độ ${theme === "dark" ? "Sáng" : "Tối"}`}
-            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-card-border bg-card-background text-text-primary transition hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer outline-none shadow-xs"
-          >
-            <span className="material-symbols-outlined text-xl text-amber-500 dark:text-amber-400">
-              {theme === "dark" ? "light_mode" : "dark_mode"}
-            </span>
-          </button>
+          <label className="relative grid size-10 place-items-center rounded-xl hover:bg-[var(--surface-secondary)]">
+            <span className="material-symbols-outlined pointer-events-none text-xl text-text-secondary">contrast</span>
+            <select
+              aria-label={t.themeToggle(theme === "dark")}
+              value={theme || "system"}
+              onChange={(event) => { const mode = event.target.value; setTheme(mode); }}
+              className="absolute inset-0 cursor-pointer opacity-0"
+            >
+              {[
+                { value: "light", label: "Light" },
+                { value: "dark", label: "Dark" },
+                { value: "system", label: "System" },
+              ].map((mode) => <option key={mode.value} value={mode.value}>{mode.label}</option>)}
+            </select>
+          </label>
         )}
 
-        {/* Context Active Badge */}
-        <div className="flex h-11 items-center gap-2 rounded-2xl border border-card-border bg-card-background px-3 text-xs font-black text-text-primary shadow-xs">
-          <span className="size-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100 dark:ring-emerald-950 animate-pulse" />
-          <span className="hidden xl:inline">Context active</span>
-        </div>
+        <details className="group relative">
+          <summary
+            aria-label={t.account}
+            className="grid size-10 cursor-pointer list-none place-items-center rounded-full bg-[var(--accent-primary)] text-sm font-bold text-white outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden"
+          >
+            {avatarInitial}
+          </summary>
+          <div className="absolute right-0 z-50 mt-2 w-44 overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface-raised)] p-1.5 shadow-[var(--shadow-soft)]">
+            <Link
+              href="/workspace/iam/security"
+              className="flex min-h-10 items-center rounded-lg px-3 text-sm font-semibold text-text-primary hover:bg-card-surface-area"
+            >
+              {t.account}
+            </Link>
+            <button
+              type="button"
+              onClick={signOut}
+              className="flex min-h-10 w-full items-center rounded-lg px-3 text-left text-sm font-semibold text-red-700 hover:bg-red-50 dark:text-red-300 dark:hover:bg-red-950/40"
+            >
+              {t.signOut}
+            </button>
+          </div>
+        </details>
       </div>
     </header>
   );

@@ -12,11 +12,17 @@ describe('AccessControlService', () => {
         AccessControlPrismaClient['roleAssignment']['findMany']
       >;
     };
+    permission: {
+      findMany: jest.Mock;
+    };
   };
 
   beforeEach(() => {
     prisma = {
       roleAssignment: {
+        findMany: jest.fn(),
+      },
+      permission: {
         findMany: jest.fn(),
       },
     };
@@ -270,6 +276,35 @@ describe('AccessControlService', () => {
     expect(capabilities).not.toContain('LAB_LEAD');
     expect(capabilities).not.toContain('role-faculty');
     expect(capabilities).not.toContain('role-lab-lead');
+  });
+
+  it('resolves every current capability for an active SUPER_ADMIN assignment', async () => {
+    prisma.roleAssignment.findMany.mockResolvedValue([
+      {
+        id: 'ra-super',
+        userId: 'usr-super',
+        contextType: 'PLATFORM',
+        contextId: 'GLOBAL',
+        status: 'ACTIVE',
+        role: {
+          id: 'role-super',
+          name: 'SUPER_ADMIN',
+          permissions: [],
+        },
+      },
+    ]);
+    prisma.permission.findMany.mockResolvedValue([
+      { id: 'p-iam', key: 'iam.users.manage' },
+      { id: 'p-knowledge', key: 'knowledge.workspace.view' },
+    ]);
+
+    await expect(
+      service.resolveCapabilities({
+        userId: 'usr-super',
+        contextType: 'PLATFORM',
+        contextId: 'GLOBAL',
+      }),
+    ).resolves.toEqual(['iam.users.manage', 'knowledge.workspace.view']);
   });
 
   describe('hasActiveAssignment', () => {

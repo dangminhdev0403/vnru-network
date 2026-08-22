@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   UserStatus,
   RoleAssignmentStatus,
@@ -12,6 +17,7 @@ export interface UserSelectResult {
   id: string;
   email: string | null;
   status: UserStatus;
+  canManageUser?: boolean;
 }
 
 export interface RoleWithPermissions {
@@ -38,6 +44,7 @@ export interface IamAdminPrismaClient {
     findMany(args: {
       take: number;
       skip: number;
+      where?: { id: { not: string } };
       orderBy?: { id: 'asc' | 'desc' };
       select?: { id: boolean; email: boolean; status: boolean };
     }): Promise<UserSelectResult[]>;
@@ -64,6 +71,19 @@ export interface IamAdminPrismaClient {
     findUnique(args: { where: { id: string } }): Promise<Role | null>;
   };
   roleAssignment: {
+    findMany(args: {
+      where: {
+        userId: string | { in: string[] };
+        contextType: string;
+        contextId: string;
+        status: RoleAssignmentStatus;
+      };
+      select: {
+        roleId: boolean;
+        userId?: boolean;
+        role?: { select: { name: boolean } };
+      };
+    }): Promise<{ roleId: string; userId?: string; role?: { name: string } }[]>;
     upsert(args: {
       where: {
         userId_roleId_contextType_contextId: {
@@ -108,10 +128,16 @@ export class IamAdminService {
     private readonly prisma: IamAdminPrismaClient,
   ) {}
 
-  async listUsers(limit: number, offset: number): Promise<UserSelectResult[]> {
-    return this.prisma.user.findMany({
+  async listUsers(
+    limit: number,
+    offset: number,
+    actorId?: string,
+    activeContext?: { contextType: string; contextId: string } | null,
+  ): Promise<UserSelectResult[]> {
+    const users = await this.prisma.user.findMany({
       take: limit,
       skip: offset,
+      ...(actorId ? { where: { id: { not: actorId } } } : {}),
       orderBy: { id: 'asc' },
       select: {
         id: true,
@@ -119,18 +145,81 @@ export class IamAdminService {
         status: true,
       },
     });
+    if (!actorId || !activeContext) return users;
+
+    const assignments = await this.prisma.roleAssignment.findMany({
+      where: {
+        userId: { in: [actorId, ...users.map(({ id }) => id)] },
+        ...activeContext,
+        status: RoleAssignmentStatus.ACTIVE,
+      },
+      select: { userId: true, roleId: true, role: { select: { name: true } } },
+    });
+    const actorRoleIds = new Set(
+      assignments
+        .filter(({ userId }) => userId === actorId)
+        .map(({ roleId }) => roleId),
+    );
+    return users.map((user) => ({
+      ...user,
+      canManageUser:
+        user.id !== actorId &&
+        !assignments.some(
+          ({ userId, role }) =>
+            userId === user.id &&
+            role?.name.replace(/[\s_-]/g, '').toUpperCase() === 'SUPERADMIN',
+        ) &&
+        !assignments.some(
+          ({ userId, roleId }) =>
+            userId === user.id && actorRoleIds.has(roleId),
+        ),
+    }));
   }
 
   async setUserStatus(
     id: string,
     status: UserStatus,
     actorId: string,
+    activeContext?: { contextType: string; contextId: string },
   ): Promise<UserSelectResult> {
+    if (id === actorId) {
+      throw new ForbiddenException('Users cannot change their own status');
+    }
+
     const user = await this.prisma.user.findUnique({
       where: { id },
     });
     if (!user) {
       throw new NotFoundException('User not found');
+    }
+
+    if (activeContext) {
+      const assignmentScope = {
+        ...activeContext,
+        status: RoleAssignmentStatus.ACTIVE,
+      };
+      const [actorRoles, targetRoles] = await Promise.all([
+        this.prisma.roleAssignment.findMany({
+          where: { userId: actorId, ...assignmentScope },
+          select: { roleId: true },
+        }),
+        this.prisma.roleAssignment.findMany({
+          where: { userId: id, ...assignmentScope },
+          select: { roleId: true, role: { select: { name: true } } },
+        }),
+      ]);
+      if (
+        targetRoles.some(
+          ({ role }) =>
+            role?.name.replace(/[\s_-]/g, '').toUpperCase() === 'SUPERADMIN',
+        )
+      ) {
+        throw new ForbiddenException('SUPER_ADMIN status cannot be changed');
+      }
+      const actorRoleIds = new Set(actorRoles.map(({ roleId }) => roleId));
+      if (targetRoles.some(({ roleId }) => actorRoleIds.has(roleId))) {
+        throw new ForbiddenException('Users cannot change peer status');
+      }
     }
 
     return this.prisma.$transaction(async (tx) => {
@@ -206,6 +295,10 @@ export class IamAdminService {
     },
     actorId: string,
   ): Promise<RoleAssignment> {
+    if (input.userId === actorId) {
+      throw new ForbiddenException('Users cannot assign roles to themselves');
+    }
+
     const user = await this.prisma.user.findUnique({
       where: { id: input.userId },
     });
@@ -218,6 +311,30 @@ export class IamAdminService {
     });
     if (!role) {
       throw new NotFoundException('Role not found');
+    }
+
+    if (role.name.replace(/[\s_-]/g, '').toUpperCase() === 'SUPERADMIN') {
+      throw new ForbiddenException('SUPER_ADMIN role cannot be assigned');
+    }
+
+    const assignmentScope = {
+      contextType: input.contextType,
+      contextId: input.contextId,
+      status: RoleAssignmentStatus.ACTIVE,
+    };
+    const [actorRoles, targetRoles] = await Promise.all([
+      this.prisma.roleAssignment.findMany({
+        where: { userId: actorId, ...assignmentScope },
+        select: { roleId: true },
+      }),
+      this.prisma.roleAssignment.findMany({
+        where: { userId: input.userId, ...assignmentScope },
+        select: { roleId: true },
+      }),
+    ]);
+    const actorRoleIds = new Set(actorRoles.map(({ roleId }) => roleId));
+    if (targetRoles.some(({ roleId }) => actorRoleIds.has(roleId))) {
+      throw new ForbiddenException('Users cannot assign roles to peers');
     }
 
     return this.prisma.$transaction(async (tx) => {

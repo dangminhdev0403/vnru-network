@@ -41,6 +41,8 @@ const configSchema = z
     KEYCLOAK_CLIENT_ID: z.string().min(1, {
       message: 'KEYCLOAK_CLIENT_ID must be a non-empty string',
     }),
+    KEYCLOAK_PROFILE_CLIENT_ID: z.string().min(1).optional(),
+    KEYCLOAK_PROFILE_CLIENT_SECRET: z.string().min(1).optional(),
     KEYCLOAK_REDIRECT_URI: z
       .string()
       .min(1)

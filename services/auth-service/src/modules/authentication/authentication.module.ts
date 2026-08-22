@@ -7,6 +7,7 @@ import { SessionModule } from '../session/session.module';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticatedRequestGuard } from './authenticated-request-context';
+import { KeycloakProfileService } from './keycloak-profile.service';
 import { IamAdminController } from '../access-control/iam-admin.controller';
 import {
   KeycloakOidcService,
@@ -102,6 +103,7 @@ import {
     KeycloakOidcService,
     AuthenticationService,
     AuthenticatedRequestGuard,
+    KeycloakProfileService,
   ],
   exports: [
     AuthenticationService,

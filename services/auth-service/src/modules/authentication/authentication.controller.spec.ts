@@ -5,6 +5,8 @@ import type {
   RequestWithCookies,
 } from './authenticated-request-context';
 import { SessionService } from '../session/session-public';
+import { IdentityService } from '../identity/identity.service';
+import { KeycloakProfileService } from './keycloak-profile.service';
 import {
   AuthenticatedUser,
   AuthenticationService,
@@ -98,7 +100,19 @@ describe('AuthenticationController', () => {
     controller = new AuthenticationController(
       authService as unknown as AuthenticationService,
       sessionService as unknown as SessionService,
+      {
+        findExternalSubject: jest.fn().mockResolvedValue('kc-user-1'),
+      } as unknown as IdentityService,
+      {
+        get: jest.fn(),
+        update: jest.fn(),
+      } as unknown as KeycloakProfileService,
     );
+  });
+
+  it('requires step-up MFA before disabling MFA', () => {
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    expect(Reflect.getMetadata('requireMfa', controller.disableMfa)).toBe(true);
   });
 
   describe('login', () => {
@@ -311,9 +325,7 @@ describe('AuthenticationController', () => {
       expect(authService.logout).toHaveBeenCalledWith(
         'session-token-to-revoke',
       );
-      expect(
-        new URL(result.logoutUrl).searchParams.get('post_logout_redirect_uri'),
-      ).toBe('https://portal.example.com/');
+      expect(result.logoutUrl).toBe('/');
       expect(mockResponse.clearCookie).toHaveBeenCalledTimes(1);
       const firstCall = mockResponse.clearCookie.mock.calls[0];
       if (!firstCall) {

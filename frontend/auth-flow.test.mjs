@@ -71,6 +71,24 @@ test("auth flow keeps provider tokens out of the frontend", async () => {
   assert.match(source[3], /await backend\.json\(\)/);
 });
 
+test("proxy keeps a valid backend session authoritative over provider refresh", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("./proxy.ts", import.meta.url), "utf8");
+  assert.ok(
+    source.indexOf("if (session?.ok) return NextResponse.next()") <
+      source.indexOf("RefreshTokenError"),
+  );
+});
+
+test("workspace header uses the authenticated account menu", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("./components/shared/Header.tsx", import.meta.url), "utf8");
+  assert.match(source, /fetch\("\/api\/auth\/me"\)/);
+  assert.match(source, /href="\/api\/auth\/account\?section=profile"/);
+  assert.match(source, /fetch\("\/api\/auth\/logout", \{ method: "POST" \}\)/);
+  assert.doesNotMatch(source, /\{t\.contextActive\}/);
+});
+
 test("landing copy has a value in every supported locale", async () => {
   const { readFile } = await import("node:fs/promises");
   const [source, dictionaries] = await Promise.all([
@@ -109,8 +127,10 @@ test("collaboration cards tolerate long translated words", async () => {
   assert.equal((source.match(/\[overflow-wrap:anywhere\]/g) || []).length >= 6, true);
 });
 
-test("root layout preserves nested workspace layouts during client navigation", async () => {
+test("authenticated routes share one persistent workspace shell", async () => {
   const { readFile } = await import("node:fs/promises");
-  const source = await readFile(new URL("./app/layout.tsx", import.meta.url), "utf8");
-  assert.doesNotMatch(source, /RouteMotion|key=\{pathname\}/);
+  const root = await readFile(new URL("./app/layout.tsx", import.meta.url), "utf8");
+  const workspace = await readFile(new URL("./app/(workspace)/layout.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(root, /RouteMotion|key=\{pathname\}/);
+  assert.match(workspace, /<WorkspaceShell>\{children\}<\/WorkspaceShell>/);
 });

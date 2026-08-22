@@ -12,7 +12,7 @@ Welcome to the Russia-Vietnam Science-Technology Intelligence Network governance
 6. [API Specification](API_SPEC.md): API contract source of truth, versioned event envelopes, and service-to-service communication.
 7. [Open Decisions](OPEN_QUESTIONS.md): Centralized register of unresolved architectural and product decisions (OPEN-01 to OPEN-12).
 8. Scope Documentation:
-   - **Frontend**: [Frontend Architecture](../frontend/docs/ARCHITECTURE.md) | [Frontend Rules](../frontend/docs/RULES.md) | [Module Guide](../frontend/docs/MODULE_GUIDE.md) | [Runtime UI Guide](../frontend/docs/RUNTIME_UI_GUIDE.md) | [Contract Guide](../frontend/docs/CONTRACT_GUIDE.md)
+   - **Frontend**: [Frontend Architecture](../frontend/docs/ARCHITECTURE.md) | [Frontend Rules](../frontend/docs/RULES.md) | [Module Guide](../frontend/docs/MODULE_GUIDE.md) | [Runtime UI Guide](../frontend/docs/RUNTIME_UI_GUIDE.md) | [Contract Guide](../frontend/docs/CONTRACT_GUIDE.md) | [Query Resource Guide](../frontend/docs/QUERY_RESOURCE_GUIDE.md)
    - **Backend Services**: [Services Architecture](../services/docs/ARCHITECTURE.md) | [Services Rules](../services/docs/RULES.md) | [Service Guide](../services/docs/SERVICE_GUIDE.md)
 9. [Pro-Max Verification Guide](VERIFICATION_GUIDE.md): Repository-wide selectable Quick / Integration / Browser UI / Full / Custom verification profiles, Chrome DevTools MCP browser requirements, failure-stop policy, and evidence matrix. `Pro-Max` names the guide/framework; users can simply ask to test or verify a module and then choose a profile.
 

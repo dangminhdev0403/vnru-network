@@ -4,6 +4,73 @@
 @import "./css/default.css";
 @import "./css/dark.css";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --background: #f6f7f9;
+  --surface: #ffffff;
+  --surface-secondary: #f9fafb;
+  --surface-raised: #ffffff;
+  --border: #e4e7ec;
+  --text-primary: #18212b;
+  --text-secondary: #667085;
+  --accent-primary: #2563eb;
+  --accent-network: #e34b55;
+  --nav-bg: #171c23;
+  --nav-hover: #222a34;
+  --nav-active: #2a323d;
+  --success: #16825d;
+  --warning: #b7791f;
+  --danger: #c73745;
+  --shadow-soft: 0 1px 2px rgb(16 24 40 / .04), 0 8px 24px rgb(16 24 40 / .04);
+  color-scheme: light;
+
+  /* Compatibility bridge: existing shared components inherit one system. */
+  --background-50: var(--background);
+  --background-soft-50: var(--surface-secondary);
+  --background-soft-100: var(--surface-secondary);
+  --card-background: var(--surface);
+  --card-surface-area: var(--surface-secondary);
+  --card-border: var(--border);
+  --card-surface-border: var(--border);
+  --input-background: var(--surface);
+  --input-border: var(--border);
+  --foreground-50: var(--text-primary);
+  --text-primary: #18212b;
+  --text-secondary: #667085;
+  --text-tertiary: #858f9e;
+}
+
+[data-theme="dark"],
+.dark {
+  --background: #11151b;
+  --surface: #171c23;
+  --surface-secondary: #1d232c;
+  --surface-raised: #222a34;
+  --border: #2d3642;
+  --text-primary: #f3f5f7;
+  --text-secondary: #b7c0cc;
+  --nav-bg: #171c23;
+  --nav-hover: #1d232c;
+  --nav-active: #222a34;
+  --shadow-soft: none;
+  color-scheme: dark;
+
+  --background-50: var(--background);
+  --background-soft-50: var(--surface-secondary);
+  --background-soft-100: var(--surface-secondary);
+  --card-background: var(--surface);
+  --card-surface-area: var(--surface-secondary);
+  --card-border: var(--border);
+  --card-surface-border: var(--border);
+  --input-background: var(--surface-secondary);
+  --input-border: var(--border);
+  --foreground-50: var(--text-primary);
+  --text-primary: #f3f5f7;
+  --text-secondary: #b7c0cc;
+  --text-tertiary: #929dab;
+}
+
 @theme {
   --color-primary: #071a33;
   --color-primary-container: #102a4d;
@@ -158,9 +225,18 @@ section[id] {
 }
 
 body {
-  background:
-    linear-gradient(90deg, transparent calc(50% - .5px), rgb(31 99 233 / .055) 50%, transparent calc(50% + .5px)),
-    var(--color-background);
+  background: var(--background);
+}
+
+.workspace-background {
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+.module-kicker {
+  border: 1px solid var(--border);
+  background: var(--surface-secondary);
+  color: var(--accent-primary);
 }
 
 ::selection {

@@ -1,4 +1,4 @@
-import { NotFoundException } from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { UserStatus, RoleAssignmentStatus } from '@prisma/client';
 import { IamAdminService } from './iam-admin.service';
 
@@ -16,6 +16,7 @@ describe('IamAdminService', () => {
       findUnique: jest.Mock;
     };
     roleAssignment: {
+      findMany: jest.Mock;
       upsert: jest.Mock;
     };
     session: {
@@ -43,6 +44,7 @@ describe('IamAdminService', () => {
         findUnique: jest.fn(),
       },
       roleAssignment: {
+        findMany: jest.fn().mockResolvedValue([]),
         upsert: jest.fn(),
       },
       session: {
@@ -82,9 +84,101 @@ describe('IamAdminService', () => {
       });
       expect(result).toEqual(users);
     });
+
+    it('marks self and same-role peers as not assignable in the active context', async () => {
+      const users = [
+        {
+          id: 'actor-1',
+          email: 'actor@example.com',
+          status: UserStatus.ACTIVE,
+        },
+        { id: 'peer-1', email: 'peer@example.com', status: UserStatus.ACTIVE },
+        {
+          id: 'other-1',
+          email: 'other@example.com',
+          status: UserStatus.ACTIVE,
+        },
+      ];
+      prismaMock.user.findMany.mockResolvedValue(users.slice(1));
+      prismaMock.roleAssignment.findMany.mockResolvedValue([
+        { userId: 'actor-1', roleId: 'role-admin' },
+        { userId: 'peer-1', roleId: 'role-admin' },
+        { userId: 'other-1', roleId: 'role-user' },
+      ]);
+
+      const result = await service.listUsers(10, 0, 'actor-1', {
+        contextType: 'ORGANIZATION',
+        contextId: 'org-1',
+      });
+
+      expect(prismaMock.user.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({ where: { id: { not: 'actor-1' } } }),
+      );
+      expect(
+        result.map(({ id, canManageUser }) => ({ id, canManageUser })),
+      ).toEqual([
+        { id: 'peer-1', canManageUser: false },
+        { id: 'other-1', canManageUser: true },
+      ]);
+    });
   });
 
   describe('setUserStatus', () => {
+    const activeContext = {
+      contextType: 'ORGANIZATION',
+      contextId: 'org-1',
+    };
+
+    it('rejects changing own status before any write', async () => {
+      await expect(
+        service.setUserStatus(
+          'actor-1',
+          UserStatus.INACTIVE,
+          'actor-1',
+          activeContext,
+        ),
+      ).rejects.toThrow(ForbiddenException);
+      expect(prismaMock.user.update).not.toHaveBeenCalled();
+    });
+
+    it('rejects changing a same-role peer status before any write', async () => {
+      prismaMock.user.findUnique.mockResolvedValue({ id: 'peer-1' });
+      prismaMock.roleAssignment.findMany
+        .mockResolvedValueOnce([{ roleId: 'role-admin' }])
+        .mockResolvedValueOnce([
+          { roleId: 'role-admin', role: { name: 'ADMIN' } },
+        ]);
+
+      await expect(
+        service.setUserStatus(
+          'peer-1',
+          UserStatus.INACTIVE,
+          'actor-1',
+          activeContext,
+        ),
+      ).rejects.toThrow(ForbiddenException);
+      expect(prismaMock.user.update).not.toHaveBeenCalled();
+    });
+
+    it('rejects changing a SUPER_ADMIN status before any write', async () => {
+      prismaMock.user.findUnique.mockResolvedValue({ id: 'super-1' });
+      prismaMock.roleAssignment.findMany
+        .mockResolvedValueOnce([{ roleId: 'role-user' }])
+        .mockResolvedValueOnce([
+          { roleId: 'role-super', role: { name: 'SUPER_ADMIN' } },
+        ]);
+
+      await expect(
+        service.setUserStatus(
+          'super-1',
+          UserStatus.INACTIVE,
+          'actor-1',
+          activeContext,
+        ),
+      ).rejects.toThrow(ForbiddenException);
+      expect(prismaMock.user.update).not.toHaveBeenCalled();
+    });
+
     it('updates user status, revokes sessions if status is INACTIVE, and writes audit event in transaction', async () => {
       const existingUser = {
         id: 'usr-1',
@@ -279,9 +373,48 @@ describe('IamAdminService', () => {
       status: RoleAssignmentStatus.ACTIVE,
     };
 
+    it('rejects self-assignment before any write', async () => {
+      await expect(
+        service.upsertRoleAssignment(input, input.userId),
+      ).rejects.toThrow(ForbiddenException);
+      expect(prismaMock.roleAssignment.upsert).not.toHaveBeenCalled();
+    });
+
+    it('rejects assigning the SUPER_ADMIN role before any write', async () => {
+      prismaMock.user.findUnique.mockResolvedValue({ id: 'usr-1' });
+      prismaMock.role.findUnique.mockResolvedValue({
+        id: 'role-1',
+        name: 'SUPER_ADMIN',
+      });
+
+      await expect(
+        service.upsertRoleAssignment(input, 'actor-usr-123'),
+      ).rejects.toThrow(ForbiddenException);
+      expect(prismaMock.roleAssignment.upsert).not.toHaveBeenCalled();
+    });
+
+    it('rejects assignment when actor and target have the same active role in context', async () => {
+      prismaMock.user.findUnique.mockResolvedValue({ id: 'usr-1' });
+      prismaMock.role.findUnique.mockResolvedValue({
+        id: 'role-1',
+        name: 'ADMIN',
+      });
+      prismaMock.roleAssignment.findMany
+        .mockResolvedValueOnce([{ roleId: 'peer-role' }])
+        .mockResolvedValueOnce([{ roleId: 'peer-role' }]);
+
+      await expect(
+        service.upsertRoleAssignment(input, 'actor-usr-123'),
+      ).rejects.toThrow(ForbiddenException);
+      expect(prismaMock.roleAssignment.upsert).not.toHaveBeenCalled();
+    });
+
     it('performs upsert, logs security audit event and returns result inside transaction', async () => {
       prismaMock.user.findUnique.mockResolvedValue({ id: 'usr-1' });
-      prismaMock.role.findUnique.mockResolvedValue({ id: 'role-1' });
+      prismaMock.role.findUnique.mockResolvedValue({
+        id: 'role-1',
+        name: 'ADMIN',
+      });
       prismaMock.roleAssignment.upsert.mockResolvedValue({
         id: 'assignment-1',
         ...input,
@@ -357,7 +490,10 @@ describe('IamAdminService', () => {
 
     it('rolls back transaction (rethrows error) if audit event logging fails', async () => {
       prismaMock.user.findUnique.mockResolvedValue({ id: 'usr-1' });
-      prismaMock.role.findUnique.mockResolvedValue({ id: 'role-1' });
+      prismaMock.role.findUnique.mockResolvedValue({
+        id: 'role-1',
+        name: 'ADMIN',
+      });
       prismaMock.roleAssignment.upsert.mockResolvedValue({
         id: 'assignment-1',
         ...input,

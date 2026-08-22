@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk, Source_Serif_4 } from "next/font/google";
 import { ThemeProvider } from "../components/providers/ThemeProvider";
+import QueryProvider from "../components/providers/QueryProvider";
 import "./globals.css";
 
 const sans = Hanken_Grotesk({
@@ -36,7 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="font-sans antialiased bg-background text-on-background min-h-screen">
         <ThemeProvider>
-          {children}
+          <QueryProvider>{children}</QueryProvider>
         </ThemeProvider>
       </body>
     </html>

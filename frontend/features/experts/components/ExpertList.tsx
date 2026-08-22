@@ -26,7 +26,7 @@ function buildHref(base: Record<string, string | undefined>, overrides: Record<s
 
 export default function ExpertList({ result, query, locale = "vi" }: Props) {
   const t = L[locale];
-  const hasFilters = query.q || query.country || query.organization || query.topic || query.language;
+  const hasFilters = query.q || query.country || query.topic || query.language;
 
   return (
     <div className="mx-auto max-w-[1580px] px-4 py-7 sm:px-6 lg:px-8 lg:py-8">
@@ -35,7 +35,7 @@ export default function ExpertList({ result, query, locale = "vi" }: Props) {
       </h1>
 
       {/* Search & filters */}
-      <form className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_auto_auto_auto_auto_auto]" action="/experts">
+      <form className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_auto_auto_auto_auto]" action="/experts">
         <input
           name="q"
           defaultValue={query.q}
@@ -49,13 +49,6 @@ export default function ExpertList({ result, query, locale = "vi" }: Props) {
           defaultValue={query.country}
           placeholder={t.filterCountry}
           aria-label={t.filterCountry}
-          className="h-11 rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          name="organization"
-          defaultValue={query.organization}
-          placeholder={t.filterOrg}
-          aria-label={t.filterOrg}
           className="h-11 rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input

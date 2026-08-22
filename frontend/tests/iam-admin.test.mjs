@@ -64,7 +64,7 @@ test("BFF role-assignments route proxies correctly", async () => {
 
 test("IAM page route redirects unauthenticated users", async () => {
   const fileContent = await readFile(
-    new URL("../app/admin/iam/page.tsx", import.meta.url),
+    new URL("../app/(workspace)/workspace/iam/admin/page.tsx", import.meta.url),
     "utf8",
   );
 
@@ -73,11 +73,11 @@ test("IAM page route redirects unauthenticated users", async () => {
   // Must redirect to Keycloak login if missing
   assert.match(
     fileContent,
-    /redirect\("\/api\/auth\/login\?returnTo=\/admin\/iam"\)/,
+    /redirect\("\/api\/auth\/login\?returnTo=\/workspace\/iam\/admin"\)/,
   );
   // Backend remains the authorization authority; the client renders a real 403 state.
   const clientContent = await readFile(
-    new URL("../app/admin/iam/IamClientPage.tsx", import.meta.url),
+    new URL("../app/(workspace)/workspace/iam/admin/IamClientPage.tsx", import.meta.url),
     "utf8",
   );
   assert.match(clientContent, /status === 403/);
@@ -86,20 +86,39 @@ test("IAM page route redirects unauthenticated users", async () => {
 
 test("IAM client uses the approved flow UI with real BFF data only", async () => {
   const fileContent = await readFile(
-    new URL("../app/admin/iam/IamClientPage.tsx", import.meta.url),
+    new URL("../app/(workspace)/workspace/iam/admin/IamClientPage.tsx", import.meta.url),
     "utf8",
   );
 
-  assert.match(fileContent, /Identity → Context → Role → Backend decision/);
-  assert.match(fileContent, /\/api\/admin\/users/);
-  assert.match(fileContent, /\/api\/admin\/roles/);
-  assert.match(fileContent, /\/api\/admin\/role-assignments/);
+  assert.match(fileContent, /Identity → Context → Role → Backend authoritative decision/);
+  assert.match(fileContent, /useIamAdministration/);
+  assert.match(fileContent, /user\.canManageUser/);
+  assert.match(fileContent, /SUPERADMIN/);
+  assert.match(fileContent, /aria-label=\{t\.searchRoles\}/);
+  assert.match(fileContent, /aria-expanded=\{expandedGroup === group\.name\}/);
+  assert.match(fileContent, /groupPermissions\(selectedRole\?\.permissions, permissionQuery, locale\)/);
+  assert.match(fileContent, /permissionLabels\[locale\]\[permission\]/);
+  assert.match(fileContent, /groupLabels\[locale\]\[group\.name\]/);
+  assert.match(fileContent, /grants\.proposals\.confirm_paired/);
+  assert.match(fileContent, /Xác nhận hồ sơ đề xuất song phương/);
+  assert.match(fileContent, /roleLabels\[locale\]\[role\.name\]/);
+  assert.match(fileContent, /Quản trị quyết định của Quỹ/);
+  assert.doesNotMatch(fileContent, /\{role\.name\} ·|\{selectedRole\?\.name\}/);
+  assert.doesNotMatch(fileContent, /\{t\.workspace\}|\{t\.refresh\}/);
+  assert.match(fileContent, /iam-admin-surface/);
+  assert.match(fileContent, /role-profile/);
+  assert.match(fileContent, /permission-module/);
+  assert.doesNotMatch(fileContent, /max-w-7xl|role-information/);
+  assert.match(fileContent, /aria-current="page"/);
+  assert.match(fileContent, /t\.permissionName/);
+  assert.doesNotMatch(fileContent, /dark:(?:bg|border|text)-slate|bg-\[#10203b\]|bg-slate-950\/45/);
+  assert.match(fileContent, /t\.readOnlyNote/);
   assert.doesNotMatch(fileContent, /localStorage|roleSeed|fake|accessToken|refreshToken/i);
 });
 
 test("IAM live route does not depend on static HTML templates", async () => {
   const pageContent = await readFile(
-    new URL("../app/admin/iam/page.tsx", import.meta.url),
+    new URL("../app/(workspace)/workspace/iam/admin/page.tsx", import.meta.url),
     "utf8",
   );
   assert.doesNotMatch(pageContent, /html-templates|dangerouslySetInnerHTML/);

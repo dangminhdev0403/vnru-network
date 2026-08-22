@@ -24,6 +24,10 @@ export interface ExternalIdentityRecord {
 
 export interface IdentityPrismaClient {
   externalIdentity: {
+    findFirst: (args: {
+      where: { userId: string };
+      select: { subject: boolean };
+    }) => Promise<{ subject: string } | null>;
     findUnique: (args: {
       where: { issuer_subject: { issuer: string; subject: string } };
       include?: { user: boolean };
@@ -60,6 +64,14 @@ export class IdentityService {
     return this.prisma.user.findUnique({
       where: { id: id.trim() },
     });
+  }
+
+  async findExternalSubject(userId: string): Promise<string | null> {
+    const identity = await this.prisma.externalIdentity.findFirst({
+      where: { userId },
+      select: { subject: true },
+    });
+    return identity?.subject ?? null;
   }
 
   async resolveOrCreateByExternalIdentity(

@@ -63,6 +63,7 @@ export class IamAdminController {
   @Get('users')
   async listUsers(
     @Query() query: Record<string, unknown>,
+    @Req() req?: AuthenticatedRequest,
   ): Promise<UserSelectResult[]> {
     const parsed = paginationSchema.safeParse(query);
     if (!parsed.success) {
@@ -71,7 +72,12 @@ export class IamAdminController {
       );
     }
     const { limit, offset } = parsed.data;
-    return this.iamAdminService.listUsers(limit, offset);
+    return this.iamAdminService.listUsers(
+      limit,
+      offset,
+      req?.authContext?.userId,
+      req?.authContext?.activeContext,
+    );
   }
 
   @Patch('users/:id/status')
@@ -103,6 +109,7 @@ export class IamAdminController {
       parsedId.data,
       parsedStatus.data,
       actorId,
+      req.authContext?.activeContext ?? undefined,
     );
   }
 
