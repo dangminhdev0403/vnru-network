@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SESSION_COOKIE_NAME } from "@/features/auth/server";
 import IamClientPage from "./IamClientPage";
+import RolePermissionsPage from "./RolePermissionsPage";
 
 type View = "overview" | "roles";
 
@@ -11,5 +12,5 @@ export default async function IamAdminPage({ searchParams }: Readonly<{ searchPa
 
   const requestedView = (await searchParams).view;
   const initialView: View = requestedView === "roles" ? "roles" : "overview";
-  return <IamClientPage initialView={initialView} />;
+  return initialView === "roles" ? <RolePermissionsPage /> : <IamClientPage initialView="overview" />;
 }
