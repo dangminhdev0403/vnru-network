@@ -1,5 +1,5 @@
-import CollaborationWorkspaceView from "@/features/collaboration/components/CollaborationWorkspaceView";
+import { CollaborationHub } from "@/features/collaboration/components/CollaborationHub";
 
-export default function CollaborationWorkspacePage() {
-  return <CollaborationWorkspaceView />;
+export default function CollaborationHubPage() {
+  return <CollaborationHub />;
 }

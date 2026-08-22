@@ -67,11 +67,9 @@ test("admin-nav-registry filters sections based on admin capabilities", async ()
   assert.ok(accessSection.items.some((i) => i.href === "/admin/access/roles"));
 });
 
-test("collaboration BFF route handles limit and cursor without offset", async () => {
-  const bffContent = await readFile(new URL("../app/api/collab/opportunities/route.ts", import.meta.url), "utf8");
-  assert.match(bffContent, /url\.searchParams\.get\("cursor"\)/);
-  assert.match(bffContent, /targetUrl\.searchParams\.set\("limit"/);
-  assert.doesNotMatch(bffContent, /searchParams\.get\("offset"\)/);
+test("collaboration BFF preserves cursor query without inventing offset", async () => {
+  const bffContent = await readFile(new URL("../app/api/collab/[...path]/route.ts", import.meta.url), "utf8");
+  assert.match(bffContent, /targetUrl\.search = url\.search/);
   assert.doesNotMatch(bffContent, /offset=/);
 });
 

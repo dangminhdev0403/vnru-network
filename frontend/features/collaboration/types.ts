@@ -12,17 +12,30 @@ export interface ResearchOpportunity {
 export type ProposalState =
   | "DRAFT"
   | "PAIRED_CONFIRMED"
-  | "ENDORSED"
   | "SUBMITTED"
-  | "SCREENED_ELIGIBLE"
-  | "SCREENED_INELIGIBLE"
-  | "DECIDED_ACCEPTED"
-  | "DECIDED_REJECTED";
+  | "ELIGIBLE"
+  | "INELIGIBLE"
+  | "APPROVED"
+  | "REJECTED"
+  | "REVISION_REQUESTED";
 
 export interface ProposalParticipant {
+  id?: string;
   userId: string;
   organizationRef: string;
+  country: "VN" | "RU";
+}
+
+export interface ProposalConfirmation {
+  participantId: string;
+  confirmed: boolean;
   confirmedAt?: string | null;
+}
+
+export interface ProposalEndorsement {
+  organizationRef: string;
+  country: "VN" | "RU";
+  endorsed: boolean;
   endorsedAt?: string | null;
 }
 
@@ -30,10 +43,11 @@ export interface CollaborationProposal {
   id: string;
   opportunityId: string;
   content: string;
-  revisionNumber: number;
+  revision: number;
   state: ProposalState;
-  vnParticipant: ProposalParticipant;
-  ruParticipant: ProposalParticipant;
+  participants: ProposalParticipant[];
+  confirmations: ProposalConfirmation[];
+  endorsements: ProposalEndorsement[];
   createdAt: string;
   updatedAt: string;
 }
@@ -49,12 +63,4 @@ export interface CreateProposalInput {
   content: string;
   vnParticipant: CreateProposalParticipant;
   ruParticipant: CreateProposalParticipant;
-}
-
-export interface CollaborationDecision {
-  id: string;
-  proposalId: string;
-  decision: "ACCEPTED" | "REJECTED";
-  rationale: string;
-  issuedAt: string;
 }

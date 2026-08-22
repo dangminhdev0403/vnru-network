@@ -5,19 +5,13 @@ import type {
 } from "./types";
 
 export class CollabApiError extends Error {
-  constructor(
-    public status: number,
-    message: string,
-  ) {
+  constructor(public status: number, message: string) {
     super(message);
     this.name = "CollabApiError";
   }
 }
 
-export function getApiErrorMessage(
-  payload: unknown,
-  fallback: string = "Request failed",
-): string {
+export function getApiErrorMessage(payload: unknown, fallback = "Request failed"): string {
   if (!payload || typeof payload !== "object") return fallback;
   const p = payload as Record<string, unknown>;
   if (typeof p.error === "string") return p.error;
@@ -29,113 +23,88 @@ export function getApiErrorMessage(
   return fallback;
 }
 
+async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const res = await fetch(`/api/collab${path}`, {
+    ...options,
+    headers: {
+      accept: "application/json",
+      ...(options.body ? { "content-type": "application/json" } : {}),
+      ...options.headers,
+    },
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    throw new CollabApiError(res.status, getApiErrorMessage(err));
+  }
+  return res.json();
+}
+
 export interface ListOpportunitiesResult {
-  data: ResearchOpportunity[];
+  items: ResearchOpportunity[];
   nextCursor?: string | null;
 }
 
-export async function listOpportunities(
-  cursor?: string,
-  limit: number = 20,
-): Promise<ListOpportunitiesResult> {
-  const params = new URLSearchParams();
-  params.set("limit", String(limit));
-  if (cursor) {
-    params.set("cursor", cursor);
+export const collabRepository = {
+  async listOpportunities(cursor?: string, limit = 20, signal?: AbortSignal): Promise<ListOpportunitiesResult> {
+    const params = new URLSearchParams();
+    params.set("limit", String(limit));
+    if (cursor) params.set("cursor", cursor);
+    return request<ListOpportunitiesResult>(`/opportunities?${params.toString()}`, { signal });
+  },
+
+  async createOpportunity(input: { id?: string; title: string; description?: string }): Promise<ResearchOpportunity> {
+    const payload = {
+      id: input.id || (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : undefined),
+      title: input.title,
+      description: input.description,
+    };
+    return request<ResearchOpportunity>("/opportunities", { method: "POST", body: JSON.stringify(payload) });
+  },
+
+  async publishOpportunity(id: string): Promise<ResearchOpportunity> {
+    return request<ResearchOpportunity>(`/opportunities/${encodeURIComponent(id)}/publish`, { method: "POST" });
+  },
+
+  async closeOpportunity(id: string): Promise<ResearchOpportunity> {
+    return request<ResearchOpportunity>(`/opportunities/${encodeURIComponent(id)}/close`, { method: "POST" });
+  },
+
+  async getProposal(id: string, signal?: AbortSignal): Promise<CollaborationProposal> {
+    return request<CollaborationProposal>(`/proposals/${encodeURIComponent(id)}`, { signal });
+  },
+
+  async createProposal(input: CreateProposalInput): Promise<CollaborationProposal> {
+    const payload = {
+      id: input.id || (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : undefined),
+      opportunityId: input.opportunityId,
+      content: input.content,
+      vnParticipant: input.vnParticipant,
+      ruParticipant: input.ruParticipant,
+    };
+    return request<CollaborationProposal>("/proposals", { method: "POST", body: JSON.stringify(payload) });
+  },
+
+  async reviseProposal(id: string, input: { content: string; expectedRevision: number }): Promise<CollaborationProposal> {
+    return request<CollaborationProposal>(`/proposals/${encodeURIComponent(id)}`, { method: "PUT", body: JSON.stringify(input) });
+  },
+
+  async confirmProposal(id: string): Promise<CollaborationProposal> {
+    return request<CollaborationProposal>(`/proposals/${encodeURIComponent(id)}/confirm`, { method: "POST" });
+  },
+
+  async endorseProposal(id: string): Promise<CollaborationProposal> {
+    return request<CollaborationProposal>(`/proposals/${encodeURIComponent(id)}/endorse`, { method: "POST" });
+  },
+
+  async submitProposal(id: string): Promise<CollaborationProposal> {
+    return request<CollaborationProposal>(`/proposals/${encodeURIComponent(id)}/submit`, { method: "POST" });
+  },
+
+  async screenProposal(id: string, input: { eligible: boolean; reason?: string }): Promise<CollaborationProposal> {
+    return request<CollaborationProposal>(`/proposals/${encodeURIComponent(id)}/screen`, { method: "POST", body: JSON.stringify(input) });
+  },
+
+  async decisionProposal(id: string, input: { approved: boolean; reason?: string; requestRevision?: boolean }): Promise<CollaborationProposal> {
+    return request<CollaborationProposal>(`/proposals/${encodeURIComponent(id)}/decision`, { method: "POST", body: JSON.stringify(input) });
   }
-
-  const res = await fetch(`/api/collab/opportunities?${params.toString()}`, {
-    headers: { accept: "application/json" },
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => null);
-    throw new CollabApiError(
-      res.status,
-      getApiErrorMessage(err, "Failed to load opportunities"),
-    );
-  }
-
-  const json = await res.json();
-  if (Array.isArray(json)) {
-    return { data: json };
-  }
-  return {
-    data: json.data || [],
-    nextCursor: json.nextCursor,
-  };
-}
-
-export async function createOpportunity(input: {
-  id?: string;
-  title: string;
-  description?: string;
-}): Promise<ResearchOpportunity> {
-  const payload = {
-    id: input.id || (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : undefined),
-    title: input.title,
-    ...(input.description ? { description: input.description } : {}),
-  };
-
-  const res = await fetch("/api/collab/opportunities", {
-    method: "POST",
-    headers: { "content-type": "application/json", accept: "application/json" },
-    body: JSON.stringify(payload),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => null);
-    throw new CollabApiError(
-      res.status,
-      getApiErrorMessage(err, "Create opportunity failed"),
-    );
-  }
-
-  return res.json();
-}
-
-export async function getProposalById(
-  id: string,
-): Promise<CollaborationProposal> {
-  const res = await fetch(`/api/collab/proposals/${encodeURIComponent(id)}`, {
-    headers: { accept: "application/json" },
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => null);
-    throw new CollabApiError(
-      res.status,
-      getApiErrorMessage(err, "Failed to load proposal"),
-    );
-  }
-
-  return res.json();
-}
-
-export async function createProposal(
-  input: CreateProposalInput,
-): Promise<CollaborationProposal> {
-  const payload = {
-    id: input.id || (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : undefined),
-    opportunityId: input.opportunityId,
-    content: input.content,
-    vnParticipant: input.vnParticipant,
-    ruParticipant: input.ruParticipant,
-  };
-
-  const res = await fetch("/api/collab/proposals", {
-    method: "POST",
-    headers: { "content-type": "application/json", accept: "application/json" },
-    body: JSON.stringify(payload),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => null);
-    throw new CollabApiError(
-      res.status,
-      getApiErrorMessage(err, "Create proposal failed"),
-    );
-  }
-
-  return res.json();
-}
+};
