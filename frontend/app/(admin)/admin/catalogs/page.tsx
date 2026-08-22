@@ -7,11 +7,12 @@ import React from "react";
 const catalogCopy: Record<
   Locale,
   {
-    title: string;
     kicker: string;
+    title: string;
     description: string;
     backToAdmin: string;
-    categories: { name: string; desc: string; count: string; icon: string }[];
+    statusNote: string;
+    categories: { name: string; desc: string; icon: string }[];
   }
 > = {
   vi: {
@@ -19,10 +20,11 @@ const catalogCopy: Record<
     title: "Danh mục Chuẩn hóa Hệ thống",
     description: "Quản lý các bảng phân loại lĩnh vực nghiên cứu, danh sách tổ chức đối tác, và quy chuẩn dữ liệu song phương.",
     backToAdmin: "← Quay lại Quản trị Phân quyền",
+    statusNote: "Dữ liệu danh mục chuẩn hóa đang được phục vụ trực tiếp từ các dịch vụ miền tương ứng.",
     categories: [
-      { name: "Lĩnh vực nghiên cứu (OECD / FOS)", desc: "Phân loại chuyên ngành KH&CN Việt – Nga", count: "12 nhóm chính", icon: "category" },
-      { name: "Viện / Trường đối tác", desc: "Danh sách pháp nhân tổ chức nghiên cứu đã xác thực", count: "84 đơn vị", icon: "domain" },
-      { name: "Từ khóa khoa học chuẩn", desc: "Hệ thống từ khóa song ngữ cho thuật toán tìm kiếm", count: "1,240 từ khóa", icon: "label" },
+      { name: "Lĩnh vực nghiên cứu (OECD / FOS)", desc: "Phân loại chuyên ngành KH&CN Việt – Nga theo chuẩn OECD", icon: "category" },
+      { name: "Viện / Trường đối tác", desc: "Danh sách pháp nhân tổ chức nghiên cứu đã xác thực", icon: "domain" },
+      { name: "Từ khóa khoa học chuẩn", desc: "Hệ thống từ khóa song ngữ cho thuật toán tìm kiếm và đề xuất", icon: "label" },
     ],
   },
   en: {
@@ -30,10 +32,11 @@ const catalogCopy: Record<
     title: "System Standardized Catalogs",
     description: "Manage research classification tables, verified institutional directories, and bilateral data taxonomies.",
     backToAdmin: "← Back to Access Administration",
+    statusNote: "Standardized taxonomies are served directly from their authoritative domain services.",
     categories: [
-      { name: "Research Fields (OECD / FOS)", desc: "Vietnam–Russia S&T domain taxonomies", count: "12 main groups", icon: "category" },
-      { name: "Partner Institutions", desc: "Verified research universities and academies", count: "84 entities", icon: "domain" },
-      { name: "Standardized Keywords", desc: "Bilingual controlled vocabulary for discovery", count: "1,240 keywords", icon: "label" },
+      { name: "Research Fields (OECD / FOS)", desc: "Vietnam–Russia S&T domain taxonomies under OECD standard", icon: "category" },
+      { name: "Partner Institutions", desc: "Verified research universities and academies", icon: "domain" },
+      { name: "Standardized Keywords", desc: "Bilingual controlled vocabulary for search and recommendation", icon: "label" },
     ],
   },
   ru: {
@@ -41,10 +44,11 @@ const catalogCopy: Record<
     title: "Стандартизированные каталоги системы",
     description: "Управление классификаторами научных направлений, реестрами организаций и двусторонней терминологией.",
     backToAdmin: "← Назад к администрированию",
+    statusNote: "Нормативные справочники предоставляются напрямую соответствующими доменными сервисами.",
     categories: [
-      { name: "Научные направления (OECD / FOS)", desc: "Классификатор областей науки и технологий РФ — СРВ", count: "12 групп", icon: "category" },
-      { name: "Партнёрские организации", desc: "Верифицированные университеты и институты РАН/VAST", count: "84 организации", icon: "domain" },
-      { name: "Нормативные ключевые слова", desc: "Двуязычный тезаурус для поисковых механизмов", count: "1,240 терминов", icon: "label" },
+      { name: "Научные направления (OECD / FOS)", desc: "Классификатор областей науки и технологий РФ — СРВ по стандартам OECD", icon: "category" },
+      { name: "Партнёрские организации", desc: "Верифицированные университеты и институты РАН/VAST", icon: "domain" },
+      { name: "Нормативные ключевые слова", desc: "Двуязычный тезаурус для поисковых механизмов", icon: "label" },
     ],
   },
 };
@@ -76,6 +80,10 @@ export default function AdminCatalogsPage() {
         </Link>
       </div>
 
+      <div className="mb-6 rounded-xl border border-blue-200 bg-blue-50/50 p-4 text-xs font-medium text-blue-800 dark:border-blue-900/30 dark:bg-blue-950/20 dark:text-blue-300">
+        {t.statusNote}
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {t.categories.map((cat) => (
           <div
@@ -85,9 +93,6 @@ export default function AdminCatalogsPage() {
             <span className="material-symbols-outlined text-3xl text-blue-600 dark:text-blue-400">{cat.icon}</span>
             <strong className="mt-3 block text-base font-bold text-text-primary">{cat.name}</strong>
             <p className="mt-1 text-xs leading-5 text-text-secondary">{cat.desc}</p>
-            <span className="mt-4 inline-block rounded-lg bg-[var(--surface-secondary)] px-2.5 py-1 text-xs font-bold text-text-secondary">
-              {cat.count}
-            </span>
           </div>
         ))}
       </div>

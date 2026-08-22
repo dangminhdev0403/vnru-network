@@ -10,7 +10,7 @@ import {
 
 export default auth(async function proxy(request) {
   const legacyRoutes: Record<string, string> = {
-    "/admin/iam": "/workspace/iam/admin",
+    "/admin/iam": "/admin/access",
     "/security": "/workspace/iam/security",
   };
   const canonicalPath = legacyRoutes[request.nextUrl.pathname];

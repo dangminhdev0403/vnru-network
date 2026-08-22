@@ -20,7 +20,7 @@ const dashboardCopy: Record<
     eyebrow: string;
     title: string;
     subtitle: string;
-    exploreM02: string;
+    exploreKnowledge: string;
     heroHeading: string;
     openIam: string;
     openKnowledge: string;
@@ -39,8 +39,8 @@ const dashboardCopy: Record<
     eyebrow: "Không gian làm việc thời gian thực · Dữ liệu công khai",
     title: "Bảng điều khiển Không gian làm việc Nga – Việt",
     subtitle:
-      "Danh tính & ngữ cảnh từ Module 01. Tri thức & chuyên gia công khai từ Module 02.",
-    exploreM02: "Khám phá Kho Tri thức →",
+      "Danh tính & ngữ cảnh từ IAM. Tri thức & chuyên gia công khai từ Kho Tri thức.",
+    exploreKnowledge: "Khám phá Kho Tri thức →",
     heroHeading: "Danh tính rõ ràng. Tri thức liên kết. Hợp tác có lộ trình.",
     openIam: "Mở IAM Workspace",
     openKnowledge: "Mở Kho Tri thức",
@@ -59,8 +59,8 @@ const dashboardCopy: Record<
     eyebrow: "Runtime Workspace · Verified Public Discovery",
     title: "Russia–Vietnam Workspace Dashboard",
     subtitle:
-      "Identity & active context from Module 01. Public research & experts from Module 02.",
-    exploreM02: "Explore Knowledge →",
+      "Identity & active context from IAM. Public research & experts from Knowledge Repository.",
+    exploreKnowledge: "Explore Knowledge →",
     heroHeading:
       "Verified Identity. Connected Intelligence. Actionable Cooperation.",
     openIam: "Open IAM Workspace",
@@ -80,8 +80,8 @@ const dashboardCopy: Record<
     eyebrow: "Рабочее пространство · Открытая база данных",
     title: "Панель управления РФ — СРВ",
     subtitle:
-      "Идентификация и контекст из Модуля 01. Публикации и эксперты из Модуля 02.",
-    exploreM02: "Обзор базы знаний →",
+      "Идентификация и контекст из IAM. Публикации и эксперты из базы знаний.",
+    exploreKnowledge: "Обзор базы знаний →",
     heroHeading:
       "Проверенная идентичность. Связанные знания. Дорожная карта сотрудничества.",
     openIam: "Открыть IAM",
@@ -122,7 +122,7 @@ export default function DashboardView({ publications, experts }: Props) {
           href="/workspace/knowledge"
           className="rounded-2xl bg-blue-600 px-4 py-3 text-sm font-black text-white hover:bg-blue-700 transition shadow-md"
         >
-          {t.exploreM02}
+          {t.exploreKnowledge}
         </Link>
       </div>
 
@@ -246,7 +246,7 @@ export default function DashboardView({ publications, experts }: Props) {
       {/* Bottom Governance Link Cards */}
       <div className="mt-6 flex flex-wrap gap-4">
         <Link
-          href="/workspace/iam/admin"
+          href="/admin/access"
           className="rounded-2xl border border-card-border bg-card-background p-4 text-sm font-black text-text-primary hover:bg-slate-100 dark:hover:bg-slate-800 transition shadow-xs"
         >
           {t.accessAdmin}

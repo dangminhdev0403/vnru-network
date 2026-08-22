@@ -1,5 +1,5 @@
-import IamClientPage from "@/app/(workspace)/workspace/iam/admin/IamClientPage";
+import UserAdministration from "@/features/admin/access/components/UserAdministration";
 
 export default function AdminAccessUsersPage() {
-  return <IamClientPage initialView="overview" />;
+  return <UserAdministration />;
 }

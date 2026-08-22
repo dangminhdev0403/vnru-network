@@ -12,10 +12,17 @@ export function sanitizeReturnTo(value: string | null | undefined): string {
 
 export function resolveLandingPath(capabilities: string[] = []): string {
   if (capabilities.includes("iam.roles.manage") || capabilities.includes("iam.users.manage")) {
-    return "/workspace/iam/admin";
+    return "/admin/access";
   }
   if (capabilities.includes("knowledge.workspace.view")) {
     return "/workspace/knowledge";
+  }
+  if (
+    capabilities.some((c) =>
+      c.startsWith("collab.") || c.startsWith("reviews.") || c.startsWith("projects.")
+    )
+  ) {
+    return "/workspace/collaboration";
   }
   return "/workspace";
 }

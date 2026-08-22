@@ -38,11 +38,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body: unknown = await request.json();
+    const headers = backendHeaders(request);
+    headers.set("content-type", "application/json");
+
     const backendRes = await fetch(
       collabServiceUrl("api/v1/collab/opportunities"),
       {
         method: "POST",
-        headers: { ...backendHeaders(request), "content-type": "application/json" },
+        headers,
         body: JSON.stringify(body),
       },
     );

@@ -49,7 +49,7 @@ const knowledgeCopy: Record<
   }
 > = {
   vi: {
-    kicker: "Module 02 · Kho Tri thức & Danh bạ Chuyên gia",
+    kicker: "Kho Tri thức & Danh bạ Chuyên gia Song phương",
     title: "Kho Tri thức & Danh bạ Chuyên gia",
     subtitle:
       "Dữ liệu công khai từ knowledge-service và organization-service. Auth-service duy trì quyền hạn phiên.",
@@ -81,7 +81,7 @@ const knowledgeCopy: Record<
       c === "VN" ? "Việt Nam" : c === "RU" ? "Liên bang Nga" : c || "N/A",
   },
   en: {
-    kicker: "Module 02 · Knowledge Repository & Expert Directory",
+    kicker: "Bilateral Knowledge Repository & Expert Directory",
     title: "Knowledge Repository & Expert Directory",
     subtitle:
       "Verified public research from knowledge-service and organization-service. Auth-service manages sessions.",
@@ -113,7 +113,7 @@ const knowledgeCopy: Record<
       c === "VN" ? "Vietnam" : c === "RU" ? "Russian Federation" : c || "N/A",
   },
   ru: {
-    kicker: "Модуль 02 · База знаний и Каталог экспертов",
+    kicker: "База знаний и Каталог экспертов РФ — СРВ",
     title: "База знаний и Каталог экспертов",
     subtitle:
       "Открытые данные из knowledge-service и organization-service. Auth-service управляет сессиями.",

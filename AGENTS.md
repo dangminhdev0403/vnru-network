@@ -68,6 +68,13 @@ UI is not considered verified merely because tests/build pass. For web UI work, 
 
 - After modifying, updating, or creating any UI component, the Agent is required to manually run `npx impeccable detect` and automatically resolve all anti-patterns (font scale, contrast, explicit button types, reduced motion) before completing the task.
 
+## Local test accounts
+
+- `secrets/account.json` is the ignored, local source of truth for test login accounts. Read it at test time; each entry's `role` identifies the corresponding test persona. Never copy usernames/passwords into source, docs, plans, prompts, logs, screenshots, commits, or final reports.
+- Select an account by exact `environment` and `role`; use its `loginUrl` and `realm`. Nested entries inherit the surrounding environment/login context. If the requested role is absent, report it instead of reusing a broader role or inventing credentials.
+- Missing login identity: create/provision it in the configured Keycloak realm; Keycloak owns credentials. Missing application role/context: assign it through the existing IAM Administration surface/API (`/workspace/iam/admin`, `POST /api/v1/admin/role-assignments`) using an authorized administrator. Never grant `SUPER_ADMIN` as a substitute; the API intentionally forbids assigning it.
+- Keep `secrets/account.json` ignored and local. Do not edit, delete, rotate, or expose existing accounts without explicit approval.
+
 ## Navigation
 
 When `graphify-out/graph.json` exists: Graphify query/impact first, scoped Repomix second, exact source last. Otherwise use focused symbol/path search; never broad-scan by default.

@@ -77,7 +77,7 @@ const iamAdminCopy: Record<
     accessDeniedTitle: "Không có quyền truy cập",
     accessDeniedDesc:
       "Backend từ chối quyền quản trị IAM trong ngữ cảnh hiện tại.",
-    backToModule: "Về Module 01",
+    backToModule: "Về Quản trị IAM",
     views: [
       { id: "overview", label: "Quản lý người dùng", icon: "group" },
       { id: "roles", label: "Vai trò & quyền", icon: "admin_panel_settings" },
@@ -139,7 +139,7 @@ const iamAdminCopy: Record<
     accessDeniedTitle: "Access Denied",
     accessDeniedDesc:
       "Backend rejected administrative permissions in the current context.",
-    backToModule: "Back to IAM Workspace",
+    backToModule: "Back to IAM Governance",
     views: [
       { id: "overview", label: "User Management", icon: "group" },
       {
@@ -206,7 +206,7 @@ const iamAdminCopy: Record<
     accessDeniedTitle: "Доступ запрещен",
     accessDeniedDesc:
       "Сервер отклонил административные права в текущем контексте.",
-    backToModule: "В Модуль 01",
+    backToModule: "Назад к управлению IAM",
     views: [
       { id: "overview", label: "Управление пользователями", icon: "group" },
       { id: "roles", label: "Роли и права", icon: "admin_panel_settings" },

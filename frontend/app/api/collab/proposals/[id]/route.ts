@@ -4,14 +4,14 @@ import {
   backendHeaders,
 } from "@/features/auth/server";
 
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   try {
-    const url = new URL(request.url);
-    const limit = url.searchParams.get("limit") || "20";
-    const offset = url.searchParams.get("offset") || "0";
-
+    const { id } = await params;
     const backendRes = await fetch(
-      collabServiceUrl(`api/v1/collab/decisions?limit=${encodeURIComponent(limit)}&offset=${encodeURIComponent(offset)}`),
+      collabServiceUrl(`api/v1/collab/proposals/${encodeURIComponent(id)}`),
       {
         cache: "no-store",
         headers: backendHeaders(request),
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
 
     if (!backendRes.ok) {
       return NextResponse.json(
-        { error: "Failed to fetch collaboration decisions" },
+        { error: "Proposal not found" },
         { status: backendRes.status },
       );
     }
@@ -35,14 +35,21 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   try {
+    const { id } = await params;
     const body: unknown = await request.json();
+    const headers = backendHeaders(request);
+    headers.set("content-type", "application/json");
+
     const backendRes = await fetch(
-      collabServiceUrl("api/v1/collab/decisions"),
+      collabServiceUrl(`api/v1/collab/proposals/${encodeURIComponent(id)}`),
       {
-        method: "POST",
-        headers: { ...backendHeaders(request), "content-type": "application/json" },
+        method: "PUT",
+        headers,
         body: JSON.stringify(body),
       },
     );

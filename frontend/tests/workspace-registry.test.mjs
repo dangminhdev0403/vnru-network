@@ -47,9 +47,9 @@ test("canonical admin routes exist and are protected", async () => {
   const proxy = await readFile(new URL("../proxy.ts", import.meta.url), "utf8");
 
   assert.match(adminAccess, /RolePermissionsPage/);
-  assert.match(adminUsers, /IamClientPage/);
+  assert.match(adminUsers, /UserAdministration|IamClientPage/);
   assert.match(adminRoles, /RolePermissionsPage/);
-  assert.match(adminAudit, /SecurityClientPage/);
+  assert.match(adminAudit, /Nhật ký Kiểm toán|System Audit Logs|AdminAuditPage/);
   assert.match(adminCatalogs, /Danh mục Chuẩn hóa Hệ thống|System Standardized Catalogs/);
   assert.match(proxy, /"\/admin\/:path\*"/);
 });

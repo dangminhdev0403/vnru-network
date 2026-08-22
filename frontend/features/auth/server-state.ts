@@ -8,7 +8,14 @@ import {
 } from "@dangminhdev04032005/query-resource";
 import { httpClient } from "@/lib/httpClient";
 
-export type CurrentUser = Record<string, unknown>;
+export type CurrentUser = {
+  id?: string;
+  email?: string;
+  fullName?: string;
+  roles?: string[];
+  capabilities?: string[];
+  [key: string]: unknown;
+};
 
 async function json<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await httpClient(path, init);

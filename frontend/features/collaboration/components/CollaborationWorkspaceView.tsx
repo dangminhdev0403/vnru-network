@@ -2,9 +2,10 @@
 
 import { useLocale, type Locale } from "@/app/HomeMotion";
 import { useCurrentUser } from "@/features/auth/server-state";
-import Link from "next/link";
 import React, { useState } from "react";
-import type { ResearchOpportunity, CollaborationProposal } from "../types";
+import { useOpportunities } from "../hooks";
+import { showError, showToast } from "@/lib/alerts";
+import { CollabApiError } from "../repository";
 
 interface Copy {
   kicker: string;
@@ -21,7 +22,6 @@ interface Copy {
   noOpportunities: string;
   noProposals: string;
   statusLabels: Record<string, string>;
-  budgetCap: string;
   timeline: string;
   lead: string;
   counterpart: string;
@@ -29,6 +29,18 @@ interface Copy {
   pipelineTitle: string;
   pipelineDesc: string;
   phases: [string, string, string][];
+  modalCreateTitle: string;
+  modalCreateDesc: string;
+  fieldCode: string;
+  fieldTitle: string;
+  fieldDesc: string;
+  fieldOpenDate: string;
+  fieldCloseDate: string;
+  cancel: string;
+  submit: string;
+  creating: string;
+  loading: string;
+  retry: string;
 }
 
 const collabCopy: Record<Locale, Copy> = {
@@ -60,11 +72,10 @@ const collabCopy: Record<Locale, Copy> = {
       INELIGIBLE: "Không hợp lệ",
       IN_REVIEW: "Đang bình duyệt",
       REVIEWED: "Đã có kết quả phản biện",
-      ACCEPTED: "Quỹ phê duyệt tài trợ",
+      ACCEPTED: "Quỹ phê duyệt",
       REJECTED: "Không chấp thuận",
     },
-    budgetCap: "Ngân sách tối đa",
-    timeline: "Thời hạn nộp",
+    timeline: "Thời hạn nhận hồ sơ",
     lead: "Chủ nhiệm VN",
     counterpart: "Chủ nhiệm Nga",
     endorsements: "Xác nhận tổ chức",
@@ -78,6 +89,18 @@ const collabCopy: Record<Locale, Copy> = {
       ["05", "Bình duyệt Chuyên gia", "Chấm điểm độc lập, ẩn danh và ngăn chặn xung đột lợi ích."],
       ["06", "Quyết định & Dự án", "Quỹ ban hành quyết định và tự động khởi tạo dự án PMS."],
     ],
+    modalCreateTitle: "Tạo Cơ hội Cộng tác Nghiên cứu",
+    modalCreateDesc: "Nhập thông tin chương trình và thiết lập khung thời gian tiếp nhận hồ sơ.",
+    fieldCode: "Mã cơ hội (Code)",
+    fieldTitle: "Tiêu đề cơ hội",
+    fieldDesc: "Mô tả mục tiêu & định hướng nghiên cứu",
+    fieldOpenDate: "Ngày mở tiếp nhận",
+    fieldCloseDate: "Ngày đóng tiếp nhận",
+    cancel: "Hủy",
+    submit: "Tạo cơ hội",
+    creating: "Đang tạo…",
+    loading: "Đang tải dữ liệu cơ hội…",
+    retry: "Làm mới",
   },
   en: {
     kicker: "VN–RU S&T Collaboration",
@@ -110,7 +133,6 @@ const collabCopy: Record<Locale, Copy> = {
       ACCEPTED: "Foundation Approved",
       REJECTED: "Rejected",
     },
-    budgetCap: "Budget Cap",
     timeline: "Submission Timeline",
     lead: "VN Lead PI",
     counterpart: "RU Counterpart PI",
@@ -125,6 +147,18 @@ const collabCopy: Record<Locale, Copy> = {
       ["05", "Double-blind Review", "Independent scoring with strict COI enforcement."],
       ["06", "Decision & PMS Launch", "Foundation issues joint decision, automatically bootstrapping PMS."],
     ],
+    modalCreateTitle: "Create Research Opportunity",
+    modalCreateDesc: "Provide opportunity metadata and define submission timeline windows.",
+    fieldCode: "Opportunity Code",
+    fieldTitle: "Opportunity Title",
+    fieldDesc: "Research Objectives & Priorities",
+    fieldOpenDate: "Open Date",
+    fieldCloseDate: "Close Date",
+    cancel: "Cancel",
+    submit: "Create Opportunity",
+    creating: "Creating…",
+    loading: "Loading opportunities…",
+    retry: "Refresh",
   },
   ru: {
     kicker: "Научное сотрудничество РФ — СРВ",
@@ -157,7 +191,6 @@ const collabCopy: Record<Locale, Copy> = {
       ACCEPTED: "Одобрено Фондом",
       REJECTED: "Отклонено",
     },
-    budgetCap: "Лимит финансирования",
     timeline: "Сроки приёма",
     lead: "Руководитель (СРВ)",
     counterpart: "Руководитель (РФ)",
@@ -165,13 +198,25 @@ const collabCopy: Record<Locale, Copy> = {
     pipelineTitle: "Стандартизированный регламент двустороннего отбора",
     pipelineDesc: "Каждая заявка проходит 6 контрольных рубежей с чётким разграничением ответственности.",
     phases: [
-      ["01", "Конкурс сотрудничества", "Публикация приоритетных направлений и условий финансирования."],
+      ["01", "Конкурс сотрудничества", "Публикация приоритетных направлений и условий."],
       ["02", "Сопряжение партнёров", "Совместная подготовка и обоюдное подтверждение заявки."],
       ["03", "Подтверждение институтов", "Согласование участия руководящими организациями."],
       ["04", "Формальная проверка", "Контроль соответствия регламенту перед направлением экспертам."],
       ["05", "Двойное рецензирование", "Независимая анонимная оценка с контролем конфликта интересов."],
       ["06", "Решение и запуск", "Принятие совместного решения Фонда и автоматический запуск в PMS."],
     ],
+    modalCreateTitle: "Создать конкурс сотрудничества",
+    modalCreateDesc: "Укажите параметры конкурса и установите временные рамки приёма заявок.",
+    fieldCode: "Код конкурса",
+    fieldTitle: "Название конкурса",
+    fieldDesc: "Цели и направления исследований",
+    fieldOpenDate: "Дата начала приёма",
+    fieldCloseDate: "Дата окончания приёма",
+    cancel: "Отмена",
+    submit: "Создать",
+    creating: "Создание…",
+    loading: "Загрузка данных…",
+    retry: "Обновить",
   },
 };
 
@@ -180,12 +225,45 @@ export default function CollaborationWorkspaceView() {
   const t = collabCopy[locale] || collabCopy.vi;
   const currentUser = useCurrentUser();
   const [activeTab, setActiveTab] = useState<"opportunities" | "proposals" | "screening" | "decisions">("opportunities");
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const capabilities = currentUser.data?.capabilities ?? [];
+  const [formCode, setFormCode] = useState("");
+  const [formTitle, setFormTitle] = useState("");
+  const [formDesc, setFormDesc] = useState("");
+  const [formOpenDate, setFormOpenDate] = useState("");
+  const [formCloseDate, setFormCloseDate] = useState("");
+
+  const { opportunities, isLoading, isError, error, refetch, createOpportunity, isCreating } = useOpportunities();
+
+  const capabilities: string[] = (currentUser.data as { capabilities?: string[] })?.capabilities ?? [];
   const canCreateOpp = capabilities.includes("collab.opportunities.create");
   const canCreateProp = capabilities.includes("collab.proposals.create");
   const canScreen = capabilities.includes("collab.proposals.screen");
   const canDecide = capabilities.includes("collab.decisions.issue_foundation");
+
+  const handleCreateOpportunity = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formCode || !formTitle || !formDesc || !formOpenDate || !formCloseDate) return;
+
+    try {
+      await createOpportunity({
+        code: formCode.trim(),
+        title: formTitle.trim(),
+        description: formDesc.trim(),
+        openDate: new Date(formOpenDate).toISOString(),
+        closeDate: new Date(formCloseDate).toISOString(),
+      });
+      showToast({ title: t.submit, icon: "success" });
+      setIsCreateModalOpen(false);
+      setFormCode("");
+      setFormTitle("");
+      setFormDesc("");
+      setFormOpenDate("");
+      setFormCloseDate("");
+    } catch (err) {
+      showError(t.submit, err instanceof CollabApiError ? err.message : "Create failed");
+    }
+  };
 
   return (
     <div className="mx-auto max-w-[1580px] px-4 py-7 sm:px-6 lg:px-8 lg:py-8">
@@ -205,10 +283,19 @@ export default function CollaborationWorkspaceView() {
         </div>
 
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => refetch()}
+            className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2.5 text-sm font-semibold text-text-primary hover:bg-[var(--surface-secondary)] transition cursor-pointer"
+          >
+            <span className={`material-symbols-outlined text-base ${isLoading ? "animate-spin" : ""}`}>refresh</span>
+            <span>{t.retry}</span>
+          </button>
           {canCreateOpp && (
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-[14px] bg-[var(--accent-primary)] px-4 py-2.5 text-sm font-bold text-white transition hover:brightness-95"
+              onClick={() => setIsCreateModalOpen(true)}
+              className="inline-flex items-center gap-2 rounded-[14px] bg-blue-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700 shadow-sm cursor-pointer"
             >
               <span className="material-symbols-outlined text-lg">add_circle</span>
               <span>{t.createOpportunity}</span>
@@ -217,7 +304,7 @@ export default function CollaborationWorkspaceView() {
           {canCreateProp && (
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-[14px] border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-bold text-text-primary transition hover:bg-[var(--surface-secondary)]"
+              className="inline-flex items-center gap-2 rounded-[14px] border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-bold text-text-primary transition hover:bg-[var(--surface-secondary)] cursor-pointer"
             >
               <span className="material-symbols-outlined text-lg">edit_document</span>
               <span>{t.submitProposal}</span>
@@ -230,8 +317,8 @@ export default function CollaborationWorkspaceView() {
       <section className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-soft)] sm:p-8">
         <div className="pointer-events-none absolute right-8 top-8 size-24 opacity-[.035] [background:radial-gradient(circle,var(--accent-primary)_1.5px,transparent_1.5px)] [background-size:16px_16px]" />
         <div>
-          <span className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-primary)]">
-            Module 03 · Research Collaboration Lifecycle
+          <span className="text-xs font-bold uppercase tracking-[0.14em] text-blue-600 dark:text-blue-400">
+            Cộng tác Nghiên cứu Song phương · Research Collaboration Lifecycle
           </span>
           <h2 className="mt-2 text-2xl font-bold tracking-[-0.03em] text-text-primary">
             {t.pipelineTitle}
@@ -265,7 +352,7 @@ export default function CollaborationWorkspaceView() {
         <button
           type="button"
           onClick={() => setActiveTab("opportunities")}
-          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold transition ${
+          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold transition cursor-pointer ${
             activeTab === "opportunities"
               ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
               : "border-transparent text-text-secondary hover:text-text-primary"
@@ -278,7 +365,7 @@ export default function CollaborationWorkspaceView() {
         <button
           type="button"
           onClick={() => setActiveTab("proposals")}
-          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold transition ${
+          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold transition cursor-pointer ${
             activeTab === "proposals"
               ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
               : "border-transparent text-text-secondary hover:text-text-primary"
@@ -292,7 +379,7 @@ export default function CollaborationWorkspaceView() {
           <button
             type="button"
             onClick={() => setActiveTab("screening")}
-            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold transition ${
+            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold transition cursor-pointer ${
               activeTab === "screening"
                 ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
                 : "border-transparent text-text-secondary hover:text-text-primary"
@@ -307,7 +394,7 @@ export default function CollaborationWorkspaceView() {
           <button
             type="button"
             onClick={() => setActiveTab("decisions")}
-            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold transition ${
+            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold transition cursor-pointer ${
               activeTab === "decisions"
                 ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
                 : "border-transparent text-text-secondary hover:text-text-primary"
@@ -322,9 +409,56 @@ export default function CollaborationWorkspaceView() {
       {/* Tab Panels */}
       <div className="mt-6">
         {activeTab === "opportunities" && (
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center shadow-[var(--shadow-soft)]">
-            <span className="material-symbols-outlined text-4xl text-text-tertiary">campaign</span>
-            <p className="mt-3 text-sm font-semibold text-text-secondary">{t.noOpportunities}</p>
+          <div>
+            {isLoading ? (
+              <div className="p-8 text-center text-sm text-text-secondary">{t.loading}</div>
+            ) : isError ? (
+              <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-900/50 dark:bg-rose-950/20 dark:text-rose-300">
+                {error?.message || "Failed to load opportunities"}
+              </div>
+            ) : opportunities.length === 0 ? (
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center shadow-[var(--shadow-soft)]">
+                <span className="material-symbols-outlined text-4xl text-text-tertiary">campaign</span>
+                <p className="mt-3 text-sm font-semibold text-text-secondary">{t.noOpportunities}</p>
+              </div>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {opportunities.map((opp) => (
+                  <div
+                    key={opp.id}
+                    className="flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-soft)] transition hover:border-[var(--accent-primary)]"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-bold font-mono px-2 py-0.5 rounded bg-[var(--surface-secondary)] text-text-secondary">
+                          {opp.code}
+                        </span>
+                        <span
+                          className={`text-xs font-bold px-2.5 py-1 rounded-full ${
+                            opp.status === "PUBLISHED"
+                              ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300"
+                              : opp.status === "CLOSED"
+                              ? "bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-300"
+                              : "bg-blue-100 text-blue-800 dark:bg-blue-950/50 dark:text-blue-300"
+                          }`}
+                        >
+                          {t.statusLabels[opp.status] || opp.status}
+                        </span>
+                      </div>
+                      <h3 className="mt-3 text-lg font-bold text-text-primary">{opp.title}</h3>
+                      <p className="mt-2 text-xs leading-5 text-text-secondary line-clamp-3">{opp.description}</p>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t border-[var(--border)]">
+                      <span className="text-[11px] font-semibold text-text-secondary block">{t.timeline}</span>
+                      <span className="text-xs font-mono font-medium text-text-primary">
+                        {new Date(opp.openDate).toLocaleDateString()} — {new Date(opp.closeDate).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -345,10 +479,99 @@ export default function CollaborationWorkspaceView() {
         {activeTab === "decisions" && (
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center shadow-[var(--shadow-soft)]">
             <span className="material-symbols-outlined text-4xl text-text-tertiary">gavel</span>
-            <p className="mt-3 text-sm font-semibold text-text-secondary">Chưa có quyết định tài trợ nào được ban hành.</p>
+            <p className="mt-3 text-sm font-semibold text-text-secondary">Chưa có quyết định nào được ban hành.</p>
           </div>
         )}
       </div>
+
+      {/* Create Opportunity Modal */}
+      {isCreateModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
+          <div className="w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl">
+            <h2 className="text-lg font-bold text-text-primary">{t.modalCreateTitle}</h2>
+            <p className="mt-1 text-xs text-text-secondary">{t.modalCreateDesc}</p>
+
+            <form onSubmit={handleCreateOpportunity} className="mt-4 space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-text-primary mb-1">{t.fieldCode}</label>
+                <input
+                  type="text"
+                  value={formCode}
+                  onChange={(e) => setFormCode(e.target.value)}
+                  placeholder="e.g. VNRU-2026-AI"
+                  required
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] p-2.5 text-sm text-text-primary outline-none focus:border-[var(--accent-primary)] font-mono"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-text-primary mb-1">{t.fieldTitle}</label>
+                <input
+                  type="text"
+                  value={formTitle}
+                  onChange={(e) => setFormTitle(e.target.value)}
+                  placeholder="e.g. Nghiên cứu ứng dụng Trí tuệ Nhân tạo trong Y học Biển"
+                  required
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] p-2.5 text-sm text-text-primary outline-none focus:border-[var(--accent-primary)]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-text-primary mb-1">{t.fieldDesc}</label>
+                <textarea
+                  value={formDesc}
+                  onChange={(e) => setFormDesc(e.target.value)}
+                  placeholder="Chi tiết về mục tiêu hợp tác nghiên cứu song phương..."
+                  rows={3}
+                  required
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] p-2.5 text-sm text-text-primary outline-none focus:border-[var(--accent-primary)]"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-text-primary mb-1">{t.fieldOpenDate}</label>
+                  <input
+                    type="date"
+                    value={formOpenDate}
+                    onChange={(e) => setFormOpenDate(e.target.value)}
+                    required
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] p-2.5 text-sm text-text-primary outline-none focus:border-[var(--accent-primary)]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-text-primary mb-1">{t.fieldCloseDate}</label>
+                  <input
+                    type="date"
+                    value={formCloseDate}
+                    onChange={(e) => setFormCloseDate(e.target.value)}
+                    required
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] p-2.5 text-sm text-text-primary outline-none focus:border-[var(--accent-primary)]"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsCreateModalOpen(false)}
+                  className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-text-secondary hover:bg-[var(--surface-secondary)] cursor-pointer"
+                >
+                  {t.cancel}
+                </button>
+                <button
+                  type="submit"
+                  disabled={isCreating}
+                  className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50 shadow-sm cursor-pointer"
+                >
+                  {isCreating ? t.creating : t.submit}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

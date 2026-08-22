@@ -19,8 +19,6 @@ export interface ResearchOpportunity {
   title: string;
   description: string;
   status: OpportunityStatus;
-  budgetCapAmount: number;
-  currency: string;
   openDate: string;
   closeDate: string;
   createdAt: string;
