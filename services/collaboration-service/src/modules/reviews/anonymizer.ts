@@ -42,21 +42,38 @@ export function buildSanitizedSnapshot(
   if (trimmedContent.startsWith('{') || trimmedContent.startsWith('[')) {
     try {
       const parsed = JSON.parse(trimmedContent);
-      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
-        parsedJson = true;
-        for (const [key, val] of Object.entries(parsed)) {
-          if (!ALLOWED_KEYS.has(key) || IDENTIFIER_KEYS.test(key)) continue;
-          if (typeof val === 'string') {
-            const sanitized = sanitizeText(val, forbidden);
-            if (sanitized) structuredFields[key] = sanitized;
-          } else if (Array.isArray(val)) {
-            const sanitizedArray = val
-              .filter((item): item is string => typeof item === 'string')
-              .map((item) => sanitizeText(item, forbidden))
-              .filter(Boolean);
-            if (sanitizedArray.length > 0) structuredFields[key] = sanitizedArray.slice(0, MAX_ARRAY);
+      parsedJson = true;
+      if (parsed && typeof parsed === 'object') {
+        if (!Array.isArray(parsed)) {
+          // JSON Object
+          for (const [key, val] of Object.entries(parsed)) {
+            if (!ALLOWED_KEYS.has(key) || IDENTIFIER_KEYS.test(key)) continue;
+            if (typeof val === 'string') {
+              const sanitized = sanitizeText(val, forbidden);
+              if (sanitized) structuredFields[key] = sanitized;
+            } else if (Array.isArray(val)) {
+              const sanitizedArray = val
+                .filter((item): item is string => typeof item === 'string')
+                .map((item) => sanitizeText(item, forbidden))
+                .filter(Boolean);
+              if (sanitizedArray.length > 0) structuredFields[key] = sanitizedArray.slice(0, MAX_ARRAY);
+            }
+          }
+        } else {
+          // JSON Array
+          for (const item of parsed) {
+            if (item && typeof item === 'object' && !Array.isArray(item)) {
+              for (const [key, val] of Object.entries(item)) {
+                if (!ALLOWED_KEYS.has(key) || IDENTIFIER_KEYS.test(key)) continue;
+                if (typeof val === 'string') {
+                  const sanitized = sanitizeText(val, forbidden);
+                  if (sanitized && !structuredFields[key]) structuredFields[key] = sanitized;
+                }
+              }
+            }
           }
         }
+
         if (typeof structuredFields.title === 'string' && structuredFields.title.trim()) {
           title = structuredFields.title;
         }
@@ -65,7 +82,7 @@ export function buildSanitizedSnapshot(
         }
       }
     } catch {
-      // Content started with { but failed to parse - treat as invalid JSON and never use as raw abstract
+      // Content started with { or [ but failed to parse - treat as invalid JSON and never use as raw abstract
       parsedJson = true;
     }
   }
@@ -98,12 +115,13 @@ export function validateProposalSnapshot(value: unknown): boolean {
     if (typeof field === 'string') {
       const trimmed = field.trim();
       if (trimmed.length === 0 || trimmed.length > MAX_STRING) return false;
-      if (trimmed.startsWith('{"') || trimmed.startsWith('[{')) return false;
+      if (trimmed.startsWith('{') || trimmed.startsWith('[')) return false;
       if (EMAIL_CHECK.test(trimmed) || UUID_CHECK.test(trimmed) || ORG_REF_CHECK.test(trimmed)) return false;
       return true;
     }
     return Array.isArray(field) && field.length <= MAX_ARRAY
       && field.every((item) => typeof item === 'string' && item.trim().length > 0 && item.length <= 255
+        && !item.trim().startsWith('{') && !item.trim().startsWith('[')
         && !EMAIL_CHECK.test(item) && !UUID_CHECK.test(item) && !ORG_REF_CHECK.test(item));
   });
 }

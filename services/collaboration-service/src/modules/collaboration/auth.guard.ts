@@ -49,11 +49,7 @@ export class AuthGuard implements CanActivate {
       if (isPublic) return true;
       throw new UnauthorizedException('Authentication required');
     }
-    const baseUrl = process.env.AUTH_SERVICE_URL;
-    if (!baseUrl) {
-      if (isPublic) return true;
-      throw new ForbiddenException('AUTH_SERVICE_URL not configured');
-    }
+    const baseUrl = process.env.AUTH_SERVICE_URL || 'http://127.0.0.1:8080';
 
     let response: Response;
     try {

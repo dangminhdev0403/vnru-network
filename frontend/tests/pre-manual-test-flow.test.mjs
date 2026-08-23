@@ -110,6 +110,22 @@ test("Point 2, 3, 4: Authoritative snapshot, hardened anonymizer, and duplicate 
   assert.doesNotMatch(rawJsonSnapshot.abstract, /\{/);
   assert.ok(validateProposalSnapshot(rawJsonSnapshot));
 
+  // Test JSON-array fallback: proposal with JSON array content must NEVER set abstract to raw JSON array
+  const rawJsonArraySnapshot = buildSanitizedSnapshot({
+    content: JSON.stringify([
+      { author: "Secret Person", email: "secret@example.com" },
+      { abstract: "Sanitized abstract from array of objects" },
+    ]),
+    opportunity: { title: "Bilateral Space Science", description: "Bilateral space exploration scope" },
+    participants: [{ userId: "user-8888", organizationRef: "ORG_ARRAY" }],
+  });
+
+  assert.equal(rawJsonArraySnapshot.title, "Bilateral Space Science");
+  assert.equal(rawJsonArraySnapshot.abstract, "Sanitized abstract from array of objects");
+  assert.doesNotMatch(rawJsonArraySnapshot.abstract, /Secret Person/);
+  assert.doesNotMatch(rawJsonArraySnapshot.abstract, /\[/);
+  assert.ok(validateProposalSnapshot(rawJsonArraySnapshot));
+
   // Schema-level uniqueness check
   const reviewSchema = await readFile(new URL("../../services/collaboration-service/prisma/reviews/schema.prisma", import.meta.url), "utf8");
   assert.match(reviewSchema, /@@unique\(\[proposalRef,\s*reviewerId\]\)/);
