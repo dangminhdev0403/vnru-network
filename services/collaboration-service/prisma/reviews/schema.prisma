@@ -43,6 +43,7 @@ model ReviewAssignment {
   conflict           ConflictDeclaration?
   reviewRecord       ReviewRecord?
 
+  @@unique([proposalRef, reviewerId])
   @@index([reviewerId])
   @@index([proposalRef])
   @@index([boardRef])

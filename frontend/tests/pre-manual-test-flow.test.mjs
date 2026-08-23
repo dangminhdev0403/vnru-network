@@ -91,6 +91,28 @@ test("Point 2, 3, 4: Authoritative snapshot, hardened anonymizer, and duplicate 
   assert.equal(snapshot.authorName, undefined);
   assert.equal(snapshot.contactEmail, undefined);
   assert.ok(validateProposalSnapshot(snapshot));
+
+  // Test raw JSON fallback: proposal without explicit abstract field must NEVER set abstract to raw JSON
+  const rawJsonSnapshot = buildSanitizedSnapshot({
+    content: JSON.stringify({
+      author: "Secret Person",
+      email: "secret@example.com",
+      someRandomField: "should be ignored",
+    }),
+    opportunity: { title: "Quantum Computing Grant", description: "Bilateral quantum research scope" },
+    participants: [{ userId: "user-9999", organizationRef: "ORG_SECRET" }],
+  });
+
+  assert.equal(rawJsonSnapshot.title, "Quantum Computing Grant");
+  assert.equal(rawJsonSnapshot.abstract, "Bilateral quantum research scope");
+  assert.doesNotMatch(rawJsonSnapshot.abstract, /Secret Person/);
+  assert.doesNotMatch(rawJsonSnapshot.abstract, /secret@example\.com/);
+  assert.doesNotMatch(rawJsonSnapshot.abstract, /\{/);
+  assert.ok(validateProposalSnapshot(rawJsonSnapshot));
+
+  // Schema-level uniqueness check
+  const reviewSchema = await readFile(new URL("../../services/collaboration-service/prisma/reviews/schema.prisma", import.meta.url), "utf8");
+  assert.match(reviewSchema, /@@unique\(\[proposalRef,\s*reviewerId\]\)/);
 });
 
 test("Point 5 & Issue E: Only fetch recommendation for allowed actors/states", async () => {

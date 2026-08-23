@@ -35,39 +35,46 @@ export class ReviewRepository {
     }
     if (!params.boardRef.trim()) throw new BadRequestException('boardRef is required');
 
-    return this.prisma.$transaction(async (tx) => {
-      const existing = await tx.reviewAssignment.findFirst({
-        where: {
-          proposalRef: params.proposalRef,
-          reviewerId: params.reviewerId,
-        },
+    try {
+      return await this.prisma.$transaction(async (tx) => {
+        const existing = await tx.reviewAssignment.findFirst({
+          where: {
+            proposalRef: params.proposalRef,
+            reviewerId: params.reviewerId,
+          },
+        });
+        if (existing) {
+          throw new BadRequestException('Reviewer is already assigned to this proposal');
+        }
+
+        const assignment = await tx.reviewAssignment.create({
+          data: {
+            proposalRef: params.proposalRef,
+            reviewerId: params.reviewerId,
+            boardRef: params.boardRef,
+            status: 'PENDING',
+          },
+        });
+
+        await tx.proposalSnapshot.create({
+          data: {
+            assignmentId: assignment.id,
+            proposalRef: params.proposalRef,
+            snapshot: params.snapshot,
+          },
+        });
+
+        return tx.reviewAssignment.findUnique({
+          where: { id: assignment.id },
+          include: { snapshot: true },
+        });
       });
-      if (existing) {
+    } catch (err: any) {
+      if (err?.code === 'P2002' || err?.message?.includes('Reviewer is already assigned')) {
         throw new BadRequestException('Reviewer is already assigned to this proposal');
       }
-
-      const assignment = await tx.reviewAssignment.create({
-        data: {
-          proposalRef: params.proposalRef,
-          reviewerId: params.reviewerId,
-          boardRef: params.boardRef,
-          status: 'PENDING',
-        },
-      });
-
-      await tx.proposalSnapshot.create({
-        data: {
-          assignmentId: assignment.id,
-          proposalRef: params.proposalRef,
-          snapshot: params.snapshot,
-        },
-      });
-
-      return tx.reviewAssignment.findUnique({
-        where: { id: assignment.id },
-        include: { snapshot: true },
-      });
-    });
+      throw err;
+    }
   }
 
   async findAssignments(filters: {
