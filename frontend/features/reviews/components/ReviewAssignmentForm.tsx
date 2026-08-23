@@ -7,9 +7,9 @@ import { confirmAction, showError, showSuccess } from "@/lib/alerts";
 import { useLocale, type Locale } from "@/app/HomeMotion";
 
 const copy: Record<Locale, { open: string; confirm: string; success: string; error: string; requestFailed: string; creating: string; create: string; fields: Record<string, string> }> = {
-  vi: { open: "Tạo phân công", confirm: "Xác nhận tạo phân công?", success: "Đã tạo phân công", error: "Không thể tạo phân công", requestFailed: "Yêu cầu thất bại", creating: "Đang tạo…", create: "Tạo phân công", fields: { proposalRef: "Mã đề xuất", reviewerId: "Mã người phản biện", boardRef: "Mã hội đồng", title: "Tiêu đề đề xuất", abstract: "Tóm tắt đề xuất" } },
-  en: { open: "Create assignment", confirm: "Create this assignment?", success: "Assignment created", error: "Failed to create assignment", requestFailed: "Request failed", creating: "Creating…", create: "Create assignment", fields: { proposalRef: "Proposal reference", reviewerId: "Reviewer ID", boardRef: "Board reference", title: "Proposal title", abstract: "Proposal abstract" } },
-  ru: { open: "Создать назначение", confirm: "Создать назначение?", success: "Назначение создано", error: "Не удалось создать назначение", requestFailed: "Запрос не выполнен", creating: "Создание…", create: "Создать назначение", fields: { proposalRef: "Код заявки", reviewerId: "Код рецензента", boardRef: "Код совета", title: "Название заявки", abstract: "Аннотация заявки" } },
+  vi: { open: "Tạo phân công", confirm: "Xác nhận tạo phân công?", success: "Đã tạo phân công", error: "Không thể tạo phân công", requestFailed: "Yêu cầu thất bại", creating: "Đang tạo…", create: "Tạo phân công", fields: { proposalRef: "Mã đề xuất", reviewerId: "Mã người phản biện", boardRef: "Mã hội đồng" } },
+  en: { open: "Create assignment", confirm: "Create this assignment?", success: "Assignment created", error: "Failed to create assignment", requestFailed: "Request failed", creating: "Creating…", create: "Create assignment", fields: { proposalRef: "Proposal reference", reviewerId: "Reviewer ID", boardRef: "Board reference" } },
+  ru: { open: "Создать назначение", confirm: "Создать назначение?", success: "Назначение создано", error: "Не удалось создать назначение", requestFailed: "Запрос не выполнен", creating: "Создание…", create: "Создать назначение", fields: { proposalRef: "Код заявки", reviewerId: "Код рецензента", boardRef: "Код совета" } },
 };
 
 const initial = {
@@ -36,7 +36,7 @@ export function ReviewAssignmentForm({ onCreated }: { onCreated: () => void | Pr
       event.preventDefault();
       if (!(await confirmAction({ title: t.confirm })).isConfirmed) return;
       try {
-        await createAssignment({ proposalRef: form.proposalRef.trim(), reviewerId: form.reviewerId.trim(), boardRef: form.boardRef.trim(), proposalSnapshot: undefined });
+        await createAssignment({ proposalRef: form.proposalRef.trim(), reviewerId: form.reviewerId.trim(), boardRef: form.boardRef.trim() });
         setForm(initial);
         setOpen(false);
         await onCreated();

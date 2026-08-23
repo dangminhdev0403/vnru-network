@@ -79,7 +79,13 @@ async function refreshAccessToken(
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [Keycloak],
+  providers: [
+    Keycloak({
+      clientId: process.env.AUTH_KEYCLOAK_ID,
+      clientSecret: process.env.AUTH_KEYCLOAK_SECRET,
+      issuer: process.env.AUTH_KEYCLOAK_ISSUER,
+    }),
+  ],
   pages: { signIn: "/login", error: "/login" },
   callbacks: {
     async jwt({ token, account }) {

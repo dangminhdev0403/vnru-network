@@ -26,7 +26,7 @@ test("Issue A: Opportunity draft persistence and manager query scoping", async (
   assert.match(view, /const allOpportunities = opportunities;/);
 });
 
-test("Issue B: Runtime UI uses active session/context without hardcoded test fixture UUIDs", async () => {
+test("Point 1 & Issue B: Runtime UI has no ORG_001/ORG_002 side inference or hardcoded test fixture UUIDs", async () => {
   const [view, form] = await Promise.all([
     read("features/collaboration/components/CollaborationWorkspaceView.tsx"),
     read("features/reviews/components/ReviewAssignmentForm.tsx"),
@@ -38,22 +38,34 @@ test("Issue B: Runtime UI uses active session/context without hardcoded test fix
   assert.doesNotMatch(view, /useState\("ORG_001"\)/);
   assert.doesNotMatch(view, /useState\("ORG_002"\)/);
 
+  // No ORG_001/ORG_002 side inference in openProposalModal
+  assert.doesNotMatch(view, /userContextId === "ORG_001"/);
+  assert.doesNotMatch(view, /userContextId === "ORG_002"/);
+
   // Review assignment form does not hardcode reviewer UUID or board
   assert.doesNotMatch(form, /reviewerId:\s*"7809a72b-8a8e-49b8-897b-aa663ee38005"/);
   assert.doesNotMatch(form, /boardRef:\s*"BOARD_001"/);
 });
 
-test("Issue C & D: Server-side snapshot creation and anonymization value hardening", async () => {
-  const [reviewService, reviewController] = await Promise.all([
+test("Point 2, 3, 4: Authoritative snapshot, hardened anonymizer, and duplicate reviewer assignment prevention", async () => {
+  const [reviewService, reviewController, reviewRepo] = await Promise.all([
     readFile(new URL("../../services/collaboration-service/src/modules/reviews/review.service.ts", import.meta.url), "utf8"),
     readFile(new URL("../../services/collaboration-service/src/modules/reviews/review.controller.ts", import.meta.url), "utf8"),
+    readFile(new URL("../../services/collaboration-service/src/modules/reviews/review.repository.ts", import.meta.url), "utf8"),
   ]);
 
-  // Controller only requires proposalRef, reviewerId, boardRef
-  assert.match(reviewController, /proposalRef,\s*reviewerId,\s*and boardRef are required/);
+  // Controller only accepts proposalRef, reviewerId, boardRef (no proposalSnapshot)
+  assert.doesNotMatch(reviewController, /proposalSnapshot/);
+  // Service has mandatory GrantRepository injection
+  assert.match(reviewService, /grantRepository:\s*GrantRepository/);
+  assert.doesNotMatch(reviewService, /grantRepository\?:/);
   // Service verifies ELIGIBLE state and builds authoritative snapshot
   assert.match(reviewService, /proposal\.state !== 'ELIGIBLE'/);
   assert.match(reviewService, /buildSanitizedSnapshot\(proposal\)/);
+  // Service and repository check duplicate reviewer assignment
+  assert.match(reviewService, /findAssignmentByProposalAndReviewer/);
+  assert.match(reviewService, /Reviewer is already assigned to this proposal/);
+  assert.match(reviewRepo, /Reviewer is already assigned to this proposal/);
 
   // Test anonymizer logic directly
   const rawText = "Contact lead author pi.vietnam@example.com with UUID 7809a72b-8a8e-49b8-897b-aa663ee38001 at ORG_001.";
@@ -66,6 +78,8 @@ test("Issue C & D: Server-side snapshot creation and anonymization value hardeni
     content: JSON.stringify({
       title: "Marine Biotechnology Research",
       abstract: "Study conducted by Dr. Nguyen at ORG_001 with email nguyen@lab.vn",
+      authorName: "Dr. Nguyen", // Must be stripped
+      contactEmail: "nguyen@lab.vn", // Must be stripped
     }),
     opportunity: { title: "Joint AI Initiative" },
     participants: [{ userId: "user-1234", organizationRef: "ORG_001" }],
@@ -74,10 +88,12 @@ test("Issue C & D: Server-side snapshot creation and anonymization value hardeni
   assert.equal(snapshot.title, "Marine Biotechnology Research");
   assert.doesNotMatch(snapshot.abstract, /nguyen@lab\.vn/);
   assert.doesNotMatch(snapshot.abstract, /ORG_001/);
+  assert.equal(snapshot.authorName, undefined);
+  assert.equal(snapshot.contactEmail, undefined);
   assert.ok(validateProposalSnapshot(snapshot));
 });
 
-test("Issue E: Decision Maker Decision Review Summary without reviewer identity leakage", async () => {
+test("Point 5 & Issue E: Only fetch recommendation for allowed actors/states", async () => {
   const [reviewService, proposalDetail, reviewRepo] = await Promise.all([
     readFile(new URL("../../services/collaboration-service/src/modules/reviews/review.service.ts", import.meta.url), "utf8"),
     read("features/collaboration/components/ProposalDetail.tsx"),
@@ -90,6 +106,11 @@ test("Issue E: Decision Maker Decision Review Summary without reviewer identity 
 
   // Repository exposes getRecommendation
   assert.match(reviewRepo, /getRecommendation\(proposalRef:/);
+
+  // ProposalDetail conditionally enables recommendation hook based on role and post-screening state
+  assert.match(proposalDetail, /canViewRecommendation/);
+  assert.match(proposalDetail, /isPostScreeningState/);
+  assert.match(proposalDetail, /useEvaluationRecommendation\(\s*id,\s*Boolean\(proposal && isPostScreeningState && canViewRecommendation\)/);
 
   // ProposalDetail renders Decision Review Summary and gates decision on review recommendation
   assert.match(proposalDetail, /reviewSummaryTitle/);

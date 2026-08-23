@@ -1,5 +1,5 @@
 const ALLOWED_KEYS = new Set(['title', 'abstract', 'objectives', 'methodology', 'expectedOutcomes', 'keywords']);
-const IDENTIFIER_KEYS = /(author|person|user|email|organization|institution|country|name|phone|address|affiliation)/i;
+const IDENTIFIER_KEYS = /(author|person|user|email|organization|institution|country|name|phone|address|affiliation|contact|lead|participant)/i;
 const MAX_STRING = 10_000;
 const MAX_ARRAY = 50;
 
@@ -25,23 +25,42 @@ export function buildSanitizedSnapshot(
     opportunity?: { title?: string; description?: string | null };
     participants?: Array<{ userId: string; organizationRef: string }>;
   },
-): Record<string, string> {
+): Record<string, string | string[]> {
   const forbidden = (proposal.participants || []).flatMap((p) => [p.userId, p.organizationRef]).filter(Boolean);
 
   let title = proposal.opportunity?.title || 'Joint Research Proposal';
   let abstract = proposal.content || '';
+  const structuredFields: Record<string, string | string[]> = {};
 
   try {
     const parsed = JSON.parse(proposal.content);
     if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
-      if (typeof parsed.title === 'string' && parsed.title.trim()) title = parsed.title;
-      if (typeof parsed.abstract === 'string' && parsed.abstract.trim()) abstract = parsed.abstract;
+      for (const [key, val] of Object.entries(parsed)) {
+        if (!ALLOWED_KEYS.has(key) || IDENTIFIER_KEYS.test(key)) continue;
+        if (typeof val === 'string') {
+          const sanitized = sanitizeText(val, forbidden);
+          if (sanitized) structuredFields[key] = sanitized;
+        } else if (Array.isArray(val)) {
+          const sanitizedArray = val
+            .filter((item): item is string => typeof item === 'string')
+            .map((item) => sanitizeText(item, forbidden))
+            .filter(Boolean);
+          if (sanitizedArray.length > 0) structuredFields[key] = sanitizedArray.slice(0, MAX_ARRAY);
+        }
+      }
+      if (typeof structuredFields.title === 'string' && structuredFields.title.trim()) {
+        title = structuredFields.title;
+      }
+      if (typeof structuredFields.abstract === 'string' && structuredFields.abstract.trim()) {
+        abstract = structuredFields.abstract;
+      }
     }
   } catch {
     // plain string content
   }
 
-  const sanitizedSnapshot: Record<string, string> = {
+  const sanitizedSnapshot: Record<string, string | string[]> = {
+    ...structuredFields,
     title: sanitizeText(title, forbidden) || 'Joint Research Proposal',
     abstract: sanitizeText(abstract, forbidden) || 'Research plan content',
   };

@@ -26,7 +26,6 @@ export interface CreateReviewAssignmentInput {
   proposalRef: string;
   reviewerId: string;
   boardRef: string;
-  proposalSnapshot?: { title?: string; abstract?: string };
 }
 
 export interface EvaluationRecommendation {

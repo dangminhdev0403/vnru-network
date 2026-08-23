@@ -77,7 +77,8 @@ test("Review manager can create an anonymized assignment from the workspace", as
   ]);
 
   assert.match(repository, /createAssignment/);
-  assert.match(form, /proposalSnapshot/);
+  assert.match(form, /proposalRef/);
+  assert.doesNotMatch(form, /proposalSnapshot/);
   assert.match(resource, /createAssignment:\s*defineMutation/);
   assert.match(hooks, /useCreateReviewAssignment/);
   assert.match(list, /ReviewAssignmentForm/);

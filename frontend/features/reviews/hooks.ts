@@ -20,7 +20,7 @@ export function useReviewAssignment(id: string) {
   return { assignment: query.data ?? null, isLoading: query.isLoading, isError: query.isError, error: query.error, refetch: query.refetch, declareConflict: conflict.mutateAsync, saveEvaluation: save.mutateAsync, submitEvaluation: submit.mutateAsync, isPending: conflict.isPending || save.isPending || submit.isPending };
 }
 
-export function useEvaluationRecommendation(proposalRef: string) {
-  const query = useQuery({ ...reviews.queries.recommendation.options(proposalRef), enabled: Boolean(proposalRef) });
+export function useEvaluationRecommendation(proposalRef: string, enabled = true) {
+  const query = useQuery({ ...reviews.queries.recommendation.options(proposalRef), enabled: Boolean(proposalRef) && enabled });
   return { recommendation: query.data ?? null, isLoading: query.isLoading, isError: query.isError, error: query.error, refetch: query.refetch };
 }

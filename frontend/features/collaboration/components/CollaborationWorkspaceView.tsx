@@ -339,30 +339,10 @@ export default function CollaborationWorkspaceView() {
   const openProposalModal = (opp: ResearchOpportunity) => {
     setSelectedOppForProposal(opp);
     setProposalContent("");
-    const userContextId = userData?.activeContext?.contextId || "";
-    if (currentUserId) {
-      if (userContextId === "ORG_001") {
-        setVnUserId(currentUserId);
-        setVnOrgRef(userContextId);
-        setRuUserId("");
-        setRuOrgRef("");
-      } else if (userContextId === "ORG_002") {
-        setRuUserId(currentUserId);
-        setRuOrgRef(userContextId);
-        setVnUserId("");
-        setVnOrgRef("");
-      } else {
-        setVnUserId(currentUserId);
-        setVnOrgRef(userContextId);
-        setRuUserId("");
-        setRuOrgRef("");
-      }
-    } else {
-      setVnUserId("");
-      setVnOrgRef("");
-      setRuUserId("");
-      setRuOrgRef("");
-    }
+    setVnUserId(currentUserId || "");
+    setVnOrgRef(userData?.activeContext?.contextId || "");
+    setRuUserId("");
+    setRuOrgRef("");
   };
 
   const handleCreateProposal = async (e: React.FormEvent) => {

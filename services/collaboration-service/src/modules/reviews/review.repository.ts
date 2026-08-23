@@ -12,6 +12,18 @@ export function isValidUuid(id: string): boolean {
 export class ReviewRepository {
   constructor(@Inject(REVIEW_PRISMA) private readonly prisma: PrismaClient) {}
 
+  async findAssignmentByProposalAndReviewer(proposalRef: string, reviewerId: string) {
+    if (!isValidUuid(reviewerId)) {
+      throw new BadRequestException('reviewerId must be a valid UUID');
+    }
+    return this.prisma.reviewAssignment.findFirst({
+      where: {
+        proposalRef,
+        reviewerId,
+      },
+    });
+  }
+
   async createAssignment(params: {
     proposalRef: string;
     reviewerId: string;
@@ -24,6 +36,16 @@ export class ReviewRepository {
     if (!params.boardRef.trim()) throw new BadRequestException('boardRef is required');
 
     return this.prisma.$transaction(async (tx) => {
+      const existing = await tx.reviewAssignment.findFirst({
+        where: {
+          proposalRef: params.proposalRef,
+          reviewerId: params.reviewerId,
+        },
+      });
+      if (existing) {
+        throw new BadRequestException('Reviewer is already assigned to this proposal');
+      }
+
       const assignment = await tx.reviewAssignment.create({
         data: {
           proposalRef: params.proposalRef,

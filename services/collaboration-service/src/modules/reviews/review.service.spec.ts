@@ -52,17 +52,23 @@ describe('Review Service Logic & Boundary Checks', () => {
     authenticationLevel: 'PASSWORD',
   };
 
+  let mockGrantRepo: any;
+
   beforeEach(() => {
     mockRepo = {
       createAssignment: jest.fn(),
       findAssignments: jest.fn(),
       findAssignmentById: jest.fn(),
+      findAssignmentByProposalAndReviewer: jest.fn().mockResolvedValue(null),
       saveConflictDeclaration: jest.fn(),
       saveEvaluation: jest.fn(),
       submitEvaluation: jest.fn(),
       getRecommendation: jest.fn(),
     };
-    service = new ReviewService(mockRepo);
+    mockGrantRepo = {
+      findProposalById: jest.fn(),
+    };
+    service = new ReviewService(mockRepo, mockGrantRepo);
   });
 
   describe('1. Proposal Snapshot Anonymization Validation', () => {
@@ -97,15 +103,64 @@ describe('Review Service Logic & Boundary Checks', () => {
       })).toBe(true);
     });
 
-    it('should throw BadRequestException when creating assignment with invalid snapshot', async () => {
+    it('should throw NotFoundException when proposal is not found', async () => {
+      mockGrantRepo.findProposalById.mockResolvedValue(null);
       const body = {
         proposalRef: 'prop-123',
         reviewerId: reviewerUserBoardA.userId,
         boardRef: reviewerUserBoardA.activeContext!.contextId,
-        proposalSnapshot: {
-          title: 'Quantum Project',
-          authorName: 'Dr. Nguyen', // Invalid key
-        },
+      };
+
+      await expect(service.createAssignment(body, reviewBoardAdminUser)).rejects.toThrow(NotFoundException);
+      expect(mockRepo.createAssignment).not.toHaveBeenCalled();
+    });
+
+    it('should throw BadRequestException when proposal is not ELIGIBLE', async () => {
+      mockGrantRepo.findProposalById.mockResolvedValue({
+        id: 'prop-123',
+        state: 'SUBMITTED',
+        participants: [],
+        content: 'Valid content',
+      });
+      const body = {
+        proposalRef: 'prop-123',
+        reviewerId: reviewerUserBoardA.userId,
+        boardRef: reviewerUserBoardA.activeContext!.contextId,
+      };
+
+      await expect(service.createAssignment(body, reviewBoardAdminUser)).rejects.toThrow(BadRequestException);
+      expect(mockRepo.createAssignment).not.toHaveBeenCalled();
+    });
+
+    it('should throw BadRequestException when reviewer is a participant of the proposal', async () => {
+      mockGrantRepo.findProposalById.mockResolvedValue({
+        id: 'prop-123',
+        state: 'ELIGIBLE',
+        participants: [{ userId: reviewerUserBoardA.userId, organizationRef: 'ORG_001' }],
+        content: 'Valid content',
+      });
+      const body = {
+        proposalRef: 'prop-123',
+        reviewerId: reviewerUserBoardA.userId,
+        boardRef: reviewerUserBoardA.activeContext!.contextId,
+      };
+
+      await expect(service.createAssignment(body, reviewBoardAdminUser)).rejects.toThrow(BadRequestException);
+      expect(mockRepo.createAssignment).not.toHaveBeenCalled();
+    });
+
+    it('should throw BadRequestException when reviewer is already assigned to the proposal', async () => {
+      mockGrantRepo.findProposalById.mockResolvedValue({
+        id: 'prop-123',
+        state: 'ELIGIBLE',
+        participants: [],
+        content: 'Valid content',
+      });
+      mockRepo.findAssignmentByProposalAndReviewer.mockResolvedValue({ id: 'assign-existing' });
+      const body = {
+        proposalRef: 'prop-123',
+        reviewerId: reviewerUserBoardA.userId,
+        boardRef: reviewerUserBoardA.activeContext!.contextId,
       };
 
       await expect(service.createAssignment(body, reviewBoardAdminUser)).rejects.toThrow(BadRequestException);
@@ -119,7 +174,6 @@ describe('Review Service Logic & Boundary Checks', () => {
         proposalRef: 'prop-123',
         reviewerId: reviewerUserBoardA.userId,
         boardRef: reviewerUserBoardA.activeContext!.contextId,
-        proposalSnapshot: { title: 'Valid snapshot' },
       };
 
       await expect(service.createAssignment(body, reviewerUserBoardA)).rejects.toThrow(ForbiddenException);

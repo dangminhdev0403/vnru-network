@@ -223,7 +223,6 @@ export function ProposalDetail({ id }: { id: string }) {
   const { locale } = useLocale();
   const t = proposalDetailCopy[locale] || proposalDetailCopy.vi;
   const { proposal, isLoading, isError, error, refetch } = useProposal(id);
-  const { recommendation, isLoading: isRecLoading } = useEvaluationRecommendation(id);
   const actions = useProposalMutations();
   const { data: user } = useCurrentUser();
 
@@ -231,6 +230,20 @@ export function ProposalDetail({ id }: { id: string }) {
   const [reason, setReason] = useState("");
 
   const caps = (user as { capabilities?: string[] })?.capabilities ?? [];
+  const canViewRecommendation =
+    caps.includes("collab.decisions.issue_foundation") ||
+    caps.includes("reviews.recommendations.view") ||
+    caps.includes("reviews.assignments.manage");
+  const isPostScreeningState =
+    proposal?.state === "ELIGIBLE" ||
+    proposal?.state === "APPROVED" ||
+    proposal?.state === "REJECTED" ||
+    proposal?.state === "REVISION_REQUESTED";
+
+  const { recommendation, isLoading: isRecLoading } = useEvaluationRecommendation(
+    id,
+    Boolean(proposal && isPostScreeningState && canViewRecommendation),
+  );
 
   const run = async (action: () => Promise<unknown>) => {
     try {

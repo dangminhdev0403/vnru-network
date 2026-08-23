@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, ForbiddenException, NotFoundException, Optional, Inject, forwardRef } from '@nestjs/common';
+import { Injectable, BadRequestException, ForbiddenException, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { ReviewRepository } from './review.repository';
 import { validateProposalSnapshot, buildSanitizedSnapshot } from './anonymizer';
 import type { AuthenticatedUser } from './auth.guard';
@@ -8,8 +8,8 @@ import { GrantRepository } from '../collaboration/grant.repository';
 export class ReviewService {
   constructor(
     private readonly repository: ReviewRepository,
-    @Optional() @Inject(forwardRef(() => GrantRepository))
-    private readonly grantRepository?: GrantRepository,
+    @Inject(forwardRef(() => GrantRepository))
+    private readonly grantRepository: GrantRepository,
   ) {}
 
   async hasSubmittedReview(proposalRef: string) {
@@ -21,7 +21,6 @@ export class ReviewService {
       proposalRef: string;
       reviewerId: string;
       boardRef: string;
-      proposalSnapshot?: unknown;
     },
     user: AuthenticatedUser,
   ) {
@@ -29,22 +28,23 @@ export class ReviewService {
       throw new ForbiddenException('Only users with reviews.assignments.manage capability can manage review assignments');
     }
 
-    let snapshotToUse = params.proposalSnapshot;
-
-    if (this.grantRepository) {
-      const proposal = await this.grantRepository.findProposalById(params.proposalRef);
-      if (!proposal) {
-        throw new NotFoundException(`Proposal ${params.proposalRef} not found`);
-      }
-      if (proposal.state !== 'ELIGIBLE') {
-        throw new BadRequestException('Proposal must be in ELIGIBLE state for review assignment');
-      }
-      if (proposal.participants.some((p: any) => p.userId === params.reviewerId)) {
-        throw new BadRequestException('Reviewer cannot be a participant of the proposal');
-      }
-      snapshotToUse = buildSanitizedSnapshot(proposal);
+    const proposal = await this.grantRepository.findProposalById(params.proposalRef);
+    if (!proposal) {
+      throw new NotFoundException(`Proposal ${params.proposalRef} not found`);
+    }
+    if (proposal.state !== 'ELIGIBLE') {
+      throw new BadRequestException('Proposal must be in ELIGIBLE state for review assignment');
+    }
+    if (proposal.participants.some((p: any) => p.userId === params.reviewerId)) {
+      throw new BadRequestException('Reviewer cannot be a participant of the proposal');
     }
 
+    const existing = await this.repository.findAssignmentByProposalAndReviewer(params.proposalRef, params.reviewerId);
+    if (existing) {
+      throw new BadRequestException('Reviewer is already assigned to this proposal');
+    }
+
+    const snapshotToUse = buildSanitizedSnapshot(proposal);
     if (!snapshotToUse || !validateProposalSnapshot(snapshotToUse)) {
       throw new BadRequestException('Proposal snapshot failed anonymization validation. Keys must only be title, abstract, objectives, methodology, expectedOutcomes, keywords. Values and keys cannot contain identity identifiers.');
     }
