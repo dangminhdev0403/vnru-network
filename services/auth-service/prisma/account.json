@@ -12,7 +12,7 @@
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-bb663ee38712",
-        "issuer": "http://localhost:8081/realms/vnru",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
         "subject": "curator-keycloak-subject-uuid-1234"
       },
       "role": {
@@ -44,7 +44,7 @@
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38002",
-        "issuer": "http://localhost:8081/realms/vnru",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
         "subject": "815ecd3d-d4b2-4035-9060-bf96e6997831"
       },
       "role": {
@@ -52,6 +52,10 @@
         "name": "RESEARCHER"
       },
       "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38017",
+          "key": "knowledge.workspace.view"
+        },
         {
           "id": "7809a72b-8a8e-49b8-897b-ee663ee38001",
           "key": "collab.proposals.create"
@@ -86,13 +90,65 @@
     },
     {
       "user": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38021",
+        "email": "researcher_ru@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38022",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
+        "subject": "b2674fba-48c8-414f-926f-3ecfe1aab351"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38001",
+        "name": "RESEARCHER"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38020",
+          "key": "knowledge.workspace.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38021",
+          "key": "collab.proposals.create"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38022",
+          "key": "collab.proposals.confirm_paired"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38023",
+          "key": "collab.proposals.submit"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38024",
+          "key": "projects.projects.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38025",
+          "key": "projects.milestones.update"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38026",
+          "key": "projects.reports.submit"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38021",
+        "contextType": "ORGANIZATION",
+        "contextId": "ORG_002",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38003",
         "email": "org_rep@vnru.network",
         "status": "ACTIVE"
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38004",
-        "issuer": "http://localhost:8081/realms/vnru",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
         "subject": "fed2a1c0-4417-41ff-b81e-9eb3d01902ed"
       },
       "role": {
@@ -122,13 +178,49 @@
     },
     {
       "user": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38023",
+        "email": "org_rep_ru@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38024",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
+        "subject": "2abeca26-e327-4ee0-970c-e1cc0b03082c"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38002",
+        "name": "ORGANIZATION_REPRESENTATIVE"
+      },
+      "permissions": [
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38027",
+          "key": "collab.proposals.endorse"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38028",
+          "key": "projects.projects.view"
+        },
+        {
+          "id": "7809a72b-8a8e-49b8-897b-ee663ee38029",
+          "key": "projects.reports.view_org"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38022",
+        "contextType": "ORGANIZATION",
+        "contextId": "ORG_002",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38005",
         "email": "reviewer@vnru.network",
         "status": "ACTIVE"
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38006",
-        "issuer": "http://localhost:8081/realms/vnru",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
         "subject": "94f310a1-5eb3-4b4d-9cc4-a9879856fcd7"
       },
       "role": {
@@ -164,7 +256,7 @@
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38008",
-        "issuer": "http://localhost:8081/realms/vnru",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
         "subject": "5499c30e-9183-403b-8e9e-fbc664541096"
       },
       "role": {
@@ -212,7 +304,7 @@
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38010",
-        "issuer": "http://localhost:8081/realms/vnru",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
         "subject": "13d2c564-39d9-4365-b5bf-8e06ce2ea07b"
       },
       "role": {

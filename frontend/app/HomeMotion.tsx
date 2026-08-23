@@ -7,6 +7,7 @@ import { useLogout } from "@/features/auth/server-state";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import translations from "./home-translations.json";
+import { confirmAction } from "@/lib/alerts";
 
 export type Locale = "vi" | "en" | "ru";
 
@@ -123,6 +124,7 @@ export function HomeMotion({
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     if (loggingOut) return;
+    if (!(await confirmAction({ title: "Xác nhận đăng xuất?" })).isConfirmed) return;
     setLoggingOut(true);
     try {
       const { logoutUrl } = await logout.mutateAsync();

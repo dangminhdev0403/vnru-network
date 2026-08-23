@@ -98,6 +98,13 @@ export class GrantRepository {
     });
   }
 
+  async findApprovedDecision(decisionRef: string, proposalRef: string) {
+    return this.prisma.collaborationDecision.findFirst({
+      where: { id: decisionRef, proposalId: proposalRef, approved: true },
+      select: { id: true },
+    });
+  }
+
   async executeInTransaction<T>(fn: (tx: any) => Promise<T>): Promise<T> {
     return this.prisma.$transaction(fn);
   }

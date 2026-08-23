@@ -4,8 +4,10 @@ import { PrismaClient } from '../../generated/projects';
 import { ProjectController } from './project.controller';
 import { ProjectRepository } from './project.repository';
 import { ProjectService } from './project.service';
+import { CollaborationModule } from '../collaboration/collaboration.module';
 
 @Module({
+  imports: [CollaborationModule],
   controllers: [ProjectController],
   providers: [
     {

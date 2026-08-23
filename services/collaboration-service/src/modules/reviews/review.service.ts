@@ -7,6 +7,10 @@ import type { AuthenticatedUser } from './auth.guard';
 export class ReviewService {
   constructor(private readonly repository: ReviewRepository) {}
 
+  async hasSubmittedReview(proposalRef: string) {
+    return (await this.repository.getRecommendation(proposalRef)) !== null;
+  }
+
   async createAssignment(
     params: {
       proposalRef: string;

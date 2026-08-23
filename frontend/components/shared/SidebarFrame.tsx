@@ -38,6 +38,7 @@ const copy: Record<
     collapse: string;
     expand: string;
     close: string;
+    navigation: string;
   }
 > = {
   vi: {
@@ -49,6 +50,7 @@ const copy: Record<
     collapse: "Thu gọn thanh điều hướng",
     expand: "Mở rộng thanh điều hướng",
     close: "Đóng thanh điều hướng",
+    navigation: "Điều hướng",
   },
   en: {
     brand: "VN–RU Science & Technology Network",
@@ -59,6 +61,7 @@ const copy: Record<
     collapse: "Collapse navigation",
     expand: "Expand navigation",
     close: "Close navigation",
+    navigation: "Navigation",
   },
   ru: {
     brand: "Сеть НТИ РФ — СРВ",
@@ -69,6 +72,7 @@ const copy: Record<
     collapse: "Свернуть панель",
     expand: "Развернуть панель",
     close: "Закрыть панель",
+    navigation: "Навигация",
   },
 };
 
@@ -174,7 +178,7 @@ export default function SidebarFrame({
 
       <nav
         className="relative z-10 min-h-0 flex-1 space-y-5 overflow-x-hidden overflow-y-auto py-5"
-        aria-label="Navigation"
+        aria-label={t.navigation}
       >
         {sections.map((section) => (
           <section key={section.label}>

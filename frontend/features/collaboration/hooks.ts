@@ -8,7 +8,22 @@ const collab = collabResource.bind(undefined);
 export function useOpportunities(cursor?: string, limit = 20) {
   const query = useQuery(collab.queries.opportunities.options({ cursor, limit }));
   const create = useMutation(collab.mutations.createOpportunity.options({ onSuccess: ({ client, cache }) => { cache.queries.opportunities.invalidateAll(client); } }));
-  return { opportunities: query.data?.items ?? [], nextCursor: query.data?.nextCursor ?? null, isLoading: query.isLoading, isError: query.isError, error: query.error, refetch: query.refetch, createOpportunity: create.mutateAsync, isCreating: create.isPending };
+  const publish = useMutation(collab.mutations.publishOpportunity.options({ onSuccess: ({ client, cache }) => { cache.queries.opportunities.invalidateAll(client); } }));
+  const close = useMutation(collab.mutations.closeOpportunity.options({ onSuccess: ({ client, cache }) => { cache.queries.opportunities.invalidateAll(client); } }));
+  return {
+    opportunities: query.data?.items ?? [],
+    nextCursor: query.data?.nextCursor ?? null,
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
+    createOpportunity: create.mutateAsync,
+    isCreating: create.isPending,
+    publishOpportunity: publish.mutateAsync,
+    isPublishing: publish.isPending,
+    closeOpportunity: close.mutateAsync,
+    isClosing: close.isPending,
+  };
 }
 
 export function useProposal(id: string) {

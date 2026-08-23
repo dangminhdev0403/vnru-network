@@ -13,6 +13,7 @@ import {
   ModalOverlay,
   type ModalOverlayProps,
 } from "react-aria-components";
+import { useLocale } from "@/app/HomeMotion";
 
 export type SheetProps = AriaDialogTriggerProps;
 export function Sheet(props: SheetProps) {
@@ -50,6 +51,7 @@ export function SheetContent({
   showCloseButton = false,
   ...props
 }: SheetContentProps) {
+  const { locale } = useLocale();
   return (
     <Modal
       className={cn(
@@ -71,7 +73,7 @@ export function SheetContent({
             {showCloseButton && (
               <AriaButton
                 onPress={close}
-                aria-label="Đóng"
+                aria-label={locale === "en" ? "Close" : locale === "ru" ? "Закрыть" : "Đóng"}
                 className="absolute top-4 right-4 flex size-8 items-center justify-center rounded-xl text-text-tertiary transition hover:bg-background-gray-secondary hover:text-text-primary outline-none cursor-pointer"
               >
                 ✕

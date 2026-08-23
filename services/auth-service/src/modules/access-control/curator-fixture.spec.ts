@@ -12,6 +12,7 @@ describe('Workflow Role Fixtures Importer', () => {
         upsert: jest.fn().mockImplementation((args) => Promise.resolve({ id: args.where.id, ...args.create })),
       },
       externalIdentity: {
+        deleteMany: jest.fn().mockResolvedValue({ count: 0 }),
         upsert: jest.fn().mockImplementation((args) => Promise.resolve({ id: args.create.id, ...args.create })),
       },
       role: {
@@ -38,7 +39,23 @@ describe('Workflow Role Fixtures Importer', () => {
     // Import fixtures
     const results = await importFixture(mockPrisma, fixturePath);
 
-    expect(results).toHaveLength(6);
+    expect(results).toHaveLength(8);
+    expect(mockPrisma.externalIdentity.deleteMany).toHaveBeenCalledWith({
+      where: {
+        issuer: 'http://127.0.0.1:8081/realms/vnru',
+        subject: 'curator-keycloak-subject-uuid-1234',
+        id: { not: '7809a72b-8a8e-49b8-897b-bb663ee38712' },
+      },
+    });
+    expect(mockPrisma.externalIdentity.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: '7809a72b-8a8e-49b8-897b-bb663ee38712' },
+        update: expect.objectContaining({
+          issuer: 'http://127.0.0.1:8081/realms/vnru',
+          subject: 'curator-keycloak-subject-uuid-1234',
+        }),
+      }),
+    );
 
     // 1. KNOWLEDGE_CURATOR Checks
     expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
@@ -63,18 +80,12 @@ describe('Workflow Role Fixtures Importer', () => {
     );
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: {
-          userId_roleId_contextType_contextId: {
-            userId: '7809a72b-8a8e-49b8-897b-bb663ee38711',
-            roleId: '7809a72b-8a8e-49b8-897b-bb663ee38713',
-            contextType: 'PLATFORM',
-            contextId: 'GLOBAL',
-          },
-        },
+        where: { id: '7809a72b-8a8e-49b8-897b-bb663ee38716' },
+        update: expect.objectContaining({ contextType: 'PLATFORM', contextId: 'GLOBAL' }),
       }),
     );
 
-    // 2. RESEARCHER Checks
+    // 2. RESEARCHER VN Checks
     expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: { id: '7809a72b-8a8e-49b8-897b-aa663ee38001' },
@@ -91,6 +102,7 @@ describe('Workflow Role Fixtures Importer', () => {
       }),
     );
     const researcherPermissions = [
+      'knowledge.workspace.view',
       'collab.proposals.create',
       'collab.proposals.confirm_paired',
       'collab.proposals.submit',
@@ -107,18 +119,30 @@ describe('Workflow Role Fixtures Importer', () => {
     }
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: {
-          userId_roleId_contextType_contextId: {
-            userId: '7809a72b-8a8e-49b8-897b-aa663ee38001',
-            roleId: '7809a72b-8a8e-49b8-897b-ff663ee38001',
-            contextType: 'ORGANIZATION',
-            contextId: 'ORG_001',
-          },
-        },
+        where: expect.objectContaining({ id: expect.any(String) }),
+        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38001', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38001', contextType: 'ORGANIZATION', contextId: 'ORG_001' }),
       }),
     );
 
-    // 3. ORGANIZATION_REPRESENTATIVE Checks
+    // 3. RESEARCHER RU Checks
+    expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: '7809a72b-8a8e-49b8-897b-bb663ee38021' },
+        create: {
+          id: '7809a72b-8a8e-49b8-897b-bb663ee38021',
+          email: 'researcher_ru@vnru.network',
+          status: 'ACTIVE',
+        },
+      }),
+    );
+    expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({ id: expect.any(String) }),
+        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-bb663ee38021', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38001', contextType: 'ORGANIZATION', contextId: 'ORG_002' }),
+      }),
+    );
+
+    // 4. ORGANIZATION_REPRESENTATIVE VN Checks
     expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: { id: '7809a72b-8a8e-49b8-897b-aa663ee38003' },
@@ -136,14 +160,26 @@ describe('Workflow Role Fixtures Importer', () => {
     );
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: {
-          userId_roleId_contextType_contextId: {
-            userId: '7809a72b-8a8e-49b8-897b-aa663ee38003',
-            roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002',
-            contextType: 'ORGANIZATION',
-            contextId: 'ORG_001',
-          },
+        where: expect.objectContaining({ id: expect.any(String) }),
+        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38003', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002', contextType: 'ORGANIZATION', contextId: 'ORG_001' }),
+      }),
+    );
+
+    // 5. ORGANIZATION_REPRESENTATIVE RU Checks
+    expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: '7809a72b-8a8e-49b8-897b-bb663ee38023' },
+        create: {
+          id: '7809a72b-8a8e-49b8-897b-bb663ee38023',
+          email: 'org_rep_ru@vnru.network',
+          status: 'ACTIVE',
         },
+      }),
+    );
+    expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({ id: expect.any(String) }),
+        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-bb663ee38023', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002', contextType: 'ORGANIZATION', contextId: 'ORG_002' }),
       }),
     );
 
@@ -165,14 +201,8 @@ describe('Workflow Role Fixtures Importer', () => {
     );
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: {
-          userId_roleId_contextType_contextId: {
-            userId: '7809a72b-8a8e-49b8-897b-aa663ee38005',
-            roleId: '7809a72b-8a8e-49b8-897b-ff663ee38003',
-            contextType: 'REVIEW_BOARD',
-            contextId: 'BOARD_001',
-          },
-        },
+        where: expect.objectContaining({ id: expect.any(String) }),
+        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38005', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38003', contextType: 'REVIEW_BOARD', contextId: expect.any(String) }),
       }),
     );
 
@@ -189,14 +219,8 @@ describe('Workflow Role Fixtures Importer', () => {
     );
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: {
-          userId_roleId_contextType_contextId: {
-            userId: '7809a72b-8a8e-49b8-897b-aa663ee38007',
-            roleId: '7809a72b-8a8e-49b8-897b-ff663ee38004',
-            contextType: 'PLATFORM',
-            contextId: 'GLOBAL',
-          },
-        },
+        where: expect.objectContaining({ id: expect.any(String) }),
+        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38007', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38004', contextType: 'PLATFORM', contextId: 'GLOBAL' }),
       }),
     );
 

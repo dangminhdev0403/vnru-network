@@ -45,6 +45,24 @@ describe('ReviewRepository Transactional & Logic Tests', () => {
     repository = new ReviewRepository(mockPrisma as any);
   });
 
+  describe('Assignment Context Contract', () => {
+    it('accepts the canonical stable review board reference', async () => {
+      mockTx.reviewAssignment.create.mockResolvedValue({ id: 'd5dee5a7-593d-4240-94a3-35ae8e21fd26' });
+      mockTx.reviewAssignment.findUnique.mockResolvedValue({ id: 'd5dee5a7-593d-4240-94a3-35ae8e21fd26' });
+
+      await repository.createAssignment({
+        proposalRef: 'proposal-1',
+        reviewerId: 'a1234567-b123-c123-d123-e1234567890a',
+        boardRef: 'BOARD_001',
+        snapshot: { title: 'Anonymous proposal' },
+      });
+
+      expect(mockTx.reviewAssignment.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({ boardRef: 'BOARD_001' }),
+      });
+    });
+  });
+
   describe('Conflict Declaration Gate', () => {
     it('should save conflict declaration and set assignment status to CONFLICT', async () => {
       const assignmentId = 'd5dee5a7-593d-4240-94a3-35ae8e21fd26';

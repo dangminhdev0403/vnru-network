@@ -3,6 +3,7 @@
 import { cn } from "@/lib/cn";
 import Link from "next/link";
 import React from "react";
+import { useLocale } from "@/app/HomeMotion";
 
 export interface BreadcrumbItem {
   label: string;
@@ -20,6 +21,7 @@ export function Breadcrumbs({
   dividerType = "chevron",
   className,
 }: BreadcrumbsProps) {
+  const { locale } = useLocale();
   const divider =
     dividerType === "chevron" ? (
       <svg
@@ -41,7 +43,7 @@ export function Breadcrumbs({
     );
 
   return (
-    <nav aria-label="Breadcrumb" className={cn("flex items-center gap-1.5 text-xs", className)}>
+    <nav aria-label={locale === "en" ? "Breadcrumb" : locale === "ru" ? "Навигационная цепочка" : "Đường dẫn điều hướng"} className={cn("flex items-center gap-1.5 text-xs", className)}>
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
         return (

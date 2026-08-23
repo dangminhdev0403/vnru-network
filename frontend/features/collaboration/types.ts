@@ -48,6 +48,7 @@ export interface CollaborationProposal {
   participants: ProposalParticipant[];
   confirmations: ProposalConfirmation[];
   endorsements: ProposalEndorsement[];
+  decisions?: Array<{ id: string; approved: boolean }>;
   createdAt: string;
   updatedAt: string;
 }

@@ -8,6 +8,10 @@ export function useProjects() {
   const query = useQuery(projects.queries.list.options(undefined));
   return { projects: query.data?.items ?? [], nextCursor: query.data?.nextCursor ?? null, isLoading: query.isLoading, isError: query.isError, error: query.error, refetch: query.refetch };
 }
+export function useBootstrapProject() {
+  const mutation = useMutation(projects.mutations.bootstrap.options());
+  return { bootstrap: mutation.mutateAsync, isPending: mutation.isPending };
+}
 export function useProject(id: string) {
   const detail = useQuery({ ...projects.queries.detail.options(id), enabled: Boolean(id) });
   const members = useQuery({ ...projects.queries.members.options(id), enabled: Boolean(id) });

@@ -273,6 +273,32 @@ textarea {
 }
 
 /* Animations & Keyframes */
+button[aria-busy="true"] {
+  cursor: wait;
+  opacity: .7;
+}
+
+button[aria-busy="true"]::before {
+  content: "";
+  display: inline-block;
+  width: .9em;
+  height: .9em;
+  margin-right: .5em;
+  vertical-align: -.1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 999px;
+  animation: vnru-button-spin .7s linear infinite;
+}
+
+button:disabled { cursor: not-allowed; }
+
+@keyframes vnru-button-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  button[aria-busy="true"]::before { animation-duration: 1.4s; }
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

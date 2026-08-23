@@ -22,3 +22,9 @@ export interface EvaluationScores {
 
 export type EvaluationInput = EvaluationScores & { comments?: string };
 export interface AssignmentList { items: ReviewAssignment[]; total: number }
+export interface CreateReviewAssignmentInput {
+  proposalRef: string;
+  reviewerId: string;
+  boardRef: string;
+  proposalSnapshot: { title: string; abstract: string };
+}

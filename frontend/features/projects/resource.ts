@@ -1,6 +1,6 @@
 import { createResource, defineMutation, defineQuery } from "@dangminhdev04032005/query-resource";
 import { projectRepository } from "./repository";
-import type { AddMemberInput, CreateMilestoneInput, CreateReportInput, OutcomeInput, Project, ProjectMember, ReviewInput, SubmitInput, TerminateInput, UpdateMilestoneInput, UpdateReportInput } from "./types";
+import type { AddMemberInput, BootstrapProjectInput, CreateMilestoneInput, CreateReportInput, OutcomeInput, Project, ProjectMember, ReviewInput, SubmitInput, TerminateInput, UpdateMilestoneInput, UpdateReportInput } from "./types";
 
 export const projectResource = createResource<void>()({
   namespace: ["vnru", "projects"], name: "projects", scopeKey: () => ["current-context"],
@@ -10,6 +10,7 @@ export const projectResource = createResource<void>()({
     members: defineQuery({ inputKey: (id: string) => ["members", id], queryFn: ({ input, signal }) => projectRepository.getMembers(input, signal) }),
   },
   mutations: {
+    bootstrap: defineMutation<void, BootstrapProjectInput, Project>({ mutationFn: ({ variables }) => projectRepository.bootstrap(variables) }),
     addMember: defineMutation<void, { id: string; input: AddMemberInput }, ProjectMember>({ mutationFn: ({ variables }) => projectRepository.addMember(variables.id, variables.input) }),
     createMilestone: defineMutation<void, { id: string; input: CreateMilestoneInput }, Project>({ mutationFn: ({ variables }) => projectRepository.createMilestone(variables.id, variables.input) }),
     updateMilestone: defineMutation<void, { id: string; milestoneId: string; input: UpdateMilestoneInput }, Project>({ mutationFn: ({ variables }) => projectRepository.updateMilestone(variables.id, variables.milestoneId, variables.input) }),

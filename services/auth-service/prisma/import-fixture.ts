@@ -46,7 +46,7 @@ const ROLE_POLICIES: Record<(typeof ALLOWED_ROLES)[number], {
   capabilities: readonly (typeof ALLOWED_CAPABILITIES)[number][];
 }> = {
   KNOWLEDGE_CURATOR: { contextType: 'PLATFORM', capabilities: ['knowledge.workspace.view', 'experts.matches.view'] },
-  RESEARCHER: { contextType: 'ORGANIZATION', capabilities: ['collab.proposals.create', 'collab.proposals.confirm_paired', 'collab.proposals.submit', 'projects.projects.view', 'projects.milestones.update', 'projects.reports.submit'] },
+  RESEARCHER: { contextType: 'ORGANIZATION', capabilities: ['knowledge.workspace.view', 'collab.proposals.create', 'collab.proposals.confirm_paired', 'collab.proposals.submit', 'projects.projects.view', 'projects.milestones.update', 'projects.reports.submit'] },
   ORGANIZATION_REPRESENTATIVE: { contextType: 'ORGANIZATION', capabilities: ['collab.proposals.endorse', 'projects.projects.view', 'projects.reports.view_org'] },
   REVIEWER: { contextType: 'REVIEW_BOARD', capabilities: ['reviews.assignments.view_assigned', 'reviews.evaluations.score', 'reviews.evaluations.submit'] },
   COLLABORATION_MANAGER: { contextType: 'PLATFORM', capabilities: ['collab.opportunities.create', 'collab.opportunities.publish', 'collab.proposals.screen', 'reviews.assignments.manage', 'projects.projects.view', 'projects.reports.approve'] },
@@ -119,14 +119,20 @@ export async function importFixture(prisma: PrismaClient, fixturePath?: string) 
         create: item.user,
       });
 
-      await tx.externalIdentity.upsert({
+      await tx.externalIdentity.deleteMany({
         where: {
-          issuer_subject: {
-            issuer: item.externalIdentity.issuer,
-            subject: item.externalIdentity.subject,
-          },
+          issuer: item.externalIdentity.issuer,
+          subject: item.externalIdentity.subject,
+          id: { not: item.externalIdentity.id },
         },
-        update: { userId: user.id },
+      });
+      await tx.externalIdentity.upsert({
+        where: { id: item.externalIdentity.id },
+        update: {
+          issuer: item.externalIdentity.issuer,
+          subject: item.externalIdentity.subject,
+          userId: user.id,
+        },
         create: { ...item.externalIdentity, userId: user.id },
       });
 
@@ -152,15 +158,14 @@ export async function importFixture(prisma: PrismaClient, fixturePath?: string) 
       }
 
       await tx.roleAssignment.upsert({
-        where: {
-          userId_roleId_contextType_contextId: {
-            userId: user.id,
-            roleId: role.id,
-            contextType: item.roleAssignment.contextType,
-            contextId: item.roleAssignment.contextId,
-          },
+        where: { id: item.roleAssignment.id },
+        update: {
+          userId: user.id,
+          roleId: role.id,
+          contextType: item.roleAssignment.contextType,
+          contextId: item.roleAssignment.contextId,
+          status: item.roleAssignment.status,
         },
-        update: { status: item.roleAssignment.status },
         create: {
           ...item.roleAssignment,
           userId: user.id,

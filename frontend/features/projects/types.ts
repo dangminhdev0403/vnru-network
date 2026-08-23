@@ -20,6 +20,7 @@ export interface Project {
   outcomes: ProjectOutcome[];
 }
 export interface ProjectList { items: Project[]; nextCursor: string | null }
+export interface BootstrapProjectInput { decisionRef: string; proposalRef: string; title: string; description?: string; leadId: string; approved: true }
 export interface AddMemberInput { userId: string; role: "LEAD" | "MEMBER" }
 export interface CreateMilestoneInput { title: string; description?: string; dueDate: string; deliverables?: Deliverable[] }
 export interface UpdateMilestoneInput { title?: string; description?: string; dueDate?: string; deliverables?: Deliverable[]; expectedVersion: number }

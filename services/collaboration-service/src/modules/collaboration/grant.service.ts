@@ -17,6 +17,7 @@ import {
 } from './grant';
 import { GrantRepository } from './grant.repository';
 import { encodeCursor, OpportunityQuery } from './opportunity-query';
+import { ReviewService } from '../reviews/review.service';
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -34,7 +35,19 @@ function validateString(val: string, name: string, minLength = 1) {
 
 @Injectable()
 export class GrantService {
-  constructor(private readonly repository: GrantRepository) {}
+  constructor(
+    private readonly repository: GrantRepository,
+    private readonly reviewService: ReviewService,
+  ) {}
+
+  async assertApprovedDecision(decisionRef: string, proposalRef: string) {
+    const decision = await this.repository.findApprovedDecision(decisionRef, proposalRef);
+    if (!decision) {
+      throw new BadRequestException({
+        error: { code: 'INVALID_DECISION', message: 'Approved collaboration decision not found for proposal' },
+      });
+    }
+  }
 
   async listOpportunities(query: OpportunityQuery) {
     const limit = query.limit;
@@ -220,6 +233,13 @@ export class GrantService {
       isAuthorized = user.activeContext?.contextId === vnParticipant?.organizationRef;
     } else if (isRu) {
       isAuthorized = user.activeContext?.contextId === ruParticipant?.organizationRef;
+    } else if (
+      user.activeContext?.contextType === 'ORGANIZATION'
+      && user.capabilities.includes('collab.proposals.endorse')
+    ) {
+      isAuthorized = proposal.participants.some(
+        (participant) => participant.organizationRef === user.activeContext?.contextId,
+      );
     } else if (user.activeContext?.contextType === 'PLATFORM') {
       isAuthorized = true;
     }
@@ -700,12 +720,27 @@ export class GrantService {
           error: { code: 'INVALID_STATE', message: 'Collaboration decision is only allowed for ELIGIBLE proposals' },
         });
       }
+      if (!await this.reviewService.hasSubmittedReview(id)) {
+        throw new BadRequestException({
+          error: { code: 'REVIEW_REQUIRED', message: 'A submitted independent review is required before decision' },
+        });
+      }
 
       let targetState = 'REJECTED';
       if (dto.approved) {
         targetState = 'APPROVED';
       } else if (dto.requestRevision) {
         targetState = 'REVISION_REQUESTED';
+      }
+
+      const transition = await tx.jointProposal.updateMany({
+        where: { id, state: 'ELIGIBLE' },
+        data: { state: targetState },
+      });
+      if (transition.count !== 1) {
+        throw new ConflictException({
+          error: { code: 'CONCURRENCY_CONFLICT', message: 'Proposal decision was already finalized' },
+        });
       }
 
       await tx.collaborationDecision.create({
@@ -717,11 +752,8 @@ export class GrantService {
         },
       });
 
-      const updatedProposal = await tx.jointProposal.update({
+      const updatedProposal = await tx.jointProposal.findUnique({
         where: { id },
-        data: {
-          state: targetState,
-        },
         include: {
           participants: true,
           confirmations: true,
@@ -730,6 +762,9 @@ export class GrantService {
           decisions: true,
         },
       });
+      if (!updatedProposal) {
+        throw new NotFoundException({ error: { code: 'NOT_FOUND', message: 'Proposal not found' } });
+      }
 
       if (targetState === 'APPROVED') {
         await tx.outboxEvent.create({

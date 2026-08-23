@@ -3,7 +3,7 @@
 import { useLocale, type Locale } from "@/app/HomeMotion";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { showError, showToast } from "@/lib/alerts";
+import { confirmAction, showError, showToast } from "@/lib/alerts";
 import { useIamAdministration } from "@/features/iam/hooks";
 import { ApiError, type IamUser as User } from "@/features/iam/repository";
 
@@ -433,6 +433,7 @@ export default function UserAdministration({
 
   const updateUserStatus = async () => {
     if (!statusTarget) return;
+    if (!(await confirmAction({ title: "Xác nhận cập nhật trạng thái?", isDestructive: statusTarget.status === "ACTIVE" })).isConfirmed) return;
     const status = statusTarget.status === "ACTIVE" ? "INACTIVE" : "ACTIVE";
     try {
       await iam.updateUserStatus.mutateAsync({ id: statusTarget.id, status });
@@ -455,6 +456,7 @@ export default function UserAdministration({
       showError("Thiếu thông tin", "Chọn người dùng và vai trò.");
       return;
     }
+    if (!(await confirmAction({ title: "Xác nhận gán vai trò?" })).isConfirmed) return;
     try {
       await iam.assignRole.mutateAsync({
         userId: assignUserId,
@@ -834,7 +836,7 @@ export default function UserAdministration({
                 <input
                   value={contextId}
                   onChange={(event) => setContextId(event.target.value)}
-                  placeholder="Context ID"
+                  placeholder={t.contextIdLabel}
                   className="rounded-xl border border-[var(--border)] p-3 text-sm font-normal"
                 />
               </label>
@@ -850,6 +852,7 @@ export default function UserAdministration({
                 <button
                   type="submit"
                   disabled={submitting}
+                  aria-busy={submitting}
                   className="cursor-pointer rounded-xl bg-[var(--accent-primary)] px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-700 disabled:opacity-50"
                 >
                   {submitting ? t.submitting : t.submitAssign}
@@ -889,6 +892,7 @@ export default function UserAdministration({
                 type="button"
                 disabled={submitting}
                 onClick={updateUserStatus}
+                aria-busy={submitting}
                 className="rounded-xl bg-[var(--accent-primary)] px-4 py-2 text-sm font-bold text-white cursor-pointer hover:bg-slate-800 transition"
               >
                 {t.confirm}

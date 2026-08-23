@@ -4,7 +4,7 @@ import { useLocale, type Locale } from "@/app/HomeMotion";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { showToast, showError } from "@/lib/alerts";
+import { confirmAction, showToast, showError } from "@/lib/alerts";
 import { useSessions } from "@/features/iam/hooks";
 import type { IamSession as Session } from "@/features/iam/repository";
 import ProfileDialog from "./ProfileDialog";
@@ -232,11 +232,12 @@ export default function SecurityClientPage() {
 
   const triggerRefresh = () => void sessionState.sessions.refetch();
 
-  const handleRevokeSession = async () => {
-    if (!sessionToRevoke) return;
+  const handleRevokeSession = async (session = sessionToRevoke) => {
+    if (!session) return;
+    if (!(await confirmAction({ title: session.current ? t.modalSignOutTitle : t.modalRevokeTitle, text: session.current ? t.modalSignOutDesc : t.modalRevokeDesc, isDestructive: true })).isConfirmed) return;
     setActionError(null);
     try {
-      await sessionState.revokeSession.mutateAsync(sessionToRevoke.id);
+      await sessionState.revokeSession.mutateAsync(session.id);
 
       setShowRevokeDialog(false);
       showToast({
@@ -244,7 +245,7 @@ export default function SecurityClientPage() {
         icon: "success",
       });
 
-      if (sessionToRevoke.current) {
+      if (session.current) {
         router.push("/login?state=revoked");
       } else {
         triggerRefresh();
@@ -259,6 +260,7 @@ export default function SecurityClientPage() {
   };
 
   const handleRevokeOthers = async () => {
+    if (!(await confirmAction({ title: t.modalOthersTitle, text: t.modalOthersDesc, isDestructive: true })).isConfirmed) return;
     setActionError(null);
     try {
       await sessionState.revokeOtherSessions.mutateAsync();
@@ -420,7 +422,9 @@ export default function SecurityClientPage() {
             {sessions && otherSessions.length > 0 && (
               <button
                 type="button"
-                onClick={() => setShowRevokeOthersDialog(true)}
+                disabled={actionLoading}
+                aria-busy={actionLoading}
+                onClick={() => handleRevokeOthers()}
                 className="min-h-11 rounded-xl border border-red-300 px-4 text-sm font-semibold text-red-700 hover:bg-red-50 dark:border-red-900 dark:text-red-300 dark:hover:bg-red-950/40"
               >
                 {t.revokeOthersBtn}
@@ -522,10 +526,9 @@ export default function SecurityClientPage() {
                       <td className="px-5 py-4 text-right">
                         <button
                           type="button"
-                          onClick={() => {
-                            setSessionToRevoke(session);
-                            setShowRevokeDialog(true);
-                          }}
+                          disabled={actionLoading}
+                          aria-busy={actionLoading}
+                          onClick={() => handleRevokeSession(session)}
                           className="min-h-10 rounded-xl border border-red-300 px-3 text-sm font-semibold text-red-700 hover:bg-red-50 dark:border-red-900 dark:text-red-300 dark:hover:bg-red-950/40"
                         >
                           {session.current ? t.signOutBtn : t.revokeBtn}
@@ -604,7 +607,7 @@ export default function SecurityClientPage() {
               <button
                 type="button"
                 disabled={actionLoading}
-                onClick={handleRevokeSession}
+                onClick={() => handleRevokeSession()}
                 className="px-5 py-2 rounded-xl bg-error text-white text-xs font-semibold hover:bg-error/90 transition-all flex items-center gap-2 cursor-pointer"
               >
                 {actionLoading && (

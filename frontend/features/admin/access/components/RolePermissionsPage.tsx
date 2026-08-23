@@ -26,7 +26,7 @@ const copy: Record<Locale, Record<string, string>> = {
     scopeNote: "Role contract hiện tại chưa expose scope metadata. Scope cụ thể được backend xác thực khi thực hiện assignment.",
     auditNote: "Frontend contract hiện chưa expose audit trail cho role-permission mapping.", noPermission: "Không có quyền phù hợp.",
     noRole: "Không có vai trò phù hợp.", readOnly: "Role matrix do backend cung cấp", loading: "Đang tải dữ liệu IAM…", stale: "Đang hiển thị dữ liệu cũ.",
-    denied: "Không có quyền truy cập IAM trong ngữ cảnh hiện tại.", retry: "Làm mới", platformContext: "Platform / backend-managed context",
+    denied: "Không có quyền truy cập IAM trong ngữ cảnh hiện tại.", retry: "Làm mới", platformContext: "Ngữ cảnh nền tảng do backend quản lý", requestFailed: "Yêu cầu thất bại", contextPlaceholder: "Ví dụ: org-123 hoặc board-456",
   },
   en: {
     title: "Roles & Permissions", desc: "Manage roles, permissions and their application across the system.", directory: "Role directory",
@@ -46,7 +46,7 @@ const copy: Record<Locale, Record<string, string>> = {
     scopeNote: "The current role contract does not expose scope metadata. Backend validates the effective scope during assignment.",
     auditNote: "The frontend contract does not currently expose role-permission audit history.", noPermission: "No matching permissions.",
     noRole: "No matching roles.", readOnly: "Backend-provided role matrix", loading: "Loading IAM data…", stale: "Showing stale data.",
-    denied: "IAM administration is not allowed in the current context.", retry: "Refresh", platformContext: "Platform / backend-managed context",
+    denied: "IAM administration is not allowed in the current context.", retry: "Refresh", platformContext: "Backend-managed platform context", requestFailed: "Request failed", contextPlaceholder: "Example: org-123 or board-456",
   },
   ru: {
     title: "Роли и права", desc: "Управление ролями, правами и областью их применения.", directory: "Каталог ролей",
@@ -66,7 +66,7 @@ const copy: Record<Locale, Record<string, string>> = {
     scopeNote: "Текущий контракт роли не предоставляет metadata области. Backend проверяет область при назначении.",
     auditNote: "Frontend-контракт пока не предоставляет аудит связей role-permission.", noPermission: "Подходящие права не найдены.",
     noRole: "Подходящие роли не найдены.", readOnly: "Матрица ролей backend", loading: "Загрузка IAM…", stale: "Показаны устаревшие данные.",
-    denied: "Нет доступа к управлению IAM в текущем контексте.", retry: "Обновить", platformContext: "Platform / backend-managed context",
+    denied: "Нет доступа к управлению IAM в текущем контексте.", retry: "Обновить", platformContext: "Контекст платформы под управлением backend", requestFailed: "Запрос не выполнен", contextPlaceholder: "Например: org-123 или board-456",
   },
 };
 
@@ -144,6 +144,7 @@ export default function RolePermissionsPage() {
 
   const assignRole = async (event: FormEvent) => {
     event.preventDefault(); if (!assignUserId || !selectedRole) return;
+    if (!(await confirmAction({ title: t.confirmAssign })).isConfirmed) return;
     try {
       await iam.assignRole.mutateAsync({
         userId: assignUserId,
@@ -156,7 +157,7 @@ export default function RolePermissionsPage() {
       setModal(null);
       showToast({ title: t.confirmAssign, icon: "success" });
     } catch (cause) {
-      showError(t.assignTitle, cause instanceof Error ? cause.message : "Request failed");
+      showError(t.assignTitle, cause instanceof Error ? cause.message : t.requestFailed);
     }
   };
 
@@ -178,7 +179,7 @@ export default function RolePermissionsPage() {
       setModal(null);
       showToast({ title: t.saveChanges, icon: "success" });
     } catch (cause) {
-      showError(t.modalReviewTitle, cause instanceof Error ? cause.message : "Request failed");
+      showError(t.modalReviewTitle, cause instanceof Error ? cause.message : t.requestFailed);
     }
   };
 
@@ -208,7 +209,7 @@ export default function RolePermissionsPage() {
       </div>
     </section>
 
-    {modal === "assign" ? <div className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4"><form onSubmit={assignRole} className="w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl"><h3 className="text-lg font-bold">{t.assignTitle}</h3><p className="mt-1 text-xs text-text-secondary">{roleLabels[locale][selectedRole?.name ?? ""] ?? selectedRole?.name}</p><label className="mt-4 block text-xs font-semibold text-text-secondary">{t.users}<select value={assignUserId} onChange={(event) => setAssignUserId(event.target.value)} required className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"><option value="">{t.selectUser}</option>{users.map((user) => <option key={user.id} value={user.id}>{user.email || user.id}</option>)}</select></label><label className="mt-3 block text-xs font-semibold text-text-secondary">{t.contextTypeLabel} <span className="font-normal text-text-secondary">{t.optional}</span><select value={assignContextType} onChange={(event) => setAssignContextType(event.target.value)} className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"><option value="ORGANIZATION">ORGANIZATION</option><option value="REVIEW_BOARD">REVIEW_BOARD</option><option value="PLATFORM">PLATFORM</option></select></label><label className="mt-3 block text-xs font-semibold text-text-secondary">{t.contextIdLabel} <span className="font-normal text-text-secondary">{t.optional}</span><input type="text" value={assignContextId} onChange={(event) => setAssignContextId(event.target.value)} placeholder="e.g. org-123 hoặc board-456" className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm outline-none focus:border-[var(--accent-primary)]" /></label><div className="mt-6 flex justify-end gap-2"><button type="button" onClick={() => setModal(null)} className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-bold">{t.cancel}</button><button type="submit" disabled={iam.assignRole.isPending} className="rounded-xl bg-[var(--accent-primary)] px-4 py-2 text-sm font-bold text-white">{iam.assignRole.isPending ? t.assigning : t.confirmAssign}</button></div></form></div> : null}
+    {modal === "assign" ? <div className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4"><form onSubmit={assignRole} className="w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl"><h3 className="text-lg font-bold">{t.assignTitle}</h3><p className="mt-1 text-xs text-text-secondary">{roleLabels[locale][selectedRole?.name ?? ""] ?? selectedRole?.name}</p><label className="mt-4 block text-xs font-semibold text-text-secondary">{t.users}<select value={assignUserId} onChange={(event) => setAssignUserId(event.target.value)} required className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"><option value="">{t.selectUser}</option>{users.map((user) => <option key={user.id} value={user.id}>{user.email || user.id}</option>)}</select></label><label className="mt-3 block text-xs font-semibold text-text-secondary">{t.contextTypeLabel} <span className="font-normal text-text-secondary">{t.optional}</span><select value={assignContextType} onChange={(event) => setAssignContextType(event.target.value)} className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"><option value="ORGANIZATION">ORGANIZATION</option><option value="REVIEW_BOARD">REVIEW_BOARD</option><option value="PLATFORM">PLATFORM</option></select></label><label className="mt-3 block text-xs font-semibold text-text-secondary">{t.contextIdLabel} <span className="font-normal text-text-secondary">{t.optional}</span><input type="text" value={assignContextId} onChange={(event) => setAssignContextId(event.target.value)} placeholder={t.contextPlaceholder} className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm outline-none focus:border-[var(--accent-primary)]" /></label><div className="mt-6 flex justify-end gap-2"><button type="button" onClick={() => setModal(null)} className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-bold">{t.cancel}</button><button type="submit" disabled={iam.assignRole.isPending} className="rounded-xl bg-[var(--accent-primary)] px-4 py-2 text-sm font-bold text-white">{iam.assignRole.isPending ? t.assigning : t.confirmAssign}</button></div></form></div> : null}
 
     {modal === "add" ? <div className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4"><div className="w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl"><h3 className="text-lg font-bold">{t.modalAddTitle}</h3><p className="mt-1 text-xs text-text-secondary">{t.modalAddDesc}</p><div className="mt-4 max-h-80 space-y-2 overflow-y-auto pr-1">{permissionCatalogue.map((permission) => <label key={permission} className="flex items-center gap-3 rounded-xl border border-[var(--border)] p-3 hover:bg-[var(--surface-secondary)]"><input type="checkbox" checked={staged.has(permission)} onChange={() => togglePermission(permission)} className="size-4 accent-[var(--accent-primary)]" /><span className="min-w-0"><code className="block text-xs font-bold">{permission}</code><small className="text-text-secondary">{permissionLabels[locale][permission] ?? permission}</small></span></label>)}</div><div className="mt-6 flex justify-end gap-2"><button type="button" onClick={() => setModal(null)} className="rounded-xl bg-[var(--accent-primary)] px-4 py-2 text-sm font-bold text-white">{t.continue}</button></div></div></div> : null}
 

@@ -27,6 +27,7 @@ describe('Collaboration Service & Controller Tests', () => {
   let repository: GrantRepository;
   let guard: AuthGuard;
   let mockPrisma: any;
+  let mockReviewService: any;
 
   beforeEach(() => {
     process.env.AUTH_SERVICE_URL = 'http://localhost:3001';
@@ -49,6 +50,7 @@ describe('Collaboration Service & Controller Tests', () => {
       collaborationConfirmation: {
         upsert: jest.fn(),
         updateMany: jest.fn(),
+        count: jest.fn().mockResolvedValue(1),
       },
       organizationEndorsement: {
         upsert: jest.fn(),
@@ -67,7 +69,8 @@ describe('Collaboration Service & Controller Tests', () => {
     };
 
     repository = new GrantRepository(mockPrisma as any);
-    service = new GrantService(repository);
+    mockReviewService = { hasSubmittedReview: jest.fn().mockResolvedValue(true) };
+    service = new GrantService(repository, mockReviewService);
     controller = new GrantController(service);
     guard = new AuthGuard(new Reflector());
   });
@@ -196,6 +199,14 @@ describe('Collaboration Service & Controller Tests', () => {
       capabilities: ['collab.opportunities.create', 'collab.opportunities.publish'],
     } as any;
 
+    it('rejects mass-assigned opportunity state at the controller boundary', async () => {
+      await expect(controller.createOpportunity(
+        { user: managerUser },
+        { id: OPPORTUNITY_UUID, title: 'Joint Opportunity 2026', state: 'PUBLISHED' },
+      )).rejects.toThrow(BadRequestException);
+      expect(mockPrisma.researchOpportunity.create).not.toHaveBeenCalled();
+    });
+
     it('should create opportunity in DRAFT state', async () => {
       mockPrisma.researchOpportunity.create.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
@@ -273,6 +284,38 @@ describe('Collaboration Service & Controller Tests', () => {
       activeContext: { contextType: 'ORGANIZATION', contextId: 'some-other-org' },
       capabilities: ['collab.proposals.create'],
     } as any;
+
+    it('allows an organization representative to read a proposal for their active organization', async () => {
+      mockPrisma.jointProposal.findUnique.mockResolvedValueOnce({
+        id: PROPOSAL_UUID,
+        participants: [
+          { userId: VN_USER_UUID, organizationRef: 'vn-org-ref', country: 'VN' },
+          { userId: RU_USER_UUID, organizationRef: 'ru-org-ref', country: 'RU' },
+        ],
+      });
+
+      await expect(service.getProposal({
+        userId: VN_REP_UUID,
+        activeContext: { contextType: 'ORGANIZATION', contextId: 'vn-org-ref' },
+        capabilities: ['collab.proposals.endorse'],
+      } as any, PROPOSAL_UUID)).resolves.toMatchObject({ id: PROPOSAL_UUID });
+    });
+
+    it('still rejects an unrelated organization representative', async () => {
+      mockPrisma.jointProposal.findUnique.mockResolvedValueOnce({
+        id: PROPOSAL_UUID,
+        participants: [
+          { userId: VN_USER_UUID, organizationRef: 'vn-org-ref', country: 'VN' },
+          { userId: RU_USER_UUID, organizationRef: 'ru-org-ref', country: 'RU' },
+        ],
+      });
+
+      await expect(service.getProposal({
+        userId: VN_REP_UUID,
+        activeContext: { contextType: 'ORGANIZATION', contextId: 'other-org' },
+        capabilities: ['collab.proposals.endorse'],
+      } as any, PROPOSAL_UUID)).rejects.toThrow(ForbiddenException);
+    });
 
     it('should create proposal only when opportunity is PUBLISHED and caller is a participant matching context', async () => {
       mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
@@ -442,6 +485,7 @@ describe('Collaboration Service & Controller Tests', () => {
 
       mockPrisma.jointProposal.findUnique.mockResolvedValueOnce(proposalDb);
       mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID, state: 'PUBLISHED' });
+      mockPrisma.collaborationConfirmation.count.mockResolvedValueOnce(2);
       mockPrisma.jointProposal.update.mockResolvedValueOnce({
         ...proposalDb,
         state: 'PAIRED_CONFIRMED',
@@ -596,7 +640,24 @@ describe('Collaboration Service & Controller Tests', () => {
       expect(mockPrisma.proposalScreening.create).toHaveBeenCalled();
     });
 
-    it('should allow FOUNDATION_DECISION_MAKER to approve ELIGIBLE proposal and emit collab.decision.approved outbox event', async () => {
+    it('rejects a decision before a submitted independent review exists', async () => {
+      mockPrisma.jointProposal.findUnique.mockResolvedValueOnce({
+        id: PROPOSAL_UUID,
+        opportunityId: OPPORTUNITY_UUID,
+        state: 'ELIGIBLE',
+      });
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID });
+      mockReviewService.hasSubmittedReview.mockResolvedValueOnce(false);
+
+      await expect(controller.decisionProposal(
+        { user: decisionMaker },
+        PROPOSAL_UUID,
+        { approved: true, reason: 'Premature decision' },
+      )).rejects.toThrow(BadRequestException);
+      expect(mockPrisma.collaborationDecision.create).not.toHaveBeenCalled();
+    });
+
+    it('should allow FOUNDATION_DECISION_MAKER to approve reviewed ELIGIBLE proposal and emit collab.decision.approved outbox event', async () => {
       mockPrisma.jointProposal.findUnique.mockResolvedValueOnce({
         id: PROPOSAL_UUID,
         opportunityId: OPPORTUNITY_UUID,
@@ -605,10 +666,16 @@ describe('Collaboration Service & Controller Tests', () => {
       mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({
         id: OPPORTUNITY_UUID,
       });
-      mockPrisma.jointProposal.update.mockResolvedValueOnce({
+      mockPrisma.jointProposal.updateMany = jest.fn().mockResolvedValueOnce({ count: 1 });
+      mockPrisma.jointProposal.findUnique.mockResolvedValueOnce({
         id: PROPOSAL_UUID,
         opportunityId: OPPORTUNITY_UUID,
         state: 'APPROVED',
+        participants: [],
+        confirmations: [],
+        endorsements: [],
+        screenings: [],
+        decisions: [],
       });
 
       const res = await controller.decisionProposal(
@@ -630,6 +697,23 @@ describe('Collaboration Service & Controller Tests', () => {
           }),
         }),
       );
+    });
+
+    it('rejects a stale concurrent final decision', async () => {
+      mockPrisma.jointProposal.findUnique.mockResolvedValueOnce({
+        id: PROPOSAL_UUID,
+        opportunityId: OPPORTUNITY_UUID,
+        state: 'ELIGIBLE',
+      });
+      mockPrisma.researchOpportunity.findUnique.mockResolvedValueOnce({ id: OPPORTUNITY_UUID });
+      mockPrisma.jointProposal.updateMany = jest.fn().mockResolvedValueOnce({ count: 0 });
+
+      await expect(controller.decisionProposal(
+        { user: decisionMaker },
+        PROPOSAL_UUID,
+        { approved: false, reason: 'Concurrent rejection' },
+      )).rejects.toThrow(ConflictException);
+      expect(mockPrisma.collaborationDecision.create).not.toHaveBeenCalled();
     });
 
     it('should fail collaboration decision if proposal state is not ELIGIBLE', async () => {

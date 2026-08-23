@@ -45,6 +45,7 @@ const knowledgeCopy: Record<
     expertMatchingDesc: string;
     graphTitle: string;
     graphDesc: string;
+    viewOpportunities: string;
     formatCountry: (country?: string) => string;
   }
 > = {
@@ -77,6 +78,7 @@ const knowledgeCopy: Record<
     graphTitle: "Knowledge Graph & Vận hành Chỉ mục",
     graphDesc:
       "Đang hoàn thiện module kết nối đồ thị tri thức đa phương thức và mạng lưới liên kết khoa học.",
+    viewOpportunities: "Xem cơ hội cộng tác →",
     formatCountry: (c) =>
       c === "VN" ? "Việt Nam" : c === "RU" ? "Liên bang Nga" : c || "N/A",
   },
@@ -109,6 +111,7 @@ const knowledgeCopy: Record<
     graphTitle: "Knowledge Graph & Index Operations",
     graphDesc:
       "Pending multimodal knowledge graph indexing and bilateral science connection mesh.",
+    viewOpportunities: "View collaboration opportunities →",
     formatCountry: (c) =>
       c === "VN" ? "Vietnam" : c === "RU" ? "Russian Federation" : c || "N/A",
   },
@@ -141,6 +144,7 @@ const knowledgeCopy: Record<
     graphTitle: "Граф знаний и индексация",
     graphDesc:
       "Формирование мультимодального графа научных связей Россия — Вьетнам.",
+    viewOpportunities: "Возможности сотрудничества →",
     formatCountry: (c) =>
       c === "VN" ? "Вьетнам" : c === "RU" ? "Российская Федерация" : c || "N/A",
   },
@@ -254,7 +258,7 @@ export default function KnowledgeWorkspaceView({
       {/* Main Results Grid */}
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         {/* Publications section */}
-        <section className="app-panel p-6" aria-label="Publications">
+        <section className="app-panel p-6" aria-label={t.publicationsTitle}>
           <h3 className="text-lg font-black text-text-primary">
             {t.publicationsTitle}
           </h3>
@@ -326,7 +330,7 @@ export default function KnowledgeWorkspaceView({
         </section>
 
         {/* Experts section */}
-        <section className="app-panel p-6" aria-label="Experts">
+        <section className="app-panel p-6" aria-label={t.expertsTitle}>
           <h3 className="text-lg font-black text-text-primary">
             {t.expertsTitle}
           </h3>
@@ -382,6 +386,15 @@ export default function KnowledgeWorkspaceView({
                               : (x.labels.vi ?? x.labels.en ?? x.slug)}
                         </span>
                       ))}
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-card-border flex justify-end">
+                      <Link
+                        href="/workspace/collaboration/opportunities"
+                        className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        <span>{t.viewOpportunities}</span>
+                        <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                      </Link>
                     </div>
                   </article>
                 ))}

@@ -1,7 +1,7 @@
 import Swal, { SweetAlertOptions, SweetAlertResult } from "sweetalert2";
 
 export interface ConfirmActionOptions {
-  title: string;
+  title?: string;
   text?: string;
   html?: string;
   confirmButtonText?: string;
@@ -9,6 +9,18 @@ export interface ConfirmActionOptions {
   isDestructive?: boolean;
   icon?: "warning" | "info" | "question" | "error" | "success";
   darkTheme?: boolean;
+}
+
+const alertCopy = {
+  vi: { confirm: "Xác nhận", cancel: "Hủy", close: "Đóng", understood: "Đã hiểu", action: "Xác nhận thao tác?" },
+  en: { confirm: "Confirm", cancel: "Cancel", close: "Close", understood: "Understood", action: "Confirm this action?" },
+  ru: { confirm: "Подтвердить", cancel: "Отмена", close: "Закрыть", understood: "Понятно", action: "Подтвердить действие?" },
+} as const;
+
+function currentAlertCopy() {
+  if (typeof document === "undefined") return alertCopy.vi;
+  const locale = document.cookie.match(/(?:^|; )vnru_locale=(vi|en|ru)(?:;|$)/)?.[1] as keyof typeof alertCopy | undefined;
+  return alertCopy[locale ?? "vi"];
 }
 
 export interface ToastOptions {
@@ -25,20 +37,21 @@ export async function confirmAction({
   title,
   text,
   html,
-  confirmButtonText = "Xác nhận",
-  cancelButtonText = "Hủy",
+  confirmButtonText,
+  cancelButtonText,
   isDestructive = false,
   icon = "warning",
   darkTheme = false,
 }: ConfirmActionOptions): Promise<SweetAlertResult> {
+  const copy = currentAlertCopy();
   const options: SweetAlertOptions = {
-    title,
+    title: title ?? copy.action,
     text,
     html,
     icon,
     showCancelButton: true,
-    confirmButtonText,
-    cancelButtonText,
+    confirmButtonText: confirmButtonText ?? copy.confirm,
+    cancelButtonText: cancelButtonText ?? copy.cancel,
     focusCancel: true,
     buttonsStyling: false,
     customClass: {
@@ -60,6 +73,16 @@ export async function confirmAction({
   };
 
   return Swal.fire(options);
+}
+
+export async function confirmAndRun<T>(
+  action: () => Promise<T>,
+  options: ConfirmActionOptions = {},
+): Promise<boolean> {
+  const confirmation = await confirmAction(options);
+  if (!confirmation.isConfirmed) return false;
+  await action();
+  return true;
 }
 
 /**
@@ -100,7 +123,7 @@ export function showSuccess(title: string, text?: string, darkTheme = false) {
     icon: "success",
     title,
     text,
-    confirmButtonText: "Đóng",
+    confirmButtonText: currentAlertCopy().close,
     buttonsStyling: false,
     customClass: {
       popup: darkTheme ? "vnru-swal-popup-dark" : "vnru-swal-popup",
@@ -119,7 +142,7 @@ export function showError(title: string, text?: string, darkTheme = false) {
     icon: "error",
     title,
     text,
-    confirmButtonText: "Đã hiểu",
+    confirmButtonText: currentAlertCopy().understood,
     buttonsStyling: false,
     customClass: {
       popup: darkTheme ? "vnru-swal-popup-dark" : "vnru-swal-popup",

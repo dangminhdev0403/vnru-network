@@ -14,6 +14,14 @@ import {
 import { AuthGuard, Public, RequireCapability } from './auth.guard';
 import { GrantService } from './grant.service';
 import { parseOpportunityQuery } from './opportunity-query';
+import {
+  createOpportunitySchema,
+  createProposalSchema,
+  decisionProposalSchema,
+  parseBody,
+  reviseProposalSchema,
+  screenProposalSchema,
+} from './validation';
 
 @Controller('api/v1/collab')
 @UseGuards(AuthGuard)
@@ -37,14 +45,7 @@ export class GrantController {
   @Post('opportunities')
   @RequireCapability('collab.opportunities.create')
   async createOpportunity(@Req() req: any, @Body() body: any) {
-    if (!body || typeof body !== 'object') {
-      throw new BadRequestException({ error: { code: 'INVALID_BODY', message: 'Request body must be an object' } });
-    }
-    return await this.service.createOpportunity(req.user, {
-      id: body.id,
-      title: body.title,
-      description: body.description,
-    });
+    return await this.service.createOpportunity(req.user, parseBody(createOpportunitySchema, body));
   }
 
   @Post('opportunities/:id/publish')
@@ -64,16 +65,7 @@ export class GrantController {
   @Post('proposals')
   @RequireCapability('collab.proposals.create')
   async createProposal(@Req() req: any, @Body() body: any) {
-    if (!body || typeof body !== 'object') {
-      throw new BadRequestException({ error: { code: 'INVALID_BODY', message: 'Request body must be an object' } });
-    }
-    return await this.service.createProposal(req.user, {
-      id: body.id,
-      opportunityId: body.opportunityId,
-      content: body.content,
-      vnParticipant: body.vnParticipant,
-      ruParticipant: body.ruParticipant,
-    });
+    return await this.service.createProposal(req.user, parseBody(createProposalSchema, body));
   }
 
   @Get('proposals/:id')
@@ -84,13 +76,7 @@ export class GrantController {
   @Put('proposals/:id')
   @RequireCapability('collab.proposals.create')
   async reviseProposal(@Req() req: any, @Param('id') id: string, @Body() body: any) {
-    if (!body || typeof body !== 'object') {
-      throw new BadRequestException({ error: { code: 'INVALID_BODY', message: 'Request body must be an object' } });
-    }
-    return await this.service.reviseProposal(req.user, id, {
-      content: body.content,
-      expectedRevision: body.expectedRevision,
-    });
+    return await this.service.reviseProposal(req.user, id, parseBody(reviseProposalSchema, body));
   }
 
   @Post('proposals/:id/confirm')
@@ -118,26 +104,13 @@ export class GrantController {
   @HttpCode(200)
   @RequireCapability('collab.proposals.screen')
   async screenProposal(@Req() req: any, @Param('id') id: string, @Body() body: any) {
-    if (!body || typeof body !== 'object') {
-      throw new BadRequestException({ error: { code: 'INVALID_BODY', message: 'Request body must be an object' } });
-    }
-    return await this.service.screenProposal(req.user, id, {
-      eligible: body.eligible,
-      reason: body.reason,
-    });
+    return await this.service.screenProposal(req.user, id, parseBody(screenProposalSchema, body));
   }
 
   @Post('proposals/:id/decision')
   @HttpCode(200)
   @RequireCapability('collab.decisions.issue_foundation')
   async decisionProposal(@Req() req: any, @Param('id') id: string, @Body() body: any) {
-    if (!body || typeof body !== 'object') {
-      throw new BadRequestException({ error: { code: 'INVALID_BODY', message: 'Request body must be an object' } });
-    }
-    return await this.service.decisionProposal(req.user, id, {
-      approved: body.approved,
-      reason: body.reason,
-      requestRevision: body.requestRevision,
-    });
+    return await this.service.decisionProposal(req.user, id, parseBody(decisionProposalSchema, body));
   }
 }

@@ -1,5 +1,6 @@
 import type {
   AddMemberInput,
+  BootstrapProjectInput,
   CreateMilestoneInput,
   CreateReportInput,
   OutcomeInput,
@@ -34,6 +35,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 
 const body = (value: object): RequestInit => ({ method: "POST", body: JSON.stringify(value) });
 export const projectRepository = {
+  bootstrap: (input: BootstrapProjectInput) => request<Project>("/bootstrap", body(input)),
   list: (signal?: AbortSignal) => request<ProjectList>("/", { signal }),
   getDetail: (id: string, signal?: AbortSignal) => request<Project>(`/${encodeURIComponent(id)}`, { signal }),
   getMembers: (id: string, signal?: AbortSignal) => request<ProjectMember[]>(`/${encodeURIComponent(id)}/members`, { signal }),

@@ -23,6 +23,7 @@ interface Translation {
   };
   goHome: string;
   goBack: string;
+  languageLabel: string;
   operatorNote: string;
   operatorOrg: string;
 }
@@ -46,6 +47,7 @@ const translations: Record<Locale, Translation> = {
     },
     goHome: "Về trang chủ",
     goBack: "Quay lại trang trước",
+    languageLabel: "Chọn ngôn ngữ",
     operatorNote: "Sáng kiến hợp tác được sáng lập và điều phối bởi",
     operatorOrg: "Quỹ Truyền thống và Hữu nghị",
   },
@@ -67,6 +69,7 @@ const translations: Record<Locale, Translation> = {
     },
     goHome: "На главную",
     goBack: "Вернуться назад",
+    languageLabel: "Выбор языка",
     operatorNote: "Инициатива сотрудничества учреждена и координируется",
     operatorOrg: "Фондом «Традиции и дружба»",
   },
@@ -88,6 +91,7 @@ const translations: Record<Locale, Translation> = {
     },
     goHome: "Return to Homepage",
     goBack: "Go to Previous Page",
+    languageLabel: "Language selector",
     operatorNote: "Cooperation initiative founded and coordinated by the",
     operatorOrg: "Traditions and Friendship Foundation",
   },
@@ -138,7 +142,7 @@ export function NotFoundClient() {
           <div
             className="flex items-center p-1 rounded-xl bg-[#f1f5f9] border border-[#e2e8f0] text-xs font-semibold"
             role="group"
-            aria-label="Language selector"
+            aria-label={translations[locale].languageLabel}
           >
             {(["vi", "ru", "en"] as const).map((code) => {
               const isActive = locale === code;

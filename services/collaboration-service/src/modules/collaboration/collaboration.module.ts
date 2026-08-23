@@ -4,8 +4,10 @@ import { PrismaClient } from '../../generated/collaboration';
 import { GrantController } from './grant.controller';
 import { COLLAB_PRISMA, GrantRepository } from './grant.repository';
 import { GrantService } from './grant.service';
+import { ReviewsModule } from '../reviews/reviews.module';
 
 @Module({
+  imports: [ReviewsModule],
   controllers: [GrantController],
   providers: [
     {
@@ -17,5 +19,6 @@ import { GrantService } from './grant.service';
     GrantRepository,
     GrantService,
   ],
+  exports: [GrantService],
 })
 export class CollaborationModule {}

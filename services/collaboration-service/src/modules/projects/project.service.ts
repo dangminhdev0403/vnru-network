@@ -17,10 +17,14 @@ import {
   TerminateDto,
 } from './project-types';
 import { ProjectStatus, MilestoneStatus, ReportStatus, ResourceRole } from '../../generated/projects';
+import { GrantService } from '../collaboration/grant.service';
 
 @Injectable()
 export class ProjectService {
-  constructor(private readonly repository: ProjectRepository) {}
+  constructor(
+    private readonly repository: ProjectRepository,
+    private readonly collaboration: GrantService,
+  ) {}
 
   async bootstrap(dto: BootstrapProjectDto, user: AuthenticatedUser) {
     const context = user.activeContext;
@@ -35,6 +39,7 @@ export class ProjectService {
       throw new ForbiddenException('Access denied: Missing foundation decision or projects management capability');
     }
 
+    await this.collaboration.assertApprovedDecision(dto.decisionRef, dto.proposalRef);
     return this.repository.bootstrapProject(dto);
   }
 

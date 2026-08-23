@@ -21,9 +21,7 @@ export class ReviewRepository {
     if (!isValidUuid(params.reviewerId)) {
       throw new BadRequestException('reviewerId must be a valid UUID');
     }
-    if (!isValidUuid(params.boardRef)) {
-      throw new BadRequestException('boardRef must be a valid UUID');
-    }
+    if (!params.boardRef.trim()) throw new BadRequestException('boardRef is required');
 
     return this.prisma.$transaction(async (tx) => {
       const assignment = await tx.reviewAssignment.create({
@@ -63,12 +61,7 @@ export class ReviewRepository {
       }
       where.reviewerId = filters.reviewerId;
     }
-    if (filters.boardRef) {
-      if (!isValidUuid(filters.boardRef)) {
-        throw new BadRequestException('boardRef must be a valid UUID');
-      }
-      where.boardRef = filters.boardRef;
-    }
+    if (filters.boardRef) where.boardRef = filters.boardRef;
 
     const items = await this.prisma.reviewAssignment.findMany({
       where,
@@ -412,8 +405,6 @@ export class ReviewRepository {
   }
 
   async getRecommendation(proposalRef: string) {
-    const assignment = await this.prisma.reviewAssignment.findFirst({ where: { proposalRef } });
-    if (!assignment) throw new NotFoundException('Proposal recommendation not found');
     return this.prisma.evaluationRecommendation.findUnique({ where: { proposalRef } });
   }
 }

@@ -1,6 +1,6 @@
 import { createResource, defineQuery, defineMutation } from "@dangminhdev04032005/query-resource";
 import { reviewRepository } from "./repository";
-import type { EvaluationInput, ReviewAssignment } from "./types";
+import type { CreateReviewAssignmentInput, EvaluationInput, ReviewAssignment } from "./types";
 
 export const reviewResource = createResource<void>()({
   namespace: ["vnru", "reviews"],
@@ -17,6 +17,9 @@ export const reviewResource = createResource<void>()({
     }),
   },
   mutations: {
+    createAssignment: defineMutation<void, CreateReviewAssignmentInput, ReviewAssignment>({
+      mutationFn: ({ variables }) => reviewRepository.createAssignment(variables),
+    }),
     declareConflict: defineMutation<void, { id: string; declaration: 'CONFLICT' | 'NO_CONFLICT' }, ReviewAssignment>({
       mutationFn: ({ variables }) => reviewRepository.declareConflict(variables.id, variables.declaration),
     }),

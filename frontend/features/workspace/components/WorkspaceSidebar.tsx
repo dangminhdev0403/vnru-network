@@ -20,7 +20,7 @@ const labels: Record<Locale, Record<string, string>> = {
     workspaceOverview: "Không gian làm việc",
     knowledge: "Kho tri thức & Chuyên gia",
     collaboration: "Cộng tác nghiên cứu",
-    opportunities: "Cơ hội tài trợ",
+    opportunities: "Cơ hội nghiên cứu",
     reviews: "Phản biện",
     projects: "Dự án",
     iam: "Quản trị danh tính",

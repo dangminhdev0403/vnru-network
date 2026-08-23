@@ -1,4 +1,4 @@
-import type { AssignmentList, EvaluationInput, ReviewAssignment } from "./types";
+import type { AssignmentList, CreateReviewAssignmentInput, EvaluationInput, ReviewAssignment } from "./types";
 
 export class ReviewApiError extends Error {
   constructor(public status: number, message: string) {
@@ -36,6 +36,9 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 }
 
 export const reviewRepository = {
+  async createAssignment(input: CreateReviewAssignmentInput) {
+    return request<ReviewAssignment>("/assignments", { method: "POST", body: JSON.stringify(input) });
+  },
   async listAssignments(offset = 0, limit = 20, signal?: AbortSignal) {
     const params = new URLSearchParams();
     params.set("limit", String(limit));

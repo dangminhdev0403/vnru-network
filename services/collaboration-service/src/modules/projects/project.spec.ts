@@ -7,6 +7,7 @@ import { ForbiddenException, BadRequestException, ConflictException, NotFoundExc
 describe('Project Service Invariants', () => {
   let service: ProjectService;
   let repository: jest.Mocked<any>;
+  let collaboration: jest.Mocked<any>;
 
   const mockUserPm: AuthenticatedUser = {
     userId: 'user-pm-1111-1111-1111-111111111111',
@@ -71,7 +72,8 @@ describe('Project Service Invariants', () => {
       completeProject: jest.fn(),
       terminateProject: jest.fn(),
     };
-    service = new ProjectService(repository as any);
+    collaboration = { assertApprovedDecision: jest.fn().mockResolvedValue(undefined) };
+    service = new ProjectService(repository as any, collaboration as any);
   });
 
   describe('Bootstrap Idempotency & Validation', () => {
@@ -86,8 +88,15 @@ describe('Project Service Invariants', () => {
     it('successfully bootstraps a new project with foundation decision capability', async () => {
       repository.bootstrapProject.mockResolvedValue(mockProject);
       const result = await service.bootstrap(bootstrapDto, mockUserPm);
+      expect(collaboration.assertApprovedDecision).toHaveBeenCalledWith('dec-123', 'prop-123');
       expect(repository.bootstrapProject).toHaveBeenCalledWith(bootstrapDto);
       expect(result).toEqual(mockProject);
+    });
+
+    it('rejects bootstrap when the decision is not approved for the proposal', async () => {
+      collaboration.assertApprovedDecision.mockRejectedValue(new BadRequestException('Approved collaboration decision not found'));
+      await expect(service.bootstrap(bootstrapDto, mockUserPm)).rejects.toThrow(BadRequestException);
+      expect(repository.bootstrapProject).not.toHaveBeenCalled();
     });
 
     it('denies bootstrap if caller lacks foundation decision or project manage capability', async () => {
