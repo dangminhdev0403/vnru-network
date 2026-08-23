@@ -26,5 +26,18 @@ export interface CreateReviewAssignmentInput {
   proposalRef: string;
   reviewerId: string;
   boardRef: string;
-  proposalSnapshot: { title: string; abstract: string };
+  proposalSnapshot?: { title?: string; abstract?: string };
+}
+
+export interface EvaluationRecommendation {
+  id: string;
+  proposalRef: string;
+  averageScientificMerit: number;
+  averageFeasibility: number;
+  averageBilateralValue: number;
+  averageImpact: number;
+  overallAverage: number;
+  totalReviews: number;
+  createdAt: string;
+  updatedAt: string;
 }

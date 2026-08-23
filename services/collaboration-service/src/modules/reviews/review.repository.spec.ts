@@ -11,6 +11,7 @@ describe('ReviewRepository Transactional & Logic Tests', () => {
       reviewAssignment: {
         findUnique: jest.fn(),
         update: jest.fn(),
+        updateMany: jest.fn().mockResolvedValue({ count: 1 }),
         create: jest.fn(),
       },
       proposalSnapshot: {

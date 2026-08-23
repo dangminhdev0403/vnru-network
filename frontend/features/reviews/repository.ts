@@ -1,4 +1,4 @@
-import type { AssignmentList, CreateReviewAssignmentInput, EvaluationInput, ReviewAssignment } from "./types";
+import type { AssignmentList, CreateReviewAssignmentInput, EvaluationInput, EvaluationRecommendation, ReviewAssignment } from "./types";
 
 export class ReviewApiError extends Error {
   constructor(public status: number, message: string) {
@@ -56,5 +56,8 @@ export const reviewRepository = {
   },
   async submitEvaluation(id: string, evaluation: Required<EvaluationInput>) {
     return request<ReviewAssignment>(`/assignments/${encodeURIComponent(id)}/evaluation/submit`, { method: "POST", body: JSON.stringify(evaluation) });
+  },
+  async getRecommendation(proposalRef: string, signal?: AbortSignal) {
+    return request<EvaluationRecommendation>(`/proposals/${encodeURIComponent(proposalRef)}/recommendation`, { signal });
   }
 };

@@ -15,6 +15,10 @@ export const reviewResource = createResource<void>()({
       inputKey: (id: string) => ["assignment", id],
       queryFn: ({ input, signal }) => reviewRepository.getAssignmentDetail(input, signal),
     }),
+    recommendation: defineQuery({
+      inputKey: (proposalRef: string) => ["recommendation", proposalRef],
+      queryFn: ({ input, signal }) => reviewRepository.getRecommendation(input, signal),
+    }),
   },
   mutations: {
     createAssignment: defineMutation<void, CreateReviewAssignmentInput, ReviewAssignment>({

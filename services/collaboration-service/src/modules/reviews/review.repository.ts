@@ -298,11 +298,15 @@ export class ReviewRepository {
         },
       });
 
-      // Update assignment status to SUBMITTED
-      await tx.reviewAssignment.update({
-        where: { id: assignmentId },
+      // Update assignment status to SUBMITTED atomically
+      const updateResult = await tx.reviewAssignment.updateMany({
+        where: { id: assignmentId, status: { not: 'SUBMITTED' } },
         data: { status: 'SUBMITTED' },
       });
+
+      if (updateResult.count === 0) {
+        throw new BadRequestException('Evaluation already submitted');
+      }
 
       // Upsert scores
       for (const dim of dimensions) {

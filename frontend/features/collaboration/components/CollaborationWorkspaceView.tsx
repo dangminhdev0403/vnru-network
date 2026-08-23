@@ -249,15 +249,13 @@ export default function CollaborationWorkspaceView() {
   const [formTitle, setFormTitle] = useState("");
   const [formDesc, setFormDesc] = useState("");
 
-  const [localDrafts, setLocalDrafts] = useState<ResearchOpportunity[]>([]);
-
   // Proposal modal state
   const [selectedOppForProposal, setSelectedOppForProposal] = useState<ResearchOpportunity | null>(null);
   const [proposalContent, setProposalContent] = useState("");
-  const [vnUserId, setVnUserId] = useState("7809a72b-8a8e-49b8-897b-aa663ee38001");
-  const [vnOrgRef, setVnOrgRef] = useState("ORG_001");
-  const [ruUserId, setRuUserId] = useState("7809a72b-8a8e-49b8-897b-bb663ee38021");
-  const [ruOrgRef, setRuOrgRef] = useState("ORG_002");
+  const [vnUserId, setVnUserId] = useState("");
+  const [vnOrgRef, setVnOrgRef] = useState("");
+  const [ruUserId, setRuUserId] = useState("");
+  const [ruOrgRef, setRuOrgRef] = useState("");
   const [isSubmittingProposal, setIsSubmittingProposal] = useState(false);
 
   const {
@@ -287,13 +285,10 @@ export default function CollaborationWorkspaceView() {
     if (!(await confirmAction({ title: t.confirmCreate })).isConfirmed) return;
 
     try {
-      const created = await createOpportunity({
+      await createOpportunity({
         title: formTitle.trim(),
         description: formDesc.trim() || undefined,
       });
-      if (created) {
-        setLocalDrafts((prev) => [created, ...prev.filter((item) => item.id !== created.id)]);
-      }
       showToast({ title: t.submit, icon: "success" });
       setIsCreateModalOpen(false);
       setFormTitle("");
@@ -313,7 +308,6 @@ export default function CollaborationWorkspaceView() {
     if (!(await confirmAction({ title: t.confirmPublish })).isConfirmed) return;
     try {
       await publishOpportunity(id);
-      setLocalDrafts((prev) => prev.filter((item) => item.id !== id));
       showToast({ title: t.publish, icon: "success" });
       refetch();
     } catch (err) {
@@ -345,12 +339,29 @@ export default function CollaborationWorkspaceView() {
   const openProposalModal = (opp: ResearchOpportunity) => {
     setSelectedOppForProposal(opp);
     setProposalContent("");
-    if (currentUserId && userData?.activeContext?.contextId === "ORG_001") {
-      setVnUserId(currentUserId);
-      setVnOrgRef("ORG_001");
-    } else if (currentUserId && userData?.activeContext?.contextId === "ORG_002") {
-      setRuUserId(currentUserId);
-      setRuOrgRef("ORG_002");
+    const userContextId = userData?.activeContext?.contextId || "";
+    if (currentUserId) {
+      if (userContextId === "ORG_001") {
+        setVnUserId(currentUserId);
+        setVnOrgRef(userContextId);
+        setRuUserId("");
+        setRuOrgRef("");
+      } else if (userContextId === "ORG_002") {
+        setRuUserId(currentUserId);
+        setRuOrgRef(userContextId);
+        setVnUserId("");
+        setVnOrgRef("");
+      } else {
+        setVnUserId(currentUserId);
+        setVnOrgRef(userContextId);
+        setRuUserId("");
+        setRuOrgRef("");
+      }
+    } else {
+      setVnUserId("");
+      setVnOrgRef("");
+      setRuUserId("");
+      setRuOrgRef("");
     }
   };
 
@@ -389,11 +400,7 @@ export default function CollaborationWorkspaceView() {
     }
   };
 
-  // Combine local drafts and query results
-  const allOpportunities = [
-    ...localDrafts.filter((draft) => !opportunities.some((o) => o.id === draft.id)),
-    ...opportunities,
-  ];
+  const allOpportunities = opportunities;
 
   return (
     <div className="mx-auto max-w-[1580px] px-4 py-7 sm:px-6 lg:px-8 lg:py-8">

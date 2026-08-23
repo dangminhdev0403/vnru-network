@@ -26,7 +26,7 @@ export class ReviewController {
       proposalRef: string;
       reviewerId: string;
       boardRef: string;
-      proposalSnapshot: unknown;
+      proposalSnapshot?: unknown;
     },
     @CurrentUser() user: AuthenticatedUser,
   ) {
@@ -34,10 +34,9 @@ export class ReviewController {
       !body ||
       typeof body.proposalRef !== 'string' ||
       typeof body.reviewerId !== 'string' ||
-      typeof body.boardRef !== 'string' ||
-      !body.proposalSnapshot
+      typeof body.boardRef !== 'string'
     ) {
-      throw new BadRequestException('proposalRef, reviewerId, boardRef, and proposalSnapshot are required');
+      throw new BadRequestException('proposalRef, reviewerId, and boardRef are required');
     }
     return this.reviewService.createAssignment(body, user);
   }
@@ -117,15 +116,13 @@ export class ReviewController {
 
   // Recommendation - path 1
   @Get('proposals/:proposalRef/recommendation')
-  @RequireCapability('reviews.assignments.manage')
   async getRecommendation(
     @Param('proposalRef') proposalRef: string,
     @CurrentUser() user: AuthenticatedUser,
   ) {
-    if (!proposalRef || !proposalRef.trim()) {
+    if (!proposalRef?.trim()) {
       throw new BadRequestException('proposalRef is required');
     }
     return this.reviewService.getRecommendation(proposalRef.trim(), user);
   }
-
 }

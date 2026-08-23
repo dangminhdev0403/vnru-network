@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../../generated/collaboration';
 import { GrantController } from './grant.controller';
@@ -7,7 +7,7 @@ import { GrantService } from './grant.service';
 import { ReviewsModule } from '../reviews/reviews.module';
 
 @Module({
-  imports: [ReviewsModule],
+  imports: [forwardRef(() => ReviewsModule)],
   controllers: [GrantController],
   providers: [
     {
@@ -19,6 +19,6 @@ import { ReviewsModule } from '../reviews/reviews.module';
     GrantRepository,
     GrantService,
   ],
-  exports: [GrantService],
+  exports: [GrantService, GrantRepository],
 })
 export class CollaborationModule {}

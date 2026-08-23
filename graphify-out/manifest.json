@@ -1430,8 +1430,8 @@
     "semantic_hash": ""
   },
   "frontend/features/collaboration/components/CollaborationWorkspaceView.tsx": {
-    "mtime": 1787460811.793476,
-    "ast_hash": "3a98cefed8bfef77a547d9d650a76cdf",
+    "mtime": 1787464214.3808188,
+    "ast_hash": "bc35a3047ab01dbc9ee98dd14e073bca",
     "semantic_hash": ""
   },
   "frontend/features/collaboration/types.ts": {
@@ -1570,8 +1570,8 @@
     "semantic_hash": ""
   },
   "frontend/features/collaboration/components/ProposalDetail.tsx": {
-    "mtime": 1787460537.688529,
-    "ast_hash": "7bbbf901034512efdd6bd6748db4b54a",
+    "mtime": 1787464313.446035,
+    "ast_hash": "209c8df9ab70161bcc44d4836e7738fc",
     "semantic_hash": ""
   },
   "frontend/features/collaboration/resource.ts": {
@@ -1620,23 +1620,23 @@
     "semantic_hash": ""
   },
   "frontend/features/reviews/hooks.ts": {
-    "mtime": 1787457692.4109144,
-    "ast_hash": "3e4b4ad0983cc2b27212c1339953bd46",
+    "mtime": 1787464248.2028174,
+    "ast_hash": "d7e5fbfe5752f00bda7421f599557604",
     "semantic_hash": ""
   },
   "frontend/features/reviews/repository.ts": {
-    "mtime": 1787457650.448908,
-    "ast_hash": "001175430e09545ab0c8be9f23fe59a6",
+    "mtime": 1787464234.1678941,
+    "ast_hash": "c20b9058940b4eff2e92a89149b41486",
     "semantic_hash": ""
   },
   "frontend/features/reviews/resource.ts": {
-    "mtime": 1787457654.919889,
-    "ast_hash": "8a6e4199eafd85f7955353df8b57fa68",
+    "mtime": 1787464242.2573795,
+    "ast_hash": "d24d028e11a7232ac4d5e9e232ee0f87",
     "semantic_hash": ""
   },
   "frontend/features/reviews/types.ts": {
-    "mtime": 1787457645.1411433,
-    "ast_hash": "995421e5a8511a8cec915848b38fe1bd",
+    "mtime": 1787464226.237409,
+    "ast_hash": "5b6bb168b42b963ff05f4b6ca39df728",
     "semantic_hash": ""
   },
   "frontend/html-templates/promax.js": {
@@ -1740,13 +1740,13 @@
     "semantic_hash": ""
   },
   "frontend/features/projects/components/BootstrapProjectButton.tsx": {
-    "mtime": 1787460226.088567,
-    "ast_hash": "79f45583df4df407932822fe76c046ce",
+    "mtime": 1787464268.1882336,
+    "ast_hash": "e35fcd43e155212ecb0ed1dc6748bb31",
     "semantic_hash": ""
   },
   "frontend/features/reviews/components/ReviewAssignmentForm.tsx": {
-    "mtime": 1787460471.5431273,
-    "ast_hash": "593a757ea94eb0b4f428e4ef070b00c6",
+    "mtime": 1787464260.1835876,
+    "ast_hash": "90921ae806cd2fea1faea72317f6e745",
     "semantic_hash": ""
   },
   "secrets/dev-actor-session-bridge.js": {
@@ -1830,13 +1830,13 @@
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/collaboration/auth.guard.ts": {
-    "mtime": 1787393641.9007797,
-    "ast_hash": "5740fc0a95fde806498e1914f9ad1c7d",
+    "mtime": 1787464077.5439687,
+    "ast_hash": "faf38a07e04b8e6e17993815f3064054",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/collaboration/collaboration.module.ts": {
-    "mtime": 1787456425.2998285,
-    "ast_hash": "51b2c2a29e059ee312aaf58807fa1753",
+    "mtime": 1787464135.832609,
+    "ast_hash": "b74bd9feb2b88d06cfa2627bd6640f11",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/collaboration/grant-service.spec.ts": {
@@ -1845,18 +1845,18 @@
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/collaboration/grant.controller.ts": {
-    "mtime": 1787437638.6365783,
-    "ast_hash": "d847070494fe4bde7c6266875c839148",
+    "mtime": 1787464092.3045113,
+    "ast_hash": "390b296aa0ab7eb80c65d11cc5aafb42",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/collaboration/grant.repository.ts": {
-    "mtime": 1787455846.844337,
-    "ast_hash": "d3912877c10098c8d1ede2f7e3e66466",
+    "mtime": 1787464066.3928008,
+    "ast_hash": "cc5a23be057f4cea167361341c589245",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/collaboration/grant.service.ts": {
-    "mtime": 1787457200.9611726,
-    "ast_hash": "2ac2f9a133b07b9babdc819c1d71a08f",
+    "mtime": 1787464085.102616,
+    "ast_hash": "dabb6f11e95b3bfae964d0eb170dd72d",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/collaboration/grant.test.ts": {
@@ -1920,8 +1920,8 @@
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/reviews/anonymizer.ts": {
-    "mtime": 1787393642.073536,
-    "ast_hash": "587d27ecf82415494c9b0aa21d6ff94d",
+    "mtime": 1787464118.8612115,
+    "ast_hash": "a30a0ef96e6725d7bd01a1cf718fe2de",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/reviews/auth.guard.ts": {
@@ -1935,18 +1935,18 @@
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/reviews/review.controller.ts": {
-    "mtime": 1787429826.7516692,
-    "ast_hash": "813cdd0eba9d3d86a115e50be1c59575",
+    "mtime": 1787464184.1300366,
+    "ast_hash": "1eef7b80f83fe405957b102f0667d201",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/reviews/review.repository.spec.ts": {
-    "mtime": 1787455518.063669,
-    "ast_hash": "85cd800f64124101c1114e43f4004187",
+    "mtime": 1787464332.1877756,
+    "ast_hash": "57f2e4b0eb9fcefee2b1aa71b2222524",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/reviews/review.repository.ts": {
-    "mtime": 1787456509.195073,
-    "ast_hash": "0e565f936ad99e6d85f107e80794a9da",
+    "mtime": 1787464191.9289005,
+    "ast_hash": "4475659e11b69170e25742b2ae005ae9",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/reviews/review.service.spec.ts": {
@@ -1955,8 +1955,8 @@
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/reviews/review.service.ts": {
-    "mtime": 1787456505.6083877,
-    "ast_hash": "747bf4f12318d24b8c08ebc85680d290",
+    "mtime": 1787464167.6729095,
+    "ast_hash": "dc92ad566c1477f75eea5c2d53abc6b9",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/reviews/review.test.ts": {
@@ -1965,8 +1965,8 @@
     "semantic_hash": ""
   },
   "services/collaboration-service/src/modules/reviews/reviews.module.ts": {
-    "mtime": 1787456425.2998285,
-    "ast_hash": "9402dee288d0f9a4699e65b03d4b487b",
+    "mtime": 1787464140.7379332,
+    "ast_hash": "3ba19afcafe4ce2e8b07d02732ebe7ee",
     "semantic_hash": ""
   },
   "services/collaboration-service/src/shared/errors/http-exception.filter.ts": {
@@ -2137,6 +2137,11 @@
   "docs/decisions/BUSINESS_SERVICE_CONSOLIDATION.md": {
     "mtime": 1787434458.9782927,
     "ast_hash": "05efc50f32540ed637a7fefd7db1bff2",
+    "semantic_hash": ""
+  },
+  "frontend/tests/pre-manual-test-flow.test.mjs": {
+    "mtime": 1787464481.6865544,
+    "ast_hash": "bf96b08a909d784b5612d03a443f6c91",
     "semantic_hash": ""
   }
 }

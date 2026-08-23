@@ -14,10 +14,8 @@ const copy: Record<Locale, { open: string; confirm: string; success: string; err
 
 const initial = {
   proposalRef: "",
-  reviewerId: "7809a72b-8a8e-49b8-897b-aa663ee38005",
-  boardRef: "BOARD_001",
-  title: "",
-  abstract: "",
+  reviewerId: "",
+  boardRef: "",
 };
 
 export function ReviewAssignmentForm({ onCreated }: { onCreated: () => void | Promise<unknown> }) {
@@ -38,7 +36,7 @@ export function ReviewAssignmentForm({ onCreated }: { onCreated: () => void | Pr
       event.preventDefault();
       if (!(await confirmAction({ title: t.confirm })).isConfirmed) return;
       try {
-        await createAssignment({ proposalRef: form.proposalRef, reviewerId: form.reviewerId, boardRef: form.boardRef, proposalSnapshot: { title: form.title, abstract: form.abstract } });
+        await createAssignment({ proposalRef: form.proposalRef.trim(), reviewerId: form.reviewerId.trim(), boardRef: form.boardRef.trim(), proposalSnapshot: undefined });
         setForm(initial);
         setOpen(false);
         await onCreated();
@@ -47,12 +45,12 @@ export function ReviewAssignmentForm({ onCreated }: { onCreated: () => void | Pr
         await showError(t.error, error instanceof Error ? error.message : t.requestFailed);
       }
     }}>
-      {(["proposalRef", "reviewerId", "boardRef", "title", "abstract"] as const).map((field) =>
+      {(["proposalRef", "reviewerId", "boardRef"] as const).map((field) =>
         <label key={field} className="text-xs font-bold text-text-primary">{t.fields[field]}
           <input id={`assignment-${field}`} name={field} required value={form[field]} onChange={(event) => setForm({ ...form, [field]: event.target.value })} className="mt-1 block w-full rounded-lg border border-[var(--border)] bg-[var(--surface-secondary)] p-2 font-normal" />
         </label>
       )}
-      <button disabled={isPending} aria-busy={isPending} className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white disabled:opacity-50">
+      <button type="submit" disabled={isPending} aria-busy={isPending} className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white disabled:opacity-50">
         {isPending ? t.creating : t.create}
       </button>
     </form>}

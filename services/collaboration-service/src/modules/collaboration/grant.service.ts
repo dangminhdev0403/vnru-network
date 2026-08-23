@@ -49,17 +49,32 @@ export class GrantService {
     }
   }
 
-  async listOpportunities(query: OpportunityQuery) {
+  async listOpportunities(query: OpportunityQuery, user?: AuthenticatedUser) {
     const limit = query.limit;
-    const dbOpportunities = await this.repository.findPublishedOpportunities(
-      limit + 1,
-      query.cursor
-        ? {
-            id: query.cursor.id,
-            createdAt: new Date(query.cursor.createdAt),
-          }
-        : undefined,
+    const canManageOpportunities = user?.capabilities?.some((c) =>
+      ['collab.opportunities.create', 'collab.opportunities.publish', 'collab.opportunities.manage'].includes(c),
     );
+
+    const dbOpportunities = canManageOpportunities
+      ? await this.repository.findOpportunities(
+          limit + 1,
+          undefined,
+          query.cursor
+            ? {
+                id: query.cursor.id,
+                createdAt: new Date(query.cursor.createdAt),
+              }
+            : undefined,
+        )
+      : await this.repository.findPublishedOpportunities(
+          limit + 1,
+          query.cursor
+            ? {
+                id: query.cursor.id,
+                createdAt: new Date(query.cursor.createdAt),
+              }
+            : undefined,
+        );
 
     const hasMore = dbOpportunities.length > limit;
     const visible = dbOpportunities.slice(0, limit);

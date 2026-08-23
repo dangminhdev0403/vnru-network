@@ -40,13 +40,20 @@ export class AuthGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    if (this.reflector.getAllAndOverride<boolean>('is_public', [context.getHandler(), context.getClass()])) return true;
+    const isPublic = this.reflector.getAllAndOverride<boolean>('is_public', [context.getHandler(), context.getClass()]);
     const request = context.switchToHttp().getRequest();
     const cookie = request.headers.cookie;
     const authorization = request.headers.authorization;
-    if (!cookie && !authorization) throw new UnauthorizedException('Authentication required');
+
+    if (!cookie && !authorization) {
+      if (isPublic) return true;
+      throw new UnauthorizedException('Authentication required');
+    }
     const baseUrl = process.env.AUTH_SERVICE_URL;
-    if (!baseUrl) throw new ForbiddenException('AUTH_SERVICE_URL not configured');
+    if (!baseUrl) {
+      if (isPublic) return true;
+      throw new ForbiddenException('AUTH_SERVICE_URL not configured');
+    }
 
     let response: Response;
     try {
@@ -55,12 +62,22 @@ export class AuthGuard implements CanActivate {
         signal: AbortSignal.timeout(3000),
       });
     } catch {
+      if (isPublic) return true;
       throw new ForbiddenException('Authentication service unavailable');
     }
-    if (!response.ok) throw new UnauthorizedException('Invalid or expired session');
+    if (!response.ok) {
+      if (isPublic) return true;
+      throw new UnauthorizedException('Invalid or expired session');
+    }
     let user: unknown;
-    try { user = await response.json(); } catch { throw new ForbiddenException('Malformed authentication response'); }
-    if (!isAuthenticatedUser(user)) throw new ForbiddenException('Malformed authentication response');
+    try { user = await response.json(); } catch {
+      if (isPublic) return true;
+      throw new ForbiddenException('Malformed authentication response');
+    }
+    if (!isAuthenticatedUser(user)) {
+      if (isPublic) return true;
+      throw new ForbiddenException('Malformed authentication response');
+    }
 
     const capability = this.reflector.getAllAndOverride<string>(REQUIRE_CAPABILITY_KEY, [context.getHandler(), context.getClass()]);
     if (capability && !user.capabilities.includes(capability)) throw new ForbiddenException(`Missing required capability: ${capability}`);

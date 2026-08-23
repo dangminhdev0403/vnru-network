@@ -8,7 +8,14 @@ export class GrantRepository {
   constructor(@Inject(COLLAB_PRISMA) private readonly prisma: PrismaClient) {}
 
   async findPublishedOpportunities(limit: number, cursor?: { id: string; createdAt: Date }) {
-    const filters: any[] = [{ state: 'PUBLISHED' }];
+    return this.findOpportunities(limit, ['PUBLISHED'], cursor);
+  }
+
+  async findOpportunities(limit: number, states?: OpportunityState[], cursor?: { id: string; createdAt: Date }) {
+    const filters: any[] = [];
+    if (states && states.length > 0) {
+      filters.push({ state: { in: states } });
+    }
     if (cursor) {
       filters.push({
         OR: [
@@ -18,7 +25,7 @@ export class GrantRepository {
       });
     }
     return (this.prisma as any).researchOpportunity.findMany({
-      where: { AND: filters },
+      where: filters.length > 0 ? { AND: filters } : {},
       take: limit,
       orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
     });

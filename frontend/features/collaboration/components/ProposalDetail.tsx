@@ -4,6 +4,7 @@ import * as React from "react";
 import { useState } from "react";
 import { useCurrentUser } from "@/features/auth/server-state";
 import { useProposal, useProposalMutations } from "../hooks";
+import { useEvaluationRecommendation } from "@/features/reviews/hooks";
 import { confirmAndRun, showError, showToast } from "@/lib/alerts";
 import { CollabApiError, getApiErrorMessage } from "../repository";
 import { useLocale, type Locale } from "@/app/HomeMotion";
@@ -45,6 +46,14 @@ const proposalDetailCopy: Record<Locale, {
   russia: string;
   user: string;
   organization: string;
+  reviewSummaryTitle: string;
+  totalReviews: string;
+  scientificMerit: string;
+  feasibility: string;
+  bilateralValue: string;
+  impact: string;
+  overallScore: string;
+  pendingReviewNotice: string;
 }> = {
   vi: {
     title: "Đề xuất Cộng tác Nghiên cứu Song phương",
@@ -91,6 +100,14 @@ const proposalDetailCopy: Record<Locale, {
     russia: "Liên bang Nga (RU)",
     user: "Người dùng",
     organization: "Tổ chức",
+    reviewSummaryTitle: "Báo cáo Tổng hợp Bình duyệt Độc lập (An toàn & Ẩn danh)",
+    totalReviews: "Số lượt chuyên gia đã đánh giá",
+    scientificMerit: "Giá trị khoa học",
+    feasibility: "Tính khả thi",
+    bilateralValue: "Giá trị song phương",
+    impact: "Mức độ tác động",
+    overallScore: "Điểm tổng hợp",
+    pendingReviewNotice: "Chưa có kết quả phản biện hợp lệ. Quỹ chỉ có thể ra quyết định khi đã có báo cáo bình duyệt chuyên gia.",
   },
   en: {
     title: "Bilateral Research Collaboration Proposal",
@@ -137,6 +154,14 @@ const proposalDetailCopy: Record<Locale, {
     russia: "Russian Federation (RU)",
     user: "User",
     organization: "Organization",
+    reviewSummaryTitle: "Independent Review Aggregate Summary (Anonymized)",
+    totalReviews: "Total Submitted Reviews",
+    scientificMerit: "Scientific Merit",
+    feasibility: "Feasibility",
+    bilateralValue: "Bilateral Value",
+    impact: "Impact",
+    overallScore: "Overall Average Score",
+    pendingReviewNotice: "No submitted reviews yet. Decision requires at least one submitted independent review.",
   },
   ru: {
     title: "Заявка на совместное научное сотрудничество",
@@ -183,6 +208,14 @@ const proposalDetailCopy: Record<Locale, {
     russia: "Российская Федерация (RU)",
     user: "Пользователь",
     organization: "Организация",
+    reviewSummaryTitle: "Сводный отчет независимой экспертизы (анонимный)",
+    totalReviews: "Всего рецензий",
+    scientificMerit: "Научная ценность",
+    feasibility: "Практическая реализуемость",
+    bilateralValue: "Двусторонняя значимость",
+    impact: "Потенциал влияния",
+    overallScore: "Итоговый средний балл",
+    pendingReviewNotice: "Рецензии пока отсутствуют. Для принятия решения требуется как минимум одна экспертная оценка.",
   },
 };
 
@@ -190,6 +223,7 @@ export function ProposalDetail({ id }: { id: string }) {
   const { locale } = useLocale();
   const t = proposalDetailCopy[locale] || proposalDetailCopy.vi;
   const { proposal, isLoading, isError, error, refetch } = useProposal(id);
+  const { recommendation, isLoading: isRecLoading } = useEvaluationRecommendation(id);
   const actions = useProposalMutations();
   const { data: user } = useCurrentUser();
 
@@ -409,6 +443,59 @@ export function ProposalDetail({ id }: { id: string }) {
       {(canScreen || canDecide) && (
         <section className="app-panel space-y-4 p-6">
           <h2 className="text-lg font-bold text-text-primary">{t.governanceDecision}</h2>
+
+          {canDecide && (
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-bold text-text-primary">{t.reviewSummaryTitle}</h3>
+                {recommendation && (
+                  <span className="rounded-full bg-blue-100 dark:bg-blue-950/60 px-2.5 py-0.5 text-xs font-bold text-blue-700 dark:text-blue-300">
+                    {t.totalReviews}: {recommendation.totalReviews}
+                  </span>
+                )}
+              </div>
+
+              {recommendation ? (
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-5 pt-1 text-xs">
+                  <div className="rounded-lg bg-[var(--surface)] p-2.5 border border-[var(--border)]">
+                    <span className="text-text-secondary block font-medium">{t.scientificMerit}</span>
+                    <span className="text-base font-bold text-text-primary mt-1 block">
+                      {recommendation.averageScientificMerit.toFixed(1)} / 5.0
+                    </span>
+                  </div>
+                  <div className="rounded-lg bg-[var(--surface)] p-2.5 border border-[var(--border)]">
+                    <span className="text-text-secondary block font-medium">{t.feasibility}</span>
+                    <span className="text-base font-bold text-text-primary mt-1 block">
+                      {recommendation.averageFeasibility.toFixed(1)} / 5.0
+                    </span>
+                  </div>
+                  <div className="rounded-lg bg-[var(--surface)] p-2.5 border border-[var(--border)]">
+                    <span className="text-text-secondary block font-medium">{t.bilateralValue}</span>
+                    <span className="text-base font-bold text-text-primary mt-1 block">
+                      {recommendation.averageBilateralValue.toFixed(1)} / 5.0
+                    </span>
+                  </div>
+                  <div className="rounded-lg bg-[var(--surface)] p-2.5 border border-[var(--border)]">
+                    <span className="text-text-secondary block font-medium">{t.impact}</span>
+                    <span className="text-base font-bold text-text-primary mt-1 block">
+                      {recommendation.averageImpact.toFixed(1)} / 5.0
+                    </span>
+                  </div>
+                  <div className="rounded-lg bg-blue-50 dark:bg-blue-950/40 p-2.5 border border-blue-200 dark:border-blue-800/50 col-span-2 sm:col-span-1">
+                    <span className="text-blue-700 dark:text-blue-300 block font-bold">{t.overallScore}</span>
+                    <span className="text-base font-black text-blue-700 dark:text-blue-300 mt-1 block">
+                      {recommendation.overallAverage.toFixed(1)} / 5.0
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-xs text-amber-700 dark:text-amber-300 font-medium">
+                  {isRecLoading ? t.loading : t.pendingReviewNotice}
+                </p>
+              )}
+            </div>
+          )}
+
           <div>
             <label className="block text-xs font-bold text-text-secondary mb-1">
               {t.reasonLabel} *
@@ -449,7 +536,7 @@ export function ProposalDetail({ id }: { id: string }) {
               <>
                 <button
                   type="button"
-                  disabled={!reason.trim() || actions.isPending} aria-busy={actions.isPending}
+                  disabled={!recommendation || !reason.trim() || actions.isPending} aria-busy={actions.isPending}
                   onClick={() => run(() => actions.decision({ id, approved: true, reason: reason.trim() }))}
                   className="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-700 disabled:opacity-50 cursor-pointer shadow-xs"
                 >
@@ -457,7 +544,7 @@ export function ProposalDetail({ id }: { id: string }) {
                 </button>
                 <button
                   type="button"
-                  disabled={!reason.trim() || actions.isPending} aria-busy={actions.isPending}
+                  disabled={!recommendation || !reason.trim() || actions.isPending} aria-busy={actions.isPending}
                   onClick={() => run(() => actions.decision({ id, approved: false, reason: reason.trim() }))}
                   className="rounded-xl border border-rose-600 bg-rose-50 dark:bg-rose-950/40 px-4 py-2 text-xs font-bold text-rose-700 dark:text-rose-300 hover:bg-rose-100 disabled:opacity-50 cursor-pointer shadow-xs"
                 >
@@ -465,7 +552,7 @@ export function ProposalDetail({ id }: { id: string }) {
                 </button>
                 <button
                   type="button"
-                  disabled={!reason.trim() || actions.isPending} aria-busy={actions.isPending}
+                  disabled={!recommendation || !reason.trim() || actions.isPending} aria-busy={actions.isPending}
                   onClick={() =>
                     run(
                       () => actions.decision({

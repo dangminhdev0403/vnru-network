@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/features/auth/server-state";
 import { useBootstrapProject } from "../hooks";
 import { confirmAction, showError } from "@/lib/alerts";
 import type { CollaborationProposal } from "@/features/collaboration/types";
@@ -16,10 +17,13 @@ export function BootstrapProjectButton({ proposal }: { proposal: CollaborationPr
   const { locale } = useLocale();
   const t = copy[locale] ?? copy.vi;
   const router = useRouter();
+  const { data: user } = useCurrentUser();
+  const caps = (user as { capabilities?: string[] })?.capabilities ?? [];
+  const canBootstrap = caps.includes("collab.decisions.issue_foundation") || caps.includes("projects.projects.manage");
   const { bootstrap, isPending } = useBootstrapProject();
   const decision = proposal.decisions?.find((item) => item.approved);
   const lead = proposal.participants.find((item) => item.country === "VN");
-  if (!decision || !lead) return null;
+  if (!decision || !lead || !canBootstrap) return null;
 
   return <button type="button" disabled={isPending} onClick={async () => {
     if (!(await confirmAction({ title: t.confirm })).isConfirmed) return;

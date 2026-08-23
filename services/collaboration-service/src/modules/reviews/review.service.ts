@@ -1,11 +1,16 @@
-import { Injectable, BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException, ForbiddenException, NotFoundException, Optional, Inject, forwardRef } from '@nestjs/common';
 import { ReviewRepository } from './review.repository';
-import { validateProposalSnapshot } from './anonymizer';
+import { validateProposalSnapshot, buildSanitizedSnapshot } from './anonymizer';
 import type { AuthenticatedUser } from './auth.guard';
+import { GrantRepository } from '../collaboration/grant.repository';
 
 @Injectable()
 export class ReviewService {
-  constructor(private readonly repository: ReviewRepository) {}
+  constructor(
+    private readonly repository: ReviewRepository,
+    @Optional() @Inject(forwardRef(() => GrantRepository))
+    private readonly grantRepository?: GrantRepository,
+  ) {}
 
   async hasSubmittedReview(proposalRef: string) {
     return (await this.repository.getRecommendation(proposalRef)) !== null;
@@ -16,7 +21,7 @@ export class ReviewService {
       proposalRef: string;
       reviewerId: string;
       boardRef: string;
-      proposalSnapshot: unknown;
+      proposalSnapshot?: unknown;
     },
     user: AuthenticatedUser,
   ) {
@@ -24,8 +29,23 @@ export class ReviewService {
       throw new ForbiddenException('Only users with reviews.assignments.manage capability can manage review assignments');
     }
 
-    // Validate proposal snapshot
-    if (!validateProposalSnapshot(params.proposalSnapshot)) {
+    let snapshotToUse = params.proposalSnapshot;
+
+    if (this.grantRepository) {
+      const proposal = await this.grantRepository.findProposalById(params.proposalRef);
+      if (!proposal) {
+        throw new NotFoundException(`Proposal ${params.proposalRef} not found`);
+      }
+      if (proposal.state !== 'ELIGIBLE') {
+        throw new BadRequestException('Proposal must be in ELIGIBLE state for review assignment');
+      }
+      if (proposal.participants.some((p: any) => p.userId === params.reviewerId)) {
+        throw new BadRequestException('Reviewer cannot be a participant of the proposal');
+      }
+      snapshotToUse = buildSanitizedSnapshot(proposal);
+    }
+
+    if (!snapshotToUse || !validateProposalSnapshot(snapshotToUse)) {
       throw new BadRequestException('Proposal snapshot failed anonymization validation. Keys must only be title, abstract, objectives, methodology, expectedOutcomes, keywords. Values and keys cannot contain identity identifiers.');
     }
 
@@ -33,7 +53,7 @@ export class ReviewService {
       proposalRef: params.proposalRef,
       reviewerId: params.reviewerId,
       boardRef: params.boardRef,
-      snapshot: params.proposalSnapshot,
+      snapshot: snapshotToUse,
     });
   }
 
@@ -99,7 +119,7 @@ export class ReviewService {
     }
 
     const assignment = await this.repository.findAssignmentById(assignmentId);
-    if (assignment.reviewerId !== user.userId || !user.activeContext || assignment.boardRef !== user.activeContext.contextId) {
+    if (assignment.reviewerId !== user.userId || assignment.boardRef !== user.activeContext?.contextId) {
       throw new ForbiddenException('You can only save scores for your own assigned assignment');
     }
 
@@ -117,7 +137,7 @@ export class ReviewService {
     }
 
     const assignment = await this.repository.findAssignmentById(assignmentId);
-    if (assignment.reviewerId !== user.userId || !user.activeContext || assignment.boardRef !== user.activeContext.contextId) {
+    if (assignment.reviewerId !== user.userId || assignment.boardRef !== user.activeContext?.contextId) {
       throw new ForbiddenException('You can only submit evaluations for your own assigned assignment');
     }
 
@@ -125,7 +145,10 @@ export class ReviewService {
   }
 
   async getRecommendation(proposalRef: string, user: AuthenticatedUser) {
-    if (!user.capabilities.includes('reviews.assignments.manage') && !user.capabilities.includes('reviews.recommendations.view')) {
+    const hasPermission = user.capabilities.some((c) =>
+      ['reviews.assignments.manage', 'reviews.recommendations.view', 'collab.decisions.issue_foundation'].includes(c),
+    );
+    if (!hasPermission) {
       throw new ForbiddenException('Insufficient permissions to view proposal recommendations');
     }
 

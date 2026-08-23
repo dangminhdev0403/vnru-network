@@ -30,7 +30,7 @@ export class GrantController {
 
   @Get('opportunities')
   @Public()
-  async listOpportunities(@Query() raw: Record<string, unknown>) {
+  async listOpportunities(@Req() req: any, @Query() raw: Record<string, unknown>) {
     let query;
     try {
       query = parseOpportunityQuery({ ...raw });
@@ -39,7 +39,7 @@ export class GrantController {
         error: { code: 'INVALID_QUERY', message: err?.message || 'Invalid query parameters' },
       });
     }
-    return await this.service.listOpportunities(query);
+    return await this.service.listOpportunities(query, req.user);
   }
 
   @Post('opportunities')
