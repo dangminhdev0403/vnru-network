@@ -121,11 +121,13 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
             fill
             priority
             sizes="100vw"
-            className="pointer-events-none object-cover object-center"
+            className="pointer-events-none object-cover object-center opacity-55 sm:opacity-75 lg:opacity-95"
           />
+          <div className="absolute inset-0 bg-white/60 lg:bg-[linear-gradient(90deg,rgba(255,255,255,.8)_0%,rgba(255,255,255,.64)_30%,rgba(255,255,255,.08)_50%,rgba(239,246,255,.24)_68%,rgba(239,246,255,.36)_100%)]" aria-hidden="true" />
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-blue-50/15 to-transparent" aria-hidden="true" />
           <div className="relative mx-auto grid max-w-[1460px] gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch">
-            {/* Left Column */}
-            <div className="flex max-w-3xl flex-col justify-between">
+            {/* Left Column: Slides in smoothly from the Left */}
+            <div className="flex max-w-3xl flex-col justify-between animate-slide-in-left">
               <div>
                 <div>
                   <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-4 py-1.5 text-xs sm:text-[13px] font-bold text-blue-700 shadow-sm shadow-blue-500/5 backdrop-blur transition hover:border-blue-300">
@@ -223,8 +225,8 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
               </div>
             </div>
 
-            {/* Right Column */}
-            <div className="relative mx-auto w-full max-w-[560px] lg:max-w-none">
+            {/* Right Column: Slides in smoothly from the Right */}
+            <div className="relative mx-auto w-full max-w-[560px] lg:max-w-none animate-slide-in-right">
               <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-white/50 bg-sky-50/36 p-6 shadow-[0_20px_50px_-20px_rgba(37,99,235,0.2)] backdrop-blur-sm transition duration-500 hover:bg-sky-50/46 hover:shadow-[0_25px_60px_-15px_rgba(37,99,235,0.26)] sm:p-7">
                 <div className="absolute -right-12 -top-12 size-48 rounded-full bg-blue-100/60 blur-3xl" aria-hidden="true" />
                 <div className="absolute -left-12 -bottom-12 size-48 rounded-full bg-sky-100/60 blur-3xl" aria-hidden="true" />
@@ -461,6 +463,68 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
         </div>
       </footer>
 
+      <style jsx>{`
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-40px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(40px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(18px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        .animate-slide-in-left {
+          animation: slideInLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .animate-slide-in-right {
+          animation: slideInRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out both;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .animate-slide-in-left,
+          .animate-slide-in-right,
+          .animate-fade-in-up,
+          .animate-fade-in {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
