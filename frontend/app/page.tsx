@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { PublicHome } from "@/features/public-home/components/PublicHome";
+import { GuestHomeV2 } from "@/features/public-v2/components/GuestHomeV2";
 import {
   getCurrentSession,
   resolveLandingPath,
@@ -21,7 +21,7 @@ export default async function Home() {
     : "/account";
 
   return (
-    <PublicHome
+    <GuestHomeV2
       isAuthenticated={Boolean(session)}
       workspaceHref={workspaceHref}
     />
