@@ -72,36 +72,24 @@ Application/workspace/admin UI must share that design DNA without copying market
 
 Never turn the workspace into a generic SaaS/admin template or turn operational pages into marketing hero layouts.
 
-## 4. Mandatory browser-first rule
+## 4. Browser verification policy — On-Demand & Proposal-First
 
-For web UI targets, real browser inspection through the configured **Chrome DevTools MCP** is mandatory.
+For web UI development, standard code completion relies on static validation (lint, typecheck, component tests, impeccable anti-pattern checks).
 
-A UI task cannot PASS from any combination of:
+- **No Auto-Launch After Code Edits**: The agent must **NOT** automatically launch Chrome or Chrome DevTools MCP after editing code.
+- **Code Done -> Report Immediately**: Immediately report the completed changes, touched files, and static validation results.
+- **Propose Browser Testing**: If real interactive browser testing or visual inspection is recommended, propose it in the report (e.g. *"Bạn có muốn mở Chrome để test tương tác thực tế luồng này không?"*).
+- **Explicit Trigger**: Chrome DevTools MCP is executed only when:
+  1. The user explicitly requests browser testing (e.g. `test browser`, `mở chrome test`, `audit UI browser`); or
+  2. The user approves an agent's proposal for browser verification.
 
-- unit/component tests;
-- lint/typecheck;
-- production build;
-- code inspection;
-- DOM existence;
-- absence of compile errors;
-- one desktop screenshot;
-- screenshots captured only before edits.
+## 5. Working loop
 
-If Chrome DevTools MCP is unavailable, mark the browser/visual gate `BLOCKED`. Do not silently substitute manual assumptions or code inspection.
+### Standard code fix task:
+`discover target -> identify root cause -> edit smallest coherent scope -> validate (lint / typecheck / impeccable) -> report immediately -> propose browser testing if needed`
 
-## 5. Required working loop
-
-Audit-only:
-
-`discover surfaces -> run app -> render -> interact -> inspect -> capture -> classify -> report`
-
-Fix task:
-
-`discover surfaces -> baseline screenshots -> visually inspect -> classify -> identify root cause -> edit smallest coherent scope -> validate -> reload -> interact -> inspect again -> capture after -> compare before/after -> repeat until stable -> final regression`
-
-After the final source change, perform a fresh rendered-browser pass. Evidence captured before the final edit is stale.
-
-Before reporting a defect, verify current HEAD/source and reproduce it once in the current browser session when practical. Do not report stale defects from older snapshots.
+### Dedicated UI audit / Approved browser verification task:
+`discover surfaces -> run app -> open Chrome DevTools MCP -> render -> interact -> inspect -> capture -> classify -> report`
 
 ## 6. Repository-wide route/surface discovery
 
@@ -437,9 +425,9 @@ Screenshots are evidence, not decoration. Visually inspect them and state what c
 
 Never claim “fixed” because CSS compiled.
 
-## 23. Repository-wide final regression
+## 23. Repository-wide UI regression (Dedicated Browser Audits Only)
 
-After all fixes, perform a fresh pass across the complete affected frontend surface set.
+When performing a dedicated UI audit or user-approved full browser pass, inspect the affected frontend surfaces:
 
 For repository-wide UI work, include representative coverage of:
 
@@ -452,7 +440,7 @@ For repository-wide UI work, include representative coverage of:
 
 Recheck shared-shell neighbors after any shell/navigation/token change.
 
-Inspect again:
+Inspect:
 
 - layout;
 - typography;
@@ -465,8 +453,6 @@ Inspect again:
 - Console;
 - Network;
 - auth/session behavior where relevant.
-
-One clean browser pass must occur after the final edit.
 
 ## 24. Strict scorecard
 
@@ -524,7 +510,7 @@ A repository-wide UI pass may be called `stable for integration` only when:
 - browser Network behavior is sane for tested flows;
 - keyboard/focus basics work on primary actions;
 - security/auth boundaries remain intact;
-- final rendered-browser evidence was captured after the final source change.
+- static code gates pass (lint/typecheck/impeccable), and browser evidence is provided if running under an explicit browser-testing profile.
 
 P2/P3 may remain only when explicitly documented.
 

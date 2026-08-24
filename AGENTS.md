@@ -63,7 +63,13 @@ When present locally, the following taste skills may be consulted as supporting 
 - `.agents/skills/redesign-existing-projects/`
 - `.agents/skills/stitch-design-taste/`
 
-UI is not considered verified merely because tests/build pass. For web UI work, final rendered-browser inspection through Chrome DevTools MCP is required by the skill. Browser screenshots are evidence, not decoration: the agent must visually inspect the rendered result after the final source change.
+UI is validated by code checks and static gates during development. For web UI work, real rendered-browser inspection (via Chrome DevTools MCP) is on-demand: after completing code edits and standard validation, the agent must report immediately. Do NOT automatically launch Chrome without approval; propose browser testing to the user if interactive or visual verification is recommended.
+
+## Browser Verification Policy (On-Demand / Proposal-First)
+
+- **Code Done -> Report Immediately**: After code edits or UI adjustments, run the smallest reliable validation (e.g. lint, typecheck, or focused tests) and immediately return the report of changed files and results.
+- **No Automatic Chrome Launch**: Do not automatically start dev servers and launch Chrome DevTools MCP after editing code unless explicitly requested by the user in the prompt (e.g., `test browser`, `mở chrome test`).
+- **Propose When Needed**: If human-like interactive or visual verification is needed, explicitly propose it in the completion report (e.g., "Bạn có muốn mở Chrome để test tương tác thực tế luồng này không?") and wait for user confirmation.
 
 ## UI Quality & Impeccable Gate
 
