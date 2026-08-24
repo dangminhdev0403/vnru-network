@@ -1,93 +1,9 @@
 {
   "_metadata": {
-    "description": "NON-SECRET synthetic IAM fixtures for Module 2 and Module 3 workflow roles. Matches the Keycloak test identities.",
+    "description": "NON-SECRET synthetic IAM fixtures for the current workflow roles. Knowledge Curator and the duplicate generic Researcher fixture are intentionally removed from the active test set.",
     "warning": "This file does not contain passwords or credentials. Keycloak OIDC owns user credentials. To authenticate as these users, Keycloak must be configured with identities matching the issuer and subject specified below."
   },
   "fixtures": [
-    {
-      "user": {
-        "id": "7809a72b-8a8e-49b8-897b-bb663ee38711",
-        "email": "curator@vnru.network",
-        "status": "ACTIVE"
-      },
-      "externalIdentity": {
-        "id": "7809a72b-8a8e-49b8-897b-bb663ee38712",
-        "issuer": "http://127.0.0.1:8081/realms/vnru",
-        "subject": "curator-keycloak-subject-uuid-1234"
-      },
-      "role": {
-        "id": "7809a72b-8a8e-49b8-897b-bb663ee38713",
-        "name": "KNOWLEDGE_CURATOR"
-      },
-      "permissions": [
-        {
-          "id": "7809a72b-8a8e-49b8-897b-bb663ee38714",
-          "key": "knowledge.workspace.view"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-bb663ee38715",
-          "key": "experts.matches.view"
-        }
-      ],
-      "roleAssignment": {
-        "id": "7809a72b-8a8e-49b8-897b-bb663ee38716",
-        "contextType": "PLATFORM",
-        "contextId": "GLOBAL",
-        "status": "ACTIVE"
-      }
-    },
-    {
-      "user": {
-        "id": "7809a72b-8a8e-49b8-897b-aa663ee38001",
-        "email": "researcher@vnru.network",
-        "status": "ACTIVE"
-      },
-      "externalIdentity": {
-        "id": "7809a72b-8a8e-49b8-897b-aa663ee38002",
-        "issuer": "http://127.0.0.1:8081/realms/vnru",
-        "subject": "815ecd3d-d4b2-4035-9060-bf96e6997831"
-      },
-      "role": {
-        "id": "7809a72b-8a8e-49b8-897b-ff663ee38001",
-        "name": "RESEARCHER"
-      },
-      "permissions": [
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38017",
-          "key": "knowledge.workspace.view"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38001",
-          "key": "collab.proposals.create"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38002",
-          "key": "collab.proposals.confirm_paired"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38003",
-          "key": "collab.proposals.submit"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
-          "key": "projects.projects.view"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38005",
-          "key": "projects.milestones.update"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38006",
-          "key": "projects.reports.submit"
-        }
-      ],
-      "roleAssignment": {
-        "id": "7809a72b-8a8e-49b8-897b-dd663ee38001",
-        "contextType": "ORGANIZATION",
-        "contextId": "e1d5a7d3-7d1a-47ef-b203-d2d89f7db387",
-        "status": "ACTIVE"
-      }
-    },
     {
       "user": {
         "id": "7809a72b-8a8e-49b8-897b-bb663ee38021",
@@ -104,39 +20,18 @@
         "name": "RESEARCHER"
       },
       "permissions": [
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38020",
-          "key": "knowledge.workspace.view"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38021",
-          "key": "collab.proposals.create"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38022",
-          "key": "collab.proposals.confirm_paired"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38023",
-          "key": "collab.proposals.submit"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38024",
-          "key": "projects.projects.view"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38025",
-          "key": "projects.milestones.update"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38026",
-          "key": "projects.reports.submit"
-        }
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38020", "key": "knowledge.workspace.view" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38021", "key": "collab.proposals.create" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38022", "key": "collab.proposals.confirm_paired" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38023", "key": "collab.proposals.submit" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38024", "key": "projects.projects.view" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38025", "key": "projects.milestones.update" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38026", "key": "projects.reports.submit" }
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38021",
         "contextType": "ORGANIZATION",
-        "contextId": "ORG_002",
+        "contextId": "a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7",
         "status": "ACTIVE"
       }
     },
@@ -156,23 +51,14 @@
         "name": "ORGANIZATION_REPRESENTATIVE"
       },
       "permissions": [
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38007",
-          "key": "collab.proposals.endorse"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
-          "key": "projects.projects.view"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38008",
-          "key": "projects.reports.view_org"
-        }
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38007", "key": "collab.proposals.endorse" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38004", "key": "projects.projects.view" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38008", "key": "projects.reports.view_org" }
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38002",
         "contextType": "ORGANIZATION",
-        "contextId": "ORG_001",
+        "contextId": "e1d5a7d3-7d1a-47ef-b203-d2d89f7db387",
         "status": "ACTIVE"
       }
     },
@@ -192,23 +78,14 @@
         "name": "ORGANIZATION_REPRESENTATIVE"
       },
       "permissions": [
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38027",
-          "key": "collab.proposals.endorse"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38028",
-          "key": "projects.projects.view"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38029",
-          "key": "projects.reports.view_org"
-        }
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38027", "key": "collab.proposals.endorse" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38028", "key": "projects.projects.view" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38029", "key": "projects.reports.view_org" }
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38022",
         "contextType": "ORGANIZATION",
-        "contextId": "ORG_002",
+        "contextId": "a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7",
         "status": "ACTIVE"
       }
     },
@@ -228,18 +105,9 @@
         "name": "REVIEWER"
       },
       "permissions": [
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38009",
-          "key": "reviews.assignments.view_assigned"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38010",
-          "key": "reviews.evaluations.score"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38011",
-          "key": "reviews.evaluations.submit"
-        }
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38009", "key": "reviews.assignments.view_assigned" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38010", "key": "reviews.evaluations.score" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38011", "key": "reviews.evaluations.submit" }
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38003",
@@ -264,30 +132,12 @@
         "name": "COLLABORATION_MANAGER"
       },
       "permissions": [
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38012",
-          "key": "collab.opportunities.create"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38013",
-          "key": "collab.opportunities.publish"
-        },
-        {
-          "id": "343736e9-fa64-487f-b7ea-17e563591ad7",
-          "key": "collab.proposals.screen"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38014",
-          "key": "reviews.assignments.manage"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
-          "key": "projects.projects.view"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38015",
-          "key": "projects.reports.approve"
-        }
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38012", "key": "collab.opportunities.create" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38013", "key": "collab.opportunities.publish" },
+        { "id": "343736e9-fa64-487f-b7ea-17e563591ad7", "key": "collab.proposals.screen" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38014", "key": "reviews.assignments.manage" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38004", "key": "projects.projects.view" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38015", "key": "projects.reports.approve" }
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38004",
@@ -312,14 +162,8 @@
         "name": "FOUNDATION_DECISION_MAKER"
       },
       "permissions": [
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38016",
-          "key": "collab.decisions.issue_foundation"
-        },
-        {
-          "id": "7809a72b-8a8e-49b8-897b-ee663ee38004",
-          "key": "projects.projects.view"
-        }
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38016", "key": "collab.decisions.issue_foundation" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38004", "key": "projects.projects.view" }
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38005",
@@ -344,18 +188,9 @@
         "name": "SUPER_ADMIN"
       },
       "permissions": [
-        {
-          "id": "f4f7c8c6-172b-4574-960a-75019392d2f1",
-          "key": "iam.users.manage"
-        },
-        {
-          "id": "64df1450-c2f2-477b-910f-856181ca61d7",
-          "key": "iam.roles.manage"
-        },
-        {
-          "id": "29a718ba-f38a-4d47-882d-12791cd9a90f",
-          "key": "iam.audit.view"
-        }
+        { "id": "f4f7c8c6-172b-4574-960a-75019392d2f1", "key": "iam.users.manage" },
+        { "id": "64df1450-c2f2-477b-910f-856181ca61d7", "key": "iam.roles.manage" },
+        { "id": "29a718ba-f38a-4d47-882d-12791cd9a90f", "key": "iam.audit.view" }
       ],
       "roleAssignment": {
         "id": "7a23f350-6cbb-49d9-a63a-10e2f136d20e",
