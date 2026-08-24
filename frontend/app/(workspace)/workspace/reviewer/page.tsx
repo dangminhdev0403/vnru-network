@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ReviewerTaskWorkspace } from '@/features/workspace/components/ReviewerTaskWorkspace';
+import { ReviewerInteractiveWorkspace } from '@/features/workspace/components/ReviewerInteractiveWorkspace';
 import { requireWorkspaceCapability } from '@/features/auth/workspace-server';
 
 export const metadata: Metadata = {
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   await requireWorkspaceCapability('/workspace/reviewer', ['reviews.assignments.view_assigned']);
-  return <ReviewerTaskWorkspace />;
+  return <ReviewerInteractiveWorkspace />;
 }
