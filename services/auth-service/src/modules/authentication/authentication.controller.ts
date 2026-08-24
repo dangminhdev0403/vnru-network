@@ -5,30 +5,25 @@ import {
   Delete,
   ForbiddenException,
   Get,
-  Headers,
   NotFoundException,
   Param,
   Patch,
   Post,
-  Query,
   Req,
   Res,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import type { Response } from 'express';
-import { validateConfig } from '../../config';
 import { DEFAULT_MAX_SESSION_TTL_MS } from '../session/session-public';
 import { SessionService } from '../session/session-public';
 import {
   AuthenticatedUser,
   AuthenticationService,
-  CallbackResult,
 } from './authentication.service';
 import {
   AuthenticatedRequestGuard,
   extractSessionCookie,
-  RequireMfa,
   SESSION_COOKIE_NAME,
 } from './authenticated-request-context';
 import type {
@@ -36,11 +31,12 @@ import type {
   RequestWithCookies,
 } from './authenticated-request-context';
 import { IdentityService } from '../identity/identity.service';
-import {
-  KeycloakProfileService,
-  MfaStatus,
-  UserProfile,
-} from './keycloak-profile.service';
+
+interface UserProfile {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
 
 export const SESSION_COOKIE_OPTIONS = {
   httpOnly: true,
@@ -56,21 +52,25 @@ export class AuthenticationController {
     private readonly authService: AuthenticationService,
     private readonly sessionService: SessionService,
     private readonly identityService: IdentityService,
-    private readonly profileService: KeycloakProfileService,
   ) {}
 
-  private async profileSubject(req: AuthenticatedRequest): Promise<string> {
+  private async profileUser(req: AuthenticatedRequest) {
     const userId = req.authContext?.userId;
     if (!userId) throw new UnauthorizedException('Authentication required');
-    const subject = await this.identityService.findExternalSubject(userId);
-    if (!subject) throw new NotFoundException('External identity not found');
-    return subject;
+    const user = await this.identityService.findById(userId);
+    if (!user) throw new NotFoundException('Identity not found');
+    return user;
   }
 
   @Get('profile')
   @UseGuards(AuthenticatedRequestGuard)
   async getProfile(@Req() req: AuthenticatedRequest): Promise<UserProfile> {
-    return this.profileService.get(await this.profileSubject(req));
+    const user = await this.profileUser(req);
+    return {
+      firstName: user.firstName ?? '',
+      lastName: user.lastName ?? '',
+      email: user.email ?? '',
+    };
   }
 
   @Patch('profile')
@@ -87,75 +87,50 @@ export class AuthenticationController {
     ) {
       throw new BadRequestException('Invalid profile');
     }
-    return this.profileService.update(await this.profileSubject(req), {
+    const userId = (await this.profileUser(req)).id;
+    const user = await this.identityService.updateProfile(userId, {
       firstName: body.firstName.trim(),
       lastName: body.lastName.trim(),
     });
+    return {
+      firstName: user.firstName ?? '',
+      lastName: user.lastName ?? '',
+      email: user.email ?? '',
+    };
   }
 
   @Get('mfa')
   @UseGuards(AuthenticatedRequestGuard)
-  async getMfaStatus(@Req() req: AuthenticatedRequest): Promise<MfaStatus> {
-    return this.profileService.getMfaStatus(await this.profileSubject(req));
-  }
-
-  @Delete('mfa')
-  @UseGuards(AuthenticatedRequestGuard)
-  @RequireMfa()
-  async disableMfa(@Req() req: AuthenticatedRequest): Promise<MfaStatus> {
-    return this.profileService.disableMfa(await this.profileSubject(req));
-  }
-
-  private getConfiguredRedirectUri(): string {
-    return validateConfig().KEYCLOAK_REDIRECT_URI;
-  }
-
-  @Get('login')
-  async login(@Res() res: Response): Promise<void> {
-    const { authorizationUrl } = await this.authService.beginLogin();
-    res.redirect(authorizationUrl);
-  }
-
-  @Get('callback')
-  async callback(
-    @Query() query: Record<string, string | undefined>,
-    @Req() _req: RequestWithCookies,
-    @Res({ passthrough: true }) res: Response,
-  ): Promise<Pick<CallbackResult, 'user'>> {
-    if (!query || typeof query.state !== 'string' || !query.state.trim()) {
-      throw new BadRequestException('Missing or invalid state parameter');
-    }
-    if (typeof query.code !== 'string' || !query.code.trim()) {
-      throw new BadRequestException('Missing or invalid code parameter');
-    }
-
-    const configuredRedirectUri = this.getConfiguredRedirectUri();
-    const callbackUrl = new URL(configuredRedirectUri);
-    for (const [key, value] of Object.entries(query)) {
-      if (typeof value === 'string') {
-        callbackUrl.searchParams.set(key, value);
-      }
-    }
-
-    const result = await this.authService.handleCallback({
-      currentUrl: callbackUrl.toString(),
-      state: query.state.trim(),
-    });
-
-    res.cookie(SESSION_COOKIE_NAME, result.token, SESSION_COOKIE_OPTIONS);
-
-    return {
-      user: result.user,
-    };
+  async getMfaStatus(
+    @Req() req: AuthenticatedRequest,
+  ): Promise<{ enabled: false }> {
+    await this.profileUser(req);
+    return { enabled: false };
   }
 
   @Post('exchange')
   async exchange(
-    @Headers('authorization') authorization?: string,
+    @Body()
+    body: {
+      account?: unknown;
+      timestamp?: unknown;
+      signature?: unknown;
+    },
   ): Promise<{ token: string }> {
-    const accessToken = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
-    if (!accessToken) throw new UnauthorizedException('Bearer token required');
-    const result = await this.authService.exchangeKeycloakToken(accessToken);
+    if (
+      typeof body?.account !== 'string' ||
+      !body.account.trim() ||
+      typeof body.timestamp !== 'string' ||
+      typeof body.signature !== 'string' ||
+      !/^[a-f0-9]{64}$/i.test(body.signature)
+    ) {
+      throw new BadRequestException('Invalid authentication assertion');
+    }
+    const result = await this.authService.exchangeAuthJsAssertion({
+      account: body.account.trim(),
+      timestamp: body.timestamp,
+      signature: body.signature,
+    });
     return { token: result.token };
   }
 
@@ -212,13 +187,6 @@ export class AuthenticationController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<{ ok: boolean; logoutUrl: string }> {
     const token = extractSessionCookie(req) ?? '';
-    const currentUser = await this.authService.getCurrentUser(token);
-    if (currentUser) {
-      const subject = await this.identityService.findExternalSubject(
-        currentUser.userId,
-      );
-      if (subject) await this.profileService.logout(subject);
-    }
     await this.authService.logout(token);
 
     res.clearCookie(SESSION_COOKIE_NAME, {

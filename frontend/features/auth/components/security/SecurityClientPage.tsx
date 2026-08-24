@@ -58,19 +58,19 @@ const securityCopy: Record<
   }
 > = {
   vi: {
-    gateBadge: "Cổng bảo mật Keycloak OIDC",
+    gateBadge: "Cổng bảo mật Auth.js",
     title: "Phiên hoạt động & Quản lý Bảo mật",
     description:
       "Giám sát các phiên trình duyệt được mã hóa và đảm bảo ranh giới danh tính trên các dịch vụ song phương.",
     refreshBtn: "Làm mới trạng thái",
     profileTitle: "Hồ sơ cá nhân",
     profileDesc:
-      "Cập nhật tên, email và thông tin tài khoản tại cổng danh tính Keycloak.",
+      "Cập nhật tên, email và thông tin tài khoản trong hồ sơ ứng dụng.",
     profileAction: "Chỉnh sửa hồ sơ",
     mfaTitle: "Xác thực Đa yếu tố (MFA)",
     mfaEnforced: "Bắt buộc",
     mfaDesc:
-      "Quản trị bởi cơ quan thẩm quyền danh tính Quỹ Truyền thống và Hữu nghị thông qua Keycloak.",
+      "Quản trị bởi cơ quan thẩm quyền danh tính Quỹ Truyền thống và Hữu nghị thông qua Auth.js.",
     mfaManaged: "Quản lý 2FA",
     sessionsHeader: "Danh sách Phiên đang Hoạt động",
     sessionsSubheader:
@@ -109,19 +109,19 @@ const securityCopy: Record<
     actionColumn: "Hành động",
   },
   en: {
-    gateBadge: "Keycloak OIDC Security Gate",
+    gateBadge: "Auth.js Security Gate",
     title: "Security & Active Sessions",
     description:
       "Monitor cryptographic browser sessions and ensure identity boundaries across bilateral services.",
     refreshBtn: "Refresh Status",
     profileTitle: "Personal Profile",
     profileDesc:
-      "Update your name, email, and account details in the Keycloak identity portal.",
+      "Update your name, email, and account details in your application profile.",
     profileAction: "Edit profile",
     mfaTitle: "Multi-Factor Authentication (MFA)",
     mfaEnforced: "Enforced",
     mfaDesc:
-      "Governed by the Traditions and Friendship Foundation identity authority via Keycloak.",
+      "Governed by the Traditions and Friendship Foundation identity authority via Auth.js.",
     mfaManaged: "Manage 2FA",
     sessionsHeader: "Cryptographically Active Sessions",
     sessionsSubheader: "Validated session tokens bound to your active context.",
@@ -159,19 +159,19 @@ const securityCopy: Record<
     actionColumn: "Action",
   },
   ru: {
-    gateBadge: "Шлюз безопасности Keycloak OIDC",
+    gateBadge: "Шлюз безопасности Auth.js",
     title: "Безопасность и активные сессии",
     description:
       "Мониторинг зашифрованных сессий браузера и обеспечение границ безопасности двусторонних сервисов.",
     refreshBtn: "Обновить статус",
     profileTitle: "Личный профиль",
     profileDesc:
-      "Измените имя, email и данные учетной записи в портале Keycloak.",
+      "Измените имя, email и данные учетной записи в профиле приложения.",
     profileAction: "Изменить профиль",
     mfaTitle: "Многофакторная аутентификация (MFA)",
     mfaEnforced: "Обязательно",
     mfaDesc:
-      "Управляется центром идентификации Фонда «Традиции и дружба» через Keycloak.",
+      "Управляется центром идентификации Фонда «Традиции и дружба» через Auth.js.",
     mfaManaged: "Управление 2FA",
     sessionsHeader: "Активные зашифрованные сессии",
     sessionsSubheader:

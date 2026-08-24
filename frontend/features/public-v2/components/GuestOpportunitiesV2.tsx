@@ -130,10 +130,10 @@ const COPY: Record<Locale, {
     ctaBtn: "Launch a Research Opportunity →",
   },
   ru: {
-    kicker: "Приоритетные программы научно-технического сотрудничества · 2026",
+    kicker: "Приоритетные программы НТИ · Фонд «Традиции и дружба»",
     title1: "Возможности совместных",
     title2: "научных исследований",
-    title3: "Россия – Вьетнам",
+    title3: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
     intro: "Конкурсы совместных исследовательских проектов, грантовые программы и формирование двусторонних научных коллективов институтов и университетов России и Вьетнама.",
     searchPlaceholder: "Поиск по названию конкурса, коду, ключевым словам, дисциплине...",
     searchBtn: "Искать",
@@ -336,7 +336,7 @@ export function GuestOpportunitiesV2() {
                             {opp.code}
                           </span>
 
-                          <span className="text-xs font-bold text-slate-500">
+                          <span className="rounded-full border border-blue-200/80 bg-slate-100/90 px-3 py-1 text-xs font-bold text-slate-800">
                             {opp.field}
                           </span>
                         </div>
@@ -347,7 +347,7 @@ export function GuestOpportunitiesV2() {
                         </h2>
 
                         {/* Summary */}
-                        <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600">
+                        <p className="mt-3 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
                           {opp.summary}
                         </p>
 
@@ -407,7 +407,7 @@ export function GuestOpportunitiesV2() {
                 <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black text-slate-950">
                   {t.howItWorksTitle}
                 </h2>
-                <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600">
+                <p className="mt-3 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
                   {t.howItWorksDesc}
                 </p>
               </div>
@@ -424,7 +424,7 @@ export function GuestOpportunitiesV2() {
                       0{idx + 1}
                     </span>
                     <h3 className="mt-4 text-base sm:text-lg font-black text-slate-950">{step.title}</h3>
-                    <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600">{step.desc}</p>
+                    <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-700 font-normal">{step.desc}</p>
                   </div>
                 ))}
               </div>
@@ -439,7 +439,7 @@ export function GuestOpportunitiesV2() {
                 <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
                   {t.ctaTitle}
                 </h2>
-                <p className="mt-4 max-w-2xl text-sm sm:text-base leading-relaxed text-blue-100">
+                <p className="mt-3.5 max-w-2xl text-base sm:text-lg leading-relaxed text-blue-100 font-normal">
                   {t.ctaDesc}
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -518,12 +518,12 @@ export function GuestOpportunitiesV2() {
                   <span>Viện Hàn lâm KH&CN Việt Nam (VAST), 18 Hoàng Quốc Việt, Cầu Giấy, Hà Nội</span>
                 </div>
                 <div>
-                  <strong className="block font-bold text-slate-900">Văn phòng Đối tác Moskva:</strong>
-                  <span>Viện Hàn lâm Khoa học Nga (RAS), Leninsky Prospekt 14, Moskva</span>
+                  <strong className="block font-bold text-slate-900">Quỹ Truyền thống và Hữu nghị:</strong>
+                  <span>125047, Moskva, Đường Tverskaya-Yamskaya số 1, Tòa nhà 30, Văn phòng 01B, Liên bang Nga</span>
                 </div>
                 <div className="pt-1">
                   <span className="block font-medium">Hỗ trợ kỹ thuật & kết nối đề tài:</span>
-                  <a href="mailto:contact@vnru-network.org" className="font-bold text-blue-700 transition hover:underline">contact@vnru-network.org</a>
+                  <a href="mailto:info@fonddruzhba.ru" className="font-bold text-blue-700 transition hover:underline">info@fonddruzhba.ru</a>
                 </div>
               </div>
             </div>

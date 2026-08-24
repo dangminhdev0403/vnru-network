@@ -17,11 +17,24 @@ export default auth(async function proxy(request) {
 
   const legacyRoutes: Record<string, string> = {
     "/admin/iam": "/admin/access",
+    "/workspace/collaboration/reviews": "/workspace/collaboration?view=assignments",
+    "/workspace/collaboration/opportunities": "/workspace/collaboration?view=opportunities",
+    "/workspace/collaboration/proposals": "/workspace/collaboration?view=screening",
+    "/workspace/collaboration/projects": "/workspace/collaboration?view=projects",
+    "/workspace/collaboration/reports": "/workspace/collaboration?view=reports",
+    "/workspace/reviewer/assignments": "/workspace/reviewer?view=assignments",
+    "/workspace/reviewer/reviews": "/workspace/reviewer?view=assignments",
+    "/workspace/reviewer/evaluation": "/workspace/reviewer?view=evaluation",
+    "/workspace/reviewer/history": "/workspace/reviewer?view=history",
   };
-  const canonicalPath = legacyRoutes[request.nextUrl.pathname];
-  if (canonicalPath) {
-    const target = request.nextUrl.clone();
-    target.pathname = canonicalPath;
+  const canonicalTarget = legacyRoutes[request.nextUrl.pathname];
+  if (canonicalTarget) {
+    const target = new URL(canonicalTarget, request.nextUrl.origin);
+    request.nextUrl.searchParams.forEach((value, key) => {
+      if (!target.searchParams.has(key)) {
+        target.searchParams.set(key, value);
+      }
+    });
     return NextResponse.redirect(target);
   }
 

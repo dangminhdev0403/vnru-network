@@ -111,7 +111,7 @@ export function PublicHome({
     setLoggingOut(true);
     try {
       const { logoutUrl } = await logout.mutateAsync();
-      // Keycloak logout may be cross-origin; full-page navigation is required.
+      // Auth logout uses full-page navigation to clear both frontend and backend sessions.
       window.location.assign(logoutUrl || "/");
     } catch {
       window.location.replace("/");

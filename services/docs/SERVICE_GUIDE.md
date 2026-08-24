@@ -5,7 +5,7 @@ The current service is `auth-service`. Its controllers handle transport, applica
 Internal modules:
 
 - identity: platform user and federated identity linkage;
-- authentication: Keycloak OIDC orchestration;
+- authentication: Auth.js assertion verification and opaque session creation;
 - session: opaque session lifecycle;
 - access-control: roles, permissions, assignments and active context;
 - security: MFA policy state and append-only security audit.

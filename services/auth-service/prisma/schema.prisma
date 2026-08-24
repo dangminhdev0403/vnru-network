@@ -24,6 +24,8 @@ enum AuthenticationLevel {
 model User {
   id                 String             @id @default(uuid())
   email              String?
+  firstName          String?
+  lastName           String?
   status             UserStatus         @default(ACTIVE)
   externalIdentities ExternalIdentity[]
   sessions           Session[]

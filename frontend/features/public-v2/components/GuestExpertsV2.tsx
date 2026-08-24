@@ -82,9 +82,9 @@ const COPY: Record<Locale, {
     ctaBtn: "Join the Expert Directory →",
   },
   ru: {
-    kicker: "Сеть верифицированных экспертов · ВАНТ и РАН",
+    kicker: "Сеть верифицированных экспертов · Фонд «Традиции и дружба»",
     title1: "Научные эксперты",
-    title2: "Россия – Вьетнам",
+    title2: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
     intro: "Прямая связь с ведущими профессорами, исследователями и специалистами академических институтов и университетов России и Вьетнама.",
     searchPlaceholder: "Поиск по имени, институту, научной дисциплине, ключевым словам...",
     searchBtn: "Искать",
@@ -263,7 +263,7 @@ export function GuestExpertsV2() {
                       </div>
 
                       {/* Bio snippet */}
-                      <p className="mt-4 line-clamp-3 text-xs sm:text-sm leading-relaxed text-slate-600">
+                      <p className="mt-4 line-clamp-3 text-sm sm:text-base leading-relaxed text-slate-700 font-normal">
                         {copy.bio}
                       </p>
                     </div>
@@ -304,7 +304,7 @@ export function GuestExpertsV2() {
                 <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
                   {t.ctaTitle}
                 </h2>
-                <p className="mt-4 max-w-2xl text-sm sm:text-base leading-relaxed text-blue-100">
+                <p className="mt-3.5 max-w-2xl text-base sm:text-lg leading-relaxed text-blue-100 font-normal">
                   {t.ctaDesc}
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -525,12 +525,12 @@ export function GuestExpertsV2() {
                   <span>Viện Hàn lâm KH&CN Việt Nam (VAST), 18 Hoàng Quốc Việt, Cầu Giấy, Hà Nội</span>
                 </div>
                 <div>
-                  <strong className="block font-bold text-slate-900">Văn phòng Đối tác Moskva:</strong>
-                  <span>Viện Hàn lâm Khoa học Nga (RAS), Leninsky Prospekt 14, Moskva</span>
+                  <strong className="block font-bold text-slate-900">Quỹ Truyền thống và Hữu nghị:</strong>
+                  <span>125047, Moskva, Đường Tverskaya-Yamskaya số 1, Tòa nhà 30, Văn phòng 01B, Liên bang Nga</span>
                 </div>
                 <div className="pt-1">
                   <span className="block font-medium">Hỗ trợ kỹ thuật & kết nối đề tài:</span>
-                  <a href="mailto:contact@vnru-network.org" className="font-bold text-blue-700 transition hover:underline">contact@vnru-network.org</a>
+                  <a href="mailto:info@fonddruzhba.ru" className="font-bold text-blue-700 transition hover:underline">info@fonddruzhba.ru</a>
                 </div>
               </div>
             </div>

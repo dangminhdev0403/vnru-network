@@ -1,7 +1,7 @@
 {
   "_metadata": {
     "description": "NON-SECRET IAM policy fixtures for the current workflow roles. Login accounts exist only in the ignored secrets/account.json file.",
-    "warning": "This file does not contain passwords or credentials. Keycloak OIDC owns user credentials. To authenticate as these users, Keycloak must be configured with identities matching the issuer and subject specified below."
+    "warning": "This file does not contain passwords or credentials. Runtime credentials stay in the ignored secrets/account.json file."
   },
   "fixtures": [
     {

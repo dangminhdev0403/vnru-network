@@ -10,6 +10,6 @@ It contains five internal Module 1 boundaries:
 - `access-control`;
 - `security`.
 
-These boundaries share one deployment but retain explicit ownership. PostgreSQL `auth_db` is the only application database. Keycloak is the external OIDC identity provider.
+These boundaries share one deployment but retain explicit ownership. PostgreSQL `auth_db` is the only application database. Auth.js verifies runtime credentials and sends a short-lived HMAC assertion to `auth-service` for opaque backend-session creation.
 
 No other business service is present.

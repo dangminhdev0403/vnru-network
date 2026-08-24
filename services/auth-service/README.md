@@ -157,10 +157,10 @@ Do not create empty architecture folders before they are needed.
 
 The Module 1 technical baseline is approved as follows:
 
-- **Identity Broker**: Keycloak acts as the identity broker over OpenID Connect (OIDC Authorization Code Flow with PKCE); upstream institution IdPs sit behind Keycloak (resolves OPEN-01).
+- **Authentication**: Auth.js Credentials verifies the ignored runtime account config and exchanges a short-lived signed assertion for an opaque backend session.
 - **Session**: Random opaque token in a `Secure`, `HttpOnly`, `SameSite` cookie; PostgreSQL stores only its SHA-256 digest. No JWT access/refresh tokens.
 - **Authorization Context**: Exactly one active context per session; context switching validates assignment/scope and rotates the session token (resolves OPEN-02).
-- **2FA**: Keycloak-native TOTP verified during OIDC flow; `auth-service` trusts the verified authentication level.
+- **2FA**: not available with the current Credentials provider.
 - **Persistence & Validation**: PostgreSQL with Prisma migrations; Zod validation at trust boundaries.
 - **Audit**: Append-only IAM and security event logging in PostgreSQL.
 
@@ -169,8 +169,7 @@ The Module 1 technical baseline is approved as follows:
 The current slice does not introduce:
 
 - Application-level JWT or Passport;
-- In-app TOTP secret generation (delegated to Keycloak);
+- In-app TOTP secret generation;
 - Cross-service Redis cache or Kafka outbox (deferred until required by multi-service integration);
 - Public authentication endpoints before approved slice implementation;
 - Concurrent multi-context sessions.
-

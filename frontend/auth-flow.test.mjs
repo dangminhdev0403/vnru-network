@@ -14,7 +14,7 @@ test("return URL accepts only same-origin paths", () => {
   assert.equal(sanitizeReturnTo(undefined), "/account");
 });
 
-test("login locale accepts only supported OIDC UI locales", () => {
+test("login locale accepts only supported UI locales", () => {
   assert.equal(sanitizeLocale("vi"), "vi");
   assert.equal(sanitizeLocale("en"), "en");
   assert.equal(sanitizeLocale("ru"), "ru");
@@ -22,7 +22,7 @@ test("login locale accepts only supported OIDC UI locales", () => {
   assert.equal(sanitizeLocale(undefined), "vi");
 });
 
-test("home reconciles locale after returning from Keycloak", async () => {
+test("home reconciles locale after authentication", async () => {
   const { readFile } = await import("node:fs/promises");
   const [home, locale] = await Promise.all([
     readFile(new URL("./features/public-home/components/PublicHome.tsx", import.meta.url), "utf8"),
@@ -32,23 +32,24 @@ test("home reconciles locale after returning from Keycloak", async () => {
   assert.match(locale, /vnru_locale=\$\{locale\}/);
 });
 
-test("login route delegates credential UI directly to Keycloak", async () => {
+test("login renders the Auth.js Credentials form", async () => {
   const { readFile } = await import("node:fs/promises");
   const page = await readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8");
-  assert.match(page, /\/api\/auth\/login\?returnTo=/);
-  assert.doesNotMatch(page, /iframe|password|html-templates\/login/);
+  assert.match(page, /action="\/api\/auth\/login"/);
+  assert.match(page, /name="account"/);
+  assert.match(page, /name="password"/);
+  assert.doesNotMatch(page, /iframe|html-templates\/login/);
 });
 
-test("registration delegates credential creation to Keycloak", async () => {
+test("self-registration is disabled for configured accounts", async () => {
   const { readFile } = await import("node:fs/promises");
   const [page, route] = await Promise.all([
     readFile(new URL("./app/register/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("./app/api/auth/login/route.ts", import.meta.url), "utf8"),
   ]);
-  assert.match(page, /action=REGISTER/);
-  assert.doesNotMatch(page, /type="password"|localStorage|sessionStorage/);
-  assert.match(route, /action === "REGISTER"/);
-  assert.match(route, /prompt: "create"/);
+  assert.match(page, /redirect\("\/login"\)/);
+  assert.match(route, /signIn\("credentials"/);
+  assert.doesNotMatch(route, /REGISTER|localStorage|sessionStorage/);
 });
 
 test("login and home use backend-authoritative session state", async () => {
@@ -84,8 +85,8 @@ test("auth flow keeps provider tokens out of the frontend", async () => {
   );
 
   assert.doesNotMatch(source.join("\n"), /refresh[_T]oken|access[_T]oken/);
-  assert.match(source[0], /signIn\(\s*"keycloak"/);
-  assert.match(source[0], /ui_locales/);
+  assert.match(source[0], /signIn\(\s*"credentials"/);
+  assert.match(source[0], /Invalid login origin/);
   assert.match(source[3], /authServiceUrl\("api\/v1\/auth\/logout"\)/);
 });
 

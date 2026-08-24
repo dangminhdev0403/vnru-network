@@ -5,7 +5,6 @@ networks:
 
 volumes:
   postgres_data:
-  keycloak_data:
 
 services:
   postgres:
@@ -24,21 +23,6 @@ services:
       interval: 3s
       timeout: 3s
       retries: 20
-    networks: [vnru-net]
-
-  keycloak:
-    build: ./infra/keycloak
-    restart: unless-stopped
-    command: start-dev
-    environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
-      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?set in secrets/demo.env}
-      KC_HOSTNAME: ${KEYCLOAK_PUBLIC_URL:-http://host.docker.internal:8180}
-      KC_HEALTH_ENABLED: "true"
-    volumes:
-      - keycloak_data:/opt/keycloak/data
-    ports:
-      - "${KEYCLOAK_PORT:-8180}:8080"
     networks: [vnru-net]
 
   migrate:
@@ -60,21 +44,14 @@ services:
       target: tools
     restart: "no"
     profiles: [seed]
-    command: pnpm exec ts-node prisma/seed-demo.ts /dev/stdin
+    command: pnpm exec ts-node prisma/seed-demo.ts /run/secrets/account.json
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/auth_db?schema=public
-      KEYCLOAK_ADMIN_URL: http://keycloak:8080
-      KEYCLOAK_PUBLIC_URL: ${KEYCLOAK_PUBLIC_URL:-http://host.docker.internal:8180}
-      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?set in secrets/demo.env}
-      KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET:?set in secrets/demo.env}
-      KEYCLOAK_PROFILE_CLIENT_SECRET: ${KEYCLOAK_PROFILE_CLIENT_SECRET:?set in secrets/demo.env}
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:8082}
+    volumes:
+      - ./secrets/account.json:/run/secrets/account.json:ro
     depends_on:
       migrate:
         condition: service_completed_successfully
-      keycloak:
-        condition: service_started
     networks: [vnru-net]
 
   auth-service:
@@ -84,11 +61,7 @@ services:
       NODE_ENV: development
       PORT: 3000
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/auth_db?schema=public
-      KEYCLOAK_ISSUER_URL: ${KEYCLOAK_PUBLIC_URL:-http://host.docker.internal:8180}/realms/vnru
-      KEYCLOAK_CLIENT_ID: vnru-auth
-      KEYCLOAK_REDIRECT_URI: ${FRONTEND_URL:-http://localhost:8082}/api/auth/callback/keycloak
-      KEYCLOAK_PROFILE_CLIENT_ID: vnru-profile-service
-      KEYCLOAK_PROFILE_CLIENT_SECRET: ${KEYCLOAK_PROFILE_CLIENT_SECRET:?set in secrets/demo.env}
+      AUTH_BRIDGE_SECRET: ${AUTH_BRIDGE_SECRET:?set in secrets/demo.env}
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -104,9 +77,10 @@ services:
       NEXTAUTH_URL: ${FRONTEND_URL:-http://localhost:8082}
       NEXTAUTH_SECRET: ${AUTH_SECRET:?set in secrets/demo.env}
       AUTH_SECRET: ${AUTH_SECRET:?set in secrets/demo.env}
-      AUTH_KEYCLOAK_ID: vnru-auth
-      AUTH_KEYCLOAK_SECRET: ${KEYCLOAK_CLIENT_SECRET:?set in secrets/demo.env}
-      AUTH_KEYCLOAK_ISSUER: ${KEYCLOAK_PUBLIC_URL:-http://host.docker.internal:8180}/realms/vnru
+      AUTH_BRIDGE_SECRET: ${AUTH_BRIDGE_SECRET:?set in secrets/demo.env}
+      ACCOUNT_CONFIG_PATH: /run/secrets/account.json
+    volumes:
+      - ./secrets/account.json:/run/secrets/account.json:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
@@ -123,5 +97,4 @@ services:
     depends_on:
       - frontend
       - auth-service
-      - keycloak
     networks: [vnru-net]

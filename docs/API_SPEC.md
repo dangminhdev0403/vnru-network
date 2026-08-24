@@ -5,7 +5,7 @@ The current HTTP contract is owned by `auth-service`. Controllers and exported O
 Implemented API families:
 
 - `/api/v1/auth/*`: OIDC exchange, current session, logout and active-context switching.
-- `/api/v1/auth/account/*`: profile and Keycloak account-management bridge.
+- `/api/v1/auth/profile`: application-owned member profile.
 - `/api/v1/auth/sessions/*`: session listing and revocation.
 - `/api/v1/admin/users/*`: identity administration.
 - `/api/v1/admin/roles/*`: role and permission administration.

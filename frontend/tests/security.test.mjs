@@ -49,14 +49,14 @@ test("httpClient redirects one time on 401 without retrying mutations", async ()
   assert.doesNotMatch(fileContent, /refresh|retry/i);
 });
 
-test("Auth.js rotates Keycloak tokens server-side and fails closed", async () => {
+test("Auth.js verifies credentials server-side and signs the backend exchange", async () => {
   const auth = await readFile(new URL("../auth.ts", import.meta.url), "utf8");
   const proxy = await readFile(new URL("../proxy.ts", import.meta.url), "utf8");
 
-  assert.match(auth, /grant_type:\s*"refresh_token"/);
-  assert.match(auth, /new URLSearchParams/);
-  assert.match(auth, /refreshToken:\s*typeof body\.refresh_token/);
-  assert.match(auth, /provider\.error = "RefreshTokenError"/);
+  assert.match(auth, /next-auth\/providers\/credentials/);
+  assert.match(auth, /timingSafeEqual/);
+  assert.match(auth, /createHmac\("sha256", secret\)/);
+  assert.match(auth, /ACCOUNT_CONFIG_PATH/);
   assert.match(proxy, /request\.auth/);
   assert.match(proxy, /cookies\.delete\(SESSION_COOKIE_NAME\)/);
   assert.doesNotMatch(auth, /session\.accessToken|session\.refreshToken/);
@@ -107,7 +107,7 @@ test("Security page route redirects unauthenticated users", async () => {
 
   // Must use cookies() to check session
   assert.match(fileContent, /cookies\(\)/);
-  // Must redirect to Keycloak login if missing
+  // Must redirect to the Auth.js login if missing
   assert.match(
     fileContent,
     /redirect\("\/api\/auth\/login\?returnTo=\/security"\)/,
@@ -152,7 +152,7 @@ test("Profile dialog shows email as an explicit read-only field", async () => {
   assert.match(fileContent, /profile\?\.email/);
 });
 
-test("MFA stays in-app while enrollment delegates only the TOTP ceremony", async () => {
+test("MFA is explicitly unavailable for the current Credentials provider", async () => {
   const control = await readFile(
     new URL(
       "../features/auth/components/security/MfaControl.tsx",
@@ -160,18 +160,9 @@ test("MFA stays in-app while enrollment delegates only the TOTP ceremony", async
     ),
     "utf8",
   );
-  const route = await readFile(
-    new URL("../app/api/auth/mfa/route.ts", import.meta.url),
-    "utf8",
-  );
-  const login = await readFile(
-    new URL("../app/api/auth/login/route.ts", import.meta.url),
-    "utf8",
-  );
-  assert.match(control, /useMfa/);
-  assert.match(control, /action=CONFIGURE_TOTP/);
-  assert.match(route, /authServiceUrl\("api\/v1\/auth\/mfa"\)/);
-  assert.match(login, /kc_action/);
+  assert.match(control, /Unavailable/);
+  assert.match(control, /Không khả dụng/);
+  assert.doesNotMatch(control, /CONFIGURE_TOTP|useMfa/);
   assert.doesNotMatch(control, /otpauth:|secret/i);
 });
 
@@ -185,18 +176,6 @@ test("Profile BFF forwards the opaque session for GET and PATCH", async () => {
   assert.match(fileContent, /export const GET/);
   assert.match(fileContent, /export const PATCH/);
   assert.doesNotMatch(fileContent, /client_secret|accessToken|refreshToken/i);
-});
-
-test("Keycloak account BFF requires a valid session and allows only known sections", async () => {
-  const fileContent = await readFile(
-    new URL("../app/api/auth/account/route.ts", import.meta.url),
-    "utf8",
-  );
-  assert.match(fileContent, /authServiceUrl\("api\/v1\/auth\/me"\)/);
-  assert.match(fileContent, /backendHeaders\(request\)/);
-  assert.match(fileContent, /personal-info/);
-  assert.match(fileContent, /account-security\/signing-in/);
-  assert.doesNotMatch(fileContent, /accessToken|refreshToken/i);
 });
 
 test("BFF context switch route proxies correctly and forwards rotated session cookie", async () => {

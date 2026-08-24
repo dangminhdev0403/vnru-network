@@ -50,44 +50,44 @@ colors:
   surface-variant: '#e0e3e5'
 typography:
   display-lg:
-    fontFamily: Source Serif 4
+    fontFamily: Noto Serif
     fontSize: 48px
     fontWeight: '700'
     lineHeight: 56px
     letterSpacing: -0.02em
   headline-lg:
-    fontFamily: Source Serif 4
+    fontFamily: Noto Serif
     fontSize: 32px
     fontWeight: '600'
     lineHeight: 40px
   headline-md:
-    fontFamily: Source Serif 4
+    fontFamily: Noto Serif
     fontSize: 24px
     fontWeight: '600'
     lineHeight: 32px
   body-lg:
-    fontFamily: Hanken Grotesk
+    fontFamily: Noto Sans
     fontSize: 18px
     fontWeight: '400'
     lineHeight: 28px
   body-md:
-    fontFamily: Hanken Grotesk
+    fontFamily: Noto Sans
     fontSize: 16px
     fontWeight: '400'
     lineHeight: 24px
   body-sm:
-    fontFamily: Hanken Grotesk
+    fontFamily: Noto Sans
     fontSize: 14px
     fontWeight: '400'
     lineHeight: 20px
   label-caps:
-    fontFamily: Hanken Grotesk
+    fontFamily: Noto Sans
     fontSize: 12px
     fontWeight: '600'
     lineHeight: 16px
     letterSpacing: 0.05em
   headline-lg-mobile:
-    fontFamily: Source Serif 4
+    fontFamily: Noto Serif
     fontSize: 28px
     fontWeight: '600'
     lineHeight: 36px
@@ -121,10 +121,10 @@ The palette is rooted in **Deep Slate** and **Academic Blue**, providing a found
 - **Surfaces:** We utilize a "Warm Ivory" (#fdfcf0) for main content areas to reduce eye strain and provide a more premium, paper-like feel compared to clinical white.
 
 ## Typography
-The typographic system creates a tension between the **Source Serif 4** (representing the heritage of publishing and academia) and **Hanken Grotesk** (representing modern data and efficient communication).
+The typographic system pairs **Noto Serif** (publishing and academic heritage) with **Noto Sans** (modern data and efficient communication). Both families use matching Vietnamese, Cyrillic, and Latin coverage so language changes do not produce fallback drift.
 
 - **Headlines:** Always use the serif face. In display settings, use tighter letter-spacing.
-- **Body Text:** Hanken Grotesk is used for its compact width, allowing for more information density in research abstracts and data tables.
+- **Body Text:** Noto Sans provides stable multilingual metrics and high legibility across research abstracts, controls, and data tables.
 - **Labels:** Meta-information (dates, citations, authors) should use the `label-caps` style for clear visual distinction without adding weight.
 
 ## Layout & Spacing

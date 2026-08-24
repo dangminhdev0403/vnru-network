@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { createHash, randomBytes } from 'crypto';
+import { createHmac, timingSafeEqual } from 'node:crypto';
 import { validateConfig } from '../../config';
 import { AccessControlService } from '../access-control/access-control.service';
 import { IdentityService, IdentityUser } from '../identity/identity-public';
@@ -7,27 +7,20 @@ import {
   DEFAULT_MAX_SESSION_TTL_MS,
   SessionService,
 } from '../session/session-public';
-import { KeycloakOidcService } from './keycloak-oidc.service';
 
-export interface BeginLoginInput {
-  redirectUri?: string;
-}
-
-export interface BeginLoginResult {
-  authorizationUrl: string;
-}
-
-export interface HandleCallbackInput {
-  currentUrl: string;
-  state: string;
-}
+export const AUTHJS_CREDENTIALS_ISSUER = 'authjs:credentials';
+const BRIDGE_MAX_AGE_MS = 30_000;
 
 export interface CallbackResult {
   token: string;
   user: IdentityUser;
 }
-
 export type ExchangeResult = CallbackResult;
+export interface AuthJsExchangeInput {
+  account: string;
+  timestamp: string;
+  signature: string;
+}
 
 export interface AuthenticatedUser {
   userId: string;
@@ -37,176 +30,46 @@ export interface AuthenticatedUser {
   authenticationLevel: 'PASSWORD' | 'MFA';
 }
 
-interface TransientStateEntry {
-  nonce: string;
-  codeVerifier: string;
-  expiresAt: number;
-}
-
 @Injectable()
 export class AuthenticationService {
-  // ponytail: single-process transient store, move to shared TTL store only when horizontal scaling.
-  private readonly transientStates = new Map<string, TransientStateEntry>();
-  private readonly stateTtlMs = 10 * 60 * 1000; // 10 minutes
-
   constructor(
-    private readonly oidcService: KeycloakOidcService,
     private readonly identityService: IdentityService,
     private readonly sessionService: SessionService,
     private readonly accessControlService: AccessControlService,
   ) {}
 
-  private cleanupExpiredStates(): void {
-    const now = Date.now();
-    for (const [state, entry] of this.transientStates.entries()) {
-      if (now >= entry.expiresAt) {
-        this.transientStates.delete(state);
-      }
-    }
-  }
-
-  private getConfiguredRedirectUri(): string {
-    return validateConfig().KEYCLOAK_REDIRECT_URI;
-  }
-
-  async beginLogin(params?: BeginLoginInput): Promise<BeginLoginResult> {
-    this.cleanupExpiredStates();
-
-    const configured = this.getConfiguredRedirectUri();
-    let redirectUri: string;
-    if (params?.redirectUri) {
-      if (params.redirectUri !== configured) {
-        throw new Error('Redirect URI mismatch');
-      }
-      redirectUri = params.redirectUri;
-    } else {
-      redirectUri = configured;
-    }
-
-    const state = randomBytes(32).toString('base64url');
-    const nonce = randomBytes(32).toString('base64url');
-    const codeVerifier = randomBytes(32).toString('base64url');
-    const codeChallenge = createHash('sha256')
-      .update(codeVerifier)
-      .digest('base64url');
-
-    this.transientStates.set(state, {
-      nonce,
-      codeVerifier,
-      expiresAt: Date.now() + this.stateTtlMs,
-    });
-
-    try {
-      const authorizationUrl =
-        await this.oidcService.createAuthorizationRequest({
-          redirectUri,
-          state,
-          nonce,
-          codeChallenge,
-          codeChallengeMethod: 'S256',
-        });
-
-      return { authorizationUrl };
-    } catch (error) {
-      this.transientStates.delete(state);
-      throw error;
-    }
-  }
-
-  async handleCallback(params: HandleCallbackInput): Promise<CallbackResult> {
-    this.cleanupExpiredStates();
-
+  async exchangeAuthJsAssertion(
+    input: AuthJsExchangeInput,
+  ): Promise<ExchangeResult> {
+    const timestamp = Number(input.timestamp);
     if (
-      !params?.state ||
-      typeof params.state !== 'string' ||
-      params.state.trim() === ''
+      !Number.isSafeInteger(timestamp) ||
+      Math.abs(Date.now() - timestamp) > BRIDGE_MAX_AGE_MS
     ) {
-      throw new UnauthorizedException('Missing or invalid state parameter');
+      throw new UnauthorizedException('Expired authentication assertion');
     }
-
-    const entry = this.transientStates.get(params.state);
-    if (!entry) {
-      throw new UnauthorizedException('State not found or already consumed');
-    }
-
-    // Consume and delete BEFORE async provider work for single-use / replay protection
-    this.transientStates.delete(params.state);
-
-    if (Date.now() >= entry.expiresAt) {
-      throw new UnauthorizedException('Expired state parameter');
-    }
-
-    const oidcUser = await this.oidcService.handleCallback({
-      currentUrl: params.currentUrl,
-      expectedState: params.state,
-      expectedNonce: entry.nonce,
-      codeVerifier: entry.codeVerifier,
-    });
-
-    const user = await this.identityService.resolveOrCreateByExternalIdentity({
-      issuer: oidcUser.issuer,
-      subject: oidcUser.subject,
-      email: oidcUser.email,
-    });
-
-    if (user.status !== 'ACTIVE') {
-      throw new UnauthorizedException('Identity is inactive or unauthorized');
-    }
-
-    const sessionResult = await this.sessionService.createSession({
-      userId: user.id,
-      ttlMs: DEFAULT_MAX_SESSION_TTL_MS,
-      authenticationLevel: oidcUser.authenticationLevel,
-    });
-
-    return {
-      token: sessionResult.token,
-      user,
-    };
-  }
-
-  async exchangeKeycloakToken(accessToken: string): Promise<ExchangeResult> {
-    if (!accessToken?.trim()) {
-      throw new UnauthorizedException('Missing access token');
-    }
-
-    const issuer = validateConfig().KEYCLOAK_ISSUER_URL.replace(/\/$/, '');
-    const response = await fetch(`${issuer}/protocol/openid-connect/userinfo`, {
-      headers: { authorization: `Bearer ${accessToken.trim()}` },
-    });
-    if (!response.ok) throw new UnauthorizedException('Invalid access token');
-
-    const claims = (await response.json()) as {
-      sub?: unknown;
-      email?: unknown;
-      amr?: unknown;
-      acr?: unknown;
-    };
-    if (typeof claims.sub !== 'string' || !claims.sub.trim()) {
-      throw new UnauthorizedException('Missing subject');
+    const expected = createHmac('sha256', validateConfig().AUTH_BRIDGE_SECRET)
+      .update(`${input.timestamp}\n${input.account}`)
+      .digest();
+    const supplied = Buffer.from(input.signature, 'hex');
+    if (
+      supplied.length !== expected.length ||
+      !timingSafeEqual(supplied, expected)
+    ) {
+      throw new UnauthorizedException('Invalid authentication assertion');
     }
 
     const user = await this.identityService.resolveOrCreateByExternalIdentity({
-      issuer,
-      subject: claims.sub,
-      email: typeof claims.email === 'string' ? claims.email : undefined,
+      issuer: AUTHJS_CREDENTIALS_ISSUER,
+      subject: input.account,
+      email: input.account.includes('@') ? input.account : undefined,
     });
-    if (user.status !== 'ACTIVE') {
+    if (user.status !== 'ACTIVE')
       throw new UnauthorizedException('Identity is inactive or unauthorized');
-    }
-
-    const factors = Array.isArray(claims.amr) ? claims.amr : [];
-    const authenticationLevel =
-      factors.some(
-        (value) => typeof value === 'string' && /otp|mfa/i.test(value),
-      ) ||
-      (typeof claims.acr === 'string' && /mfa/i.test(claims.acr))
-        ? 'MFA'
-        : 'PASSWORD';
     const session = await this.sessionService.createSession({
       userId: user.id,
       ttlMs: DEFAULT_MAX_SESSION_TTL_MS,
-      authenticationLevel,
+      authenticationLevel: 'PASSWORD',
     });
     return { token: session.token, user };
   }
@@ -214,20 +77,11 @@ export class AuthenticationService {
   async getCurrentUser(
     token?: string | null,
   ): Promise<AuthenticatedUser | null> {
-    if (!token || typeof token !== 'string' || token.trim() === '') {
-      return null;
-    }
-
+    if (!token?.trim()) return null;
     const session = await this.sessionService.validateSession(token.trim());
-    if (!session) {
-      return null;
-    }
-
+    if (!session) return null;
     const user = await this.identityService.findById(session.userId);
-    if (!user || user.status !== 'ACTIVE') {
-      return null;
-    }
-
+    if (!user || user.status !== 'ACTIVE') return null;
     const activeContext =
       session.activeContextType && session.activeContextId
         ? {
@@ -241,7 +95,6 @@ export class AuthenticationService {
           ...activeContext,
         })
       : [];
-
     return {
       userId: session.userId,
       sessionId: session.id,
@@ -252,10 +105,6 @@ export class AuthenticationService {
   }
 
   async logout(token?: string | null): Promise<void> {
-    if (!token || typeof token !== 'string' || token.trim() === '') {
-      return;
-    }
-
-    await this.sessionService.revokeSession(token.trim());
+    if (token?.trim()) await this.sessionService.revokeSession(token.trim());
   }
 }

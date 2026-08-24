@@ -11,6 +11,8 @@ export interface ResolveExternalIdentityInput {
 export interface IdentityUser {
   id: string;
   email?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
   status: string;
 }
 
@@ -43,6 +45,10 @@ export interface IdentityPrismaClient {
     create: (args: {
       data: { email?: string; status?: string };
     }) => Promise<IdentityUser>;
+    update: (args: {
+      where: { id: string };
+      data: { firstName: string; lastName: string };
+    }) => Promise<IdentityUser>;
   };
   $transaction: <T>(
     callback: (tx: IdentityPrismaClient) => Promise<T>,
@@ -72,6 +78,13 @@ export class IdentityService {
       select: { subject: true },
     });
     return identity?.subject ?? null;
+  }
+
+  async updateProfile(
+    userId: string,
+    profile: { firstName: string; lastName: string },
+  ): Promise<IdentityUser> {
+    return this.prisma.user.update({ where: { id: userId }, data: profile });
   }
 
   async resolveOrCreateByExternalIdentity(

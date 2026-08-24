@@ -6,5 +6,5 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "transformIgnorePatterns": ["node_modules/(?!.*(?:openid-client|oauth4webapi|jose))"]
+  "transformIgnorePatterns": []
 }

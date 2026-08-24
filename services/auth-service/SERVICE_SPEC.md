@@ -266,7 +266,7 @@ Final field names and transport contracts must only be locked when API/session d
 
 ## 9. Approved Technical Baseline `[DECISION]`
 
-- **OPEN-01**: Keycloak is the identity broker over OpenID Connect (Authorization Code Flow with PKCE); institution IdPs stay behind Keycloak.
+- **OPEN-01**: External institutional identity federation is not implemented; current authentication uses Auth.js Credentials.
 - **OPEN-02**: Exactly one active context per session. Context switching validates assignment/scope and rotates the session token.
 
 ## 10. Current Implementation Baseline
@@ -274,7 +274,7 @@ Final field names and transport contracts must only be locked when API/session d
 The approved implementation baseline for Module 1 specifies:
 
 - PostgreSQL persistence with Prisma migrations;
-- Keycloak OIDC authentication broker integration;
+- Auth.js Credentials assertion verification;
 - Random opaque session tokens in HttpOnly cookies (storing SHA-256 digests in PostgreSQL);
 - Zod validation at trust boundaries;
 - Append-only PostgreSQL security audit logging.

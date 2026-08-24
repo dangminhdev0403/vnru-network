@@ -112,10 +112,10 @@ const COPY: Record<Locale, {
     joinBtn: "Join the Knowledge Network →",
   },
   ru: {
-    kicker: "Двустороннее хранилище знаний · ВАНТ и РАН",
+    kicker: "База знаний · Фонд «Традиции и дружба»",
     title1: "База научных знаний",
     title2: "и данные совместных исследований",
-    title3: "Россия – Вьетнам",
+    title3: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
     intro: "Поиск по тематическим обзорам, научным публикациям, массивам данных наблюдений и техническим отчетам ведущих институтов и университетов Вьетнама и РФ.",
     searchPlaceholder: "Поиск по названию, ключевым словам, авторам, DOI...",
     searchBtn: "Искать",
@@ -338,7 +338,7 @@ export function GuestKnowledgeV2() {
                       </p>
 
                       {/* Summary */}
-                      <p className="mt-3.5 text-sm sm:text-[15px] leading-relaxed text-slate-600">
+                      <p className="mt-3.5 text-sm sm:text-base leading-relaxed text-slate-700 font-normal">
                         {res.summary}
                       </p>
 
@@ -383,7 +383,7 @@ export function GuestKnowledgeV2() {
                 <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black text-slate-950">
                   {t.featuredTracksTitle}
                 </h2>
-                <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600">
+                <p className="mt-3 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
                   {t.featuredTracksDesc}
                 </p>
               </div>
@@ -393,29 +393,32 @@ export function GuestKnowledgeV2() {
                   {
                     title: "Nano-composite & Lớp phủ bảo vệ biển",
                     track: "Vật liệu mới",
+                    badge: "bg-amber-100 text-amber-800 border-amber-200",
                     count: "48 bài báo & báo cáo",
                     collab: "Viện KH Vật liệu (VAST) – Viện Hóa vô cơ (RAS)",
                   },
                   {
                     title: "Hệ thống phao quan trắc & CSDL Hải dương",
                     track: "Khoa học Biển",
+                    badge: "bg-cyan-100 text-cyan-800 border-cyan-200",
                     count: "12 bộ dữ liệu chuỗi thời gian",
                     collab: "Viện Hải dương học – Viện Hải dương học Shirshov",
                   },
                   {
                     title: "Xử lý dữ liệu ngôn ngữ khoa học đa ngữ",
                     track: "AI & Dữ liệu",
+                    badge: "bg-indigo-100 text-indigo-800 border-indigo-200",
                     count: "24 mô hình & chuyên đề",
                     collab: "ĐHQG Hà Nội – Viện Hàn lâm Khoa học Nga",
                   },
                 ].map((track) => (
                   <div key={track.title} className="rounded-2xl border border-blue-200/80 bg-white/90 p-6 shadow-xs">
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-black text-blue-800">
+                    <span className={`rounded-full border px-3 py-1 text-xs font-black ${track.badge}`}>
                       {track.track}
                     </span>
                     <h3 className="mt-3 text-lg font-black text-slate-950">{track.title}</h3>
-                    <p className="mt-2 text-xs sm:text-sm font-semibold text-blue-700">{track.count}</p>
-                    <p className="mt-2 text-xs text-slate-500 leading-relaxed">{track.collab}</p>
+                    <p className="mt-2 text-sm font-semibold text-blue-700">{track.count}</p>
+                    <p className="mt-2 text-xs sm:text-[13px] text-slate-600 leading-relaxed">{track.collab}</p>
                   </div>
                 ))}
               </div>
@@ -428,7 +431,7 @@ export function GuestKnowledgeV2() {
                   <span className="size-3 rounded-full bg-emerald-500" />
                   <h3 className="text-base sm:text-lg font-black text-slate-950">{t.openScienceTitle}</h3>
                 </div>
-                <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-slate-600">
+                <p className="mt-2.5 text-sm sm:text-base leading-relaxed text-slate-700 font-normal">
                   {t.openScienceDesc}
                 </p>
               </div>
@@ -449,7 +452,7 @@ export function GuestKnowledgeV2() {
                 <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
                   {t.joinTitle}
                 </h2>
-                <p className="mt-4 max-w-2xl text-sm sm:text-base leading-relaxed text-blue-100">
+                <p className="mt-3.5 max-w-2xl text-base sm:text-lg leading-relaxed text-blue-100 font-normal">
                   {t.joinDesc}
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -528,12 +531,12 @@ export function GuestKnowledgeV2() {
                   <span>Viện Hàn lâm KH&CN Việt Nam (VAST), 18 Hoàng Quốc Việt, Cầu Giấy, Hà Nội</span>
                 </div>
                 <div>
-                  <strong className="block font-bold text-slate-900">Văn phòng Đối tác Moskva:</strong>
-                  <span>Viện Hàn lâm Khoa học Nga (RAS), Leninsky Prospekt 14, Moskva</span>
+                  <strong className="block font-bold text-slate-900">Quỹ Truyền thống và Hữu nghị:</strong>
+                  <span>125047, Moskva, Đường Tverskaya-Yamskaya số 1, Tòa nhà 30, Văn phòng 01B, Liên bang Nga</span>
                 </div>
                 <div className="pt-1">
                   <span className="block font-medium">Hỗ trợ kỹ thuật & kết nối đề tài:</span>
-                  <a href="mailto:contact@vnru-network.org" className="font-bold text-blue-700 transition hover:underline">contact@vnru-network.org</a>
+                  <a href="mailto:info@fonddruzhba.ru" className="font-bold text-blue-700 transition hover:underline">info@fonddruzhba.ru</a>
                 </div>
               </div>
             </div>

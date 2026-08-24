@@ -6,6 +6,7 @@ import { cn } from "@/lib/cn";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
+import { BrandMark } from "@/components/shared/BrandMark";
 
 export interface NavItem {
   href: string;
@@ -157,10 +158,7 @@ export default function SidebarFrame({
           onClick={onItemClick}
           className="flex min-w-0 flex-1 items-center gap-3 rounded-xl p-1"
         >
-          <span className="relative grid size-10 shrink-0 overflow-hidden rounded-[14px] bg-white shadow-[0_6px_18px_-12px_rgba(15,23,42,.45)] ring-1 ring-[#e3eaf3] dark:ring-white/10">
-            <span className="absolute -inset-y-1 left-[-8px] w-[65%] -skew-x-12 bg-[var(--accent-primary)]" />
-            <span className="absolute -inset-y-1 right-[-8px] w-[55%] -skew-x-12 bg-[var(--accent-network)]" />
-          </span>
+          <BrandMark className="size-11 shadow-[0_6px_18px_-12px_rgba(15,23,42,.45)] ring-1 ring-[#e3eaf3] dark:ring-white/10" />
           {isSidebarOpen && (
             <span className="min-w-0 leading-tight">
               <strong className="block truncate text-sm font-semibold text-[#0d1d35] dark:text-white">

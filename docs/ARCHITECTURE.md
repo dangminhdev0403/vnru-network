@@ -7,7 +7,7 @@ The repository contains one backend trust boundary and one web frontend. The fro
 ```text
 Browser
   -> Next.js frontend
-     -> Keycloak for OIDC authentication
+     -> Auth.js Credentials for server-side credential verification
      -> auth-service for opaque sessions, identity, RBAC and audit
         -> PostgreSQL auth_db
 ```
@@ -16,7 +16,7 @@ Public `/`, `/knowledge`, `/experts` and `/opportunities` routes are information
 
 ## Runtime ownership
 
-- Keycloak owns credentials, login, password reset and TOTP ceremonies.
+- Auth.js owns login and encrypted frontend sessions; credentials come from the ignored runtime account config.
 - `auth-service` owns platform identity, opaque sessions, active authorization context, roles, permissions, assignments and security audit events.
 - The frontend owns presentation and BFF forwarding. Frontend visibility is never an authorization boundary.
 - PostgreSQL `auth_db` is the only application database in the current stack.
@@ -24,7 +24,7 @@ Public `/`, `/knowledge`, `/experts` and `/opportunities` routes are information
 ## Canonical routes
 
 - `/`: public landing page.
-- `/login`: authentication entry delegated to Keycloak.
+- `/login`: Auth.js Credentials authentication entry.
 - `/account`: member profile.
 - `/security`: MFA and session security.
 - `/admin/access/*`: user, role, permission and assignment administration.

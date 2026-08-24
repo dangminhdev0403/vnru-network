@@ -5,8 +5,8 @@ This directory contains `iam-fixtures.json`, a non-secret IAM policy fixture set
 ## Critical notice
 
 - **No credentials:** the fixture contains no passwords, secrets, tokens, or login credentials.
-- **Keycloak ownership:** authentication credentials and SSO identities are owned by Keycloak.
-- **Identity linkage:** browser login works only when the Keycloak identity resolves to an application identity with an active role assignment.
+- **Credential ownership:** authentication credentials remain in the ignored runtime `secrets/account.json` config and are verified by Auth.js.
+- **Identity linkage:** browser login works only when the Auth.js account resolves to an application identity with an active role assignment.
 - **Current active fixture roles:** `SUPER_ADMIN`, `RESEARCHER`, `ORGANIZATION_REPRESENTATIVE`, `REVIEWER`, `COLLABORATION_MANAGER`, and `FOUNDATION_DECISION_MAKER`.
 - `KNOWLEDGE_CURATOR` is intentionally removed from the active fixture set because its previous permissions did not own a distinct workflow step.
 - The duplicate generic Researcher fixture is intentionally removed; the current synthetic account set keeps the organization-scoped Researcher identity used for the bilateral test flow.

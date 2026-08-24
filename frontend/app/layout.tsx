@@ -1,30 +1,30 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk, Source_Serif_4 } from "next/font/google";
+import { Noto_Sans, Noto_Serif } from "next/font/google";
 import QueryProvider from "../components/providers/QueryProvider";
 import "./globals.css";
 
-const sans = Hanken_Grotesk({
-  variable: "--font-hanken",
-  subsets: ["latin", "vietnamese", "latin-ext"],
+const sans = Noto_Sans({
+  variable: "--font-noto-sans",
+  subsets: ["latin", "vietnamese", "cyrillic", "cyrillic-ext"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const serif = Source_Serif_4({
-  variable: "--font-source-serif",
-  subsets: ["latin", "vietnamese", "cyrillic", "cyrillic-ext", "latin-ext"],
+const serif = Noto_Serif({
+  variable: "--font-noto-serif",
+  subsets: ["latin", "vietnamese", "cyrillic", "cyrillic-ext"],
   display: "swap",
-  weight: ["400", "600", "700", "800", "900"],
+  weight: ["500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "Russia-Vietnam Science-Technology Intelligence Network",
+  title: "Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt",
   description: "Independent Vietnam–Russia knowledge and collaboration portal.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-theme="light" data-scroll-behavior="smooth" className={`${sans.variable} ${serif.variable}`}>
+    <html lang="vi" data-theme="light" data-scroll-behavior="smooth" className={`${sans.variable} ${serif.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -34,7 +34,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
         />
       </head>
-      <body className="font-sans antialiased bg-background text-on-background min-h-screen">
+      <body className="vnru-motion-root min-h-screen bg-background font-sans text-on-background antialiased">
         <QueryProvider>{children}</QueryProvider>
       </body>
     </html>

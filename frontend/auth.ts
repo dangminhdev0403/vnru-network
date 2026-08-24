@@ -1,7 +1,13 @@
-import { createHash } from "node:crypto";
+import { createHmac, timingSafeEqual } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import NextAuth from "next-auth";
-import Keycloak from "next-auth/providers/keycloak";
+import Credentials from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
+import { z } from "zod";
+
+const accountConfigSchema = z.object({
+  accounts: z.array(z.object({ account: z.string().min(1), password: z.string().min(1), role: z.string().min(1) })),
+});
 
 function backendUrl(path: string): URL {
   const base = process.env.AUTH_SERVICE_URL;
@@ -9,147 +15,62 @@ function backendUrl(path: string): URL {
   return new URL(path, base.endsWith("/") ? base : `${base}/`);
 }
 
-type ProviderTokens = {
-  accessToken?: string;
-  accessTokenExpiresAt?: number;
-  refreshToken?: string;
-  error?: "RefreshTokenError";
-};
+async function findAccount(account: string, password: string) {
+  const path = process.env.ACCOUNT_CONFIG_PATH;
+  if (!path) throw new Error("ACCOUNT_CONFIG_PATH is required");
+  const config = accountConfigSchema.parse(JSON.parse(await readFile(path, "utf8")));
+  return config.accounts.find((candidate) => {
+    const actual = Buffer.from(candidate.password);
+    const supplied = Buffer.from(password);
+    return candidate.account === account && actual.length === supplied.length && timingSafeEqual(actual, supplied);
+  });
+}
 
-type RefreshResult = Required<
-  Pick<ProviderTokens, "accessToken" | "accessTokenExpiresAt" | "refreshToken">
->;
-
-// ponytail: process-local lock/cache; use a shared lock when multiple Next.js instances run.
-const refreshes = new Map<string, Promise<RefreshResult>>();
-
-async function refreshAccessToken(
-  refreshToken: string,
-): Promise<RefreshResult> {
-  const key = createHash("sha256").update(refreshToken).digest("hex");
-  const active = refreshes.get(key);
-  if (active) return active;
-
-  const refresh = (async () => {
-    const issuer = process.env.AUTH_KEYCLOAK_ISSUER;
-    const clientId = process.env.AUTH_KEYCLOAK_ID;
-    const clientSecret = process.env.AUTH_KEYCLOAK_SECRET;
-    if (!issuer || !clientId || !clientSecret) {
-      throw new Error("Keycloak refresh configuration is incomplete");
-    }
-
-    const response = await fetch(
-      `${issuer.replace(/\/$/, "")}/protocol/openid-connect/token`,
-      {
-        method: "POST",
-        headers: { "content-type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          client_id: clientId,
-          client_secret: clientSecret,
-          grant_type: "refresh_token",
-          refresh_token: refreshToken,
-        }),
-      },
-    );
-    const body = (await response.json()) as {
-      access_token?: unknown;
-      expires_in?: unknown;
-      refresh_token?: unknown;
-    };
-    if (
-      !response.ok ||
-      typeof body.access_token !== "string" ||
-      typeof body.expires_in !== "number"
-    ) {
-      throw new Error("Keycloak refresh failed");
-    }
-    return {
-      accessToken: body.access_token,
-      accessTokenExpiresAt: Date.now() + body.expires_in * 1000,
-      refreshToken:
-        typeof body.refresh_token === "string"
-          ? body.refresh_token
-          : refreshToken,
-    };
-  })();
-
-  refreshes.set(key, refresh);
-  setTimeout(() => refreshes.delete(key), 5_000).unref();
-  return refresh;
+async function createBackendSession(account: string): Promise<string> {
+  const secret = process.env.AUTH_BRIDGE_SECRET;
+  if (!secret) throw new Error("AUTH_BRIDGE_SECRET is required");
+  const timestamp = Date.now().toString();
+  const signature = createHmac("sha256", secret).update(`${timestamp}\n${account}`).digest("hex");
+  const response = await fetch(backendUrl("api/v1/auth/exchange"), {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ account, timestamp, signature }),
+  });
+  if (!response.ok) throw new Error("Backend session exchange failed");
+  const body = (await response.json()) as { token?: unknown };
+  if (typeof body.token !== "string" || !body.token) throw new Error("Backend session exchange returned no token");
+  return body.token;
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: process.env.AUTH_SECRET,
   trustHost: true,
-  providers: [
-    Keycloak({
-      clientId: process.env.AUTH_KEYCLOAK_ID,
-      clientSecret: process.env.AUTH_KEYCLOAK_SECRET,
-      issuer: process.env.AUTH_KEYCLOAK_ISSUER,
-    }),
-  ],
+  session: { strategy: "jwt" },
+  providers: [Credentials({
+    credentials: {
+      account: { label: "Tài khoản", type: "text" },
+      password: { label: "Mật khẩu", type: "password" },
+    },
+    async authorize(credentials) {
+      const parsed = z.object({ account: z.string().trim().min(1), password: z.string().min(1) }).safeParse(credentials);
+      if (!parsed.success) return null;
+      const matched = await findAccount(parsed.data.account, parsed.data.password);
+      return matched ? { id: matched.account, name: matched.account } : null;
+    },
+  })],
   pages: { signIn: "/login", error: "/login" },
   callbacks: {
-    async jwt({ token, account }) {
-      const provider = token as typeof token & ProviderTokens;
-      if (account) {
-        if (
-          !account.access_token ||
-          !account.expires_at ||
-          !account.refresh_token
-        ) {
-          throw new Error("Keycloak returned incomplete tokens");
-        }
-        const response = await fetch(backendUrl("api/v1/auth/exchange"), {
-          method: "POST",
-          headers: { authorization: `Bearer ${account.access_token}` },
-        });
-        if (!response.ok) throw new Error("Backend session exchange failed");
-        const body = (await response.json()) as { token?: unknown };
-        if (typeof body.token !== "string" || !body.token) {
-          throw new Error("Backend session exchange returned no token");
-        }
-        (await cookies()).set("vnru_session", body.token, {
-          httpOnly: true,
-          sameSite: "lax",
-          secure: process.env.NODE_ENV === "production",
-          path: "/",
-          maxAge: 30 * 24 * 60 * 60,
-        });
-        provider.accessToken = account.access_token;
-        provider.accessTokenExpiresAt = account.expires_at * 1000;
-        provider.refreshToken = account.refresh_token;
-        delete provider.error;
-        return provider;
-      }
-
-      if (
-        provider.accessTokenExpiresAt &&
-        Date.now() < provider.accessTokenExpiresAt - 1_000
-      ) {
-        return provider;
-      }
-      if (!provider.refreshToken) {
-        provider.error = "RefreshTokenError";
-        return provider;
-      }
-
-      try {
-        Object.assign(
-          provider,
-          await refreshAccessToken(provider.refreshToken),
-        );
-        delete provider.error;
-      } catch {
-        provider.error = "RefreshTokenError";
-      }
-      return provider;
-    },
-    session({ session, token }) {
-      (session as typeof session & Pick<ProviderTokens, "error">).error = (
-        token as ProviderTokens
-      ).error;
-      return session;
+    async jwt({ token, user }) {
+      if (!user?.id) return token;
+      const backendToken = await createBackendSession(user.id);
+      (await cookies()).set("vnru_session", backendToken, {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: 30 * 24 * 60 * 60,
+      });
+      return token;
     },
   },
 });

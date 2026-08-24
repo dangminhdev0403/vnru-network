@@ -3,7 +3,7 @@
 The frontend currently contains:
 
 - public landing page `/` and synthetic discovery previews under `/knowledge`, `/experts` and `/opportunities`;
-- Keycloak login bridge `/login` and `/api/auth/*`;
+- Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`;
 - member account `/account`;
 - MFA and sessions `/security`;
 - IAM governance `/admin/access/*`;

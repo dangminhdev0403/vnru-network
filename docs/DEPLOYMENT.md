@@ -1,6 +1,6 @@
 # Deployment and Local Operation
 
-The containerized stack contains PostgreSQL, Keycloak, auth-service, frontend and Nginx.
+The containerized stack contains PostgreSQL, auth-service, frontend and Nginx.
 
 ```powershell
 Copy-Item .env.docker.example .env
@@ -9,9 +9,9 @@ docker compose ps
 docker compose logs -f --tail=100
 ```
 
-Endpoints use the ports configured in `.env`; defaults are frontend `3000`, auth-service `3001`, Keycloak `8080`, PostgreSQL `5432`, and Nginx `80`/`443`.
+Endpoints use the ports configured in `.env`; defaults are frontend `3000`, auth-service `3001`, PostgreSQL `5432`, and Nginx `80`/`443`.
 
-For source development, use the existing local PostgreSQL and Keycloak containers, then run:
+For source development, use the local PostgreSQL container, then run:
 
 ```powershell
 pnpm --dir services/auth-service start:dev
