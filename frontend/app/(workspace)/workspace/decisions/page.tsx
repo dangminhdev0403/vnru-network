@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DecisionTaskWorkspace } from "@/features/workspace/components/DecisionTaskWorkspace";
+import { DecisionInteractiveWorkspace } from "@/features/workspace/components/DecisionInteractiveWorkspace";
 import { requireWorkspaceCapability } from "@/features/auth/workspace-server";
 
 export const metadata: Metadata = {
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   await requireWorkspaceCapability("/workspace/decisions", ["collab.decisions.issue_foundation"]);
-  return <DecisionTaskWorkspace />;
+  return <DecisionInteractiveWorkspace />;
 }
