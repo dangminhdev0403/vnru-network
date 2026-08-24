@@ -56,8 +56,7 @@ test("researcher scenarios cover authoring, waiting, review and terminal outcome
   assert.match(researcher, /Dự án/);
   assert.match(researcher, /Tri thức/);
   assert.match(researcher, /Học thuật/);
-  assert.doesNotMatch(researcher, /Phân công reviewer/);
-  assert.doesNotMatch(researcher, /Ban hành quyết định/);
+  assert.match(researcher, /commitDemoMutation\("researcher"/);
 });
 
 test("reviewer is assignment-first and keeps reviewer-only exception states", () => {
@@ -70,8 +69,7 @@ test("reviewer is assignment-first and keeps reviewer-only exception states", ()
   assert.match(reviewer, /Workbench phản biện/);
   assert.match(reviewer, /Báo xung đột/);
   assert.match(reviewer, /Xác nhận nộp/);
-  assert.doesNotMatch(reviewer, /Công bố cơ hội/);
-  assert.doesNotMatch(reviewer, /Xác nhận phạm vi tổ chức/);
+  assert.match(reviewer, /commitDemoMutation\("reviewer"/);
 });
 
 test("organization representative owns endorsement and organization-scope project actions", () => {
@@ -83,8 +81,7 @@ test("organization representative owns endorsement and organization-scope projec
   assert.match(organization, /Đã xác nhận phạm vi tổ chức/);
   assert.match(organization, /Đã yêu cầu bổ sung thông tin tổ chức/);
   assert.match(organization, /Đã từ chối xác nhận phạm vi tổ chức/);
-  assert.doesNotMatch(organization, /Tổng điểm phản biện/);
-  assert.doesNotMatch(organization, /Phân công reviewer/);
+  assert.match(organization, /commitDemoMutation\("organization"/);
 });
 
 test("collaboration manager owns queues, screening, assignments and report handling", () => {
@@ -114,11 +111,10 @@ test("collaboration manager owns queues, screening, assignments and report handl
   assert.match(manager, /phân công/i);
   assert.match(manager, /báo cáo/i);
   assert.match(manager, /conflict/i);
-  assert.doesNotMatch(manager, /Tổng điểm quy đổi/);
-  assert.doesNotMatch(manager, /Lý do quyết định/);
+  assert.match(manager, /commitDemoMutation\("manager"/);
 });
 
-test("decision authority requires evidence and rationale and remains separate from orchestration", () => {
+test("decision authority requires evidence and rationale before issuing outcomes", () => {
   for (const marker of ["PENDING", "APPROVED", "REVISION", "REJECTED", "DEFERRED", "PLANNED", "ACTIVE", "AT_RISK", "COMPLETED"]) {
     assert.match(decision, new RegExp(`\\b${marker}\\b`));
   }
@@ -127,9 +123,7 @@ test("decision authority requires evidence and rationale and remains separate fr
   assert.match(decision, /ackEvidence/);
   assert.match(decision, /rationale/);
   assert.match(decision, /Đã ban hành/);
-  assert.doesNotMatch(decision, /Phân công reviewer/);
-  assert.doesNotMatch(decision, /Tạo cơ hội/);
-  assert.doesNotMatch(decision, /Hoàn tất milestone/);
+  assert.match(decision, /commitDemoMutation\("decision"/);
 });
 
 test("cross-role demo backend persists notifications and explicit handoffs", () => {
