@@ -17,11 +17,22 @@ export type ProposalState =
   | "REVISION"
   | "APPROVED"
   | "REJECTED"
+  | "WITHDRAWN"
   | "CANCELLED";
 
-export type ReviewState = "UNASSIGNED" | "ASSIGNED" | "IN_REVIEW" | "OVERDUE" | "SUBMITTED" | "CANCELLED";
+export type ReviewState =
+  | "UNASSIGNED"
+  | "ASSIGNED"
+  | "NEW"
+  | "IN_REVIEW"
+  | "DRAFT"
+  | "OVERDUE"
+  | "CONFLICT"
+  | "SUBMITTED"
+  | "CANCELLED";
+
 export type DecisionState = "PENDING" | "REVISION" | "APPROVED" | "REJECTED";
-export type ProjectState = "PLANNED" | "ACTIVE" | "BLOCKED" | "COMPLETED" | "CANCELLED";
+export type ProjectState = "PLANNED" | "ACTIVE" | "AT_RISK" | "BLOCKED" | "COMPLETED" | "CANCELLED";
 export type MilestoneState = "TODO" | "IN_PROGRESS" | "DONE" | "OVERDUE";
 
 export type Proposal = {
@@ -103,7 +114,7 @@ export type ReportItem = {
   title: string;
   period: string;
   progress: number;
-  state: "DRAFT" | "PENDING" | "RETURNED" | "APPROVED";
+  state: "DRAFT" | "SUBMITTED" | "PENDING" | "RETURNED" | "APPROVED" | "OVERDUE";
 };
 
 export type OrganizationEndorsement = {
