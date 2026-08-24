@@ -29,13 +29,11 @@ Public `/`, `/knowledge`, `/experts` and `/opportunities` routes are information
 - `/security`: MFA and session security.
 - `/admin/access/*`: user, role, permission and assignment administration.
 - `/admin/audit`: Module 1 audit surface.
-- `/workspace`: resolves the authenticated session to a current capability-gated role preview or a Module 1 destination.
-- `/workspace/researcher`, `/workspace/reviewer`, `/workspace/organization`: capability-gated task UI previews without business backends.
-- `/workspace/collaboration`: capability-gated `COLLABORATION_MANAGER` task UI preview for opportunities, screening, reviewer assignment, projects and report handling.
-- `/workspace/decisions`: capability-gated decision task UI preview for `FOUNDATION_DECISION_MAKER`; user-facing copy is neutral and excludes financial/funding workflows.
+- `/workspace`: the unified member workspace. Every non-administrator business persona lands here; capability keys determine visible modules and available actions.
+- `/workspace/researcher`, `/workspace/reviewer`, `/workspace/organization`, `/workspace/collaboration` and `/workspace/decisions`: capability-gated task modules inside the same workspace shell. They are not separate applications or UI personas.
 - `/workspace/enterprise`, `/workspace/leadership`: authenticated UI previews only and are not selected by current live personas.
 - Legacy `/workspace/iam*`: compatibility redirects to Module 1 routes.
 
-`KNOWLEDGE_CURATOR` is removed from the current active synthetic role fixture set because its former permission set did not own a distinct workflow step. Knowledge browsing remains available in public discovery and the Researcher preview.
+`SUPER_ADMIN` remains isolated in `/admin/*`. Backend workflow roles remain distinct for authorization, context and audit even though the frontend presents one member workspace. `KNOWLEDGE_CURATOR` is removed from the current active synthetic role fixture set because its former permission set did not own a distinct workflow step.
 
 Knowledge, expert-directory, collaboration, review, project, academic, technology and analytics business services are absent. Synthetic frontend previews may still exist for design and flow demonstration.

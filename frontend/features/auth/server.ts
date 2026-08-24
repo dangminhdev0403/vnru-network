@@ -18,20 +18,16 @@ export function resolveLandingPath(capabilities: string[] = []): string {
   if (isSystemAdministrator(capabilities)) {
     return "/admin/access";
   }
-  if (capabilities.includes("collab.decisions.issue_foundation")) {
-    return "/workspace/decisions";
-  }
-  if (capabilities.includes("collab.opportunities.create") || capabilities.includes("collab.proposals.screen") || capabilities.includes("reviews.assignments.manage")) {
-    return "/workspace/collaboration";
-  }
-  if (capabilities.includes("reviews.assignments.view_assigned")) {
-    return "/workspace/reviewer";
-  }
-  if (capabilities.includes("collab.proposals.endorse")) {
-    return "/workspace/organization";
-  }
-  if (capabilities.includes("collab.proposals.create")) {
-    return "/workspace/researcher";
+  if (capabilities.some((capability) => [
+    "collab.proposals.create",
+    "reviews.assignments.view_assigned",
+    "collab.proposals.endorse",
+    "collab.opportunities.create",
+    "collab.proposals.screen",
+    "reviews.assignments.manage",
+    "collab.decisions.issue_foundation",
+  ].includes(capability))) {
+    return "/workspace";
   }
   return "/account";
 }

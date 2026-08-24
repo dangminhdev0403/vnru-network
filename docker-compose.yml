@@ -2,7 +2,6 @@ name: vnru-network
 
 networks:
   vnru-net:
-    driver: bridge
 
 volumes:
   postgres_data:
@@ -10,7 +9,6 @@ volumes:
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: vnru-postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -19,89 +17,113 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "${POSTGRES_PORT:-55432}:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    networks:
-      - vnru-net
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d auth_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    networks: [vnru-net]
 
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0
-    container_name: vnru-keycloak
+    build: ./infra/keycloak
     restart: unless-stopped
     command: start-dev
     environment:
-      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?set in secrets/demo.env}
+      KC_HOSTNAME: ${KEYCLOAK_PUBLIC_URL:-http://vnru.localhost:8180}
       KC_HEALTH_ENABLED: "true"
-    volumes:
-      - ./infra/keycloak/themes:/opt/keycloak/themes:ro
-    ports:
-      - "${KEYCLOAK_PORT:-8080}:8080"
-    networks:
-      - vnru-net
 
-  auth-service:
+    ports:
+      - "${KEYCLOAK_PORT:-8180}:8080"
+    networks: [vnru-net]
+
+  migrate:
     build:
       context: ./services/auth-service
-      dockerfile: Dockerfile
-    container_name: vnru-auth-service
-    restart: unless-stopped
-    command: sh -c "pnpm exec prisma migrate deploy --config prisma.config.ts && node dist/src/main.js"
+      target: tools
+    restart: "no"
+    command: pnpm exec prisma migrate deploy --config prisma.config.ts
     environment:
-      NODE_ENV: production
-      PORT: 3000
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/auth_db?schema=public
-      KEYCLOAK_ISSUER_URL: ${KEYCLOAK_ISSUER_URL:-http://keycloak:8080/realms/vnru}
-      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-vnru-auth}
-      KEYCLOAK_REDIRECT_URI: ${KEYCLOAK_REDIRECT_URI:-http://localhost:3000/api/v1/auth/callback}
-      KEYCLOAK_PROFILE_CLIENT_ID: ${KEYCLOAK_PROFILE_CLIENT_ID:-vnru-profile-service}
-      KEYCLOAK_PROFILE_CLIENT_SECRET: ${KEYCLOAK_PROFILE_CLIENT_SECRET:-replace-with-secret-store-value}
-    ports:
-      - "${AUTH_SERVICE_PORT:-3001}:3000"
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - vnru-net
+    networks: [vnru-net]
+
+  demo-seed:
+    build:
+      context: ./services/auth-service
+      target: tools
+    restart: "no"
+    profiles: [seed]
+    command: pnpm exec ts-node prisma/seed-demo.ts /dev/stdin
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/auth_db?schema=public
+      KEYCLOAK_ADMIN_URL: http://keycloak:8080
+      KEYCLOAK_PUBLIC_URL: ${KEYCLOAK_PUBLIC_URL:-http://vnru.localhost:8180}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?set in secrets/demo.env}
+      KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET:?set in secrets/demo.env}
+      KEYCLOAK_PROFILE_CLIENT_SECRET: ${KEYCLOAK_PROFILE_CLIENT_SECRET:?set in secrets/demo.env}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:8082}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      keycloak:
+        condition: service_started
+    networks: [vnru-net]
+
+  auth-service:
+    build: ./services/auth-service
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/auth_db?schema=public
+      KEYCLOAK_ISSUER_URL: ${KEYCLOAK_PUBLIC_URL:-http://vnru.localhost:8180}/realms/vnru
+      KEYCLOAK_CLIENT_ID: vnru-auth
+      KEYCLOAK_REDIRECT_URI: ${FRONTEND_URL:-http://localhost:8082}/api/auth/callback/keycloak
+      KEYCLOAK_PROFILE_CLIENT_ID: vnru-profile-service
+      KEYCLOAK_PROFILE_CLIENT_SECRET: ${KEYCLOAK_PROFILE_CLIENT_SECRET:?set in secrets/demo.env}
+    ports:
+      - "${AUTH_SERVICE_PORT:-3101}:3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    networks: [vnru-net]
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: vnru-frontend
+    build: ./frontend
     restart: unless-stopped
     environment:
       NODE_ENV: production
       PORT: 3000
       AUTH_SERVICE_URL: http://auth-service:3000
-      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-vnru-default-dev-secret-replace-in-prod}
-      AUTH_SECRET: ${AUTH_SECRET:-vnru-default-dev-secret-replace-in-prod}
+      NEXTAUTH_URL: ${FRONTEND_URL:-http://localhost:8082}
+      NEXTAUTH_SECRET: ${AUTH_SECRET:?set in secrets/demo.env}
+      AUTH_SECRET: ${AUTH_SECRET:?set in secrets/demo.env}
+      AUTH_KEYCLOAK_ID: vnru-auth
+      AUTH_KEYCLOAK_SECRET: ${KEYCLOAK_CLIENT_SECRET:?set in secrets/demo.env}
+      AUTH_KEYCLOAK_ISSUER: ${KEYCLOAK_PUBLIC_URL:-http://vnru.localhost:8180}/realms/vnru
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
-      - "${FRONTEND_PORT:-3000}:3000"
+      - "${FRONTEND_PORT:-3100}:3000"
     depends_on:
       auth-service:
         condition: service_started
-    networks:
-      - vnru-net
+    networks: [vnru-net]
 
   nginx:
-    image: nginx:alpine
-    container_name: vnru-nginx
+    build: ./infra/nginx
     restart: unless-stopped
     ports:
-      - "${NGINX_HTTP_PORT:-80}:80"
-      - "${NGINX_HTTPS_PORT:-443}:443"
-    volumes:
-      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./infra/nginx/conf.d:/etc/nginx/conf.d:ro
+      - "${NGINX_HTTP_PORT:-8082}:80"
+
     depends_on:
       - frontend
       - auth-service
       - keycloak
-    networks:
-      - vnru-net
+    networks: [vnru-net]

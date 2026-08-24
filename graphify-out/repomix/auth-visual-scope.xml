@@ -1,3 +1,98 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: frontend/app/login/page.tsx, frontend/app/register/page.tsx, frontend/app/api/auth/login/route.ts, frontend/features/public-v2/components/GuestHomeV2.tsx, frontend/auth-flow.test.mjs, infra/keycloak/themes/vnru/login/resources/css/login.css
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+frontend/
+  app/
+    api/
+      auth/
+        login/
+          route.ts
+    login/
+      page.tsx
+    register/
+      page.tsx
+  features/
+    public-v2/
+      components/
+        GuestHomeV2.tsx
+  auth-flow.test.mjs
+infra/
+  keycloak/
+    themes/
+      vnru/
+        login/
+          resources/
+            css/
+              login.css
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="frontend/app/api/auth/login/route.ts">
+import { NextRequest } from "next/server";
+import { signIn } from "../../../../auth";
+import {
+  LOCALE_COOKIE_NAME,
+  sanitizeLocale,
+  sanitizeReturnTo,
+} from "../../../../features/auth/server";
+⋮----
+export async function GET(request: NextRequest)
+</file>
+
+<file path="frontend/app/register/page.tsx">
+import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { getCurrentSession, SESSION_COOKIE_NAME } from "../../features/auth/server";
+⋮----
+export default async function RegisterPage()
+</file>
+
+<file path="infra/keycloak/themes/vnru/login/resources/css/login.css">
 :root{--bg:#06142c;--surface:#0a1d3b;--surface-strong:#0d2344;--text:#f5f8ff;--muted:#a9b9cf;--subtle:#8296b1;--line:rgba(164,205,255,.14);--blue:#3278ed;--blue-dark:#1d5fcf;--cyan:#72d6ff;--red:#ff8093;--radius:12px}
 *{box-sizing:border-box}html.login-pf,html.login-pf body#keycloak-bg{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body#keycloak-bg .pf-v5-c-login{min-height:100dvh;padding:0;background:transparent}body#keycloak-bg .pf-v5-c-login__container{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(420px,.88fr);grid-template-areas:"visual form";width:100%;min-height:100dvh;max-width:none;margin:0;padding:0;overflow:hidden}body#keycloak-bg #kc-header{display:none}
 body#keycloak-bg .vnru-auth-hero{position:fixed;inset:0 44% 0 0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;padding:42px clamp(34px,4vw,72px);overflow:hidden;border-right:1px solid rgba(255,255,255,.07);background:radial-gradient(circle at 24% 30%,rgba(42,113,228,.18),transparent 30%),radial-gradient(circle at 90% 84%,rgba(209,61,91,.09),transparent 24%),linear-gradient(145deg,#06142c,#0a1d3b 62%,#071731)}
@@ -10,12 +105,35 @@ body#keycloak-bg .pf-v5-c-form__actions{padding-top:2px!important}#kc-login{widt
 @media(max-width:980px){html.login-pf body#keycloak-bg{overflow:auto}body#keycloak-bg .pf-v5-c-login{min-height:100dvh;overflow:visible}body#keycloak-bg .pf-v5-c-login__container{display:block!important;min-height:100dvh;margin:0;padding:0;overflow:visible}body#keycloak-bg .vnru-auth-hero{position:relative!important;inset:auto!important;width:100%;min-height:390px;margin:0;padding:28px!important}.vnru-auth-copy{margin:45px 0 18px!important}.vnru-auth-copy h1{max-width:600px;font-size:52px!important}.vnru-network-scene{right:-20px!important;top:54px!important;width:48%!important;height:76%!important;opacity:.44!important}.vnru-capabilities{max-width:620px}body#keycloak-bg .pf-v5-c-login__main{width:min(460px,calc(100% - 48px))!important;margin:50px auto 64px!important;padding:0!important}}
 @media(max-width:620px){body#keycloak-bg #kc-locale{top:16px;right:18px}body#keycloak-bg #kc-current-locale-link{min-width:118px;min-height:40px}.vnru-auth-hero{min-height:335px!important;padding:22px 20px 28px!important}.vnru-auth-brand{max-width:310px!important;font-size:13px!important}.vnru-brand-mark{width:38px;height:38px}.vnru-auth-copy{margin:36px 0 0!important}.vnru-eyebrow{font-size:10px}.vnru-auth-copy h1{max-width:360px;font-size:39px!important}.vnru-auth-copy>p{max-width:400px;font-size:14px;line-height:1.6}.vnru-network-scene{right:-76px!important;width:72%!important;opacity:.25!important}.vnru-capabilities,.vnru-visual-foot{display:none}.pf-v5-c-login__main{width:calc(100% - 36px)!important;margin:38px auto 52px!important}.vnru-form-head h2{font-size:34px}.vnru-back-link{margin-bottom:24px}}
 @media(prefers-reduced-motion:reduce){.net-path,.net-node,.net-core,#kc-login,.vnru-type-char{animation:none;transition:none}.vnru-type-char{opacity:1}}
-
+⋮----
 /* Public-home palette: keep the IdP ceremony visually continuous with the portal. */
 html.login-pf body#keycloak-bg{--bg:#ebf4ff;--surface:#fff;--surface-strong:#eff6ff;--text:#0f172a;--muted:#475569;--subtle:#64748b;--line:#bfdbfe;background:radial-gradient(circle at 75% 25%,rgba(59,130,246,.25),transparent 40%),linear-gradient(180deg,#dbeafe 0%,#eff6ff 55%,#e1effe 100%);color:var(--text)}
 body#keycloak-bg .vnru-auth-hero{border-right-color:#bfdbfe;background:radial-gradient(circle at 75% 25%,rgba(59,130,246,.2),transparent 40%),linear-gradient(180deg,#dbeafe,#eff6ff 58%,#e1effe)}
-body#keycloak-bg .vnru-auth-brand,.vnru-auth-copy h1,.vnru-capabilities b{color:#0f172a}.vnru-auth-brand-mark{border-color:#bfdbfe}.vnru-auth-brand small,.vnru-auth-copy>p,.vnru-capabilities span,.vnru-visual-foot,.vnru-visual-foot span{color:#475569}.vnru-eyebrow,.vnru-auth-copy h1 .vnru-title-accent{color:#2563eb}.vnru-capabilities{border-color:#bfdbfe;background:#bfdbfe}.vnru-capabilities>div{background:rgba(255,255,255,.88);border-radius:10px}
-body#keycloak-bg .pf-v5-c-login__main{color:#0f172a;background:transparent;border:0;box-shadow:none}
-.vnru-form-head h2{color:#0f172a;font-size:38px;font-weight:900;letter-spacing:-.03em}.vnru-form-head p,.vnru-terms{color:#475569;font-size:14px}.pf-v5-c-form__label-text{color:#1e293b;font-size:15px;font-weight:700}.pf-v5-c-form-control,.pf-v5-c-input-group{border:1px solid #bfdbfe;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.04)}.pf-v5-c-form-control:focus-within,.pf-v5-c-input-group:focus-within{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.18)}.pf-v5-c-form-control input{color:#0f172a;font-size:16px;font-weight:600}.pf-v5-c-form-control input::placeholder{color:#94a3b8}.vnru-options a{color:#2563eb!important;font-size:14px!important;font-weight:700}.vnru-security-note{border:1px solid #bfdbfe;border-radius:14px;background:rgba(255,255,255,.75);color:#475569;font-size:14px}.vnru-security-note b{color:#0f172a}#kc-login{border-radius:14px;font-size:16px;font-weight:800;background:linear-gradient(135deg,#2563eb,#1d4ed8);box-shadow:0 12px 28px -8px rgba(37,99,235,.75)}.vnru-divider{color:#64748b;font-size:13px}.vnru-divider:before,.vnru-divider:after{background:#bfdbfe}
-body#keycloak-bg #kc-current-locale-link,body#keycloak-bg #login-select-toggle{border-color:#bfdbfe;border-radius:12px;background:#fff;color:#1e293b;box-shadow:0 1px 3px rgba(0,0,0,.06)}body#keycloak-bg #kc-locale-dropdown ul{border-color:#bfdbfe;border-radius:14px;background:#fff;box-shadow:0 18px 42px rgba(37,99,235,.16)}body#keycloak-bg #kc-locale-dropdown li a{color:#334155;border-radius:8px}body#keycloak-bg #kc-locale-dropdown li a:hover{background:#eff6ff;color:#1d4ed8}
-@media(max-width:620px){.vnru-form-head h2{font-size:32px}}
+body#keycloak-bg .vnru-auth-brand,.vnru-auth-copy h1,.vnru-capabilities b{color:#0f172a}.vnru-auth-brand-mark{border-color:#bfdbfe}.vnru-auth-brand small,.vnru-auth-copy>p,.vnru-capabilities span,.vnru-visual-foot,.vnru-visual-foot span{color:#475569}.vnru-eyebrow,.vnru-auth-copy h1 .vnru-title-accent{color:#2563eb}.vnru-capabilities{border-color:#bfdbfe;background:#bfdbfe}.vnru-capabilities>div{background:rgba(255,255,255,.88)}
+body#keycloak-bg .pf-v5-c-login__main{color:#0f172a}.vnru-form-head h2{color:#0f172a;font-size:42px}.vnru-form-head p,.vnru-terms{color:#475569;font-size:15px}.pf-v5-c-form__label-text{color:#1e293b;font-size:16px}.pf-v5-c-form-control,.pf-v5-c-input-group{border-color:#bfdbfe;background:rgba(255,255,255,.9)}.pf-v5-c-form-control input{color:#0f172a;font-size:17px}.pf-v5-c-form-control input::placeholder{color:#64748b}.vnru-options a{color:#1d4ed8!important;font-size:15px!important}.vnru-security-note{border-color:#bfdbfe;background:rgba(255,255,255,.72);color:#475569;font-size:15px}.vnru-security-note b{color:#0f172a}#kc-login{font-size:17px}.vnru-divider{color:#64748b;font-size:14px}.vnru-divider:before,.vnru-divider:after{background:#bfdbfe}
+body#keycloak-bg #kc-current-locale-link,body#keycloak-bg #login-select-toggle{border-color:#bfdbfe;background:#fff;color:#1e293b}body#keycloak-bg #kc-locale-dropdown ul{border-color:#bfdbfe;background:#fff;box-shadow:0 18px 42px rgba(37,99,235,.14)}body#keycloak-bg #kc-locale-dropdown li a{color:#334155}body#keycloak-bg #kc-locale-dropdown li a:hover{background:#eff6ff;color:#1d4ed8}
+@media(max-width:620px){.vnru-form-head h2{font-size:34px}}
+</file>
+
+<file path="frontend/app/login/page.tsx">
+import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import {
+  getCurrentSession,
+  sanitizeReturnTo,
+  SESSION_COOKIE_NAME,
+} from "../../features/auth/server";
+</file>
+
+<file path="frontend/features/public-v2/components/GuestHomeV2.tsx">
+import Link from "next/link";
+import { GuestExploreMedia } from "./GuestExploreMedia";
+import { GuestPublicNav } from "./GuestPublicNav";
+</file>
+
+<file path="frontend/auth-flow.test.mjs">
+
+</file>
+
+</files>

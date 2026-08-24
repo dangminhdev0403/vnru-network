@@ -14,13 +14,9 @@ Only Module 1 has an implemented backend runtime. Public discovery and role page
 | Access administration | `/admin/access/*` |
 | Security audit | `/admin/audit` |
 
-`/workspace` reads the authenticated capability set. IAM administrators go to `/admin/access`. Current role previews resolve as follows:
+`/workspace` is the single landing and overview for every non-administrator business persona. Its navigation is composed from the authenticated capability set. Researcher, Reviewer, Organization Representative, Collaboration Manager and Foundation Decision Maker remain backend authorization roles, while their existing `/workspace/*` routes act as capability-gated task modules inside one product shell. Users with several roles see the union of their allowed modules without switching dashboard personas.
 
-- Researcher -> `/workspace/researcher`;
-- Reviewer -> `/workspace/reviewer`;
-- Organization Representative -> `/workspace/organization`;
-- Collaboration Manager -> `/workspace/collaboration`;
-- Foundation Decision Maker -> `/workspace/decisions` with neutral user-facing decision terminology.
+IAM administrators go to `/admin/access` and do not receive member-workspace navigation, even when their session also contains business capabilities.
 
 `KNOWLEDGE_CURATOR` is not part of the current active role fixture set. Its former view-only permission set did not own a distinct workflow step.
 

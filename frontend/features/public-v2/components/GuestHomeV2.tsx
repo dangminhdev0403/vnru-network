@@ -17,90 +17,259 @@ const events = [
 
 export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticated: boolean; workspaceHref: string }) {
   return (
-    <div className="min-h-screen bg-[#f7fbff] text-slate-950">
+    <div className="min-h-screen bg-[#ebf4ff] text-slate-950">
       <GuestPublicNav active="home" isAuthenticated={isAuthenticated} workspaceHref={workspaceHref} />
 
       <main>
-        <section className="relative overflow-hidden border-b border-blue-100 bg-[radial-gradient(circle_at_75%_28%,rgba(59,130,246,.18),transparent_32%),linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <section className="relative overflow-hidden border-b border-blue-200/80 bg-[radial-gradient(circle_at_75%_25%,rgba(59,130,246,.25),transparent_40%),linear-gradient(180deg,#dbeafe_0%,#eff6ff_55%,#e1effe_100%)] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="absolute inset-0 opacity-60 [background-image:linear-gradient(rgba(59,130,246,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,.045)_1px,transparent_1px)] [background-size:42px_42px]" aria-hidden="true" />
-          <div className="relative mx-auto grid max-w-[1460px] gap-10 lg:grid-cols-[.95fr_1.05fr] lg:items-center">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.08em] text-blue-700">✦ Kết nối tri thức · Kiến tạo tương lai</span>
-              <h1 className="mt-5 text-balance text-4xl font-black leading-[1.04] tracking-[-0.045em] text-slate-950 sm:text-5xl lg:text-[58px]">Kết nối tri thức,<br /><span className="text-blue-600">Kiến tạo đột phá</span></h1>
-              <p className="mt-5 max-w-xl text-sm font-medium leading-7 text-slate-600 sm:text-[15px]">Mạng lưới hợp tác Khoa học & Công nghệ giữa Nga và Việt Nam — nơi chuyên gia, tổ chức, tri thức và cơ hội nghiên cứu gặp nhau.</p>
+          <div className="relative mx-auto grid max-w-[1460px] gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+            <div className="max-w-3xl">
+              <span className="inline-flex items-center gap-2 rounded-full border border-blue-300/80 bg-blue-100/90 px-4 py-2 text-xs sm:text-[13px] font-black uppercase tracking-[0.1em] text-blue-800">✦ Cổng kết nối hợp tác song phương</span>
+              <h1 className="mt-6 text-balance text-4xl font-black leading-[1.08] tracking-[-0.04em] text-slate-950 sm:text-5xl md:text-6xl lg:text-[62px] xl:text-[68px]">
+                Mạng lưới Tri thức<br />
+                <span className="text-blue-600">Khoa học – Công nghệ</span><br />
+                <span className="text-slate-900">Nga – Việt</span>
+              </h1>
+              <p className="mt-6 max-w-2xl text-base sm:text-lg md:text-[19px] font-normal leading-relaxed text-slate-700">
+                Nền tảng kết nối trực tiếp các chuyên gia, viện nghiên cứu, trường đại học và cơ hội hợp tác KH&CN giữa Việt Nam và Liên bang Nga.
+              </p>
 
-              <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[11px] font-bold text-slate-600">
-                <span className="inline-flex items-center gap-1.5"><b className="text-blue-600">◉</b> 2 quốc gia</span>
-                <span className="inline-flex items-center gap-1.5"><b className="text-blue-600">◎</b> 500+ chuyên gia</span>
-                <span className="inline-flex items-center gap-1.5"><b className="text-blue-600">◇</b> 300+ dự án hợp tác</span>
-                <span className="inline-flex items-center gap-1.5"><b className="text-blue-600">✦</b> 20+ lĩnh vực</span>
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm md:text-[15px] font-bold text-slate-700">
+                <span className="inline-flex items-center gap-2"><b className="text-base text-blue-600">◉</b> 2 quốc gia</span>
+                <span className="inline-flex items-center gap-2"><b className="text-base text-blue-600">◎</b> 500+ chuyên gia</span>
+                <span className="inline-flex items-center gap-2"><b className="text-base text-blue-600">◇</b> 300+ dự án hợp tác</span>
+                <span className="inline-flex items-center gap-2"><b className="text-base text-blue-600">✦</b> 20+ lĩnh vực</span>
               </div>
 
-              <div className="mt-7 flex flex-wrap gap-3">
-                <Link href={isAuthenticated ? workspaceHref : "/login"} className="inline-flex min-h-11 items-center rounded-xl bg-blue-600 px-5 text-xs font-extrabold text-white shadow-[0_12px_30px_-15px_rgba(37,99,235,.9)] transition hover:-translate-y-0.5 hover:bg-blue-700">{isAuthenticated ? "Vào không gian làm việc →" : "Gia nhập mạng lưới →"}</Link>
-                <Link href="/opportunities" className="inline-flex min-h-11 items-center rounded-xl border border-blue-200 bg-white px-5 text-xs font-extrabold text-blue-700 shadow-sm transition hover:border-blue-300 hover:bg-blue-50">Khám phá cơ hội hợp tác</Link>
+              <div className="mt-8 flex flex-wrap gap-3.5">
+                <Link href={isAuthenticated ? workspaceHref : "/register"} className="inline-flex min-h-12 items-center rounded-xl bg-blue-600 px-6 text-sm sm:text-base font-bold text-white shadow-[0_14px_32px_-14px_rgba(37,99,235,.9)] transition hover:-translate-y-0.5 hover:bg-blue-700">{isAuthenticated ? "Vào không gian làm việc →" : "Gia nhập mạng lưới →"}</Link>
+                <Link href="/opportunities" className="inline-flex min-h-12 items-center rounded-xl border border-blue-300 bg-white/90 px-6 text-sm sm:text-base font-bold text-blue-700 shadow-xs transition hover:border-blue-400 hover:bg-white">Khám phá cơ hội hợp tác</Link>
               </div>
             </div>
 
-            <div className="relative mx-auto flex w-full max-w-[620px] items-center justify-center py-4">
-              <div className="relative aspect-square w-[76%] min-w-[300px] rounded-full border border-blue-200/80 bg-[radial-gradient(circle_at_38%_34%,#ffffff_0%,#dcecff_34%,#8bc2ff_67%,#2f7eea_100%)] shadow-[0_35px_90px_-34px_rgba(37,99,235,.65)]">
-                <div className="absolute inset-[8%] rounded-full border border-white/55" />
-                <div className="absolute inset-[18%] rounded-full border border-white/45" />
-                <div className="absolute left-[10%] right-[10%] top-1/2 h-px bg-white/60" />
-                <div className="absolute bottom-[10%] left-1/2 top-[10%] w-px bg-white/45" />
-                <div className="absolute left-[17%] top-[43%] grid size-14 place-items-center rounded-full border-4 border-white bg-red-500 text-xl text-yellow-300 shadow-lg">★</div>
-                <div className="absolute right-[18%] top-[43%] overflow-hidden rounded-full border-4 border-white shadow-lg"><div className="h-[18px] w-[54px] bg-white" /><div className="h-[18px] w-[54px] bg-blue-600" /><div className="h-[18px] w-[54px] bg-red-500" /></div>
-                {["left-[25%] top-[20%]", "right-[22%] top-[24%]", "left-[30%] bottom-[20%]", "right-[30%] bottom-[18%]", "left-[48%] top-[8%]"].map((pos) => <span key={pos} className={`absolute size-2 rounded-full border-2 border-white bg-blue-600 shadow ${pos}`} />)}
+            <div className="relative mx-auto w-full max-w-[640px]">
+              <div className="relative overflow-hidden rounded-[32px] border border-blue-200 bg-gradient-to-b from-white/95 via-blue-50/90 to-sky-100/70 p-7 shadow-[0_24px_60px_-18px_rgba(37,99,235,0.22)] backdrop-blur-xl sm:p-8">
+                <div className="absolute -right-12 -top-12 size-48 rounded-full bg-blue-200/50 blur-3xl" aria-hidden="true" />
+                <div className="absolute -left-12 -bottom-12 size-48 rounded-full bg-sky-200/50 blur-3xl" aria-hidden="true" />
+
+                <div className="relative">
+                  <div className="flex items-center justify-between gap-3 border-b border-blue-200/80 pb-4">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-blue-300 bg-blue-100/80 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-blue-800">
+                      ✦ Cổng thông tin Song phương
+                    </span>
+                    <div className="flex items-center gap-1.5 rounded-full border border-blue-200/90 bg-white/85 px-2.5 py-1 text-xs font-black text-slate-700 shadow-xs">
+                      <span className="grid size-5 place-items-center rounded-full bg-red-600 text-[10px] text-yellow-300 shadow-xs">★</span>
+                      <span className="text-[10px] font-extrabold text-blue-600">↔</span>
+                      <span className="flex size-5 flex-col overflow-hidden rounded-full border border-slate-200 shadow-xs">
+                        <span className="h-1/3 bg-white" />
+                        <span className="h-1/3 bg-blue-600" />
+                        <span className="h-1/3 bg-red-600" />
+                      </span>
+                      <span className="ml-1 text-[11px] font-black uppercase text-blue-700">VN – RU</span>
+                    </div>
+                  </div>
+
+                  <h2 className="mt-4 text-xl sm:text-2xl font-black leading-snug tracking-tight text-slate-950">
+                    Cầu nối trực tiếp giữa các viện nghiên cứu và trường đại học hàng đầu Việt Nam – Liên bang Nga.
+                  </h2>
+
+                  <div className="mt-6 space-y-4">
+                    <div className="flex items-start gap-4 rounded-2xl border border-blue-200/80 bg-white/85 p-4 shadow-xs transition hover:border-blue-300 hover:bg-white">
+                      <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-600 text-lg font-black text-white shadow-sm">
+                        16
+                      </span>
+                      <div className="min-w-0">
+                        <h3 className="text-base sm:text-lg font-black text-slate-950">Viện nghiên cứu & Đại học trọng điểm</h3>
+                        <p className="mt-1 text-xs sm:text-sm font-medium leading-relaxed text-slate-600">
+                          Hợp tác trực tiếp giữa VAST, Viện Hàn lâm Khoa học Nga (RAS), ĐHQG Hà Nội, Bách Khoa và MISIS.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 rounded-2xl border border-blue-200/80 bg-white/85 p-4 shadow-xs transition hover:border-blue-300 hover:bg-white">
+                      <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-600 text-lg font-black text-white shadow-sm">
+                        500+
+                      </span>
+                      <div className="min-w-0">
+                        <h3 className="text-base sm:text-lg font-black text-slate-950">Chuyên gia khoa học song phương</h3>
+                        <p className="mt-1 text-xs sm:text-sm font-medium leading-relaxed text-slate-600">
+                          Đội ngũ giáo sư và nhà khoa học sẵn sàng kết nối, phản biện độc lập và đồng chủ trì đề tài.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 rounded-2xl border border-blue-200/80 bg-white/85 p-4 shadow-xs transition hover:border-blue-300 hover:bg-white">
+                      <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-600 text-lg font-black text-white shadow-sm">
+                        14
+                      </span>
+                      <div className="min-w-0">
+                        <h3 className="text-base sm:text-lg font-black text-slate-950">Hướng nghiên cứu trọng điểm năm 2026</h3>
+                        <p className="mt-1 text-xs sm:text-sm font-medium leading-relaxed text-slate-600">
+                          Ưu tiên các lĩnh vực AI, Khoa học Biển, Vật liệu Nano, Năng lượng mới và Chuyển giao công nghệ.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 pt-2">
+                    <Link
+                      href="/opportunities"
+                      className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-blue-600 px-6 text-sm sm:text-base font-bold text-white shadow-[0_12px_30px_-12px_rgba(37,99,235,0.8)] transition hover:bg-blue-700"
+                    >
+                      Khám phá cơ hội hợp tác ngay →
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className="absolute inset-x-[12%] top-1/2 h-px -rotate-12 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
-              <div className="absolute inset-x-[15%] top-1/2 h-px rotate-12 bg-gradient-to-r from-transparent via-blue-400/45 to-transparent" />
             </div>
           </div>
         </section>
 
         <GuestExploreMedia />
 
-        <section id="about" className="px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1460px] rounded-[28px] border border-blue-100 bg-gradient-to-b from-blue-50/80 to-white p-5 shadow-[0_22px_70px_-48px_rgba(37,99,235,.55)] sm:p-7">
+        <section id="about" className="px-4 py-14 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-[1460px] rounded-[32px] border border-blue-200/90 bg-gradient-to-b from-blue-100/70 via-sky-50/80 to-blue-50/60 p-6 shadow-[0_22px_70px_-40px_rgba(37,99,235,.28)] sm:p-9">
             <div className="flex items-end justify-between gap-4">
-              <div><p className="text-[10px] font-black uppercase tracking-[0.12em] text-blue-600">Hệ sinh thái mạng lưới</p><h2 className="mt-1 text-2xl font-black tracking-tight text-slate-950">Khám phá hệ sinh thái của chúng tôi</h2></div>
-              <div className="hidden gap-2 sm:flex"><button type="button" className="grid size-8 place-items-center rounded-full border border-blue-100 bg-white text-blue-700">‹</button><button type="button" className="grid size-8 place-items-center rounded-full border border-blue-100 bg-white text-blue-700">›</button></div>
+              <div>
+                <p className="text-xs sm:text-[13px] font-black uppercase tracking-[0.14em] text-blue-700">Hệ sinh thái mạng lưới</p>
+                <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-slate-950">Khám phá hệ sinh thái của chúng tôi</h2>
+              </div>
+              <div className="hidden gap-2.5 sm:flex">
+                <button type="button" className="grid size-9 place-items-center rounded-full border border-blue-200 bg-white/90 text-lg font-bold text-blue-700 shadow-xs transition hover:bg-white">‹</button>
+                <button type="button" className="grid size-9 place-items-center rounded-full border border-blue-200 bg-white/90 text-lg font-bold text-blue-700 shadow-xs transition hover:bg-white">›</button>
+              </div>
             </div>
 
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
               {ecosystem.map((item) => (
-                <Link key={item.title} href={item.href} className="group rounded-2xl border border-blue-100 bg-white p-5 shadow-[0_14px_35px_-30px_rgba(37,99,235,.5)] transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-[0_20px_45px_-28px_rgba(37,99,235,.6)]">
-                  <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-xl font-black text-blue-600 ring-1 ring-blue-100">{item.icon}</span>
-                  <h3 className="mt-4 text-sm font-extrabold text-slate-950">{item.title}</h3>
-                  <p className="mt-2 text-[11px] leading-5 text-slate-500">{item.desc}</p>
-                  <span className="mt-4 inline-flex text-[11px] font-extrabold text-blue-600 transition group-hover:translate-x-1">Khám phá →</span>
+                <Link key={item.title} href={item.href} className="group rounded-2xl border border-blue-200/80 bg-white/90 p-6 shadow-[0_14px_35px_-30px_rgba(37,99,235,.35)] transition hover:-translate-y-1 hover:border-blue-300 hover:bg-white hover:shadow-[0_20px_45px_-28px_rgba(37,99,235,.5)]">
+                  <span className="grid size-12 place-items-center rounded-xl bg-blue-100 text-2xl font-black text-blue-700 ring-1 ring-blue-200">{item.icon}</span>
+                  <h3 className="mt-5 text-base sm:text-lg font-bold text-slate-950">{item.title}</h3>
+                  <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-slate-600">{item.desc}</p>
+                  <span className="mt-5 inline-flex text-xs sm:text-sm font-extrabold text-blue-600 transition group-hover:translate-x-1">Khám phá →</span>
                 </Link>
               ))}
             </div>
 
-            <div id="events" className="mt-8 flex items-end justify-between gap-4"><h2 className="text-xl font-black tracking-tight">Sự kiện nổi bật</h2><Link href="/#events" className="text-[11px] font-extrabold text-blue-600">Xem tất cả →</Link></div>
-            <div className="mt-4 grid gap-4 lg:grid-cols-3">
+            <div id="events" className="mt-12 flex items-end justify-between gap-4">
+              <div>
+                <p className="text-xs sm:text-[13px] font-black uppercase tracking-[0.14em] text-blue-700">Sự kiện & Hội thảo</p>
+                <h2 className="mt-1 text-2xl sm:text-3xl font-black tracking-tight">Sự kiện nổi bật</h2>
+              </div>
+              <Link href="/#events" className="text-xs sm:text-sm font-bold text-blue-700 transition hover:text-blue-900">Xem tất cả sự kiện →</Link>
+            </div>
+            <div className="mt-5 grid gap-5 lg:grid-cols-3">
               {events.map((event) => (
-                <article key={event.title} className="overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-[0_14px_38px_-30px_rgba(37,99,235,.45)]">
-                  <div className={`relative h-28 bg-gradient-to-br ${event.tone}`}>
+                <article key={event.title} className="overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-[0_14px_38px_-30px_rgba(37,99,235,.35)]">
+                  <div className={`relative h-32 bg-gradient-to-br ${event.tone}`}>
                     <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_20%_30%,white_0_2px,transparent_3px),radial-gradient(circle_at_70%_60%,white_0_1px,transparent_2px)] [background-size:34px_34px]" />
-                    <div className="absolute left-4 top-4 rounded-xl bg-white px-2.5 py-2 text-center shadow"><strong className="block text-lg leading-none text-blue-700">{event.date}</strong><small className="mt-1 block text-[8px] font-bold uppercase text-slate-500">{event.month}</small></div>
-                    <span className="absolute bottom-3 left-4 rounded-full bg-blue-700/90 px-2.5 py-1 text-[8px] font-black tracking-wide text-white">{event.kind}</span>
+                    <div className="absolute left-4 top-4 rounded-xl bg-white px-3 py-2 text-center shadow-xs">
+                      <strong className="block text-xl sm:text-2xl font-black leading-none text-blue-700">{event.date}</strong>
+                      <small className="mt-1 block text-[9px] sm:text-[10px] font-bold uppercase text-slate-500">{event.month}</small>
+                    </div>
+                    <span className="absolute bottom-3 left-4 rounded-full bg-blue-700/90 px-3 py-1 text-[9px] sm:text-[10px] font-black tracking-wider text-white">{event.kind}</span>
                   </div>
-                  <div className="p-4"><h3 className="text-sm font-extrabold leading-5 text-slate-950">{event.title}</h3><p className="mt-3 text-[10px] font-semibold text-slate-500">◎ {event.place}</p><p className="mt-1 text-[10px] text-slate-400">◷ 2026</p></div>
+                  <div className="p-5">
+                    <h3 className="text-sm sm:text-base font-bold leading-snug text-slate-950">{event.title}</h3>
+                    <p className="mt-3 text-xs sm:text-sm font-medium text-slate-600">◎ {event.place}</p>
+                    <p className="mt-1 text-xs text-slate-400">◷ Năm 2026</p>
+                  </div>
                 </article>
               ))}
             </div>
 
-            <div className="mt-6 grid gap-3 rounded-2xl border border-blue-100 bg-blue-50/70 p-4 sm:grid-cols-2 xl:grid-cols-4">
-              {[["500+", "Chuyên gia"], ["300+", "Dự án hợp tác"], ["20+", "Lĩnh vực"], ["50+", "Tổ chức đối tác"]].map(([value, label]) => <div key={label} className="flex items-center gap-3 rounded-xl bg-white/85 p-3"><span className="grid size-9 place-items-center rounded-xl bg-blue-100 text-lg text-blue-700">◌</span><span><strong className="block text-xl font-black text-slate-950">{value}</strong><small className="text-[10px] font-semibold text-slate-500">{label}</small></span></div>)}
+            <div className="mt-8 grid gap-4 rounded-2xl border border-blue-200/90 bg-blue-100/70 p-5 sm:grid-cols-2 xl:grid-cols-4">
+              {[["500+", "Chuyên gia"], ["300+", "Dự án hợp tác"], ["20+", "Lĩnh vực"], ["50+", "Tổ chức đối tác"]].map(([value, label]) => (
+                <div key={label} className="flex items-center gap-3.5 rounded-xl bg-white/95 p-4 shadow-xs">
+                  <span className="grid size-11 place-items-center rounded-xl bg-blue-100 text-xl font-bold text-blue-700">◌</span>
+                  <span>
+                    <strong className="block text-2xl sm:text-3xl font-black text-slate-950">{value}</strong>
+                    <small className="text-xs sm:text-sm font-semibold text-slate-600">{label}</small>
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </section>
       </main>
 
-      <footer id="news" className="border-t border-blue-100 bg-white px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-[1460px] flex-col gap-4 text-[11px] text-slate-500 sm:flex-row sm:items-center sm:justify-between"><strong className="text-slate-800">Mạng lưới KH&CN Nga – Việt</strong><div className="flex flex-wrap gap-5"><Link href="/experts">Chuyên gia</Link><Link href="/opportunities">Hợp tác</Link><Link href="/knowledge">Tri thức</Link></div></div>
+      <footer id="news" className="border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700">
+        <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <Link href="/" className="inline-flex items-center gap-3.5" aria-label="Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt">
+                <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-blue-200 bg-white shadow-xs">
+                  <span className="absolute inset-y-0 left-0 w-[62%] -skew-x-12 bg-blue-600" />
+                  <span className="absolute inset-y-0 right-0 w-[46%] -skew-x-12 bg-rose-500" />
+                </span>
+                <span>
+                  <strong className="block text-base sm:text-lg font-black tracking-tight text-slate-950">Mạng lưới Tri thức KH&CN</strong>
+                  <small className="block text-xs font-extrabold tracking-wider text-slate-600 uppercase">Nga – Việt</small>
+                </span>
+              </Link>
+              <p className="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-slate-600">
+                Cổng thông tin & điều phối hợp tác khoa học công nghệ độc lập giữa các viện nghiên cứu, trường đại học trọng điểm của Việt Nam và Liên bang Nga.
+              </p>
+              <div className="mt-5 flex items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-white/90 px-3 py-1 text-xs font-bold text-blue-800 shadow-xs">
+                  <span className="size-2 rounded-full bg-emerald-500" />
+                  Cổng dữ liệu mở KH&CN 2026
+                </span>
+              </div>
+            </div>
+
+            <div className="lg:col-span-3">
+              <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">Khám phá hệ sinh thái</h4>
+              <ul className="mt-4 space-y-2.5 text-xs sm:text-sm font-semibold text-slate-600">
+                <li><Link href="/opportunities" className="transition hover:text-blue-700 hover:underline">Chương trình & Cơ hội nghiên cứu</Link></li>
+                <li><Link href="/experts" className="transition hover:text-blue-700 hover:underline">Mạng lưới Chuyên gia xác thực</Link></li>
+                <li><Link href="/knowledge" className="transition hover:text-blue-700 hover:underline">Kho tri thức & Báo cáo KH&CN</Link></li>
+                <li><Link href="/#about" className="transition hover:text-blue-700 hover:underline">Viện & Đại học đối tác liên kết</Link></li>
+                <li><Link href="/#events" className="transition hover:text-blue-700 hover:underline">Hội thảo & Diễn đàn khoa học</Link></li>
+              </ul>
+            </div>
+
+            <div className="lg:col-span-2">
+              <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">Hướng trọng điểm</h4>
+              <ul className="mt-4 space-y-2.5 text-xs sm:text-sm font-semibold text-slate-600">
+                <li><span className="text-slate-700">Trí tuệ nhân tạo & Dữ liệu</span></li>
+                <li><span className="text-slate-700">Khoa học Biển & Hải dương</span></li>
+                <li><span className="text-slate-700">Vật liệu mới & Nano</span></li>
+                <li><span className="text-slate-700">Năng lượng sạch & Nguyên tử</span></li>
+                <li><span className="text-slate-700">Công nghệ sinh học biển</span></li>
+              </ul>
+            </div>
+
+            <div className="lg:col-span-3">
+              <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">Điều phối & Liên hệ</h4>
+              <div className="mt-4 space-y-3 text-xs sm:text-sm text-slate-600">
+                <div>
+                  <strong className="block font-bold text-slate-900">Văn phòng Điều phối Hà Nội:</strong>
+                  <span>Viện Hàn lâm KH&CN Việt Nam (VAST), 18 Hoàng Quốc Việt, Cầu Giấy, Hà Nội</span>
+                </div>
+                <div>
+                  <strong className="block font-bold text-slate-900">Văn phòng Đối tác Moskva:</strong>
+                  <span>Viện Hàn lâm Khoa học Nga (RAS), Leninsky Prospekt 14, Moskva</span>
+                </div>
+                <div className="pt-1">
+                  <span className="block font-medium">Hỗ trợ kỹ thuật & kết nối đề tài:</span>
+                  <a href="mailto:contact@vnru-network.org" className="font-bold text-blue-700 transition hover:underline">contact@vnru-network.org</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-blue-200/80 pt-8 text-xs sm:text-sm font-medium text-slate-600 md:flex-row">
+            <p>© 2026 Mạng lưới Tri thức Khoa học – Công nghệ Nga – Việt. Bảo lưu mọi quyền.</p>
+            <div className="flex flex-wrap gap-5 font-semibold text-slate-600">
+              <Link href="/#about" className="hover:text-blue-700">Điều khoản hợp tác</Link>
+              <Link href="/#about" className="hover:text-blue-700">Chính sách bảo mật</Link>
+              <Link href="/#about" className="hover:text-blue-700">Chuẩn mực đạo đức nghiên cứu</Link>
+              <Link href="/#about" className="hover:text-blue-700">Dữ liệu mở song phương</Link>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   );

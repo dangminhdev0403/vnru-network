@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
-test("workspace root resolves the authenticated persona while legacy IAM routes stay self-service", async () => {
+test("workspace root renders the unified member dashboard while legacy IAM routes stay self-service", async () => {
   const [workspace, iam, iamSecurity] = await Promise.all([
     read("app/(workspace)/workspace/page.tsx"),
     read("app/(workspace)/workspace/iam/page.tsx"),
@@ -12,7 +12,8 @@ test("workspace root resolves the authenticated persona while legacy IAM routes 
   ]);
 
   assert.match(workspace, /requireWorkspaceSession\("\/workspace"\)/);
-  assert.match(workspace, /redirect\(resolveLandingPath\(capabilities\)\)/);
+  assert.match(workspace, /UnifiedWorkspaceDashboard/);
+  assert.match(workspace, /isSystemAdministrator\(capabilities\)/);
   assert.match(iam, /redirect\("\/account"\)/);
   assert.match(iamSecurity, /redirect\("\/security"\)/);
 });
@@ -43,6 +44,16 @@ test("authenticated shell contains current capability-gated task workspaces and 
   assert.match(proxy, /isSystemAdministrator\(capabilities\)/);
   assert.match(proxy, /target\.pathname = "\/admin\/access"/);
   assert.match(proxy, /target\.search = ""/);
+  assert.doesNotMatch(proxy, /target\.pathname = resolveLandingPath/);
+});
+
+test("unified workspace aggregates capability modules without a role switcher", async () => {
+  const dashboard = await read("features/workspace/components/UnifiedWorkspaceDashboard.tsx");
+  assert.match(dashboard, /useDemoWorkflow\(\)/);
+  for (const capability of ["collab.proposals.create", "reviews.assignments.view_assigned", "collab.proposals.endorse", "collab.opportunities.create", "collab.decisions.issue_foundation"]) {
+    assert.match(dashboard, new RegExp(capability.replaceAll(".", "\\.")));
+  }
+  assert.doesNotMatch(dashboard, /RoleSwitcher|PersonaSwitcher|setActiveRole/);
 });
 
 test("current role routes declare backend-aligned capability guards", async () => {

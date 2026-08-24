@@ -15,6 +15,13 @@ export interface WorkspaceSidebarProps {
 
 const labels: Record<Locale, Record<string, string>> = {
   vi: {
+    networkWorkspace: "KHÔNG GIAN MẠNG LƯỚI",
+    research: "NGHIÊN CỨU & TRI THỨC",
+    review: "PHẢN BIỆN",
+    organizationSection: "TỔ CHỨC",
+    coordination: "ĐIỀU PHỐI",
+    decisionSection: "QUYẾT ĐỊNH",
+    member: "Thành viên mạng lưới",
     roleWorkspace: "KHÔNG GIAN VAI TRÒ",
     overview: "Tổng quan",
     myKnowledge: "Tri thức của tôi",
@@ -55,6 +62,13 @@ const labels: Record<Locale, Record<string, string>> = {
     security: "Bảo mật & Phiên đăng nhập",
   },
   en: {
+    networkWorkspace: "NETWORK WORKSPACE",
+    research: "RESEARCH & KNOWLEDGE",
+    review: "PEER REVIEW",
+    organizationSection: "ORGANIZATION",
+    coordination: "COORDINATION",
+    decisionSection: "DECISIONS",
+    member: "Network member",
     roleWorkspace: "ROLE WORKSPACE",
     overview: "Overview",
     myKnowledge: "My knowledge",
@@ -95,6 +109,13 @@ const labels: Record<Locale, Record<string, string>> = {
     security: "Security & Sessions",
   },
   ru: {
+    networkWorkspace: "СЕТЕВОЕ ПРОСТРАНСТВО",
+    research: "ИССЛЕДОВАНИЯ И ЗНАНИЯ",
+    review: "ЭКСПЕРТИЗА",
+    organizationSection: "ОРГАНИЗАЦИЯ",
+    coordination: "КООРДИНАЦИЯ",
+    decisionSection: "РЕШЕНИЯ",
+    member: "Участник сети",
     roleWorkspace: "РАБОЧЕЕ ПРОСТРАНСТВО РОЛИ",
     overview: "Обзор",
     myKnowledge: "Мои знания",
@@ -158,17 +179,7 @@ export default function WorkspaceSidebar({
   const persona = resolveUserPersonas(capabilities)[0];
   const userName = [user?.fullName, user?.displayName, user?.name, user?.username, user?.email]
     .find((value): value is string => typeof value === "string" && value.trim().length > 0);
-  const personaLabelKey = persona?.key === "RESEARCHER"
-    ? "researcher"
-    : persona?.key === "REVIEWER"
-      ? "reviewer"
-      : persona?.key === "ORGANIZATION_REPRESENTATIVE"
-        ? "organization"
-        : persona?.key === "COLLABORATION_MANAGER"
-          ? "manager"
-          : persona?.key === "FOUNDATION_DECISION_MAKER"
-            ? "decision"
-            : undefined;
+  const personaLabelKey = persona?.key === "WORKSPACE_MEMBER" ? "member" : undefined;
   const contextLabel = user?.activeContext?.contextType === "PLATFORM"
     ? (locale === "vi" ? "Toàn hệ thống" : locale === "ru" ? "Вся система" : "Platform-wide")
     : user?.activeContext

@@ -39,6 +39,18 @@ test("login route delegates credential UI directly to Keycloak", async () => {
   assert.doesNotMatch(page, /iframe|password|html-templates\/login/);
 });
 
+test("registration delegates credential creation to Keycloak", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const [page, route] = await Promise.all([
+    readFile(new URL("./app/register/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./app/api/auth/login/route.ts", import.meta.url), "utf8"),
+  ]);
+  assert.match(page, /action=REGISTER/);
+  assert.doesNotMatch(page, /type="password"|localStorage|sessionStorage/);
+  assert.match(route, /action === "REGISTER"/);
+  assert.match(route, /prompt: "create"/);
+});
+
 test("login and home use backend-authoritative session state", async () => {
   const { readFile } = await import("node:fs/promises");
   const [server, login, home, motion] = await Promise.all([

@@ -52,6 +52,7 @@ Persistent identifiers or server-state resources may be added only when current 
 ## Workspace navigation and RBAC rendering
 
 - If a typed workspace registry exists, it owns aliases, dashboard definitions, labels, and navigation order.
+- Business roles do not create separate frontend applications or overview pages. All non-administrator personas land on `/workspace`; the registry composes task modules from capabilities.
 - Navigation uses session-bound capabilities and explicit resource scope; raw permission keys are not user-facing labels.
 - Mutating controls render only with the matching manage capability.
 - Resource scope belongs in URL/local query state when it must be shareable.
@@ -93,6 +94,6 @@ Persistent identifiers or server-state resources may be added only when current 
 
 ## Workspace Context Switching
 
-- Authenticated users holding multiple roles (e.g. Researcher + Reviewer) switch active context via the workspace context switcher.
-- Context changes update the active session authorization token and trigger workspace re-rendering without a hard browser reload.
+- Authenticated users holding multiple roles (e.g. Researcher + Reviewer) see the union of task modules allowed in the active authorization context; they do not switch dashboard personas.
+- Context changes update the active session authorization token and trigger capability-based workspace re-rendering without a hard browser reload.
 

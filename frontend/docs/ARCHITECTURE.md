@@ -8,13 +8,13 @@ The frontend currently contains:
 - MFA and sessions `/security`;
 - IAM governance `/admin/access/*`;
 - Module 1 security audit `/admin/audit`;
-- capability-gated Researcher, Reviewer, Organization Representative, Collaboration Manager and Decision task previews under `/workspace/*`;
+- one unified member overview at `/workspace` plus capability-gated Researcher, Reviewer, Organization Representative, Collaboration Manager and Decision task modules under `/workspace/*`;
 - authenticated Enterprise and Leadership UI previews that are not live persona destinations;
-- role-aware `/workspace` resolution and compatibility redirects under `/workspace/iam*`.
+- capability-aware `/workspace` navigation and compatibility redirects under `/workspace/iam*`.
 
 Routes remain thin. `features/auth` owns authentication, account and security behavior; `features/iam` and `features/admin/access` own access governance; shared shells own presentation only. Backend authorization is authoritative.
 
-Current role-preview routes are task-oriented and may use URL `view` state to expose separate navigation destinations inside one route family. Demo mutations write only local preview activity/state and must remain clearly labeled.
+Task-module routes may use URL `view` state to expose separate navigation destinations inside one route family. They share one member persona and one workspace shell; backend roles remain distinct authorization/audit inputs. Demo mutations write only local preview activity/state and must remain clearly labeled.
 
 `KNOWLEDGE_CURATOR` is removed from the current active synthetic role set. Knowledge discovery remains available publicly and inside the Researcher preview.
 

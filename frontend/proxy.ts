@@ -4,7 +4,6 @@ import {
   authServiceUrl,
   backendHeaders,
   isSystemAdministrator,
-  resolveLandingPath,
   sanitizeReturnTo,
   SESSION_COOKIE_NAME,
 } from "./features/auth/server";
@@ -47,11 +46,6 @@ export default auth(async function proxy(request) {
           const target = request.nextUrl.clone();
           target.pathname = "/admin/access";
           target.search = "";
-          return NextResponse.redirect(target);
-        }
-        if (request.nextUrl.pathname === "/workspace" && !request.nextUrl.search) {
-          const target = request.nextUrl.clone();
-          target.pathname = resolveLandingPath(capabilities);
           return NextResponse.redirect(target);
         }
       }

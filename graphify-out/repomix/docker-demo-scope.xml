@@ -1,0 +1,1634 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: docker-compose.yml, docker-compose.prod.yml, services/auth-service/package.json, services/auth-service/prisma/**, services/auth-service/src/modules/identity/**, services/auth-service/src/modules/access-control/**, infra/keycloak/**, secrets/account.json
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+infra/
+  keycloak/
+    themes/
+      vnru/
+        login/
+          messages/
+            messages_en.properties
+            messages_ru.properties
+            messages_vi.properties
+          resources/
+            css/
+              login.css
+            js/
+              login.js
+          login.ftl
+          theme.properties
+    README.md
+    theme-smoke.test.mjs
+services/
+  auth-service/
+    prisma/
+      migrations/
+        20260818000000_add_identity/
+          migration.sql
+        20260818010000_add_session/
+          migration.sql
+        20260818020000_add_context_rbac/
+          migration.sql
+        20260818120000_add_session_active_context/
+          migration.sql
+        20260818130000_add_mfa_authentication_level/
+          migration.sql
+        20260818140000_add_selective_audit/
+          migration.sql
+        20260822170000_align_module3_collaboration_rbac/
+          migration.sql
+      iam-fixtures.json
+      import-fixture.ts
+      README.md
+      schema.prisma
+    src/
+      modules/
+        access-control/
+          access-control.module.ts
+          access-control.service.spec.ts
+          access-control.service.ts
+          iam-admin.controller.spec.ts
+          iam-admin.controller.ts
+          iam-admin.service.spec.ts
+          iam-admin.service.ts
+          workflow-fixture.spec.ts
+        identity/
+          identity-public.ts
+          identity.module.ts
+          identity.service.spec.ts
+          identity.service.ts
+    package.json
+docker-compose.prod.yml
+docker-compose.yml
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="infra/keycloak/themes/vnru/login/messages/messages_en.properties">
+loginTitle=Sign in
+networkName=Vietnam - Russia Network
+brandTagline=Science · Technology · Cooperation
+secureAccess=Secure access · RU–VN
+heroTitleLead=Connect knowledge
+heroTitleAccent=between Vietnam and Russia.
+heroDescription=Sign in to discover experts, publications, organizations, and research–industry collaboration opportunities across the RU–VN network.
+knowledgeDescription=Publications · Topics · Scientific data
+knowledgeTitle=Knowledge
+expertsDescription=Scientists · Experts · Organizations
+expertsTitle=Experts
+cooperationDescription=Research + Industry · RU–VN
+cooperationTitle=2+2 Cooperation
+identityProtected=Identity & access protected
+researchEcosystem=RU–VN research ecosystem
+backHome=← Back to home
+welcomeBack=Welcome back.
+noAccount=Don’t have an account?
+createAccount=Create account
+usernameLabel=Email or username
+usernamePlaceholder=Enter email or username
+passwordLabel=Password
+passwordPlaceholder=Enter password
+forgotPassword=Forgot password?
+portalLogin=Sign in
+googleLogin=Continue with Google
+comingSoon=Coming soon
+termsNotice=By continuing, you agree to the Terms of Use and Privacy Policy.
+secureLoginTitle=Secure sign-in.
+secureLoginDescription=Identity, sessions, and security policies are managed by the RU–VN authentication system.
+alternativeLogin=Or sign in with
+invalidUserMessage=Incorrect login information.
+invalidUsernameOrPasswordMessage=Incorrect login information.
+showPassword=Show password
+hidePassword=Hide password
+</file>
+
+<file path="infra/keycloak/themes/vnru/login/messages/messages_ru.properties">
+loginTitle=Вход
+networkName=Сеть Вьетнам - Россия
+brandTagline=Наука · Технологии · Сотрудничество
+secureAccess=Безопасный доступ · RU–VN
+heroTitleLead=Объединяем знания
+heroTitleAccent=Вьетнама и России.
+heroDescription=Войдите, чтобы находить экспертов, публикации, организации и возможности сотрудничества науки и бизнеса в сети RU–VN.
+knowledgeDescription=Публикации · Темы · Научные данные
+knowledgeTitle=Знания
+expertsDescription=Учёные · Эксперты · Организации
+expertsTitle=Эксперты
+cooperationDescription=Исследования + Индустрия · RU–VN
+cooperationTitle=Сотрудничество 2+2
+identityProtected=Защищённые данные и доступ
+researchEcosystem=Исследовательская экосистема RU–VN
+backHome=← На главную
+welcomeBack=С возвращением.
+noAccount=Нет аккаунта?
+createAccount=Создать аккаунт
+usernameLabel=Email или имя пользователя
+usernamePlaceholder=Введите email или имя пользователя
+passwordLabel=Пароль
+passwordPlaceholder=Введите пароль
+forgotPassword=Забыли пароль?
+portalLogin=Войти
+googleLogin=Продолжить с Google
+comingSoon=Скоро
+termsNotice=Продолжая, вы соглашаетесь с Условиями использования и Политикой конфиденциальности.
+secureLoginTitle=Безопасный вход.
+secureLoginDescription=Идентификация, сеансы и политики безопасности управляются системой аутентификации RU–VN.
+alternativeLogin=Или войти через
+invalidUserMessage=Неверные данные для входа.
+invalidUsernameOrPasswordMessage=Неверные данные для входа.
+showPassword=Показать пароль
+hidePassword=Скрыть пароль
+</file>
+
+<file path="infra/keycloak/themes/vnru/login/messages/messages_vi.properties">
+loginTitle=Đăng nhập
+networkName=Mạng lưới Việt Nam - Nga
+brandTagline=Khoa học, công nghệ và hợp tác
+secureAccess=Cổng truy cập an toàn
+heroTitleLead=Kết nối tri thức
+heroTitleAccent=Việt Nam - Nga.
+heroDescription=Không gian hợp tác dành cho nhà khoa học, chuyên gia và tổ chức của hai quốc gia.
+knowledgeDescription=Công bố, chủ đề và dữ liệu khoa học
+knowledgeTitle=Tri thức
+expertsDescription=Nhà khoa học, chuyên gia và tổ chức
+expertsTitle=Chuyên gia
+cooperationDescription=Kết nối nghiên cứu với doanh nghiệp
+cooperationTitle=Hợp tác 2+2
+identityProtected=Danh tính và truy cập được bảo vệ
+researchEcosystem=Hệ sinh thái nghiên cứu song phương
+backHome=← Quay lại trang chủ
+welcomeBack=Chào mừng trở lại.
+noAccount=Chưa có tài khoản?
+createAccount=Tạo tài khoản
+usernameLabel=Email hoặc tên đăng nhập
+usernamePlaceholder=Nhập email hoặc tên đăng nhập
+passwordLabel=Mật khẩu
+passwordPlaceholder=Nhập mật khẩu
+forgotPassword=Quên mật khẩu?
+portalLogin=Đăng nhập
+googleLogin=Tiếp tục với Google
+comingSoon=Sắp hỗ trợ
+termsNotice=Bằng việc tiếp tục, bạn đồng ý với Điều khoản sử dụng và Chính sách bảo mật.
+secureLoginTitle=Đăng nhập an toàn.
+secureLoginDescription=Danh tính và phiên truy cập được bảo vệ bởi hệ thống xác thực của mạng lưới.
+alternativeLogin=Hoặc đăng nhập bằng
+invalidUserMessage=Thông tin đăng nhập không chính xác.
+invalidUsernameOrPasswordMessage=Thông tin đăng nhập không chính xác.
+showPassword=Hiện mật khẩu
+hidePassword=Ẩn mật khẩu
+</file>
+
+<file path="infra/keycloak/themes/vnru/login/resources/css/login.css">
+:root{--bg:#06142c;--surface:#0a1d3b;--surface-strong:#0d2344;--text:#f5f8ff;--muted:#a9b9cf;--subtle:#8296b1;--line:rgba(164,205,255,.14);--blue:#3278ed;--blue-dark:#1d5fcf;--cyan:#72d6ff;--red:#ff8093;--radius:12px}
+*{box-sizing:border-box}html.login-pf,html.login-pf body#keycloak-bg{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body#keycloak-bg .pf-v5-c-login{min-height:100dvh;padding:0;background:transparent}body#keycloak-bg .pf-v5-c-login__container{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(420px,.88fr);grid-template-areas:"visual form";width:100%;min-height:100dvh;max-width:none;margin:0;padding:0;overflow:hidden}body#keycloak-bg #kc-header{display:none}
+body#keycloak-bg .vnru-auth-hero{position:fixed;inset:0 44% 0 0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;padding:42px clamp(34px,4vw,72px);overflow:hidden;border-right:1px solid rgba(255,255,255,.07);background:radial-gradient(circle at 24% 30%,rgba(42,113,228,.18),transparent 30%),radial-gradient(circle at 90% 84%,rgba(209,61,91,.09),transparent 24%),linear-gradient(145deg,#06142c,#0a1d3b 62%,#071731)}
+body#keycloak-bg .vnru-auth-brand{position:relative;z-index:4;display:flex;align-items:center;gap:13px;max-width:430px;color:#fff;font-size:15px;font-weight:780;line-height:1.25;letter-spacing:-.015em;text-decoration:none}.vnru-brand-mark{position:relative;width:42px;height:42px;flex:0 0 auto;overflow:hidden;border:1px solid rgba(255,255,255,.18);border-radius:11px;background:#fff;box-shadow:0 12px 32px rgba(18,72,176,.2)}.vnru-brand-mark:before,.vnru-brand-mark:after{content:"";position:absolute;inset:0;background:#2467e9;clip-path:polygon(0 0,66% 0,34% 100%,0 100%)}.vnru-brand-mark:after{background:#d9435a;clip-path:polygon(66% 0,100% 0,100% 100%,34% 100%)}.vnru-auth-brand small{display:block;margin-top:3px;color:#a9bad0;font-size:11px;font-weight:650;letter-spacing:.1em;text-transform:uppercase}
+body#keycloak-bg .vnru-network-scene{position:absolute;z-index:1;right:-24px;top:112px;width:58%;height:68%;opacity:.7}.vnru-network-scene svg{width:100%;height:100%}.net-path{fill:none;stroke:rgba(105,199,255,.27);stroke-width:1.2;stroke-dasharray:6 11;animation:dash 24s linear infinite}.net-path.hot{stroke:url(#vnruAuthGrad);stroke-width:2;stroke-dasharray:none}.net-node{fill:#69d1ff;filter:drop-shadow(0 0 7px rgba(105,209,255,.45));animation:pulse 4s ease-in-out infinite}.net-node.red{fill:#ff7188;filter:drop-shadow(0 0 7px rgba(255,113,136,.4))}.net-core{fill:#eaf8ff;filter:drop-shadow(0 0 13px rgba(114,218,255,.72));animation:corePulse 4.4s ease-in-out infinite}@keyframes dash{to{stroke-dashoffset:-280}}@keyframes pulse{50%{opacity:.5}}@keyframes corePulse{50%{r:12;opacity:.76}}
+body#keycloak-bg .vnru-auth-copy{position:relative;z-index:3;max-width:690px;margin:auto 0}.vnru-type-char{opacity:0;animation:type-char .01s linear forwards;animation-delay:calc(var(--char-index)*90ms)}@keyframes type-char{to{opacity:1}}.vnru-eyebrow{display:inline-block;color:#c7e8ff;font-size:12px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}.vnru-auth-copy h1{max-width:660px;margin:18px 0;color:#fff;font-size:clamp(46px,5vw,74px);font-weight:760;line-height:1.03;letter-spacing:-.052em}.vnru-auth-copy h1 .vnru-title-accent{color:#79d7ff}.vnru-auth-copy>p{max-width:550px;margin:0;color:#b0bfd2;font-size:17px;line-height:1.7}.vnru-capabilities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;max-width:650px;margin-top:36px;overflow:hidden;border:1px solid rgba(255,255,255,.09);border-radius:var(--radius);background:rgba(255,255,255,.09)}.vnru-capabilities>div{min-height:110px;padding:17px;background:rgba(7,25,54,.88)}.vnru-capabilities b{display:block;color:#f8fbff;font-size:16px}.vnru-capabilities span{display:block;margin-top:7px;color:#adbed2;font-size:13px;line-height:1.5}.vnru-visual-foot{position:relative;z-index:4;display:flex;flex-wrap:wrap;gap:22px;color:#a9bad0;font-size:13px}.vnru-visual-foot span{color:#a9bad0}
+body#keycloak-bg .pf-v5-c-login__main{grid-area:form;align-self:center;justify-self:center;width:min(100% - 64px,460px);max-width:none;margin:0;padding:36px 0;background:transparent;border:0;box-shadow:none;color:#fff}body#keycloak-bg .pf-v5-c-login__main-header,body#keycloak-bg .pf-v5-c-login__main-body,body#keycloak-bg .pf-v5-c-login__main-footer{padding:0}body#keycloak-bg #kc-page-title{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}body#keycloak-bg #kc-locale{position:fixed;z-index:5;top:28px;right:32px}body#keycloak-bg #kc-locale-dropdown{position:relative}body#keycloak-bg #kc-current-locale-link{display:flex;min-width:0;min-height:42px;align-items:center;justify-content:space-between;gap:8px;padding:0 10px;border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);background:#0d2344;color:#e8f0fa;font-size:13px;font-weight:760;text-decoration:none}body#keycloak-bg #kc-locale-dropdown ul{position:absolute;top:calc(100% + 7px);right:0;min-width:160px;margin:0;padding:6px;list-style:none;border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);background:#0d2344;box-shadow:0 18px 42px rgba(1,8,22,.38)}body#keycloak-bg #kc-locale-dropdown li a{display:block;padding:10px;border-radius:8px;color:#dce7f4;font-size:13px;text-decoration:none}body#keycloak-bg #kc-locale-dropdown li a:hover{background:rgba(255,255,255,.08);color:#fff}body#keycloak-bg #login-select-toggle{min-width:0;min-height:42px;padding:0 32px 0 10px;appearance:none;border:1px solid #31597b;border-radius:var(--radius);background:#0b223d;color:#f3f6fa;font:760 13px/1 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;box-shadow:none}body#keycloak-bg .pf-v5-c-login__main-header-utilities>.pf-v5-c-form-control{position:relative;min-height:42px;overflow:visible;border:0;background:transparent;box-shadow:none}body#keycloak-bg .pf-v5-c-login__main-header-utilities>.pf-v5-c-form-control:focus-within{border:0;background:transparent;box-shadow:none}body#keycloak-bg .pf-v5-c-login__main-header-utilities>.pf-v5-c-form-control::before,body#keycloak-bg .pf-v5-c-login__main-header-utilities>.pf-v5-c-form-control::after{content:none}body#keycloak-bg .pf-v5-c-login__main-header-utilities .pf-v5-c-form-control__utilities{position:absolute;top:50%;right:10px;width:16px;height:16px;align-items:center;justify-content:center;color:#c5d3e2;transform:translateY(-50%)}body#keycloak-bg .pf-v5-c-login__main-header-utilities .pf-v5-c-form-control__toggle-icon{display:grid;width:16px;height:16px;place-items:center}body#keycloak-bg .pf-v5-c-login__main-header-utilities .pf-v5-c-form-control__toggle-icon svg{display:block;width:10px;height:10px}body#keycloak-bg #login-select-toggle:hover{border-color:#47769c;background-color:#0e2948}body#keycloak-bg #login-select-toggle:focus,body#keycloak-bg #login-select-toggle:focus-visible,body#keycloak-bg #login-select-toggle:active,body#keycloak-bg #login-select-toggle:open{border-color:#55bfea;outline:0;box-shadow:none}body#keycloak-bg #login-select-toggle option{background:#0b223d;color:#f3f6fa}.vnru-back-link{display:inline-flex;margin-bottom:28px;color:#a1b3c9!important;font-size:13px!important;font-weight:700;text-decoration:none}.vnru-back-link:hover{color:#fff!important}.vnru-form-head h2{margin:0;color:#fff;font-size:38px;font-weight:760;line-height:1.12;letter-spacing:-.04em}.vnru-form-head p{margin:10px 0 0;color:#a8b8cc}.vnru-form-head a{color:#7ad8ff!important;font-weight:780}.vnru-form-head:has(+ form){margin-bottom:25px}
+body#keycloak-bg .pf-v5-c-form{gap:17px}.pf-v5-c-form__group{gap:8px}.pf-v5-c-form__label-text{color:#e4edf8;font-size:13px;font-weight:760}.pf-v5-c-form-control,.pf-v5-c-input-group{min-height:54px;overflow:hidden;border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);background:rgba(255,255,255,.055);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}.pf-v5-c-form-control input{min-height:52px;padding:0 16px;border:0;background:transparent;color:#fff;box-shadow:none;font-size:15px}.pf-v5-c-form-control input::placeholder{color:#879ab4}.pf-v5-c-form-control:focus-within,.pf-v5-c-input-group:focus-within{border-color:rgba(114,214,255,.76);box-shadow:0 0 0 3px rgba(63,151,235,.13);background:rgba(255,255,255,.075)}.pf-v5-c-form-control input:focus{outline:0}.pf-v5-c-input-group{gap:0}.pf-v5-c-input-group .pf-v5-c-form-control{border:0;border-radius:0}.pf-v5-c-input-group .pf-v5-c-form-control:focus-within{box-shadow:none}#password-show-password{min-width:52px;min-height:52px;padding:0 15px;border:0;background:transparent;color:#9cafc6}.vnru-options{display:flex;justify-content:flex-end;margin-top:10px}.vnru-options a{color:#78d8ff!important;font-size:13px!important;font-weight:760}.pf-v5-c-form__helper-text{margin-top:8px}.pf-v5-c-form__helper-text .pf-m-error{color:#ff9aac;font-size:15px;font-weight:850;line-height:1.45}
+body#keycloak-bg .pf-v5-c-form__actions{padding-top:2px!important}#kc-login{width:100%;min-height:54px;border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:#fff;font-size:15px;font-weight:800;box-shadow:0 12px 28px rgba(20,73,175,.25);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}#kc-login:hover{background:linear-gradient(135deg,#3a82f2,#2466d3);box-shadow:0 16px 32px rgba(20,73,175,.3);transform:translateY(-1px)}#kc-login:active{transform:translateY(1px)}.vnru-google-button{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;margin-top:13px;border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);background:rgba(255,255,255,.04);color:#c9d5e4;font-weight:740}.vnru-google-button>span{display:grid;width:23px;height:23px;place-items:center;border-radius:50%;background:#fff;color:#4285f4;font-weight:900}.vnru-google-button small{color:#8ea2bb;font-size:10px}.vnru-google-button:disabled{cursor:not-allowed;opacity:.64}.vnru-terms{margin:18px 0 22px;color:#a8b8cc;font-size:12px;line-height:1.6;text-align:center}.vnru-security-note{display:flex;gap:12px;padding:15px;border:1px solid rgba(114,214,255,.14);border-radius:var(--radius);background:rgba(255,255,255,.035);color:#b2c1d4;font-size:13px;line-height:1.55}.vnru-security-note>span{color:#74d8ff;font-size:19px}.vnru-security-note b{color:#e5edf8}.vnru-divider{display:flex;align-items:center;gap:12px;margin:22px 0;color:#7f93ad;font-size:12px}.vnru-divider:before,.vnru-divider:after{content:"";flex:1;height:1px;background:rgba(255,255,255,.09)}body#keycloak-bg a:focus-visible,body#keycloak-bg button:focus-visible,body#keycloak-bg input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+@media(max-width:980px){html.login-pf body#keycloak-bg{overflow:auto}body#keycloak-bg .pf-v5-c-login{min-height:100dvh;overflow:visible}body#keycloak-bg .pf-v5-c-login__container{display:block!important;min-height:100dvh;margin:0;padding:0;overflow:visible}body#keycloak-bg .vnru-auth-hero{position:relative!important;inset:auto!important;width:100%;min-height:390px;margin:0;padding:28px!important}.vnru-auth-copy{margin:45px 0 18px!important}.vnru-auth-copy h1{max-width:600px;font-size:52px!important}.vnru-network-scene{right:-20px!important;top:54px!important;width:48%!important;height:76%!important;opacity:.44!important}.vnru-capabilities{max-width:620px}body#keycloak-bg .pf-v5-c-login__main{width:min(460px,calc(100% - 48px))!important;margin:50px auto 64px!important;padding:0!important}}
+@media(max-width:620px){body#keycloak-bg #kc-locale{top:16px;right:18px}body#keycloak-bg #kc-current-locale-link{min-width:118px;min-height:40px}.vnru-auth-hero{min-height:335px!important;padding:22px 20px 28px!important}.vnru-auth-brand{max-width:310px!important;font-size:13px!important}.vnru-brand-mark{width:38px;height:38px}.vnru-auth-copy{margin:36px 0 0!important}.vnru-eyebrow{font-size:10px}.vnru-auth-copy h1{max-width:360px;font-size:39px!important}.vnru-auth-copy>p{max-width:400px;font-size:14px;line-height:1.6}.vnru-network-scene{right:-76px!important;width:72%!important;opacity:.25!important}.vnru-capabilities,.vnru-visual-foot{display:none}.pf-v5-c-login__main{width:calc(100% - 36px)!important;margin:38px auto 52px!important}.vnru-form-head h2{font-size:34px}.vnru-back-link{margin-bottom:24px}}
+@media(prefers-reduced-motion:reduce){.net-path,.net-node,.net-core,#kc-login,.vnru-type-char{animation:none;transition:none}.vnru-type-char{opacity:1}}
+⋮----
+/* Public-home palette: keep the IdP ceremony visually continuous with the portal. */
+html.login-pf body#keycloak-bg{--bg:#ebf4ff;--surface:#fff;--surface-strong:#eff6ff;--text:#0f172a;--muted:#475569;--subtle:#64748b;--line:#bfdbfe;background:radial-gradient(circle at 75% 25%,rgba(59,130,246,.25),transparent 40%),linear-gradient(180deg,#dbeafe 0%,#eff6ff 55%,#e1effe 100%);color:var(--text)}
+body#keycloak-bg .vnru-auth-hero{border-right-color:#bfdbfe;background:radial-gradient(circle at 75% 25%,rgba(59,130,246,.2),transparent 40%),linear-gradient(180deg,#dbeafe,#eff6ff 58%,#e1effe)}
+body#keycloak-bg .vnru-auth-brand,.vnru-auth-copy h1,.vnru-capabilities b{color:#0f172a}.vnru-auth-brand-mark{border-color:#bfdbfe}.vnru-auth-brand small,.vnru-auth-copy>p,.vnru-capabilities span,.vnru-visual-foot,.vnru-visual-foot span{color:#475569}.vnru-eyebrow,.vnru-auth-copy h1 .vnru-title-accent{color:#2563eb}.vnru-capabilities{border-color:#bfdbfe;background:#bfdbfe}.vnru-capabilities>div{background:rgba(255,255,255,.88);border-radius:10px}
+body#keycloak-bg .pf-v5-c-login__main{color:#0f172a;background:transparent;border:0;box-shadow:none}
+.vnru-form-head h2{color:#0f172a;font-size:38px;font-weight:900;letter-spacing:-.03em}.vnru-form-head p,.vnru-terms{color:#475569;font-size:14px}.pf-v5-c-form__label-text{color:#1e293b;font-size:15px;font-weight:700}.pf-v5-c-form-control,.pf-v5-c-input-group{border:1px solid #bfdbfe;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.04)}.pf-v5-c-form-control:focus-within,.pf-v5-c-input-group:focus-within{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.18)}.pf-v5-c-form-control input{color:#0f172a;font-size:16px;font-weight:600}.pf-v5-c-form-control input::placeholder{color:#94a3b8}.vnru-options a{color:#2563eb!important;font-size:14px!important;font-weight:700}.vnru-security-note{border:1px solid #bfdbfe;border-radius:14px;background:rgba(255,255,255,.75);color:#475569;font-size:14px}.vnru-security-note b{color:#0f172a}#kc-login{border-radius:14px;font-size:16px;font-weight:800;background:linear-gradient(135deg,#2563eb,#1d4ed8);box-shadow:0 12px 28px -8px rgba(37,99,235,.75)}.vnru-divider{color:#64748b;font-size:13px}.vnru-divider:before,.vnru-divider:after{background:#bfdbfe}
+body#keycloak-bg #kc-current-locale-link,body#keycloak-bg #login-select-toggle{border-color:#bfdbfe;border-radius:12px;background:#fff;color:#1e293b;box-shadow:0 1px 3px rgba(0,0,0,.06)}body#keycloak-bg #kc-locale-dropdown ul{border-color:#bfdbfe;border-radius:14px;background:#fff;box-shadow:0 18px 42px rgba(37,99,235,.16)}body#keycloak-bg #kc-locale-dropdown li a{color:#334155;border-radius:8px}body#keycloak-bg #kc-locale-dropdown li a:hover{background:#eff6ff;color:#1d4ed8}
+@media(max-width:620px){.vnru-form-head h2{font-size:32px}}
+</file>
+
+<file path="infra/keycloak/themes/vnru/login/resources/js/login.js">
+localeSelect.onchange = () =>
+</file>
+
+<file path="infra/keycloak/themes/vnru/login/login.ftl">
+<#import "template.ftl" as layout>
+<#import "field.ftl" as field>
+<#import "social-providers.ftl" as identityProviders>
+<#import "passkeys.ftl" as passkeys>
+<@layout.registrationLayout displayMessage=!messagesPerField.existsError('username','password') displayInfo=false; section>
+  <#if section = "header">
+    ${msg("loginTitle")}
+  <#elseif section = "form">
+    <section class="vnru-auth-hero" aria-label="${msg("networkName")}">
+      <a class="vnru-auth-brand" href="http://localhost:3000/"><span class="vnru-brand-mark" aria-hidden="true"></span><span>${msg("networkName")}<small>${msg("brandTagline")}</small></span></a>
+      <div class="vnru-network-scene" aria-hidden="true">
+        <svg viewBox="0 0 700 700" preserveAspectRatio="xMidYMid meet">
+          <defs><linearGradient id="vnruAuthGrad"><stop offset="0" stop-color="#69d1ff"/><stop offset="1" stop-color="#ff7188"/></linearGradient></defs>
+          <path class="net-path" d="M130 160 C220 190 250 270 335 330"/><path class="net-path" d="M115 360 C205 345 260 340 335 330"/><path class="net-path" d="M160 545 C225 480 275 404 335 330"/><path class="net-path hot" d="M335 330 C410 300 472 300 548 330"/><path class="net-path" d="M548 330 C585 260 615 210 640 155"/><path class="net-path" d="M548 330 C607 338 628 350 664 365"/><path class="net-path" d="M548 330 C595 410 616 477 642 545"/>
+          <circle class="net-node" cx="130" cy="160" r="5"/><circle class="net-node" cx="115" cy="360" r="5"/><circle class="net-node" cx="160" cy="545" r="5"/><circle class="net-core" cx="335" cy="330" r="10"/><circle class="net-node red" cx="548" cy="330" r="6"/><circle class="net-node red" cx="640" cy="155" r="5"/><circle class="net-node red" cx="664" cy="365" r="5"/><circle class="net-node red" cx="642" cy="545" r="5"/>
+        </svg>
+      </div>
+      <div class="vnru-auth-copy">
+        <span class="vnru-eyebrow">${msg("secureAccess")}</span>
+        <h1>${msg("heroTitleLead")} <span class="vnru-title-accent">${msg("heroTitleAccent")}</span></h1>
+        <p>${msg("heroDescription")}</p>
+        <div class="vnru-capabilities"><div><b>${msg("knowledgeTitle")}</b><span>${msg("knowledgeDescription")}</span></div><div><b>${msg("expertsTitle")}</b><span>${msg("expertsDescription")}</span></div><div><b>${msg("cooperationTitle")}</b><span>${msg("cooperationDescription")}</span></div></div>
+      </div>
+      <div class="vnru-visual-foot"><span>${msg("identityProtected")}</span><span>${msg("researchEcosystem")}</span></div>
+    </section>
+    <a class="vnru-back-link" href="http://localhost:3000/">${msg("backHome")}</a>
+    <div class="vnru-form-head"><h2>${msg("welcomeBack")}</h2><#if realm.registrationAllowed && !registrationDisabled??><p>${msg("noAccount")} <a href="${url.registrationUrl}">${msg("createAccount")}</a></p></#if></div>
+    <#if realm.password>
+      <form id="kc-form-login" class="${properties.kcFormClass!}" onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post" novalidate="novalidate">
+        <#if !usernameHidden??>
+          <div class="${properties.kcFormGroupClass}">
+            <label for="username" class="${properties.kcFormLabelClass}"><span class="${properties.kcFormLabelTextClass}">${msg("usernameLabel")}</span></label>
+            <span class="${properties.kcInputClass} vnru-input vnru-user-input <#if messagesPerField.existsError('username','password')>${properties.kcError}</#if>">
+              <input id="username" name="username" value="${login.username!''}" type="text" autocomplete="username" autofocus placeholder="${msg("usernamePlaceholder")}" aria-invalid="${messagesPerField.existsError('username','password')?c}"/>
+            </span>
+          </div>
+        </#if>
+
+        <div class="${properties.kcFormGroupClass}">
+          <label for="password" class="${properties.kcFormLabelClass}"><span class="${properties.kcFormLabelTextClass}">${msg("passwordLabel")}</span></label>
+          <div class="${properties.kcInputGroup} vnru-input vnru-password-input">
+            <div class="${properties.kcInputGroupItemClass} ${properties.kcFill}">
+              <span class="${properties.kcInputClass}">
+                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="${msg('passwordPlaceholder')}" aria-invalid="${messagesPerField.existsError('username','password')?c}"/>
+              </span>
+            </div>
+            <div class="${properties.kcInputGroupItemClass}">
+              <button class="${properties.kcFormPasswordVisibilityButtonClass}" type="button" aria-label="${msg('showPassword')}" aria-controls="password" data-password-toggle data-icon-show="fa-eye fas" data-icon-hide="fa-eye-slash fas" data-label-show="${msg('showPassword')}" data-label-hide="${msg('hidePassword')}" id="password-show-password"><i class="fa-eye fas" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <#if realm.resetPasswordAllowed><div class="vnru-options"><a href="${url.loginResetCredentialsUrl}">${msg("forgotPassword")}</a></div></#if>
+        </div>
+
+        <#if messagesPerField.existsError('username','password')>
+          <div class="${properties.kcFormHelperTextClass}" aria-live="polite"><span class="${properties.kcInputErrorMessageClass}">${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}</span></div>
+        </#if>
+        <input type="hidden" id="id-hidden-input" name="credentialId" <#if auth.selectedCredential?has_content>value="${auth.selectedCredential}"</#if>/>
+        <button class="${properties.kcButtonPrimaryClass} ${properties.kcButtonBlockClass}" name="login" id="kc-login" type="submit">${msg("portalLogin")}</button>
+      </form>
+      <p class="vnru-terms">${msg("termsNotice")}</p>
+      <div class="vnru-security-note"><span aria-hidden="true">◇</span><div><b>${msg("secureLoginTitle")}</b> ${msg("secureLoginDescription")}</div></div>
+    </#if>
+    <@passkeys.conditionalUIData />
+  <#elseif section = "socialProviders">
+    <#if realm.password && social.providers?? && social.providers?has_content>
+      <div class="vnru-divider"><span>${msg("alternativeLogin")}</span></div>
+      <@identityProviders.show social=social/>
+    </#if>
+  </#if>
+</@layout.registrationLayout>
+</file>
+
+<file path="infra/keycloak/themes/vnru/login/theme.properties">
+parent=keycloak.v2
+styles=css/login.css
+scripts=js/login.js
+locales=vi,en,ru
+</file>
+
+<file path="infra/keycloak/README.md">
+# VN-RU Keycloak login theme
+
+Mount `themes/vnru` at `/opt/keycloak/themes/vnru:ro`, then set realm `loginTheme` to `vnru`.
+
+Keycloak owns username, password, remember-me, password reset, MFA, and future identity-provider options. Do not reproduce these controls in the VN-RU frontend.
+</file>
+
+<file path="infra/keycloak/theme-smoke.test.mjs">
+const keys = (bundle)
+</file>
+
+<file path="services/auth-service/prisma/migrations/20260818000000_add_identity/migration.sql">
+-- CreateEnum
+CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'INACTIVE');
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "email" TEXT,
+    "status" "UserStatus" NOT NULL DEFAULT 'ACTIVE',
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ExternalIdentity" (
+    "id" TEXT NOT NULL,
+    "issuer" TEXT NOT NULL,
+    "subject" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "ExternalIdentity_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ExternalIdentity_issuer_subject_key" ON "ExternalIdentity"("issuer", "subject");
+
+-- AddForeignKey
+ALTER TABLE "ExternalIdentity" ADD CONSTRAINT "ExternalIdentity_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+</file>
+
+<file path="services/auth-service/prisma/migrations/20260818010000_add_session/migration.sql">
+-- CreateTable
+CREATE TABLE "Session" (
+    "id" TEXT NOT NULL,
+    "tokenDigest" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+    "revokedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Session_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Session_tokenDigest_key" ON "Session"("tokenDigest");
+
+-- CreateIndex
+CREATE INDEX "Session_userId_revokedAt_idx" ON "Session"("userId", "revokedAt");
+
+-- AddForeignKey
+ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+</file>
+
+<file path="services/auth-service/prisma/migrations/20260818020000_add_context_rbac/migration.sql">
+-- CreateEnum
+CREATE TYPE "RoleAssignmentStatus" AS ENUM ('ACTIVE', 'INACTIVE');
+
+-- CreateTable
+CREATE TABLE "Role" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "Role_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Permission" (
+    "id" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+
+    CONSTRAINT "Permission_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "RolePermission" (
+    "id" TEXT NOT NULL,
+    "roleId" TEXT NOT NULL,
+    "permissionId" TEXT NOT NULL,
+
+    CONSTRAINT "RolePermission_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "RoleAssignment" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "roleId" TEXT NOT NULL,
+    "contextType" TEXT NOT NULL,
+    "contextId" TEXT NOT NULL,
+    "status" "RoleAssignmentStatus" NOT NULL DEFAULT 'ACTIVE',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "RoleAssignment_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Role_name_key" ON "Role"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Permission_key_key" ON "Permission"("key");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "RolePermission_roleId_permissionId_key" ON "RolePermission"("roleId", "permissionId");
+
+-- CreateIndex
+CREATE INDEX "RoleAssignment_userId_contextType_contextId_status_idx" ON "RoleAssignment"("userId", "contextType", "contextId", "status");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "RoleAssignment_userId_roleId_contextType_contextId_key" ON "RoleAssignment"("userId", "roleId", "contextType", "contextId");
+
+-- AddForeignKey
+ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RoleAssignment" ADD CONSTRAINT "RoleAssignment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RoleAssignment" ADD CONSTRAINT "RoleAssignment_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+</file>
+
+<file path="services/auth-service/prisma/migrations/20260818120000_add_session_active_context/migration.sql">
+-- AlterTable
+ALTER TABLE "Session" ADD COLUMN "activeContextType" TEXT,
+ADD COLUMN "activeContextId" TEXT;
+</file>
+
+<file path="services/auth-service/prisma/migrations/20260818130000_add_mfa_authentication_level/migration.sql">
+-- CreateEnum
+CREATE TYPE "AuthenticationLevel" AS ENUM ('PASSWORD', 'MFA');
+
+-- AlterTable
+ALTER TABLE "Session" ADD COLUMN "authenticationLevel" "AuthenticationLevel" NOT NULL DEFAULT 'PASSWORD';
+</file>
+
+<file path="services/auth-service/prisma/migrations/20260818140000_add_selective_audit/migration.sql">
+-- CreateTable
+CREATE TABLE "SecurityAuditEvent" (
+    "id" TEXT NOT NULL,
+    "event" TEXT NOT NULL,
+    "actorId" TEXT NOT NULL,
+    "targetId" TEXT NOT NULL,
+    "context" JSONB NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "SecurityAuditEvent_pkey" PRIMARY KEY ("id")
+);
+</file>
+
+<file path="services/auth-service/prisma/schema.prisma">
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum RoleAssignmentStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum AuthenticationLevel {
+  PASSWORD
+  MFA
+}
+
+model User {
+  id                 String             @id @default(uuid())
+  email              String?
+  status             UserStatus         @default(ACTIVE)
+  externalIdentities ExternalIdentity[]
+  sessions           Session[]
+  roleAssignments    RoleAssignment[]
+}
+
+model ExternalIdentity {
+  id      String @id @default(uuid())
+  issuer  String
+  subject String
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([issuer, subject])
+}
+
+model Session {
+  id                  String              @id @default(uuid())
+  tokenDigest         String              @unique
+  userId              String
+  user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt           DateTime
+  revokedAt           DateTime?
+  createdAt           DateTime            @default(now())
+  activeContextType   String?
+  activeContextId     String?
+  authenticationLevel AuthenticationLevel @default(PASSWORD)
+
+  @@index([userId, revokedAt])
+}
+
+model Role {
+  id              String           @id @default(uuid())
+  name            String           @unique
+  permissions     RolePermission[]
+  roleAssignments RoleAssignment[]
+}
+
+model Permission {
+  id    String           @id @default(uuid())
+  key   String           @unique
+  roles RolePermission[]
+}
+
+model RolePermission {
+  id           String     @id @default(uuid())
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+}
+
+model RoleAssignment {
+  id          String               @id @default(uuid())
+  userId      String
+  roleId      String
+  contextType String
+  contextId   String
+  status      RoleAssignmentStatus @default(ACTIVE)
+  createdAt   DateTime             @default(now())
+  user        User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        Role                 @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId, contextType, contextId])
+  @@index([userId, contextType, contextId, status])
+}
+
+model SecurityAuditEvent {
+  id        String   @id @default(uuid())
+  event     String
+  actorId   String
+  targetId  String
+  context   Json
+  createdAt DateTime @default(now())
+}
+</file>
+
+<file path="services/auth-service/src/modules/access-control/access-control.module.ts">
+import { Module } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { validateConfig } from '../../config';
+import {
+  ACCESS_CONTROL_PRISMA,
+  AccessControlService,
+} from './access-control.service';
+import { IamAdminService } from './iam-admin.service';
+⋮----
+export class AccessControlModule {}
+</file>
+
+<file path="services/auth-service/src/modules/access-control/access-control.service.ts">
+import { Inject, Injectable } from '@nestjs/common';
+⋮----
+export interface ResolveCapabilitiesInput {
+  userId: string;
+  contextType: string;
+  contextId: string;
+}
+⋮----
+export interface PermissionRecord {
+  id: string;
+  key: string;
+}
+⋮----
+export interface RolePermissionRecord {
+  id?: string;
+  roleId?: string;
+  permissionId?: string;
+  permission: PermissionRecord;
+}
+⋮----
+export interface RoleRecord {
+  id: string;
+  name: string;
+  permissions: RolePermissionRecord[];
+}
+⋮----
+export interface RoleAssignmentRecord {
+  id: string;
+  userId: string;
+  roleId?: string;
+  contextType: string;
+  contextId: string;
+  status: string;
+  role: RoleRecord;
+}
+⋮----
+export interface AccessControlPrismaClient {
+  permission: {
+    findMany: () => Promise<PermissionRecord[]>;
+  };
+  roleAssignment: {
+    findMany: (args: {
+      where: {
+        userId: string;
+        contextType?: string;
+        contextId?: string;
+        status: string;
+      };
+      include?: {
+        role: {
+          include: {
+            permissions: {
+              include: {
+                permission: boolean;
+              };
+            };
+          };
+        };
+      };
+    }) => Promise<RoleAssignmentRecord[]>;
+  };
+}
+⋮----
+export class AccessControlService {
+⋮----
+constructor(
+⋮----
+async resolveCapabilities(
+    input: ResolveCapabilitiesInput,
+): Promise<string[]>
+⋮----
+async resolveSoleActiveContext(
+    userId: string,
+): Promise<
+⋮----
+async hasActiveAssignment(
+    userId: string,
+    contextType: string,
+    contextId: string,
+    txClient?: AccessControlPrismaClient,
+): Promise<boolean>
+</file>
+
+<file path="services/auth-service/src/modules/identity/identity-public.ts">
+
+</file>
+
+<file path="services/auth-service/src/modules/identity/identity.module.ts">
+import { Module } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { validateConfig } from '../../config';
+import { IDENTITY_PRISMA, IdentityService } from './identity.service';
+⋮----
+export class IdentityModule {}
+</file>
+
+<file path="services/auth-service/src/modules/identity/identity.service.spec.ts">
+import {
+  ExternalIdentityRecord,
+  IdentityPrismaClient,
+  IdentityService,
+  IdentityUser,
+} from './identity.service';
+</file>
+
+<file path="services/auth-service/src/modules/identity/identity.service.ts">
+import { Inject, Injectable } from '@nestjs/common';
+⋮----
+export interface ResolveExternalIdentityInput {
+  issuer: string;
+  subject: string;
+  email?: string;
+}
+⋮----
+export interface IdentityUser {
+  id: string;
+  email?: string | null;
+  status: string;
+}
+⋮----
+export interface ExternalIdentityRecord {
+  id: string;
+  issuer: string;
+  subject: string;
+  userId: string;
+  user?: IdentityUser;
+}
+⋮----
+export interface IdentityPrismaClient {
+  externalIdentity: {
+    findFirst: (args: {
+      where: { userId: string };
+      select: { subject: boolean };
+    }) => Promise<{ subject: string } | null>;
+    findUnique: (args: {
+      where: { issuer_subject: { issuer: string; subject: string } };
+      include?: { user: boolean };
+    }) => Promise<ExternalIdentityRecord | null>;
+    create: (args: {
+      data: { issuer: string; subject: string; userId: string };
+    }) => Promise<ExternalIdentityRecord>;
+  };
+  user: {
+    findUnique: (args: {
+      where: { id: string };
+    }) => Promise<IdentityUser | null>;
+    create: (args: {
+      data: { email?: string; status?: string };
+    }) => Promise<IdentityUser>;
+  };
+  $transaction: <T>(
+    callback: (tx: IdentityPrismaClient) => Promise<T>,
+  ) => Promise<T>;
+}
+⋮----
+export class IdentityService
+⋮----
+constructor(
+⋮----
+async findById(id: string): Promise<IdentityUser | null>
+⋮----
+async findExternalSubject(userId: string): Promise<string | null>
+⋮----
+async resolveOrCreateByExternalIdentity(
+    input: ResolveExternalIdentityInput,
+): Promise<IdentityUser>
+</file>
+
+<file path="docker-compose.prod.yml">
+services:
+  postgres:
+    ports: !reset []
+
+  keycloak:
+    ports: !reset []
+
+  auth-service:
+    ports: !reset []
+
+  frontend:
+    ports: !reset []
+
+  nginx:
+    ports: !override
+      - "127.0.0.1:8080:80"
+</file>
+
+<file path="services/auth-service/prisma/migrations/20260822170000_align_module3_collaboration_rbac/migration.sql">
+UPDATE "Role"
+SET "name" = 'COLLABORATION_MANAGER'
+WHERE "name" = 'PROGRAM_MANAGER';
+
+UPDATE "Permission"
+SET "key" = regexp_replace("key", '^grants\.', 'collab.')
+WHERE "key" LIKE 'grants.%';
+
+UPDATE "RoleAssignment"
+SET "contextType" = 'PLATFORM', "contextId" = 'GLOBAL'
+WHERE "contextType" = 'FUNDING_PROGRAM';
+</file>
+
+<file path="services/auth-service/prisma/iam-fixtures.json">
+{
+  "_metadata": {
+    "description": "NON-SECRET IAM policy fixtures for the current workflow roles. Login accounts exist only in the ignored secrets/account.json file.",
+    "warning": "This file does not contain passwords or credentials. Keycloak OIDC owns user credentials. To authenticate as these users, Keycloak must be configured with identities matching the issuer and subject specified below."
+  },
+  "fixtures": [
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38021",
+        "email": "researcher_ru@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38022",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
+        "subject": "b2674fba-48c8-414f-926f-3ecfe1aab351"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38001",
+        "name": "RESEARCHER"
+      },
+      "permissions": [
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38020", "key": "knowledge.workspace.view" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38021", "key": "collab.proposals.create" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38022", "key": "collab.proposals.confirm_paired" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38023", "key": "collab.proposals.submit" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38024", "key": "projects.projects.view" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38025", "key": "projects.milestones.update" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38026", "key": "projects.reports.submit" }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38021",
+        "contextType": "ORGANIZATION",
+        "contextId": "a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38003",
+        "email": "org_rep@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38004",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
+        "subject": "fed2a1c0-4417-41ff-b81e-9eb3d01902ed"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38002",
+        "name": "ORGANIZATION_REPRESENTATIVE"
+      },
+      "permissions": [
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38007", "key": "collab.proposals.endorse" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38004", "key": "projects.projects.view" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38008", "key": "projects.reports.view_org" }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38002",
+        "contextType": "ORGANIZATION",
+        "contextId": "e1d5a7d3-7d1a-47ef-b203-d2d89f7db387",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38023",
+        "email": "org_rep_ru@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-bb663ee38024",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
+        "subject": "2abeca26-e327-4ee0-970c-e1cc0b03082c"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38002",
+        "name": "ORGANIZATION_REPRESENTATIVE"
+      },
+      "permissions": [
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38027", "key": "collab.proposals.endorse" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38028", "key": "projects.projects.view" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38029", "key": "projects.reports.view_org" }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38022",
+        "contextType": "ORGANIZATION",
+        "contextId": "a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38005",
+        "email": "reviewer@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38006",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
+        "subject": "7530ce9b-fb60-451e-81b7-b48f4f75b007"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38003",
+        "name": "REVIEWER"
+      },
+      "permissions": [
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38009", "key": "reviews.assignments.view_assigned" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38010", "key": "reviews.evaluations.score" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38011", "key": "reviews.evaluations.submit" }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38003",
+        "contextType": "REVIEW_BOARD",
+        "contextId": "BOARD_001",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38007",
+        "email": "program_manager@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38008",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
+        "subject": "5499c30e-9183-403b-8e9e-fbc664541096"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38004",
+        "name": "COLLABORATION_MANAGER"
+      },
+      "permissions": [
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38012", "key": "collab.opportunities.create" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38013", "key": "collab.opportunities.publish" },
+        { "id": "343736e9-fa64-487f-b7ea-17e563591ad7", "key": "collab.proposals.screen" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38014", "key": "reviews.assignments.manage" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38004", "key": "projects.projects.view" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38015", "key": "projects.reports.approve" }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38004",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38009",
+        "email": "decision_maker@vnru.network",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "7809a72b-8a8e-49b8-897b-aa663ee38010",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
+        "subject": "13d2c564-39d9-4365-b5bf-8e06ce2ea07b"
+      },
+      "role": {
+        "id": "7809a72b-8a8e-49b8-897b-ff663ee38005",
+        "name": "FOUNDATION_DECISION_MAKER"
+      },
+      "permissions": [
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38016", "key": "collab.decisions.issue_foundation" },
+        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38004", "key": "projects.projects.view" }
+      ],
+      "roleAssignment": {
+        "id": "7809a72b-8a8e-49b8-897b-dd663ee38005",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "6a63ec6d-f493-4d7a-8fb3-fc8f08fd26db",
+        "email": "super-admin-fixture@vnru.invalid",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "1b09a446-c7c5-47d8-a027-c66a518dc93a",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
+        "subject": "de503a91-0397-4fab-98b0-d26b2764954c"
+      },
+      "role": {
+        "id": "e4f570dc-3a5d-4091-b5ee-4274fe9a6a7d",
+        "name": "SUPER_ADMIN"
+      },
+      "permissions": [
+        { "id": "f4f7c8c6-172b-4574-960a-75019392d2f1", "key": "iam.users.manage" },
+        { "id": "64df1450-c2f2-477b-910f-856181ca61d7", "key": "iam.roles.manage" },
+        { "id": "29a718ba-f38a-4d47-882d-12791cd9a90f", "key": "iam.audit.view" }
+      ],
+      "roleAssignment": {
+        "id": "7a23f350-6cbb-49d9-a63a-10e2f136d20e",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
+        "status": "ACTIVE"
+      }
+    }
+  ]
+}
+</file>
+
+<file path="services/auth-service/src/modules/access-control/access-control.service.spec.ts">
+import {
+  AccessControlPrismaClient,
+  AccessControlService,
+  ResolveCapabilitiesInput,
+} from './access-control.service';
+⋮----
+// When querying for status: 'ACTIVE', inactive records are not returned by the repository query
+⋮----
+key: 'collab.proposals.create', // duplicate permission key across roles in same context
+⋮----
+// Output must only contain capability keys, never role names (e.g. no 'FACULTY_MEMBER' or 'LAB_LEAD')
+</file>
+
+<file path="services/auth-service/src/modules/access-control/iam-admin.controller.spec.ts">
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import {
+  UserStatus,
+  RoleAssignmentStatus,
+  RoleAssignment,
+} from '@prisma/client';
+import { Reflector } from '@nestjs/core';
+import { Test, TestingModule } from '@nestjs/testing';
+import { IamAdminController } from './iam-admin.controller';
+import { IamAdminService } from './iam-admin.service';
+import {
+  AuthenticatedRequestGuard,
+  AuthenticatedRequest,
+} from '../authentication/authenticated-request-context';
+import { AuthenticationService } from '../authentication/authentication.service';
+</file>
+
+<file path="services/auth-service/src/modules/access-control/iam-admin.controller.ts">
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
+import type { RoleAssignment } from '@prisma/client';
+import { z } from 'zod';
+import {
+  AuthenticatedRequestGuard,
+  RequirePermission,
+} from '../authentication/authenticated-request-context';
+import type { AuthenticatedRequest } from '../authentication/authenticated-request-context';
+import {
+  IamAdminService,
+  UserSelectResult,
+  MappedRole,
+} from './iam-admin.service';
+⋮----
+export class IamAdminController
+⋮----
+constructor(private readonly iamAdminService: IamAdminService)
+⋮----
+async listUsers(
+    @Query() query: Record<string, unknown>,
+    @Req() req?: AuthenticatedRequest,
+): Promise<UserSelectResult[]>
+⋮----
+async setUserStatus(
+    @Param('id') id: string,
+    @Body() body: { status?: unknown },
+    @Req() req: AuthenticatedRequest,
+): Promise<UserSelectResult>
+⋮----
+async listRoles(
+    @Query() query: Record<string, unknown>,
+): Promise<MappedRole[]>
+⋮----
+async replaceRolePermissions(
+    @Param('id') id: string,
+    @Body() body: Record<string, unknown>,
+    @Req() req: AuthenticatedRequest,
+): Promise<MappedRole>
+⋮----
+async upsertRoleAssignment(
+    @Body() body: Record<string, unknown>,
+    @Req() req: AuthenticatedRequest,
+): Promise<RoleAssignment>
+</file>
+
+<file path="services/auth-service/src/modules/access-control/iam-admin.service.spec.ts">
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { UserStatus, RoleAssignmentStatus } from '@prisma/client';
+import { IamAdminService } from './iam-admin.service';
+</file>
+
+<file path="services/auth-service/src/modules/access-control/iam-admin.service.ts">
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import {
+  UserStatus,
+  RoleAssignmentStatus,
+  User,
+  Role,
+  RoleAssignment,
+} from '@prisma/client';
+import { ACCESS_CONTROL_PRISMA } from './access-control.service';
+⋮----
+export interface UserSelectResult {
+  id: string;
+  email: string | null;
+  status: UserStatus;
+  canManageUser?: boolean;
+}
+⋮----
+export interface RoleWithPermissions {
+  id: string;
+  name: string;
+  permissions: {
+    permission: {
+      key: string;
+    } | null;
+  }[];
+}
+⋮----
+export interface MappedRole {
+  id: string;
+  name: string;
+  permissions: string[];
+}
+⋮----
+export interface IamAdminPrismaClient {
+  $transaction<T>(
+    fn: (tx: Omit<IamAdminPrismaClient, '$transaction'>) => Promise<T>,
+  ): Promise<T>;
+  user: {
+    findMany(args: {
+      take: number;
+      skip: number;
+      where?: { id: { not: string } };
+      orderBy?: { id: 'asc' | 'desc' };
+      select?: { id: boolean; email: boolean; status: boolean };
+    }): Promise<UserSelectResult[]>;
+    findUnique(args: { where: { id: string } }): Promise<User | null>;
+    update(args: {
+      where: { id: string };
+      data: { status: UserStatus };
+      select?: { id: boolean; email: boolean; status: boolean };
+    }): Promise<UserSelectResult>;
+  };
+  role: {
+    findMany(args: {
+      take: number;
+      skip: number;
+      orderBy?: { name: 'asc' | 'desc' };
+      include?: {
+        permissions: {
+          include: {
+            permission: boolean;
+          };
+        };
+      };
+    }): Promise<RoleWithPermissions[]>;
+    findUnique(args: { where: { id: string } }): Promise<Role | null>;
+  };
+  permission: {
+    findMany(args: {
+      where: { key: { in: string[] } };
+      select: { id: boolean; key: boolean };
+    }): Promise<{ id: string; key: string }[]>;
+  };
+  rolePermission: {
+    deleteMany(args: { where: { roleId: string } }): Promise<{ count: number }>;
+    createMany(args: {
+      data: { roleId: string; permissionId: string }[];
+    }): Promise<{ count: number }>;
+  };
+  roleAssignment: {
+    findMany(args: {
+      where: {
+        userId: string | { in: string[] };
+        contextType: string;
+        contextId: string;
+        status: RoleAssignmentStatus;
+      };
+      select: {
+        roleId: boolean;
+        userId?: boolean;
+        role?: { select: { name: boolean } };
+      };
+    }): Promise<{ roleId: string; userId?: string; role?: { name: string } }[]>;
+    upsert(args: {
+      where: {
+        userId_roleId_contextType_contextId: {
+          userId: string;
+          roleId: string;
+          contextType: string;
+          contextId: string;
+        };
+      };
+      update: { status: RoleAssignmentStatus };
+      create: {
+        userId: string;
+        roleId: string;
+        contextType: string;
+        contextId: string;
+        status: RoleAssignmentStatus;
+      };
+    }): Promise<RoleAssignment>;
+  };
+  session: {
+    updateMany(args: {
+      where: { userId: string; revokedAt: null };
+      data: { revokedAt: Date };
+    }): Promise<{ count: number }>;
+  };
+  securityAuditEvent: {
+    create(args: {
+      data: {
+        event: string;
+        actorId: string;
+        targetId: string;
+        context: any;
+      };
+    }): Promise<any>;
+  };
+}
+⋮----
+$transaction<T>(
+    fn: (tx: Omit<IamAdminPrismaClient, '$transaction'>) => Promise<T>,
+  ): Promise<T>;
+⋮----
+findMany(args: {
+      take: number;
+      skip: number;
+      where?: { id: { not: string } };
+      orderBy?: { id: 'asc' | 'desc' };
+      select?: { id: boolean; email: boolean; status: boolean };
+    }): Promise<UserSelectResult[]>;
+findUnique(args:
+update(args: {
+      where: { id: string };
+      data: { status: UserStatus };
+      select?: { id: boolean; email: boolean; status: boolean };
+    }): Promise<UserSelectResult>;
+⋮----
+findMany(args: {
+      take: number;
+      skip: number;
+      orderBy?: { name: 'asc' | 'desc' };
+      include?: {
+        permissions: {
+          include: {
+            permission: boolean;
+          };
+        };
+      };
+    }): Promise<RoleWithPermissions[]>;
+⋮----
+findMany(args: {
+      where: { key: { in: string[] } };
+      select: { id: boolean; key: boolean };
+}): Promise<
+⋮----
+deleteMany(args:
+createMany(args: {
+      data: { roleId: string; permissionId: string }[];
+}): Promise<
+⋮----
+findMany(args: {
+      where: {
+        userId: string | { in: string[] };
+        contextType: string;
+        contextId: string;
+        status: RoleAssignmentStatus;
+      };
+      select: {
+        roleId: boolean;
+        userId?: boolean;
+        role?: { select: { name: boolean } };
+      };
+}): Promise<
+upsert(args: {
+      where: {
+        userId_roleId_contextType_contextId: {
+          userId: string;
+          roleId: string;
+          contextType: string;
+          contextId: string;
+        };
+      };
+      update: { status: RoleAssignmentStatus };
+      create: {
+        userId: string;
+        roleId: string;
+        contextType: string;
+        contextId: string;
+        status: RoleAssignmentStatus;
+      };
+    }): Promise<RoleAssignment>;
+⋮----
+updateMany(args: {
+      where: { userId: string; revokedAt: null };
+      data: { revokedAt: Date };
+}): Promise<
+⋮----
+create(args: {
+      data: {
+        event: string;
+        actorId: string;
+        targetId: string;
+        context: any;
+      };
+    }): Promise<any>;
+⋮----
+export class IamAdminService
+⋮----
+constructor(
+⋮----
+async listUsers(
+    limit: number,
+    offset: number,
+    actorId?: string,
+    activeContext?: { contextType: string; contextId: string } | null,
+): Promise<UserSelectResult[]>
+⋮----
+async setUserStatus(
+    id: string,
+    status: UserStatus,
+    actorId: string,
+    activeContext?: { contextType: string; contextId: string },
+): Promise<UserSelectResult>
+⋮----
+async listRoles(limit: number, offset: number): Promise<MappedRole[]>
+⋮----
+async replaceRolePermissions(
+    roleId: string,
+    permissionKeys: string[],
+    actorId: string,
+    activeContext?: { contextType: string; contextId: string },
+): Promise<MappedRole>
+⋮----
+async upsertRoleAssignment(
+    input: {
+      userId: string;
+      roleId: string;
+      contextType: string;
+      contextId: string;
+      status: RoleAssignmentStatus;
+    },
+    actorId: string,
+): Promise<RoleAssignment>
+</file>
+
+<file path="services/auth-service/src/modules/access-control/workflow-fixture.spec.ts">
+import { importFixture } from '../../../prisma/import-fixture';
+⋮----
+// Import fixtures
+⋮----
+// 1. RESEARCHER Checks
+⋮----
+// 2. ORGANIZATION_REPRESENTATIVE VN Checks
+⋮----
+// 3. ORGANIZATION_REPRESENTATIVE RU Checks
+⋮----
+// 4. REVIEWER Checks
+⋮----
+// 5. COLLABORATION_MANAGER Checks
+⋮----
+// 6. FOUNDATION_DECISION_MAKER Checks
+⋮----
+// The local full-access account remains provisioned through the fixture.
+⋮----
+// Run again to verify idempotency intent (successive execution should not fail and behave same way)
+⋮----
+name: 'UNKNOWN_ADMIN', // Invalid, not in ALLOWED_ROLES
+⋮----
+key: 'admin.all.access', // Invalid permission key
+</file>
+
+<file path="services/auth-service/package.json">
+{
+  "name": "auth-service",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "node --env-file-if-exists=.env ./node_modules/@nestjs/cli/bin/nest.js start",
+    "start:dev": "node --env-file-if-exists=.env ./node_modules/@nestjs/cli/bin/nest.js start --watch",
+    "start:debug": "node --env-file-if-exists=.env ./node_modules/@nestjs/cli/bin/nest.js start --debug --watch",
+    "start:prod": "node --env-file-if-exists=.env dist/src/main.js",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "node --env-file-if-exists=.env ./node_modules/jest/bin/jest.js --config ./test/jest-e2e.json"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/platform-express": "^11.0.1",
+    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/client": "^7.9.1",
+    "openid-client": "^5.7.1",
+    "pg": "^8.23.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
+    "@nestjs/cli": "^11.0.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@nestjs/testing": "^11.0.1",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.0",
+    "@types/supertest": "^7.0.0",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "globals": "^17.0.0",
+    "jest": "^30.0.0",
+    "prettier": "^3.4.2",
+    "prisma": "^7.9.1",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
+</file>
+
+<file path="docker-compose.yml">
+name: vnru-network
+
+networks:
+  vnru-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vnru-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: auth_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - vnru-net
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: vnru-keycloak
+    restart: unless-stopped
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_HEALTH_ENABLED: "true"
+    volumes:
+      - ./infra/keycloak/themes:/opt/keycloak/themes:ro
+    ports:
+      - "${KEYCLOAK_PORT:-8080}:8080"
+    networks:
+      - vnru-net
+
+  auth-service:
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    container_name: vnru-auth-service
+    restart: unless-stopped
+    command: sh -c "pnpm exec prisma migrate deploy --config prisma.config.ts && node dist/src/main.js"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/auth_db?schema=public
+      KEYCLOAK_ISSUER_URL: ${KEYCLOAK_ISSUER_URL:-http://keycloak:8080/realms/vnru}
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-vnru-auth}
+      KEYCLOAK_REDIRECT_URI: ${KEYCLOAK_REDIRECT_URI:-http://localhost:3000/api/v1/auth/callback}
+      KEYCLOAK_PROFILE_CLIENT_ID: ${KEYCLOAK_PROFILE_CLIENT_ID:-vnru-profile-service}
+      KEYCLOAK_PROFILE_CLIENT_SECRET: ${KEYCLOAK_PROFILE_CLIENT_SECRET:-replace-with-secret-store-value}
+    ports:
+      - "${AUTH_SERVICE_PORT:-3001}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - vnru-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vnru-frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      AUTH_SERVICE_URL: http://auth-service:3000
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-vnru-default-dev-secret-replace-in-prod}
+      AUTH_SECRET: ${AUTH_SECRET:-vnru-default-dev-secret-replace-in-prod}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      auth-service:
+        condition: service_started
+    networks:
+      - vnru-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: vnru-nginx
+    restart: unless-stopped
+    ports:
+      - "${NGINX_HTTP_PORT:-80}:80"
+      - "${NGINX_HTTPS_PORT:-443}:443"
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./infra/nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - frontend
+      - auth-service
+      - keycloak
+    networks:
+      - vnru-net
+</file>
+
+<file path="services/auth-service/prisma/README.md">
+# Synthetic IAM Workflow Fixtures
+
+This directory contains `iam-fixtures.json`, a non-secret IAM policy fixture set, and `import-fixture.ts`, the importer used to populate workflow roles in the auth database. The only local login-account source is the ignored `secrets/account.json` file.
+
+## Critical notice
+
+- **No credentials:** the fixture contains no passwords, secrets, tokens, or login credentials.
+- **Keycloak ownership:** authentication credentials and SSO identities are owned by Keycloak.
+- **Identity linkage:** browser login works only when the Keycloak identity resolves to an application identity with an active role assignment.
+- **Current active fixture roles:** `SUPER_ADMIN`, `RESEARCHER`, `ORGANIZATION_REPRESENTATIVE`, `REVIEWER`, `COLLABORATION_MANAGER`, and `FOUNDATION_DECISION_MAKER`.
+- `KNOWLEDGE_CURATOR` is intentionally removed from the active fixture set because its previous permissions did not own a distinct workflow step.
+- The duplicate generic Researcher fixture is intentionally removed; the current synthetic account set keeps the organization-scoped Researcher identity used for the bilateral test flow.
+
+`services/auth-service/prisma/iam-fixtures.json` contains policy fixtures only. Local login credentials remain in ignored `secrets/account.json` and must never be copied into this directory.
+
+## Usage
+
+Run the importer with the configured development database:
+
+```bash
+npx ts-node prisma/import-fixture.ts
+```
+
+The importer validates each fixture against the exact capability policy declared in `import-fixture.ts` before writing it.
+</file>
+
+<file path="services/auth-service/prisma/import-fixture.ts">
+import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+⋮----
+import { z } from 'zod';
+⋮----
+export async function importFixture(prisma: PrismaClient, fixturePath?: string)
+</file>
+
+</files>

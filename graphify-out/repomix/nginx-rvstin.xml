@@ -1,0 +1,418 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: docker-compose.yml, docker-compose.prod.yml, infra/nginx/nginx.conf, infra/nginx/conf.d/default.conf, infra/nginx/host-rvstin.conf, .env.docker.example
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+infra/
+  nginx/
+    conf.d/
+      default.conf
+    host-rvstin.conf
+    nginx.conf
+.env.docker.example
+docker-compose.prod.yml
+docker-compose.yml
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="infra/nginx/host-rvstin.conf">
+server {
+    listen 80;
+    listen [::]:80;
+    server_name rvstin.com www.rvstin.com;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://rvstin.com$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name rvstin.com www.rvstin.com;
+
+    ssl_certificate /etc/letsencrypt/live/rvstin.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/rvstin.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 1d;
+    ssl_session_tickets off;
+
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    client_max_body_size 50m;
+
+    location = /nginx-health {
+        access_log off;
+        default_type text/plain;
+        return 200 "ok\n";
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_connect_timeout 10s;
+        proxy_read_timeout 60s;
+    }
+}
+</file>
+
+<file path="docker-compose.prod.yml">
+services:
+  postgres:
+    ports: !reset []
+
+  keycloak:
+    ports: !reset []
+
+  auth-service:
+    ports: !reset []
+
+  frontend:
+    ports: !reset []
+
+  nginx:
+    ports: !override
+      - "127.0.0.1:8080:80"
+</file>
+
+<file path="infra/nginx/conf.d/default.conf">
+# Upstream definitions
+upstream frontend_upstream {
+    server frontend:3000;
+    keepalive 32;
+}
+
+upstream auth_service_upstream {
+    server auth-service:3000;
+    keepalive 32;
+}
+
+upstream keycloak_upstream {
+    server keycloak:8080;
+    keepalive 32;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name localhost _;
+
+    # Common Proxy Headers
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Port $server_port;
+
+    # Timeouts
+    proxy_connect_timeout 60s;
+    proxy_send_timeout 60s;
+    proxy_read_timeout 60s;
+
+    # 1. Direct Backend Microservices API Endpoints
+    # Module 1: Auth & IAM Admin
+    location /api/v1/auth/ {
+        proxy_pass http://auth_service_upstream;
+    }
+
+    location /api/v1/admin/ {
+        proxy_pass http://auth_service_upstream;
+    }
+
+    # 2. Keycloak OIDC Authentication Routes
+    location /realms/ {
+        proxy_pass http://keycloak_upstream;
+        proxy_buffer_size 128k;
+        proxy_buffers 4 256k;
+        proxy_busy_buffers_size 256k;
+    }
+
+    location /resources/ {
+        proxy_pass http://keycloak_upstream;
+    }
+
+    # 3. Next.js Static Asset Optimization
+    location /_next/static/ {
+        proxy_pass http://frontend_upstream;
+        proxy_cache_bypass $http_upgrade;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    # 4. Next.js Frontend Portal (Default Route & SSR / BFF APIs)
+    location / {
+        proxy_pass http://frontend_upstream;
+        proxy_buffer_size 128k;
+        proxy_buffers 4 256k;
+        proxy_busy_buffers_size 256k;
+    }
+}
+</file>
+
+<file path="infra/nginx/nginx.conf">
+user nginx;
+worker_processes auto;
+pid /var/run/nginx.pid;
+error_log /var/log/nginx/error.log warn;
+
+events {
+    worker_connections 1024;
+    multi_accept on;
+    use epoll;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    # Logging Settings
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for" '
+                    'rt=$request_time uct="$upstream_connect_time" uht="$upstream_header_time" urt="$upstream_response_time"';
+
+    access_log /var/log/nginx/access.log main;
+
+    # Performance Settings
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
+    server_tokens off;
+
+    # Buffer & Upload limits (Supporting large PDF / Scientific paper submissions)
+    client_max_body_size 50M;
+    client_body_buffer_size 128k;
+
+    # Gzip Compression
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_min_length 256;
+    gzip_types
+        text/plain
+        text/css
+        text/javascript
+        text/xml
+        application/json
+        application/javascript
+        application/x-javascript
+        application/xml
+        application/xml+rss
+        application/vnd.ms-fontobject
+        font/woff
+        font/woff2
+        image/svg+xml;
+
+    include /etc/nginx/conf.d/*.conf;
+}
+</file>
+
+<file path=".env.docker.example">
+# ==========================================
+# VN-RU Science-Technology Intelligence Network
+# Docker Environment Configuration Template
+# ==========================================
+
+# Global Environment
+NODE_ENV=production
+
+# PostgreSQL Configuration
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres_secure_password_replace_in_prod
+POSTGRES_PORT=5432
+
+# Keycloak Configuration
+KEYCLOAK_ADMIN=admin
+KEYCLOAK_ADMIN_PASSWORD=admin_secure_password_replace_in_prod
+KEYCLOAK_PORT=8080
+KEYCLOAK_ISSUER_URL=http://keycloak:8080/realms/vnru
+KEYCLOAK_CLIENT_ID=vnru-auth
+KEYCLOAK_PROFILE_CLIENT_ID=vnru-profile-service
+KEYCLOAK_PROFILE_CLIENT_SECRET=replace-with-secret-store-value
+
+# Auth Service
+AUTH_SERVICE_PORT=3001
+
+# Frontend Portal
+FRONTEND_PORT=3000
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=generate_strong_random_secret_for_production
+AUTH_SECRET=generate_strong_random_secret_for_production
+
+# Nginx Gateway Configuration
+NGINX_HTTP_PORT=80
+NGINX_HTTPS_PORT=443
+</file>
+
+<file path="docker-compose.yml">
+name: vnru-network
+
+networks:
+  vnru-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vnru-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: auth_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - vnru-net
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: vnru-keycloak
+    restart: unless-stopped
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_HEALTH_ENABLED: "true"
+    volumes:
+      - ./infra/keycloak/themes:/opt/keycloak/themes:ro
+    ports:
+      - "${KEYCLOAK_PORT:-8080}:8080"
+    networks:
+      - vnru-net
+
+  auth-service:
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    container_name: vnru-auth-service
+    restart: unless-stopped
+    command: sh -c "pnpm exec prisma migrate deploy --config prisma.config.ts && node dist/src/main.js"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/auth_db?schema=public
+      KEYCLOAK_ISSUER_URL: ${KEYCLOAK_ISSUER_URL:-http://keycloak:8080/realms/vnru}
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-vnru-auth}
+      KEYCLOAK_REDIRECT_URI: ${KEYCLOAK_REDIRECT_URI:-http://localhost:3000/api/v1/auth/callback}
+      KEYCLOAK_PROFILE_CLIENT_ID: ${KEYCLOAK_PROFILE_CLIENT_ID:-vnru-profile-service}
+      KEYCLOAK_PROFILE_CLIENT_SECRET: ${KEYCLOAK_PROFILE_CLIENT_SECRET:-replace-with-secret-store-value}
+    ports:
+      - "${AUTH_SERVICE_PORT:-3001}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - vnru-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vnru-frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      AUTH_SERVICE_URL: http://auth-service:3000
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-vnru-default-dev-secret-replace-in-prod}
+      AUTH_SECRET: ${AUTH_SECRET:-vnru-default-dev-secret-replace-in-prod}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      auth-service:
+        condition: service_started
+    networks:
+      - vnru-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: vnru-nginx
+    restart: unless-stopped
+    ports:
+      - "${NGINX_HTTP_PORT:-80}:80"
+      - "${NGINX_HTTPS_PORT:-443}:443"
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./infra/nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - frontend
+      - auth-service
+      - keycloak
+    networks:
+      - vnru-net
+</file>
+
+</files>

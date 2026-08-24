@@ -6,7 +6,7 @@ WORKDIR /app
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # Stage 2: Builder
 FROM node:22-alpine AS builder
@@ -23,6 +23,9 @@ RUN pnpm exec prisma generate
 
 # Build NestJS application
 RUN pnpm run build
+
+# One-shot migration/seed image. Kept separate from the non-root runtime.
+FROM builder AS tools
 
 # Stage 3: Production Runner
 FROM node:22-alpine AS runner

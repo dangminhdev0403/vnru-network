@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { OpportunitiesIndexPage } from "@/features/public-discovery/components/PublicDiscoveryPages";
+import { GuestOpportunitiesV2 } from "@/features/public-v2/components/GuestOpportunitiesV2";
 
-export const metadata: Metadata = { title: "Cơ hội nghiên cứu | VN–RU Network", description: "Public preview of bilateral research collaboration opportunities." };
+export const metadata: Metadata = {
+  title: "Cơ hội Hợp tác Nghiên cứu | Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt",
+  description: "Khám phá các chương trình kêu gọi đề xuất đề tài nghiên cứu song phương Việt Nam – Liên bang Nga.",
+};
 
 export default function Page() {
-  return <OpportunitiesIndexPage />;
+  return <GuestOpportunitiesV2 />;
 }

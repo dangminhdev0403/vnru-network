@@ -18,9 +18,9 @@ test("workspace navigation exposes only destinations allowed by capability", () 
   ]);
 
   const roleCases = [
-    { capabilities: ["collab.proposals.create"], landing: "/workspace/researcher", minItems: 7 },
-    { capabilities: ["reviews.assignments.view_assigned"], landing: "/workspace/reviewer", minItems: 6 },
-    { capabilities: ["collab.proposals.endorse"], landing: "/workspace/organization", minItems: 6 },
+    { capabilities: ["collab.proposals.create"], moduleHref: "/workspace/researcher?view=collaboration", minItems: 7 },
+    { capabilities: ["reviews.assignments.view_assigned"], moduleHref: "/workspace/reviewer?view=assignments", minItems: 6 },
+    { capabilities: ["collab.proposals.endorse"], moduleHref: "/workspace/organization?view=endorsements", minItems: 6 },
     {
       capabilities: [
         "collab.opportunities.create",
@@ -30,20 +30,21 @@ test("workspace navigation exposes only destinations allowed by capability", () 
         "projects.projects.view",
         "projects.reports.approve",
       ],
-      landing: "/workspace/collaboration",
+      moduleHref: "/workspace/collaboration?view=opportunities",
       minItems: 8,
     },
-    { capabilities: ["collab.decisions.issue_foundation", "projects.projects.view"], landing: "/workspace/decisions", minItems: 6 },
+    { capabilities: ["collab.decisions.issue_foundation", "projects.projects.view"], moduleHref: "/workspace/decisions?view=queue", minItems: 6 },
   ];
 
-  for (const { capabilities, landing, minItems } of roleCases) {
+  for (const { capabilities, moduleHref, minItems } of roleCases) {
     const hrefs = filterNavSections(capabilities).flatMap((section) =>
       section.items.map((item) => item.href),
     );
-    assert.equal(hrefs[0], landing);
+    assert.equal(hrefs[0], "/workspace");
+    assert.ok(hrefs.includes(moduleHref));
     assert.equal(hrefs.at(-2), "/account");
     assert.equal(hrefs.at(-1), "/security");
-    assert.ok(hrefs.length >= minItems, `${landing} should expose a complete task navigation`);
+    assert.ok(hrefs.length >= minItems, `/workspace should expose a complete task navigation`);
   }
 
   const adminItems = filterNavSections(["iam.roles.manage"]).flatMap(
@@ -77,18 +78,18 @@ test("workspace navigation exposes only destinations allowed by capability", () 
   assert.equal(resolveLandingPath(fullAdminCapabilities), "/admin/access");
 });
 
-test("persona resolution recognizes current workspace roles and IAM independently", () => {
+test("persona resolution uses one member workspace while IAM stays independent", () => {
   const roleCases = [
-    ["collab.proposals.create", "RESEARCHER"],
-    ["reviews.assignments.view_assigned", "REVIEWER"],
-    ["collab.proposals.endorse", "ORGANIZATION_REPRESENTATIVE"],
-    ["collab.opportunities.create", "COLLABORATION_MANAGER"],
-    ["collab.decisions.issue_foundation", "FOUNDATION_DECISION_MAKER"],
+    "collab.proposals.create",
+    "reviews.assignments.view_assigned",
+    "collab.proposals.endorse",
+    "collab.opportunities.create",
+    "collab.decisions.issue_foundation",
   ];
-  for (const [capability, expectedPersona] of roleCases) {
+  for (const capability of roleCases) {
     assert.deepEqual(
       resolveUserPersonas([capability]).map((persona) => persona.key),
-      [expectedPersona],
+      ["WORKSPACE_MEMBER"],
     );
   }
   assert.deepEqual(
@@ -97,13 +98,13 @@ test("persona resolution recognizes current workspace roles and IAM independentl
   );
 });
 
-test("workspace landing resolves every current workspace persona", () => {
+test("workspace landing resolves every business role to the unified workspace", () => {
   const roleCases = [
-    ["collab.proposals.create", "/workspace/researcher"],
-    ["reviews.assignments.view_assigned", "/workspace/reviewer"],
-    ["collab.proposals.endorse", "/workspace/organization"],
-    ["collab.opportunities.create", "/workspace/collaboration"],
-    ["collab.decisions.issue_foundation", "/workspace/decisions"],
+    ["collab.proposals.create", "/workspace"],
+    ["reviews.assignments.view_assigned", "/workspace"],
+    ["collab.proposals.endorse", "/workspace"],
+    ["collab.opportunities.create", "/workspace"],
+    ["collab.decisions.issue_foundation", "/workspace"],
     ["iam.roles.manage", "/admin/access"],
   ];
   for (const [capability, expectedPath] of roleCases) {

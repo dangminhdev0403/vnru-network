@@ -20,7 +20,11 @@ export async function GET(request: NextRequest) {
       ui_locales: sanitizeLocale(
         request.cookies.get(LOCALE_COOKIE_NAME)?.value,
       ),
-      ...(action === "CONFIGURE_TOTP" ? { kc_action: action } : {}),
+      ...(action === "CONFIGURE_TOTP"
+        ? { kc_action: action }
+        : action === "REGISTER"
+          ? { prompt: "create" }
+          : {}),
       ...(prompt === "login" ? { prompt } : {}),
     },
   );
