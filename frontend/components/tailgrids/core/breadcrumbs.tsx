@@ -3,7 +3,7 @@
 import { cn } from "@/lib/cn";
 import Link from "next/link";
 import React from "react";
-import { useLocale } from "@/app/HomeMotion";
+import { useLocale } from "@/core/i18n/locale";
 
 export interface BreadcrumbItem {
   label: string;

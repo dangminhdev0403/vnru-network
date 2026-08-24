@@ -1,23 +1,16 @@
-import ExpertDetail from "../../../features/experts/components/ExpertDetail";
-import { getExpertById, getExpertMatches } from "../../../features/experts/repository";
-import PublicHeader from "@/components/shared/PublicHeader";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ExpertDetailPage } from "@/features/public-discovery/components/PublicDiscoveryPages";
+import { EXPERTS, getExpert } from "@/features/public-discovery/mock-data";
 
-export default async function ExpertDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export const metadata: Metadata = { title: "Hồ sơ chuyên gia | VN–RU Network" };
+
+export function generateStaticParams() {
+  return EXPERTS.map(({ id }) => ({ id }));
+}
+
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const [expertResult, matchesResult] = await Promise.all([
-    getExpertById(id),
-    getExpertMatches(id),
-  ]);
-
-  if (expertResult.status === "error" && expertResult.kind === "not_found") {
-    notFound();
-  }
-
-  return (
-    <>
-      <PublicHeader />
-      <ExpertDetail expertResult={expertResult} matchesResult={matchesResult} id={id} />
-    </>
-  );
+  if (!getExpert(id)) notFound();
+  return <ExpertDetailPage id={id} />;
 }

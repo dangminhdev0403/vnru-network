@@ -35,98 +35,36 @@ export const WORKSPACE_PERSONAS: Record<string, WorkspacePersona> = {
     matchCapabilities: ["iam.roles.manage", "iam.users.manage"],
     primaryLanding: "/admin/access",
   },
-  COLLABORATION_MANAGER: {
-    key: "COLLABORATION_MANAGER",
-    name: "Quản lý cộng tác",
-    matchCapabilities: ["collab.opportunities.create", "collab.opportunities.publish", "collab.proposals.screen"],
-    primaryLanding: "/workspace/collaboration",
-  },
-  RESEARCHER: {
-    key: "RESEARCHER",
-    name: "Nhà nghiên cứu (PI)",
-    matchCapabilities: ["collab.proposals.create", "collab.proposals.submit", "projects.milestones.update"],
-    primaryLanding: "/workspace/collaboration",
-  },
-  ORGANIZATION_REPRESENTATIVE: {
-    key: "ORGANIZATION_REPRESENTATIVE",
-    name: "Đại diện tổ chức",
-    matchCapabilities: ["collab.proposals.endorse", "projects.reports.view_org"],
-    primaryLanding: "/workspace/collaboration",
-  },
-  REVIEWER: {
-    key: "REVIEWER",
-    name: "Chuyên gia phản biện",
-    matchCapabilities: ["reviews.assignments.view_assigned", "reviews.evaluations.score", "reviews.evaluations.submit"],
-    primaryLanding: "/workspace/collaboration",
-  },
-  FOUNDATION_DECISION_MAKER: {
-    key: "FOUNDATION_DECISION_MAKER",
-    name: "Quản trị quyết định của Quỹ",
-    matchCapabilities: ["collab.decisions.issue_foundation"],
-    primaryLanding: "/workspace/collaboration",
-  },
-  KNOWLEDGE_CURATOR: {
-    key: "KNOWLEDGE_CURATOR",
-    name: "Quản trị tri thức",
-    matchCapabilities: ["knowledge.workspace.view"],
-    primaryLanding: "/workspace/knowledge",
-  },
 };
 
 export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
   {
-    key: "overview",
-    labelKey: "overview",
+    key: "workspace_modules",
+    labelKey: "workspaceModules",
     items: [
-      { key: "workspace_home", href: "/workspace", labelKey: "workspaceOverview", icon: "dashboard" },
-      { key: "knowledge_experts", href: "/workspace/knowledge", labelKey: "knowledge", icon: "hub", requiredCapabilities: ["knowledge.workspace.view"] },
-      {
-        key: "collaboration_hub",
-        href: "/workspace/collaboration",
-        labelKey: "collaboration",
-        icon: "handshake",
-        requiredCapabilities: [
-          "collab.opportunities.create",
-          "collab.opportunities.publish",
-          "collab.proposals.create",
-          "collab.proposals.submit",
-          "collab.proposals.confirm_paired",
-          "collab.proposals.endorse",
-          "collab.proposals.screen",
-          "collab.decisions.issue_foundation",
-          "reviews.assignments.view_assigned",
-          "projects.projects.view",
-        ],
-      },
-      {
-        key: "collaboration_opportunities",
-        href: "/workspace/collaboration/opportunities",
-        labelKey: "opportunities",
-        icon: "campaign",
-        requiredCapabilities: ["collab.opportunities.create", "collab.opportunities.publish", "collab.proposals.create"],
-      },
-      {
-        key: "collaboration_reviews",
-        href: "/workspace/collaboration/reviews",
-        labelKey: "reviews",
-        icon: "fact_check",
-        requiredCapabilities: ["reviews.assignments.view_assigned", "reviews.assignments.manage"],
-      },
-      {
-        key: "collaboration_projects",
-        href: "/workspace/collaboration/projects",
-        labelKey: "projects",
-        icon: "account_tree",
-        requiredCapabilities: ["projects.projects.view", "projects.projects.manage"],
-      },
-      { key: "iam_portal", href: "/workspace/iam", labelKey: "iam", icon: "badge" },
+      { key: "workspace_hub", href: "/workspace", labelKey: "workspaceHub", icon: "space_dashboard" },
+      { key: "researcher", href: "/workspace/researcher", labelKey: "researcher", icon: "science" },
+      { key: "reviewer", href: "/workspace/reviewer", labelKey: "reviewer", icon: "rate_review" },
+      { key: "organization", href: "/workspace/organization", labelKey: "organization", icon: "domain" },
+      { key: "enterprise", href: "/workspace/enterprise", labelKey: "enterprise", icon: "handshake" },
+      { key: "leadership", href: "/workspace/leadership", labelKey: "leadership", icon: "analytics" },
     ],
   },
   {
-    key: "governance",
-    labelKey: "governance",
+    key: "administration",
+    labelKey: "administration",
     items: [
-      { key: "sessions_security", href: "/workspace/iam/security", labelKey: "sessions", icon: "shield_lock" },
+      { key: "governance", href: "/governance", labelKey: "governance", icon: "policy" },
+      { key: "access_control", href: "/admin/access/roles", labelKey: "accessControl", icon: "manage_accounts", requiredCapabilities: ["iam.roles.manage"] },
+      { key: "audit", href: "/admin/audit", labelKey: "audit", icon: "security", requiredCapabilities: ["iam.audit.view", "iam.roles.manage"] },
+    ],
+  },
+  {
+    key: "account",
+    labelKey: "account",
+    items: [
+      { key: "account_profile", href: "/account", labelKey: "accountProfile", icon: "person" },
+      { key: "sessions_security", href: "/security", labelKey: "security", icon: "shield_lock" },
     ],
   },
 ];
@@ -140,7 +78,9 @@ export function hasCapability(userCapabilities: string[], required?: string | st
 }
 
 export function filterNavSections(userCapabilities: string[] = []): WorkspaceNavSection[] {
-  return WORKSPACE_NAV_REGISTRY.map((section) => {
+  return WORKSPACE_NAV_REGISTRY.filter((section) =>
+    hasCapability(userCapabilities, section.requiredCapabilities),
+  ).map((section) => {
     const visibleItems = section.items.filter((item) => hasCapability(userCapabilities, item.requiredCapabilities));
     return {
       ...section,

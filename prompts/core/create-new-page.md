@@ -7,10 +7,10 @@ Create a new page in the VN-RU Network portal (with header, breadcrumbs, TailGri
 ## Step 0 — Gather Inputs
 
 Ask the user:
-1. **Page Title / Label** — Sidebar and breadcrumb text (e.g. `Bilateral Grants` / `Tài trợ song phương`).
-2. **Page URL Path** — kebab-case URL (e.g. `/workspace/grants`).
+1. **Page Title / Label** — user-task language for the sidebar and breadcrumb (e.g. `Research collaboration` / `Cộng tác nghiên cứu`).
+2. **Page URL Path** — canonical current URL (for example `/account`, `/security`, or `/admin/access`).
 3. **Target Navigation Section** — `WORKSPACE` or `GOVERNANCE`.
-4. **Module Assignment** — Module 01 (IAM), Module 02 (Knowledge), Module 03 (Grants), etc.
+4. **Product Area** — Public / Discovery, Role-based Workspace, or Governance & Administration, plus the owning business capability.
 
 ---
 

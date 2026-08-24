@@ -1,10 +1,11 @@
 "use client";
 
 import { useMemo, useState, type FormEvent } from "react";
-import { useLocale, type Locale } from "@/app/HomeMotion";
+import { useLocale, type Locale } from "@/core/i18n/locale";
 import { useIamAdministration } from "@/features/iam/hooks";
 import { ApiError, type IamRole } from "@/features/iam/repository";
 import { confirmAction, showError, showToast } from "@/lib/alerts";
+import { z } from "zod";
 
 const copy: Record<Locale, Record<string, string>> = {
   vi: {
@@ -110,6 +111,7 @@ export default function RolePermissionsPage() {
   const [assignUserId, setAssignUserId] = useState("");
   const [assignContextType, setAssignContextType] = useState("ORGANIZATION");
   const [assignContextId, setAssignContextId] = useState("");
+  const [assignError, setAssignError] = useState("");
   const [expandedGroup, setExpandedGroup] = useState<string | null>(null);
   const selectedRole = roles.find((role) => role.id === selectedRoleId) ?? roles[0];
   const currentPermissions = useMemo(() => new Set(selectedRole?.permissions ?? []), [selectedRole]);
@@ -143,11 +145,14 @@ export default function RolePermissionsPage() {
   };
 
   const assignRole = async (event: FormEvent) => {
-    event.preventDefault(); if (!assignUserId || !selectedRole) return;
+    event.preventDefault();
+    const parsed = z.string().trim().min(1, t.selectUser).safeParse(assignUserId);
+    if (!parsed.success || !selectedRole) return setAssignError(parsed.success ? t.noRole : parsed.error.issues[0]?.message ?? t.selectUser);
+    setAssignError("");
     if (!(await confirmAction({ title: t.confirmAssign })).isConfirmed) return;
     try {
       await iam.assignRole.mutateAsync({
-        userId: assignUserId,
+        userId: parsed.data,
         roleId: selectedRole.id,
         contextType: assignContextType.trim() || undefined,
         contextId: assignContextId.trim() || undefined,
@@ -209,7 +214,7 @@ export default function RolePermissionsPage() {
       </div>
     </section>
 
-    {modal === "assign" ? <div className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4"><form onSubmit={assignRole} className="w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl"><h3 className="text-lg font-bold">{t.assignTitle}</h3><p className="mt-1 text-xs text-text-secondary">{roleLabels[locale][selectedRole?.name ?? ""] ?? selectedRole?.name}</p><label className="mt-4 block text-xs font-semibold text-text-secondary">{t.users}<select value={assignUserId} onChange={(event) => setAssignUserId(event.target.value)} required className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"><option value="">{t.selectUser}</option>{users.map((user) => <option key={user.id} value={user.id}>{user.email || user.id}</option>)}</select></label><label className="mt-3 block text-xs font-semibold text-text-secondary">{t.contextTypeLabel} <span className="font-normal text-text-secondary">{t.optional}</span><select value={assignContextType} onChange={(event) => setAssignContextType(event.target.value)} className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"><option value="ORGANIZATION">ORGANIZATION</option><option value="REVIEW_BOARD">REVIEW_BOARD</option><option value="PLATFORM">PLATFORM</option></select></label><label className="mt-3 block text-xs font-semibold text-text-secondary">{t.contextIdLabel} <span className="font-normal text-text-secondary">{t.optional}</span><input type="text" value={assignContextId} onChange={(event) => setAssignContextId(event.target.value)} placeholder={t.contextPlaceholder} className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm outline-none focus:border-[var(--accent-primary)]" /></label><div className="mt-6 flex justify-end gap-2"><button type="button" onClick={() => setModal(null)} className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-bold">{t.cancel}</button><button type="submit" disabled={iam.assignRole.isPending} className="rounded-xl bg-[var(--accent-primary)] px-4 py-2 text-sm font-bold text-white">{iam.assignRole.isPending ? t.assigning : t.confirmAssign}</button></div></form></div> : null}
+    {modal === "assign" ? <div className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4"><form noValidate onSubmit={assignRole} className="w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl"><h3 className="text-lg font-bold">{t.assignTitle}</h3>{assignError && <p id="assign-user-error" role="alert" className="mt-2 rounded-lg bg-rose-500/10 p-2 text-xs text-rose-600">{assignError}</p>}<p className="mt-1 text-xs text-text-secondary">{roleLabels[locale][selectedRole?.name ?? ""] ?? selectedRole?.name}</p><label className="mt-4 block text-xs font-semibold text-text-secondary">{t.users}<select value={assignUserId} onChange={(event) => setAssignUserId(event.target.value)} aria-invalid={Boolean(assignError)} aria-describedby={assignError ? "assign-user-error" : undefined} className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"><option value="">{t.selectUser}</option>{users.map((user) => <option key={user.id} value={user.id}>{user.email || user.id}</option>)}</select></label><label className="mt-3 block text-xs font-semibold text-text-secondary">{t.contextTypeLabel} <span className="font-normal text-text-secondary">{t.optional}</span><select value={assignContextType} onChange={(event) => setAssignContextType(event.target.value)} className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"><option value="ORGANIZATION">ORGANIZATION</option><option value="REVIEW_BOARD">REVIEW_BOARD</option><option value="PLATFORM">PLATFORM</option></select></label><label className="mt-3 block text-xs font-semibold text-text-secondary">{t.contextIdLabel} <span className="font-normal text-text-secondary">{t.optional}</span><input type="text" value={assignContextId} onChange={(event) => setAssignContextId(event.target.value)} placeholder={t.contextPlaceholder} className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm outline-none focus:border-[var(--accent-primary)]" /></label><div className="mt-6 flex justify-end gap-2"><button type="button" onClick={() => setModal(null)} className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-bold">{t.cancel}</button><button type="submit" disabled={iam.assignRole.isPending} className="rounded-xl bg-[var(--accent-primary)] px-4 py-2 text-sm font-bold text-white">{iam.assignRole.isPending ? t.assigning : t.confirmAssign}</button></div></form></div> : null}
 
     {modal === "add" ? <div className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4"><div className="w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl"><h3 className="text-lg font-bold">{t.modalAddTitle}</h3><p className="mt-1 text-xs text-text-secondary">{t.modalAddDesc}</p><div className="mt-4 max-h-80 space-y-2 overflow-y-auto pr-1">{permissionCatalogue.map((permission) => <label key={permission} className="flex items-center gap-3 rounded-xl border border-[var(--border)] p-3 hover:bg-[var(--surface-secondary)]"><input type="checkbox" checked={staged.has(permission)} onChange={() => togglePermission(permission)} className="size-4 accent-[var(--accent-primary)]" /><span className="min-w-0"><code className="block text-xs font-bold">{permission}</code><small className="text-text-secondary">{permissionLabels[locale][permission] ?? permission}</small></span></label>)}</div><div className="mt-6 flex justify-end gap-2"><button type="button" onClick={() => setModal(null)} className="rounded-xl bg-[var(--accent-primary)] px-4 py-2 text-sm font-bold text-white">{t.continue}</button></div></div></div> : null}
 

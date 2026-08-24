@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>VN–RU Portal · Demo Control Center V3</title>
+  <link href="assets/styles.css" rel="stylesheet"/>
+</head>
+<body data-area="demo" data-screen="index.html">
+  <div class="demo-entry">
+    <div class="demo-entry-inner">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <span class="eyebrow" style="color:#8fb7ff">VN–RU Network · Prototype V3 Architecture</span>
+        <span class="badge" style="background:rgba(255,255,255,.08);color:#d9e6f5;border-color:rgba(255,255,255,.16)">Phân tách 3 Vùng &amp; 5 Vai trò</span>
+      </div>
+
+      <h1>Ba vùng truy cập độc lập.<br/>Không trộn lẫn vai trò và quyền hạn.</h1>
+      <p class="lead">Bản Prototype V3 phân tách vật lý rõ ràng giữa <strong>Public (Không đăng nhập)</strong>, <strong>Authentication (OIDC Bridge)</strong>, <strong>Role-based Workspace (5 vai trò thành viên)</strong> và <strong>Governance (Khu vực quản trị độc lập)</strong>. Mỗi vai trò sở hữu giao diện, thanh điều hướng và luồng xử lý riêng biệt.</p>
+
+      <!-- 3 Access Zones Grid -->
+      <div class="access-zones">
+        <!-- Zone 1: Public -->
+        <section class="zone">
+          <small style="color:#8fb7ff;font-weight:900;text-transform:uppercase;letter-spacing:.08em">01 · Không đăng nhập</small>
+          <strong style="font-size:22px;color:#fff;margin:8px 0">Public / Discovery</strong>
+          <p>Dành cho khách vãng lai và nhà khoa học tìm kiếm công khai: Trang chủ, kho tri thức, danh bạ chuyên gia, tìm kiếm nâng cao. Tuyệt đối không nhét Sidebar Workspace.</p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:16px">
+            <a class="zone-link" href="public/index.html"><span>Mở Cổng Public</span><span>→</span></a>
+            <a class="zone-link" href="public/knowledge/index.html"><span>Kho tri thức mở</span><span>→</span></a>
+            <a class="zone-link" href="public/experts/index.html"><span>Danh bạ chuyên gia</span><span>→</span></a>
+            <a class="zone-link" href="public/search/index.html"><span>Tìm kiếm tri thức</span><span>→</span></a>
+          </div>
+        </section>
+
+        <!-- Zone 2: Workspace -->
+        <section class="zone" style="background:rgba(45,108,223,.08);border-color:rgba(45,108,223,.28)">
+          <small style="color:#8fb7ff;font-weight:900;text-transform:uppercase;letter-spacing:.08em">02 · Đã đăng nhập (Role-based)</small>
+          <strong style="font-size:22px;color:#fff;margin:8px 0">Role-based Workspace</strong>
+          <p>Chọn chính xác vai trò để trải nghiệm. Role switcher điều hướng vào màn hình chính thức của vai trò đó, có đầy đủ modal tương tác và dữ liệu mô phỏng thực tế:</p>
+          
+          <div class="role-grid-demo" style="margin-top:14px">
+            <a class="role-demo-link" href="workspace/researcher/index.html">
+              <small style="color:#8fb7ff">Researcher</small>
+              <strong>Nhà nghiên cứu →</strong>
+            </a>
+            <a class="role-demo-link" href="workspace/reviewer/index.html">
+              <small style="color:#bfaae8">Peer Review</small>
+              <strong>Hội đồng phản biện →</strong>
+            </a>
+            <a class="role-demo-link" href="workspace/organization/index.html">
+              <small style="color:#81d5cc">Organization</small>
+              <strong>Đại diện tổ chức (VAST) →</strong>
+            </a>
+            <a class="role-demo-link" href="workspace/enterprise/index.html">
+              <small style="color:#f3c485">Enterprise</small>
+              <strong>Đại diện doanh nghiệp →</strong>
+            </a>
+            <a class="role-demo-link" href="workspace/leadership/index.html" style="grid-column:span 2">
+              <small style="color:#a5bedb">Leadership</small>
+              <strong>Lãnh đạo / Điều phối Chiến lược →</strong>
+            </a>
+          </div>
+          
+          <a class="zone-link" href="auth/login.html" style="margin-top:14px">
+            <span>Cổng đăng nhập OIDC / Chọn Role</span>
+            <span>→</span>
+          </a>
+        </section>
+
+        <!-- Zone 3: Governance -->
+        <section class="zone" style="background:rgba(154,78,86,.08);border-color:rgba(154,78,86,.28)">
+          <small style="color:#f2a7af;font-weight:900;text-transform:uppercase;letter-spacing:.08em">03 · Quyền Quản trị</small>
+          <strong style="font-size:22px;color:#fff;margin:8px 0">Governance Area</strong>
+          <p>Khu vực độc lập dành cho quản trị viên hệ thống: Quản lý danh tính (IAM), phân quyền RBAC, kiểm duyệt quy trình và nhật ký Audit an toàn thông tin.</p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:16px">
+            <a class="zone-link" href="governance/index.html"><span>Tổng quan Governance</span><span>→</span></a>
+            <a class="zone-link" href="governance/access/index.html"><span>Danh tính &amp; Phân quyền (IAM)</span><span>→</span></a>
+            <a class="zone-link" href="governance/workflow/index.html"><span>Kiểm duyệt &amp; Quy trình</span><span>→</span></a>
+            <a class="zone-link" href="governance/audit/index.html"><span>Audit &amp; Security Logs</span><span>→</span></a>
+            <a class="zone-link" href="demo/flow-map.html"><span>Xem Ma trận Vai trò &amp; Luồng</span><span>→</span></a>
+          </div>
+        </section>
+      </div>
+
+      <!-- Quick Shortcuts Helper Footer -->
+      <div style="margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;color:#8fa7c2;font-size:12px">
+        <div>
+          <span>Phím tắt hệ thống: <span class="kbd" style="background:rgba(255,255,255,.1);color:white;border-color:rgba(255,255,255,.2)">Ctrl + K</span> Mở nhanh tìm kiếm màn hình theo vai trò · <span class="kbd" style="background:rgba(255,255,255,.1);color:white;border-color:rgba(255,255,255,.2)">ESC</span> Đóng popup</span>
+        </div>
+        <div>
+          <span>Bản quyền © 2026 Mạng lưới Tri thức Khoa học &amp; Công nghệ Việt Nam – Liên bang Nga</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/app.js"></script>
+</body>
+</html>

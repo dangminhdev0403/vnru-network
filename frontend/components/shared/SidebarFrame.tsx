@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, type Locale } from "@/app/HomeMotion";
+import { useLocale, type Locale } from "@/core/i18n/locale";
 import { Tooltip, TooltipTrigger } from "@/components/tailgrids/core/tooltip";
 import { cn } from "@/lib/cn";
 import Link from "next/link";
@@ -25,6 +25,7 @@ export interface SidebarFrameProps {
   isMobile?: boolean;
   onItemClick?: () => void;
   badgeText?: string;
+  contextLabel?: string;
 }
 
 const copy: Record<
@@ -83,13 +84,14 @@ export default function SidebarFrame({
   isMobile = false,
   onItemClick,
   badgeText,
+  contextLabel,
 }: SidebarFrameProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { locale } = useLocale();
   const t = copy[locale] || copy.vi;
 
-  const isActive = (href: string) => {
+  const matches = (href: string) => {
     const [path, query] = href.split("?");
     if (query) return pathname === path && searchParams.toString() === query;
     if (href === "/workspace" || href === "/admin/access") {
@@ -97,6 +99,10 @@ export default function SidebarFrame({
     }
     return pathname === path || pathname.startsWith(path + "/");
   };
+  const activeHref = sections
+    .flatMap((section) => section.items.map((item) => item.href))
+    .filter(matches)
+    .sort((a, b) => b.length - a.length)[0];
 
   return (
     <aside className="relative isolate flex h-full w-full flex-col overflow-hidden border-r border-[#dfe6ef] bg-[#fbfdff] px-3 py-4 text-[#10213a] dark:border-[#253445] dark:bg-[var(--nav-bg)] dark:text-[#f4f7fb]">
@@ -191,7 +197,7 @@ export default function SidebarFrame({
             )}
             <div className="grid gap-1">
               {section.items.map((item) => {
-                const active = isActive(item.href);
+                const active = item.href === activeHref;
                 const link = (
                   <Link
                     href={item.href}
@@ -241,7 +247,7 @@ export default function SidebarFrame({
             {t.currentContext}
           </p>
           <strong className="mt-1.5 block text-sm font-semibold text-[#14243c] dark:text-[#f4f7fb]">
-            {t.authenticated}
+            {contextLabel || t.authenticated}
           </strong>
           <p className="mt-2 flex items-center gap-2 border-t border-[#e7edf4] pt-2 text-xs text-[#68788e] dark:border-white/8 dark:text-[#9bacc0]">
             <span className="size-2 rounded-full bg-[var(--success)]" />

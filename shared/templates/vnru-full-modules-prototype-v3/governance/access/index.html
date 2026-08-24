@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>Danh tính &amp; Phân quyền · Governance</title>
+  <link href="../../assets/styles.css" rel="stylesheet"/>
+</head>
+<body data-area="governance" data-role="governance" data-screen="governance/access/index.html">
+  <div class="workspace">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark">VR</span>
+        <span class="brand-text">Mạng lưới Tri thức Việt – Nga<small>Governance</small></span>
+      </a>
+      <div class="role-sidebar-head">
+        <span class="role-name">Quản trị Hệ thống (Governance)</span>
+        <span class="role-desc">Danh tính · Phân quyền · Audit</span>
+      </div>
+      <div class="nav-section">Khu vực quản trị</div>
+      <a class="side-link" href="../index.html"><span class="dot"></span><span>Tổng quan quản trị</span></a>
+      <a class="side-link active" href="index.html"><span class="dot"></span><span>Danh tính &amp; Phân quyền</span></a>
+      <a class="side-link" href="../workflow/index.html"><span class="dot"></span><span>Kiểm duyệt &amp; Quy trình</span></a>
+      <a class="side-link" href="../audit/index.html"><span class="dot"></span><span>Audit &amp; Security</span></a>
+      
+      <div class="nav-section">Hệ thống</div>
+      <a class="side-link" href="../../public/index.html"><span class="dot"></span><span>Cổng thông tin Public</span></a>
+      <a class="side-link" href="../../auth/login.html"><span class="dot"></span><span>Đổi tài khoản / Role</span></a>
+
+      <div class="side-user">
+        <span class="avatar" style="background:#9a4e56">SA</span>
+        <span class="user-txt">
+          <strong>System Administrator</strong>
+          <small>Quyền Quản trị Hệ thống</small>
+        </span>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <header class="workspace-top">
+        <div>
+          <div class="crumb">Governance / IAM / Quản lý người dùng &amp; Phân quyền</div>
+          <strong>Danh tính &amp; Phân quyền Truy cập (IAM)</strong>
+        </div>
+        <div class="spacer"></div>
+        <span class="context-chip" style="background:#f8e5e8;color:#743941;border-color:#eec4c9">Quản trị Hệ thống</span>
+        <a class="icon-btn" href="../../demo/flow-map.html" title="Sơ đồ phân quyền">☷</a>
+        <span class="avatar" style="background:#9a4e56">SA</span>
+      </header>
+
+      <div class="content">
+        <div class="access-ribbon">
+          <span class="role-dot" style="background:#9a4e56"></span>
+          <strong>Governance &amp; Administration</strong>
+          <span>Khu vực độc lập · Quản lý danh tính OIDC và phân bổ vai trò trên hệ thống</span>
+          <span>Phạm vi: Toàn hệ thống</span>
+        </div>
+
+        <section class="role-hero" style="background:radial-gradient(circle at 90% 10%,rgba(154,78,86,.18),transparent 35%),linear-gradient(135deg,#fffdf8,#faf2f3 70%,#f5e9eb)">
+          <div class="role-kicker" style="color:#9a4e56">Identity &amp; Access Management</div>
+          <h1>Quản lý Danh tính &amp; Phân bổ Vai trò</h1>
+          <p>Điều phối tài khoản nhà khoa học, hội đồng phản biện, đại diện viện/trường và doanh nghiệp. Đảm bảo tuân thủ nguyên tắc Least Privilege.</p>
+        </section>
+
+        <!-- Filter & Actions Bar -->
+        <div class="card" style="margin-bottom:18px">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+            <div class="searchbox" style="flex:1;max-width:420px;padding:8px 12px">
+              <input placeholder="Tìm kiếm theo email, họ tên hoặc vai trò..." data-filter-input />
+            </div>
+            <div style="display:flex;gap:8px">
+              <button type="button" class="primary-btn btn-sm" data-local-action="grant-permission">+ Thêm / Gán vai trò người dùng</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Họ tên &amp; Email</th>
+                <th>Cơ quan / Đơn vị</th>
+                <th>Vai trò được gán (Role)</th>
+                <th>Trạng thái OIDC</th>
+                <th>Phiên làm việc</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>GS.TS. Trần Đình Nam</strong>
+                  <span class="muted tiny">nguyen.vana@vast.vn</span>
+                </td>
+                <td>Viện Hàn lâm KH&CN VN (VAST)</td>
+                <td><span class="badge" style="background:#dce9ff;color:#17395f">RESEARCHER</span></td>
+                <td><span class="badge green">Active · Keycloak</span></td>
+                <td><span class="muted tiny">2 giờ trước (Hà Nội)</span></td>
+                <td>
+                  <button class="secondary-btn btn-sm" data-local-action="grant-permission">Sửa quyền</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Prof. Alexei Morozov</strong>
+                  <span class="muted tiny">a.morozov@dvo.ru</span>
+                </td>
+                <td>FEB RAS Vladivostok</td>
+                <td><span class="badge" style="background:#dce9ff;color:#17395f">RESEARCHER</span></td>
+                <td><span class="badge green">Active · Keycloak</span></td>
+                <td><span class="muted tiny">15 phút trước (Vladivostok)</span></td>
+                <td>
+                  <button class="secondary-btn btn-sm" data-local-action="grant-permission">Sửa quyền</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Chuyên gia Phản biện #07</strong>
+                  <span class="muted tiny">reviewer07@vnru-eval.gov.vn</span>
+                </td>
+                <td>Hội đồng Khoa học Vật liệu Biển</td>
+                <td><span class="badge" style="background:#ebe8ff;color:#4d448a">REVIEWER</span></td>
+                <td><span class="badge green">Active · TOTP MFA</span></td>
+                <td><span class="muted tiny">Vừa xong (Ẩn danh)</span></td>
+                <td>
+                  <button class="secondary-btn btn-sm" data-local-action="grant-permission">Sửa quyền</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Ban Hợp tác Quốc tế VAST</strong>
+                  <span class="muted tiny">htqt@vast.vn</span>
+                </td>
+                <td>Viện Hàn lâm KH&CN VN</td>
+                <td><span class="badge" style="background:#dff4f1;color:#1d5f5a">ORGANIZATION_REP</span></td>
+                <td><span class="badge green">Active</span></td>
+                <td><span class="muted tiny">1 ngày trước</span></td>
+                <td>
+                  <button class="secondary-btn btn-sm" data-local-action="grant-permission">Sửa quyền</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>KS. Lê Anh Tuấn</strong>
+                  <span class="muted tiny">tuanla@viettel.com.vn</span>
+                </td>
+                <td>Tập đoàn Viettel (Viettel R&amp;D)</td>
+                <td><span class="badge" style="background:#fff0d8;color:#815421">ENTERPRISE_REP</span></td>
+                <td><span class="badge green">Active</span></td>
+                <td><span class="muted tiny">3 giờ trước</span></td>
+                <td>
+                  <button class="secondary-btn btn-sm" data-local-action="grant-permission">Sửa quyền</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="role-layout-note" style="margin-top:20px">
+          <strong>Nguyên tắc Quản trị</strong>
+          <p>Khu vực Governance hoàn toàn độc lập khỏi Workspace của các thành viên nghiên cứu. Mọi thay đổi phân quyền phải được lưu vết vào nhật ký Audit &amp; Security.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="../../assets/app.js"></script>
+</body>
+</html>

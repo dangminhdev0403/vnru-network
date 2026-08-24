@@ -1,278 +1,42 @@
-# 🇻🇳🇷🇺 Russia-Vietnam Science-Technology Intelligence Network
+# VN–RU Network Portal
 
-### Russia-Vietnam Science-Technology Intelligence Network
+Current implementation is intentionally limited to **Module 1: Identity & Access Governance** plus the public landing page.
 
-> A digital platform connecting **research, education, institutions, experts, and technology** between Vietnam and Russia.
+## Kept runtime
 
-<br>
+- `frontend/`: landing page, Keycloak login bridge, account, security/session management, IAM administration and audit UI.
+- `services/auth-service/`: identity, authentication, sessions, access control and security audit.
+- `infra/keycloak/`: Keycloak login theme.
+- `infra/nginx/`: reverse proxy for frontend, auth-service and Keycloak.
+- PostgreSQL: `auth_db` only.
 
-![Architecture](https://img.shields.io/badge/Architecture-Microservices%20(Target)-0A0A0A)
-![Frontend](https://img.shields.io/badge/Frontend-Next.js%2016.3-000000)
-![Backend](https://img.shields.io/badge/Backend-NestJS%2011-E0234E)
-![Database](https://img.shields.io/badge/Database-PostgreSQL-336791)
-![Events](https://img.shields.io/badge/Event%20Bus-Kafka%20(Target)-231F20)
-![Cache](https://img.shields.io/badge/Cache-Redis-DC382D)
-![License](https://img.shields.io/badge/License-Private-555555)
+Knowledge, expert directory, research collaboration, reviews, projects, academic, technology and analytics runtimes are not present.
 
----
+## Development
 
-## ✦ Overview `[SOURCE]`
+Start local PostgreSQL and Keycloak, then run the two source processes in separate terminals:
 
-**Russia-Vietnam Science-Technology Intelligence Network** is an independent bilateral cooperation initiative founded, owned, coordinated, and operated by the **Traditions and Friendship Foundation**. The Network is not a separate legal entity and serves as the single window connecting Vietnamese and Russian organizations (universities, research institutes, scientific associations, enterprises) and individual scientists.
-
-The platform operates across three canonical architectural layers `[SOURCE]` and a cross-cutting analytics foundation `[DESIGN]`:
-
-```text
-┌─────────────────────────────────────────────────────────────┐
-│ 1. User Interface & Multilingual Experience Layer (exp)     │
-│    - Trilingual (VI / RU / EN) + AI Translation Assistance  │
-│    - Three Canonical Access Areas:                          │
-│      * Public / Discovery (Home, News/Events, Search)       │
-│      * Role-based Workspace (Researcher, Reviewer, Enterprise)│
-│      * Governance & Administration (Foundation/Operators)   │
-└──────────────────────────────┬──────────────────────────────┘
-                               │
-┌──────────────────────────────▼──────────────────────────────┐
-│ 2. Business & Platform Services Layer (biz)                 │
-│    - Module 1: Identity & Access Governance (IAM)           │
-│    - Module 2: Knowledge Repository & Expert Directory      │
-│    - Module 3: Bilateral Research Funding & Project Mgmt    │
-│    - Module 4: Training, Transfer & Academic Exchange       │
-│    - Module 5: Technology Transfer & 2+2 Consortium Model   │
-│    - Module 6: Internal Monitoring & Reporting Dashboard    │
-└──────────────────────────────┬──────────────────────────────┘
-                               │
-┌──────────────────────────────▼──────────────────────────────┐
-│ 3. Infrastructure & Digital Sovereignty Layer (infra)       │
-│    - Hybrid Cloud, DR, Encryption, Audit Logs               │
-└─────────────────────────────────────────────────────────────┘
-                               ▲
-┌──────────────────────────────┴──────────────────────────────┐
-│ Cross-Cutting: Analytics, KPI & Audit Layer (analytics)     │
-│    - Read-only fact ingestion; zero business write-back     │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 📍 Current State vs. Target Architecture
-
-| Dimension | Current Implementation State | Planned Target Architecture |
-| :--- | :--- | :--- |
-| **Frontend** | Next.js 16.3 scaffold in `frontend/` with Server Components, TanStack Query, and query-resource integration. | Complete Portal UI across Public Discovery, Persona Workspaces, Review Queue, Governance & Admin, and Internal Dashboard. |
-| **Backend** | NestJS 11 business-family deployables: `auth-service`, `knowledge-service`, `collaboration-service`. | Add Academic, Technology, and read-only Analytics deployables only when implemented; extract internal modules when operationally justified. |
-| **Data & Storage** | Local PostgreSQL database connections per active service. | Database-per-service isolation (`auth_db`, `organization_db`, `grant_db`, etc.) with Redis caching. |
-| **Messaging** | In-process transactional workflows. | Kafka Event Bus with Transactional Outbox pattern for asynchronous domain event propagation and fact streaming. |
-
----
-
-## 🧩 Six Business Capabilities `[SOURCE]`
-
-| Capability | Business Responsibility | Owning Target Service |
-| :--- | :--- | :--- |
-| 🔐 **1. Identity & Access Governance** | Unified identity, Keycloak OIDC authentication, session lifecycle, active context resolution, RBAC policy enforcement, and security audit log. | `auth-service` *(Current)* |
-| 🏛️ **2. Knowledge Repository & Expert Directory** | Publications, expert and organization discovery, topics, and partner matching. | `knowledge-service` *(Current)* |
-| 🤝 **3. Bilateral Research Collaboration & Project Management** | Research opportunities, VN–RU joint proposals, independent/anonymized peer review, collaboration decisions, and project tracking. *(Financial workflows are outside scope.)* | `collaboration-service` *(Current)* |
-| 🎓 **4. Training, Knowledge Transfer & Academic Exchange** | Seminars, professional activities, conferences/forums (including annual Vietnam–Russia Intellectual Forum), academic exchange, and knowledge dissemination. `[DECISION]` *(No separate financial-support branch).* | `academic-service` *(Target)* |
-| 🚀 **5. Technology Transfer & Enterprise Connection** | Technology marketplace, enterprise demands, expressions of interest (EOI), **2+2 consortium collaborations** (1 VN Inst + 1 VN Ent + 1 RU Inst + 1 RU Ent), and IP/transfer advisory. | `technology-service` *(Target)* |
-| 📊 **6. Internal Monitoring & Reporting Dashboard** | Internal monitoring and strategic reporting for Network leadership and Foundation management; tracks projects, expert connections, and tech transfer. *(Internal workspace only).* | `analytics-service` *(Target, Read-only)* |
-
----
-
-## 🏗️ Target Microservices Topology
-
-```text
-                         ┌────────────────────┐
-                         │     Next.js        │
-                         │  Web Portal (exp)  │
-                         └─────────┬──────────┘
-                                   │ HTTP/REST
-                                   ▼
-                         ┌────────────────────┐
-                         │    API Gateway     │
-                         └─────────┬──────────┘
-                                   │
-          ┌────────────────────────┼────────────────────────┐
-          │                        │                        │
-          ▼                        ▼                        ▼
-   ┌─────────────┐          ┌─────────────┐          ┌─────────────┐
-   │    Auth     │          │ Organization│          │  Knowledge  │
-   │   Service   │          │   Service   │          │   Service   │
-   │  (Current)  │          │  (Target)   │          │  (Target)   │
-   └──────┬──────┘          └──────┬──────┘          └──────┬──────┘
-          │                        │                        │
-          └────────────────────────┼────────────────────────┘
-                                   │
-          ┌────────────────────────┼────────────────────────┐
-          ▼                        ▼                        ▼
-   ┌─────────────┐          ┌─────────────┐          ┌─────────────┐
-   │    Grant    │          │   Review    │          │   Project   │
-   │   Service   │          │   Service   │          │   Service   │
-   │  (Target)   │          │  (Target)   │          │  (Target)   │
-   └──────┬──────┘          └──────┬──────┘          └──────┬──────┘
-          │                        │                        │
-          └────────────────────────┼────────────────────────┘
-                                   │ Outbox Events
-                                   ▼
-                            ┌─────────────┐
-                            │    Kafka    │
-                            │  Event Bus  │
-                            └──────┬──────┘
-                                   │
-                    ┌──────────────┼──────────────┐
-                    ▼              ▼              ▼
-              Notification      Search        Analytics
-                Service         Indexer        Service
-               (Target)        (Target)       (Target)
-```
-
----
-
-## 📁 Repository Structure
-
-```text
-vnru-network/
-│
-├── frontend/                  # Next.js 16.3 Web Portal (Current Implementation)
-│   ├── src/app/               # App Router pages and product surfaces
-│   ├── src/features/          # Domain-specific UI features
-│   └── docs/                  # Frontend architecture & rules
-│
-├── services/                  # Backend Services
-│   ├── auth-service/          # Identity, Authentication & RBAC (Current Implementation)
-│   │
-│   │  # --- Target / Planned Microservices ---
-│   ├── api-gateway/           # Edge routing & rate limiting (Target)
-│   ├── knowledge-service/     # Publications + expert/organization directory + matching modules
-│   ├── collaboration-service/ # Opportunities/proposals/decisions + reviews + projects modules
-│   ├── academic-service/      # Academic activities & knowledge exchange (Target)
-│   ├── technology-service/    # Tech marketplace & 2+2 consortiums (Target)
-│   └── analytics-service/     # Internal monitoring & strategic reporting (Target)
-│
-├── shared/                    # Shared Technical Contracts
-│   └── api-contract/          # Exported OpenAPI specifications & types
-│
-├── infrastructure/            # Infrastructure Deployment Definitions
-│   ├── postgres/              # Database scripts & configs
-│   ├── redis/                 # Cache configs
-│   └── kafka/                 # Event bus definitions
-│
-├── docs/                      # Authoritative Repository & Architecture Docs
-│   ├── README.md              # Documentation index & reading order
-│   ├── ARCHITECTURE.md        # 3-Layer Portal system architecture & 3 access areas
-│   ├── DOMAIN_MAP.md          # Business capability & data ownership map
-│   ├── RBAC_ARCHITECTURE.md   # Personas & permission taxonomy
-│   ├── RULES.md               # Authoritative governance & development rules
-│   ├── API_SPEC.md            # API contract standards & event envelopes
-│   └── OPEN_QUESTIONS.md      # Centralized register of open decisions (OPEN-01..12)
-│
-├── deploy/                    # Docker compose & deployment configurations
-└── scripts/                   # Workspace development scripts
-```
-
----
-
-## ⚙️ Technology Stack
-
-### Frontend (Current)
-- **Framework**: Next.js 16.3 (App Router, Server Components by default)
-- **Language**: TypeScript 5
-- **Data Fetching**: `@tanstack/react-query` + `@dangminhdev04032005/query-resource`
-- **Styling**: Tailwind CSS v4
-
-### Backend (Current & Target)
-- **Framework**: NestJS 11
-- **Language**: TypeScript
-- **Contract Standard**: OpenAPI exported from backend code (`npm run openapi:export`)
-- **Architecture**: Domain-bounded modules hosted by business-family deployables
-
-### Infrastructure (Target)
-- **Primary Database**: PostgreSQL (isolated database per microservice)
-- **Caching & Sessions**: Redis (never primary source of truth)
-- **Event Streaming**: Kafka with Transactional Outbox pattern
-- **Search & Analytics**: OpenSearch / pgvector (Search) + Analytics aggregation engine
-
----
-
-## 🔐 Security & Access Governance
-
-Authentication and authorization are strictly enforced at backend service boundaries:
-
-```text
-User (Subject) ──> Authenticates (Keycloak OIDC Broker)
-                         │
-                         ▼
-             Resolve Active Context
-  ┌──────────────────────┬──────────────────────┐
-  ▼                      ▼                      ▼
-Context A:             Context B:             Context C:
-Researcher @ Univ X    Reviewer @ Board Y     Organization Rep @ Univ X
-(grants.proposals.*)   (reviews.assignments.*)(organization.members.*)
-```
-
-- **Backend Authority**: Backend services are the single security boundary. Frontend visibility checks are UX conveniences only.
-- **Fail-Closed Security**: Missing authentication, missing permissions, or invalid resource scopes result in `401`/`403`.
-- **Capability Keys**: Permissions use `<domain>.<resource>.<action>` format.
-- **Independent Review Isolation**: Reviewers only access assigned proposals; author identities and institutional affiliations are masked according to review policy.
-
----
-
-## 🗄️ Data Ownership Principles
-
-Each microservice owns its persistence store exclusively:
-
-```text
-auth_db | organization_db | knowledge_db | grant_db | review_db | project_db | academic_db | technology_db | analytics_db
-```
-
-1. **No Cross-Service Database Access**: Services must never query another service's database directly.
-2. **Contract Integration**: Inter-service coordination uses public REST APIs or versioned domain events.
-3. **Analytics Non-Transactional Rule**: `analytics-service` stores materialized fact rollups and KPI metrics; it NEVER acts as a transactional source of truth and NEVER mutates business state.
-
----
-
-## 📖 Documentation Index
-
-| Document | Purpose |
-| :--- | :--- |
-| [docs/README.md](docs/README.md) | Documentation index, reading order & state distinctions |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 3-Layer Portal architecture, 3 access areas & data boundaries |
-| [docs/DOMAIN_MAP.md](docs/DOMAIN_MAP.md) | Six business capabilities, model ownership & dependency rules |
-| [docs/RBAC_ARCHITECTURE.md](docs/RBAC_ARCHITECTURE.md) | Personas, capability keys, active context & independent review |
-| [docs/RULES.md](docs/RULES.md) | Authoritative global rules, security & package governance |
-| [docs/API_SPEC.md](docs/API_SPEC.md) | OpenAPI contract policy, REST scopes & versioned event envelopes |
-| [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | Centralized open decisions register (OPEN-01 through OPEN-12) |
-
----
-
-## 🚀 Development Quickstart
-
-```bash
-# Install dependencies
-pnpm install
-
-# Start development infrastructure
-docker compose -f deploy/docker-compose.dev.yml up -d
-
-# Start Next.js frontend
+```powershell
+docker start postgres-local vnru-keycloak-dev
+pnpm --dir services/auth-service start:dev
 pnpm --dir frontend dev
-
-# Start current backend deployables
-npm --prefix services/auth-service run start:dev
-npm --prefix services/knowledge-service start
-npm --prefix services/collaboration-service start
 ```
 
----
+Local endpoints:
 
-<div align="center">
+- Frontend: `http://localhost:3000`
+- Auth service: `http://localhost:8080`
+- Keycloak: `http://localhost:8081`
+- PostgreSQL: `localhost:5432`
 
-### Russia-Vietnam Science-Technology Intelligence Network
+For the containerized stack:
 
-**Connecting Knowledge · Research · Education · Technology**
+```powershell
+Copy-Item .env.docker.example .env
+docker compose up --build -d
+docker compose logs -f --tail=100
+```
 
-🇻🇳 Vietnam   ×   🇷🇺 Russia
+## Documentation
 
-</div>
-
-
+Start at [`docs/README.md`](docs/README.md).

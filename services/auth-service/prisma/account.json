@@ -84,7 +84,7 @@
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38001",
         "contextType": "ORGANIZATION",
-        "contextId": "ORG_001",
+        "contextId": "e1d5a7d3-7d1a-47ef-b203-d2d89f7db387",
         "status": "ACTIVE"
       }
     },
@@ -323,6 +323,42 @@
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38005",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
+        "id": "6a63ec6d-f493-4d7a-8fb3-fc8f08fd26db",
+        "email": "super-admin-fixture@vnru.invalid",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "1b09a446-c7c5-47d8-a027-c66a518dc93a",
+        "issuer": "http://127.0.0.1:8081/realms/vnru",
+        "subject": "de503a91-0397-4fab-98b0-d26b2764954c"
+      },
+      "role": {
+        "id": "e4f570dc-3a5d-4091-b5ee-4274fe9a6a7d",
+        "name": "SUPER_ADMIN"
+      },
+      "permissions": [
+        {
+          "id": "f4f7c8c6-172b-4574-960a-75019392d2f1",
+          "key": "iam.users.manage"
+        },
+        {
+          "id": "64df1450-c2f2-477b-910f-856181ca61d7",
+          "key": "iam.roles.manage"
+        },
+        {
+          "id": "29a718ba-f38a-4d47-882d-12791cd9a90f",
+          "key": "iam.audit.view"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7a23f350-6cbb-49d9-a63a-10e2f136d20e",
         "contextType": "PLATFORM",
         "contextId": "GLOBAL",
         "status": "ACTIVE"

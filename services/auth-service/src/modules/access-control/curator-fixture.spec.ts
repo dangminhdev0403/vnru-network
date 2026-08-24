@@ -39,7 +39,7 @@ describe('Workflow Role Fixtures Importer', () => {
     // Import fixtures
     const results = await importFixture(mockPrisma, fixturePath);
 
-    expect(results).toHaveLength(8);
+    expect(results).toHaveLength(9);
     expect(mockPrisma.externalIdentity.deleteMany).toHaveBeenCalledWith({
       where: {
         issuer: 'http://127.0.0.1:8081/realms/vnru',
@@ -120,7 +120,7 @@ describe('Workflow Role Fixtures Importer', () => {
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({ id: expect.any(String) }),
-        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38001', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38001', contextType: 'ORGANIZATION', contextId: 'ORG_001' }),
+        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38001', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38001', contextType: 'ORGANIZATION', contextId: 'e1d5a7d3-7d1a-47ef-b203-d2d89f7db387' }),
       }),
     );
 
@@ -241,9 +241,14 @@ describe('Workflow Role Fixtures Importer', () => {
       }),
     );
 
-    // Verify no SUPER_ADMIN exists
+    // The local full-access account remains provisioned through the fixture.
     const allRoleCalls = mockPrisma.role.upsert.mock.calls.map((call: any) => call[0].where.name);
-    expect(allRoleCalls).not.toContain('SUPER_ADMIN');
+    expect(allRoleCalls).toContain('SUPER_ADMIN');
+    for (const key of ['iam.users.manage', 'iam.roles.manage', 'iam.audit.view']) {
+      expect(mockPrisma.permission.upsert).toHaveBeenCalledWith(
+        expect.objectContaining({ where: { key } }),
+      );
+    }
 
     // Run again to verify idempotency intent (successive execution should not fail and behave same way)
     await expect(importFixture(mockPrisma, fixturePath)).resolves.not.toThrow();
@@ -269,7 +274,7 @@ describe('Workflow Role Fixtures Importer', () => {
           },
           role: {
             id: '7809a72b-8a8e-49b8-897b-ff663ee38001',
-            name: 'SUPER_ADMIN', // Invalid, not in ALLOWED_ROLES
+            name: 'UNKNOWN_ADMIN', // Invalid, not in ALLOWED_ROLES
           },
           permissions: [
             {

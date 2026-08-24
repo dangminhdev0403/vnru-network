@@ -14,6 +14,7 @@ export type CurrentUser = {
   fullName?: string;
   roles?: string[];
   capabilities?: string[];
+  activeContext?: { contextType: string; contextId: string } | null;
   [key: string]: unknown;
 };
 

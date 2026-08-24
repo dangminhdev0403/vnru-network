@@ -5,13 +5,13 @@ import { sanitizeLocale, sanitizeReturnTo } from "./features/auth/server.ts";
 
 test("return URL accepts only same-origin paths", () => {
   assert.equal(
-    sanitizeReturnTo("/workspace/reviewer?tab=pending"),
-    "/workspace/reviewer?tab=pending",
+    sanitizeReturnTo("/account?tab=profile"),
+    "/account?tab=profile",
   );
-  assert.equal(sanitizeReturnTo("https://evil.example/steal"), "/workspace");
-  assert.equal(sanitizeReturnTo("//evil.example/steal"), "/workspace");
-  assert.equal(sanitizeReturnTo("javascript:alert(1)"), "/workspace");
-  assert.equal(sanitizeReturnTo(undefined), "/workspace");
+  assert.equal(sanitizeReturnTo("https://evil.example/steal"), "/account");
+  assert.equal(sanitizeReturnTo("//evil.example/steal"), "/account");
+  assert.equal(sanitizeReturnTo("javascript:alert(1)"), "/account");
+  assert.equal(sanitizeReturnTo(undefined), "/account");
 });
 
 test("login locale accepts only supported OIDC UI locales", () => {
@@ -24,9 +24,12 @@ test("login locale accepts only supported OIDC UI locales", () => {
 
 test("home reconciles locale after returning from Keycloak", async () => {
   const { readFile } = await import("node:fs/promises");
-  const source = await readFile(new URL("./app/HomeMotion.tsx", import.meta.url), "utf8");
-  assert.match(source, /addEventListener\("pageshow", syncLocale\)/);
-  assert.match(source, /vnru_locale=\$\{locale\}/);
+  const [home, locale] = await Promise.all([
+    readFile(new URL("./features/public-home/components/PublicHome.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./core/i18n/locale.ts", import.meta.url), "utf8"),
+  ]);
+  assert.match(home, /addEventListener\("pageshow", syncLocale\)/);
+  assert.match(locale, /vnru_locale=\$\{locale\}/);
 });
 
 test("login route delegates credential UI directly to Keycloak", async () => {
@@ -42,12 +45,16 @@ test("login and home use backend-authoritative session state", async () => {
     readFile(new URL("./features/auth/server.ts", import.meta.url), "utf8"),
     readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("./app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("./app/HomeMotion.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./features/public-home/components/PublicHome.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(server, /getCurrentSession/);
   assert.match(login, /getCurrentSession/);
   assert.match(home, /isAuthenticated/);
+  assert.match(home, /resolveLandingPath/);
+  assert.match(home, /workspaceHref/);
   assert.match(motion, /useLogout/);
+  assert.match(motion, /href=\{workspaceHref\}/);
+  assert.match(motion, /Vào không gian làm việc/);
   assert.match(motion, /window\.location\.assign\(logoutUrl \|\| "\/"\)/);
 });
 
@@ -73,10 +80,7 @@ test("auth flow keeps provider tokens out of the frontend", async () => {
 test("proxy logs out when provider refresh expires", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("./proxy.ts", import.meta.url), "utf8");
-  assert.ok(
-    source.indexOf("RefreshTokenError") <
-      source.indexOf("if (session?.ok) return NextResponse.next()"),
-  );
+  assert.ok(source.indexOf("request.auth") < source.indexOf("if (session?.ok)"));
   assert.match(source, /new URL\("\/api\/auth\/logout"/);
   assert.match(source, /logout\.searchParams\.set\("returnTo"/);
   const logout = await readFile(new URL("./app/api/auth/logout/route.ts", import.meta.url), "utf8");
@@ -97,7 +101,7 @@ test("workspace header uses the authenticated account menu", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("./components/shared/Header.tsx", import.meta.url), "utf8");
   assert.match(source, /useCurrentUser\(\)/);
-  assert.match(source, /href="\/workspace\/iam\/security"/);
+  assert.match(source, /href="\/account"/);
   assert.match(source, /useLogout\(\)/);
   assert.doesNotMatch(source, /\{t\.contextActive\}/);
 });
@@ -111,18 +115,18 @@ test("workspace theme modes are localized in VI EN RU", async () => {
   assert.match(source, /setIsThemeOpen\(false\)/);
 });
 
-test("IAM overview reuses the workspace dashboard", async () => {
+test("legacy IAM overview redirects to the canonical account route", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("./app/(workspace)/workspace/iam/page.tsx", import.meta.url), "utf8");
-  assert.match(source, /redirect\("\/workspace"\)/);
+  assert.match(source, /redirect\("\/account"\)/);
   assert.doesNotMatch(source, /IamWorkspaceView/);
 });
 
 test("landing copy has a value in every supported locale", async () => {
   const { readFile } = await import("node:fs/promises");
   const [source, dictionaries] = await Promise.all([
-    readFile(new URL("./app/HomeMotion.tsx", import.meta.url), "utf8"),
-    import("./app/home-translations.json", { with: { type: "json" } }).then(({ default: value }) => value),
+    readFile(new URL("./features/public-home/components/PublicHome.tsx", import.meta.url), "utf8"),
+    import("./features/public-home/i18n/translations.json", { with: { type: "json" } }).then(({ default: value }) => value),
   ]);
   const keys = [...source.matchAll(/t\("([^"]+)"\)/g)].map((match) => match[1]);
   for (const locale of ["vi", "en", "ru"]) {
@@ -132,7 +136,7 @@ test("landing copy has a value in every supported locale", async () => {
 
 test("hero typing starts after fade and cannot resize its reserved line", async () => {
   const { readFile } = await import("node:fs/promises");
-  const source = await readFile(new URL("./app/HomeMotion.tsx", import.meta.url), "utf8");
+  const source = await readFile(new URL("./features/public-home/components/PublicHome.tsx", import.meta.url), "utf8");
   assert.match(source, /HERO_TYPING_DELAY_MS = HERO_FADE_DURATION_MS \+ 100/);
   assert.match(source, /className="relative mt-3 block h-20/);
   assert.match(source, /new Intl\.Segmenter/);
@@ -142,7 +146,7 @@ test("workspace and landing brands follow the persisted VI EN RU locale", async 
   const { readFile } = await import("node:fs/promises");
   const [shell, landing] = await Promise.all([
     readFile(new URL("./components/shared/WorkspaceShell.tsx", import.meta.url), "utf8"),
-    readFile(new URL("./app/HomeMotion.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./features/public-home/components/PublicHome.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(shell, /const \{ locale \} = useLocale\(\)/);
   for (const locale of ["vi", "en", "ru"]) assert.match(shell, new RegExp(`${locale}: \\{ brand:`));
@@ -151,7 +155,7 @@ test("workspace and landing brands follow the persisted VI EN RU locale", async 
 
 test("collaboration cards tolerate long translated words", async () => {
   const { readFile } = await import("node:fs/promises");
-  const source = await readFile(new URL("./app/HomeMotion.tsx", import.meta.url), "utf8");
+  const source = await readFile(new URL("./features/public-home/components/PublicHome.tsx", import.meta.url), "utf8");
   assert.equal((source.match(/<article className="relative min-w-0/g) || []).length, 3);
   assert.equal((source.match(/\[overflow-wrap:anywhere\]/g) || []).length >= 6, true);
 });

@@ -57,6 +57,7 @@ Persistent identifiers or server-state resources may be added only when current 
 - Resource scope belongs in URL/local query state when it must be shareable.
 - Frontend capability filtering improves clarity and request volume; it never replaces backend
   authorization.
+- Member account and session-security links target `/account` and `/security`. Governance is a separate `/admin/*` surface and may appear in Workspace only as one capability-gated bridge.
 
 ## Realtime
 

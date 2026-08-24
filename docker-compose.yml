@@ -1,0 +1,107 @@
+name: vnru-network
+
+networks:
+  vnru-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vnru-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: auth_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - vnru-net
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: vnru-keycloak
+    restart: unless-stopped
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_HEALTH_ENABLED: "true"
+    volumes:
+      - ./infra/keycloak/themes:/opt/keycloak/themes:ro
+    ports:
+      - "${KEYCLOAK_PORT:-8080}:8080"
+    networks:
+      - vnru-net
+
+  auth-service:
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    container_name: vnru-auth-service
+    restart: unless-stopped
+    command: sh -c "pnpm exec prisma migrate deploy --config prisma.config.ts && node dist/src/main.js"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/auth_db?schema=public
+      KEYCLOAK_ISSUER_URL: ${KEYCLOAK_ISSUER_URL:-http://keycloak:8080/realms/vnru}
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-vnru-auth}
+      KEYCLOAK_REDIRECT_URI: ${KEYCLOAK_REDIRECT_URI:-http://localhost:3000/api/v1/auth/callback}
+      KEYCLOAK_PROFILE_CLIENT_ID: ${KEYCLOAK_PROFILE_CLIENT_ID:-vnru-profile-service}
+      KEYCLOAK_PROFILE_CLIENT_SECRET: ${KEYCLOAK_PROFILE_CLIENT_SECRET:-replace-with-secret-store-value}
+    ports:
+      - "${AUTH_SERVICE_PORT:-3001}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - vnru-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vnru-frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      AUTH_SERVICE_URL: http://auth-service:3000
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-vnru-default-dev-secret-replace-in-prod}
+      AUTH_SECRET: ${AUTH_SECRET:-vnru-default-dev-secret-replace-in-prod}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      auth-service:
+        condition: service_started
+    networks:
+      - vnru-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: vnru-nginx
+    restart: unless-stopped
+    ports:
+      - "${NGINX_HTTP_PORT:-80}:80"
+      - "${NGINX_HTTPS_PORT:-443}:443"
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./infra/nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - frontend
+      - auth-service
+      - keycloak
+    networks:
+      - vnru-net

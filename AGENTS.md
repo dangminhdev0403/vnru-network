@@ -8,11 +8,12 @@ Before editing code, tests, config, schemas, migrations, or package files:
 
 1. Read `docs/README.md`.
 2. Read `docs/RULES.md` and `docs/ARCHITECTURE.md`.
-3. Read the nearest scope instructions:
+3. For Portal routes, navigation, access areas, or capability terminology, read `docs/PORTAL_FOUNDATION_REFACTOR.md`.
+4. Read the nearest scope instructions:
    - frontend: `frontend/AGENTS.md`, `frontend/docs/ARCHITECTURE.md`, `frontend/docs/RULES.md`;
    - backend: `services/AGENTS.md`, `services/docs/ARCHITECTURE.md`, `services/docs/RULES.md`.
-4. Read only the task guide named by `docs/README.md` for that work type.
-5. Inspect current source and package manifests. When docs describe a target not present in source, source/current manifests win; stop before inventing missing packages, paths, scripts, or infrastructure.
+5. Read only the task guide named by `docs/README.md` for that work type.
+6. Inspect current source and package manifests. When docs describe a target not present in source, source/current manifests win; stop before inventing missing packages, paths, scripts, or infrastructure.
 
 Do not edit until this gate is complete. In the final report, list `Docs read:` with the exact paths. Missing that list means the task is incomplete.
 
@@ -72,7 +73,7 @@ UI is not considered verified merely because tests/build pass. For web UI work, 
 
 - `secrets/account.json` is the ignored, local source of truth for test login accounts. Read it at test time; each entry's `role` identifies the corresponding test persona. Never copy usernames/passwords into source, docs, plans, prompts, logs, screenshots, commits, or final reports.
 - Select an account by exact `environment` and `role`; use its `loginUrl` and `realm`. Nested entries inherit the surrounding environment/login context. If the requested role is absent, report it instead of reusing a broader role or inventing credentials.
-- Missing login identity: create/provision it in the configured Keycloak realm; Keycloak owns credentials. Missing application role/context: assign it through the existing IAM Administration surface/API (`/workspace/iam/admin`, `POST /api/v1/admin/role-assignments`) using an authorized administrator. Never grant `SUPER_ADMIN` as a substitute; the API intentionally forbids assigning it.
+- Missing login identity: create/provision it in the configured Keycloak realm; Keycloak owns credentials. Missing application role/context: assign it through the canonical IAM Administration surface/API (`/admin/access`, `POST /api/v1/admin/role-assignments`) using an authorized administrator. Never grant `SUPER_ADMIN` as a substitute; the API intentionally forbids assigning it.
 - Keep `secrets/account.json` ignored and local. Do not edit, delete, rotate, or expose existing accounts without explicit approval.
 
 ## Navigation

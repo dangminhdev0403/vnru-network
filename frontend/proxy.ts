@@ -9,9 +9,15 @@ import {
 } from "./features/auth/server";
 
 export default auth(async function proxy(request) {
+  if (
+    request.nextUrl.pathname.startsWith("/workspace") ||
+    request.nextUrl.pathname.startsWith("/governance")
+  ) {
+    return NextResponse.next();
+  }
+
   const legacyRoutes: Record<string, string> = {
     "/admin/iam": "/admin/access",
-    "/security": "/workspace/iam/security",
   };
   const canonicalPath = legacyRoutes[request.nextUrl.pathname];
   if (canonicalPath) {
@@ -55,5 +61,5 @@ export default auth(async function proxy(request) {
 });
 
 export const config = {
-  matcher: ["/workspace/:path*", "/admin/:path*", "/admin/iam", "/security"],
+  matcher: ["/admin/:path*", "/admin/iam", "/account", "/security"],
 };

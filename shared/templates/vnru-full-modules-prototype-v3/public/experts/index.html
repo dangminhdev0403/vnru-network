@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>Danh bạ Chuyên gia Khoa học Việt – Nga · VN–RU Portal</title>
+  <link href="../../assets/styles.css" rel="stylesheet"/>
+</head>
+<body data-area="public" data-screen="public/experts/index.html">
+  <div class="shell">
+    <!-- Public Header -->
+    <header class="public-top">
+      <div class="public-inner">
+        <a class="brand" href="../index.html">
+          <span class="brand-mark">VR</span>
+          <span class="brand-text">Mạng lưới Tri thức Việt – Nga<small>Public Discovery</small></span>
+        </a>
+        <nav class="public-nav">
+          <a href="../index.html">Trang chủ</a>
+          <a href="../knowledge/index.html">Kho tri thức</a>
+          <a class="active" href="index.html">Danh bạ chuyên gia</a>
+          <a href="../search/index.html">Tìm kiếm nâng cao</a>
+        </nav>
+        <div class="spacer"></div>
+        <div class="top-actions">
+          <a class="icon-btn" href="../search/index.html" title="Tìm kiếm">⌕</a>
+          <select class="field" data-lang=""><option>VI</option><option>RU</option><option>EN</option></select>
+          <a class="primary-btn btn-sm" href="../../auth/login.html">Đăng nhập / Workspace</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="public-content">
+      <div class="page-head">
+        <div>
+          <h1>Danh bạ Chuyên gia Khoa học &amp; Công nghệ Việt – Nga</h1>
+          <p>Khám phá các nhà khoa học, giáo sư đầu ngành và nhóm nghiên cứu tiêu biểu tại các viện hàn lâm, trường đại học của Việt Nam và Liên bang Nga.</p>
+        </div>
+      </div>
+
+      <!-- Search & Filter Card -->
+      <div class="card" style="margin-bottom:20px">
+        <div class="searchbox">
+          <span>⌕</span>
+          <input placeholder="Tìm chuyên gia theo họ tên, lĩnh vực (Hải dương học, Nano, AI, Y sinh...), hoặc viện/trường..." data-filter-input />
+        </div>
+        <div class="filters" style="margin-top:12px">
+          <select class="field" onchange="window.showToast('Lọc chuyên ngành', this.value);">
+            <option value="">Tất cả lĩnh vực khoa học</option>
+            <option>Khoa học Biển &amp; Hải dương học</option>
+            <option>Khoa học Vật liệu &amp; Công nghệ Nano</option>
+            <option>Y sinh học &amp; Bệnh truyền nhiễm nhiệt đới</option>
+            <option>Trí tuệ nhân tạo &amp; Khoa học Dữ liệu</option>
+            <option>Năng lượng sạch &amp; Lưới điện thông minh</option>
+          </select>
+          <select class="field" onchange="window.showToast('Lọc cơ quan', this.value);">
+            <option value="">Tất cả tổ chức / Viện nghiên cứu</option>
+            <option>VAST (Viện Hàn lâm KH&amp;CN Việt Nam)</option>
+            <option>RAS / FEB RAS (Viện Hàn lâm Khoa học LB Nga)</option>
+            <option>Đại học Quốc gia Hà Nội (VNU)</option>
+            <option>Đại học Tổng hợp Quốc gia Moskva (MSU)</option>
+            <option>Đại học Bách khoa Hà Nội (HUST)</option>
+            <option>Đại học Bách khoa Tomsk (TPU)</option>
+          </select>
+          <select class="field" onchange="window.showToast('Lọc quốc gia', this.value);">
+            <option value="">Tất cả quốc gia (Việt Nam &amp; LB Nga)</option>
+            <option>🇻🇳 Việt Nam</option>
+            <option>🇷🇺 Liên bang Nga</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Experts Cards Grid -->
+      <div class="grid g3">
+        <!-- Expert 1 -->
+        <article class="card">
+          <div style="display:flex;gap:12px;align-items:center">
+            <span class="avatar" style="width:46px;height:46px;font-size:14px">TN</span>
+            <div>
+              <h2 style="font-size:17px;margin:0">GS.TS. Trần Đình Nam</h2>
+              <span class="muted tiny">Viện Hải dương học · VAST 🇻🇳</span>
+            </div>
+          </div>
+          <div class="tags" style="margin:14px 0 10px">
+            <span class="tag">Khoa học Biển</span>
+            <span class="tag">Ăn mòn nhiệt đới</span>
+            <span class="tag">Vật liệu Nano</span>
+          </div>
+          <p class="muted tiny" style="margin:0 0 14px">42 công bố ISI/Scopus · 06 đề tài hợp tác Nga · Trưởng phòng Thí nghiệm Trọng điểm</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #e2e8ef">
+            <a class="secondary-btn btn-sm" href="detail.html">Xem hồ sơ đầy đủ</a>
+            <button type="button" class="ghost-btn btn-sm" onclick="window.openModal({title:'Gửi yêu cầu kết nối học thuật', content:'<p>Gửi thư giới thiệu và mong muốn hợp tác nghiên cứu tới <strong>GS.TS. Trần Đình Nam</strong> (VAST):</p><textarea class=\'field\' style=\'width:100%;height:80px;margin-top:8px\' placeholder=\'Kính gửi Giáo sư, tôi muốn trao đổi về đề xuất nghiên cứu...\'></textarea>', actions:[{id:'send',label:'Gửi tin nhắn',type:'primary',onClick:({close})=>{window.showToast('Đã gửi yêu cầu kết nối');close();}},{id:'c',label:'Hủy',type:'secondary'}]});">Kết nối ✉</button>
+          </div>
+        </article>
+
+        <!-- Expert 2 -->
+        <article class="card">
+          <div style="display:flex;gap:12px;align-items:center">
+            <span class="avatar" style="width:46px;height:46px;font-size:14px;background:#38527a;color:#fff">AM</span>
+            <div>
+              <h2 style="font-size:17px;margin:0">Prof. Alexei Morozov</h2>
+              <span class="muted tiny">Viện Sinh học Biển · FEB RAS Vladivostok 🇷🇺</span>
+            </div>
+          </div>
+          <div class="tags" style="margin:14px 0 10px">
+            <span class="tag">Marine Biology</span>
+            <span class="tag">Ocean Currents</span>
+            <span class="tag">Ecology</span>
+          </div>
+          <p class="muted tiny" style="margin:0 0 14px">68 công bố ISI · 12 chuyến khảo sát tàu Viện sĩ Oparin tại biển VN</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #e2e8ef">
+            <a class="secondary-btn btn-sm" href="detail.html">Xem hồ sơ đầy đủ</a>
+            <button type="button" class="ghost-btn btn-sm" onclick="window.openModal({title:'Gửi yêu cầu kết nối học thuật', content:'<p>Gửi thư giới thiệu và mong muốn hợp tác nghiên cứu tới <strong>Prof. Alexei Morozov</strong> (FEB RAS):</p><textarea class=\'field\' style=\'width:100%;height:80px;margin-top:8px\' placeholder=\'Dear Professor, I would like to propose a bilateral collaboration...\'></textarea>', actions:[{id:'send',label:'Gửi tin nhắn',type:'primary',onClick:({close})=>{window.showToast('Đã gửi yêu cầu kết nối');close();}},{id:'c',label:'Hủy',type:'secondary'}]});">Kết nối ✉</button>
+          </div>
+        </article>
+
+        <!-- Expert 3 -->
+        <article class="card">
+          <div style="display:flex;gap:12px;align-items:center">
+            <span class="avatar" style="width:46px;height:46px;font-size:14px">LT</span>
+            <div>
+              <h2 style="font-size:17px;margin:0">PGS.TS. Lê Hoài Thanh</h2>
+              <span class="muted tiny">Khoa Vật lý · ĐHQG Hà Nội 🇻🇳</span>
+            </div>
+          </div>
+          <div class="tags" style="margin:14px 0 10px">
+            <span class="tag">Quang học</span>
+            <span class="tag">Cảm biến quang sợi</span>
+            <span class="tag">Nano Photonics</span>
+          </div>
+          <p class="muted tiny" style="margin:0 0 14px">35 công bố Scopus · 02 sáng chế đồng sở hữu với MISIS Moskva</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #e2e8ef">
+            <a class="secondary-btn btn-sm" href="detail.html">Xem hồ sơ đầy đủ</a>
+            <button type="button" class="ghost-btn btn-sm" onclick="window.openModal({title:'Gửi yêu cầu kết nối học thuật', content:'<p>Gửi thư giới thiệu tới <strong>PGS.TS. Lê Hoài Thanh</strong>:</p><textarea class=\'field\' style=\'width:100%;height:80px;margin-top:8px\' placeholder=\'Kính gửi PGS, tôi quan tâm đến cảm biến quang...\'></textarea>', actions:[{id:'send',label:'Gửi',type:'primary',onClick:({close})=>{window.showToast('Đã gửi yêu cầu');close();}},{id:'c',label:'Hủy',type:'secondary'}]});">Kết nối ✉</button>
+          </div>
+        </article>
+
+        <!-- Expert 4 -->
+        <article class="card">
+          <div style="display:flex;gap:12px;align-items:center">
+            <span class="avatar" style="width:46px;height:46px;font-size:14px;background:#38527a;color:#fff">DS</span>
+            <div>
+              <h2 style="font-size:17px;margin:0">Prof. Dmitry Sokolov</h2>
+              <span class="muted tiny">Khoa Vật liệu Bán dẫn · MISIS Moskva 🇷🇺</span>
+            </div>
+          </div>
+          <div class="tags" style="margin:14px 0 10px">
+            <span class="tag">Nano Composite</span>
+            <span class="tag">Superconductors</span>
+            <span class="tag">Materials</span>
+          </div>
+          <p class="muted tiny" style="margin:0 0 14px">54 công bố ISI Q1 · H-index: 28 · Giải thưởng Khoa học Nhà nước LB Nga</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #e2e8ef">
+            <a class="secondary-btn btn-sm" href="detail.html">Xem hồ sơ đầy đủ</a>
+            <button type="button" class="ghost-btn btn-sm" onclick="window.showToast('Kết nối', 'Đã mở kênh kết nối với Prof. Dmitry Sokolov');">Kết nối ✉</button>
+          </div>
+        </article>
+
+        <!-- Expert 5 -->
+        <article class="card">
+          <div style="display:flex;gap:12px;align-items:center">
+            <span class="avatar" style="width:46px;height:46px;font-size:14px">VL</span>
+            <div>
+              <h2 style="font-size:17px;margin:0">TS. Vũ Hoàng Long</h2>
+              <span class="muted tiny">Trung tâm Nhiệt đới Việt – Nga 🇻🇳🇷🇺</span>
+            </div>
+          </div>
+          <div class="tags" style="margin:14px 0 10px">
+            <span class="tag">Y sinh nhiệt đới</span>
+            <span class="tag">Dịch tễ học</span>
+            <span class="tag">Kháng thể</span>
+          </div>
+          <p class="muted tiny" style="margin:0 0 14px">28 công bố · Nghiên cứu vắc-xin phối hợp với Viện Gamaleya LB Nga</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #e2e8ef">
+            <a class="secondary-btn btn-sm" href="detail.html">Xem hồ sơ đầy đủ</a>
+            <button type="button" class="ghost-btn btn-sm" onclick="window.showToast('Kết nối', 'Đã gửi yêu cầu tới TS. Vũ Hoàng Long');">Kết nối ✉</button>
+          </div>
+        </article>
+
+        <!-- Expert 6 -->
+        <article class="card">
+          <div style="display:flex;gap:12px;align-items:center">
+            <span class="avatar" style="width:46px;height:46px;font-size:14px;background:#38527a;color:#fff">EP</span>
+            <div>
+              <h2 style="font-size:17px;margin:0">Dr. Elena Petrova</h2>
+              <span class="muted tiny">Viện Dịch tễ Gamaleya Moskva 🇷🇺</span>
+            </div>
+          </div>
+          <div class="tags" style="margin:14px 0 10px">
+            <span class="tag">Immunology</span>
+            <span class="tag">Virology</span>
+            <span class="tag">Biotechnology</span>
+          </div>
+          <p class="muted tiny" style="margin:0 0 14px">49 bài báo ISI · Đồng chủ trì chương trình thử nghiệm lâm sàng song phương</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #e2e8ef">
+            <a class="secondary-btn btn-sm" href="detail.html">Xem hồ sơ đầy đủ</a>
+            <button type="button" class="ghost-btn btn-sm" onclick="window.showToast('Kết nối', 'Đã mở kênh kết nối với Dr. Elena Petrova');">Kết nối ✉</button>
+          </div>
+        </article>
+      </div>
+    </main>
+  </div>
+  <script src="../../assets/app.js"></script>
+</body>
+</html>

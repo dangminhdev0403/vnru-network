@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, type Locale } from "@/app/HomeMotion";
+import { useLocale, type Locale } from "@/core/i18n/locale";
 import { SheetContent, SheetOverlay, SheetTitle } from "@/components/tailgrids/core/sheet";
 import { cn } from "@/lib/cn";
 import Header from "@/components/shared/Header";

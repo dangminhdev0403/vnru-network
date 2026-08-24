@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 
 test("client components use domain server-state instead of raw API calls", async () => {
   const [home, header, authState] = await Promise.all([
-    readFile(new URL("../app/HomeMotion.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../features/public-home/components/PublicHome.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/shared/Header.tsx", import.meta.url), "utf8"),
     readFile(new URL("../features/auth/server-state.ts", import.meta.url), "utf8"),
   ]);
@@ -99,7 +99,7 @@ test("BFF individual session delete route forwards cookies and reads params corr
 test("Security page route redirects unauthenticated users", async () => {
   const fileContent = await readFile(
     new URL(
-      "../app/(workspace)/workspace/iam/security/page.tsx",
+      "../app/(workspace)/security/page.tsx",
       import.meta.url,
     ),
     "utf8",
@@ -110,14 +110,14 @@ test("Security page route redirects unauthenticated users", async () => {
   // Must redirect to Keycloak login if missing
   assert.match(
     fileContent,
-    /redirect\("\/api\/auth\/login\?returnTo=\/workspace\/iam\/security"\)/,
+    /redirect\("\/api\/auth\/login\?returnTo=\/security"\)/,
   );
 });
 
 test("Security client page handles UI actions without raw backend URL exposure", async () => {
   const fileContent = await readFile(
     new URL(
-      "../app/(workspace)/workspace/iam/security/SecurityClientPage.tsx",
+      "../features/auth/components/security/SecurityClientPage.tsx",
       import.meta.url,
     ),
     "utf8",
@@ -142,7 +142,7 @@ test("Security client page handles UI actions without raw backend URL exposure",
 test("Profile dialog shows email as an explicit read-only field", async () => {
   const fileContent = await readFile(
     new URL(
-      "../app/(workspace)/workspace/iam/security/ProfileDialog.tsx",
+      "../features/auth/components/security/ProfileDialog.tsx",
       import.meta.url,
     ),
     "utf8",
@@ -155,7 +155,7 @@ test("Profile dialog shows email as an explicit read-only field", async () => {
 test("MFA stays in-app while enrollment delegates only the TOTP ceremony", async () => {
   const control = await readFile(
     new URL(
-      "../app/(workspace)/workspace/iam/security/MfaControl.tsx",
+      "../features/auth/components/security/MfaControl.tsx",
       import.meta.url,
     ),
     "utf8",

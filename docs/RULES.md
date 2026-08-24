@@ -29,6 +29,8 @@ This document contains the authoritative governance, security, data-ownership, a
 
 - **Preserve Unrelated Work**: Unrelated uncommitted edits, untracked files, or existing deleted files must remain untouched.
 - **No Speculative Artifacts**: Do not generate unapproved documentation, code abstractions, or placeholder files outside assigned task boundaries.
+- **No Financial Product Domain**: Funding, investment, budget, disbursement, payment, accounting, sponsorship, royalties, deal value, ROI, benefit-sharing calculations, and financial KPIs are outside the current product scope. Source research may mention them only as clearly labeled source or historical context.
+- **Documentation Conflict Stop**: Active implementation-facing docs must agree on canonical routes and current-vs-future capability status. Reconcile conflicts before implementation.
 
 ## 6. Verification Request Dispatch
 

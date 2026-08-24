@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>Đăng nhập & Chọn vai trò · VN–RU Portal</title>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body data-area="auth" data-screen="auth/login.html" class="auth-page">
+  <div class="auth-box">
+    <div class="auth-grid">
+      <!-- Left: OIDC / Keycloak Mockup -->
+      <div>
+        <a class="brand" href="../public/index.html" style="color:white;margin-bottom:24px">
+          <span class="brand-mark">VR</span>
+          <span class="brand-text">Mạng lưới Tri thức Việt – Nga<small style="color:#8ca2bd">Cổng Đăng Nhập Xác Thực</small></span>
+        </a>
+        <h1 style="font-family:var(--serif);font-size:28px;margin:12px 0 8px">Đăng nhập tài khoản</h1>
+        <p style="color:#a5b7cb;font-size:13px;margin:0 0 20px">Hệ thống xác thực liên kết OIDC Keycloak bảo mật cao.</p>
+
+        <form onsubmit="event.preventDefault(); window.showToast('Mô phỏng đăng nhập', 'Vui lòng chọn vai trò demo ở danh sách bên cạnh.');" style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <label style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#8fa7c2;font-weight:700">Tên đăng nhập / Email viện/trường</label>
+            <input type="text" class="field" style="width:100%;margin-top:4px;background:rgba(255,255,255,.08);color:white;border-color:rgba(255,255,255,.18)" value="nguyen.vana@vast.vn" placeholder="email@donvi.vn" />
+          </div>
+          <div>
+            <label style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#8fa7c2;font-weight:700">Mật khẩu</label>
+            <input type="password" class="field" style="width:100%;margin-top:4px;background:rgba(255,255,255,.08);color:white;border-color:rgba(255,255,255,.18)" value="••••••••••••" placeholder="Mật khẩu" />
+          </div>
+          <button type="submit" class="primary-btn" style="margin-top:8px;width:100%">Đăng nhập OIDC (Keycloak)</button>
+        </form>
+
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center">
+          <a href="../public/index.html" style="font-size:12px;color:#8fb7ff">← Quay lại Cổng Public</a>
+          <span style="font-size:11px;color:#7e93ab">Bảo mật OIDC · MFA TOTP</span>
+        </div>
+      </div>
+
+      <!-- Right: Demo Quick Role Access -->
+      <div style="border-left:1px solid rgba(255,255,255,.12);padding-left:32px">
+        <span class="eyebrow" style="color:#8fb7ff">Truy cập nhanh theo vai trò (Role Demo)</span>
+        <h2 style="font-family:var(--serif);font-size:22px;margin:8px 0 16px;color:#fff">Chọn đúng Role để trải nghiệm</h2>
+        <p style="font-size:12px;color:#a5b7cb;margin-bottom:16px">Mỗi vai trò có không gian làm việc, thanh điều hướng và luồng xử lý riêng biệt hoàn toàn:</p>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <a href="../workspace/researcher/index.html" class="card flat" style="background:rgba(45,108,223,.12);border-color:rgba(45,108,223,.35);padding:14px;color:white;display:flex;align-items:center;gap:12px">
+            <span style="font-size:20px;width:32px;height:32px;background:rgba(45,108,223,.3);border-radius:8px;display:grid;place-items:center">🔬</span>
+            <div style="flex:1">
+              <strong style="font-size:13px;display:block">Nhà nghiên cứu (Researcher)</strong>
+              <small style="color:#9fb6d2">Đề xuất song phương · Tìm Co-PI · Quản lý dự án & milestone</small>
+            </div>
+            <span style="color:#8fb7ff;font-size:16px">→</span>
+          </a>
+
+          <a href="../workspace/reviewer/index.html" class="card flat" style="background:rgba(111,101,181,.12);border-color:rgba(111,101,181,.35);padding:14px;color:white;display:flex;align-items:center;gap:12px">
+            <span style="font-size:20px;width:32px;height:32px;background:rgba(111,101,181,.3);border-radius:8px;display:grid;place-items:center">⚖️</span>
+            <div style="flex:1">
+              <strong style="font-size:13px;display:block">Hội đồng phản biện (Reviewer)</strong>
+              <small style="color:#b8afd9">Hàng đợi hồ sơ được phân công · Chấm điểm Rubric ẩn danh</small>
+            </div>
+            <span style="color:#c5bef0;font-size:16px">→</span>
+          </a>
+
+          <a href="../workspace/organization/index.html" class="card flat" style="background:rgba(40,127,122,.12);border-color:rgba(40,127,122,.35);padding:14px;color:white;display:flex;align-items:center;gap:12px">
+            <span style="font-size:20px;width:32px;height:32px;background:rgba(40,127,122,.3);border-radius:8px;display:grid;place-items:center">🏛️</span>
+            <div style="flex:1">
+              <strong style="font-size:13px;display:block">Đại diện tổ chức (Organization)</strong>
+              <small style="color:#a2cfcc">VAST / ĐHQG — Xác nhận tư cách chủ trì & Bảo trợ cơ sở vật chất</small>
+            </div>
+            <span style="color:#7ee4dc;font-size:16px">→</span>
+          </a>
+
+          <a href="../workspace/enterprise/index.html" class="card flat" style="background:rgba(184,121,47,.12);border-color:rgba(184,121,47,.35);padding:14px;color:white;display:flex;align-items:center;gap:12px">
+            <span style="font-size:20px;width:32px;height:32px;background:rgba(184,121,47,.3);border-radius:8px;display:grid;place-items:center">🏭</span>
+            <div style="flex:1">
+              <strong style="font-size:13px;display:block">Đại diện doanh nghiệp (Enterprise)</strong>
+              <small style="color:#e0c198">Khám phá công nghệ TRL 5-7 · Ghép liên danh 2+2 (4 vị trí)</small>
+            </div>
+            <span style="color:#ffd392;font-size:16px">→</span>
+          </a>
+
+          <a href="../workspace/leadership/index.html" class="card flat" style="background:rgba(67,93,130,.14);border-color:rgba(67,93,130,.4);padding:14px;color:white;display:flex;align-items:center;gap:12px">
+            <span style="font-size:20px;width:32px;height:32px;background:rgba(67,93,130,.35);border-radius:8px;display:grid;place-items:center">📊</span>
+            <div style="flex:1">
+              <strong style="font-size:13px;display:block">Lãnh đạo chiến lược (Leadership)</strong>
+              <small style="color:#b2c2d4">Phân tích xu hướng nghiên cứu Việt - Nga · Trích xuất báo cáo</small>
+            </div>
+            <span style="color:#8fb7ff;font-size:16px">→</span>
+          </a>
+
+          <a href="../governance/index.html" class="card flat" style="background:rgba(154,78,86,.14);border-color:rgba(154,78,86,.4);padding:14px;color:white;display:flex;align-items:center;gap:12px">
+            <span style="font-size:20px;width:32px;height:32px;background:rgba(154,78,86,.35);border-radius:8px;display:grid;place-items:center">🛡️</span>
+            <div style="flex:1">
+              <strong style="font-size:13px;display:block">Khu vực Quản trị (Governance)</strong>
+              <small style="color:#d9a9af">Quản lý định danh & Phân quyền · Kiểm duyệt · Audit nhật ký</small>
+            </div>
+            <span style="color:#f29aa4;font-size:16px">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/app.js"></script>
+</body>
+</html>

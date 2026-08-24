@@ -12,17 +12,17 @@ Russia-Vietnam Science-Technology Intelligence Network is an independent bilater
 The Portal connects identity, scientific knowledge, experts, organizations, publications, and projects so users can move from discovery to explainable partner matching and bilateral 2+2 cooperation.
 
 ## Implemented surfaces
-- Public landing and discovery: `/`, `/search`, `/knowledge`, `/experts`, `/experts/[id]`, `/publications/[id]`.
-- Authentication and security: `/login`, `/workspace/iam/security`.
-- Authenticated workspaces: `/workspace`, `/workspace/iam`, `/workspace/knowledge`.
-- Governance: `/workspace/iam/admin`.
+- Public landing: `/`.
+- Authentication and member self-service: `/login`, `/account`, `/security`.
+- Governance: `/admin/access/*` and `/admin/audit`.
+- Compatibility: `/workspace` and legacy `/workspace/iam*` routes redirect to Module 1 surfaces.
 
 ## Product truth
 - Backend authorization is authoritative; frontend permissions only shape UX.
 - Keycloak owns credential UI; the frontend uses an opaque session bridge.
 - Vietnamese, English, and Russian are first-class locales. One selected locale must govern all visible and accessible copy on a surface.
-- Module 1 IAM is implemented. Other domain capabilities may be preview or partial and must not be presented as production-complete without evidence.
-- Public content can be explored without login when approved; workspace and governance surfaces require appropriate session and capability scope.
+- IAM infrastructure is the only implemented business module. Other business capabilities may appear as landing-page vision only and must not be presented as available runtime surfaces.
+- The landing page is public; account, security and governance surfaces require the appropriate session and capability scope.
 
 ## Design success
 - A first-time visitor understands the bilateral network and primary discovery action within seconds.

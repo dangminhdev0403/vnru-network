@@ -13,7 +13,7 @@ import {
   ModalOverlay,
   type ModalOverlayProps,
 } from "react-aria-components";
-import { useLocale } from "@/app/HomeMotion";
+import { useLocale } from "@/core/i18n/locale";
 
 export type SheetProps = AriaDialogTriggerProps;
 export function Sheet(props: SheetProps) {

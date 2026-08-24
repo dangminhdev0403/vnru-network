@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, type Locale } from "@/app/HomeMotion";
+import { useLocale, type Locale } from "@/core/i18n/locale";
 import SidebarFrame, { type NavSection } from "@/components/shared/SidebarFrame";
 import { useCurrentUser } from "@/features/auth/server-state";
 import { filterAdminNavSections } from "@/features/admin/config/admin-nav-registry";
@@ -17,34 +17,31 @@ const labels: Record<Locale, Record<string, string>> = {
   vi: {
     adminKicker: "Quản trị hệ thống",
     access: "QUẢN TRỊ TRUY CẬP",
-    dataGovernance: "QUẢN TRỊ DỮ LIỆU",
+    overview: "Tổng quan",
     auditControl: "KIỂM TOÁN & GIÁM SÁT",
     users: "Quản lý người dùng",
     roles: "Vai trò & quyền",
     assignments: "Phân công vai trò",
-    catalogs: "Danh mục chuẩn hóa",
     audit: "Nhật ký kiểm toán",
   },
   en: {
     adminKicker: "System Administration",
     access: "ACCESS MANAGEMENT",
-    dataGovernance: "DATA GOVERNANCE",
+    overview: "Overview",
     auditControl: "AUDIT & COMPLIANCE",
     users: "User Management",
     roles: "Roles & Permissions",
     assignments: "Role Assignments",
-    catalogs: "Standardized Catalogs",
     audit: "System Audit Logs",
   },
   ru: {
     adminKicker: "Администрирование системы",
     access: "УПРАВЛЕНИЕ ДОСТУПОМ",
-    dataGovernance: "УПРАВЛЕНИЕ ДАННЫМИ",
+    overview: "Обзор",
     auditControl: "АУДИТ И КОНТРОЛЬ",
     users: "Управление пользователями",
     roles: "Роли и права",
     assignments: "Назначение ролей",
-    catalogs: "Системные справочники",
     audit: "Журнал аудита",
   },
 };
@@ -58,7 +55,16 @@ export default function AdminSidebar({
   const { locale } = useLocale();
   const t = labels[locale] || labels.vi;
   const currentUser = useCurrentUser();
-  const capabilities = (currentUser.data as { capabilities?: string[] })?.capabilities ?? [];
+  const user = currentUser.data as {
+    capabilities?: string[];
+    activeContext?: { contextType: string; contextId: string } | null;
+  } | undefined;
+  const capabilities = user?.capabilities ?? [];
+  const contextLabel = user?.activeContext?.contextType === "PLATFORM"
+    ? (locale === "vi" ? "Toàn hệ thống" : locale === "ru" ? "Вся система" : "Platform-wide")
+    : user?.activeContext
+      ? `${user.activeContext.contextType} / ${user.activeContext.contextId}`
+      : undefined;
 
   const rawSections = filterAdminNavSections(capabilities);
   const sections: NavSection[] = rawSections.map((s) => ({
@@ -78,6 +84,7 @@ export default function AdminSidebar({
       isMobile={isMobile}
       onItemClick={onItemClick}
       badgeText={t.adminKicker}
+      contextLabel={contextLabel}
     />
   );
 }

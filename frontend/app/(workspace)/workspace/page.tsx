@@ -1,7 +1,11 @@
-import { getExperts, getPublications } from "@/features/knowledge/repositories/module2.repository";
-import DashboardView from "@/features/workspace/components/DashboardView";
+import type { Metadata } from 'next';
+import { PrototypeHub } from '@/features/prototype-v3/components/PrototypeHub';
 
-export default async function WorkspacePage() {
-  const [publications, experts] = await Promise.all([getPublications({ limit: "3" }), getExperts({ limit: "3" })]);
-  return <DashboardView publications={publications} experts={experts} />;
+export const metadata: Metadata = {
+  title: 'Workspace Control Center · VN–RU Network',
+  description: 'Trung tâm điều phối không gian làm việc và vai trò theo mô hình Prototype V3.'
+};
+
+export default function Page() {
+  return <PrototypeHub />;
 }

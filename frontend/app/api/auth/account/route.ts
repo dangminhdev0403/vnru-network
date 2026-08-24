@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   });
   if (!session.ok)
     return NextResponse.redirect(
-      new URL("/api/auth/login?returnTo=/workspace/iam/security", request.url),
+      new URL("/api/auth/login?returnTo=/account", request.url),
     );
 
   const section =

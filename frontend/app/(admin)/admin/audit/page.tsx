@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, type Locale } from "@/app/HomeMotion";
+import { useLocale, type Locale } from "@/core/i18n/locale";
 import Link from "next/link";
 import React from "react";
 

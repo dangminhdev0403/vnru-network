@@ -273,6 +273,8 @@ textarea {
 }
 
 /* Animations & Keyframes */
+button:not(:disabled) { cursor: pointer; }
+
 button[aria-busy="true"] {
   cursor: wait;
   opacity: .7;
@@ -500,6 +502,21 @@ button:disabled { cursor: not-allowed; }
   transform: translateY(0) scale(.98);
 }
 
+.knowledge-mesh {
+  background:
+    radial-gradient(circle at 75% 24%, rgb(37 99 235 / .26), transparent 27%),
+    radial-gradient(circle at 18% 74%, rgb(220 38 38 / .11), transparent 22%),
+    linear-gradient(rgb(125 211 252 / .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(125 211 252 / .055) 1px, transparent 1px);
+  background-size: auto, auto, 54px 54px, 54px 54px;
+  mask-image: linear-gradient(to bottom, #000 70%, transparent);
+}
+
+.typing-caret { display: inline-block; width: .055em; height: .78em; margin-left: .08em; background: #7dd3fc; vertical-align: -.04em; animation: typing-caret 1s steps(1) infinite; }
+.knowledge-join { position: relative; isolation: isolate; }
+.knowledge-join::after { content: ""; position: absolute; z-index: -1; width: 28rem; height: 28rem; right: -10rem; top: -16rem; border-radius: 50%; background: radial-gradient(circle, rgb(37 99 235 / .42), transparent 68%); }
+
+@keyframes typing-caret { 50% { opacity: 0; } }
 .app-panel {
   border: 1px solid var(--color-outline-variant);
   border-radius: 1rem;

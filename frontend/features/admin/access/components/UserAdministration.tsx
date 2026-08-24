@@ -1,11 +1,12 @@
 "use client";
 
-import { useLocale, type Locale } from "@/app/HomeMotion";
+import { useLocale, type Locale } from "@/core/i18n/locale";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { confirmAction, showError, showToast } from "@/lib/alerts";
 import { useIamAdministration } from "@/features/iam/hooks";
 import { ApiError, type IamUser as User } from "@/features/iam/repository";
+import { z } from "zod";
 
 type View = "overview" | "roles";
 
@@ -408,6 +409,7 @@ export default function UserAdministration({
   const [assignRoleId, setAssignRoleId] = useState("");
   const [contextType, setContextType] = useState("");
   const [contextId, setContextId] = useState("");
+  const [assignError, setAssignError] = useState("");
   const [statusTarget, setStatusTarget] = useState<User | null>(null);
 
   const selectedRole = useMemo(
@@ -452,15 +454,14 @@ export default function UserAdministration({
 
   const assignRole = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!assignUserId || !assignRoleId) {
-      showError("Thiếu thông tin", "Chọn người dùng và vai trò.");
-      return;
-    }
+    const parsed = z.object({ userId: z.string().trim().min(1), roleId: z.string().trim().min(1) }).safeParse({ userId: assignUserId, roleId: assignRoleId });
+    if (!parsed.success) return setAssignError("Chọn người dùng và vai trò.");
+    setAssignError("");
     if (!(await confirmAction({ title: "Xác nhận gán vai trò?" })).isConfirmed) return;
     try {
       await iam.assignRole.mutateAsync({
-        userId: assignUserId,
-        roleId: assignRoleId,
+        userId: parsed.data.userId,
+        roleId: parsed.data.roleId,
         contextType: contextType.trim() || undefined,
         contextId: contextId.trim() || undefined,
       });
@@ -795,15 +796,17 @@ export default function UserAdministration({
                 assignUserId}
             </p>
             <form
+              noValidate
               onSubmit={assignRole}
               className="mt-6 grid gap-4 sm:grid-cols-2"
             >
               <label className="grid gap-1.5 text-xs font-bold">
                 {t.roleLabel}
                 <select
-                  required
                   value={assignRoleId}
                   onChange={(event) => setAssignRoleId(event.target.value)}
+                  aria-invalid={Boolean(assignError)}
+                  aria-describedby={assignError ? "user-assignment-error" : undefined}
                   className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3 text-sm font-normal"
                 >
                   <option value="">{t.selectRolePrompt}</option>
@@ -841,6 +844,7 @@ export default function UserAdministration({
                 />
               </label>
               <div className="flex justify-end gap-2 sm:col-span-2">
+                {assignError && <p id="user-assignment-error" role="alert" className="w-full text-xs text-rose-600">{assignError}</p>}
                 <button
                   type="button"
                   disabled={submitting}

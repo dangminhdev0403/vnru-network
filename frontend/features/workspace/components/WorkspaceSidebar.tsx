@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, type Locale } from "@/app/HomeMotion";
+import { useLocale, type Locale } from "@/core/i18n/locale";
 import SidebarFrame, { type NavSection } from "@/components/shared/SidebarFrame";
 import { useCurrentUser } from "@/features/auth/server-state";
 import { filterNavSections } from "@/features/workspace/config/workspace-registry";
@@ -15,40 +15,55 @@ export interface WorkspaceSidebarProps {
 
 const labels: Record<Locale, Record<string, string>> = {
   vi: {
-    overview: "TỔNG QUAN",
-    governance: "BẢO MẬT & QUẢN TRỊ",
-    workspaceOverview: "Không gian làm việc",
-    knowledge: "Kho tri thức & Chuyên gia",
-    collaboration: "Cộng tác nghiên cứu",
-    opportunities: "Cơ hội nghiên cứu",
-    reviews: "Phản biện",
-    projects: "Dự án",
-    iam: "Quản trị danh tính",
-    sessions: "Phiên làm việc & Bảo mật",
+    workspaceModules: "KHÔNG GIAN LÀM VIỆC",
+    workspaceHub: "Tổng quan Workspace",
+    researcher: "Nhà nghiên cứu (Researcher)",
+    reviewer: "Hội đồng Phản biện",
+    organization: "Đại diện Tổ chức (VAST)",
+    enterprise: "Doanh nghiệp (Liên danh 2+2)",
+    leadership: "Lãnh đạo Chiến lược",
+    administration: "QUẢN TRỊ HỆ THỐNG",
+    governance: "Quản trị Danh tính (IAM)",
+    adminOverview: "Tổng quan Quản trị",
+    accessControl: "Phân quyền",
+    audit: "Nhật ký kiểm toán",
+    account: "TÀI KHOẢN & BẢO MẬT",
+    accountProfile: "Tài khoản cá nhân",
+    security: "Bảo mật & Phiên đăng nhập",
   },
   en: {
-    overview: "OVERVIEW",
-    governance: "SECURITY & GOVERNANCE",
-    workspaceOverview: "Overview",
-    knowledge: "Knowledge & Experts",
-    collaboration: "Research Collaboration",
-    opportunities: "Opportunities",
-    reviews: "Reviews",
-    projects: "Projects",
-    iam: "Identity & Access",
-    sessions: "Security & Sessions",
+    workspaceModules: "WORKSPACE MODULES",
+    workspaceHub: "Workspace Overview",
+    researcher: "Researcher",
+    reviewer: "Peer Reviewer",
+    organization: "Organization Rep",
+    enterprise: "Enterprise (2+2)",
+    leadership: "Strategic Leadership",
+    administration: "SYSTEM ADMINISTRATION",
+    governance: "Identity Governance (IAM)",
+    adminOverview: "Admin Overview",
+    accessControl: "Access Control",
+    audit: "Audit Log",
+    account: "ACCOUNT & SECURITY",
+    accountProfile: "Account Profile",
+    security: "Security & Sessions",
   },
   ru: {
-    overview: "ОБЗОР",
-    governance: "БЕЗОПАСНОСТЬ И УПРАВЛЕНИЕ",
-    workspaceOverview: "Обзор",
-    knowledge: "База знаний и эксперты",
-    collaboration: "Научное сотрудничество",
-    opportunities: "Возможности",
-    reviews: "Рецензии",
-    projects: "Проекты",
-    iam: "Управление доступом",
-    sessions: "Сессии и безопасность",
+    workspaceModules: "РАБОЧИЕ ПРОСТРАНСТВА",
+    workspaceHub: "Обзор Workspace",
+    researcher: "Исследователь",
+    reviewer: "Экспертный совет",
+    organization: "Организация",
+    enterprise: "Предприятие (2+2)",
+    leadership: "Руководство",
+    administration: "УПРАВЛЕНИЕ СИСТЕМОЙ",
+    governance: "Управление доступом (IAM)",
+    adminOverview: "Обзор",
+    accessControl: "Управление доступом",
+    audit: "Журнал аудита",
+    account: "УЧЁТНАЯ ЗАПИСЬ И БЕЗОПАСНОСТЬ",
+    accountProfile: "Учётная запись",
+    security: "Безопасность и сессии",
   },
 };
 
@@ -61,7 +76,16 @@ export default function WorkspaceSidebar({
   const { locale } = useLocale();
   const t = labels[locale] || labels.vi;
   const currentUser = useCurrentUser();
-  const capabilities = (currentUser.data as { capabilities?: string[] })?.capabilities ?? [];
+  const user = currentUser.data as {
+    capabilities?: string[];
+    activeContext?: { contextType: string; contextId: string } | null;
+  } | undefined;
+  const capabilities = user?.capabilities ?? [];
+  const contextLabel = user?.activeContext?.contextType === "PLATFORM"
+    ? (locale === "vi" ? "Toàn hệ thống" : locale === "ru" ? "Вся система" : "Platform-wide")
+    : user?.activeContext
+      ? `${user.activeContext.contextType} / ${user.activeContext.contextId}`
+      : undefined;
 
   const rawSections = filterNavSections(capabilities);
   const sections: NavSection[] = rawSections.map((s) => ({
@@ -80,6 +104,7 @@ export default function WorkspaceSidebar({
       toggleSidebar={toggleSidebar}
       isMobile={isMobile}
       onItemClick={onItemClick}
+      contextLabel={contextLabel}
     />
   );
 }

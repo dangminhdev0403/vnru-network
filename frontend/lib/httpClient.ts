@@ -17,6 +17,8 @@ export async function httpClient(
     response.status === 401 &&
     typeof window !== "undefined" &&
     window.location.pathname !== "/login" &&
+    !window.location.pathname.startsWith("/workspace") &&
+    !window.location.pathname.startsWith("/governance") &&
     !redirecting
   ) {
     redirecting = true;

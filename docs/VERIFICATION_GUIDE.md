@@ -143,14 +143,14 @@ Real browser interaction: **Yes — mandatory for web UI targets.**
 
 After a profile is selected, discover the module's real runtime surface and show a short execution manifest before running destructive or expensive operations.
 
-Example for a Module 1 request after the user chooses `4`:
+Example for an account/security request after the user chooses `4`:
 
 ```text
 Target: Module 01 IAM
 Profile: Full
 Planned surfaces discovered from current source:
 - auth/session service and its existing contracts
-- /workspace/iam
+- /account and /security
 - /admin/iam
 - /security
 - existing login/logout/returnTo flow

@@ -7,44 +7,20 @@ export function sanitizeLocale(value: string | null | undefined): "vi" | "en" | 
 }
 
 export function sanitizeReturnTo(value: string | null | undefined): string {
-  return value?.startsWith("/") && !value.startsWith("//") ? value : "/workspace";
+  return value?.startsWith("/") && !value.startsWith("//") ? value : "/account";
 }
 
 export function resolveLandingPath(capabilities: string[] = []): string {
   if (capabilities.includes("iam.roles.manage") || capabilities.includes("iam.users.manage")) {
     return "/admin/access";
   }
-  if (capabilities.includes("knowledge.workspace.view")) {
-    return "/workspace/knowledge";
-  }
-  if (
-    capabilities.some((c) =>
-      c.startsWith("collab.") || c.startsWith("reviews.") || c.startsWith("projects.")
-    )
-  ) {
-    return "/workspace/collaboration";
-  }
-  return "/workspace";
+  return "/account";
 }
 
 export function authServiceUrl(path: string): URL {
   const baseUrl = process.env.AUTH_SERVICE_URL;
   if (!baseUrl) throw new Error("AUTH_SERVICE_URL is required");
   return new URL(path, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
-}
-
-export function collabServiceUrl(path: string): URL {
-  const baseUrl = process.env.COLLAB_SERVICE_URL;
-  if (!baseUrl) throw new Error("COLLAB_SERVICE_URL is required");
-  return new URL(path, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
-}
-
-export function reviewServiceUrl(path: string): URL {
-  return collabServiceUrl(path);
-}
-
-export function projectServiceUrl(path: string): URL {
-  return collabServiceUrl(path);
 }
 
 export function backendHeaders(request: Request): Headers {

@@ -5,6 +5,9 @@ import * as path from 'path';
 import { z } from 'zod';
 
 const ALLOWED_CAPABILITIES = [
+  'iam.users.manage',
+  'iam.roles.manage',
+  'iam.audit.view',
   'knowledge.workspace.view',
   'experts.matches.view',
   'collab.proposals.create',
@@ -27,6 +30,7 @@ const ALLOWED_CAPABILITIES = [
 ] as const;
 
 const ALLOWED_ROLES = [
+  'SUPER_ADMIN',
   'KNOWLEDGE_CURATOR',
   'RESEARCHER',
   'ORGANIZATION_REPRESENTATIVE',
@@ -45,6 +49,7 @@ const ROLE_POLICIES: Record<(typeof ALLOWED_ROLES)[number], {
   contextType: (typeof ALLOWED_CONTEXT_TYPES)[number];
   capabilities: readonly (typeof ALLOWED_CAPABILITIES)[number][];
 }> = {
+  SUPER_ADMIN: { contextType: 'PLATFORM', capabilities: ['iam.users.manage', 'iam.roles.manage', 'iam.audit.view'] },
   KNOWLEDGE_CURATOR: { contextType: 'PLATFORM', capabilities: ['knowledge.workspace.view', 'experts.matches.view'] },
   RESEARCHER: { contextType: 'ORGANIZATION', capabilities: ['knowledge.workspace.view', 'collab.proposals.create', 'collab.proposals.confirm_paired', 'collab.proposals.submit', 'projects.projects.view', 'projects.milestones.update', 'projects.reports.submit'] },
   ORGANIZATION_REPRESENTATIVE: { contextType: 'ORGANIZATION', capabilities: ['collab.proposals.endorse', 'projects.projects.view', 'projects.reports.view_org'] },
