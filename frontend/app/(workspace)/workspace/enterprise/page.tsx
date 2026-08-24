@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { EnterpriseWorkspace } from '@/features/prototype-v3/components/EnterpriseWorkspace';
-import { requireWorkspaceCapability } from '@/features/auth/workspace-server';
+import { requireWorkspaceSession } from '@/features/auth/workspace-server';
 
 export const metadata: Metadata = {
-  title: 'Đại diện Doanh nghiệp (Enterprise 2+2) · VN–RU Network',
-  description: 'Mô hình liên danh 2+2 giữa viện trường và doanh nghiệp Việt - Nga'
+  title: 'UI Preview · Liên danh Enterprise 2+2 · VN–RU Network',
+  description: 'Bản xem trước mô hình liên danh 2+2 giữa viện trường và doanh nghiệp Việt - Nga'
 };
 
 export default async function Page() {
-  await requireWorkspaceCapability('/workspace/enterprise', ['collab.opportunities.create']);
+  await requireWorkspaceSession('/workspace/enterprise');
   return <EnterpriseWorkspace />;
 }

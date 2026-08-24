@@ -14,12 +14,6 @@ export function resolveLandingPath(capabilities: string[] = []): string {
   if (capabilities.includes("iam.roles.manage") || capabilities.includes("iam.users.manage")) {
     return "/admin/access";
   }
-  if (capabilities.includes("collab.decisions.issue_foundation")) {
-    return "/workspace/leadership";
-  }
-  if (capabilities.includes("collab.opportunities.create")) {
-    return "/workspace/enterprise";
-  }
   if (capabilities.includes("reviews.assignments.view_assigned")) {
     return "/workspace/reviewer";
   }

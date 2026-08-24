@@ -2,7 +2,7 @@
 
 ## Current scope
 
-The repository contains one backend trust boundary and one web frontend:
+The repository contains one backend trust boundary and one web frontend. The frontend also serves synthetic public-discovery and authenticated role-preview pages; these do not add backend trust boundaries:
 
 ```text
 Browser
@@ -12,7 +12,7 @@ Browser
         -> PostgreSQL auth_db
 ```
 
-The public `/` route is an informational landing page. It does not prove that a described future business capability exists.
+Public `/`, `/knowledge`, `/experts` and `/opportunities` routes are informational or synthetic discovery previews. They do not prove that a described future business capability exists.
 
 ## Runtime ownership
 
@@ -29,6 +29,9 @@ The public `/` route is an informational landing page. It does not prove that a 
 - `/security`: MFA and session security.
 - `/admin/access/*`: user, role, permission and assignment administration.
 - `/admin/audit`: Module 1 audit surface.
-- `/workspace` and legacy `/workspace/iam*`: compatibility redirects to Module 1 routes.
+- `/workspace`: resolves the authenticated session to a current capability-gated role preview or a Module 1 destination.
+- `/workspace/researcher`, `/workspace/reviewer`, `/workspace/organization`: capability-gated UI previews without business backends.
+- `/workspace/enterprise`, `/workspace/leadership`: authenticated UI previews only; current collaboration-manager and decision-maker capabilities never select these as live personas.
+- Legacy `/workspace/iam*`: compatibility redirects to Module 1 routes.
 
-Knowledge, expert directory, collaboration, review, project, academic, technology and analytics routes/services are absent.
+Knowledge, expert-directory, collaboration, review, project, academic, technology and analytics business services are absent. Synthetic frontend previews may still exist for design and flow demonstration.

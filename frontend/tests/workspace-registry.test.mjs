@@ -21,14 +21,22 @@ test("workspace navigation exposes only destinations allowed by capability", () 
     ["collab.proposals.create", "/workspace/researcher"],
     ["reviews.assignments.view_assigned", "/workspace/reviewer"],
     ["collab.proposals.endorse", "/workspace/organization"],
-    ["collab.opportunities.create", "/workspace/enterprise"],
-    ["collab.decisions.issue_foundation", "/workspace/leadership"],
   ];
   for (const [capability, expectedHref] of roleCases) {
     const hrefs = filterNavSections([capability]).flatMap((section) =>
       section.items.map((item) => item.href),
     );
     assert.deepEqual(hrefs, [expectedHref, "/account", "/security"]);
+  }
+
+  for (const futureCapability of [
+    "collab.opportunities.create",
+    "collab.decisions.issue_foundation",
+  ]) {
+    const hrefs = filterNavSections([futureCapability]).flatMap((section) =>
+      section.items.map((item) => item.href),
+    );
+    assert.deepEqual(hrefs, ["/account", "/security"]);
   }
 
   const adminItems = filterNavSections(["iam.roles.manage"]).flatMap(
@@ -43,13 +51,11 @@ test("workspace navigation exposes only destinations allowed by capability", () 
   ]);
 });
 
-test("persona resolution recognizes each dashboard role and IAM independently", () => {
+test("persona resolution recognizes current live workspace roles and IAM independently", () => {
   const roleCases = [
     ["collab.proposals.create", "RESEARCHER"],
     ["reviews.assignments.view_assigned", "REVIEWER"],
     ["collab.proposals.endorse", "ORGANIZATION_REPRESENTATIVE"],
-    ["collab.opportunities.create", "COLLABORATION_MANAGER"],
-    ["collab.decisions.issue_foundation", "FOUNDATION_DECISION_MAKER"],
   ];
   for (const [capability, expectedPersona] of roleCases) {
     assert.deepEqual(
@@ -57,24 +63,26 @@ test("persona resolution recognizes each dashboard role and IAM independently", 
       [expectedPersona],
     );
   }
+  assert.deepEqual(resolveUserPersonas(["collab.opportunities.create"]), []);
+  assert.deepEqual(resolveUserPersonas(["collab.decisions.issue_foundation"]), []);
   assert.deepEqual(
     resolveUserPersonas(["iam.roles.manage"]).map((persona) => persona.key),
     ["SUPER_ADMIN"],
   );
 });
 
-test("workspace landing resolves every fixture-backed role to its canonical surface", () => {
+test("workspace landing resolves current live roles and falls back for future capabilities", () => {
   const roleCases = [
     ["collab.proposals.create", "/workspace/researcher"],
     ["reviews.assignments.view_assigned", "/workspace/reviewer"],
     ["collab.proposals.endorse", "/workspace/organization"],
-    ["collab.opportunities.create", "/workspace/enterprise"],
-    ["collab.decisions.issue_foundation", "/workspace/leadership"],
     ["iam.roles.manage", "/admin/access"],
   ];
   for (const [capability, expectedPath] of roleCases) {
     assert.equal(resolveLandingPath([capability]), expectedPath);
   }
+  assert.equal(resolveLandingPath(["collab.opportunities.create"]), "/account");
+  assert.equal(resolveLandingPath(["collab.decisions.issue_foundation"]), "/account");
   assert.equal(resolveLandingPath([]), "/account");
 });
 

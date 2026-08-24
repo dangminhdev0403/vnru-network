@@ -17,7 +17,7 @@ test("workspace root resolves the authenticated persona while legacy IAM routes 
   assert.match(iamSecurity, /redirect\("\/security"\)/);
 });
 
-test("authenticated shell contains capability-gated role dashboards and IAM destinations", async () => {
+test("authenticated shell contains only current capability-gated role dashboards and IAM destinations", async () => {
   const [registry, proxy, header] = await Promise.all([
     read("features/workspace/config/workspace-registry.ts"),
     read("proxy.ts"),
@@ -28,8 +28,6 @@ test("authenticated shell contains capability-gated role dashboards and IAM dest
     "/workspace/researcher",
     "/workspace/reviewer",
     "/workspace/organization",
-    "/workspace/enterprise",
-    "/workspace/leadership",
     "/account",
     "/security",
     "/admin/access/roles",
@@ -37,22 +35,30 @@ test("authenticated shell contains capability-gated role dashboards and IAM dest
   ]) {
     assert.match(registry, new RegExp(`href: "${href}"`));
   }
+  assert.doesNotMatch(registry, /href: "\/workspace\/(enterprise|leadership)"/);
   assert.doesNotMatch(header, /searchPlaceholder|\/admin\/catalogs/);
   assert.match(proxy, /"\/workspace\/:path\*"/);
 });
 
-test("each role route declares its backend-aligned capability guard", async () => {
+test("current role routes declare backend-aligned capability guards", async () => {
   const roleCases = [
     ["researcher", "collab.proposals.create"],
     ["reviewer", "reviews.assignments.view_assigned"],
     ["organization", "collab.proposals.endorse"],
-    ["enterprise", "collab.opportunities.create"],
-    ["leadership", "collab.decisions.issue_foundation"],
   ];
 
   for (const [route, capability] of roleCases) {
     const source = await read(`app/(workspace)/workspace/${route}/page.tsx`);
     assert.match(source, /requireWorkspaceCapability/);
     assert.match(source, new RegExp(capability.replaceAll(".", "\\.")));
+  }
+});
+
+test("future persona pages remain authenticated UI previews without role mapping", async () => {
+  for (const route of ["enterprise", "leadership"]) {
+    const source = await read(`app/(workspace)/workspace/${route}/page.tsx`);
+    assert.match(source, /requireWorkspaceSession/);
+    assert.doesNotMatch(source, /requireWorkspaceCapability/);
+    assert.match(source, /UI Preview/);
   }
 });
