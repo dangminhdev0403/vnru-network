@@ -5,34 +5,36 @@ import {
   resolveUserPersonas,
   hasCapability,
 } from "../features/workspace/config/workspace-registry.ts";
+import { resolveLandingPath } from "../features/auth/server.ts";
 
-test("Module 1 workspace navigation exposes account, security, and explicit administrator destinations", () => {
+test("workspace navigation exposes only destinations allowed by capability", () => {
   assert.equal(hasCapability(["iam.roles.manage"], "iam.roles.manage"), true);
   assert.equal(hasCapability([], "iam.roles.manage"), false);
 
   const memberItems = filterNavSections([]).flatMap((section) => section.items);
   assert.deepEqual(memberItems.map((item) => item.href), [
-    "/workspace",
-    "/workspace/researcher",
-    "/workspace/reviewer",
-    "/workspace/organization",
-    "/workspace/enterprise",
-    "/workspace/leadership",
-    "/governance",
     "/account",
     "/security",
   ]);
+
+  const roleCases = [
+    ["collab.proposals.create", "/workspace/researcher"],
+    ["reviews.assignments.view_assigned", "/workspace/reviewer"],
+    ["collab.proposals.endorse", "/workspace/organization"],
+    ["collab.opportunities.create", "/workspace/enterprise"],
+    ["collab.decisions.issue_foundation", "/workspace/leadership"],
+  ];
+  for (const [capability, expectedHref] of roleCases) {
+    const hrefs = filterNavSections([capability]).flatMap((section) =>
+      section.items.map((item) => item.href),
+    );
+    assert.deepEqual(hrefs, [expectedHref, "/account", "/security"]);
+  }
 
   const adminItems = filterNavSections(["iam.roles.manage"]).flatMap(
     (section) => section.items,
   );
   assert.deepEqual(adminItems.map((item) => item.href), [
-    "/workspace",
-    "/workspace/researcher",
-    "/workspace/reviewer",
-    "/workspace/organization",
-    "/workspace/enterprise",
-    "/workspace/leadership",
     "/governance",
     "/admin/access/roles",
     "/admin/audit",
@@ -41,12 +43,39 @@ test("Module 1 workspace navigation exposes account, security, and explicit admi
   ]);
 });
 
-test("Module 1 persona resolution recognizes only IAM administrators", () => {
-  assert.deepEqual(resolveUserPersonas(["collab.proposals.create"]), []);
+test("persona resolution recognizes each dashboard role and IAM independently", () => {
+  const roleCases = [
+    ["collab.proposals.create", "RESEARCHER"],
+    ["reviews.assignments.view_assigned", "REVIEWER"],
+    ["collab.proposals.endorse", "ORGANIZATION_REPRESENTATIVE"],
+    ["collab.opportunities.create", "COLLABORATION_MANAGER"],
+    ["collab.decisions.issue_foundation", "FOUNDATION_DECISION_MAKER"],
+  ];
+  for (const [capability, expectedPersona] of roleCases) {
+    assert.deepEqual(
+      resolveUserPersonas([capability]).map((persona) => persona.key),
+      [expectedPersona],
+    );
+  }
   assert.deepEqual(
     resolveUserPersonas(["iam.roles.manage"]).map((persona) => persona.key),
     ["SUPER_ADMIN"],
   );
+});
+
+test("workspace landing resolves every fixture-backed role to its canonical surface", () => {
+  const roleCases = [
+    ["collab.proposals.create", "/workspace/researcher"],
+    ["reviews.assignments.view_assigned", "/workspace/reviewer"],
+    ["collab.proposals.endorse", "/workspace/organization"],
+    ["collab.opportunities.create", "/workspace/enterprise"],
+    ["collab.decisions.issue_foundation", "/workspace/leadership"],
+    ["iam.roles.manage", "/admin/access"],
+  ];
+  for (const [capability, expectedPath] of roleCases) {
+    assert.equal(resolveLandingPath([capability]), expectedPath);
+  }
+  assert.equal(resolveLandingPath([]), "/account");
 });
 
 test("admin navigation contains access governance and security audit only", async () => {

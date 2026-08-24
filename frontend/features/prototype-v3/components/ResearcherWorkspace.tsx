@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { MOCK_PROPOSALS } from '../mock-data';
+import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
 
 export function ResearcherWorkspace() {
   const [activeTab, setActiveTab] = useState<'all' | 'proposals' | 'active'>('all');
@@ -21,21 +22,25 @@ export function ResearcherWorkspace() {
 
   return (
     <div className="w-full px-6 md:px-10 lg:px-12 py-8 space-y-8">
+      <WorkspacePreviewNotice scope="không gian Nhà nghiên cứu" />
+
       {/* Toast Notification */}
       {toastText && (
-        <div className="fixed bottom-8 right-8 z-50 rounded-2xl bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-2xl animate-fade-in border border-slate-700">
-          ✓ {toastText}
+        <div role="status" aria-live="polite" className="fixed bottom-6 left-4 right-4 z-50 rounded-2xl border border-blue-700 bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-2xl animate-fade-in sm:left-auto sm:right-6 sm:max-w-md">
+          <span className="mr-2 text-xs font-black uppercase tracking-wider text-blue-300">UI Preview</span>
+          {toastText}
         </div>
       )}
 
       {/* Invite Co-PI Modal */}
       {isInviteModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-[#fffdf8] dark:bg-slate-900 rounded-3xl max-w-xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+          <div role="dialog" aria-modal="true" aria-labelledby="invite-copi-title" className="bg-[#fffdf8] dark:bg-slate-900 rounded-3xl max-w-xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Mời Đồng chủ nhiệm (Co-PI) phía LB Nga</h3>
+              <h3 id="invite-copi-title" className="text-xl font-bold text-slate-900 dark:text-white">Xem trước lời mời Đồng chủ nhiệm (Co-PI) phía LB Nga</h3>
               <button
                 type="button"
+                aria-label="Đóng cửa sổ lời mời Co-PI"
                 onClick={() => setIsInviteModalOpen(false)}
                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-2xl font-bold"
               >
@@ -89,11 +94,11 @@ export function ResearcherWorkspace() {
                 type="button"
                 onClick={() => {
                   setIsInviteModalOpen(false);
-                  showToast('Đã gửi lời mời Co-PI tới Prof. Alexei Morozov');
+                  showToast('Đã mô phỏng bước mời Co-PI; chưa gửi lời mời lên backend.');
                 }}
                 className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 shadow-md"
               >
-                Gửi lời mời ngay
+                Mô phỏng bước mời
               </button>
             </div>
           </div>
@@ -116,7 +121,7 @@ export function ResearcherWorkspace() {
             Nghiên cứu Song phương Việt Nam – Liên bang Nga
           </h1>
           <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base mt-2">
-            Quản lý đề xuất hợp tác khoa học công nghệ, theo dõi tiến độ giải ngân &amp; thực hiện và kết nối Co-PI phía Nga.
+            Quản lý đề xuất hợp tác khoa học công nghệ, theo dõi tiến độ thực hiện và kết nối Co-PI phía Nga.
           </p>
         </div>
         <div className="flex items-center gap-3 shrink-0">
@@ -129,7 +134,7 @@ export function ResearcherWorkspace() {
           </button>
           <button
             type="button"
-            onClick={() => showToast('Mở trình soạn thảo đề xuất song phương mới')}
+            onClick={() => showToast('Bản xem trước trình soạn đề xuất; chưa tạo hồ sơ mới.')}
             className="px-6 py-3 rounded-2xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 shadow-md transition-all"
           >
             + Soạn đề xuất mới
@@ -268,7 +273,7 @@ export function ResearcherWorkspace() {
               <div className="flex gap-3 shrink-0">
                 <button
                   type="button"
-                  onClick={() => showToast(`Mở chi tiết đề xuất ${item.code}`)}
+                  onClick={() => showToast(`Bản xem trước chi tiết ${item.code}; chưa tải dữ liệu backend.`)}
                   className="px-5 py-2.5 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm transition-all"
                 >
                   Xem chi tiết

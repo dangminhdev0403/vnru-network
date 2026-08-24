@@ -15,8 +15,8 @@ export interface WorkspaceSidebarProps {
 
 const labels: Record<Locale, Record<string, string>> = {
   vi: {
-    workspaceModules: "KHÔNG GIAN LÀM VIỆC",
-    workspaceHub: "Tổng quan Workspace",
+    workspaceModules: "KHÔNG GIAN CỦA TÔI",
+    workspaceHub: "Tổng quan",
     researcher: "Nhà nghiên cứu (Researcher)",
     reviewer: "Hội đồng Phản biện",
     organization: "Đại diện Tổ chức (VAST)",
@@ -32,8 +32,8 @@ const labels: Record<Locale, Record<string, string>> = {
     security: "Bảo mật & Phiên đăng nhập",
   },
   en: {
-    workspaceModules: "WORKSPACE MODULES",
-    workspaceHub: "Workspace Overview",
+    workspaceModules: "MY WORKSPACE",
+    workspaceHub: "Overview",
     researcher: "Researcher",
     reviewer: "Peer Reviewer",
     organization: "Organization Rep",
@@ -49,8 +49,8 @@ const labels: Record<Locale, Record<string, string>> = {
     security: "Security & Sessions",
   },
   ru: {
-    workspaceModules: "РАБОЧИЕ ПРОСТРАНСТВА",
-    workspaceHub: "Обзор Workspace",
+    workspaceModules: "МОЁ РАБОЧЕЕ ПРОСТРАНСТВО",
+    workspaceHub: "Обзор",
     researcher: "Исследователь",
     reviewer: "Экспертный совет",
     organization: "Организация",

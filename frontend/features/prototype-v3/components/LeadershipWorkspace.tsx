@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
 
 export function LeadershipWorkspace() {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -13,24 +14,28 @@ export function LeadershipWorkspace() {
 
   return (
     <div className="w-full px-6 md:px-10 lg:px-12 py-8 space-y-8">
+      <WorkspacePreviewNotice scope="không gian Lãnh đạo" />
+
       {/* Toast Notification */}
       {toastText && (
-        <div className="fixed bottom-8 right-8 z-50 rounded-2xl bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-2xl animate-fade-in border border-slate-700">
-          ✓ {toastText}
+        <div role="status" aria-live="polite" className="fixed bottom-6 left-4 right-4 z-50 rounded-2xl border border-blue-700 bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-2xl animate-fade-in sm:left-auto sm:right-6 sm:max-w-md">
+          <span className="mr-2 text-xs font-black uppercase tracking-wider text-blue-300">UI Preview</span>
+          {toastText}
         </div>
       )}
 
       {/* Strategic Report Modal */}
       {isReportModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-[#fffdf8] dark:bg-slate-900 rounded-3xl max-w-3xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+          <div role="dialog" aria-modal="true" aria-labelledby="strategic-report-title" className="bg-[#fffdf8] dark:bg-slate-900 rounded-3xl max-w-3xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
               <div>
                 <span className="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">Ủy ban Hợp tác KH&amp;CN Việt – Nga</span>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Báo cáo Phân tích Tín hiệu Hợp tác Nghiên cứu Quý I/2026</h3>
+                <h3 id="strategic-report-title" className="text-xl font-bold text-slate-900 dark:text-white">Bản xem trước Báo cáo Phân tích Tín hiệu Hợp tác Quý I/2026</h3>
               </div>
               <button
                 type="button"
+                aria-label="Đóng bản xem trước báo cáo"
                 onClick={() => setIsReportModalOpen(false)}
                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-2xl font-bold"
               >
@@ -77,11 +82,11 @@ export function LeadershipWorkspace() {
               <button
                 type="button"
                 onClick={() => {
-                  showToast('Đang chuẩn bị bản in PDF báo cáo tham mưu...');
+                  showToast('Đã mở bản xem trước; chưa tạo hoặc tải xuống tệp PDF.');
                 }}
                 className="px-6 py-2.5 rounded-xl bg-blue-900 text-white font-bold text-sm hover:bg-blue-950 shadow-md transition-all"
               >
-                In / Xuất PDF báo cáo
+                Xem trước bản in PDF
               </button>
             </div>
           </div>
@@ -116,16 +121,16 @@ export function LeadershipWorkspace() {
           <div className="space-y-3">
             <span className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Báo cáo Quý I/2026</span>
             <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">Tổng quan Đề xuất &amp; Dự án Song phương</h3>
-            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">Phân tích 48 đề xuất mới, tỉ lệ phê duyệt theo từng lĩnh vực trọng điểm và phân bổ ngân sách song phương.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">Phân tích 48 đề xuất mẫu, tỉ lệ phê duyệt theo từng lĩnh vực trọng điểm và phân bố hoạt động song phương.</p>
           </div>
           <div className="flex items-center justify-between pt-4 border-t border-card-border">
-            <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 text-xs font-bold">Sẵn sàng xuất</span>
+            <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 text-xs font-bold">Bản xem trước</span>
             <button
               type="button"
               onClick={() => setIsReportModalOpen(true)}
               className="px-5 py-2.5 rounded-xl bg-blue-900 text-white font-bold text-sm hover:bg-blue-950 shadow-sm transition-all"
             >
-              Xem &amp; Xuất PDF
+              Xem trước báo cáo
             </button>
           </div>
         </div>

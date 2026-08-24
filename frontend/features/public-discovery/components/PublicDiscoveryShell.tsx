@@ -13,6 +13,11 @@ const COPY: Record<Locale, { knowledge: string; experts: string; opportunities: 
 export function PublicDiscoveryShell({ children, current }: { children: ReactNode; current: "experts" | "opportunities" }) {
   const { locale, setLocale } = useLocale();
   const t = COPY[locale];
+  const navItems = [
+    { href: "/knowledge", label: t.knowledge, active: false },
+    { href: "/experts", label: t.experts, active: current === "experts" },
+    { href: "/opportunities", label: t.opportunities, active: current === "opportunities" },
+  ];
 
   useEffect(() => { document.documentElement.lang = locale; }, [locale]);
 
@@ -24,13 +29,16 @@ export function PublicDiscoveryShell({ children, current }: { children: ReactNod
           <span className="min-w-0"><strong className="block truncate text-sm sm:text-base">VN–RU Network</strong><small className="hidden text-xs font-bold uppercase tracking-[0.16em] text-blue-100 sm:block">{t.repo}</small></span>
         </Link>
         <nav className="ml-auto hidden items-center gap-6 text-sm font-semibold text-slate-200 lg:flex" aria-label="Public discovery">
-          <Link href="/knowledge">{t.knowledge}</Link>
-          <Link href="/experts" aria-current={current === "experts" ? "page" : undefined} className={current === "experts" ? "text-white underline decoration-blue-400 decoration-2 underline-offset-8" : ""}>{t.experts}</Link>
-          <Link href="/opportunities" aria-current={current === "opportunities" ? "page" : undefined} className={current === "opportunities" ? "text-white underline decoration-red-400 decoration-2 underline-offset-8" : ""}>{t.opportunities}</Link>
+          {navItems.map((item) => <Link key={item.href} href={item.href} aria-current={item.active ? "page" : undefined} className={`transition-colors hover:text-white ${item.active ? "text-white underline decoration-sky-400 decoration-2 underline-offset-8" : ""}`}>{item.label}</Link>)}
         </nav>
         <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label="Language / Ngôn ngữ / Язык" className="ml-auto h-10 rounded-lg border border-white/20 bg-[#0b223d] px-2 text-xs font-extrabold text-white focus-visible:ring-2 focus-visible:ring-sky-300 lg:ml-0"><option value="vi">VI</option><option value="ru">RU</option><option value="en">EN</option></select>
         <Link href="/login" className="inline-flex min-h-10 items-center rounded-lg bg-[#2563eb] px-3 text-xs font-extrabold text-white hover:bg-[#1d4ed8] sm:px-4 sm:text-sm"><span className="hidden sm:inline">{t.join}</span><span className="sm:hidden">{t.joinShort}</span></Link>
       </div>
+      <nav className="border-t border-white/10 lg:hidden" aria-label="Public discovery">
+        <div className="mx-auto flex max-w-[1380px] gap-6 overflow-x-auto px-4 py-3 text-xs font-bold text-slate-200 sm:px-6">
+          {navItems.map((item) => <Link key={item.href} href={item.href} aria-current={item.active ? "page" : undefined} className={`shrink-0 transition-colors hover:text-white ${item.active ? "text-white underline decoration-sky-400 decoration-2 underline-offset-4" : ""}`}>{item.label}</Link>)}
+        </div>
+      </nav>
     </header>
     {children}
     <footer className="bg-[#06152f] px-4 py-10 text-white sm:px-6"><div className="mx-auto flex max-w-[1380px] flex-col gap-5 border-t border-white/10 pt-8 sm:flex-row sm:items-end sm:justify-between"><div><strong className="font-serif text-xl">VN–RU Network</strong><p className="mt-2 max-w-xl text-sm leading-6 text-blue-100">{t.mock}</p></div><nav className="flex flex-wrap gap-5 text-sm font-semibold text-slate-200"><Link href="/knowledge">{t.knowledge}</Link><Link href="/experts">{t.experts}</Link><Link href="/opportunities">{t.opportunities}</Link></nav></div></footer>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
 
 interface EndorsementItem {
   id: string;
@@ -53,7 +54,7 @@ export function OrganizationWorkspace() {
       prev.map((item) => (item.id === id ? { ...item, isEndorsed: true } : item))
     );
     setSelectedItemForModal(null);
-    showToast('Đã đóng dấu xác nhận bảo trợ cơ sở vật chất');
+    showToast('Đã mô phỏng bước xác nhận bảo trợ; chưa ghi dữ liệu lên backend.');
   };
 
   const filteredItems = items.filter((item) => {
@@ -64,21 +65,25 @@ export function OrganizationWorkspace() {
 
   return (
     <div className="w-full px-6 md:px-10 lg:px-12 py-8 space-y-8">
+      <WorkspacePreviewNotice scope="không gian Tổ chức" />
+
       {/* Toast Notification */}
       {toastText && (
-        <div className="fixed bottom-8 right-8 z-50 rounded-2xl bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-2xl animate-fade-in border border-slate-700">
-          ✓ {toastText}
+        <div role="status" aria-live="polite" className="fixed bottom-6 left-4 right-4 z-50 rounded-2xl border border-blue-700 bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-2xl animate-fade-in sm:left-auto sm:right-6 sm:max-w-md">
+          <span className="mr-2 text-xs font-black uppercase tracking-wider text-blue-300">UI Preview</span>
+          {toastText}
         </div>
       )}
 
       {/* Endorsement Confirmation Modal */}
       {selectedItemForModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-[#fffdf8] dark:bg-slate-900 rounded-3xl max-w-2xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+          <div role="dialog" aria-modal="true" aria-labelledby="endorsement-preview-title" className="bg-[#fffdf8] dark:bg-slate-900 rounded-3xl max-w-2xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Xác nhận Bảo trợ Đề xuất Song phương</h3>
+              <h3 id="endorsement-preview-title" className="text-xl font-bold text-slate-900 dark:text-white">Xem trước Xác nhận Bảo trợ Đề xuất Song phương</h3>
               <button
                 type="button"
+                aria-label="Đóng cửa sổ xem trước xác nhận bảo trợ"
                 onClick={() => setSelectedItemForModal(null)}
                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-2xl font-bold"
               >
@@ -96,9 +101,11 @@ export function OrganizationWorkspace() {
               </div>
               <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 space-y-2 text-sm leading-relaxed">
                 <span className="font-bold text-slate-900 dark:text-white block">Cam kết nguồn lực chính thức:</span>
-                <p>✓ Đảm bảo sử dụng: {selectedItemForModal.facilities}.</p>
-                <p>✓ Đảm bảo tối thiểu 40% quỹ thời gian làm việc của chủ nhiệm tại phòng thí nghiệm chuyên ngành.</p>
-                <p>✓ Hỗ trợ thủ tục pháp lý cho đoàn chuyên gia Nga sang làm việc tại Việt Nam.</p>
+                <ul className="space-y-2">
+                  <li className="flex gap-2"><span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-teal-600" />Đảm bảo sử dụng: {selectedItemForModal.facilities}.</li>
+                  <li className="flex gap-2"><span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-teal-600" />Đảm bảo tối thiểu 40% quỹ thời gian làm việc của chủ nhiệm tại phòng thí nghiệm chuyên ngành.</li>
+                  <li className="flex gap-2"><span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-teal-600" />Hỗ trợ thủ tục pháp lý cho đoàn chuyên gia Nga sang làm việc tại Việt Nam.</li>
+                </ul>
               </div>
             </div>
             <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex justify-end gap-3">
@@ -114,7 +121,7 @@ export function OrganizationWorkspace() {
                 onClick={() => handleEndorse(selectedItemForModal.id)}
                 className="px-6 py-2.5 rounded-xl bg-teal-700 text-white font-bold text-sm hover:bg-teal-800 shadow-md"
               >
-                Ký &amp; Đóng dấu xác nhận (Endorse)
+                Mô phỏng xác nhận bảo trợ
               </button>
             </div>
           </div>
@@ -209,11 +216,11 @@ export function OrganizationWorkspace() {
                     onClick={() => setSelectedItemForModal(item)}
                     className="px-6 py-3 rounded-2xl bg-teal-700 text-white font-bold text-sm hover:bg-teal-800 shadow-md transition-all"
                   >
-                    Ký &amp; Đóng dấu xác nhận
+                    Xem trước bước xác nhận
                   </button>
                 ) : (
                   <span className="px-5 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold text-sm">
-                    ✓ Đã cấp số công văn
+                    Trạng thái mẫu · Đã bảo trợ
                   </span>
                 )}
               </div>

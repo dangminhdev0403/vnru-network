@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
 
 export function ReviewerWorkspace() {
   const [novelty, setNovelty] = useState(8.5);
@@ -25,14 +26,17 @@ export function ReviewerWorkspace() {
 
   return (
     <div className="w-full px-6 md:px-10 lg:px-12 py-8 space-y-8">
+      <WorkspacePreviewNotice scope="không gian Phản biện" />
+
       {/* Submit Confirmation Modal */}
       {isConfirmModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-[#fffdf8] dark:bg-slate-900 rounded-3xl max-w-xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+          <div role="dialog" aria-modal="true" aria-labelledby="review-submit-title" className="bg-[#fffdf8] dark:bg-slate-900 rounded-3xl max-w-xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Xác nhận nộp đánh giá phản biện</h3>
+              <h3 id="review-submit-title" className="text-xl font-bold text-slate-900 dark:text-white">Xem trước bước nộp đánh giá phản biện</h3>
               <button
                 type="button"
+                aria-label="Đóng cửa sổ xem trước bước nộp"
                 onClick={() => setIsConfirmModalOpen(false)}
                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-2xl font-bold"
               >
@@ -41,7 +45,7 @@ export function ReviewerWorkspace() {
             </div>
             <div className="p-6 md:p-8 space-y-4 text-sm">
               <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-base">
-                Bạn sắp nộp bản nhận xét &amp; điểm số phản biện cho đề xuất song phương mã số{' '}
+                Bạn đang xem trước bản nhận xét &amp; điểm số phản biện cho đề xuất song phương mã số{' '}
                 <strong className="font-mono text-purple-900 dark:text-purple-300">#RU-VN-2026-BIO-08</strong> với tổng điểm{' '}
                 <strong className="text-purple-700 dark:text-purple-400 text-xl font-mono">{totalScore.toFixed(2)}/10</strong>.
               </p>
@@ -65,7 +69,7 @@ export function ReviewerWorkspace() {
                 }}
                 className="px-6 py-2.5 rounded-xl bg-purple-700 text-white font-bold text-sm hover:bg-purple-800 shadow-md"
               >
-                Xác nhận nộp ngay
+                Mô phỏng nộp đánh giá
               </button>
             </div>
           </div>
@@ -207,7 +211,7 @@ export function ReviewerWorkspace() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-card-border">
             {isSubmitted ? (
               <span className="px-4 py-2 rounded-2xl bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 text-sm font-bold">
-                ✓ Đã hoàn tất &amp; nộp kết quả phản biện
+                Đã cập nhật trạng thái bản xem trước · Chưa nộp backend
               </span>
             ) : (
               <span className="text-sm text-slate-500 dark:text-slate-400">Trạng thái: Đang soạn thảo bản nhận xét</span>
@@ -218,7 +222,7 @@ export function ReviewerWorkspace() {
               disabled={isSubmitted}
               className="px-6 py-3 rounded-2xl bg-purple-700 text-white font-bold text-sm md:text-base hover:bg-purple-800 shadow-md disabled:opacity-50 transition-all"
             >
-              Nộp kết quả phản biện
+              Xem trước bước nộp
             </button>
           </div>
         </div>

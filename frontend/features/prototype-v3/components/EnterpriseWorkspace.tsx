@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
 import { ConsortiumSlot } from '../types';
 import { INITIAL_2PLUS2_SLOTS, RU_ENTERPRISE_CANDIDATES } from '../mock-data';
 
@@ -32,29 +33,33 @@ export function EnterpriseWorkspace() {
       )
     );
     setIsSlotModalOpen(false);
-    showToast(`Đã ghép ${candidate.name} vào vị trí thứ 4 của Liên danh 2+2`);
+    showToast(`Đã cập nhật ${candidate.name} vào liên danh mẫu; chưa ghi dữ liệu lên backend.`);
   };
 
   return (
     <div className="w-full px-6 md:px-10 lg:px-12 py-8 space-y-8">
+      <WorkspacePreviewNotice scope="không gian Điều phối hợp tác" />
+
       {/* Toast Notification */}
       {toastText && (
-        <div className="fixed bottom-8 right-8 z-50 rounded-2xl bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-2xl animate-fade-in border border-slate-700">
-          ✓ {toastText}
+        <div role="status" aria-live="polite" className="fixed bottom-6 left-4 right-4 z-50 rounded-2xl border border-blue-700 bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-2xl animate-fade-in sm:left-auto sm:right-6 sm:max-w-md">
+          <span className="mr-2 text-xs font-black uppercase tracking-wider text-blue-300">UI Preview</span>
+          {toastText}
         </div>
       )}
 
       {/* Partner Selector Modal */}
       {isSlotModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-[#fffdf8] dark:bg-slate-900 rounded-3xl max-w-2xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+          <div role="dialog" aria-modal="true" aria-labelledby="enterprise-match-title" className="bg-[#fffdf8] dark:bg-slate-900 rounded-3xl max-w-2xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Chọn Doanh nghiệp đối tác Liên bang Nga</h3>
+                <h3 id="enterprise-match-title" className="text-xl font-bold text-slate-900 dark:text-white">Xem trước ghép Doanh nghiệp đối tác Liên bang Nga</h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Danh mục doanh nghiệp công nghệ cao sẵn sàng tham gia Liên danh 2+2</p>
               </div>
               <button
                 type="button"
+                aria-label="Đóng cửa sổ xem trước ghép doanh nghiệp"
                 onClick={() => setIsSlotModalOpen(false)}
                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-2xl font-bold"
               >
@@ -77,7 +82,7 @@ export function EnterpriseWorkspace() {
                     onClick={() => handleSelectPartner(c)}
                     className="px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-sm hover:bg-amber-700 shrink-0 shadow-sm transition-all self-start sm:self-auto"
                   >
-                    Chọn đối tác
+                    Mô phỏng chọn đối tác
                   </button>
                 </div>
               ))}
@@ -133,7 +138,7 @@ export function EnterpriseWorkspace() {
         {/* VN Side */}
         <div className="p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-card-border pb-4">
-            <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">🇻🇳 Phía Việt Nam</h3>
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white md:text-xl"><span className="rounded-md bg-red-50 px-2 py-1 text-xs font-black text-red-700 dark:bg-red-950/40 dark:text-red-300">VN</span> Phía Việt Nam</h3>
             <span className="text-xs font-black px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
               2/2 Vị trí đủ
             </span>
@@ -158,7 +163,7 @@ export function EnterpriseWorkspace() {
         {/* RU Side */}
         <div className="p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-card-border pb-4">
-            <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">🇷🇺 Phía Liên bang Nga</h3>
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white md:text-xl"><span className="rounded-md bg-blue-50 px-2 py-1 text-xs font-black text-blue-700 dark:bg-blue-950/40 dark:text-blue-300">RU</span> Phía Liên bang Nga</h3>
             <span className={`text-xs font-black px-3 py-1 rounded-full ${
               slots.find((s) => s.type === 'ru-ent')?.isFilled
                 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300'
@@ -200,7 +205,7 @@ export function EnterpriseWorkspace() {
                   <strong className="block text-base font-bold text-amber-900 dark:text-amber-200">Chưa ghép doanh nghiệp đối tác LB Nga</strong>
                   <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400">Nhấp vào đây để chọn doanh nghiệp từ danh bạ đối tác Nga</p>
                   <span className="inline-block px-4 py-2 rounded-xl bg-amber-600 text-white font-bold text-xs md:text-sm shadow-sm mt-1">
-                    + Tìm &amp; Ghép Doanh nghiệp Nga ngay
+                    + Xem trước ghép Doanh nghiệp Nga
                   </span>
                 </button>
               );
@@ -224,18 +229,18 @@ export function EnterpriseWorkspace() {
           </div>
           <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400">
             {isComplete
-              ? '✓ Cấu trúc liên danh đã hoàn chỉnh 4 bên. Đã đủ điều kiện nộp hồ sơ xin cấp phép liên danh cấp quốc gia.'
-              : '⚠️ Hãy bổ sung vị trí Doanh nghiệp Nga để hoàn tất điều kiện 2+2.'}
+              ? 'Cấu trúc mẫu đã hoàn chỉnh 4 bên; sẵn sàng xem trước bước lập thỏa thuận.'
+              : 'Cần bổ sung vị trí Doanh nghiệp Nga để hoàn tất cấu trúc mẫu 2+2.'}
           </p>
         </div>
 
         <button
           type="button"
           disabled={!isComplete}
-          onClick={() => showToast('Đã khởi tạo thỏa thuận pháp lý liên danh 2+2 bốn bên')}
+          onClick={() => showToast('Đã mở trạng thái mẫu của thỏa thuận 2+2; chưa tạo hồ sơ backend.')}
           className="px-8 py-4 rounded-2xl bg-amber-600 text-white font-bold text-sm md:text-base hover:bg-amber-700 shadow-md disabled:opacity-40 shrink-0 transition-all"
         >
-          Ký Thỏa thuận Liên danh 2+2
+          Xem trước bước lập thỏa thuận
         </button>
       </div>
     </div>

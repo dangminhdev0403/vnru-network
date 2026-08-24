@@ -35,6 +35,36 @@ export const WORKSPACE_PERSONAS: Record<string, WorkspacePersona> = {
     matchCapabilities: ["iam.roles.manage", "iam.users.manage"],
     primaryLanding: "/admin/access",
   },
+  RESEARCHER: {
+    key: "RESEARCHER",
+    name: "Nhà nghiên cứu",
+    matchCapabilities: ["collab.proposals.create"],
+    primaryLanding: "/workspace/researcher",
+  },
+  REVIEWER: {
+    key: "REVIEWER",
+    name: "Hội đồng phản biện",
+    matchCapabilities: ["reviews.assignments.view_assigned"],
+    primaryLanding: "/workspace/reviewer",
+  },
+  ORGANIZATION_REPRESENTATIVE: {
+    key: "ORGANIZATION_REPRESENTATIVE",
+    name: "Đại diện tổ chức",
+    matchCapabilities: ["collab.proposals.endorse"],
+    primaryLanding: "/workspace/organization",
+  },
+  COLLABORATION_MANAGER: {
+    key: "COLLABORATION_MANAGER",
+    name: "Điều phối hợp tác",
+    matchCapabilities: ["collab.opportunities.create"],
+    primaryLanding: "/workspace/enterprise",
+  },
+  FOUNDATION_DECISION_MAKER: {
+    key: "FOUNDATION_DECISION_MAKER",
+    name: "Điều phối chiến lược",
+    matchCapabilities: ["collab.decisions.issue_foundation"],
+    primaryLanding: "/workspace/leadership",
+  },
 };
 
 export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
@@ -42,19 +72,18 @@ export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
     key: "workspace_modules",
     labelKey: "workspaceModules",
     items: [
-      { key: "workspace_hub", href: "/workspace", labelKey: "workspaceHub", icon: "space_dashboard" },
-      { key: "researcher", href: "/workspace/researcher", labelKey: "researcher", icon: "science" },
-      { key: "reviewer", href: "/workspace/reviewer", labelKey: "reviewer", icon: "rate_review" },
-      { key: "organization", href: "/workspace/organization", labelKey: "organization", icon: "domain" },
-      { key: "enterprise", href: "/workspace/enterprise", labelKey: "enterprise", icon: "handshake" },
-      { key: "leadership", href: "/workspace/leadership", labelKey: "leadership", icon: "analytics" },
+      { key: "researcher", href: "/workspace/researcher", labelKey: "researcher", icon: "science", requiredCapabilities: ["collab.proposals.create"] },
+      { key: "reviewer", href: "/workspace/reviewer", labelKey: "reviewer", icon: "rate_review", requiredCapabilities: ["reviews.assignments.view_assigned"] },
+      { key: "organization", href: "/workspace/organization", labelKey: "organization", icon: "domain", requiredCapabilities: ["collab.proposals.endorse"] },
+      { key: "enterprise", href: "/workspace/enterprise", labelKey: "enterprise", icon: "handshake", requiredCapabilities: ["collab.opportunities.create"] },
+      { key: "leadership", href: "/workspace/leadership", labelKey: "leadership", icon: "analytics", requiredCapabilities: ["collab.decisions.issue_foundation"] },
     ],
   },
   {
     key: "administration",
     labelKey: "administration",
     items: [
-      { key: "governance", href: "/governance", labelKey: "governance", icon: "policy" },
+      { key: "governance", href: "/governance", labelKey: "governance", icon: "policy", requiredCapabilities: ["iam.roles.manage"] },
       { key: "access_control", href: "/admin/access/roles", labelKey: "accessControl", icon: "manage_accounts", requiredCapabilities: ["iam.roles.manage"] },
       { key: "audit", href: "/admin/audit", labelKey: "audit", icon: "security", requiredCapabilities: ["iam.audit.view", "iam.roles.manage"] },
     ],

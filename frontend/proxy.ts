@@ -10,7 +10,6 @@ import {
 
 export default auth(async function proxy(request) {
   if (
-    request.nextUrl.pathname.startsWith("/workspace") ||
     request.nextUrl.pathname.startsWith("/governance")
   ) {
     return NextResponse.next();
@@ -61,5 +60,5 @@ export default auth(async function proxy(request) {
 });
 
 export const config = {
-  matcher: ["/admin/:path*", "/admin/iam", "/account", "/security"],
+  matcher: ["/workspace/:path*", "/admin/:path*", "/admin/iam", "/account", "/security"],
 };
