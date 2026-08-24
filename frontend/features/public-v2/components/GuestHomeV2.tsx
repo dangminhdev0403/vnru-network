@@ -121,10 +121,10 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
             fill
             priority
             sizes="100vw"
-            className="pointer-events-none object-cover object-center opacity-45"
+            className="pointer-events-none object-cover object-center opacity-35 sm:opacity-50 lg:opacity-75"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,.94)_0%,rgba(255,255,255,.72)_43%,rgba(239,246,255,.76)_100%)]" aria-hidden="true" />
-          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-blue-50/90 to-transparent" aria-hidden="true" />
+          <div className="absolute inset-0 bg-white/80 lg:bg-[linear-gradient(90deg,rgba(255,255,255,.92)_0%,rgba(255,255,255,.82)_31%,rgba(255,255,255,.28)_50%,rgba(239,246,255,.52)_68%,rgba(239,246,255,.66)_100%)]" aria-hidden="true" />
+          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-blue-50/45 to-transparent" aria-hidden="true" />
           <div className="relative mx-auto grid max-w-[1460px] gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch">
             {/* Left Column: Slides in smoothly from the Left */}
             <div className="flex max-w-3xl flex-col justify-between animate-slide-in-left">
@@ -227,7 +227,7 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
 
             {/* Right Column: Slides in smoothly from the Right */}
             <div className="relative mx-auto w-full max-w-[560px] lg:max-w-none animate-slide-in-right">
-              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-blue-200/90 bg-white p-6 sm:p-7 shadow-[0_20px_50px_-20px_rgba(37,99,235,0.18)] backdrop-blur-xl transition hover:shadow-[0_25px_60px_-15px_rgba(37,99,235,0.25)]">
+              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-blue-200/90 bg-white/88 p-6 shadow-[0_20px_50px_-20px_rgba(37,99,235,0.18)] backdrop-blur-xl transition hover:bg-white/94 hover:shadow-[0_25px_60px_-15px_rgba(37,99,235,0.25)] sm:p-7">
                 <div className="absolute -right-12 -top-12 size-48 rounded-full bg-blue-100/60 blur-3xl" aria-hidden="true" />
                 <div className="absolute -left-12 -bottom-12 size-48 rounded-full bg-sky-100/60 blur-3xl" aria-hidden="true" />
 
