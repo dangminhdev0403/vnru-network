@@ -121,10 +121,10 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
             fill
             priority
             sizes="100vw"
-            className="pointer-events-none object-cover object-center opacity-35 sm:opacity-50 lg:opacity-75"
+            className="pointer-events-none object-cover object-center opacity-55 sm:opacity-75 lg:opacity-95"
           />
-          <div className="absolute inset-0 bg-white/80 lg:bg-[linear-gradient(90deg,rgba(255,255,255,.92)_0%,rgba(255,255,255,.82)_31%,rgba(255,255,255,.28)_50%,rgba(239,246,255,.52)_68%,rgba(239,246,255,.66)_100%)]" aria-hidden="true" />
-          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-blue-50/45 to-transparent" aria-hidden="true" />
+          <div className="absolute inset-0 bg-white/60 lg:bg-[linear-gradient(90deg,rgba(255,255,255,.8)_0%,rgba(255,255,255,.64)_30%,rgba(255,255,255,.08)_50%,rgba(239,246,255,.24)_68%,rgba(239,246,255,.36)_100%)]" aria-hidden="true" />
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-blue-50/15 to-transparent" aria-hidden="true" />
           <div className="relative mx-auto grid max-w-[1460px] gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch">
             {/* Left Column: Slides in smoothly from the Left */}
             <div className="flex max-w-3xl flex-col justify-between animate-slide-in-left">
@@ -159,7 +159,7 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
 
                 {/* Bright Bilateral Strategic Focus Cards with Larger Typography */}
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-                  <div className="rounded-2xl border border-sky-200/90 bg-white p-4 shadow-sm shadow-sky-500/5 transition duration-300 hover:-translate-y-1 hover:border-sky-400 hover:shadow-md">
+                  <div className="rounded-2xl border border-white/55 bg-white/48 p-4 shadow-sm shadow-sky-500/5 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-sky-300 hover:bg-white/62 hover:shadow-md">
                     <div className="flex items-center justify-between">
                       <span className="grid size-9 place-items-center rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 text-sm font-bold text-white shadow-sm shadow-blue-500/30">⚡</span>
                       <span className="rounded-full border border-sky-200/80 bg-sky-50 px-2.5 py-0.5 text-xs font-bold text-sky-700">Trọng điểm</span>
@@ -168,7 +168,7 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
                     <p className="mt-1.5 text-sm sm:text-[14.5px] text-slate-600 leading-snug font-medium">AI, Vật liệu Nano & Biển sâu</p>
                   </div>
 
-                  <div className="rounded-2xl border border-indigo-200/90 bg-white p-4 shadow-sm shadow-indigo-500/5 transition duration-300 hover:-translate-y-1 hover:border-indigo-400 hover:shadow-md">
+                  <div className="rounded-2xl border border-white/55 bg-white/48 p-4 shadow-sm shadow-indigo-500/5 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-indigo-300 hover:bg-white/62 hover:shadow-md">
                     <div className="flex items-center justify-between">
                       <span className="grid size-9 place-items-center rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-400 text-sm font-bold text-white shadow-sm shadow-indigo-500/30">🏛</span>
                       <span className="rounded-full border border-indigo-200/80 bg-indigo-50 px-2.5 py-0.5 text-xs font-bold text-indigo-700">Học thuật</span>
@@ -177,7 +177,7 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
                     <p className="mt-1.5 text-sm sm:text-[14.5px] text-slate-600 leading-snug font-medium">Quỹ Truyền thống & Hữu nghị / VAST</p>
                   </div>
 
-                  <div className="rounded-2xl border border-emerald-200/90 bg-white p-4 shadow-sm shadow-emerald-500/5 transition duration-300 hover:-translate-y-1 hover:border-emerald-400 hover:shadow-md">
+                  <div className="rounded-2xl border border-white/55 bg-white/48 p-4 shadow-sm shadow-emerald-500/5 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:bg-white/62 hover:shadow-md">
                     <div className="flex items-center justify-between">
                       <span className="grid size-9 place-items-center rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-400 text-sm font-bold text-white shadow-sm shadow-emerald-500/30">🌐</span>
                       <span className="rounded-full border border-emerald-200/80 bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-emerald-800">Dữ liệu mở</span>
@@ -227,7 +227,7 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
 
             {/* Right Column: Slides in smoothly from the Right */}
             <div className="relative mx-auto w-full max-w-[560px] lg:max-w-none animate-slide-in-right">
-              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-blue-200/90 bg-white/88 p-6 shadow-[0_20px_50px_-20px_rgba(37,99,235,0.18)] backdrop-blur-xl transition hover:bg-white/94 hover:shadow-[0_25px_60px_-15px_rgba(37,99,235,0.25)] sm:p-7">
+              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-white/50 bg-sky-50/36 p-6 shadow-[0_20px_50px_-20px_rgba(37,99,235,0.2)] backdrop-blur-sm transition duration-500 hover:bg-sky-50/46 hover:shadow-[0_25px_60px_-15px_rgba(37,99,235,0.26)] sm:p-7">
                 <div className="absolute -right-12 -top-12 size-48 rounded-full bg-blue-100/60 blur-3xl" aria-hidden="true" />
                 <div className="absolute -left-12 -bottom-12 size-48 rounded-full bg-sky-100/60 blur-3xl" aria-hidden="true" />
 
@@ -245,8 +245,8 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
                     </h2>
 
                     <div className="mt-5 space-y-4">
-                      <div className="flex items-start gap-4 rounded-2xl border border-blue-200/75 bg-white/90 p-4.5 shadow-2xs transition hover:border-blue-300 hover:bg-white hover:shadow-xs">
-                        <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700 text-lg font-black text-white shadow-sm shadow-blue-500/25">
+                      <div className="flex items-start gap-4 rounded-2xl border border-white/55 bg-white/40 p-4.5 shadow-2xs backdrop-blur-sm transition duration-300 hover:border-white/75 hover:bg-white/54 hover:shadow-xs">
+                        <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700 text-lg font-black text-white opacity-88 shadow-sm shadow-blue-500/25">
                           16
                         </span>
                         <div className="min-w-0">
@@ -260,8 +260,8 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
                         </div>
                       </div>
 
-                      <div className="flex items-start gap-4 rounded-2xl border border-blue-200/75 bg-white/90 p-4.5 shadow-2xs transition hover:border-blue-300 hover:bg-white hover:shadow-xs">
-                        <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-base sm:text-lg font-black text-white shadow-sm shadow-indigo-500/25">
+                      <div className="flex items-start gap-4 rounded-2xl border border-white/55 bg-white/40 p-4.5 shadow-2xs backdrop-blur-sm transition duration-300 hover:border-white/75 hover:bg-white/54 hover:shadow-xs">
+                        <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-base sm:text-lg font-black text-white opacity-88 shadow-sm shadow-indigo-500/25">
                           500+
                         </span>
                         <div className="min-w-0">
@@ -275,8 +275,8 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
                         </div>
                       </div>
 
-                      <div className="flex items-start gap-4 rounded-2xl border border-blue-200/75 bg-white/90 p-4.5 shadow-2xs transition hover:border-blue-300 hover:bg-white hover:shadow-xs">
-                        <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 text-lg font-black text-white shadow-sm shadow-emerald-500/25">
+                      <div className="flex items-start gap-4 rounded-2xl border border-white/55 bg-white/40 p-4.5 shadow-2xs backdrop-blur-sm transition duration-300 hover:border-white/75 hover:bg-white/54 hover:shadow-xs">
+                        <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 text-lg font-black text-white opacity-88 shadow-sm shadow-emerald-500/25">
                           14
                         </span>
                         <div className="min-w-0">
