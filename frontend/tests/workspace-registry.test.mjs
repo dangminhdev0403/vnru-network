@@ -54,6 +54,27 @@ test("workspace navigation exposes only destinations allowed by capability", () 
     "/account",
     "/security",
   ]);
+
+  const fullAdminCapabilities = [
+    "iam.roles.manage",
+    "iam.users.manage",
+    "collab.proposals.create",
+    "reviews.assignments.view_assigned",
+    "collab.proposals.endorse",
+    "collab.opportunities.create",
+    "collab.decisions.issue_foundation",
+  ];
+  assert.deepEqual(
+    filterNavSections(fullAdminCapabilities).flatMap((section) =>
+      section.items.map((item) => item.href),
+    ),
+    ["/admin/access", "/account", "/security"],
+  );
+  assert.deepEqual(
+    resolveUserPersonas(fullAdminCapabilities).map((persona) => persona.key),
+    ["SUPER_ADMIN"],
+  );
+  assert.equal(resolveLandingPath(fullAdminCapabilities), "/admin/access");
 });
 
 test("persona resolution recognizes current workspace roles and IAM independently", () => {

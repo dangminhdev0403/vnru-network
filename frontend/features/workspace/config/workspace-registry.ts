@@ -123,7 +123,11 @@ export function hasCapability(userCapabilities: string[], required?: string | st
 }
 
 export function filterNavSections(userCapabilities: string[] = []): WorkspaceNavSection[] {
-  return WORKSPACE_NAV_REGISTRY.filter((section) =>
+  const allowedSections = hasCapability(userCapabilities, ["iam.roles.manage", "iam.users.manage"])
+    ? WORKSPACE_NAV_REGISTRY.filter((section) => section.key !== "workspace_modules")
+    : WORKSPACE_NAV_REGISTRY;
+
+  return allowedSections.filter((section) =>
     hasCapability(userCapabilities, section.requiredCapabilities),
   ).map((section) => {
     const visibleItems = section.items.filter((item) => hasCapability(userCapabilities, item.requiredCapabilities));
@@ -135,6 +139,9 @@ export function filterNavSections(userCapabilities: string[] = []): WorkspaceNav
 }
 
 export function resolveUserPersonas(userCapabilities: string[] = []): WorkspacePersona[] {
+  if (hasCapability(userCapabilities, ["iam.roles.manage", "iam.users.manage"])) {
+    return [WORKSPACE_PERSONAS.SUPER_ADMIN];
+  }
   return Object.values(WORKSPACE_PERSONAS).filter((persona) =>
     persona.matchCapabilities.some((cap) => userCapabilities.includes(cap))
   );

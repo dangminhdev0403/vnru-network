@@ -10,8 +10,12 @@ export function sanitizeReturnTo(value: string | null | undefined): string {
   return value?.startsWith("/") && !value.startsWith("//") ? value : "/account";
 }
 
+export function isSystemAdministrator(capabilities: string[] = []): boolean {
+  return capabilities.includes("iam.roles.manage") || capabilities.includes("iam.users.manage");
+}
+
 export function resolveLandingPath(capabilities: string[] = []): string {
-  if (capabilities.includes("iam.roles.manage") || capabilities.includes("iam.users.manage")) {
+  if (isSystemAdministrator(capabilities)) {
     return "/admin/access";
   }
   if (capabilities.includes("collab.decisions.issue_foundation")) {

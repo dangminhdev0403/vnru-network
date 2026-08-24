@@ -40,9 +40,20 @@ test("authenticated shell contains current capability-gated task workspaces and 
   assert.doesNotMatch(registry, /href: "\/governance"/);
   assert.doesNotMatch(header, /searchPlaceholder|\/admin\/catalogs/);
   assert.match(proxy, /"\/workspace\/:path\*"/);
+  assert.match(proxy, /isSystemAdministrator\(capabilities\)/);
+  assert.match(proxy, /target\.pathname = "\/admin\/access"/);
+  assert.match(proxy, /target\.search = ""/);
 });
 
 test("current role routes declare backend-aligned capability guards", async () => {
+  const guard = await read("features/auth/workspace-server.ts");
+  assert.match(guard, /redirect\("\/admin\/access"\)/);
+  assert.ok(
+    guard.indexOf("isSystemAdministrator(capabilities)")
+      < guard.indexOf("requiredCapabilities.some"),
+    "system administration must win before business workspace capabilities",
+  );
+
   const roleCases = [
     ["researcher", "collab.proposals.create"],
     ["reviewer", "reviews.assignments.view_assigned"],

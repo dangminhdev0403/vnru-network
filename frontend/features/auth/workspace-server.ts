@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   getCurrentSession,
+  isSystemAdministrator,
   resolveLandingPath,
   SESSION_COOKIE_NAME,
 } from "./server";
@@ -32,6 +33,9 @@ export async function requireWorkspaceCapability(
   requiredCapabilities: string[],
 ): Promise<void> {
   const capabilities = await requireWorkspaceSession(returnTo);
+  if (isSystemAdministrator(capabilities)) {
+    redirect("/admin/access");
+  }
   if (!requiredCapabilities.some((capability) => capabilities.includes(capability))) {
     redirect(resolveLandingPath(capabilities));
   }

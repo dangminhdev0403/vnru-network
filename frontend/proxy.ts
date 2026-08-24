@@ -3,6 +3,7 @@ import { auth } from "./auth";
 import {
   authServiceUrl,
   backendHeaders,
+  isSystemAdministrator,
   resolveLandingPath,
   sanitizeReturnTo,
   SESSION_COOKIE_NAME,
@@ -37,12 +38,20 @@ export default auth(async function proxy(request) {
     }
 
     if (session?.ok) {
-      if (request.nextUrl.pathname === "/workspace" && !request.nextUrl.search) {
+      const isWorkspacePath = request.nextUrl.pathname === "/workspace"
+        || request.nextUrl.pathname.startsWith("/workspace/");
+      if (isWorkspacePath) {
         const me = (await session.json().catch(() => null)) as { capabilities?: string[] } | null;
-        const landing = resolveLandingPath(me?.capabilities ?? []);
-        if (landing !== "/workspace") {
+        const capabilities = me?.capabilities ?? [];
+        if (isSystemAdministrator(capabilities)) {
           const target = request.nextUrl.clone();
-          target.pathname = landing;
+          target.pathname = "/admin/access";
+          target.search = "";
+          return NextResponse.redirect(target);
+        }
+        if (request.nextUrl.pathname === "/workspace" && !request.nextUrl.search) {
+          const target = request.nextUrl.clone();
+          target.pathname = resolveLandingPath(capabilities);
           return NextResponse.redirect(target);
         }
       }
