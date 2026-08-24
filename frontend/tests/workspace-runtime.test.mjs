@@ -66,3 +66,26 @@ test("future enterprise and leadership pages remain authenticated UI previews wi
     assert.match(source, /UI Preview/);
   }
 });
+
+test("role workspace actions open stateful demo flows instead of ending at toast feedback", async () => {
+  const [dialog, researcher, reviewer, organization, collaboration] = await Promise.all([
+    read("features/workspace/components/WorkspaceTaskDialog.tsx"),
+    read("features/workspace/components/ResearcherTaskWorkspace.tsx"),
+    read("features/workspace/components/ReviewerTaskWorkspace.tsx"),
+    read("features/workspace/components/OrganizationTaskWorkspace.tsx"),
+    read("features/workspace/components/CollaborationManagerTaskWorkspace.tsx"),
+  ]);
+
+  assert.match(dialog, /ModalOverlay/);
+  assert.match(dialog, /isDismissable/);
+  assert.match(researcher, /kind: "create-proposal"/);
+  assert.match(researcher, /proposal-title/);
+  assert.match(researcher, /reportSavedAt/);
+  assert.match(reviewer, /draftSavedAt/);
+  assert.match(reviewer, /cloud_done/);
+  assert.match(organization, /setSelectedProjectCode\(project\.code\)/);
+  assert.match(organization, /Dự án tổ chức/);
+  assert.doesNotMatch(organization, /showToast\(`Mở \$\{project\.code\}/);
+  assert.match(collaboration, /kind: "create-opportunity"/);
+  assert.match(collaboration, /opportunity-title/);
+});

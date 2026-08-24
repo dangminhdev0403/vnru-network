@@ -19,6 +19,7 @@ type ReviewAssignment = { id: string; code: string; title: string; reviewer: str
 type ReportItem = { id: string; code: string; title: string; period: string; progress: number; state: ReportState };
 
 type DialogState =
+  | { kind: "create-opportunity" }
   | { kind: "opportunity"; id: string }
   | { kind: "screening"; id: string }
   | { kind: "assignment"; id: string }
@@ -84,6 +85,10 @@ function CollaborationManagerTaskWorkspaceContent() {
   const [busy, setBusy] = React.useState(false);
   const [toast, setToast] = React.useState<string | null>(null);
   const [alert, setAlert] = React.useState("Có 1 hồ sơ đủ điều kiện nhưng chưa được phân công phản biện.");
+  const [opportunityTitle, setOpportunityTitle] = React.useState("");
+  const [opportunityField, setOpportunityField] = React.useState("");
+  const [opportunityCloses, setOpportunityCloses] = React.useState("");
+  const [opportunityError, setOpportunityError] = React.useState<string | null>(null);
 
   const showToast = (message: string) => {
     setToast(message);
@@ -101,6 +106,21 @@ function CollaborationManagerTaskWorkspaceContent() {
 
   const screeningTone = (state: ScreeningState) => state === "ELIGIBLE" ? "green" : state === "NEEDS_INFO" ? "amber" : state === "NOT_ELIGIBLE" ? "red" : "blue";
   const reportTone = (state: ReportState) => state === "APPROVED" ? "green" : state === "RETURNED" ? "amber" : "blue";
+
+  const createOpportunity = () => {
+    if (!opportunityTitle.trim() || !opportunityField.trim() || !opportunityCloses) {
+      setOpportunityError("Nhập tên, lĩnh vực và hạn nhận hồ sơ để tạo bản nháp demo.");
+      return;
+    }
+    const code = `OPP-DEMO-${String(opportunities.length + 1).padStart(2, "0")}`;
+    void mutate("Đã tạo cơ hội bản nháp", `${code} · ${opportunityTitle.trim()}`, () => {
+      setOpportunities((items) => [{ id: `op-${Date.now()}`, code, title: opportunityTitle.trim(), field: opportunityField.trim(), closes: new Intl.DateTimeFormat("vi-VN").format(new Date(`${opportunityCloses}T00:00:00`)), state: "DRAFT" }, ...items]);
+      setOpportunityTitle("");
+      setOpportunityField("");
+      setOpportunityCloses("");
+      setOpportunityError(null);
+    });
+  };
 
   const activeOpportunity = dialog?.kind === "opportunity" ? opportunities.find((item) => item.id === dialog.id) : null;
   const activeScreening = dialog?.kind === "screening" ? screenings.find((item) => item.id === dialog.id) : null;
@@ -124,7 +144,7 @@ function CollaborationManagerTaskWorkspaceContent() {
       </>}
 
       {view === "opportunities" && <>
-        <ViewHeading eyebrow="Cơ hội nghiên cứu" title="Quản lý cơ hội hợp tác" description="Tạo bản nháp, xem chi tiết và mô phỏng công bố cơ hội. Trạng thái demo được thể hiện ngay trên danh sách." action={<button type="button" disabled={busy} onClick={() => void mutate("Đã tạo cơ hội bản nháp", "OPP-DEMO-NEW", () => setOpportunities((items) => [{ id: `op-${Date.now()}`, code: "OPP-DEMO-NEW", title: "Cơ hội nghiên cứu mới chưa đặt tên", field: "Chưa chọn lĩnh vực", closes: "Chưa đặt hạn", state: "DRAFT" }, ...items]))} className="min-h-11 rounded-xl bg-cyan-700 px-4 text-sm font-bold text-white disabled:opacity-60">+ Tạo cơ hội</button>} />
+        <ViewHeading eyebrow="Cơ hội nghiên cứu" title="Quản lý cơ hội hợp tác" description="Tạo bản nháp, xem chi tiết và mô phỏng công bố cơ hội. Trạng thái demo được thể hiện ngay trên danh sách." action={<button type="button" disabled={busy} onClick={() => setDialog({ kind: "create-opportunity" })} className="min-h-11 rounded-xl bg-cyan-700 px-4 text-sm font-bold text-white hover:bg-cyan-800 disabled:opacity-60">+ Tạo cơ hội</button>} />
         <section className="rounded-2xl border border-card-border bg-card-surface-area p-5 md:p-6"><div className="divide-y divide-card-border">{opportunities.map((item) => <article key={item.id} className="grid gap-4 py-5 lg:grid-cols-[1fr_auto] lg:items-center"><div><div className="flex flex-wrap items-center gap-2"><StatusPill tone={item.state === "PUBLISHED" ? "green" : "slate"}>{item.state === "PUBLISHED" ? "Đã công bố" : "Bản nháp"}</StatusPill><span className="font-mono text-xs text-slate-500">{item.code}</span></div><h2 className="mt-2 text-base font-bold text-slate-950 dark:text-white">{item.title}</h2><p className="mt-2 text-sm text-slate-500">{item.field} · Hạn demo: {item.closes}</p></div><button type="button" onClick={() => setDialog({ kind: "opportunity", id: item.id })} className="min-h-10 rounded-lg border border-card-border px-3 text-sm font-bold text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800">Xem chi tiết</button></article>)}</div></section>
       </>}
 
@@ -158,6 +178,7 @@ function CollaborationManagerTaskWorkspaceContent() {
       {activeAssignment && <WorkspaceTaskDialog title={activeAssignment.title} eyebrow="Phân công phản biện" tone="blue" onClose={() => setDialog(null)} footer={<><button type="button" onClick={() => setDialog(null)} className="min-h-10 rounded-lg border border-card-border px-4 text-sm font-bold text-slate-700 dark:text-slate-200">Hủy</button><button type="button" disabled={busy || reviewerCandidates.find((candidate) => candidate.name === selectedReviewer)?.conflict} onClick={() => void mutate("Đã mô phỏng phân công phản biện", `${activeAssignment.code} · ${selectedReviewer}`, () => { setAssignments((items) => items.map((item) => item.id === activeAssignment.id ? { ...item, reviewer: selectedReviewer } : item)); setAlert("Phân công demo đã cập nhật; Reviewer tương ứng cần nhận hồ sơ ở bước kế tiếp."); })} className="min-h-10 rounded-lg bg-cyan-700 px-4 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">Xác nhận phân công</button></>}><div className="space-y-3">{reviewerCandidates.map((candidate) => <label key={candidate.name} className={`flex cursor-pointer gap-3 rounded-xl border p-4 ${selectedReviewer === candidate.name ? "border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30" : "border-card-border"}`}><input type="radio" name="reviewer" value={candidate.name} checked={selectedReviewer === candidate.name} onChange={() => setSelectedReviewer(candidate.name)} className="mt-1" /><span className="min-w-0 flex-1"><strong className="block text-sm text-slate-900 dark:text-white">{candidate.name}</strong><span className="mt-1 block text-xs text-slate-500">{candidate.field} · {candidate.load}</span>{candidate.conflict && <span role="alert" className="mt-2 block text-xs font-bold text-rose-700 dark:text-rose-300">Cảnh báo xung đột lợi ích demo — không thể chọn.</span>}</span></label>)}</div></WorkspaceTaskDialog>}
 
       {activeReport && <WorkspaceTaskDialog title={activeReport.title} eyebrow="Báo cáo tiến độ" tone="blue" onClose={() => setDialog(null)} footer={<>{activeReport.state !== "APPROVED" && <><button type="button" disabled={busy} onClick={() => void mutate("Đã trả báo cáo để chỉnh sửa", activeReport.code, () => setReports((items) => items.map((item) => item.id === activeReport.id ? { ...item, state: "RETURNED" } : item)))} className="min-h-10 rounded-lg border border-amber-300 px-4 text-sm font-bold text-amber-800 dark:border-amber-800 dark:text-amber-200">Trả lại chỉnh sửa</button><button type="button" disabled={busy} onClick={() => void mutate("Đã mô phỏng duyệt báo cáo", activeReport.code, () => setReports((items) => items.map((item) => item.id === activeReport.id ? { ...item, state: "APPROVED" } : item)))} className="min-h-10 rounded-lg bg-cyan-700 px-4 text-sm font-bold text-white disabled:opacity-60">Mô phỏng duyệt</button></>}<button type="button" onClick={() => setDialog(null)} className="min-h-10 rounded-lg border border-card-border px-4 text-sm font-bold text-slate-700 dark:text-slate-200">Đóng</button></>}><div className="grid gap-4 sm:grid-cols-3"><Metric value={`${activeReport.progress}%`} label="Tiến độ" detail="Dữ liệu mô phỏng" /><Metric value={activeReport.period} label="Kỳ báo cáo" detail="Không chứa dữ liệu tài chính" /><Metric value={activeReport.state === "APPROVED" ? "Đã duyệt" : activeReport.state === "RETURNED" ? "Cần sửa" : "Chờ xử lý"} label="Trạng thái" detail="Cập nhật trong UI Preview" /></div></WorkspaceTaskDialog>}
+      {dialog?.kind === "create-opportunity" && <WorkspaceTaskDialog title="Tạo cơ hội nghiên cứu" eyebrow="Bản nháp cơ hội" tone="blue" onClose={() => { setDialog(null); setOpportunityError(null); }} footer={<><button type="button" onClick={() => setDialog(null)} className="min-h-10 rounded-lg border border-card-border px-4 text-sm font-bold text-slate-700 dark:text-slate-200">Hủy</button><button type="button" disabled={busy} onClick={createOpportunity} className="min-h-10 rounded-lg bg-cyan-700 px-4 text-sm font-bold text-white hover:bg-cyan-800 disabled:opacity-60">Lưu bản nháp</button></>}><div className="space-y-4"><div><label htmlFor="opportunity-title" className="text-sm font-bold text-slate-900 dark:text-white">Tên cơ hội</label><input id="opportunity-title" autoFocus value={opportunityTitle} onChange={(event) => { setOpportunityTitle(event.target.value); setOpportunityError(null); }} placeholder="Ví dụ: Vật liệu thông minh cho môi trường biển" className="mt-2 min-h-11 w-full rounded-xl border border-card-border bg-white px-3 text-sm text-slate-900 outline-none focus:border-cyan-500 dark:bg-slate-950 dark:text-white" /></div><div className="grid gap-4 sm:grid-cols-2"><div><label htmlFor="opportunity-field" className="text-sm font-bold text-slate-900 dark:text-white">Lĩnh vực</label><input id="opportunity-field" value={opportunityField} onChange={(event) => { setOpportunityField(event.target.value); setOpportunityError(null); }} placeholder="Vật liệu · Cảm biến" className="mt-2 min-h-11 w-full rounded-xl border border-card-border bg-white px-3 text-sm text-slate-900 outline-none focus:border-cyan-500 dark:bg-slate-950 dark:text-white" /></div><div><label htmlFor="opportunity-closes" className="text-sm font-bold text-slate-900 dark:text-white">Hạn nhận hồ sơ</label><input id="opportunity-closes" type="date" value={opportunityCloses} onChange={(event) => { setOpportunityCloses(event.target.value); setOpportunityError(null); }} className="mt-2 min-h-11 w-full rounded-xl border border-card-border bg-white px-3 text-sm text-slate-900 outline-none focus:border-cyan-500 dark:bg-slate-950 dark:text-white" /></div></div>{opportunityError && <p role="alert" className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm font-semibold text-rose-800 dark:border-rose-900 dark:bg-rose-950/30 dark:text-rose-200">{opportunityError}</p>}<p className="text-xs leading-5 text-slate-500">Bản nháp chỉ tồn tại trong phiên UI Preview và sẽ xuất hiện ngay đầu danh sách sau khi lưu.</p></div></WorkspaceTaskDialog>}
     </main>
   );
 }

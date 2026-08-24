@@ -64,6 +64,7 @@ function ReviewerTaskWorkspaceContent() {
   const [toast, setToast] = React.useState<string | null>(null);
   const [alert, setAlert] = React.useState("Có 1 hồ sơ mới được phân công và 1 phiếu đang cần hoàn tất.");
   const [validationMessage, setValidationMessage] = React.useState<string | null>(null);
+  const [draftSavedAt, setDraftSavedAt] = React.useState<string | null>(null);
   const totalScore = novelty * 0.3 + methodology * 0.25 + feasibility * 0.3 + impact * 0.15;
   const selectedAssignment = dialog?.kind === "assignment" ? assignments.find((item) => item.id === dialog.id) : null;
 
@@ -75,8 +76,9 @@ function ReviewerTaskWorkspaceContent() {
   const saveDraft = async () => {
     setBusy(true);
     await commitDemoMutation("reviewer", "Đã lưu bản nháp phản biện", `RU-VN-2026-BIO-08 · ${totalScore.toFixed(2)}/10`);
+    setDraftSavedAt(new Intl.DateTimeFormat("vi-VN", { hour: "2-digit", minute: "2-digit" }).format(new Date()));
     setBusy(false);
-    showToast("Bản nháp chỉ được ghi vào nhật ký demo.");
+    showToast("Bản nháp đã được cập nhật trong phiên demo.");
   };
 
   const requestSubmit = () => {
@@ -129,6 +131,7 @@ function ReviewerTaskWorkspaceContent() {
       </>}
 
       {view === "evaluation" && <>
+        {draftSavedAt && !submitted && <div role="status" className="flex items-center gap-3 rounded-xl border border-purple-200 bg-purple-50 px-4 py-3 text-sm text-purple-900 dark:border-purple-900 dark:bg-purple-950/30 dark:text-purple-100"><span className="material-symbols-outlined text-purple-700 dark:text-purple-300" aria-hidden="true">cloud_done</span><span><strong>Bản nháp đã lưu lúc {draftSavedAt}</strong><span className="block text-xs opacity-75">Điểm và nhận xét hiện tại được giữ trong phiên UI Preview.</span></span></div>}
         <ViewHeading eyebrow="Phiếu đánh giá" title={submitted ? "Phiếu phản biện đã nộp" : "Đánh giá hồ sơ RU-VN-2026-BIO-08"} description={submitted ? "Phiếu đã chuyển sang chỉ đọc sau thao tác nộp demo." : "Chấm điểm theo rubric, nhập nhận xét, lưu bản nháp và mở modal xác nhận trước khi nộp."} action={<StatusPill state={submitted ? "SUBMITTED" : "DRAFT"} />} />
         <section className="grid gap-5 xl:grid-cols-[1fr_320px]"><div className="rounded-2xl border border-card-border bg-card-surface-area p-5 md:p-6"><div className="space-y-4"><ScoreField id="novelty" label="Tính mới & giá trị khoa học" weight="30%" value={novelty} onChange={setNovelty} disabled={submitted || busy} /><ScoreField id="methodology" label="Phương pháp nghiên cứu" weight="25%" value={methodology} onChange={setMethodology} disabled={submitted || busy} /><ScoreField id="feasibility" label="Tính khả thi & bổ trợ song phương" weight="30%" value={feasibility} onChange={setFeasibility} disabled={submitted || busy} /><ScoreField id="impact" label="Tiềm năng công bố & đào tạo" weight="15%" value={impact} onChange={setImpact} disabled={submitted || busy} /><div><label htmlFor="review-comment" className="text-sm font-bold text-slate-900 dark:text-white">Nhận xét chuyên môn</label><textarea id="review-comment" disabled={submitted || busy} rows={6} value={comment} onChange={(event) => { setComment(event.target.value); setValidationMessage(null); }} className="mt-2 w-full rounded-xl border border-card-border bg-white p-3 text-sm leading-6 text-slate-900 outline-none focus:border-purple-500 disabled:opacity-60 dark:bg-slate-950 dark:text-white" />{validationMessage && <p role="alert" className="mt-2 text-sm font-semibold text-red-700 dark:text-red-300">{validationMessage}</p>}</div></div>{!submitted && <div className="mt-5 flex flex-wrap justify-end gap-2 border-t border-card-border pt-5"><button type="button" disabled={busy} onClick={() => void saveDraft()} className="min-h-10 rounded-lg border border-card-border px-4 text-sm font-bold text-slate-700 disabled:opacity-60 dark:text-slate-200">Lưu bản nháp demo</button><button type="button" disabled={busy} onClick={requestSubmit} className="min-h-10 rounded-lg bg-purple-700 px-4 text-sm font-bold text-white hover:bg-purple-800 disabled:opacity-60">Xem trước & nộp</button></div>}{submitted && <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300"><strong className="block">Đã nộp trong UI Preview</strong><span className="mt-1 block">Không có dữ liệu nghiệp vụ nào được gửi tới backend.</span></div>}</div><aside className="space-y-4"><div className="rounded-2xl border border-card-border bg-card-surface-area p-5"><p className="text-xs font-extrabold uppercase tracking-wider text-slate-500">Tổng điểm quy đổi</p><strong className="mt-2 block font-mono text-4xl text-purple-700 dark:text-purple-300">{totalScore.toFixed(2)}</strong><span className="text-sm font-bold text-slate-500">/ 10</span><div className="mt-4"><StatusPill state="PASS" /></div></div><div className="rounded-2xl border border-card-border bg-card-surface-area p-5"><h2 className="text-sm font-bold text-slate-900 dark:text-white">Kiểm tra trước khi nộp</h2><ul className="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300"><li>✓ 4 tiêu chí đã có điểm</li><li>✓ Nhận xét tối thiểu 30 ký tự</li><li>✓ Modal xác nhận trước submit</li></ul></div></aside></section>
       </>}
