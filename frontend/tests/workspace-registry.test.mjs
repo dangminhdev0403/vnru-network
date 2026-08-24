@@ -18,28 +18,32 @@ test("workspace navigation exposes only destinations allowed by capability", () 
   ]);
 
   const roleCases = [
-    ["collab.proposals.create", "/workspace/researcher"],
-    ["reviews.assignments.view_assigned", "/workspace/reviewer"],
-    ["collab.proposals.endorse", "/workspace/organization"],
+    { capabilities: ["collab.proposals.create"], landing: "/workspace/researcher", minItems: 7 },
+    { capabilities: ["reviews.assignments.view_assigned"], landing: "/workspace/reviewer", minItems: 6 },
+    { capabilities: ["collab.proposals.endorse"], landing: "/workspace/organization", minItems: 6 },
+    {
+      capabilities: [
+        "collab.opportunities.create",
+        "collab.opportunities.publish",
+        "collab.proposals.screen",
+        "reviews.assignments.manage",
+        "projects.projects.view",
+        "projects.reports.approve",
+      ],
+      landing: "/workspace/collaboration",
+      minItems: 8,
+    },
+    { capabilities: ["collab.decisions.issue_foundation", "projects.projects.view"], landing: "/workspace/decisions", minItems: 6 },
   ];
-  for (const [capability, expectedHref] of roleCases) {
-    const hrefs = filterNavSections([capability]).flatMap((section) =>
+
+  for (const { capabilities, landing, minItems } of roleCases) {
+    const hrefs = filterNavSections(capabilities).flatMap((section) =>
       section.items.map((item) => item.href),
     );
-    assert.equal(hrefs[0], expectedHref);
+    assert.equal(hrefs[0], landing);
     assert.equal(hrefs.at(-2), "/account");
     assert.equal(hrefs.at(-1), "/security");
-    assert.ok(hrefs.length >= 6, `${capability} should expose a complete role task skeleton`);
-  }
-
-  for (const futureCapability of [
-    "collab.opportunities.create",
-    "collab.decisions.issue_foundation",
-  ]) {
-    const hrefs = filterNavSections([futureCapability]).flatMap((section) =>
-      section.items.map((item) => item.href),
-    );
-    assert.deepEqual(hrefs, ["/account", "/security"]);
+    assert.ok(hrefs.length >= minItems, `${landing} should expose a complete task navigation`);
   }
 
   const adminItems = filterNavSections(["iam.roles.manage"]).flatMap(
@@ -52,11 +56,13 @@ test("workspace navigation exposes only destinations allowed by capability", () 
   ]);
 });
 
-test("persona resolution recognizes current live workspace roles and IAM independently", () => {
+test("persona resolution recognizes current workspace roles and IAM independently", () => {
   const roleCases = [
     ["collab.proposals.create", "RESEARCHER"],
     ["reviews.assignments.view_assigned", "REVIEWER"],
     ["collab.proposals.endorse", "ORGANIZATION_REPRESENTATIVE"],
+    ["collab.opportunities.create", "COLLABORATION_MANAGER"],
+    ["collab.decisions.issue_foundation", "FOUNDATION_DECISION_MAKER"],
   ];
   for (const [capability, expectedPersona] of roleCases) {
     assert.deepEqual(
@@ -64,26 +70,24 @@ test("persona resolution recognizes current live workspace roles and IAM indepen
       [expectedPersona],
     );
   }
-  assert.deepEqual(resolveUserPersonas(["collab.opportunities.create"]), []);
-  assert.deepEqual(resolveUserPersonas(["collab.decisions.issue_foundation"]), []);
   assert.deepEqual(
     resolveUserPersonas(["iam.roles.manage"]).map((persona) => persona.key),
     ["SUPER_ADMIN"],
   );
 });
 
-test("workspace landing resolves current live roles and falls back for future capabilities", () => {
+test("workspace landing resolves every current workspace persona", () => {
   const roleCases = [
     ["collab.proposals.create", "/workspace/researcher"],
     ["reviews.assignments.view_assigned", "/workspace/reviewer"],
     ["collab.proposals.endorse", "/workspace/organization"],
+    ["collab.opportunities.create", "/workspace/collaboration"],
+    ["collab.decisions.issue_foundation", "/workspace/decisions"],
     ["iam.roles.manage", "/admin/access"],
   ];
   for (const [capability, expectedPath] of roleCases) {
     assert.equal(resolveLandingPath([capability]), expectedPath);
   }
-  assert.equal(resolveLandingPath(["collab.opportunities.create"]), "/account");
-  assert.equal(resolveLandingPath(["collab.decisions.issue_foundation"]), "/account");
   assert.equal(resolveLandingPath([]), "/account");
 });
 
