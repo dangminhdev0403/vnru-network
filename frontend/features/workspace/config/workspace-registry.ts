@@ -53,6 +53,18 @@ export const WORKSPACE_PERSONAS: Record<string, WorkspacePersona> = {
     matchCapabilities: ["collab.proposals.endorse"],
     primaryLanding: "/workspace/organization",
   },
+  COLLABORATION_MANAGER: {
+    key: "COLLABORATION_MANAGER",
+    name: "Điều phối hợp tác",
+    matchCapabilities: ["collab.opportunities.create", "collab.proposals.screen", "reviews.assignments.manage"],
+    primaryLanding: "/workspace/collaboration",
+  },
+  FOUNDATION_DECISION_MAKER: {
+    key: "FOUNDATION_DECISION_MAKER",
+    name: "Cơ quan quyết định",
+    matchCapabilities: ["collab.decisions.issue_foundation"],
+    primaryLanding: "/workspace/decisions",
+  },
 };
 
 export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
@@ -73,6 +85,16 @@ export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
       { key: "organization_endorsements", href: "/workspace/organization?view=endorsements", labelKey: "endorsementQueue", icon: "fact_check", requiredCapabilities: ["collab.proposals.endorse"] },
       { key: "organization_projects", href: "/workspace/organization?view=projects", labelKey: "relatedProjects", icon: "account_tree", requiredCapabilities: ["collab.proposals.endorse"] },
       { key: "organization_activity", href: "/workspace/organization?view=activity", labelKey: "organizationActivity", icon: "monitoring", requiredCapabilities: ["collab.proposals.endorse"] },
+      { key: "manager_overview", href: "/workspace/collaboration", labelKey: "managerOverview", icon: "hub", requiredCapabilities: ["collab.opportunities.create"] },
+      { key: "manager_opportunities", href: "/workspace/collaboration?view=opportunities", labelKey: "opportunityManagement", icon: "campaign", requiredCapabilities: ["collab.opportunities.create", "collab.opportunities.publish"] },
+      { key: "manager_screening", href: "/workspace/collaboration?view=screening", labelKey: "proposalScreening", icon: "rule", requiredCapabilities: ["collab.proposals.screen"] },
+      { key: "manager_assignments", href: "/workspace/collaboration?view=assignments", labelKey: "reviewAssignments", icon: "assignment_ind", requiredCapabilities: ["reviews.assignments.manage"] },
+      { key: "manager_projects", href: "/workspace/collaboration?view=projects", labelKey: "programProjects", icon: "account_tree", requiredCapabilities: ["collab.opportunities.create"] },
+      { key: "manager_reports", href: "/workspace/collaboration?view=reports", labelKey: "reportApprovals", icon: "task", requiredCapabilities: ["projects.reports.approve"] },
+      { key: "decision_overview", href: "/workspace/decisions", labelKey: "decisionOverview", icon: "gavel", requiredCapabilities: ["collab.decisions.issue_foundation"] },
+      { key: "decision_queue", href: "/workspace/decisions?view=queue", labelKey: "decisionQueue", icon: "pending_actions", requiredCapabilities: ["collab.decisions.issue_foundation"] },
+      { key: "decision_history", href: "/workspace/decisions?view=history", labelKey: "decisionHistory", icon: "history", requiredCapabilities: ["collab.decisions.issue_foundation"] },
+      { key: "decision_projects", href: "/workspace/decisions?view=projects", labelKey: "decisionProjects", icon: "view_in_ar", requiredCapabilities: ["collab.decisions.issue_foundation"] },
     ],
   },
   {
