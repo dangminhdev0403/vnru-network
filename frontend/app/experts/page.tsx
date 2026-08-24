@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { ExpertsIndexPage } from "@/features/public-discovery/components/PublicDiscoveryPages";
+import { GuestExpertsV2 } from "@/features/public-v2/components/GuestExpertsV2";
 
-export const metadata: Metadata = { title: "Chuyên gia | VN–RU Network", description: "Public preview of experts across the Vietnam–Russia knowledge network." };
+export const metadata: Metadata = {
+  title: "Chuyên gia | VN–RU Network",
+  description: "Khám phá chuyên gia trong Mạng lưới Khoa học & Công nghệ Nga – Việt.",
+};
 
 export default function Page() {
-  return <ExpertsIndexPage />;
+  return <GuestExpertsV2 />;
 }
