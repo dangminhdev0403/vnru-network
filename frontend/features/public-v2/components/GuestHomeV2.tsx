@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { GuestExploreMedia } from "./GuestExploreMedia";
 import { GuestPublicNav } from "./GuestPublicNav";
 
@@ -113,8 +114,17 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
       <GuestPublicNav active="home" isAuthenticated={isAuthenticated} workspaceHref={workspaceHref} />
 
       <main>
-        <section className="relative overflow-hidden border-b border-blue-200/80 bg-[radial-gradient(ellipse_100%_80%_at_50%_-10%,rgba(59,130,246,0.15),rgba(255,255,255,0.95)),linear-gradient(180deg,#ffffff_0%,#f0f7ff_60%,#e4f0fd_100%)] px-4 py-12 sm:px-6 lg:px-8 lg:py-18">
-          <div className="absolute inset-0 opacity-40 bg-[linear-gradient(rgba(59,130,246,.04)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,.04)_1px,transparent_1px)] bg-[size:42px_42px]" aria-hidden="true" />
+        <section className="relative overflow-hidden border-b border-blue-200/80 bg-blue-50 px-4 py-12 sm:px-6 lg:px-8 lg:py-18">
+          <Image
+            src="/brand/vnru-network-banner.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="pointer-events-none object-cover object-center opacity-45"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,.94)_0%,rgba(255,255,255,.72)_43%,rgba(239,246,255,.76)_100%)]" aria-hidden="true" />
+          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-blue-50/90 to-transparent" aria-hidden="true" />
           <div className="relative mx-auto grid max-w-[1460px] gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch">
             {/* Left Column: Slides in smoothly from the Left */}
             <div className="flex max-w-3xl flex-col justify-between animate-slide-in-left">
