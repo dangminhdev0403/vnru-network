@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ResearcherTaskWorkspace } from '@/features/workspace/components/ResearcherTaskWorkspace';
+import { ResearcherInteractiveWorkspace } from '@/features/workspace/components/ResearcherInteractiveWorkspace';
 import { requireWorkspaceCapability } from '@/features/auth/workspace-server';
 
 export const metadata: Metadata = {
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   await requireWorkspaceCapability('/workspace/researcher', ['collab.proposals.create']);
-  return <ResearcherTaskWorkspace />;
+  return <ResearcherInteractiveWorkspace />;
 }
