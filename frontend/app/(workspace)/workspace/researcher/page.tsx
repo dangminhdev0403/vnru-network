@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ResearcherInteractiveWorkspace } from '@/features/workspace/components/ResearcherInteractiveWorkspace';
+import { ResearcherInteractiveWorkspace } from '@/features/workspace/demo-v2/ResearcherInteractiveWorkspace';
 import { requireWorkspaceCapability } from '@/features/auth/workspace-server';
 
 export const metadata: Metadata = {
