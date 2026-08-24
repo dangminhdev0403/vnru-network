@@ -106,13 +106,18 @@ test("workspace header uses the authenticated account menu", async () => {
   assert.doesNotMatch(source, /\{t\.contextActive\}/);
 });
 
-test("workspace theme modes are localized in VI EN RU", async () => {
+test("the application is light-only and does not expose theme controls", async () => {
   const { readFile } = await import("node:fs/promises");
-  const source = await readFile(new URL("./components/shared/Header.tsx", import.meta.url), "utf8");
-  for (const label of ["Hệ thống", "System", "Системная"]) assert.match(source, new RegExp(label));
-  assert.doesNotMatch(source, /label: "(?:Light|Dark|System)"/);
-  assert.doesNotMatch(source, /<select/);
-  assert.match(source, /setIsThemeOpen\(false\)/);
+  const [header, layout, styles] = await Promise.all([
+    readFile(new URL("./components/shared/Header.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./app/globals.css", import.meta.url), "utf8"),
+  ]);
+  assert.match(layout, /data-theme="light"/);
+  assert.doesNotMatch(layout, /ThemeProvider/);
+  assert.doesNotMatch(header, /useTheme|setTheme|isThemeOpen|themeModes/);
+  assert.doesNotMatch(styles, /@import "\.\/css\/dark\.css"/);
+  assert.doesNotMatch(styles, /color-scheme:\s*dark/);
 });
 
 test("legacy IAM overview redirects to the canonical account route", async () => {

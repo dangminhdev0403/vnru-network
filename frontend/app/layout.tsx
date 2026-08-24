@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk, Source_Serif_4 } from "next/font/google";
-import { ThemeProvider } from "../components/providers/ThemeProvider";
 import QueryProvider from "../components/providers/QueryProvider";
 import "./globals.css";
 
@@ -25,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning className={`${sans.variable} ${serif.variable}`}>
+    <html lang="en" data-theme="light" data-scroll-behavior="smooth" className={`${sans.variable} ${serif.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -36,9 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body className="font-sans antialiased bg-background text-on-background min-h-screen">
-        <ThemeProvider>
-          <QueryProvider>{children}</QueryProvider>
-        </ThemeProvider>
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

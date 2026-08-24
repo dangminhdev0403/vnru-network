@@ -1,10 +1,9 @@
 "use client";
 
 import { useLocale, type Locale } from "@/core/i18n/locale";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCurrentUser, useLogout } from "@/features/auth/server-state";
 
 interface HeaderProps {
@@ -25,8 +24,6 @@ const headerCopy: Record<
     account: string;
     signOut: string;
     openMenu: string;
-    themeToggle: (isDark: boolean) => string;
-    themeModes: { light: string; dark: string; system: string };
     titles: Record<string, string>;
     defaultTitle: string;
   }
@@ -37,8 +34,6 @@ const headerCopy: Record<
     account: "Tài khoản",
     signOut: "Đăng xuất",
     openMenu: "Mở menu",
-    themeToggle: (isDark) => `Chuyển sang chế độ ${isDark ? "Sáng" : "Tối"}`,
-    themeModes: { light: "Sáng", dark: "Tối", system: "Hệ thống" },
     titles: {
       "/workspace": "Tổng quan",
       "/account": "Tài khoản",
@@ -57,8 +52,6 @@ const headerCopy: Record<
     account: "Account",
     signOut: "Sign out",
     openMenu: "Open menu",
-    themeToggle: (isDark) => `Switch to ${isDark ? "Light" : "Dark"} mode`,
-    themeModes: { light: "Light", dark: "Dark", system: "System" },
     titles: {
       "/workspace": "Overview",
       "/account": "Account",
@@ -77,9 +70,6 @@ const headerCopy: Record<
     account: "Аккаунт",
     signOut: "Выйти",
     openMenu: "Открыть меню",
-    themeToggle: (isDark) =>
-      `Переключить на ${isDark ? "Светлую" : "Темную"} тему`,
-    themeModes: { light: "Светлая", dark: "Темная", system: "Системная" },
     titles: {
       "/workspace": "Обзор",
       "/account": "Учётная запись",
@@ -94,26 +84,13 @@ const headerCopy: Record<
   },
 };
 
-const themeModesList: { value: "light" | "dark" | "system"; key: "light" | "dark" | "system" }[] = [
-  { value: "light", key: "light" },
-  { value: "dark", key: "dark" },
-  { value: "system", key: "system" },
-];
-
 export default function Header({ onMenuClick }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
   const { locale, setLocale } = useLocale();
   const [isLangOpen, setIsLangOpen] = useState(false);
-  const [isThemeOpen, setIsThemeOpen] = useState(false);
   const currentUser = useCurrentUser();
   const logout = useLogout();
-  const mounted = React.useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false,
-  );
   const t = headerCopy[locale] || headerCopy.vi;
 
   const label = currentUser.data
@@ -171,10 +148,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
         <div className="relative">
           <button
             type="button"
-            onClick={() => {
-              setIsLangOpen(!isLangOpen);
-              setIsThemeOpen(false);
-            }}
+            onClick={() => setIsLangOpen(!isLangOpen)}
             className="flex h-10 items-center gap-1.5 rounded-xl px-3 text-xs font-bold text-text-primary transition hover:bg-[var(--surface-secondary)]"
             aria-label={
               languages.find((language) => language.code === locale)?.label
@@ -209,49 +183,6 @@ export default function Header({ onMenuClick }: HeaderProps) {
             </div>
           )}
         </div>
-
-        {/* Theme mode control */}
-        {mounted && (
-          <div className="relative">
-            <button
-              type="button"
-              aria-label={t.themeToggle(theme === "dark")}
-              aria-expanded={isThemeOpen}
-              onClick={() => {
-                setIsThemeOpen(!isThemeOpen);
-                setIsLangOpen(false);
-              }}
-              className="grid size-10 place-items-center rounded-xl text-text-secondary transition hover:bg-[var(--surface-secondary)] hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]"
-            >
-              <span className="material-symbols-outlined text-xl">contrast</span>
-            </button>
-            {isThemeOpen && (
-              <div
-                className="absolute right-0 z-50 mt-1.5 w-36 overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface-raised)] p-1.5 shadow-[var(--shadow-soft)]"
-                onMouseLeave={() => setIsThemeOpen(false)}
-              >
-                {themeModesList.map(({ value: mode, key }) => (
-                  <button
-                    key={mode}
-                    type="button"
-                    onClick={() => {
-                      setTheme(mode);
-                      setIsThemeOpen(false);
-                    }}
-                    className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold transition ${
-                      theme === mode
-                        ? "bg-[var(--accent-primary)] text-white"
-                        : "text-text-secondary hover:bg-[var(--surface-secondary)] hover:text-text-primary"
-                    }`}
-                  >
-                    {t.themeModes[key]}
-                    {theme === mode && <span className="material-symbols-outlined text-base">check</span>}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
 
         <details className="group relative">
           <summary

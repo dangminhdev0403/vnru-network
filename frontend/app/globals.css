@@ -2,8 +2,6 @@
 
 @import "tailwindcss";
 @import "./css/default.css";
-@import "./css/dark.css";
-
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
@@ -39,36 +37,6 @@
   --text-primary: #18212b;
   --text-secondary: #667085;
   --text-tertiary: #858f9e;
-}
-
-[data-theme="dark"],
-.dark {
-  --background: #11151b;
-  --surface: #171c23;
-  --surface-secondary: #1d232c;
-  --surface-raised: #222a34;
-  --border: #2d3642;
-  --text-primary: #f3f5f7;
-  --text-secondary: #b7c0cc;
-  --nav-bg: #171c23;
-  --nav-hover: #1d232c;
-  --nav-active: #222a34;
-  --shadow-soft: none;
-  color-scheme: dark;
-
-  --background-50: var(--background);
-  --background-soft-50: var(--surface-secondary);
-  --background-soft-100: var(--surface-secondary);
-  --card-background: var(--surface);
-  --card-surface-area: var(--surface-secondary);
-  --card-border: var(--border);
-  --card-surface-border: var(--border);
-  --input-background: var(--surface-secondary);
-  --input-border: var(--border);
-  --foreground-50: var(--text-primary);
-  --text-primary: #f3f5f7;
-  --text-secondary: #b7c0cc;
-  --text-tertiary: #929dab;
 }
 
 @theme {
