@@ -39,7 +39,7 @@ fi
 "${COMPOSE[@]}" up -d --remove-orphans
 
 for _ in {1..60}; do
-  if curl -fsS http://127.0.0.1:8080/nginx-health >/dev/null; then
+  if curl -fsS "${DEPLOY_HEALTH_URL:-http://127.0.0.1:8080/}" >/dev/null; then
     "${COMPOSE[@]}" ps
     echo "Deployment healthy: $(git rev-parse HEAD)"
     exit 0
