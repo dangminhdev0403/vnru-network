@@ -6,6 +6,8 @@ const titles: Record<DemoScope, string> = {
   researcher: "Nhật ký thao tác nghiên cứu",
   reviewer: "Lịch sử phản biện",
   organization: "Hoạt động tổ chức",
+  manager: "Nhật ký điều phối hợp tác",
+  decision: "Lịch sử quyết định demo",
 };
 
 export function DemoActivityPanel({ scope }: { scope: DemoScope }) {
@@ -13,7 +15,7 @@ export function DemoActivityPanel({ scope }: { scope: DemoScope }) {
 
   return (
     <section
-      data-workspace-view={scope === "researcher" ? "academic" : scope === "reviewer" ? "history" : "activity"}
+      data-workspace-view={scope === "researcher" ? "academic" : scope === "reviewer" ? "history" : scope === "organization" ? "activity" : undefined}
       tabIndex={-1}
       className="scroll-mt-24 rounded-2xl border border-card-border bg-card-surface-area p-5 outline-none md:p-6"
     >
