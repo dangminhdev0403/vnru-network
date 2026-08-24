@@ -118,6 +118,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
 
   const label = currentUser.data
     ? [
+        currentUser.data.fullName,
         currentUser.data.displayName,
         currentUser.data.name,
         currentUser.data.username,
@@ -259,7 +260,15 @@ export default function Header({ onMenuClick }: HeaderProps) {
           >
             {avatarInitial}
           </summary>
-          <div className="absolute right-0 z-50 mt-2 w-44 overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface-raised)] p-1.5 shadow-[var(--shadow-soft)]">
+          <div className="absolute right-0 z-50 mt-2 w-64 overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface-raised)] p-1.5 shadow-[var(--shadow-soft)]">
+            {label && (
+              <div className="border-b border-[var(--border)] px-3 py-2.5">
+                <strong className="block truncate text-sm text-text-primary">{label}</strong>
+                {currentUser.data?.email && currentUser.data.email !== label && (
+                  <span className="mt-0.5 block truncate text-xs text-text-secondary">{currentUser.data.email}</span>
+                )}
+              </div>
+            )}
             <Link
               href="/account"
               className="flex min-h-10 items-center rounded-lg px-3 text-sm font-semibold text-text-primary hover:bg-card-surface-area"

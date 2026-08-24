@@ -20,7 +20,7 @@ export function WorkspacePreviewNotice({ scope }: WorkspacePreviewNoticeProps) {
               Dữ liệu minh họa · UI Preview
             </p>
             <p className="mt-0.5 text-sm leading-6 text-slate-700 dark:text-slate-300">
-              Các thao tác trong <strong className="font-bold text-slate-900 dark:text-white">{scope}</strong> chỉ cập nhật giao diện cục bộ, chưa gửi hoặc ghi dữ liệu lên backend.
+              Các thao tác trong <strong className="font-bold text-slate-900 dark:text-white">{scope}</strong> chạy qua mock service có độ trễ và lưu cục bộ để kiểm thử flow; không ghi vào backend nghiệp vụ.
             </p>
           </div>
         </div>

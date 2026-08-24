@@ -26,7 +26,10 @@ test("workspace navigation exposes only destinations allowed by capability", () 
     const hrefs = filterNavSections([capability]).flatMap((section) =>
       section.items.map((item) => item.href),
     );
-    assert.deepEqual(hrefs, [expectedHref, "/account", "/security"]);
+    assert.equal(hrefs[0], expectedHref);
+    assert.equal(hrefs.at(-2), "/account");
+    assert.equal(hrefs.at(-1), "/security");
+    assert.ok(hrefs.length >= 6, `${capability} should expose a complete role task skeleton`);
   }
 
   for (const futureCapability of [

@@ -2,6 +2,9 @@
 
 import React, { useState } from 'react';
 import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
+import { commitDemoMutation } from '../demo-backend';
+import { DemoActivityPanel } from './DemoActivityPanel';
+import { WorkspaceSectionSync } from './WorkspaceSectionSync';
 
 export function ReviewerWorkspace() {
   const [novelty, setNovelty] = useState(8.5);
@@ -13,6 +16,15 @@ export function ReviewerWorkspace() {
   );
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const submitDemoReview = async () => {
+    setIsSubmitting(true);
+    await commitDemoMutation('reviewer', 'Đã nộp bản phản biện', `RU-VN-2026-BIO-08 · ${totalScore.toFixed(2)}/10`);
+    setIsConfirmModalOpen(false);
+    setIsSubmitted(true);
+    setIsSubmitting(false);
+  };
 
   // Dynamic total score calculation
   const totalScore = novelty * 0.3 + methodology * 0.25 + feasibility * 0.3 + impact * 0.15;
@@ -26,6 +38,7 @@ export function ReviewerWorkspace() {
 
   return (
     <div className="w-full px-6 md:px-10 lg:px-12 py-8 space-y-8">
+      <React.Suspense fallback={null}><WorkspaceSectionSync /></React.Suspense>
       <WorkspacePreviewNotice scope="không gian Phản biện" />
 
       {/* Submit Confirmation Modal */}
@@ -40,7 +53,7 @@ export function ReviewerWorkspace() {
                 onClick={() => setIsConfirmModalOpen(false)}
                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-2xl font-bold"
               >
-                ✕
+                <span aria-hidden="true" className="material-symbols-outlined">close</span>
               </button>
             </div>
             <div className="p-6 md:p-8 space-y-4 text-sm">
@@ -63,11 +76,9 @@ export function ReviewerWorkspace() {
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  setIsConfirmModalOpen(false);
-                  setIsSubmitted(true);
-                }}
-                className="px-6 py-2.5 rounded-xl bg-purple-700 text-white font-bold text-sm hover:bg-purple-800 shadow-md"
+                onClick={() => void submitDemoReview()}
+                disabled={isSubmitting}
+                className="px-6 py-2.5 rounded-xl bg-purple-700 text-white font-bold text-sm hover:bg-purple-800 shadow-md disabled:cursor-wait disabled:opacity-60"
               >
                 Mô phỏng nộp đánh giá
               </button>
@@ -77,7 +88,7 @@ export function ReviewerWorkspace() {
       )}
 
       {/* Role Ribbon */}
-      <div className="p-4 md:p-5 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60 text-purple-950 dark:text-purple-200 text-sm font-bold flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+      <div data-workspace-view="overview" tabIndex={-1} className="scroll-mt-24 p-4 md:p-5 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60 text-purple-950 dark:text-purple-200 text-sm font-bold flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs outline-none">
         <div className="flex items-center gap-3">
           <span className="w-3 h-3 rounded-full bg-purple-600 shadow-[0_0_10px_rgba(147,51,234,0.7)]" />
           <span className="text-sm md:text-base font-bold">Hội đồng Phản biện Độc lập · Hồ sơ #RU-VN-2026-BIO-08</span>
@@ -86,7 +97,7 @@ export function ReviewerWorkspace() {
       </div>
 
       {/* Hero Dossier Card */}
-      <div className="p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-3">
+      <section data-workspace-view="assignments" tabIndex={-1} className="scroll-mt-24 p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-3 outline-none">
         <span className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300">
           Hồ sơ phản biện song phương
         </span>
@@ -96,10 +107,10 @@ export function ReviewerWorkspace() {
         <p className="text-sm md:text-base text-slate-600 dark:text-slate-300">
           Lĩnh vực: <strong className="text-slate-900 dark:text-white">Khoa học Vật liệu &amp; Hóa lý Biển</strong> · Mã phân công: <code className="font-bold text-purple-700 dark:text-purple-400 font-mono">#RU-VN-2026-BIO-08</code> · Hạn phản biện: <strong>30/08/2026</strong>
         </p>
-      </div>
+      </section>
 
       {/* Grid: Rubric Scoring vs Dossier Sidebar - Fluid Widescreen */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <section data-workspace-view="evaluation" tabIndex={-1} className="scroll-mt-24 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start outline-none">
         {/* Rubric Form (8 Cols) */}
         <div className="lg:col-span-8 p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-card-border pb-5">
@@ -190,7 +201,7 @@ export function ReviewerWorkspace() {
               <strong className="text-sm md:text-base uppercase tracking-wider text-purple-950 dark:text-purple-200 block">Tổng điểm quy đổi Hội đồng</strong>
               <small className="text-slate-600 dark:text-slate-400 text-xs md:text-sm">Tự động tổng hợp từ 4 nhóm tiêu chí trọng số</small>
             </div>
-            <strong className="text-4xl lg:text-5xl font-extrabold font-mono text-purple-900 dark:text-purple-300">{totalScore.toFixed(2)} / 10</strong>
+            <strong className="text-4xl lg:text-5xl font-extrabold font-mono text-slate-900 dark:text-white">{totalScore.toFixed(2)} / 10</strong>
           </div>
 
           {/* Comment Box */}
@@ -251,7 +262,8 @@ export function ReviewerWorkspace() {
                 type="button"
                 className="w-full py-3.5 rounded-2xl border border-slate-300 dark:border-slate-700 text-sm font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-xs"
               >
-                📄 Toàn văn đề cương (PDF 32 trang)
+                <span aria-hidden="true" className="material-symbols-outlined mr-2 align-middle text-lg">description</span>
+                Toàn văn đề cương (PDF 32 trang)
               </button>
             </div>
           </div>
@@ -264,7 +276,8 @@ export function ReviewerWorkspace() {
             </p>
           </div>
         </aside>
-      </div>
+      </section>
+      <DemoActivityPanel scope="reviewer" />
     </div>
   );
 }

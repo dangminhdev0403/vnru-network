@@ -26,6 +26,8 @@ export interface SidebarFrameProps {
   onItemClick?: () => void;
   badgeText?: string;
   contextLabel?: string;
+  userName?: string;
+  userMeta?: string;
 }
 
 const copy: Record<
@@ -85,6 +87,8 @@ export default function SidebarFrame({
   onItemClick,
   badgeText,
   contextLabel,
+  userName,
+  userMeta,
 }: SidebarFrameProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -162,7 +166,7 @@ export default function SidebarFrame({
               <strong className="block truncate text-sm font-semibold text-[#0d1d35] dark:text-white">
                 {t.brand}
               </strong>
-              <small className="mt-1 block truncate text-[10px] font-semibold uppercase tracking-[.08em] text-[#718198] dark:text-[#8fa2b8]">
+              <small className="mt-1 block truncate text-xs font-semibold uppercase tracking-[.08em] text-[#718198] dark:text-[#8fa2b8]">
                 {badgeText || t.subtitle}
               </small>
             </span>
@@ -182,6 +186,18 @@ export default function SidebarFrame({
         </button>
       </div>
 
+      {isSidebarOpen && userName && (
+        <div className="relative z-10 mt-3 flex min-w-0 items-center gap-3 rounded-xl bg-[#eef4fb] px-3 py-2.5 dark:bg-[#142334]">
+          <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[#173d73] text-xs font-bold text-white dark:bg-[#315f9e]">
+            {userName.trim().charAt(0).toLocaleUpperCase(locale)}
+          </span>
+          <span className="min-w-0">
+            <strong className="block truncate text-sm font-bold text-[#10213a] dark:text-white" title={userName}>{userName}</strong>
+            {userMeta && <small className="mt-0.5 block truncate text-xs text-[#60738c] dark:text-[#9bacc0]" title={userMeta}>{userMeta}</small>}
+          </span>
+        </div>
+      )}
+
       <nav
         className="relative z-10 min-h-0 flex-1 space-y-5 overflow-x-hidden overflow-y-auto py-5"
         aria-label={t.navigation}
@@ -189,7 +205,7 @@ export default function SidebarFrame({
         {sections.map((section) => (
           <section key={section.label}>
             {isSidebarOpen ? (
-              <h2 className="px-3 pb-2 text-[10px] font-bold tracking-[.12em] text-[#718198] dark:text-[#8fa2b8]">
+              <h2 className="px-3 pb-2 text-xs font-bold tracking-[.12em] text-[#718198] dark:text-[#8fa2b8]">
                 {section.label}
               </h2>
             ) : (
@@ -212,7 +228,7 @@ export default function SidebarFrame({
                   >
                     <span
                       className={cn(
-                        "material-symbols-outlined text-[21px]",
+                        "material-symbols-outlined text-xl",
                         active
                           ? "text-[#1769ff] dark:text-[#5f95ff]"
                           : "text-[#6f8097] dark:text-[#8fa2b8]",
@@ -243,7 +259,7 @@ export default function SidebarFrame({
 
       {isSidebarOpen && (
         <div className="relative z-10 shrink-0 rounded-2xl border border-[#dfe6ef] bg-white/[0.88] p-3.5 shadow-[0_10px_30px_-24px_rgba(15,23,42,.45)] backdrop-blur-sm dark:border-[#2b3b4c] dark:bg-[#111d28]/[0.92] dark:shadow-none">
-          <p className="text-[10px] font-bold uppercase tracking-[.12em] text-[#718198] dark:text-[#8fa2b8]">
+          <p className="text-xs font-bold uppercase tracking-[.12em] text-[#718198] dark:text-[#8fa2b8]">
             {t.currentContext}
           </p>
           <strong className="mt-1.5 block text-sm font-semibold text-[#14243c] dark:text-[#f4f7fb]">

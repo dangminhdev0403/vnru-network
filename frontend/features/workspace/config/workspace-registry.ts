@@ -58,11 +58,21 @@ export const WORKSPACE_PERSONAS: Record<string, WorkspacePersona> = {
 export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
   {
     key: "workspace_modules",
-    labelKey: "workspaceModules",
+    labelKey: "roleWorkspace",
     items: [
-      { key: "researcher", href: "/workspace/researcher", labelKey: "researcher", icon: "science", requiredCapabilities: ["collab.proposals.create"] },
-      { key: "reviewer", href: "/workspace/reviewer", labelKey: "reviewer", icon: "rate_review", requiredCapabilities: ["reviews.assignments.view_assigned"] },
-      { key: "organization", href: "/workspace/organization", labelKey: "organization", icon: "domain", requiredCapabilities: ["collab.proposals.endorse"] },
+      { key: "researcher_overview", href: "/workspace/researcher", labelKey: "overview", icon: "home", requiredCapabilities: ["collab.proposals.create"] },
+      { key: "researcher_knowledge", href: "/workspace/researcher?view=knowledge", labelKey: "myKnowledge", icon: "library_books", requiredCapabilities: ["collab.proposals.create"] },
+      { key: "researcher_collaboration", href: "/workspace/researcher?view=collaboration", labelKey: "researchCollaboration", icon: "sync_alt", requiredCapabilities: ["collab.proposals.create"] },
+      { key: "researcher_projects", href: "/workspace/researcher?view=projects", labelKey: "myProjects", icon: "view_in_ar", requiredCapabilities: ["collab.proposals.create"] },
+      { key: "researcher_academic", href: "/workspace/researcher?view=academic", labelKey: "academicExchange", icon: "menu_book", requiredCapabilities: ["collab.proposals.create"] },
+      { key: "reviewer_overview", href: "/workspace/reviewer", labelKey: "reviewOverview", icon: "dashboard", requiredCapabilities: ["reviews.assignments.view_assigned"] },
+      { key: "reviewer_assignments", href: "/workspace/reviewer?view=assignments", labelKey: "assignedDossiers", icon: "assignment", requiredCapabilities: ["reviews.assignments.view_assigned"] },
+      { key: "reviewer_evaluation", href: "/workspace/reviewer?view=evaluation", labelKey: "evaluationWorkspace", icon: "rate_review", requiredCapabilities: ["reviews.assignments.view_assigned"] },
+      { key: "reviewer_history", href: "/workspace/reviewer?view=history", labelKey: "reviewHistory", icon: "history", requiredCapabilities: ["reviews.assignments.view_assigned"] },
+      { key: "organization_overview", href: "/workspace/organization", labelKey: "organizationOverview", icon: "domain", requiredCapabilities: ["collab.proposals.endorse"] },
+      { key: "organization_endorsements", href: "/workspace/organization?view=endorsements", labelKey: "endorsementQueue", icon: "fact_check", requiredCapabilities: ["collab.proposals.endorse"] },
+      { key: "organization_projects", href: "/workspace/organization?view=projects", labelKey: "relatedProjects", icon: "account_tree", requiredCapabilities: ["collab.proposals.endorse"] },
+      { key: "organization_activity", href: "/workspace/organization?view=activity", labelKey: "organizationActivity", icon: "monitoring", requiredCapabilities: ["collab.proposals.endorse"] },
     ],
   },
   {

@@ -2,6 +2,9 @@
 
 import React, { useState } from 'react';
 import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
+import { commitDemoMutation } from '../demo-backend';
+import { DemoActivityPanel } from './DemoActivityPanel';
+import { WorkspaceSectionSync } from './WorkspaceSectionSync';
 
 interface EndorsementItem {
   id: string;
@@ -43,18 +46,23 @@ export function OrganizationWorkspace() {
 
   const [selectedItemForModal, setSelectedItemForModal] = useState<EndorsementItem | null>(null);
   const [toastText, setToastText] = useState<string | null>(null);
+  const [isMutating, setIsMutating] = useState(false);
 
   const showToast = (msg: string) => {
     setToastText(msg);
     setTimeout(() => setToastText(null), 2500);
   };
 
-  const handleEndorse = (id: string) => {
+  const handleEndorse = async (id: string) => {
+    setIsMutating(true);
+    const selected = items.find((item) => item.id === id);
+    await commitDemoMutation('organization', 'Đã xác nhận bảo trợ', selected?.title || id);
     setItems((prev) =>
       prev.map((item) => (item.id === id ? { ...item, isEndorsed: true } : item))
     );
     setSelectedItemForModal(null);
-    showToast('Đã mô phỏng bước xác nhận bảo trợ; chưa ghi dữ liệu lên backend.');
+    setIsMutating(false);
+    showToast('Mock service đã cập nhật trạng thái bảo trợ và lưu nhật ký demo.');
   };
 
   const filteredItems = items.filter((item) => {
@@ -65,6 +73,7 @@ export function OrganizationWorkspace() {
 
   return (
     <div className="w-full px-6 md:px-10 lg:px-12 py-8 space-y-8">
+      <React.Suspense fallback={null}><WorkspaceSectionSync /></React.Suspense>
       <WorkspacePreviewNotice scope="không gian Tổ chức" />
 
       {/* Toast Notification */}
@@ -87,7 +96,7 @@ export function OrganizationWorkspace() {
                 onClick={() => setSelectedItemForModal(null)}
                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-2xl font-bold"
               >
-                ✕
+                <span aria-hidden="true" className="material-symbols-outlined">close</span>
               </button>
             </div>
             <div className="p-6 md:p-8 space-y-5 text-sm">
@@ -118,8 +127,9 @@ export function OrganizationWorkspace() {
               </button>
               <button
                 type="button"
-                onClick={() => handleEndorse(selectedItemForModal.id)}
-                className="px-6 py-2.5 rounded-xl bg-teal-700 text-white font-bold text-sm hover:bg-teal-800 shadow-md"
+                onClick={() => void handleEndorse(selectedItemForModal.id)}
+                disabled={isMutating}
+                className="px-6 py-2.5 rounded-xl bg-teal-700 text-white font-bold text-sm hover:bg-teal-800 shadow-md disabled:cursor-wait disabled:opacity-60"
               >
                 Mô phỏng xác nhận bảo trợ
               </button>
@@ -129,13 +139,27 @@ export function OrganizationWorkspace() {
       )}
 
       {/* Role Ribbon */}
-      <div className="p-4 md:p-5 rounded-2xl bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800/60 text-teal-950 dark:text-teal-200 text-sm font-bold flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+      <div data-workspace-view="overview" tabIndex={-1} className="scroll-mt-24 p-4 md:p-5 rounded-2xl bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800/60 text-teal-950 dark:text-teal-200 text-sm font-bold flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs outline-none">
         <div className="flex items-center gap-3">
           <span className="w-3 h-3 rounded-full bg-teal-600 shadow-[0_0_10px_rgba(20,184,166,0.7)]" />
           <span className="text-sm md:text-base font-bold">Ban Hợp tác Quốc tế · Viện Hàn lâm KH&amp;CN Việt Nam (VAST)</span>
         </div>
         <span className="text-slate-600 dark:text-slate-400 font-medium text-xs md:text-sm">Phạm vi: Đơn vị Chủ trì &amp; Bảo trợ cơ sở vật chất</span>
       </div>
+
+      <section data-workspace-view="projects" tabIndex={-1} className="scroll-mt-24 grid gap-px overflow-hidden rounded-2xl border border-card-border bg-card-border outline-none sm:grid-cols-3" aria-label="Dự án liên quan">
+        {[
+          ['03', 'Đề xuất song phương', '2 hồ sơ đang chờ xác nhận'],
+          ['02', 'Dự án đang triển khai', 'VAST ↔ RAS'],
+          ['05', 'Đơn vị trực thuộc', 'Có nguồn lực tham gia'],
+        ].map(([value, label, detail]) => (
+          <div key={label} className="bg-card-surface-area p-5">
+            <strong className="block text-2xl font-extrabold text-teal-800 dark:text-teal-300">{value}</strong>
+            <span className="mt-1 block text-sm font-bold text-slate-900 dark:text-white">{label}</span>
+            <small className="mt-1 block text-xs text-slate-500 dark:text-slate-400">{detail}</small>
+          </div>
+        ))}
+      </section>
 
       {/* Hero */}
       <div className="p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-2">
@@ -151,7 +175,7 @@ export function OrganizationWorkspace() {
       </div>
 
       {/* Main Card */}
-      <div className="p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-6">
+      <section data-workspace-view="endorsements" tabIndex={-1} className="scroll-mt-24 p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-6 outline-none">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-card-border pb-4">
           <div className="flex gap-2">
             <button
@@ -227,7 +251,8 @@ export function OrganizationWorkspace() {
             </div>
           ))}
         </div>
-      </div>
+      </section>
+      <DemoActivityPanel scope="organization" />
     </div>
   );
 }

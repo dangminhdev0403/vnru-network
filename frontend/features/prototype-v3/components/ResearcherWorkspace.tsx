@@ -3,15 +3,26 @@
 import React, { useState } from 'react';
 import { MOCK_PROPOSALS } from '../mock-data';
 import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
+import { commitDemoMutation } from '../demo-backend';
+import { DemoActivityPanel } from './DemoActivityPanel';
+import { WorkspaceSectionSync } from './WorkspaceSectionSync';
 
 export function ResearcherWorkspace() {
   const [activeTab, setActiveTab] = useState<'all' | 'proposals' | 'active'>('all');
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [toastText, setToastText] = useState<string | null>(null);
+  const [isMutating, setIsMutating] = useState(false);
 
   const showToast = (msg: string) => {
     setToastText(msg);
     setTimeout(() => setToastText(null), 2500);
+  };
+
+  const runDemoAction = async (action: string, detail: string) => {
+    setIsMutating(true);
+    await commitDemoMutation('researcher', action, detail);
+    setIsMutating(false);
+    showToast(`${action} đã được ghi vào mock service.`);
   };
 
   const filteredProposals = MOCK_PROPOSALS.filter((p) => {
@@ -22,6 +33,7 @@ export function ResearcherWorkspace() {
 
   return (
     <div className="w-full px-6 md:px-10 lg:px-12 py-8 space-y-8">
+      <React.Suspense fallback={null}><WorkspaceSectionSync /></React.Suspense>
       <WorkspacePreviewNotice scope="không gian Nhà nghiên cứu" />
 
       {/* Toast Notification */}
@@ -44,7 +56,7 @@ export function ResearcherWorkspace() {
                 onClick={() => setIsInviteModalOpen(false)}
                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-2xl font-bold"
               >
-                ✕
+                <span aria-hidden="true" className="material-symbols-outlined">close</span>
               </button>
             </div>
             <div className="p-6 md:p-8 space-y-5 text-sm">
@@ -94,9 +106,10 @@ export function ResearcherWorkspace() {
                 type="button"
                 onClick={() => {
                   setIsInviteModalOpen(false);
-                  showToast('Đã mô phỏng bước mời Co-PI; chưa gửi lời mời lên backend.');
+                  void runDemoAction('Đã tạo lời mời Co-PI', 'Prof. Alexei Morozov · RU-VN-2026-NANO-01');
                 }}
-                className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 shadow-md"
+                className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 shadow-md disabled:cursor-wait disabled:opacity-60"
+                disabled={isMutating}
               >
                 Mô phỏng bước mời
               </button>
@@ -106,7 +119,7 @@ export function ResearcherWorkspace() {
       )}
 
       {/* Role Ribbon */}
-      <div className="p-4 md:p-5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-blue-950 dark:text-blue-200 text-sm font-bold flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+      <div data-workspace-view="overview" tabIndex={-1} className="scroll-mt-24 p-4 md:p-5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-blue-950 dark:text-blue-200 text-sm font-bold flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs outline-none">
         <div className="flex items-center gap-3">
           <span className="w-3 h-3 rounded-full bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.7)]" />
           <span className="text-sm md:text-base font-bold">Nhà nghiên cứu: GS.TS. Trần Đình Nam (Viện Hải dương học · VAST)</span>
@@ -134,8 +147,9 @@ export function ResearcherWorkspace() {
           </button>
           <button
             type="button"
-            onClick={() => showToast('Bản xem trước trình soạn đề xuất; chưa tạo hồ sơ mới.')}
-            className="px-6 py-3 rounded-2xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 shadow-md transition-all"
+            onClick={() => void runDemoAction('Đã tạo bản nháp đề xuất', 'Hồ sơ RU-VN mới ở trạng thái nháp')}
+            disabled={isMutating}
+            className="px-6 py-3 rounded-2xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 shadow-md transition-all disabled:cursor-wait disabled:opacity-60"
           >
             + Soạn đề xuất mới
           </button>
@@ -143,7 +157,7 @@ export function ResearcherWorkspace() {
       </div>
 
       {/* KPI Cards - Widescreen Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section data-workspace-view="knowledge" tabIndex={-1} className="scroll-mt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 outline-none" aria-label="Tri thức của tôi">
         <div className="p-6 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-2 hover:shadow-md transition-all">
           <span className="text-slate-500 dark:text-slate-400 text-xs md:text-sm font-bold block uppercase tracking-wider">Đề xuất đang mở</span>
           <strong className="text-4xl lg:text-5xl font-extrabold text-blue-900 dark:text-blue-400 block font-mono">4</strong>
@@ -156,18 +170,18 @@ export function ResearcherWorkspace() {
         </div>
         <div className="p-6 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-2 hover:shadow-md transition-all">
           <span className="text-slate-500 dark:text-slate-400 text-xs md:text-sm font-bold block uppercase tracking-wider">Đồng tác giả Nga</span>
-          <strong className="text-4xl lg:text-5xl font-extrabold text-indigo-900 dark:text-indigo-400 block font-mono">18</strong>
-          <span className="text-xs md:text-sm text-indigo-600 dark:text-indigo-400 font-bold block">FEB RAS &amp; MISIS Moskva</span>
+          <strong className="text-4xl lg:text-5xl font-extrabold text-blue-900 dark:text-blue-300 block font-mono">18</strong>
+          <span className="text-xs md:text-sm text-blue-700 dark:text-blue-300 font-bold block">FEB RAS &amp; MISIS Moskva</span>
         </div>
         <div className="p-6 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-2 hover:shadow-md transition-all">
           <span className="text-slate-500 dark:text-slate-400 text-xs md:text-sm font-bold block uppercase tracking-wider">Hội thảo sắp tới</span>
           <strong className="text-4xl lg:text-5xl font-extrabold text-slate-800 dark:text-slate-200 block font-mono">3</strong>
           <span className="text-xs md:text-sm text-blue-600 dark:text-blue-400 font-bold block">Diễn đàn Biển 2026</span>
         </div>
-      </div>
+      </section>
 
       {/* Stepper Pipeline - Spacious */}
-      <div className="p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-4">
+      <section data-workspace-view="collaboration" tabIndex={-1} className="scroll-mt-24 p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-4 outline-none">
         <div>
           <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">
             Quy trình Hợp tác Nghiên cứu Song phương
@@ -197,10 +211,10 @@ export function ResearcherWorkspace() {
             <span>Triển khai Dự án</span>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Tabs & Proposals List */}
-      <div className="p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-6">
+      <section data-workspace-view="projects" tabIndex={-1} className="scroll-mt-24 p-6 md:p-8 rounded-3xl bg-card-surface-area border border-card-border shadow-sm space-y-6 outline-none">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-card-border pb-4">
           <div className="flex gap-2">
             <button
@@ -273,7 +287,7 @@ export function ResearcherWorkspace() {
               <div className="flex gap-3 shrink-0">
                 <button
                   type="button"
-                  onClick={() => showToast(`Bản xem trước chi tiết ${item.code}; chưa tải dữ liệu backend.`)}
+                  onClick={() => void runDemoAction('Đã mở hồ sơ dự án', `${item.code} · ${item.statusLabel}`)}
                   className="px-5 py-2.5 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-sm transition-all"
                 >
                   Xem chi tiết
@@ -282,7 +296,8 @@ export function ResearcherWorkspace() {
             </div>
           ))}
         </div>
-      </div>
+      </section>
+      <DemoActivityPanel scope="researcher" />
     </div>
   );
 }
