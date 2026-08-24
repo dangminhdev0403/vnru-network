@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { GuestExploreMedia } from "./GuestExploreMedia";
 import { GuestPublicNav } from "./GuestPublicNav";
 
@@ -230,18 +229,6 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
                         Cổng thông tin Song phương
                       </span>
                     </div>
-
-                    <figure className="vnru-hero-visual relative mt-4 aspect-[16/9] overflow-hidden rounded-2xl border border-blue-200/80 bg-slate-950 shadow-[0_18px_42px_-24px_rgba(15,23,42,.75)]">
-                      <Image
-                        src="/brand/vnru-infinity-hero.png"
-                        alt="Biểu tượng kết nối khoa học và công nghệ Việt Nam – Liên bang Nga"
-                        fill
-                        priority
-                        sizes="(max-width: 1024px) 100vw, 42vw"
-                        className="object-cover transition-transform duration-700 ease-out motion-safe:hover:scale-[1.025]"
-                      />
-                      <span className="absolute inset-0 bg-gradient-to-t from-slate-950/25 via-transparent to-white/5" aria-hidden="true" />
-                    </figure>
 
                     <h2 className="mt-4 text-xl sm:text-2xl font-bold leading-snug tracking-tight text-slate-950">
                       Cầu nối trực tiếp giữa các viện nghiên cứu và trường đại học hàng đầu Việt Nam – Liên bang Nga.

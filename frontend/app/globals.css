@@ -595,11 +595,6 @@ a:hover > .vnru-brand-mark {
   box-shadow: 0 14px 34px -18px rgba(15, 56, 125, 0.82);
 }
 
-.vnru-hero-visual {
-  isolation: isolate;
-  transform: translateZ(0);
-}
-
 /* Keep this final so later utility animations also honor reduced motion. */
 @media (prefers-reduced-motion: reduce) {
   *,
