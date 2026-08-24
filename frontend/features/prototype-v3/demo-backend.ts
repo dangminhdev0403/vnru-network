@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export type DemoScope = "researcher" | "reviewer" | "organization";
+export type DemoScope = "researcher" | "reviewer" | "organization" | "manager" | "decision";
 
 export interface DemoActivity {
   id: string;
