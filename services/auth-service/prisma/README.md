@@ -1,25 +1,24 @@
-# Synthetic Curator IAM Fixture (Module 2)
+# Synthetic IAM Workflow Fixtures
 
-This directory contains `account.json`, a non-secret synthetic IAM fixture, and `import-fixture.ts`, an importer to populate it in the database.
+This directory contains `account.json`, a non-secret synthetic IAM fixture set, and `import-fixture.ts`, the importer used to populate workflow roles in the auth database.
 
-## Critical Notice
+## Critical notice
 
-* **No Credentials / Non-Secret:** This fixture contains **no passwords, secrets, tokens, or credentials**.
-* **Keycloak Ownership:** Upstream authentication credentials and SSO are owned entirely by the Keycloak OIDC broker.
-* **Linkage Required:** To successfully authenticate as this user, Keycloak must contain a user identity whose OIDC `iss` (issuer) and `sub` (subject) matches the `issuer` and `subject` configured in `account.json`:
-  * **Issuer:** `http://localhost:8080/realms/vnru`
-  * **Subject:** `curator-keycloak-subject-uuid-1234`
+- **No credentials:** the fixture contains no passwords, secrets, tokens, or login credentials.
+- **Keycloak ownership:** authentication credentials and SSO identities are owned by Keycloak.
+- **Identity linkage:** browser login works only when the Keycloak identity resolves to the same OIDC issuer and subject stored in `account.json`.
+- **Current active fixture roles:** `SUPER_ADMIN`, `RESEARCHER`, `ORGANIZATION_REPRESENTATIVE`, `REVIEWER`, `COLLABORATION_MANAGER`, and `FOUNDATION_DECISION_MAKER`.
+- `KNOWLEDGE_CURATOR` is intentionally removed from the active fixture set because its previous permissions did not own a distinct workflow step.
+- The duplicate generic Researcher fixture is intentionally removed; the current synthetic account set keeps the organization-scoped Researcher identity used for the bilateral test flow.
 
-If Keycloak doesn't have a matching user, OIDC authentication will succeed but the user context resolution on `auth-service` will not link to this role and permissions.
+`services/auth-service/prisma/account.json` is not the local credential file. Local login credentials remain outside source control and must never be copied into this directory.
 
 ## Usage
 
-Run the importer script with `ts-node` or execute the focused test suite:
+Run the importer with the configured development database:
 
 ```bash
-# Set environment variables
-$env:DATABASE_URL="postgresql://localhost:5432/db"
-
-# Execute importer
 npx ts-node prisma/import-fixture.ts
 ```
+
+The importer validates each fixture against the exact capability policy declared in `import-fixture.ts` before writing it.
