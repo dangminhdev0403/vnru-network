@@ -29,13 +29,16 @@ Local endpoints:
 - Keycloak: `http://localhost:8081`
 - PostgreSQL: `localhost:5432`
 
-For the containerized stack:
+For the containerized demo stack, keep `secrets/account.json` and `secrets/demo.env` local and ignored:
 
-```powershell
-Copy-Item .env.docker.example .env
-docker compose up --build -d
-docker compose logs -f --tail=100
+```bash
+docker compose --env-file secrets/demo.env build
+docker compose --env-file secrets/demo.env up -d
+# First run or whenever demo account passwords change:
+docker compose --env-file secrets/demo.env run --rm -T demo-seed < secrets/account.json
 ```
+
+Open `http://localhost:8082`. PostgreSQL and Keycloak data persist in named volumes; normal restarts retain fixtures and demo accounts.
 
 ## Documentation
 
