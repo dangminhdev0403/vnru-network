@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { OrganizationTaskWorkspace } from '@/features/workspace/components/OrganizationTaskWorkspace';
+import { OrganizationInteractiveWorkspace } from '@/features/workspace/components/OrganizationInteractiveWorkspace';
 import { requireWorkspaceCapability } from '@/features/auth/workspace-server';
 
 export const metadata: Metadata = {
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   await requireWorkspaceCapability('/workspace/organization', ['collab.proposals.endorse']);
-  return <OrganizationTaskWorkspace />;
+  return <OrganizationInteractiveWorkspace />;
 }
