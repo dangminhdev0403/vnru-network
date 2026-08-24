@@ -30,8 +30,12 @@ Public `/`, `/knowledge`, `/experts` and `/opportunities` routes are information
 - `/admin/access/*`: user, role, permission and assignment administration.
 - `/admin/audit`: Module 1 audit surface.
 - `/workspace`: resolves the authenticated session to a current capability-gated role preview or a Module 1 destination.
-- `/workspace/researcher`, `/workspace/reviewer`, `/workspace/organization`: capability-gated UI previews without business backends.
-- `/workspace/enterprise`, `/workspace/leadership`: authenticated UI previews only; current collaboration-manager and decision-maker capabilities never select these as live personas.
+- `/workspace/researcher`, `/workspace/reviewer`, `/workspace/organization`: capability-gated task UI previews without business backends.
+- `/workspace/collaboration`: capability-gated `COLLABORATION_MANAGER` task UI preview for opportunities, screening, reviewer assignment, projects and report handling.
+- `/workspace/decisions`: capability-gated decision task UI preview for `FOUNDATION_DECISION_MAKER`; user-facing copy is neutral and excludes financial/funding workflows.
+- `/workspace/enterprise`, `/workspace/leadership`: authenticated UI previews only and are not selected by current live personas.
 - Legacy `/workspace/iam*`: compatibility redirects to Module 1 routes.
+
+`KNOWLEDGE_CURATOR` is removed from the current active synthetic role fixture set because its former permission set did not own a distinct workflow step. Knowledge browsing remains available in public discovery and the Researcher preview.
 
 Knowledge, expert-directory, collaboration, review, project, academic, technology and analytics business services are absent. Synthetic frontend previews may still exist for design and flow demonstration.
