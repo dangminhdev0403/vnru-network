@@ -46,9 +46,7 @@ test("workspace navigation exposes only destinations allowed by capability", () 
     (section) => section.items,
   );
   assert.deepEqual(adminItems.map((item) => item.href), [
-    "/governance",
-    "/admin/access/roles",
-    "/admin/audit",
+    "/admin/access",
     "/account",
     "/security",
   ]);

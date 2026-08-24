@@ -79,9 +79,7 @@ export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
     key: "administration",
     labelKey: "administration",
     items: [
-      { key: "governance", href: "/governance", labelKey: "governance", icon: "policy", requiredCapabilities: ["iam.roles.manage"] },
-      { key: "access_control", href: "/admin/access/roles", labelKey: "accessControl", icon: "manage_accounts", requiredCapabilities: ["iam.roles.manage"] },
-      { key: "audit", href: "/admin/audit", labelKey: "audit", icon: "security", requiredCapabilities: ["iam.audit.view", "iam.roles.manage"] },
+      { key: "governance", href: "/admin/access", labelKey: "governance", icon: "policy", requiredCapabilities: ["iam.roles.manage"] },
     ],
   },
   {
