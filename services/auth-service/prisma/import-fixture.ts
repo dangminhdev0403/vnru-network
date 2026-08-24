@@ -108,7 +108,7 @@ const fixturesDocumentSchema = z.object({
 });
 
 export async function importFixture(prisma: PrismaClient, fixturePath?: string) {
-  const resolvedPath = fixturePath ?? path.join(__dirname, 'account.json');
+  const resolvedPath = fixturePath ?? path.join(__dirname, 'iam-fixtures.json');
   const rawData = JSON.parse(fs.readFileSync(resolvedPath, 'utf8'));
   const data = fixturesDocumentSchema.parse(rawData);
 

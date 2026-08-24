@@ -1,6 +1,6 @@
 {
   "_metadata": {
-    "description": "NON-SECRET synthetic IAM fixtures for the current workflow roles. Knowledge Curator and the duplicate generic Researcher fixture are intentionally removed from the active test set.",
+    "description": "NON-SECRET IAM policy fixtures for the current workflow roles. Login accounts exist only in the ignored secrets/account.json file.",
     "warning": "This file does not contain passwords or credentials. Keycloak OIDC owns user credentials. To authenticate as these users, Keycloak must be configured with identities matching the issuer and subject specified below."
   },
   "fixtures": [
@@ -98,7 +98,7 @@
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38006",
         "issuer": "http://127.0.0.1:8081/realms/vnru",
-        "subject": "94f310a1-5eb3-4b4d-9cc4-a9879856fcd7"
+        "subject": "7530ce9b-fb60-451e-81b7-b48f4f75b007"
       },
       "role": {
         "id": "7809a72b-8a8e-49b8-897b-ff663ee38003",

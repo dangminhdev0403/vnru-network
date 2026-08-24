@@ -34,73 +34,14 @@ describe('Workflow Role Fixtures Importer', () => {
   });
 
   it('proves shape, exact capabilities, context, and idempotency intent for all fixtures', async () => {
-    const fixturePath = path.join(__dirname, '../../../prisma/account.json');
+    const fixturePath = path.join(__dirname, '../../../prisma/iam-fixtures.json');
     
     // Import fixtures
     const results = await importFixture(mockPrisma, fixturePath);
 
-    expect(results).toHaveLength(9);
-    expect(mockPrisma.externalIdentity.deleteMany).toHaveBeenCalledWith({
-      where: {
-        issuer: 'http://127.0.0.1:8081/realms/vnru',
-        subject: 'curator-keycloak-subject-uuid-1234',
-        id: { not: '7809a72b-8a8e-49b8-897b-bb663ee38712' },
-      },
-    });
-    expect(mockPrisma.externalIdentity.upsert).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: { id: '7809a72b-8a8e-49b8-897b-bb663ee38712' },
-        update: expect.objectContaining({
-          issuer: 'http://127.0.0.1:8081/realms/vnru',
-          subject: 'curator-keycloak-subject-uuid-1234',
-        }),
-      }),
-    );
+    expect(results).toHaveLength(7);
 
-    // 1. KNOWLEDGE_CURATOR Checks
-    expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: { id: '7809a72b-8a8e-49b8-897b-bb663ee38711' },
-        create: {
-          id: '7809a72b-8a8e-49b8-897b-bb663ee38711',
-          email: 'curator@vnru.network',
-          status: 'ACTIVE',
-        },
-      }),
-    );
-    expect(mockPrisma.role.upsert).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: { name: 'KNOWLEDGE_CURATOR' },
-      }),
-    );
-    expect(mockPrisma.permission.upsert).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: { key: 'knowledge.workspace.view' },
-      }),
-    );
-    expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: { id: '7809a72b-8a8e-49b8-897b-bb663ee38716' },
-        update: expect.objectContaining({ contextType: 'PLATFORM', contextId: 'GLOBAL' }),
-      }),
-    );
-
-    // 2. RESEARCHER VN Checks
-    expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: { id: '7809a72b-8a8e-49b8-897b-aa663ee38001' },
-        create: {
-          id: '7809a72b-8a8e-49b8-897b-aa663ee38001',
-          email: 'researcher@vnru.network',
-          status: 'ACTIVE',
-        },
-      }),
-    );
-    expect(mockPrisma.role.upsert).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: { name: 'RESEARCHER' },
-      }),
-    );
+    // 1. RESEARCHER Checks
     const researcherPermissions = [
       'knowledge.workspace.view',
       'collab.proposals.create',
@@ -117,14 +58,6 @@ describe('Workflow Role Fixtures Importer', () => {
         }),
       );
     }
-    expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: expect.objectContaining({ id: expect.any(String) }),
-        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38001', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38001', contextType: 'ORGANIZATION', contextId: 'e1d5a7d3-7d1a-47ef-b203-d2d89f7db387' }),
-      }),
-    );
-
-    // 3. RESEARCHER RU Checks
     expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: { id: '7809a72b-8a8e-49b8-897b-bb663ee38021' },
@@ -138,11 +71,11 @@ describe('Workflow Role Fixtures Importer', () => {
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({ id: expect.any(String) }),
-        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-bb663ee38021', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38001', contextType: 'ORGANIZATION', contextId: 'ORG_002' }),
+        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-bb663ee38021', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38001', contextType: 'ORGANIZATION', contextId: 'a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7' }),
       }),
     );
 
-    // 4. ORGANIZATION_REPRESENTATIVE VN Checks
+    // 2. ORGANIZATION_REPRESENTATIVE VN Checks
     expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: { id: '7809a72b-8a8e-49b8-897b-aa663ee38003' },
@@ -161,11 +94,11 @@ describe('Workflow Role Fixtures Importer', () => {
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({ id: expect.any(String) }),
-        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38003', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002', contextType: 'ORGANIZATION', contextId: 'ORG_001' }),
+        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38003', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002', contextType: 'ORGANIZATION', contextId: 'e1d5a7d3-7d1a-47ef-b203-d2d89f7db387' }),
       }),
     );
 
-    // 5. ORGANIZATION_REPRESENTATIVE RU Checks
+    // 3. ORGANIZATION_REPRESENTATIVE RU Checks
     expect(mockPrisma.user.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: { id: '7809a72b-8a8e-49b8-897b-bb663ee38023' },
@@ -179,7 +112,7 @@ describe('Workflow Role Fixtures Importer', () => {
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({ id: expect.any(String) }),
-        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-bb663ee38023', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002', contextType: 'ORGANIZATION', contextId: 'ORG_002' }),
+        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-bb663ee38023', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002', contextType: 'ORGANIZATION', contextId: 'a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7' }),
       }),
     );
 
@@ -305,7 +238,7 @@ describe('Workflow Role Fixtures Importer', () => {
   });
 
   it('fails validation when a known capability or context belongs to another role', async () => {
-    const fixturePath = path.join(__dirname, '../../../prisma/account.json');
+    const fixturePath = path.join(__dirname, '../../../prisma/iam-fixtures.json');
     const document = JSON.parse(fs.readFileSync(fixturePath, 'utf8'));
     document.fixtures[1].permissions = document.fixtures[2].permissions;
     document.fixtures[1].roleAssignment.contextType = 'REVIEW_BOARD';
