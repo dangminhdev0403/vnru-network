@@ -116,7 +116,7 @@ export function GuestHomeV2({ isAuthenticated, workspaceHref }: { isAuthenticate
       <main>
         <section className="relative overflow-hidden border-b border-blue-200/80 bg-blue-50 px-4 py-12 sm:px-6 lg:px-8 lg:py-18">
           <Image
-            src="/brand/vnru-network-banner.png"
+            src="/brand/vnru-network-banner-2026.png"
             alt=""
             fill
             priority
