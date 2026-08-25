@@ -9,6 +9,7 @@ import { GuestPublicNav } from "./GuestPublicNav";
 const COPY: Record<
   Locale,
   {
+    brandTitle: string;
     kicker: string;
     title1: string;
     title2: string;
@@ -35,6 +36,7 @@ const COPY: Record<
   }
 > = {
   vi: {
+    brandTitle: "Mạng lưới tri thức Nga - Việt",
     kicker: "Mạng lưới Chuyên gia Xác thực · VAST & RAS",
     title1: "Khám phá Chuyên gia Khoa học",
     title2: "Nga – Việt",
@@ -63,6 +65,7 @@ const COPY: Record<
     ctaBtn: "Gia nhập mạng lưới chuyên gia →",
   },
   en: {
+    brandTitle: "Russia - Vietnam Knowledge Network",
     kicker: "Verified Expert Network · VAST & RAS",
     title1: "Discover Scientific Experts",
     title2: "Russia – Vietnam",
@@ -91,6 +94,7 @@ const COPY: Record<
     ctaBtn: "Join the Expert Directory →",
   },
   ru: {
+    brandTitle: "Российско-вьетнамская сеть знаний",
     kicker: "Сеть верифицированных экспертов · Фонд «Традиции и дружба»",
     title1: "Научные эксперты",
     title2: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
@@ -549,7 +553,7 @@ export function GuestExpertsV2() {
               <Link
                 href="/"
                 className="inline-flex items-center gap-3.5"
-                aria-label="Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt"
+                aria-label={t.brandTitle}
               >
                 <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-blue-200 bg-white shadow-xs">
                   <span className="absolute inset-y-0 left-0 w-[62%] -skew-x-12 bg-blue-600" />
@@ -557,11 +561,8 @@ export function GuestExpertsV2() {
                 </span>
                 <span>
                   <strong className="block text-base sm:text-lg font-black tracking-tight text-slate-950">
-                    Mạng lưới Tri thức KH&CN
+                    {t.brandTitle}
                   </strong>
-                  <small className="block text-xs font-extrabold tracking-wider text-slate-600 uppercase">
-                    Nga – Việt
-                  </small>
                 </span>
               </Link>
               <p className="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-slate-600">

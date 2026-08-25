@@ -41,6 +41,7 @@ const TYPE_LABELS: Record<KnowledgeType, Record<Locale, string>> = {
 const COPY: Record<
   Locale,
   {
+    brandTitle: string;
     kicker: string;
     title1: string;
     title2: string;
@@ -74,6 +75,7 @@ const COPY: Record<
   }
 > = {
   vi: {
+    brandTitle: "Mạng lưới tri thức Nga - Việt",
     kicker: "CSDL Tri thức Song phương · VAST & RAS",
     title1: "Kho Tri thức Khoa học",
     title2: "& Dữ liệu Hợp tác Song phương",
@@ -111,6 +113,7 @@ const COPY: Record<
     joinBtn: "Gia nhập mạng lưới tri thức →",
   },
   en: {
+    brandTitle: "Russia - Vietnam Knowledge Network",
     kicker: "Bilateral Knowledge Repository · VAST & RAS",
     title1: "Scientific Knowledge Base",
     title2: "& Bilateral Research Data",
@@ -147,6 +150,7 @@ const COPY: Record<
     joinBtn: "Join the Knowledge Network →",
   },
   ru: {
+    brandTitle: "Российско-вьетнамская сеть знаний",
     kicker: "База знаний · Фонд «Традиции и дружба»",
     title1: "База научных знаний",
     title2: "и данные совместных исследований",
@@ -591,7 +595,7 @@ export function GuestKnowledgeV2() {
               <Link
                 href="/"
                 className="inline-flex items-center gap-3.5"
-                aria-label="Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt"
+                aria-label={t.brandTitle}
               >
                 <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-blue-200 bg-white shadow-xs">
                   <span className="absolute inset-y-0 left-0 w-[62%] -skew-x-12 bg-blue-600" />
@@ -599,11 +603,8 @@ export function GuestKnowledgeV2() {
                 </span>
                 <span>
                   <strong className="block text-base sm:text-lg font-black tracking-tight text-slate-950">
-                    Mạng lưới Tri thức KH&CN
+                    {t.brandTitle}
                   </strong>
-                  <small className="block text-xs font-extrabold tracking-wider text-slate-600 uppercase">
-                    Nga – Việt
-                  </small>
                 </span>
               </Link>
               <p className="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-slate-600">

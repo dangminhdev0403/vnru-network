@@ -12,7 +12,7 @@ Browser
         -> PostgreSQL auth_db
 ```
 
-Public `/`, `/knowledge`, `/experts` and `/opportunities` routes are informational or synthetic discovery previews. They do not prove that a described future business capability exists.
+Public `/`, `/explore`, `/knowledge`, `/experts` and `/opportunities` routes are informational or synthetic discovery previews. They do not prove that a described future business capability exists.
 
 ## Runtime ownership
 
@@ -24,6 +24,7 @@ Public `/`, `/knowledge`, `/experts` and `/opportunities` routes are information
 ## Canonical routes
 
 - `/`: public landing page.
+- `/explore`: public discovery hub linking collaboration, expert and knowledge previews.
 - `/login`: Auth.js Credentials authentication entry.
 - `/register`: localized registration-request UI preview; it does not create identities or bypass administrator provisioning.
 - `/account`: member profile.

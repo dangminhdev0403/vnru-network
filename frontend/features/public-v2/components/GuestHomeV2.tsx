@@ -270,8 +270,8 @@ const HOME_COPY: Record<
       },
     ],
     footer: {
-      brandTitle: "Mạng lưới Tri thức KH&CN",
-      subtitle: "Nga – Việt",
+      brandTitle: "Mạng lưới tri thức Nga - Việt",
+      subtitle: "",
       desc: "Cổng thông tin & điều phối hợp tác khoa học công nghệ độc lập giữa các viện nghiên cứu, trường đại học trọng điểm của Việt Nam và Liên bang Nga.",
       openDataBadge: "Cổng dữ liệu mở KH&CN 2026",
       navTitle: "Khám phá hệ sinh thái",
@@ -447,8 +447,8 @@ const HOME_COPY: Record<
       { val: "50+", lbl: "Организаций", col: "from-amber-600 to-orange-600" },
     ],
     footer: {
-      brandTitle: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
-      subtitle: "Россия – Вьетнам",
+      brandTitle: "Российско-вьетнамская сеть знаний",
+      subtitle: "",
       desc: "Независимый портал координации научно-технологического сотрудничества между ведущими институтами и университетами Вьетнама и Российской Федерации.",
       openDataBadge: "Портал открытых данных НТИ 2026",
       navTitle: "Экосистема сети",
@@ -636,8 +636,8 @@ const HOME_COPY: Record<
       },
     ],
     footer: {
-      brandTitle: "S&T Knowledge Network",
-      subtitle: "Russia – Vietnam",
+      brandTitle: "Russia - Vietnam Knowledge Network",
+      subtitle: "",
       desc: "Independent portal for coordinating science and technology cooperation between leading institutes and universities of Vietnam and the Russian Federation.",
       openDataBadge: "Open S&T Data Portal 2026",
       navTitle: "Explore Ecosystem",
@@ -905,16 +905,18 @@ export function GuestHomeV2({
               <Link
                 href="/"
                 className="inline-flex items-center gap-3.5"
-                aria-label="Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt"
+                aria-label={t.footer.brandTitle}
               >
                 <BrandMark className="size-11 shadow-xs" />
                 <span>
                   <strong className="block text-base sm:text-lg font-black tracking-tight text-[#1A1C1CD9]">
                     {t.footer.brandTitle}
                   </strong>
-                  <small className="block text-xs font-extrabold tracking-wider text-slate-600 uppercase">
-                    {t.footer.subtitle}
-                  </small>
+                  {t.footer.subtitle ? (
+                    <small className="block text-xs font-extrabold tracking-wider text-slate-600 uppercase">
+                      {t.footer.subtitle}
+                    </small>
+                  ) : null}
                 </span>
               </Link>
               <p className="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-slate-600">

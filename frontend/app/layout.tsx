@@ -25,7 +25,7 @@ const serif = Noto_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt",
+  title: "Mạng lưới tri thức Nga - Việt",
   description: "Independent Vietnam–Russia knowledge and collaboration portal.",
   icons: {
     icon: [
