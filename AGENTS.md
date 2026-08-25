@@ -37,6 +37,8 @@ For any task whose primary intent is UI inspection, UI repair, visual polish, re
 
 The UI Quality Pro-Max skill is mandatory even when the user does not name it explicitly. Natural-language requests such as `soi lại giao diện`, `fix UI`, `fix UX`, `polish`, `responsive`, `review UX`, `ổn định giao diện`, `soi và fix toàn bộ UI/UX`, or `kiểm tra giao diện` trigger it.
 
+For every UI creation, modification, or review task, also load and follow `.agents/skills/design-dna/SKILL.md`. This applies to typography, spacing, color, components, layout, responsive behavior, motion, accessibility, loading/error/empty states, and visual stability. Skip Design DNA only when the task has no rendered UI effect.
+
 ### Default UI scope
 
 When a UI/UX request is generic and does **not** explicitly name a module, route, page, or component, treat the target as the **complete currently implemented frontend product**, not Module 01 or any single workspace.

@@ -6,7 +6,14 @@ import { useEffect, useState } from "react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { BrandMark } from "@/components/shared/BrandMark";
 
-type GuestNavActive = "home" | "about" | "opportunities" | "experts" | "knowledge" | "events" | "news";
+type GuestNavActive =
+  | "home"
+  | "about"
+  | "opportunities"
+  | "experts"
+  | "knowledge"
+  | "events"
+  | "news";
 
 type GuestPublicNavProps = {
   active?: GuestNavActive;
@@ -14,19 +21,22 @@ type GuestPublicNavProps = {
   workspaceHref?: string;
 };
 
-const COPY: Record<Locale, {
-  brandTitle: string;
-  home: string;
-  about: string;
-  collaboration: string;
-  experts: string;
-  knowledge: string;
-  events: string;
-  news: string;
-  login: string;
-  workspace: string;
-  subtitle: string;
-}> = {
+const COPY: Record<
+  Locale,
+  {
+    brandTitle: string;
+    home: string;
+    about: string;
+    collaboration: string;
+    experts: string;
+    knowledge: string;
+    events: string;
+    news: string;
+    login: string;
+    workspace: string;
+    subtitle: string;
+  }
+> = {
   vi: {
     brandTitle: "Mạng lưới Tri thức KH&CN",
     home: "Trang chủ",
@@ -68,12 +78,22 @@ const COPY: Record<Locale, {
   },
 };
 
-export function GuestPublicNav({ active, isAuthenticated = false, workspaceHref = "/workspace" }: GuestPublicNavProps) {
+const LANGUAGE_OPTIONS: { code: Locale; label: string; flag: string }[] = [
+  { code: "vi", label: "Tiếng Việt", flag: "🇻🇳" },
+  { code: "ru", label: "Русский", flag: "🇷🇺" },
+  { code: "en", label: "English", flag: "🇬🇧" },
+];
+
+export function GuestPublicNav({
+  active,
+  isAuthenticated = false,
+  workspaceHref = "/workspace",
+}: GuestPublicNavProps) {
   const { locale, setLocale } = useLocale();
   const pathname = usePathname();
   const [clickedKey, setClickedKey] = useState<string | null>(null);
   const [currentHash, setCurrentHash] = useState<string>("");
-  const t = COPY[locale];
+  const t = COPY[locale] ?? COPY.vi;
 
   useEffect(() => {
     const handleHash = () => {
@@ -113,15 +133,27 @@ export function GuestPublicNav({ active, isAuthenticated = false, workspaceHref 
   return (
     <header className="sticky top-0 z-50 border-b border-blue-200/80 bg-[#edf5fe]/95 shadow-[0_4px_20px_-12px_rgba(37,99,235,.2)] backdrop-blur-xl">
       <div className="mx-auto flex h-[74px] max-w-[1460px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-3" aria-label="Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt" onClick={() => setClickedKey("home")}>
-          <BrandMark className="size-11 border border-blue-200 shadow-2xs" />
+        <Link
+          href="/"
+          className="flex min-w-0 shrink-0 items-center gap-3"
+          aria-label="Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt"
+          onClick={() => setClickedKey("home")}
+        >
+          <BrandMark className="size-11 shadow-xs" />
           <span className="hidden min-w-0 sm:block">
-            <strong className="block truncate text-[15px] sm:text-[16px] font-extrabold tracking-tight text-slate-950">{t.brandTitle}</strong>
-            <small className="block text-[11.5px] font-bold tracking-[0.06em] text-slate-500 uppercase">{t.subtitle}</small>
+            <strong className="block truncate text-[15px] sm:text-[16px] font-extrabold tracking-tight text-slate-950">
+              {t.brandTitle}
+            </strong>
+            <small className="block text-[11.5px] font-bold tracking-[0.06em] text-slate-500 uppercase">
+              {t.subtitle}
+            </small>
           </span>
         </Link>
 
-        <nav className="hidden items-center rounded-xl border border-blue-200/80 bg-blue-100/70 p-1 shadow-2xs lg:flex" aria-label="Điều hướng công khai">
+        <nav
+          className="hidden items-center rounded-xl border border-blue-200/80 bg-blue-100/70 p-1 shadow-2xs lg:flex"
+          aria-label="Điều hướng công khai"
+        >
           {items.map((item) => {
             const selected = item.key === activeKey;
             return (
@@ -138,25 +170,46 @@ export function GuestPublicNav({ active, isAuthenticated = false, workspaceHref 
           })}
         </nav>
 
-        <div className="flex items-center gap-2.5">
-          <button type="button" aria-label="Tìm kiếm" className="grid size-10 place-items-center rounded-xl border border-blue-200/90 bg-white text-base font-bold text-blue-700 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50">⌕</button>
-          <select
-            value={locale}
-            onChange={(event) => setLocale(event.target.value as Locale)}
-            aria-label="Ngôn ngữ"
-            className="h-10 rounded-xl border border-blue-200/90 bg-white px-2.5 text-xs sm:text-sm font-bold text-slate-700 shadow-2xs outline-none transition hover:border-blue-300 focus:border-blue-400"
+        <div className="flex items-center gap-3">
+          {/* Borderless Language Selector showing clear regional language names with flags */}
+          <div className="relative inline-flex items-center">
+            <select
+              value={locale}
+              onChange={(event) => setLocale(event.target.value as Locale)}
+              aria-label="Chọn ngôn ngữ khu vực"
+              className="h-10 cursor-pointer appearance-none rounded-xl border-0 bg-transparent hover:bg-white/80 pl-3 pr-7 text-xs sm:text-sm font-extrabold text-slate-800 outline-none transition focus:bg-white focus:ring-2 focus:ring-blue-500/20"
+            >
+              {LANGUAGE_OPTIONS.map((opt) => (
+                <option
+                  key={opt.code}
+                  value={opt.code}
+                  className="bg-white text-slate-900 font-bold py-1.5"
+                >
+                  {opt.flag} {opt.label}
+                </option>
+              ))}
+            </select>
+            <span
+              className="pointer-events-none absolute right-2 text-[10px] text-slate-500 font-black"
+              aria-hidden="true"
+            >
+              ▼
+            </span>
+          </div>
+
+          <Link
+            href={isAuthenticated ? workspaceHref : "/login"}
+            className="inline-flex h-10 items-center justify-center rounded-xl bg-blue-600 px-4.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700"
           >
-            <option value="vi">VI</option>
-            <option value="en">EN</option>
-            <option value="ru">RU</option>
-          </select>
-          <Link href={isAuthenticated ? workspaceHref : "/login"} className="inline-flex h-10 items-center justify-center rounded-xl bg-blue-600 px-4.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700">
             {isAuthenticated ? t.workspace : t.login}
           </Link>
         </div>
       </div>
 
-      <nav className="border-t border-blue-200/60 bg-[#edf5fe] lg:hidden" aria-label="Điều hướng công khai trên di động">
+      <nav
+        className="border-t border-blue-200/60 bg-[#edf5fe] lg:hidden"
+        aria-label="Điều hướng công khai trên di động"
+      >
         <div className="mx-auto flex max-w-[1460px] gap-1.5 overflow-x-auto px-4 py-2.5 sm:px-6">
           {items.map((item) => {
             const selected = item.key === activeKey;

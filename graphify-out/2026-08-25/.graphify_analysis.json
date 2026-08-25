@@ -1,0 +1,396 @@
+{
+  "communities": {
+    "0": [
+      "eslint_config_prettier",
+      "eslint_eslintrc",
+      "eslint_js",
+      "eslint_plugin_prettier",
+      "globals",
+      "jest",
+      "nestjs_cli",
+      "nestjs_schematics",
+      "nestjs_testing",
+      "prettier",
+      "services_auth_service_package_devdependencies",
+      "services_auth_service_package_devdependencies_eslint_config_prettier",
+      "services_auth_service_package_devdependencies_eslint_eslintrc",
+      "services_auth_service_package_devdependencies_eslint_js",
+      "services_auth_service_package_devdependencies_eslint_plugin_prettier",
+      "services_auth_service_package_devdependencies_globals",
+      "services_auth_service_package_devdependencies_jest",
+      "services_auth_service_package_devdependencies_nestjs_cli",
+      "services_auth_service_package_devdependencies_nestjs_schematics",
+      "services_auth_service_package_devdependencies_nestjs_testing",
+      "services_auth_service_package_devdependencies_prettier",
+      "services_auth_service_package_devdependencies_source_map_support",
+      "services_auth_service_package_devdependencies_supertest",
+      "services_auth_service_package_devdependencies_ts_jest",
+      "services_auth_service_package_devdependencies_ts_loader",
+      "services_auth_service_package_devdependencies_ts_node",
+      "services_auth_service_package_devdependencies_tsconfig_paths",
+      "services_auth_service_package_devdependencies_types_express",
+      "services_auth_service_package_devdependencies_types_jest",
+      "services_auth_service_package_devdependencies_types_supertest",
+      "services_auth_service_package_devdependencies_typescript_eslint",
+      "source_map_support",
+      "supertest",
+      "ts_jest",
+      "ts_loader",
+      "ts_node",
+      "tsconfig_paths",
+      "types_express",
+      "types_jest",
+      "types_supertest",
+      "typescript_eslint"
+    ],
+    "1": [
+      "controller",
+      "get",
+      "injectable",
+      "services_auth_service_src_app_controller",
+      "services_auth_service_src_app_controller_appcontroller",
+      "services_auth_service_src_app_controller_appcontroller_constructor",
+      "services_auth_service_src_app_controller_appcontroller_gethello",
+      "services_auth_service_src_app_controller_spec",
+      "services_auth_service_src_app_module",
+      "services_auth_service_src_app_module_appmodule",
+      "services_auth_service_src_app_module_ts_module",
+      "services_auth_service_src_app_service",
+      "services_auth_service_src_app_service_appservice",
+      "services_auth_service_src_app_service_appservice_gethello",
+      "services_auth_service_src_main",
+      "services_auth_service_src_main_bootstrap",
+      "services_auth_service_src_modules_access_control_access_control_module",
+      "services_auth_service_src_modules_access_control_access_control_module_accesscontrolmodule",
+      "services_auth_service_src_modules_access_control_access_control_module_ts_module",
+      "services_auth_service_src_modules_authentication_authentication_module",
+      "services_auth_service_src_modules_authentication_authentication_module_authenticationmodule",
+      "services_auth_service_src_modules_authentication_authentication_module_ts_module",
+      "services_auth_service_src_modules_identity_identity_module",
+      "services_auth_service_src_modules_identity_identity_module_identitymodule",
+      "services_auth_service_src_modules_identity_identity_module_ts_module",
+      "services_auth_service_src_modules_security_security_module",
+      "services_auth_service_src_modules_security_security_module_securitymodule",
+      "services_auth_service_src_modules_security_security_module_ts_module",
+      "services_auth_service_src_modules_session_session_module",
+      "services_auth_service_src_modules_session_session_module_sessionmodule",
+      "services_auth_service_src_modules_session_session_module_ts_module",
+      "services_auth_service_test_app_e2e_spec"
+    ],
+    "2": [
+      "services_auth_service_tsconfig",
+      "services_auth_service_tsconfig_compileroptions",
+      "services_auth_service_tsconfig_compileroptions_allowsyntheticdefaultimports",
+      "services_auth_service_tsconfig_compileroptions_baseurl",
+      "services_auth_service_tsconfig_compileroptions_declaration",
+      "services_auth_service_tsconfig_compileroptions_emitdecoratormetadata",
+      "services_auth_service_tsconfig_compileroptions_esmoduleinterop",
+      "services_auth_service_tsconfig_compileroptions_experimentaldecorators",
+      "services_auth_service_tsconfig_compileroptions_forceconsistentcasinginfilenames",
+      "services_auth_service_tsconfig_compileroptions_incremental",
+      "services_auth_service_tsconfig_compileroptions_isolatedmodules",
+      "services_auth_service_tsconfig_compileroptions_module",
+      "services_auth_service_tsconfig_compileroptions_moduleresolution",
+      "services_auth_service_tsconfig_compileroptions_nofallthroughcasesinswitch",
+      "services_auth_service_tsconfig_compileroptions_noimplicitany",
+      "services_auth_service_tsconfig_compileroptions_outdir",
+      "services_auth_service_tsconfig_compileroptions_removecomments",
+      "services_auth_service_tsconfig_compileroptions_resolvepackagejsonexports",
+      "services_auth_service_tsconfig_compileroptions_skiplibcheck",
+      "services_auth_service_tsconfig_compileroptions_sourcemap",
+      "services_auth_service_tsconfig_compileroptions_strictbindcallapply",
+      "services_auth_service_tsconfig_compileroptions_strictnullchecks",
+      "services_auth_service_tsconfig_compileroptions_target"
+    ],
+    "3": [
+      "dangminhdev04032005_query_resource",
+      "frontend_package",
+      "frontend_package_dependencies",
+      "frontend_package_dependencies_dangminhdev04032005_query_resource",
+      "frontend_package_dependencies_next",
+      "frontend_package_dependencies_react",
+      "frontend_package_dependencies_react_dom",
+      "frontend_package_dependencies_tanstack_react_query",
+      "frontend_package_name",
+      "frontend_package_packagemanager",
+      "frontend_package_private",
+      "frontend_package_scripts",
+      "frontend_package_scripts_build",
+      "frontend_package_scripts_dev",
+      "frontend_package_scripts_lint",
+      "frontend_package_scripts_start",
+      "frontend_package_version",
+      "next",
+      "react",
+      "react_dom",
+      "tanstack_react_query"
+    ],
+    "4": [
+      "eslint_config_next",
+      "frontend_package_devdependencies",
+      "frontend_package_devdependencies_eslint",
+      "frontend_package_devdependencies_eslint_config_next",
+      "frontend_package_devdependencies_tailwindcss",
+      "frontend_package_devdependencies_tailwindcss_postcss",
+      "frontend_package_devdependencies_types_node",
+      "frontend_package_devdependencies_types_react",
+      "frontend_package_devdependencies_types_react_dom",
+      "frontend_package_devdependencies_typescript",
+      "frontend_package_json_eslint",
+      "frontend_package_json_types_node",
+      "frontend_package_json_typescript",
+      "services_auth_service_package_devdependencies_eslint",
+      "services_auth_service_package_devdependencies_types_node",
+      "services_auth_service_package_devdependencies_typescript",
+      "tailwindcss",
+      "tailwindcss_postcss",
+      "types_react",
+      "types_react_dom"
+    ],
+    "5": [
+      "frontend_tsconfig_compileroptions",
+      "frontend_tsconfig_compileroptions_allowjs",
+      "frontend_tsconfig_compileroptions_esmoduleinterop",
+      "frontend_tsconfig_compileroptions_incremental",
+      "frontend_tsconfig_compileroptions_isolatedmodules",
+      "frontend_tsconfig_compileroptions_jsx",
+      "frontend_tsconfig_compileroptions_lib",
+      "frontend_tsconfig_compileroptions_module",
+      "frontend_tsconfig_compileroptions_moduleresolution",
+      "frontend_tsconfig_compileroptions_noemit",
+      "frontend_tsconfig_compileroptions_paths",
+      "frontend_tsconfig_compileroptions_plugins",
+      "frontend_tsconfig_compileroptions_resolvejsonmodule",
+      "frontend_tsconfig_compileroptions_skiplibcheck",
+      "frontend_tsconfig_compileroptions_strict",
+      "frontend_tsconfig_compileroptions_target",
+      "ref_dom",
+      "ref_dom_iterable",
+      "ref_esnext"
+    ],
+    "6": [
+      "nestjs_common",
+      "nestjs_core",
+      "nestjs_platform_express",
+      "reflect_metadata",
+      "rxjs",
+      "services_auth_service_package",
+      "services_auth_service_package_author",
+      "services_auth_service_package_dependencies",
+      "services_auth_service_package_dependencies_nestjs_common",
+      "services_auth_service_package_dependencies_nestjs_core",
+      "services_auth_service_package_dependencies_nestjs_platform_express",
+      "services_auth_service_package_dependencies_reflect_metadata",
+      "services_auth_service_package_dependencies_rxjs",
+      "services_auth_service_package_description",
+      "services_auth_service_package_license",
+      "services_auth_service_package_name",
+      "services_auth_service_package_private",
+      "services_auth_service_package_version"
+    ],
+    "7": [
+      "frontend_tsconfig",
+      "frontend_tsconfig_exclude",
+      "frontend_tsconfig_include",
+      "frontend_tsconfig_json_ref_node_modules",
+      "frontend_tsconfig_json_ref_ts",
+      "ref_dist",
+      "ref_mts",
+      "ref_next_dev_types_ts",
+      "ref_next_env_d_ts",
+      "ref_next_types_ts",
+      "ref_spec_ts",
+      "ref_test",
+      "ref_tsconfig_json",
+      "ref_tsx",
+      "services_auth_service_tsconfig_build",
+      "services_auth_service_tsconfig_build_exclude",
+      "services_auth_service_tsconfig_build_extends"
+    ],
+    "8": [
+      "ref_js",
+      "ref_json",
+      "ref_t_j_s",
+      "services_auth_service_package_jest",
+      "services_auth_service_package_jest_collectcoveragefrom",
+      "services_auth_service_package_jest_coveragedirectory",
+      "services_auth_service_package_jest_modulefileextensions",
+      "services_auth_service_package_jest_rootdir",
+      "services_auth_service_package_jest_testenvironment",
+      "services_auth_service_package_jest_testregex",
+      "services_auth_service_package_jest_transform",
+      "services_auth_service_package_json_ref_ts",
+      "services_auth_service_package_transform_t_j_s"
+    ],
+    "9": [
+      "services_auth_service_package_scripts",
+      "services_auth_service_package_scripts_build",
+      "services_auth_service_package_scripts_format",
+      "services_auth_service_package_scripts_lint",
+      "services_auth_service_package_scripts_start",
+      "services_auth_service_package_scripts_start_debug",
+      "services_auth_service_package_scripts_start_dev",
+      "services_auth_service_package_scripts_start_prod",
+      "services_auth_service_package_scripts_test",
+      "services_auth_service_package_scripts_test_cov",
+      "services_auth_service_package_scripts_test_debug",
+      "services_auth_service_package_scripts_test_e2e",
+      "services_auth_service_package_scripts_test_watch"
+    ],
+    "10": [
+      "services_auth_service_nest_cli",
+      "services_auth_service_nest_cli_collection",
+      "services_auth_service_nest_cli_compileroptions",
+      "services_auth_service_nest_cli_compileroptions_deleteoutdir",
+      "services_auth_service_nest_cli_schema",
+      "services_auth_service_nest_cli_sourceroot"
+    ],
+    "11": [
+      "frontend_app_layout",
+      "frontend_app_layout_geistmono",
+      "frontend_app_layout_geistsans",
+      "frontend_app_layout_metadata",
+      "frontend_app_layout_rootlayout"
+    ],
+    "12": [
+      "frontend_app_page",
+      "frontend_app_page_home"
+    ],
+    "13": [
+      "frontend_eslint_config",
+      "frontend_eslint_config_eslintconfig"
+    ],
+    "14": [
+      "frontend_next_config",
+      "frontend_next_config_nextconfig"
+    ],
+    "15": [
+      "frontend_postcss_config",
+      "frontend_postcss_config_config"
+    ],
+    "16": [
+      "services_auth_service_eslint_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.04878048780487805,
+    "1": 0.09475806451612903,
+    "2": 0.08695652173913043,
+    "3": 0.09523809523809523,
+    "4": 0.1,
+    "5": 0.10526315789473684,
+    "6": 0.1111111111111111,
+    "7": 0.11764705882352941,
+    "8": 0.15384615384615385,
+    "9": 0.15384615384615385,
+    "10": 0.3333333333333333,
+    "11": 0.4,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0
+  },
+  "gods": [
+    {
+      "id": "services_auth_service_tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 22
+    },
+    {
+      "id": "frontend_tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "services_auth_service_package_scripts",
+      "label": "scripts",
+      "degree": 13
+    },
+    {
+      "id": "services_auth_service_package_jest",
+      "label": "jest",
+      "degree": 8
+    },
+    {
+      "id": "frontend_tsconfig_include",
+      "label": "include",
+      "degree": 7
+    },
+    {
+      "id": "services_auth_service_src_app_service_appservice",
+      "label": "AppService",
+      "degree": 7
+    },
+    {
+      "id": "services_auth_service_src_app_controller_appcontroller",
+      "label": "AppController",
+      "degree": 6
+    },
+    {
+      "id": "frontend_package_scripts",
+      "label": "scripts",
+      "degree": 5
+    },
+    {
+      "id": "services_auth_service_tsconfig_build_exclude",
+      "label": "exclude",
+      "degree": 5
+    },
+    {
+      "id": "frontend_tsconfig_compileroptions_lib",
+      "label": "lib",
+      "degree": 4
+    }
+  ],
+  "surprises": [
+    {
+      "source": "exclude",
+      "target": "node_modules",
+      "source_files": [
+        "services/auth-service/tsconfig.build.json",
+        "frontend/tsconfig.json"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "extends",
+      "why": "connects across different repos/directories; peripheral node `node_modules` unexpectedly reaches hub `exclude`"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `devDependencies` connect `Community 0` to `Community 4`, `Community 6`?",
+      "why": "High betweenness centrality (0.216) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `devDependencies` connect `Community 4` to `Community 3`?",
+      "why": "High betweenness centrality (0.115) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `scripts` connect `Community 9` to `Community 6`?",
+      "why": "High betweenness centrality (0.051) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `geistSans`, `geistMono`, `metadata` to the rest of the system?",
+      "why": "129 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 0` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.04878048780487805 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 1` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.09475806451612903 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 2` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

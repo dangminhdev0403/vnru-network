@@ -20,12 +20,22 @@ const serif = Noto_Serif({
 export const metadata: Metadata = {
   title: "Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt",
   description: "Independent Vietnam–Russia knowledge and collaboration portal.",
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    apple: "/favicon.png",
+    shortcut: "/favicon.png",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="vi" data-theme="light" data-scroll-behavior="smooth" className={`${sans.variable} ${serif.variable}`}>
       <head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
