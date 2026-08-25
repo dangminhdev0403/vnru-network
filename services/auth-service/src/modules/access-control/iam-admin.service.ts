@@ -317,8 +317,12 @@ export class IamAdminService {
         },
         select: { roleId: true },
       });
-      if (actorRoles.some(({ roleId: actorRoleId }) => actorRoleId === roleId)) {
-        throw new ForbiddenException('Users cannot change permissions on their own role');
+      if (
+        actorRoles.some(({ roleId: actorRoleId }) => actorRoleId === roleId)
+      ) {
+        throw new ForbiddenException(
+          'Users cannot change permissions on their own role',
+        );
       }
     }
 
@@ -349,7 +353,11 @@ export class IamAdminService {
       });
     });
 
-    return { id: role.id, name: role.name, permissions: [...permissionKeys].sort() };
+    return {
+      id: role.id,
+      name: role.name,
+      permissions: [...permissionKeys].sort(),
+    };
   }
 
   async upsertRoleAssignment(

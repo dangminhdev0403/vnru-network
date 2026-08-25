@@ -300,10 +300,10 @@ const HOME_COPY: Record<
     },
   },
   ru: {
-    eyebrow: "Портал двустороннего научно-технологического сотрудничества",
-    title1: "Интеллектуальная сеть",
-    title2: "Наука и технологии",
-    title3: "Россия – Вьетнам",
+    eyebrow: "Портал двустороннего сотрудничества",
+    title1: "РОССИЙСКО-ВЬЕТНАМСКАЯ",
+    title2: "ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
+    title3: "",
     focusCards: [
       {
         tag: "Приоритет",
@@ -477,9 +477,9 @@ const HOME_COPY: Record<
     },
   },
   en: {
-    eyebrow: "Bilateral S&T Collaboration Portal",
-    title1: "Knowledge Network",
-    title2: "Science & Technology",
+    eyebrow: "Bilateral Cooperation Gateway",
+    title1: "Science & Technology",
+    title2: "Knowledge Network",
     title3: "Russia – Vietnam",
     focusCards: [
       {
@@ -696,7 +696,9 @@ export function GuestHomeV2({
             <div
               key={banner.id}
               className={`absolute inset-0 -z-20 transition-opacity duration-700 ease-in-out ${
-                idx === currentSlide ? "opacity-100 scale-100" : "opacity-0 pointer-events-none"
+                idx === currentSlide
+                  ? "opacity-100 scale-100"
+                  : "opacity-0 pointer-events-none"
               }`}
             >
               <Image
@@ -715,25 +717,29 @@ export function GuestHomeV2({
             aria-hidden="true"
           />
 
-          <div className="mx-auto flex min-h-[480px] max-w-[1460px] items-center px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-22">
+          <div className="mx-auto flex min-h-[480px] sm:min-h-[540px] lg:min-h-[580px] xl:min-h-[620px] max-w-[1460px] items-center px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
             <div className="w-full max-w-[960px] xl:max-w-[1100px]">
-              <div className="inline-flex items-center gap-2.5 rounded-full border-2 border-amber-500/80 px-3.5 py-1.5">
+              <div className="inline-flex items-center gap-2.5 rounded-full border-2 border-amber-500/80 bg-black/35 px-4 py-2 shadow-[0_4px_14px_-2px_rgba(0,0,0,0.35)] backdrop-blur-md">
                 <span
-                  className="relative flex size-2 shrink-0"
+                  className="relative flex size-2.5 shrink-0"
                   aria-hidden="true"
                 >
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(245,158,11,0.8)]" />
+                  <span className="relative inline-flex size-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.9)]" />
                 </span>
-                <span className="text-xs sm:text-[13px] font-bold tracking-wide text-amber-300">
+                <span className="text-sm sm:text-base font-bold tracking-wide text-amber-300">
                   {t.eyebrow}
                 </span>
               </div>
 
-              <h1 className="mt-6 overflow-visible py-1 font-sans text-[34px] font-black leading-[1.16] tracking-tight text-white sm:text-[44px] md:text-[50px] lg:text-[56px] xl:text-[60px] drop-shadow-[0_2px_14px_rgba(0,0,0,0.6)]">
+              <h1 className="mt-6 overflow-visible py-1 font-sans text-4xl sm:text-5xl md:text-[54px] lg:text-[62px] xl:text-[66px] font-black leading-[1.12] tracking-tight text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.7)]">
                 <span className="block">{t.title1}</span>
-                <span className="mt-1 block text-[#41C5FF] drop-shadow-[0_0_18px_rgba(65,197,255,0.45)]">{t.title2}</span>
-                <span className="mt-1 block text-white">{t.title3}</span>
+                <span className="mt-1 block text-[#38bdf8] drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]">
+                  {t.title2}
+                </span>
+                {t.title3 ? (
+                  <span className="mt-1 block text-white">{t.title3}</span>
+                ) : null}
               </h1>
             </div>
           </div>

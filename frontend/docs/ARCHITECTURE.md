@@ -3,7 +3,7 @@
 The frontend currently contains:
 
 - public landing page `/` and synthetic discovery previews under `/knowledge`, `/experts` and `/opportunities`;
-- Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`;
+- Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`, plus a localized `/register` request preview that does not create identities;
 - member account `/account`;
 - MFA and sessions `/security`;
 - IAM governance `/admin/access/*`;

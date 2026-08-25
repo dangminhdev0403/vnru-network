@@ -9,6 +9,7 @@ Only Module 1 has an implemented backend runtime. Public discovery and role page
 | Landing page | `/` |
 | Public discovery previews | `/knowledge`, `/experts`, `/opportunities` |
 | Login | `/login` |
+| Registration request preview | `/register` |
 | Member profile | `/account` |
 | MFA and sessions | `/security` |
 | Access administration | `/admin/access/*` |

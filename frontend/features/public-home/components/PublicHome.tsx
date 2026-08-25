@@ -11,7 +11,7 @@ import { confirmAction } from "@/lib/alerts";
 
 const HERO_STATIC_TITLE: Record<Locale, string> = {
   vi: "Mạng lưới Trí thức Khoa học - Công nghệ Nga - Việt",
-  ru: "Российско-вьетнамская научно-технологическая интеллектуальная сеть",
+  ru: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
   en: "Russia-Vietnam Science-Technology Intelligence Network",
 };
 
@@ -90,7 +90,9 @@ export function PublicHome({
 
   useEffect(() => {
     const syncLocale = () => {
-      const value = document.cookie.match(/(?:^|; )vnru_locale=(vi|en|ru)(?:;|$)/)?.[1] as Locale | undefined;
+      const value = document.cookie.match(
+        /(?:^|; )vnru_locale=(vi|en|ru)(?:;|$)/,
+      )?.[1] as Locale | undefined;
       if (value) setLocale(value);
     };
     syncLocale();
@@ -108,7 +110,8 @@ export function PublicHome({
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     if (loggingOut) return;
-    if (!(await confirmAction({ title: "Xác nhận đăng xuất?" })).isConfirmed) return;
+    if (!(await confirmAction({ title: "Xác nhận đăng xuất?" })).isConfirmed)
+      return;
     setLoggingOut(true);
     try {
       const { logoutUrl } = await logout.mutateAsync();
@@ -998,7 +1001,9 @@ export function PublicHome({
                   className="future-cta mt-8 inline-flex min-h-12 items-center gap-3 rounded-xl bg-white px-5 py-3 text-sm font-extrabold text-[#06152f] shadow-lg shadow-blue-950/30 transition hover:-translate-y-0.5 hover:bg-[#eaf2ff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7dd3fc]"
                 >
                   {t("Khám phá kho tri thức")}
-                  <span aria-hidden="true" className="text-lg">↗</span>
+                  <span aria-hidden="true" className="text-lg">
+                    ↗
+                  </span>
                 </Link>
               </div>
 

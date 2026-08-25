@@ -55,10 +55,12 @@ const roleAssignmentSchema = z.object({
 });
 
 const rolePermissionsSchema = z.object({
-  permissions: z.array(z.string().trim().min(1)).max(200).refine(
-    (permissions) => new Set(permissions).size === permissions.length,
-    { message: 'Permissions must be unique' },
-  ),
+  permissions: z
+    .array(z.string().trim().min(1))
+    .max(200)
+    .refine((permissions) => new Set(permissions).size === permissions.length, {
+      message: 'Permissions must be unique',
+    }),
 });
 
 @Controller('api/v1/admin')
@@ -145,11 +147,13 @@ export class IamAdminController {
     const parsedBody = rolePermissionsSchema.safeParse(body);
     if (!parsedId.success || !parsedBody.success) {
       throw new BadRequestException(
-        parsedId.error?.issues[0]?.message ?? parsedBody.error?.issues[0]?.message,
+        parsedId.error?.issues[0]?.message ??
+          parsedBody.error?.issues[0]?.message,
       );
     }
     const actorId = req.authContext?.userId;
-    if (!actorId) throw new UnauthorizedException('Actor ID not found in request context');
+    if (!actorId)
+      throw new UnauthorizedException('Actor ID not found in request context');
     return this.iamAdminService.replaceRolePermissions(
       parsedId.data,
       parsedBody.data.permissions,

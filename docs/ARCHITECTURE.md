@@ -25,6 +25,7 @@ Public `/`, `/knowledge`, `/experts` and `/opportunities` routes are information
 
 - `/`: public landing page.
 - `/login`: Auth.js Credentials authentication entry.
+- `/register`: localized registration-request UI preview; it does not create identities or bypass administrator provisioning.
 - `/account`: member profile.
 - `/security`: MFA and session security.
 - `/admin/access/*`: user, role, permission and assignment administration.

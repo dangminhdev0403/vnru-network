@@ -9,33 +9,65 @@ describe('Workflow Role Fixtures Importer', () => {
     mockPrisma = {
       $transaction: jest.fn((callback) => callback(mockPrisma)),
       user: {
-        upsert: jest.fn().mockImplementation((args) => Promise.resolve({ id: args.where.id, ...args.create })),
+        upsert: jest
+          .fn()
+          .mockImplementation((args) =>
+            Promise.resolve({ id: args.where.id, ...args.create }),
+          ),
       },
       externalIdentity: {
         deleteMany: jest.fn().mockResolvedValue({ count: 0 }),
-        upsert: jest.fn().mockImplementation((args) => Promise.resolve({ id: args.create.id, ...args.create })),
+        upsert: jest
+          .fn()
+          .mockImplementation((args) =>
+            Promise.resolve({ id: args.create.id, ...args.create }),
+          ),
       },
       role: {
-        upsert: jest.fn().mockImplementation((args) => Promise.resolve({ id: args.where.id || args.create.id, ...args.create })),
+        upsert: jest.fn().mockImplementation((args) =>
+          Promise.resolve({
+            id: args.where.id || args.create.id,
+            ...args.create,
+          }),
+        ),
         findUnique: jest.fn(),
       },
       permission: {
-        upsert: jest.fn().mockImplementation((args) => Promise.resolve({ id: args.create.id, ...args.create })),
-        findUnique: jest.fn().mockImplementation((args) => Promise.resolve({ id: 'perm-id', key: args.where.key })),
+        upsert: jest
+          .fn()
+          .mockImplementation((args) =>
+            Promise.resolve({ id: args.create.id, ...args.create }),
+          ),
+        findUnique: jest
+          .fn()
+          .mockImplementation((args) =>
+            Promise.resolve({ id: 'perm-id', key: args.where.key }),
+          ),
       },
       rolePermission: {
         deleteMany: jest.fn().mockResolvedValue({ count: 0 }),
-        upsert: jest.fn().mockImplementation((args) => Promise.resolve({ id: 'rp-id', ...args.create })),
+        upsert: jest
+          .fn()
+          .mockImplementation((args) =>
+            Promise.resolve({ id: 'rp-id', ...args.create }),
+          ),
       },
       roleAssignment: {
-        upsert: jest.fn().mockImplementation((args) => Promise.resolve({ id: args.create.id, ...args.create })),
+        upsert: jest
+          .fn()
+          .mockImplementation((args) =>
+            Promise.resolve({ id: args.create.id, ...args.create }),
+          ),
       },
     };
   });
 
   it('proves shape, exact capabilities, context, and idempotency intent for all fixtures', async () => {
-    const fixturePath = path.join(__dirname, '../../../prisma/iam-fixtures.json');
-    
+    const fixturePath = path.join(
+      __dirname,
+      '../../../prisma/iam-fixtures.json',
+    );
+
     // Import fixtures
     const results = await importFixture(mockPrisma, fixturePath);
 
@@ -71,7 +103,12 @@ describe('Workflow Role Fixtures Importer', () => {
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({ id: expect.any(String) }),
-        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-bb663ee38021', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38001', contextType: 'ORGANIZATION', contextId: 'a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7' }),
+        update: expect.objectContaining({
+          userId: '7809a72b-8a8e-49b8-897b-bb663ee38021',
+          roleId: '7809a72b-8a8e-49b8-897b-ff663ee38001',
+          contextType: 'ORGANIZATION',
+          contextId: 'a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7',
+        }),
       }),
     );
 
@@ -94,7 +131,12 @@ describe('Workflow Role Fixtures Importer', () => {
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({ id: expect.any(String) }),
-        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38003', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002', contextType: 'ORGANIZATION', contextId: 'e1d5a7d3-7d1a-47ef-b203-d2d89f7db387' }),
+        update: expect.objectContaining({
+          userId: '7809a72b-8a8e-49b8-897b-aa663ee38003',
+          roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002',
+          contextType: 'ORGANIZATION',
+          contextId: 'e1d5a7d3-7d1a-47ef-b203-d2d89f7db387',
+        }),
       }),
     );
 
@@ -112,7 +154,12 @@ describe('Workflow Role Fixtures Importer', () => {
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({ id: expect.any(String) }),
-        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-bb663ee38023', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002', contextType: 'ORGANIZATION', contextId: 'a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7' }),
+        update: expect.objectContaining({
+          userId: '7809a72b-8a8e-49b8-897b-bb663ee38023',
+          roleId: '7809a72b-8a8e-49b8-897b-ff663ee38002',
+          contextType: 'ORGANIZATION',
+          contextId: 'a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7',
+        }),
       }),
     );
 
@@ -135,7 +182,12 @@ describe('Workflow Role Fixtures Importer', () => {
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({ id: expect.any(String) }),
-        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38005', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38003', contextType: 'REVIEW_BOARD', contextId: expect.any(String) }),
+        update: expect.objectContaining({
+          userId: '7809a72b-8a8e-49b8-897b-aa663ee38005',
+          roleId: '7809a72b-8a8e-49b8-897b-ff663ee38003',
+          contextType: 'REVIEW_BOARD',
+          contextId: expect.any(String),
+        }),
       }),
     );
 
@@ -153,7 +205,12 @@ describe('Workflow Role Fixtures Importer', () => {
     expect(mockPrisma.roleAssignment.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({ id: expect.any(String) }),
-        update: expect.objectContaining({ userId: '7809a72b-8a8e-49b8-897b-aa663ee38007', roleId: '7809a72b-8a8e-49b8-897b-ff663ee38004', contextType: 'PLATFORM', contextId: 'GLOBAL' }),
+        update: expect.objectContaining({
+          userId: '7809a72b-8a8e-49b8-897b-aa663ee38007',
+          roleId: '7809a72b-8a8e-49b8-897b-ff663ee38004',
+          contextType: 'PLATFORM',
+          contextId: 'GLOBAL',
+        }),
       }),
     );
 
@@ -175,9 +232,15 @@ describe('Workflow Role Fixtures Importer', () => {
     );
 
     // The local full-access account remains provisioned through the fixture.
-    const allRoleCalls = mockPrisma.role.upsert.mock.calls.map((call: any) => call[0].where.name);
+    const allRoleCalls = mockPrisma.role.upsert.mock.calls.map(
+      (call: any) => call[0].where.name,
+    );
     expect(allRoleCalls).toContain('SUPER_ADMIN');
-    for (const key of ['iam.users.manage', 'iam.roles.manage', 'iam.audit.view']) {
+    for (const key of [
+      'iam.users.manage',
+      'iam.roles.manage',
+      'iam.audit.view',
+    ]) {
       expect(mockPrisma.permission.upsert).toHaveBeenCalledWith(
         expect.objectContaining({ where: { key } }),
       );
@@ -238,14 +301,19 @@ describe('Workflow Role Fixtures Importer', () => {
   });
 
   it('fails validation when a known capability or context belongs to another role', async () => {
-    const fixturePath = path.join(__dirname, '../../../prisma/iam-fixtures.json');
+    const fixturePath = path.join(
+      __dirname,
+      '../../../prisma/iam-fixtures.json',
+    );
     const document = JSON.parse(fs.readFileSync(fixturePath, 'utf8'));
     document.fixtures[1].permissions = document.fixtures[2].permissions;
     document.fixtures[1].roleAssignment.contextType = 'REVIEW_BOARD';
     const tempFilePath = path.join(__dirname, 'temp-invalid-role-policy.json');
     fs.writeFileSync(tempFilePath, JSON.stringify(document));
     try {
-      await expect(importFixture(mockPrisma, tempFilePath)).rejects.toThrow(/exact capability set|requires ORGANIZATION/);
+      await expect(importFixture(mockPrisma, tempFilePath)).rejects.toThrow(
+        /exact capability set|requires ORGANIZATION/,
+      );
     } finally {
       if (fs.existsSync(tempFilePath)) fs.unlinkSync(tempFilePath);
     }

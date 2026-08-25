@@ -123,7 +123,11 @@ export function GuestPublicNav({
     { key: "knowledge", label: t.knowledge, href: "/knowledge" },
     { key: "events", label: t.events, href: "/#events" },
     { key: "news", label: t.news, href: "/#news" },
-  ];
+  ].filter(
+    (item) =>
+      pathname !== "/" ||
+      !["opportunities", "experts", "knowledge"].includes(item.key),
+  );
 
   return (
     <header className="sticky top-0 z-50 border-b border-blue-200/80 bg-[#edf5fe]/95 shadow-[0_4px_20px_-12px_rgba(37,99,235,.2)] backdrop-blur-xl">

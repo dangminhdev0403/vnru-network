@@ -370,23 +370,30 @@ describe('IamAdminService', () => {
 
   describe('replaceRolePermissions', () => {
     it('replaces mappings and audits in one transaction', async () => {
-      prismaMock.role.findUnique.mockResolvedValue({ id: 'role-1', name: 'RESEARCHER' });
+      prismaMock.role.findUnique.mockResolvedValue({
+        id: 'role-1',
+        name: 'RESEARCHER',
+      });
       prismaMock.permission.findMany.mockResolvedValue([
         { id: 'perm-1', key: 'collab.proposals.create' },
       ]);
       prismaMock.rolePermission.deleteMany.mockResolvedValue({ count: 1 });
       prismaMock.rolePermission.createMany.mockResolvedValue({ count: 1 });
 
-      await expect(service.replaceRolePermissions(
-        'role-1',
-        ['collab.proposals.create'],
-        'actor-1',
-      )).resolves.toEqual({
+      await expect(
+        service.replaceRolePermissions(
+          'role-1',
+          ['collab.proposals.create'],
+          'actor-1',
+        ),
+      ).resolves.toEqual({
         id: 'role-1',
         name: 'RESEARCHER',
         permissions: ['collab.proposals.create'],
       });
-      expect(prismaMock.rolePermission.deleteMany).toHaveBeenCalledWith({ where: { roleId: 'role-1' } });
+      expect(prismaMock.rolePermission.deleteMany).toHaveBeenCalledWith({
+        where: { roleId: 'role-1' },
+      });
       expect(prismaMock.rolePermission.createMany).toHaveBeenCalledWith({
         data: [{ roleId: 'role-1', permissionId: 'perm-1' }],
       });

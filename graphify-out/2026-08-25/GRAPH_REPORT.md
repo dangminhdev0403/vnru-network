@@ -1,16 +1,16 @@
 # Graph Report - vnru-network  (2026-08-25)
 
 ## Corpus Check
-- 326 files · ~1,317,832 words
+- 326 files · ~632,216 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2553 nodes · 3572 edges · 211 communities (178 shown, 33 thin omitted)
+- 2557 nodes · 3600 edges · 208 communities (174 shown, 34 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.61)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9c43703c`
+- Built from commit: `e8a257bc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -60,8 +60,6 @@
 - Backend Service Rules
 - Russia-Vietnam Science-Technology Intelligence Network Global Rules (Authoritative)
 - Frontend Rules
-- ResearcherTaskWorkspace.tsx
-- ReviewerTaskWorkspace.tsx
 - Agent Instructions — Russia-Vietnam Science-Technology Intelligence Network
 - DecisionTaskWorkspace.tsx
 - AuthenticationService
@@ -92,7 +90,6 @@
 - System Architecture
 - RolePermissionsPage.tsx
 - Discord Bot Setup Guide
-- admin-nav-registry.ts
 - AuthenticatedRequestGuard
 - style.md
 - auth.ts
@@ -152,13 +149,16 @@
 - Archon Configuration Guide
 - dependencies
 - mfa/route.ts
+- SecurityClientPage.tsx
 - decisions.ts
 - 1. THE THREE DIALS (Core Configuration)
 - route.ts
 - SidebarIcons.tsx
+- alerts.ts
 - cn.ts
 - Authoring Command Files
 - Control
+- opportunities.ts
 - Control
 - Workflow Authoring
 - Workflow Authoring
@@ -174,7 +174,6 @@
 - Initializing Archon in a Repository
 - frontend/package.json
 - Semantics
-- route.ts
 - Command Name
 - Parameter Matrix (Quick Reference)
 - Variable Substitution Reference
@@ -205,13 +204,13 @@
 - zustand
 
 ## God Nodes (most connected - your core abstractions)
-1. `useLocale` - 54 edges
+1. `useLocale` - 56 edges
 2. `cn()` - 47 edges
 3. `commitDemoMutation()` - 33 edges
 4. `authServiceUrl()` - 28 edges
 5. `backendHeaders()` - 27 edges
 6. `UI Quality Pro-Max — VN-RU Portal` - 27 edges
-7. `Locale` - 25 edges
+7. `Locale` - 26 edges
 8. `react` - 25 edges
 9. `compilerOptions` - 22 edges
 10. `SessionService` - 19 edges
@@ -221,25 +220,25 @@
   frontend/features/auth/components/security/SecurityClientPage.tsx → secrets/dev-actor-session-bridge.js
 - `AdminAuditPage()` --calls--> `useLocale`  [EXTRACTED]
   frontend/app/(admin)/admin/audit/page.tsx → frontend/core/i18n/locale.ts
-- `OrganizationWorkspace()` --calls--> `commitDemoMutation()`  [EXTRACTED]
-  frontend/features/prototype-v3/components/OrganizationWorkspace.tsx → frontend/features/prototype-v3/demo-backend.ts
-- `ResearcherWorkspace()` --calls--> `commitDemoMutation()`  [EXTRACTED]
-  frontend/features/prototype-v3/components/ResearcherWorkspace.tsx → frontend/features/prototype-v3/demo-backend.ts
-- `ReviewerWorkspace()` --calls--> `commitDemoMutation()`  [EXTRACTED]
-  frontend/features/prototype-v3/components/ReviewerWorkspace.tsx → frontend/features/prototype-v3/demo-backend.ts
+- `RegisterPage()` --calls--> `useLocale`  [EXTRACTED]
+  frontend/app/register/page.tsx → frontend/core/i18n/locale.ts
+- `ExpertsIndexPage()` --calls--> `useLocale`  [EXTRACTED]
+  frontend/features/public-discovery/components/PublicDiscoveryPages.tsx → frontend/core/i18n/locale.ts
+- `json()` --calls--> `httpClient()`  [EXTRACTED]
+  frontend/features/auth/server-state.ts → frontend/lib/httpClient.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (211 total, 33 thin omitted)
+## Communities (208 total, 34 thin omitted)
 
 ### Community 0 - "devDependencies"
 Cohesion: 0.04
 Nodes (49): eslint-config-prettier, @eslint/eslintrc, @eslint/js, eslint-plugin-prettier, globals, jest, @nestjs/cli, @nestjs/schematics (+41 more)
 
 ### Community 1 - "demo-v2/CollaborationManagerInteractiveWorkspace.tsx"
-Cohesion: 0.09
-Nodes (46): copy, ModuleKey, modules, Content(), reportTone(), reviewers, screeningLabel, screeningTone() (+38 more)
+Cohesion: 0.08
+Nodes (51): copy, ModuleKey, modules, UnifiedWorkspaceDashboard(), toneClass, WorkspaceTaskDialog(), WorkspaceTaskDialogProps, Content() (+43 more)
 
 ### Community 2 - "compilerOptions"
 Cohesion: 0.09
@@ -258,8 +257,8 @@ Cohesion: 0.07
 Nodes (28): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+20 more)
 
 ### Community 6 - "dependencies"
-Cohesion: 0.12
-Nodes (17): @nestjs/common, @nestjs/core, @nestjs/platform-express, pg, @prisma/adapter-pg, reflect-metadata, rxjs, dependencies (+9 more)
+Cohesion: 0.11
+Nodes (15): FlagProps, LANGUAGE_OPTIONS, LanguageOption, LanguageSwitcher(), LanguageSwitcherProps, LanguageSwitcherVariant, switcherCopy, COPY (+7 more)
 
 ### Community 7 - "exclude"
 Cohesion: 0.25
@@ -270,8 +269,8 @@ Cohesion: 0.15
 Nodes (13): scripts, build, format, lint, start, start:debug, start:dev, start:prod (+5 more)
 
 ### Community 9 - "components/DecisionInteractiveWorkspace.tsx"
-Cohesion: 0.08
-Nodes (34): DecisionItem, DecisionProject, DecisionState, DecisionView, initialItems, projects, views, Endorsement (+26 more)
+Cohesion: 0.07
+Nodes (37): DemoScope, DecisionItem, decisionMeta(), DecisionProject, DecisionState, DecisionView, DecisionWorkspaceContent(), initialItems (+29 more)
 
 ### Community 10 - "nest-cli.json"
 Cohesion: 0.33
@@ -282,28 +281,28 @@ Cohesion: 0.29
 Nodes (5): beVietnamPro, metadata, sans, serif, QueryProvider()
 
 ### Community 12 - "authServiceUrl"
-Cohesion: 0.18
-Nodes (18): POST(), GET(), PATCH(), PATCH(), GET(), POST(), GET(), POST() (+10 more)
+Cohesion: 0.15
+Nodes (21): POST(), GET(), PATCH(), PATCH(), GET(), POST(), GET(), POST() (+13 more)
 
 ### Community 17 - "PRE_TEST_FOCUSED_FIX_GUIDE.md"
 Cohesion: 0.05
 Nodes (37): 10. P1 — Sidebar semantics still treat roles like modules, 11. P1 — Documentation must describe runtime truth correctly, 12. Exact files to inspect first, 13. Focused implementation slices, 14. Things NOT to do in this pre-test fix, 15. Verification after the focused fix, 16. Pre-test exit gate, 17. First real test after this guide (+29 more)
 
 ### Community 18 - "DemoWorkflowProvider.tsx"
-Cohesion: 0.13
-Nodes (13): DemoWorkflowContext, DemoWorkflowContextValue, DemoWorkflowProvider(), makeId(), nowLabel(), Proposal, ProposalState, WorkflowNotification (+5 more)
+Cohesion: 0.15
+Nodes (12): DemoWorkflowContext, DemoWorkflowContextValue, DemoWorkflowProvider(), makeId(), nowLabel(), OrganizationEndorsement, WorkflowNotification, WorkflowRole (+4 more)
 
 ### Community 19 - "VN–RU Public Discovery UI Guide"
 Cohesion: 0.06
 Nodes (32): 10. 2+2 rule, 11. Interaction integrity, 12. Responsive behavior, 13. Implementation mapping, 14. Acceptance test, 1. Product role, 2. Visual continuity with landing, 3. Typography (+24 more)
 
 ### Community 21 - "commitDemoMutation"
-Cohesion: 0.12
-Nodes (18): DemoActivityPanel(), titles, EndorsementItem, OrganizationWorkspace(), ResearcherWorkspace(), ReviewerWorkspace(), WorkspacePreviewNotice(), WorkspacePreviewNoticeProps (+10 more)
+Cohesion: 0.14
+Nodes (12): DemoActivityPanel(), titles, EndorsementItem, WorkspacePreviewNotice(), WorkspacePreviewNoticeProps, WorkspaceSectionSync(), Assignment, AssignmentState (+4 more)
 
 ### Community 22 - "demo-backend.ts"
-Cohesion: 0.14
-Nodes (29): commitDemoMutation(), DemoActivity, DemoHandoff, DemoMutationOptions, DemoNotification, emitChange(), markAllDemoNotificationsRead(), markDemoNotificationRead() (+21 more)
+Cohesion: 0.13
+Nodes (31): OrganizationWorkspace(), ResearcherWorkspace(), ReviewerWorkspace(), commitDemoMutation(), DemoActivity, DemoHandoff, DemoMutationOptions, DemoNotification (+23 more)
 
 ### Community 23 - "7. DIAL DEFINITIONS (Technical Reference)"
 Cohesion: 0.08
@@ -319,11 +318,11 @@ Nodes (21): Button Press (Playful), Card Entrance (Premium), Choreography Essent
 
 ### Community 26 - "index.ts"
 Cohesion: 0.09
-Nodes (16): ActivityItem, Opportunity, AcademicEvent, DEMO_ACADEMIC_EVENTS, getAcademicEventById(), DEMO_ACTIVITIES, DEMO_KNOWLEDGE_RESOURCES, getKnowledgeResourceById() (+8 more)
+Nodes (14): ReportItem, AcademicEvent, DEMO_ACADEMIC_EVENTS, getAcademicEventById(), DEMO_ACTIVITIES, DEMO_EXPERTS, Expert, getExpertById() (+6 more)
 
 ### Community 27 - "authentication.controller.ts"
-Cohesion: 0.10
-Nodes (12): Delete, Res, RequestWithCookies, AuthenticationController, Body, Controller, Get, Param (+4 more)
+Cohesion: 0.17
+Nodes (18): Delete, Res, AuthenticatedRequest, extractSessionCookie(), isRecord(), RequestWithCookies, AuthenticationController, SESSION_COOKIE_OPTIONS (+10 more)
 
 ### Community 28 - "Mock Data Agent Guide — Interactive Role Workflows"
 Cohesion: 0.07
@@ -331,31 +330,31 @@ Nodes (27): Activity fixtures, COLLABORATION_MANAGER, Deadline distribution, Dec
 
 ### Community 29 - "requireWorkspaceCapability"
 Cohesion: 0.12
-Nodes (18): metadata, Page(), metadata, Page(), metadata, Page(), metadata, Page() (+10 more)
+Nodes (16): metadata, Page(), metadata, Page(), metadata, Page(), metadata, Page() (+8 more)
 
 ### Community 30 - "Frontend API Contract Guide"
 Cohesion: 0.12
 Nodes (15): Anti-patterns, Authentication and Session, Authorization Context, Caching, Contract Rules, Error Contract, Frontend API Contract Guide, Generated Contracts (+7 more)
 
 ### Community 31 - "authentication.service.ts"
-Cohesion: 0.23
-Nodes (9): IdentityModule, Module, ExternalIdentityRecord, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput, Inject (+1 more)
+Cohesion: 0.19
+Nodes (10): AuthJsExchangeInput, CallbackResult, ExchangeResult, ExternalIdentityRecord, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput (+2 more)
 
 ### Community 32 - "components/CollaborationManagerInteractiveWorkspace.tsx"
 Cohesion: 0.10
 Nodes (22): Assignment, assignmentMeta(), AssignmentState, initialAssignments, initialScreenings, ManagerView, ManagerWorkspaceContent(), opportunities (+14 more)
 
 ### Community 33 - "GuestExpertsV2.tsx"
-Cohesion: 0.07
-Nodes (28): AdminAuditPage(), auditCopy, metadata, metadata, BrandMark(), BrandMarkProps, FlagProps, LANGUAGE_OPTIONS (+20 more)
+Cohesion: 0.08
+Nodes (26): AdminAuditPage(), auditCopy, metadata, metadata, metadata, copy, RegisterPage(), BrandMark() (+18 more)
 
 ### Community 34 - "interactive-workflow-v2.test.mjs"
 Cohesion: 0.08
 Nodes (22): academicsContent, activitiesContent, allMockDataContent, decision, decisionsContent, endorsementsContent, expertsContent, iamContent (+14 more)
 
 ### Community 35 - "server.ts"
-Cohesion: 0.24
-Nodes (6): GET(), POST(), LoginPage(), getCurrentSession(), sanitizeLocale(), sanitizeReturnTo()
+Cohesion: 0.17
+Nodes (10): GET(), POST(), copy, LoginPage(), Home(), HomeSession, getCurrentSession(), sanitizeLocale() (+2 more)
 
 ### Community 36 - "Frontend Runtime and UI Guide"
 Cohesion: 0.20
@@ -378,8 +377,8 @@ Cohesion: 0.12
 Nodes (13): DialogState, ManagerView, Opportunity, OpportunityState, ReportItem, ReportState, ReviewAssignment, reviewerCandidates (+5 more)
 
 ### Community 41 - "authentication.module.ts"
-Cohesion: 0.13
-Nodes (9): Assignment, AssignmentState, DialogState, initialAssignments, ReviewerView, views, toneClass, WorkspaceTaskDialog() (+1 more)
+Cohesion: 0.09
+Nodes (9): Optional, AccessControlService, Inject, Injectable, AuthenticationService, Injectable, SessionService, Inject (+1 more)
 
 ### Community 42 - "app/page.tsx"
 Cohesion: 0.11
@@ -397,61 +396,53 @@ Nodes (8): 1. Security & Authentication Boundaries, 2. Data Ownership & Module B
 Cohesion: 0.25
 Nodes (7): Before code, Boundaries, Completion, Frontend Rules, Server state, State, UI Quality & Impeccable Gate
 
-### Community 46 - "ResearcherTaskWorkspace.tsx"
-Cohesion: 0.24
-Nodes (10): filterNavSections(), hasCapability(), resolveUserPersonas(), WORKSPACE_MEMBER_CAPABILITIES, WORKSPACE_NAV_REGISTRY, WORKSPACE_PERSONAS, WorkspaceNavEntry, WorkspaceNavSection (+2 more)
-
-### Community 47 - "ReviewerTaskWorkspace.tsx"
-Cohesion: 0.06
-Nodes (46): copy, groupLabels, isSystemRole(), Modal, permissionLabels, roleLabels, RolePermissionsPage(), Tab (+38 more)
-
 ### Community 48 - "Agent Instructions — Russia-Vietnam Science-Technology Intelligence Network"
 Cohesion: 0.18
 Nodes (10): Agent Instructions — Russia-Vietnam Science-Technology Intelligence Network, AGY / Ponytail execution policy, Browser Verification Policy (On-Demand / Proposal-First), Default UI scope, Execution rules, Local test accounts, Mandatory pre-code gate, Mandatory UI/UX quality routing (+2 more)
 
 ### Community 49 - "DecisionTaskWorkspace.tsx"
-Cohesion: 0.19
-Nodes (9): DecisionItem, DecisionState, DecisionTaskWorkspaceContent(), DecisionView, initialItems, stateClass(), stateLabel(), StatusPill() (+1 more)
+Cohesion: 0.20
+Nodes (8): DecisionItem, DecisionState, DecisionView, initialItems, stateClass(), stateLabel(), StatusPill(), views
 
 ### Community 50 - "AuthenticationService"
-Cohesion: 0.12
-Nodes (18): Optional, AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord (+10 more)
+Cohesion: 0.23
+Nodes (11): AccessControlPrismaClient, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord, CreateSessionInput, CreateSessionResult (+3 more)
 
 ### Community 51 - "WorkspaceShell.tsx"
-Cohesion: 0.19
-Nodes (12): shellCopy, WorkspaceShell(), SheetContent(), SheetContentProps, SheetOverlay(), SheetOverlayProps, SheetProps, SheetTitle() (+4 more)
+Cohesion: 0.10
+Nodes (21): copy, NavItem, SidebarFrame(), SidebarFrameProps, shellCopy, WorkspaceShell(), BreadcrumbItem, Breadcrumbs() (+13 more)
 
 ### Community 52 - "table.tsx"
 Cohesion: 0.11
 Nodes (17): Accordion, Choreography Rules, Coordinated Sequences, Counter-Motion, Dashboard Widgets, Drag and Drop, Grid Cards, Group Rules (+9 more)
 
 ### Community 64 - "prototype-v3/mock-data.ts"
-Cohesion: 0.33
-Nodes (8): INITIAL_2PLUS2_SLOTS, ROLE_CONFIGS, RU_ENTERPRISE_CANDIDATES, ConsortiumSlot, ProposalItem, RoleConfig, RoleType, RubricScore
+Cohesion: 0.29
+Nodes (9): EnterpriseWorkspace(), INITIAL_2PLUS2_SLOTS, ROLE_CONFIGS, RU_ENTERPRISE_CANDIDATES, ConsortiumSlot, ProposalItem, RoleConfig, RoleType (+1 more)
 
 ### Community 69 - "iam.ts"
 Cohesion: 0.22
 Nodes (7): DEMO_AUDIT_EVENTS, DEMO_IAM_USERS, getIamUserById(), IamAssignmentScope, IamAuditEvent, IamDemoUser, IamUserStatus
 
 ### Community 71 - "GuestKnowledgeV2.tsx"
-Cohesion: 0.33
-Nodes (7): Home(), HomeSession, metadata, Page(), isSystemAdministrator(), resolveLandingPath(), UnifiedWorkspaceDashboard()
+Cohesion: 0.40
+Nodes (4): DEMO_KNOWLEDGE_RESOURCES, getKnowledgeResourceById(), KnowledgeResource, KnowledgeType
 
 ### Community 72 - "iam-admin.service.ts"
-Cohesion: 0.14
-Nodes (18): Query, IamAdminController, paginationSchema, roleAssignmentSchema, rolePermissionsSchema, Body, Controller, Get (+10 more)
+Cohesion: 0.12
+Nodes (20): Query, IamAdminController, paginationSchema, roleAssignmentSchema, rolePermissionsSchema, Body, Controller, Get (+12 more)
 
 ### Community 73 - "reviews.ts"
 Cohesion: 0.25
 Nodes (6): ReviewAssignment, ReviewState, DEMO_REVIEWS, DetailedReview, getReviewById(), RubricBreakdown
 
 ### Community 74 - "workspace-server.ts"
-Cohesion: 0.27
-Nodes (7): metadata, Page(), metadata, Page(), requireWorkspaceSession(), EnterpriseWorkspace(), LeadershipWorkspace()
+Cohesion: 0.21
+Nodes (12): metadata, Page(), metadata, Page(), metadata, Page(), isSystemAdministrator(), resolveLandingPath() (+4 more)
 
 ### Community 75 - "cn"
 Cohesion: 0.07
-Nodes (43): Badge(), BadgeProps, badgeStyles, BreadcrumbItem, Breadcrumbs(), BreadcrumbsProps, Button(), ButtonProps (+35 more)
+Nodes (40): Badge(), BadgeProps, badgeStyles, Button(), ButtonProps, buttonStyles, Card(), CardAction() (+32 more)
 
 ### Community 76 - "3.4 Full"
 Cohesion: 0.11
@@ -466,12 +457,12 @@ Cohesion: 0.43
 Nodes (6): esc(), openDrawer(), openFlow(), openModal(), openPalette(), toast()
 
 ### Community 79 - "reports.ts"
-Cohesion: 0.33
-Nodes (4): ReportItem, DEMO_REPORTS, DetailedReport, getReportById()
+Cohesion: 0.12
+Nodes (17): @nestjs/common, @nestjs/core, @nestjs/platform-express, pg, @prisma/adapter-pg, reflect-metadata, rxjs, dependencies (+9 more)
 
 ### Community 80 - "opportunities.ts"
-Cohesion: 0.40
-Nodes (3): DEMO_EXPERTS, Expert, getExpertById()
+Cohesion: 0.13
+Nodes (17): AccountClientPage(), copy, ProfileDialog(), schema, iam, security, useProfile(), iamRepository (+9 more)
 
 ### Community 81 - "Workflow Commands"
 Cohesion: 0.06
@@ -486,28 +477,20 @@ Cohesion: 0.40
 Nodes (4): Canonical routes, Current scope, Runtime ownership, System Architecture
 
 ### Community 84 - "RolePermissionsPage.tsx"
-Cohesion: 0.22
+Cohesion: 0.14
 Nodes (9): Color, Combined Properties, Opacity, Performance, Position, Property Selection, Property Selection by Goal, Rotation (+1 more)
 
 ### Community 85 - "Discord Bot Setup Guide"
 Cohesion: 0.07
 Nodes (26): 1. Create a Discord Application, 2. Create a Bot, 3. Generate Invite URL, 4. Get Your User ID, 5. Add to `.env` (in the archon repo root), 6. Start the Server, 7. Test, Discord Bot Setup Guide (+18 more)
 
-### Community 86 - "admin-nav-registry.ts"
-Cohesion: 0.12
-Nodes (16): copy, NavItem, NavSection, SidebarFrame(), SidebarFrameProps, Tooltip(), TooltipProps, TooltipTrigger() (+8 more)
-
-### Community 87 - "AuthenticatedRequestGuard"
-Cohesion: 0.14
-Nodes (15): AuthenticatedRequestGuard, extractSessionCookie(), isRecord(), RequireMfa(), RequirePermission(), context(), Injectable, SESSION_COOKIE_OPTIONS (+7 more)
-
 ### Community 88 - "style.md"
 Cohesion: 0.20
 Nodes (9): BlurText Component, Custom SVG Icons (no external icon library needed for these), Dependencies, FadingVideo Component, Fonts (Google Fonts), Key Design Principles, Liquid Glass CSS (in index.css), Section 1: Hero (+1 more)
 
 ### Community 89 - "auth.ts"
-Cohesion: 0.25
-Nodes (5): accountConfigSchema, backendUrl(), createBackendSession(), { handlers, auth, signIn, signOut }, config
+Cohesion: 0.33
+Nodes (4): accountConfigSchema, backendUrl(), createBackendSession(), { handlers, auth, signIn, signOut }
 
 ### Community 90 - "VN–RU Network Portal"
 Cohesion: 0.40
@@ -558,8 +541,8 @@ Cohesion: 0.14
 Nodes (15): @prisma/client, @prisma/client, ALLOWED_CAPABILITIES, ALLOWED_CONTEXT_TYPES, ALLOWED_ROLES, fixturesDocumentSchema, importFixture(), ROLE_POLICIES (+7 more)
 
 ### Community 114 - "theme-smoke.test.mjs"
-Cohesion: 0.60
-Nodes (4): OrganizationEndorsement, DEMO_ENDORSEMENTS, getEndorsementById(), getEndorsementByProposalId()
+Cohesion: 0.18
+Nodes (8): EndorsementItem, EndorsementState, initialEndorsements, OrganizationView, projects, stateCopy(), StatePill(), views
 
 ### Community 115 - "Archon Setup Wizard"
 Cohesion: 0.09
@@ -578,7 +561,7 @@ Cohesion: 0.17
 Nodes (12): 1. Signature Easing (80% of animations), 2. Duration Palette, 3. Entrance Pattern, Brand Motion Identity, Corporate / Professional, Energetic / Dynamic, Four Archetypes, Keyword Matching (+4 more)
 
 ### Community 120 - "Anti-Patterns"
-Cohesion: 0.15
+Cohesion: 0.17
 Nodes (12): Distance-Duration Scaling, Duration by Element Type, Duration by Personality, Easing: Directional Rules, Easing: Industry Standards, Enter vs. Exit, Interactive Feedback, Material-Based Easing (+4 more)
 
 ### Community 127 - "UI Quality Pro-Max — VN-RU Portal"
@@ -654,12 +637,12 @@ Cohesion: 0.18
 Nodes (10): Accessibility, Cognitive Accessibility, Content Type Adaptation, Context Adaptation, Dark Mode, Performance Budgets, Platform Scaling, prefers-reduced-motion (+2 more)
 
 ### Community 145 - "KeycloakProfileService"
-Cohesion: 0.16
-Nodes (13): AppModule, Module, configSchema, validateConfig(), bootstrap(), AccessControlModule, Module, AuthenticationModule (+5 more)
+Cohesion: 0.15
+Nodes (15): AppModule, Module, configSchema, validateConfig(), bootstrap(), AccessControlModule, Module, AuthenticationModule (+7 more)
 
 ### Community 147 - "useLocale"
-Cohesion: 0.09
-Nodes (24): metadata, Page(), metadata, metadata, Page(), ExpertDetailPage(), OpportunitiesIndexPage(), OpportunityDetailPage() (+16 more)
+Cohesion: 0.15
+Nodes (16): metadata, Page(), metadata, Page(), ExpertDetailPage(), ExpertsIndexPage(), OpportunitiesIndexPage(), OpportunityDetailPage() (+8 more)
 
 ### Community 148 - "Common Failure Modes"
 Cohesion: 0.11
@@ -686,12 +669,16 @@ Cohesion: 0.12
 Nodes (17): clsx, @dangminhdev04032005/query-resource, dependencies, clsx, @dangminhdev04032005/query-resource, motion, next-themes, react-i18next (+9 more)
 
 ### Community 155 - "mfa/route.ts"
-Cohesion: 0.17
+Cohesion: 0.18
 Nodes (11): Feels Cheap / Flat, Feels Too Fast / Jarring, Feels Too Slow, Inconsistent Feel, Looks Robotic, No Personality, Performance (Dropped Frames), Personality Mistakes (+3 more)
 
+### Community 156 - "SecurityClientPage.tsx"
+Cohesion: 0.24
+Nodes (10): filterNavSections(), hasCapability(), resolveUserPersonas(), WORKSPACE_MEMBER_CAPABILITIES, WORKSPACE_NAV_REGISTRY, WORKSPACE_PERSONAS, WorkspaceNavEntry, WorkspaceNavSection (+2 more)
+
 ### Community 157 - "decisions.ts"
-Cohesion: 0.16
-Nodes (13): Decision, DecisionState, Milestone, MilestoneState, Project, ProjectState, DEMO_DECISIONS, DetailedDecision (+5 more)
+Cohesion: 0.32
+Nodes (6): Decision, DecisionState, DEMO_DECISIONS, DetailedDecision, getDecisionById(), getDecisionByProposalId()
 
 ### Community 158 - "1. THE THREE DIALS (Core Configuration)"
 Cohesion: 0.40
@@ -700,6 +687,10 @@ Nodes (5): 0.A Read these signals first, 0.B Output a one-line "Design Read" bef
 ### Community 159 - "route.ts"
 Cohesion: 0.22
 Nodes (8): Core Philosophy, Pillar 1: Emotional Intent, Pillar 2: Visual Narrative, Pillar 3: Motion Craft, The 1/3 Screen Rule, The Attention Budget, Three Motion Layers, Three Pillars
+
+### Community 162 - "alerts.ts"
+Cohesion: 0.08
+Nodes (31): copy, groupLabels, isSystemRole(), Modal, permissionLabels, roleLabels, RolePermissionsPage(), Tab (+23 more)
 
 ### Community 164 - "cn.ts"
 Cohesion: 0.50
@@ -712,6 +703,10 @@ Nodes (13): Anti-Patterns, Artifact Conventions, Authoring Command Files, Comple
 ### Community 166 - "Control"
 Cohesion: 0.14
 Nodes (13): `archon workflow abandon <run-id> [--json]`, `archon workflow approve <run-id> [comment] [--json]`, `archon workflow get <run-id> [--verbose] [--json]`, `archon workflow reject <run-id> [reason] [--json]`, `archon workflow resume <run-id> [--json]`, `archon workflow run <workflow> "<message>" --detach [--json]`, `archon workflow runs [--all] [--status <s>] [--limit <n>] [--json]`, `archon workflow status [--verbose] [--json]` (+5 more)
+
+### Community 167 - "opportunities.ts"
+Cohesion: 0.11
+Nodes (16): Milestone, MilestoneState, Opportunity, Project, ProjectState, Proposal, ProposalState, DEMO_OPPORTUNITIES (+8 more)
 
 ### Community 168 - "Control"
 Cohesion: 0.25
@@ -772,10 +767,6 @@ Nodes (9): name, packageManager, private, scripts, build, dev, lint, start (+1 m
 ### Community 182 - "Semantics"
 Cohesion: 0.40
 Nodes (4): Color, Semantics, Spacing and elevation, Typography
-
-### Community 184 - "route.ts"
-Cohesion: 0.83
-Nodes (3): DELETE(), GET(), proxy()
 
 ### Community 185 - "Command Name"
 Cohesion: 0.22
@@ -850,28 +841,28 @@ Cohesion: 0.50
 Nodes (3): Critical notice, Synthetic IAM Workflow Fixtures, Usage
 
 ### Community 240 - "workspace-registry.ts"
-Cohesion: 0.12
-Nodes (19): Header(), headerCopy, HeaderProps, SidebarProps, auth, authResource, CurrentUser, json() (+11 more)
+Cohesion: 0.09
+Nodes (26): Header(), headerCopy, HeaderProps, SidebarProps, NavSection, AdminSidebar(), AdminSidebarProps, labels (+18 more)
 
 ## Knowledge Gaps
-- **1416 isolated node(s):** `auditCopy`, `metadata`, `metadata`, `metadata`, `metadata` (+1411 more)
+- **1420 isolated node(s):** `auditCopy`, `metadata`, `metadata`, `metadata`, `metadata` (+1415 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **33 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **34 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useLocale` connect `WorkspaceShell.tsx` to `GuestExpertsV2.tsx`, `demo-v2/CollaborationManagerInteractiveWorkspace.tsx`, `GuestKnowledgeV2.tsx`, `cn`, `ReviewerTaskWorkspace.tsx`, `workspace-registry.ts`, `useLocale`, `admin-nav-registry.ts`?**
-  _High betweenness centrality (0.034) - this node is a cross-community bridge._
-- **Why does `react` connect `demo-backend.ts` to `components/CollaborationManagerInteractiveWorkspace.tsx`, `demo-v2/CollaborationManagerInteractiveWorkspace.tsx`, `components/ResearcherInteractiveWorkspace.tsx`, `components/DecisionInteractiveWorkspace.tsx`, `OrganizationTaskWorkspace.tsx`, `DecisionTaskWorkspace.tsx`, `DemoWorkflowProvider.tsx`, `commitDemoMutation`, `dependencies`?**
-  _High betweenness centrality (0.018) - this node is a cross-community bridge._
-- **Why does `WorkspacePreviewNotice()` connect `commitDemoMutation` to `prototype-v3/mock-data.ts`, `components/CollaborationManagerInteractiveWorkspace.tsx`, `demo-v2/CollaborationManagerInteractiveWorkspace.tsx`, `components/ResearcherInteractiveWorkspace.tsx`, `CollaborationManagerTaskWorkspace.tsx`, `components/DecisionInteractiveWorkspace.tsx`, `workspace-server.ts`, `authentication.module.ts`, `OrganizationTaskWorkspace.tsx`, `DecisionTaskWorkspace.tsx`?**
-  _High betweenness centrality (0.014) - this node is a cross-community bridge._
+- **Why does `useLocale` connect `WorkspaceShell.tsx` to `GuestExpertsV2.tsx`, `alerts.ts`, `demo-v2/CollaborationManagerInteractiveWorkspace.tsx`, `dependencies`, `workspace-registry.ts`, `opportunities.ts`, `useLocale`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+- **Why does `react` connect `demo-backend.ts` to `components/CollaborationManagerInteractiveWorkspace.tsx`, `demo-v2/CollaborationManagerInteractiveWorkspace.tsx`, `components/ResearcherInteractiveWorkspace.tsx`, `components/DecisionInteractiveWorkspace.tsx`, `OrganizationTaskWorkspace.tsx`, `DemoWorkflowProvider.tsx`, `commitDemoMutation`, `dependencies`?**
+  _High betweenness centrality (0.020) - this node is a cross-community bridge._
+- **Why does `dependencies` connect `dependencies` to `class-variance-authority`, `i18next`, `react-aria-components`, `next-auth`, `react-dom`, `frontend/package.json`, `demo-backend.ts`, `next`, `tailwind-merge`, `zustand`?**
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **What connects `auditCopy`, `metadata`, `metadata` to the rest of the system?**
-  _1416 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1420 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
 - **Should `demo-v2/CollaborationManagerInteractiveWorkspace.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.09216255442670537 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08240794856808883 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
