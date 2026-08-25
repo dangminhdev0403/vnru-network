@@ -1,275 +1,309 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLocale, type Locale } from "@/core/i18n/locale";
 
-type Locale = "vi" | "ru" | "en";
-
-interface Translation {
-  brandTitle: string;
-  brandSubtitle: string;
+type Copy = {
   badge: string;
-  errorCode: string;
-  heading: string;
+  title: string;
   description: string;
-  technicalDetails: {
-    statusLabel: string;
-    statusValue: string;
-    networkLabel: string;
-    networkValue: string;
-    actionLabel: string;
-    actionValue: string;
-  };
-  goHome: string;
-  goBack: string;
-  languageLabel: string;
-  operatorNote: string;
-  operatorOrg: string;
-}
+  helperStrong: string;
+  helperText: string;
+  home: string;
+  explore: string;
+  searchPlaceholder: string;
+  search: string;
+  russia: string;
+  vietnam: string;
+};
 
-const translations: Record<Locale, Translation> = {
+const COPY: Record<Locale, Copy> = {
   vi: {
-    brandTitle: "Russia-Vietnam Science-Technology Intelligence Network",
-    brandSubtitle: "Cổng thông tin hợp tác song phương",
-    badge: "Lỗi điều hướng • HTTP 404",
-    errorCode: "404",
-    heading: "Không tìm thấy trang yêu cầu",
+    badge: "Trang không tồn tại",
+    title: "Không tìm thấy trang bạn cần",
     description:
-      "Đường dẫn bạn yêu cầu không tồn tại, đã bị thay đổi hoặc tạm thời không khả dụng. Vui lòng kiểm tra lại địa chỉ URL hoặc sử dụng các tùy chọn điều hướng bên dưới.",
-    technicalDetails: {
-      statusLabel: "Mã trạng thái",
-      statusValue: "404 Not Found",
-      networkLabel: "Hệ thống",
-      networkValue: "Russia-Vietnam Science-Technology Intelligence Network",
-      actionLabel: "Khuyến nghị",
-      actionValue: "Quay lại trang trước hoặc về trang chủ",
-    },
-    goHome: "Về trang chủ",
-    goBack: "Quay lại trang trước",
-    languageLabel: "Chọn ngôn ngữ",
-    operatorNote: "Sáng kiến hợp tác được sáng lập và điều phối bởi",
-    operatorOrg: "Quỹ Truyền thống và Hữu nghị",
-  },
-  ru: {
-    brandTitle: "Russia-Vietnam Science-Technology Intelligence Network",
-    brandSubtitle: "Портал двустороннего сотрудничества",
-    badge: "Ошибка навигации • HTTP 404",
-    errorCode: "404",
-    heading: "Запрашиваемая страница не найдена",
-    description:
-      "Запрашиваемый ресурс не существует, был перемещен или временно недоступен. Пожалуйста, проверьте правильность адреса URL или воспользуйтесь кнопками ниже.",
-    technicalDetails: {
-      statusLabel: "Код ошибки",
-      statusValue: "404 Not Found",
-      networkLabel: "Система",
-      networkValue: "Russia-Vietnam Science-Technology Intelligence Network",
-      actionLabel: "Рекомендация",
-      actionValue: "Вернуться назад или перейти на главную",
-    },
-    goHome: "На главную",
-    goBack: "Вернуться назад",
-    languageLabel: "Выбор языка",
-    operatorNote: "Инициатива сотрудничества учреждена и координируется",
-    operatorOrg: "Фондом «Традиции и дружба»",
+      "Trang bạn đang tìm kiếm có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng.",
+    helperStrong: "Bạn có thể quay lại trang chủ",
+    helperText: "hoặc khám phá những nội dung hữu ích khác.",
+    home: "Về trang chủ",
+    explore: "Khám phá ngay",
+    searchPlaceholder: "Tìm kiếm nội dung bạn quan tâm...",
+    search: "Tìm kiếm",
+    russia: "RUSSIA",
+    vietnam: "VIETNAM",
   },
   en: {
-    brandTitle: "Russia-Vietnam Science-Technology Intelligence Network",
-    brandSubtitle: "Bilateral Cooperation Portal",
-    badge: "Navigation Error • HTTP 404",
-    errorCode: "404",
-    heading: "Requested Page Not Found",
+    badge: "Page not found",
+    title: "We could not find that page",
     description:
-      "The page you requested does not exist, has been relocated, or is temporarily unavailable. Please verify the URL or use the navigation options below.",
-    technicalDetails: {
-      statusLabel: "Status Code",
-      statusValue: "404 Not Found",
-      networkLabel: "System",
-      networkValue: "Russia-Vietnam Science-Technology Intelligence Network",
-      actionLabel: "Recommended Action",
-      actionValue: "Go back to previous page or return to homepage",
-    },
-    goHome: "Return to Homepage",
-    goBack: "Go to Previous Page",
-    languageLabel: "Language selector",
-    operatorNote: "Cooperation initiative founded and coordinated by the",
-    operatorOrg: "Traditions and Friendship Foundation",
+      "The page may have been removed, renamed, or is temporarily unavailable.",
+    helperStrong: "You can return to the homepage",
+    helperText: "or explore other useful content.",
+    home: "Back to home",
+    explore: "Explore now",
+    searchPlaceholder: "Search for content...",
+    search: "Search",
+    russia: "RUSSIA",
+    vietnam: "VIETNAM",
+  },
+  ru: {
+    badge: "Страница не найдена",
+    title: "Не удалось найти нужную страницу",
+    description:
+      "Возможно, страница была удалена, переименована или временно недоступна.",
+    helperStrong: "Вы можете вернуться на главную",
+    helperText: "или посмотреть другие полезные материалы.",
+    home: "На главную",
+    explore: "Перейти к обзору",
+    searchPlaceholder: "Поиск материалов...",
+    search: "Поиск",
+    russia: "RUSSIA",
+    vietnam: "VIETNAM",
   },
 };
 
+function GlobeArtwork({ t }: { t: Copy }) {
+  return (
+    <div className="relative mx-auto flex min-h-[420px] w-full max-w-[720px] items-center justify-center lg:min-h-[560px]">
+      <div
+        className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle_at_50%_48%,rgba(59,130,246,.12),rgba(59,130,246,.035)_44%,transparent_72%)] blur-2xl"
+        aria-hidden="true"
+      />
+
+      <svg
+        viewBox="0 0 720 620"
+        role="img"
+        aria-label="Kết nối tri thức Nga - Việt"
+        className="relative z-10 h-auto w-full overflow-visible"
+      >
+        <defs>
+          <radialGradient id="globeFill" cx="45%" cy="38%" r="68%">
+            <stop offset="0%" stopColor="#ffffff" />
+            <stop offset="58%" stopColor="#f8fbff" />
+            <stop offset="100%" stopColor="#eef5ff" />
+          </radialGradient>
+          <linearGradient id="routeGradient" x1="0" x2="1">
+            <stop offset="0%" stopColor="#2563eb" />
+            <stop offset="100%" stopColor="#3b82f6" />
+          </linearGradient>
+          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <g opacity="0.5">
+          <path d="M48 134 L150 70 L282 100 L370 42 L520 80 L650 44" stroke="#cfe0ff" strokeWidth="1.2" fill="none" />
+          <path d="M88 214 L208 154 L332 184 L462 116 L662 166" stroke="#d9e6fb" strokeWidth="1.2" fill="none" />
+          <path d="M110 90 L182 242 L314 66 L410 226 L585 112 L676 282" stroke="#d9e6fb" strokeWidth="1.2" fill="none" />
+          {[ [48,134],[150,70],[282,100],[370,42],[520,80],[650,44],[88,214],[208,154],[332,184],[462,116],[662,166],[182,242],[410,226],[585,112],[676,282] ].map(([cx, cy], index) => (
+            <circle key={index} cx={cx} cy={cy} r="3.5" fill="#9fc2ff" />
+          ))}
+        </g>
+
+        <g transform="translate(98 45)">
+          <circle cx="325" cy="275" r="218" fill="url(#globeFill)" stroke="#cfe0ff" strokeWidth="1.5" />
+          <ellipse cx="325" cy="275" rx="218" ry="88" fill="none" stroke="#dbe8ff" strokeWidth="1.2" />
+          <ellipse cx="325" cy="275" rx="218" ry="155" fill="none" stroke="#e2ecff" strokeWidth="1.2" />
+          <ellipse cx="325" cy="275" rx="92" ry="218" fill="none" stroke="#dbe8ff" strokeWidth="1.2" />
+          <ellipse cx="325" cy="275" rx="154" ry="218" fill="none" stroke="#e2ecff" strokeWidth="1.2" />
+
+          <g fill="#c8d9f6" opacity="0.95">
+            <path d="M223 117c32-25 77-39 126-36 48 3 85 19 114 46-35 6-62 17-78 33-23 22-32 45-55 57-24 12-57 8-88-2-25-8-49-25-69-46 14-18 29-36 50-52Z" />
+            <path d="M170 221c30-20 69-25 102-11 25 10 38 31 52 51 10 15 24 29 41 42-24 7-46 20-64 39-18 19-28 42-42 63-33-14-62-40-79-73-18-35-23-76-10-111Z" />
+            <path d="M347 305c31-4 60 8 83 27 26 21 43 51 51 85-22 24-52 41-86 50-19-17-36-36-47-59-13-27-17-63-1-103Z" />
+            <path d="M466 247c22-10 48-10 70 1 19 9 34 25 43 43-7 25-19 48-36 68-20-3-40-10-55-23-25-21-34-54-22-89Z" />
+          </g>
+
+          <g fill="#b7cff7" opacity="0.82">
+            {Array.from({ length: 84 }).map((_, index) => {
+              const angle = (index / 84) * Math.PI * 2;
+              const radius = 150 + (index % 5) * 10;
+              const cx = 325 + Math.cos(angle) * radius;
+              const cy = 275 + Math.sin(angle) * radius * 0.68;
+              return <circle key={index} cx={cx} cy={cy} r="2" />;
+            })}
+          </g>
+
+          <path
+            d="M296 124 C382 148 420 207 414 306"
+            fill="none"
+            stroke="url(#routeGradient)"
+            strokeWidth="4"
+            strokeLinecap="round"
+            filter="url(#softGlow)"
+          />
+          <path
+            d="M296 124 C382 148 420 207 414 306"
+            fill="none"
+            stroke="#2563eb"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+          />
+
+          <g transform="translate(292 115)" filter="url(#softGlow)">
+            <path d="M0 0c-12 0-22 10-22 22 0 17 22 39 22 39s22-22 22-39C22 10 12 0 0 0Z" fill="#2563eb" />
+            <circle cx="0" cy="22" r="7" fill="white" />
+          </g>
+          <text x="332" y="143" fill="#1d4ed8" fontSize="18" fontWeight="800">{t.russia}</text>
+
+          <g transform="translate(414 300)" filter="url(#softGlow)">
+            <path d="M0 0c-12 0-22 10-22 22 0 17 22 39 22 39s22-22 22-39C22 10 12 0 0 0Z" fill="#ef4444" />
+            <circle cx="0" cy="22" r="7" fill="white" />
+          </g>
+          <text x="448" y="329" fill="#1d4ed8" fontSize="18" fontWeight="800">{t.vietnam}</text>
+
+          <g opacity="0.48" fill="none" stroke="#b7cff7" strokeWidth="1.1">
+            <ellipse cx="325" cy="275" rx="274" ry="112" transform="rotate(-12 325 275)" />
+            <ellipse cx="325" cy="275" rx="286" ry="156" transform="rotate(19 325 275)" />
+          </g>
+        </g>
+
+        <g opacity="0.55" fill="#d6e3f7">
+          <path d="M56 532h32v-64h16v64h28v-94h22v94h24v-51h18v51h28v-120h24v120h28v-80h20v80h38v-58h18v58h45v-94h24v94h29v-70h20v70h38v-114h22v114h24v-80h18v80h37v-62h18v62h30v-98h22v98h28v-49h17v49h35v24H56Z" />
+        </g>
+
+        <g opacity="0.42" fill="none" stroke="#bcd2f4" strokeWidth="2">
+          <path d="M38 534c78-60 132-111 197-159 38 42 75 93 120 159" />
+          <path d="M470 534h198M510 534c44-86 86-86 128 0M552 534c25-62 48-98 68-141 17 38 29 87 48 141" />
+        </g>
+
+        <g opacity="0.55">
+          <ellipse cx="474" cy="570" rx="172" ry="34" fill="none" stroke="#c8dbfa" strokeWidth="1.5" />
+          <ellipse cx="474" cy="570" rx="128" ry="24" fill="none" stroke="#b5cff7" strokeWidth="1.5" />
+          <ellipse cx="474" cy="570" rx="84" ry="14" fill="none" stroke="#93baf8" strokeWidth="1.5" />
+          <circle cx="474" cy="570" r="5" fill="#60a5fa" filter="url(#softGlow)" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 export function NotFoundClient() {
   const router = useRouter();
-  const [locale, setLocale] = useState<Locale>("vi");
+  const { locale } = useLocale();
+  const t = COPY[locale] ?? COPY.vi;
+  const [query, setQuery] = useState("");
 
-  const t = translations[locale];
-
-  const handleGoBack = () => {
-    if (typeof window !== "undefined" && window.history.length > 1) {
-      router.back();
-    } else {
-      router.push("/");
-    }
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const value = query.trim();
+    router.push(value ? `/explore?query=${encodeURIComponent(value)}` : "/explore");
   };
 
   return (
-    <div className="bg-[#f8fafc] text-[#0f172a] min-h-screen flex flex-col font-sans antialiased selection:bg-[#0284c7]/20 selection:text-[#071426]">
-      {/* Background Subtle Ambient Glow */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-[#0284c7]/12 via-[#1e3a8a]/6 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#0284c7]/6 rounded-full blur-3xl"></div>
-      </div>
+    <main className="relative isolate min-h-screen overflow-hidden bg-white text-slate-950 selection:bg-blue-100 selection:text-blue-950">
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_32%,rgba(59,130,246,.07),transparent_32%),radial-gradient(circle_at_20%_82%,rgba(59,130,246,.045),transparent_25%)]" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-45 [background-image:linear-gradient(rgba(59,130,246,.025)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,.025)_1px,transparent_1px)] [background-size:52px_52px]" aria-hidden="true" />
 
-      {/* Top Header with Brand & Language Switcher */}
-      <header className="relative z-20 bg-white/90 backdrop-blur-md border-b border-[#e2e8f0] w-full sticky top-0 shadow-2xs">
-        <div className="flex justify-between items-center px-6 lg:px-12 h-16 max-w-7xl mx-auto w-full">
-          <Link href="/" className="flex items-center gap-3.5 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#071426] via-[#0f233d] to-[#0284c7] flex items-center justify-center text-white font-serif font-bold text-base shadow-sm group-hover:scale-105 transition-transform">
-              VR
+      <section className="mx-auto grid min-h-screen max-w-[1520px] items-center gap-5 px-5 py-10 sm:px-8 lg:grid-cols-[.9fr_1.1fr] lg:px-12 xl:px-16">
+        <div className="relative z-10 mx-auto w-full max-w-[620px] lg:mx-0">
+          <div className="inline-flex min-h-11 items-center gap-3 rounded-full border border-blue-300 bg-white px-5 text-xs font-black uppercase tracking-[0.08em] text-blue-600 shadow-[0_8px_28px_rgba(37,99,235,.06)]">
+            <span className="grid size-6 place-items-center rounded-full border border-blue-300" aria-hidden="true">
+              <span className="size-2 rounded-full bg-blue-600" />
+            </span>
+            {t.badge}
+          </div>
+
+          <div className="mt-7 select-none">
+            <div
+              className="inline-block text-[clamp(9rem,17vw,15.5rem)] font-black leading-[.78] tracking-[-0.085em] text-transparent drop-shadow-[0_18px_24px_rgba(37,99,235,.16)]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(180deg,#dfeaff_0%,#60a5fa_30%,#2563eb_67%,#0b55df_100%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                WebkitTextStroke: "1px rgba(37,99,235,.18)",
+              }}
+              aria-label="404"
+            >
+              404
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-serif font-bold text-base text-[#071426] tracking-tight block">
-                  {t.brandTitle}
-                </span>
-              </div>
-              <p className="text-xs text-[#475569] hidden sm:block">
-                {t.brandSubtitle}
-              </p>
-            </div>
-          </Link>
-
-          {/* Right: Language Switcher */}
-          <div
-            className="flex items-center p-1 rounded-xl bg-[#f1f5f9] border border-[#e2e8f0] text-xs font-semibold"
-            role="group"
-            aria-label={translations[locale].languageLabel}
-          >
-            {(["vi", "ru", "en"] as const).map((code) => {
-              const isActive = locale === code;
-              return (
-                <button
-                  key={code}
-                  type="button"
-                  onClick={() => setLocale(code)}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                    isActive
-                      ? "bg-white text-[#071426] shadow-xs"
-                      : "text-[#64748b] hover:text-[#071426]"
-                  }`}
-                  aria-pressed={isActive}
-                >
-                  {code.toUpperCase()}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </header>
-
-      {/* Main Dedicated 404 Centerpiece */}
-      <main className="relative z-10 flex-1 max-w-4xl mx-auto w-full px-6 py-16 sm:py-24 flex flex-col items-center justify-center text-center">
-        {/* Error Status Badge */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-red-50 border border-red-200 text-red-700 text-xs font-semibold shadow-2xs mb-6">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
-          </span>
-          <span className="tracking-wide uppercase text-xs font-bold">{t.badge}</span>
-        </div>
-
-        {/* Sculptural 404 Artwork */}
-        <div className="relative my-2 select-none flex items-center justify-center">
-          {/* Ambient Glow */}
-          <div className="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-[#0284c7]/15 via-[#1e3a8a]/10 to-[#059669]/10 blur-3xl pointer-events-none"></div>
-
-          {/* Large Typographic 404 */}
-          <div className="relative font-serif text-8xl sm:text-9xl md:text-9xl font-extrabold tracking-tighter leading-none text-[#071426]">
-            404
           </div>
 
-          {/* Compass / Navigation Radar Vector Motif */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-15">
-            <svg className="w-52 h-52 sm:w-72 sm:h-72 text-[#0284c7]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-              <circle cx="12" cy="12" r="10" strokeDasharray="3 3"></circle>
-              <circle cx="12" cy="12" r="4"></circle>
-              <line x1="2" y1="12" x2="22" y2="12"></line>
-              <line x1="12" y1="2" x2="12" y2="22"></line>
-            </svg>
-          </div>
-        </div>
-
-        {/* Headline & Description */}
-        <div className="space-y-3 max-w-xl mx-auto mt-4">
-          <h1 className="font-serif text-2xl sm:text-4xl font-bold text-[#071426] tracking-tight leading-snug">
-            {t.heading}
+          <h1 className="mt-7 text-balance text-3xl font-black leading-tight tracking-[-0.035em] text-[#071426] sm:text-4xl lg:text-[42px]">
+            {t.title}
           </h1>
-          <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
+          <p className="mt-4 max-w-[560px] text-base leading-7 text-slate-600 sm:text-lg">
             {t.description}
           </p>
-        </div>
 
-        {/* Diagnostic Metadata Panel */}
-        <div className="my-8 w-full max-w-lg bg-white rounded-2xl border border-[#e2e8f0] p-4 sm:p-5 shadow-2xs text-left">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div>
-              <span className="text-[#64748b] block text-xs font-medium uppercase tracking-wider">
-                {t.technicalDetails.statusLabel}
-              </span>
-              <span className="font-semibold text-red-600">
-                {t.technicalDetails.statusValue}
-              </span>
-            </div>
-            <div>
-              <span className="text-[#64748b] block text-xs font-medium uppercase tracking-wider">
-                {t.technicalDetails.networkLabel}
-              </span>
-              <span className="font-semibold text-[#071426]">
-                {t.technicalDetails.networkValue}
-              </span>
-            </div>
+          <div className="mt-7 flex max-w-[560px] items-center" aria-hidden="true">
+            <div className="h-px flex-1 bg-gradient-to-r from-blue-500 to-blue-200" />
+            <span className="size-2 rounded-full bg-blue-600 shadow-[0_0_0_5px_rgba(37,99,235,.08)]" />
           </div>
-        </div>
 
-        {/* The Two Dedicated Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-          {/* 1. Return to Home */}
-          <Link
-            href="/"
-            className="px-7 py-3.5 rounded-xl bg-[#071426] hover:bg-[#0f233d] text-white text-sm font-semibold transition-all shadow-md hover:shadow-lg flex items-center gap-2.5 cursor-pointer"
-          >
-            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            <span>{t.goHome}</span>
-          </Link>
+          <div className="mt-7 flex max-w-[560px] items-center gap-4 rounded-2xl border border-blue-200 bg-white/90 p-4 shadow-[0_10px_36px_rgba(37,99,235,.06)]">
+            <div className="grid size-14 shrink-0 place-items-center rounded-full bg-blue-50 text-blue-600 ring-1 ring-blue-100" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="size-7" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M3 12h18M12 3c2.7 2.5 4.2 5.5 4.2 9S14.7 18.5 12 21M12 3C9.3 5.5 7.8 8.5 7.8 12S9.3 18.5 12 21" />
+              </svg>
+            </div>
+            <p className="text-sm leading-6 text-slate-600 sm:text-base">
+              <strong className="block font-black text-blue-600">{t.helperStrong}</strong>
+              {t.helperText}
+            </p>
+          </div>
 
-          {/* 2. Go to Previous Page */}
-          <button
-            type="button"
-            onClick={handleGoBack}
-            className="px-7 py-3.5 rounded-xl bg-white hover:bg-[#f1f5f9] border border-[#cbd5e1] text-sm font-semibold text-[#071426] transition-all shadow-2xs hover:shadow-xs flex items-center gap-2.5 cursor-pointer"
-          >
-            <svg className="w-4 h-4 text-[#64748b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            <span>{t.goBack}</span>
-          </button>
-        </div>
-      </main>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link
+              href="/"
+              className="inline-flex min-h-14 items-center justify-center gap-3 rounded-xl bg-blue-600 px-7 text-sm font-black text-white shadow-[0_12px_28px_rgba(37,99,235,.24)] transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-blue-600 motion-reduce:transition-none"
+            >
+              <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="m3 11 9-8 9 8" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M5 10v10h14V10M9 20v-6h6v6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              {t.home}
+            </Link>
 
-      {/* Footer */}
-      <footer className="relative z-10 w-full border-t border-[#e2e8f0] py-6 bg-white/80 backdrop-blur-xs">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs text-[#64748b]">
-          <p>
-            {t.operatorNote} <span className="font-semibold text-[#071426]">{t.operatorOrg}</span>
-          </p>
-          <div className="flex items-center gap-3">
-            <Link href="/" className="hover:text-[#0284c7] transition-colors font-medium">
-              {t.goHome}
+            <Link
+              href="/explore"
+              className="inline-flex min-h-14 items-center justify-center gap-3 rounded-xl border border-blue-300 bg-white px-7 text-sm font-black text-slate-900 transition hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-blue-600 motion-reduce:transition-none"
+            >
+              <svg viewBox="0 0 24 24" className="size-5 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="m15.5 8.5-2.1 4.9-4.9 2.1 2.1-4.9 4.9-2.1Z" strokeLinejoin="round" />
+              </svg>
+              {t.explore}
             </Link>
           </div>
         </div>
-      </footer>
-    </div>
+
+        <GlobeArtwork t={t} />
+
+        <form
+          onSubmit={handleSearch}
+          className="mx-auto flex w-full max-w-[930px] gap-3 rounded-2xl border border-blue-100 bg-white/95 p-3 shadow-[0_14px_42px_rgba(37,99,235,.08)] lg:col-span-2"
+        >
+          <label className="flex min-h-14 min-w-0 flex-1 items-center gap-3 rounded-xl border border-blue-100 bg-white px-4 focus-within:border-blue-300 focus-within:ring-4 focus-within:ring-blue-50">
+            <svg viewBox="0 0 24 24" className="size-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.7" />
+              <path d="m16 16 4 4" strokeLinecap="round" />
+            </svg>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={t.searchPlaceholder}
+              aria-label={t.searchPlaceholder}
+              className="min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400 sm:text-base"
+            />
+          </label>
+          <button
+            type="submit"
+            className="min-h-14 shrink-0 rounded-xl bg-blue-600 px-6 text-sm font-black text-white shadow-[0_10px_22px_rgba(37,99,235,.18)] transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 motion-reduce:transition-none sm:px-8"
+          >
+            {t.search}
+          </button>
+        </form>
+      </section>
+    </main>
   );
 }
