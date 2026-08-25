@@ -3,18 +3,12 @@
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 import { useCurrentUser, useLogout } from "@/features/auth/server-state";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 
 interface HeaderProps {
-  onMenuClick?: () => void;
+  readonly onMenuClick?: () => void;
 }
-
-const languages: { code: Locale; label: string; flag: string }[] = [
-  { code: "vi", label: "Tiếng Việt", flag: "🇻🇳" },
-  { code: "ru", label: "Русский", flag: "🇷🇺" },
-  { code: "en", label: "English", flag: "🇬🇧" },
-];
 
 const headerCopy: Record<
   Locale,
@@ -87,8 +81,7 @@ const headerCopy: Record<
 export default function Header({ onMenuClick }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { locale, setLocale } = useLocale();
-  const [isLangOpen, setIsLangOpen] = useState(false);
+  const { locale } = useLocale();
   const currentUser = useCurrentUser();
   const logout = useLogout();
   const t = headerCopy[locale] || headerCopy.vi;
@@ -145,45 +138,9 @@ export default function Header({ onMenuClick }: HeaderProps) {
       {/* Actions (Language Switcher, Theme Toggle, Context Active) */}
       <div className="ml-auto flex items-center gap-2.5">
         {/* Language Switcher */}
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setIsLangOpen(!isLangOpen)}
-            className="flex h-10 items-center gap-1.5 rounded-xl px-3 text-xs font-bold text-text-primary transition hover:bg-[var(--surface-secondary)]"
-            aria-label={
-              languages.find((language) => language.code === locale)?.label
-            }
-          >
-            <span className="uppercase">{locale}</span>
-          </button>
+        <LanguageSwitcher variant="workspace" />
 
-          {isLangOpen && (
-            <div
-              className="absolute right-0 z-50 mt-1.5 w-36 overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface-raised)] p-1.5 shadow-[var(--shadow-soft)]"
-              onMouseLeave={() => setIsLangOpen(false)}
-            >
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  type="button"
-                  onClick={() => {
-                    setLocale(lang.code);
-                    setIsLangOpen(false);
-                  }}
-                  className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold transition cursor-pointer ${
-                    locale === lang.code
-                      ? "bg-[var(--surface-secondary)] text-[var(--accent-primary)] font-bold"
-                      : "text-text-secondary hover:bg-[var(--surface-secondary)] hover:text-text-primary"
-                  }`}
-                >
-                  <span>{lang.flag}</span>
-                  <span>{lang.label}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
+        {/* User Profile Details Menu */}
         <details className="group relative">
           <summary
             aria-label={t.account}

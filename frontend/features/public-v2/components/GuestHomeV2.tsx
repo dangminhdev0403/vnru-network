@@ -1,11 +1,33 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { BrandMark } from "@/components/shared/BrandMark";
 import { GuestExploreMedia } from "./GuestExploreMedia";
 import { GuestPublicNav } from "./GuestPublicNav";
+
+const HERO_BANNERS = [
+  {
+    id: "banner-1",
+    src: "/brand/vnru-network-banner-2026.png",
+    alt: "Mạng lưới Tri thức Khoa học – Công nghệ Nga – Việt",
+    objectPosition: "object-[68%_center]",
+  },
+  {
+    id: "banner-2",
+    src: "/brand/vnru-hero-slide-2.jpg",
+    alt: "Biểu tượng Moskva và Hà Nội kết nối công nghệ",
+    objectPosition: "object-center",
+  },
+  {
+    id: "banner-3",
+    src: "/brand/vnru-hero-slide-3.jpg",
+    alt: "Quốc kỳ và công trình biểu tượng song phương Nga – Việt",
+    objectPosition: "object-center",
+  },
+];
 
 const HOME_COPY: Record<
   Locale,
@@ -14,8 +36,6 @@ const HOME_COPY: Record<
     title1: string;
     title2: string;
     title3: string;
-    priorityLabel: string;
-    subtitle: string;
     focusCards: {
       tag: string;
       title: string;
@@ -99,9 +119,6 @@ const HOME_COPY: Record<
     title1: "Mạng lưới Tri thức",
     title2: "Khoa học – Công nghệ",
     title3: "Nga – Việt",
-    priorityLabel: "Lĩnh vực ưu tiên:",
-    subtitle:
-      "Nền tảng kết nối trực tiếp các chuyên gia, viện nghiên cứu, trường đại học và cơ hội hợp tác KH&CN giữa Việt Nam và Liên bang Nga.",
     focusCards: [
       {
         tag: "Trọng điểm",
@@ -287,9 +304,6 @@ const HOME_COPY: Record<
     title1: "Интеллектуальная сеть",
     title2: "Наука и технологии",
     title3: "Россия – Вьетнам",
-    priorityLabel: "Приоритетные направления:",
-    subtitle:
-      "Платформа прямого взаимодействия ведущих ученых, исследовательских институтов, университетов и научно-технологических проектов Вьетнама и Российской Федерации.",
     focusCards: [
       {
         tag: "Приоритет",
@@ -467,9 +481,6 @@ const HOME_COPY: Record<
     title1: "Knowledge Network",
     title2: "Science & Technology",
     title3: "Russia – Vietnam",
-    priorityLabel: "Priority Areas:",
-    subtitle:
-      "Direct collaboration platform connecting leading experts, research institutes, universities, and S&T initiatives between Vietnam and the Russian Federation.",
     focusCards: [
       {
         tag: "Priority",
@@ -656,21 +667,23 @@ const HOME_COPY: Record<
   },
 };
 
-const PRIMARY_DISCIPLINE: Record<Locale, string> = {
-  vi: "Khoa học",
-  ru: "Наука",
-  en: "Science",
-};
-
 export function GuestHomeV2({
   isAuthenticated,
   workspaceHref,
 }: Readonly<{ isAuthenticated: boolean; workspaceHref: string }>) {
   const { locale } = useLocale();
   const t = HOME_COPY[locale] ?? HOME_COPY.vi;
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_BANNERS.length);
+    }, 3200);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#ebf4ff] text-slate-950 font-sans">
+    <div className="min-h-screen bg-[#f0f4f9] text-slate-900 font-sans">
       <GuestPublicNav
         active="home"
         isAuthenticated={isAuthenticated}
@@ -678,47 +691,50 @@ export function GuestHomeV2({
       />
 
       <main>
-        <section className="relative isolate min-h-[620px] overflow-hidden border-b border-sky-300/60 bg-[#b9d8eb] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-          <Image
-            src="/brand/vnru-network-banner-2026.png"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="pointer-events-none -z-20 object-cover object-[68%_center] brightness-[0.95] saturate-[0.96] contrast-[0.96]"
-          />
+        <section className="relative isolate min-h-[580px] overflow-hidden border-b border-slate-700/40 bg-[#0c1424]">
+          {HERO_BANNERS.map((banner, idx) => (
+            <div
+              key={banner.id}
+              className={`absolute inset-0 -z-20 transition-opacity duration-700 ease-in-out ${
+                idx === currentSlide ? "opacity-100 scale-100" : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <Image
+                src={banner.src}
+                alt={banner.alt}
+                fill
+                priority={idx === 0}
+                sizes="100vw"
+                className={`pointer-events-none object-cover ${banner.objectPosition} brightness-[0.98] saturate-[1.02]`}
+              />
+            </div>
+          ))}
+
           <div
-            className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(211,232,246,.94)_0%,rgba(180,216,238,.82)_56%,rgba(147,198,230,.68)_100%)] sm:bg-[linear-gradient(90deg,rgba(216,235,248,.94)_0%,rgba(190,220,240,.82)_44%,rgba(139,195,229,.38)_72%,rgba(76,157,211,.08)_100%)] lg:bg-[linear-gradient(90deg,rgba(216,235,248,.94)_0%,rgba(190,220,240,.82)_31%,rgba(139,195,229,.38)_48%,rgba(76,157,211,.08)_62%,rgba(48,126,186,0)_72%)]"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(15,23,42,0.68)_0%,rgba(15,23,42,0.48)_42%,rgba(15,23,42,0.18)_70%,transparent_92%)]"
             aria-hidden="true"
           />
 
-          <div className="mx-auto flex min-h-[492px] max-w-[1280px] items-center">
-            <div className="w-full max-w-[760px]">
-              <div className="flex items-center gap-3 text-sm font-semibold text-[#174F82] sm:text-base">
-                <span className="h-px w-9 bg-[#E25555]" aria-hidden="true" />
-                <span>{t.eyebrow}</span>
+          <div className="mx-auto flex min-h-[480px] max-w-[1460px] items-center px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-22">
+            <div className="w-full max-w-[960px] xl:max-w-[1100px]">
+              <div className="inline-flex items-center gap-2.5 rounded-full border-2 border-amber-500/80 px-3.5 py-1.5">
+                <span
+                  className="relative flex size-2 shrink-0"
+                  aria-hidden="true"
+                >
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+                  <span className="relative inline-flex size-2 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(245,158,11,0.8)]" />
+                </span>
+                <span className="text-xs sm:text-[13px] font-bold tracking-wide text-amber-300">
+                  {t.eyebrow}
+                </span>
               </div>
 
-              <h1 className="mt-7 overflow-visible py-1 font-serif text-[40px] font-bold leading-[1.16] tracking-[-0.025em] text-[#0B2742] sm:text-[50px] lg:text-[58px] xl:text-[62px]">
+              <h1 className="mt-6 overflow-visible py-1 font-sans text-[34px] font-black leading-[1.16] tracking-tight text-white sm:text-[44px] md:text-[50px] lg:text-[56px] xl:text-[60px] drop-shadow-[0_2px_14px_rgba(0,0,0,0.6)]">
                 <span className="block">{t.title1}</span>
-                <span className="mt-1 block pb-1.5 text-[#1769B0]">
-                  {t.title2}
-                </span>
-                <span className="mt-1 block text-[#0B2742]">{t.title3}</span>
+                <span className="mt-1 block text-[#41C5FF] drop-shadow-[0_0_18px_rgba(65,197,255,0.45)]">{t.title2}</span>
+                <span className="mt-1 block text-white">{t.title3}</span>
               </h1>
-
-              <div className="mt-8 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-l-2 border-[#E25555] pl-4 text-base sm:text-lg">
-                <span className="font-semibold text-[#405a73]">
-                  {t.priorityLabel}
-                </span>
-                <strong className="font-bold text-[#174a8b]">
-                  {PRIMARY_DISCIPLINE[locale]}
-                </strong>
-              </div>
-
-              <p className="mt-7 max-w-[680px] text-base font-medium leading-[1.65] text-[#17324f] sm:text-lg lg:text-[19px]">
-                {t.subtitle}
-              </p>
             </div>
           </div>
         </section>
@@ -732,7 +748,7 @@ export function GuestHomeV2({
                 <p className="text-xs sm:text-[13px] font-black uppercase tracking-[0.14em] text-blue-700">
                   {t.ecosystem.eyebrow}
                 </p>
-                <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-slate-950">
+                <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[#1A1C1CD9]">
                   {t.ecosystem.title}
                 </h2>
                 <p className="mt-3 text-lg sm:text-xl md:text-[20px] font-normal leading-relaxed text-slate-700">
@@ -774,7 +790,7 @@ export function GuestHomeV2({
                       {item.badge}
                     </span>
                   </div>
-                  <h3 className="mt-5 text-lg sm:text-xl font-bold text-slate-950">
+                  <h3 className="mt-5 text-lg sm:text-xl font-bold text-[#1A1C1CD9]">
                     {item.title}
                   </h3>
                   <p className="mt-2.5 text-base sm:text-[17px] leading-relaxed text-slate-700 font-normal">
@@ -795,7 +811,7 @@ export function GuestHomeV2({
                 <p className="text-xs sm:text-[13px] font-black uppercase tracking-[0.14em] text-blue-700">
                   {t.events.eyebrow}
                 </p>
-                <h2 className="mt-2 text-2xl sm:text-3xl font-black tracking-tight text-slate-950">
+                <h2 className="mt-2 text-2xl sm:text-3xl font-black tracking-tight text-[#1A1C1CD9]">
                   {t.events.title}
                 </h2>
                 <p className="mt-2 text-lg sm:text-xl font-normal leading-relaxed text-slate-700">
@@ -833,7 +849,7 @@ export function GuestHomeV2({
                     </span>
                   </div>
                   <div className="p-5 sm:p-6">
-                    <h3 className="text-lg sm:text-xl font-bold leading-snug text-slate-950">
+                    <h3 className="text-lg sm:text-xl font-bold leading-snug text-[#1A1C1CD9]">
                       {event.title}
                     </h3>
                     <p className="mt-3 text-base font-medium text-slate-700">
@@ -859,7 +875,7 @@ export function GuestHomeV2({
                     ✓
                   </span>
                   <span>
-                    <strong className="block text-2xl sm:text-3xl font-black text-slate-950">
+                    <strong className="block text-2xl sm:text-3xl font-black text-[#1A1C1CD9]">
                       {val}
                     </strong>
                     <small className="text-base font-semibold text-[#405a73]">
@@ -887,7 +903,7 @@ export function GuestHomeV2({
               >
                 <BrandMark className="size-11 shadow-xs" />
                 <span>
-                  <strong className="block text-base sm:text-lg font-black tracking-tight text-slate-950">
+                  <strong className="block text-base sm:text-lg font-black tracking-tight text-[#1A1C1CD9]">
                     {t.footer.brandTitle}
                   </strong>
                   <small className="block text-xs font-extrabold tracking-wider text-slate-600 uppercase">
@@ -907,7 +923,7 @@ export function GuestHomeV2({
             </div>
 
             <div className="lg:col-span-3">
-              <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">
+              <h4 className="text-sm font-black uppercase tracking-wider text-[#1A1C1CD9]">
                 {t.footer.navTitle}
               </h4>
               <ul className="mt-4 space-y-2.5 text-xs sm:text-sm font-semibold text-slate-600">
@@ -955,7 +971,7 @@ export function GuestHomeV2({
             </div>
 
             <div className="lg:col-span-2">
-              <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">
+              <h4 className="text-sm font-black uppercase tracking-wider text-[#1A1C1CD9]">
                 {t.footer.pillarsTitle}
               </h4>
               <ul className="mt-4 space-y-2.5 text-xs sm:text-sm font-semibold text-slate-600">
@@ -968,7 +984,7 @@ export function GuestHomeV2({
             </div>
 
             <div className="lg:col-span-3">
-              <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">
+              <h4 className="text-sm font-black uppercase tracking-wider text-[#1A1C1CD9]">
                 {t.footer.contactTitle}
               </h4>
               <div className="mt-4 space-y-3 text-xs sm:text-sm text-slate-600">

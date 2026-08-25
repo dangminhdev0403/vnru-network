@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { EXPERTS, OPPORTUNITIES } from "@/features/public-discovery/mock-data";
 import knowledgeNetworkArtwork from "@/public/images/vn-ru-knowledge-network.png";
 
@@ -78,7 +79,7 @@ function BilateralMap({ t, experts, opportunities, reduced }: { t: Copy; experts
 }
 
 export function KnowledgeDiscovery() {
-  const { locale, setLocale } = useLocale(); const t = COPY[locale]; const discovery = DISCOVERY_COPY[locale];
+  const { locale } = useLocale(); const t = COPY[locale]; const discovery = DISCOVERY_COPY[locale];
   const [topic, setTopic] = useState<"all" | Resource["type"]>("all"); const reduced = useReducedMotion(); const typed = useTyping(t.typed, reduced);
   const filters = [{ id: "all" as const, label: t.filters[0] }, { id: "materials" as const, label: t.filters[1] }, { id: "energy" as const, label: t.filters[2] }, { id: "digital" as const, label: t.filters[3] }];
   const visible = useMemo(() => t.resources.filter((item) => topic === "all" || item.type === topic), [t.resources, topic]);
@@ -87,7 +88,7 @@ export function KnowledgeDiscovery() {
     <header className="sticky top-0 z-40 border-b border-white/10 bg-[#06152f]/90 text-white backdrop-blur-xl"><div className="mx-auto flex min-h-18 max-w-[1380px] items-center gap-3 px-4 sm:px-6">
       <Link href="/" className="flex min-w-0 items-center gap-3" aria-label="VN–RU Network"><span className="relative grid h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-white"><span className="absolute inset-y-0 left-0 w-[64%] -skew-x-12 bg-[#1d4ed8]"/><span className="absolute inset-y-0 right-0 w-[48%] -skew-x-12 bg-[#dc2626]"/></span><span className="min-w-0"><strong className="block truncate text-sm sm:text-base">VN–RU Network</strong><small className="hidden text-xs font-bold uppercase tracking-[0.16em] text-blue-100 sm:block">{t.repo}</small></span></Link>
       <nav className="ml-auto hidden items-center gap-6 text-sm font-semibold text-slate-200 lg:flex" aria-label={t.resourcesLabel}><a href="#topics">{t.topics}</a><a href="#experts">{discovery.experts}</a><a href="#opportunities">{discovery.opportunities}</a><a href="#join">{t.join}</a></nav>
-      <select value={locale} onChange={(e) => setLocale(e.target.value as Locale)} aria-label="Language / Ngôn ngữ / Язык" className="ml-auto h-10 rounded-lg border border-white/20 bg-[#0b223d] px-2 text-xs font-extrabold text-white focus-visible:ring-2 focus-visible:ring-sky-300 lg:ml-0"><option value="vi">VI</option><option value="ru">RU</option><option value="en">EN</option></select>
+      <LanguageSwitcher variant="dark" />
       <Link href="/login" className="inline-flex min-h-10 items-center rounded-lg bg-[#2563eb] px-3 text-xs font-extrabold text-white hover:bg-[#1d4ed8] sm:px-4 sm:text-sm"><span className="hidden sm:inline">{t.joinNetwork}</span><span className="sm:hidden">{t.join}</span></Link>
     </div><nav className="border-t border-white/10 lg:hidden" aria-label={t.resourcesLabel}><div className="mx-auto flex max-w-[1380px] gap-6 overflow-x-auto px-4 py-3 text-xs font-bold text-slate-200 sm:px-6"><a className="shrink-0" href="#topics">{t.topics}</a><a className="shrink-0" href="#experts">{discovery.experts}</a><a className="shrink-0" href="#opportunities">{discovery.opportunities}</a><a className="shrink-0" href="#join">{t.join}</a></div></nav></header>
     <main><section className="knowledge-hero relative isolate overflow-hidden bg-[#06152f] px-4 py-10 text-white sm:px-6 sm:py-12"><div className="knowledge-mesh absolute inset-0 -z-10" aria-hidden="true"/><div className="mx-auto grid max-w-[1380px] items-center gap-6 lg:grid-cols-2">

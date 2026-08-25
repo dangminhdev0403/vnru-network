@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
-import { Noto_Sans, Noto_Serif } from "next/font/google";
+import { Be_Vietnam_Pro, Noto_Sans, Noto_Serif } from "next/font/google";
 import QueryProvider from "../components/providers/QueryProvider";
 import "./globals.css";
+
+const beVietnamPro = Be_Vietnam_Pro({
+  variable: "--font-be-vietnam-pro",
+  subsets: ["latin", "vietnamese"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+});
 
 const sans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -32,7 +39,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="vi" data-theme="light" data-scroll-behavior="smooth" className={`${sans.variable} ${serif.variable}`}>
+    <html
+      lang="vi"
+      suppressHydrationWarning
+      className={`${beVietnamPro.variable} ${sans.variable} ${serif.variable}`}
+    >
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
@@ -44,7 +55,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
         />
       </head>
-      <body className="vnru-motion-root min-h-screen bg-background font-sans text-on-background antialiased">
+      <body suppressHydrationWarning className="vnru-motion-root min-h-screen bg-background font-sans text-on-background antialiased">
         <QueryProvider>{children}</QueryProvider>
       </body>
     </html>

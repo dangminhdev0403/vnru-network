@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, type ReactNode } from "react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 
 const COPY: Record<Locale, { knowledge: string; experts: string; opportunities: string; join: string; joinShort: string; repo: string; mock: string }> = {
   vi: { knowledge: "Tri thức", experts: "Chuyên gia", opportunities: "Cơ hội nghiên cứu", join: "Gia nhập mạng lưới", joinShort: "Gia nhập", repo: "Kho tri thức công cộng", mock: "Public preview · Dữ liệu minh hoạ, không phải số liệu vận hành chính thức." },
@@ -11,7 +12,7 @@ const COPY: Record<Locale, { knowledge: string; experts: string; opportunities: 
 };
 
 export function PublicDiscoveryShell({ children, current }: { children: ReactNode; current: "experts" | "opportunities" }) {
-  const { locale, setLocale } = useLocale();
+  const { locale } = useLocale();
   const t = COPY[locale];
   const navItems = [
     { href: "/knowledge", label: t.knowledge, active: false },
@@ -31,7 +32,7 @@ export function PublicDiscoveryShell({ children, current }: { children: ReactNod
         <nav className="ml-auto hidden items-center gap-6 text-sm font-semibold text-slate-200 lg:flex" aria-label="Public discovery">
           {navItems.map((item) => <Link key={item.href} href={item.href} aria-current={item.active ? "page" : undefined} className={`transition-colors hover:text-white ${item.active ? "text-white underline decoration-sky-400 decoration-2 underline-offset-8" : ""}`}>{item.label}</Link>)}
         </nav>
-        <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label="Language / Ngôn ngữ / Язык" className="ml-auto h-10 rounded-lg border border-white/20 bg-[#0b223d] px-2 text-xs font-extrabold text-white focus-visible:ring-2 focus-visible:ring-sky-300 lg:ml-0"><option value="vi">VI</option><option value="ru">RU</option><option value="en">EN</option></select>
+        <LanguageSwitcher variant="dark" />
         <Link href="/login" className="inline-flex min-h-10 items-center rounded-lg bg-[#2563eb] px-3 text-xs font-extrabold text-white hover:bg-[#1d4ed8] sm:px-4 sm:text-sm"><span className="hidden sm:inline">{t.join}</span><span className="sm:hidden">{t.joinShort}</span></Link>
       </div>
       <nav className="border-t border-white/10 lg:hidden" aria-label="Public discovery">

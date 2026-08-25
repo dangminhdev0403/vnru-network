@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { useLogout } from "@/features/auth/server-state";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import translations from "../i18n/translations.json";
 import { confirmAction } from "@/lib/alerts";
 
@@ -163,16 +164,7 @@ export function PublicHome({
           </nav>
 
           <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3 lg:ml-0">
-            <select
-              value={locale}
-              onChange={(event) => setLocale(event.target.value as Locale)}
-              className="h-9 min-w-28 rounded-lg border border-[#46627f] bg-[#0b223d] px-2 text-xs font-bold text-white outline-none transition hover:border-[#55bfea] focus:border-[#55bfea] focus-visible:ring-2 focus-visible:ring-[#55bfea]/25 sm:min-w-32 sm:px-3"
-              aria-label={t("Ngôn ngữ")}
-            >
-              <option value="vi">Tiếng Việt</option>
-              <option value="en">English</option>
-              <option value="ru">Русский</option>
-            </select>
+            <LanguageSwitcher variant="dark" />
 
             {/* Auth Button */}
             {isAuthenticated ? (

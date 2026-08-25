@@ -300,7 +300,7 @@ export function GuestExploreMedia() {
                 <p className="text-xs sm:text-[13px] font-black uppercase tracking-[0.14em] text-blue-700">
                   {t.eyebrow}
                 </p>
-                <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-slate-950">
+                <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[#1A1C1CD9]">
                   {t.title}
                 </h2>
                 <p className="mt-3 text-lg sm:text-xl md:text-[20px] font-normal leading-relaxed text-slate-700">
@@ -360,9 +360,18 @@ export function GuestExploreMedia() {
               />
               <div className="relative grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
                 <div>
-                  <span className="inline-flex rounded-full border border-white/25 bg-white/15 px-3.5 py-1.5 text-xs sm:text-[13px] font-black uppercase tracking-wider backdrop-blur">
-                    {t.bannerTag}
-                  </span>
+                  <div className="inline-flex items-center gap-2.5 rounded-full border-2 border-amber-400/90 bg-black/18 px-3.5 py-1.5 shadow-[0_2px_10px_-2px_rgba(0,0,0,0.2)] backdrop-blur-sm">
+                    <span
+                      className="relative flex size-2 shrink-0"
+                      aria-hidden="true"
+                    >
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+                      <span className="relative inline-flex size-2 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(245,158,11,0.8)]" />
+                    </span>
+                    <span className="text-xs sm:text-[13px] font-bold tracking-wide text-amber-300">
+                      {t.bannerTag}
+                    </span>
+                  </div>
                   <h3 className="mt-4 max-w-3xl text-2xl sm:text-3xl md:text-4xl font-black leading-snug tracking-tight">
                     {t.bannerTitle}
                   </h3>

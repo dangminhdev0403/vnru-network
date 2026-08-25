@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { BrandMark } from "@/components/shared/BrandMark";
 
@@ -78,18 +79,12 @@ const COPY: Record<
   },
 };
 
-const LANGUAGE_OPTIONS: { code: Locale; label: string; flag: string }[] = [
-  { code: "vi", label: "Tiếng Việt", flag: "🇻🇳" },
-  { code: "ru", label: "Русский", flag: "🇷🇺" },
-  { code: "en", label: "English", flag: "🇬🇧" },
-];
-
 export function GuestPublicNav({
   active,
   isAuthenticated = false,
   workspaceHref = "/workspace",
 }: GuestPublicNavProps) {
-  const { locale, setLocale } = useLocale();
+  const { locale } = useLocale();
   const pathname = usePathname();
   const [clickedKey, setClickedKey] = useState<string | null>(null);
   const [currentHash, setCurrentHash] = useState<string>("");
@@ -171,31 +166,7 @@ export function GuestPublicNav({
         </nav>
 
         <div className="flex items-center gap-3">
-          {/* Borderless Language Selector showing clear regional language names with flags */}
-          <div className="relative inline-flex items-center">
-            <select
-              value={locale}
-              onChange={(event) => setLocale(event.target.value as Locale)}
-              aria-label="Chọn ngôn ngữ khu vực"
-              className="h-10 cursor-pointer appearance-none rounded-xl border-0 bg-transparent hover:bg-white/80 pl-3 pr-7 text-xs sm:text-sm font-extrabold text-slate-800 outline-none transition focus:bg-white focus:ring-2 focus:ring-blue-500/20"
-            >
-              {LANGUAGE_OPTIONS.map((opt) => (
-                <option
-                  key={opt.code}
-                  value={opt.code}
-                  className="bg-white text-slate-900 font-bold py-1.5"
-                >
-                  {opt.flag} {opt.label}
-                </option>
-              ))}
-            </select>
-            <span
-              className="pointer-events-none absolute right-2 text-[10px] text-slate-500 font-black"
-              aria-hidden="true"
-            >
-              ▼
-            </span>
-          </div>
+          <LanguageSwitcher variant="light" />
 
           <Link
             href={isAuthenticated ? workspaceHref : "/login"}
