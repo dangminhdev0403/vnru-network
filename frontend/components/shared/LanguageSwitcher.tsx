@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useId } from "react";
+import { useRouter } from "next/navigation";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 
 export interface FlagProps {
@@ -91,6 +92,12 @@ export const LANGUAGE_OPTIONS: readonly LanguageOption[] = [
   },
 ];
 
+const switcherCopy: Record<Locale, { current: string; select: string }> = {
+  vi: { current: "Ngôn ngữ hiện tại", select: "Chọn ngôn ngữ" },
+  ru: { current: "Текущий язык", select: "Выберите язык" },
+  en: { current: "Current language", select: "Select language" },
+};
+
 export type LanguageSwitcherVariant = "light" | "dark" | "workspace" | "transparent";
 
 export interface LanguageSwitcherProps {
@@ -98,6 +105,8 @@ export interface LanguageSwitcherProps {
   readonly className?: string;
   readonly align?: "left" | "right";
   readonly showShortCodeMobile?: boolean;
+  readonly compact?: boolean;
+  readonly refreshOnChange?: boolean;
 }
 
 export function LanguageSwitcher({
@@ -105,7 +114,10 @@ export function LanguageSwitcher({
   className = "",
   align = "right",
   showShortCodeMobile = true,
+  compact = false,
+  refreshOnChange = false,
 }: LanguageSwitcherProps) {
+  const router = useRouter();
   const { locale, setLocale } = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -151,20 +163,21 @@ export function LanguageSwitcher({
     setLocale(code);
     setIsOpen(false);
     buttonRef.current?.focus();
+    if (refreshOnChange) router.refresh();
   };
 
   // Variant-specific styling rules
   const getTriggerStyles = () => {
     switch (variant) {
       case "dark":
-        return "h-10 px-3 gap-2 rounded-xl border border-white/20 bg-white/10 text-white hover:bg-white/15 hover:border-white/30 focus-visible:ring-2 focus-visible:ring-sky-400/40 backdrop-blur-md";
+        return "min-h-11 px-3 gap-2 rounded-xl border border-white/20 bg-white/10 text-white hover:bg-white/15 hover:border-white/30 focus-visible:ring-2 focus-visible:ring-sky-400/40 backdrop-blur-md";
       case "workspace":
-        return "h-10 px-3 gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-text-primary hover:bg-[var(--surface-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/30";
+        return "min-h-11 px-3 gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-text-primary hover:bg-[var(--surface-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/30";
       case "transparent":
-        return "h-10 px-3 gap-2 rounded-xl border border-transparent hover:border-slate-200 bg-transparent hover:bg-white/80 text-slate-800 focus-visible:ring-2 focus-visible:ring-blue-500/20";
+        return "min-h-11 px-3 gap-2 rounded-xl border border-transparent hover:border-slate-200 bg-transparent hover:bg-white/80 text-slate-800 focus-visible:ring-2 focus-visible:ring-blue-500/20";
       case "light":
       default:
-        return "h-10 px-3 gap-2 rounded-xl border border-blue-200/80 bg-white/90 text-slate-800 hover:bg-white hover:border-blue-300 shadow-2xs focus-visible:ring-2 focus-visible:ring-blue-500/30";
+        return "min-h-11 px-3 gap-2 rounded-xl border border-blue-200/80 bg-white/90 text-slate-800 hover:bg-white hover:border-blue-300 shadow-2xs focus-visible:ring-2 focus-visible:ring-blue-500/30";
     }
   };
 
@@ -229,16 +242,18 @@ export function LanguageSwitcher({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls={listboxId}
-        aria-label={`Ngôn ngữ hiện tại: ${currentOption.label}. Nhấn để đổi ngôn ngữ.`}
+        aria-label={`${switcherCopy[locale].current}: ${currentOption.label}`}
         className={`inline-flex items-center justify-between text-xs sm:text-sm font-bold transition-all duration-150 outline-none cursor-pointer select-none ${getTriggerStyles()}`}
       >
         <div className="flex items-center gap-2">
           <CurrentFlag className="w-[19px] h-[13px]" />
-          <span className={showShortCodeMobile ? "hidden sm:inline" : "inline"}>
-            {currentOption.label}
-          </span>
-          {showShortCodeMobile && (
-            <span className="sm:hidden uppercase tracking-wider font-extrabold">
+          {!compact && (
+            <span className={showShortCodeMobile ? "hidden sm:inline" : "inline"}>
+              {currentOption.label}
+            </span>
+          )}
+          {(compact || showShortCodeMobile) && (
+            <span className={compact ? "uppercase tracking-wider font-extrabold" : "sm:hidden uppercase tracking-wider font-extrabold"}>
               {currentOption.shortCode}
             </span>
           )}
@@ -266,7 +281,7 @@ export function LanguageSwitcher({
         <div
           id={listboxId}
           role="listbox"
-          aria-label="Chọn ngôn ngữ"
+          aria-label={switcherCopy[locale].select}
           className={`absolute ${
             align === "right" ? "right-0" : "left-0"
           } mt-2 w-48 sm:w-52 rounded-2xl p-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150 ${getMenuStyles()}`}

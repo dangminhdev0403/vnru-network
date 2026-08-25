@@ -41,13 +41,15 @@ test("login renders the Auth.js Credentials form", async () => {
   assert.doesNotMatch(page, /iframe|html-templates\/login/);
 });
 
-test("self-registration is disabled for configured accounts", async () => {
+test("registration remains a non-persisting localized request preview", async () => {
   const { readFile } = await import("node:fs/promises");
   const [page, route] = await Promise.all([
     readFile(new URL("./app/register/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("./app/api/auth/login/route.ts", import.meta.url), "utf8"),
   ]);
-  assert.match(page, /redirect\("\/login"\)/);
+  assert.match(page, /useLocale\(\)/);
+  assert.match(page, /event\.preventDefault\(\)/);
+  assert.match(page, /self-registration API access is not yet available/);
   assert.match(route, /signIn\("credentials"/);
   assert.doesNotMatch(route, /REGISTER|localStorage|sessionStorage/);
 });
