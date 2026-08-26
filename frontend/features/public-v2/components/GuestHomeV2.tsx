@@ -716,7 +716,7 @@ export function GuestHomeV2({
 
           <div className="mx-auto flex min-h-[560px] max-w-[1460px] items-center px-4 py-12 sm:min-h-[620px] sm:px-6 sm:py-16 lg:px-8">
             <div className="mr-auto w-full max-w-[760px] text-left">
-              <div className="mb-5 inline-flex max-w-full items-center gap-2.5 rounded-full border border-amber-400/90 px-4 py-2 text-sm font-bold text-amber-300 sm:mb-6 sm:px-5 sm:text-base">
+              <div className="mb-5 inline-flex max-w-full items-center gap-2.5 rounded-full border-[2.5px] border-amber-400/90 bg-black/20 px-4 py-2 text-[15px] font-black text-amber-300 sm:mb-6 sm:px-5 sm:text-[17px]">
                 <span className="size-2.5 shrink-0 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.9)]" aria-hidden="true" />
                 <span>Cổng kết nối hợp tác song phương</span>
               </div>
