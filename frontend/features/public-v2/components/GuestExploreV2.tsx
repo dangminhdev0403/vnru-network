@@ -358,7 +358,7 @@ export function GuestExploreV2() {
           </div>
         </section>
 
-        <section className="mb-7 flex flex-col gap-3 rounded-2xl border border-blue-200 bg-[linear-gradient(90deg,rgba(37,99,235,.045),rgba(37,99,235,.015))] p-3 shadow-[0_5px_18px_rgba(37,99,235,.04)] xl:flex-row xl:items-center xl:justify-between">
+        <section className="relative z-40 mb-7 flex flex-col gap-3 rounded-2xl border border-blue-200 bg-[linear-gradient(90deg,rgba(37,99,235,.045),rgba(37,99,235,.015))] p-3 shadow-[0_5px_18px_rgba(37,99,235,.04)] xl:flex-row xl:items-center xl:justify-between">
           <div className="rvstin-category-scroll flex min-w-0 gap-2 overflow-x-auto overflow-y-hidden pb-1 xl:pb-0">
             {(Object.keys(t.categories) as Category[]).map((key) => {
               const active = key === category;
@@ -380,16 +380,16 @@ export function GuestExploreV2() {
           </div>
 
           <div className="flex shrink-0 items-center gap-3">
-            <details className="group relative">
+            <details className="group static">
               <summary className="grid size-11 list-none cursor-pointer place-items-center rounded-xl border border-blue-200 bg-white text-blue-600 transition hover:border-blue-400 hover:bg-blue-50 hover:shadow-[0_0_0_3px_rgba(37,99,235,.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 [&::-webkit-details-marker]:hidden">
                 <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
                   <path d="M5 7h14M5 12h14M5 17h14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
                 </svg>
               </summary>
 
-              <div className="absolute right-0 top-[calc(100%+10px)] z-40 w-[min(1120px,calc(100vw-32px))] overflow-hidden rounded-2xl border border-blue-200 bg-white shadow-[0_24px_60px_rgba(20,59,135,.18)]">
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
-                  {catalogs.map(([key, children], index) => (
+              <div className="absolute inset-x-0 top-[calc(100%+10px)] overflow-hidden rounded-2xl border border-blue-200 bg-white shadow-[0_24px_60px_rgba(20,59,135,.18)]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+                  {catalogs.map(([key, children]) => (
                     <section
                       key={key}
                       className="border-b border-r border-blue-100 p-4 transition-colors hover:bg-blue-50/25 xl:[&:nth-child(4n)]:border-r-0"
@@ -397,11 +397,8 @@ export function GuestExploreV2() {
                       <button
                         type="button"
                         onClick={() => setCategory(key)}
-                        className="flex w-full items-start gap-2 rounded-xl border border-transparent px-3 py-2.5 text-left text-sm font-black text-slate-950 transition duration-150 hover:-translate-y-px hover:border-blue-200 hover:bg-white hover:text-blue-700 hover:shadow-[0_8px_18px_rgba(37,99,235,.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        className="flex min-h-11 w-full items-start rounded-xl border border-transparent px-3 py-2.5 text-left text-base font-black text-slate-950 transition duration-150 hover:-translate-y-px hover:border-blue-200 hover:bg-white hover:text-blue-700 hover:shadow-[0_8px_18px_rgba(37,99,235,.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                       >
-                        <span className="text-xs font-black tabular-nums text-blue-600">
-                          0{index + 1}
-                        </span>
                         <span>{t.categories[key]}</span>
                       </button>
 
@@ -423,15 +420,12 @@ export function GuestExploreV2() {
                     <button
                       type="button"
                       onClick={() => setCategory("all")}
-                      className="flex w-full items-start gap-2 rounded-xl border border-transparent px-3 py-2.5 text-left text-sm font-black text-slate-950 transition duration-150 hover:-translate-y-px hover:border-blue-200 hover:bg-white hover:text-blue-700 hover:shadow-[0_8px_18px_rgba(37,99,235,.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                      className="flex min-h-11 w-full items-start rounded-xl border border-transparent px-3 py-2.5 text-left text-base font-black text-slate-950 transition duration-150 hover:-translate-y-px hover:border-blue-200 hover:bg-white hover:text-blue-700 hover:shadow-[0_8px_18px_rgba(37,99,235,.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                     >
-                      <span className="text-xs font-black text-blue-600">00</span>
                       <span>{t.categories.all}</span>
                     </button>
-                    <div className="mt-2 grid gap-1 text-xs text-slate-600">
-                      <span className="rounded-lg px-4 py-2">• {t.latest}</span>
-                      <span className="rounded-lg px-4 py-2">• {t.featured}</span>
-                      <span className="rounded-lg px-4 py-2">• {t.experts}</span>
+                    <div className="mt-2 grid grid-cols-2 gap-1 text-base text-slate-600">
+                      {[t.latest, t.featured, t.spotlight, t.experts, t.newsletter, t.viewAll].map((item) => <span key={item} className="min-h-11 rounded-lg px-4 py-2">• {item}</span>)}
                     </div>
                   </section>
                 </div>
