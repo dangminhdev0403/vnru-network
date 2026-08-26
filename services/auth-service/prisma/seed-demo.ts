@@ -15,6 +15,13 @@ const customRoles = [
     permissions: ['iam.audit.view', 'iam.roles.manage', 'iam.users.manage'],
   },
 ] as const;
+const legacyRoleNames = [
+  'RESEARCHER',
+  'ORGANIZATION_REPRESENTATIVE',
+  'REVIEWER',
+  'COLLABORATION_MANAGER',
+  'FOUNDATION_DECISION_MAKER',
+] as const;
 const scrypt = promisify(scryptCallback);
 const accountsSchema = z.object({
   accounts: z
@@ -173,6 +180,12 @@ async function main() {
       where: {
         userId: { in: fixtureBindings.map(({ userId }) => userId) },
         id: { notIn: activeAssignmentIds },
+      },
+    });
+    await prisma.role.deleteMany({
+      where: {
+        name: { in: [...legacyRoleNames] },
+        roleAssignments: { none: {} },
       },
     });
     await prisma.permission.deleteMany({ where: { roles: { none: {} } } });
