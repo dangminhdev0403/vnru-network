@@ -710,7 +710,7 @@ export function GuestHomeV2({
             </div>
           ))}
           <div
-            className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(3,10,24,0.72)_0%,rgba(3,10,24,0.60)_55%,rgba(3,10,24,0.46)_100%)]"
+            className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-full bg-[linear-gradient(90deg,rgba(3,10,24,0.66)_0%,rgba(3,10,24,0.50)_48%,rgba(3,10,24,0.16)_76%,transparent_100%)] sm:w-[78%] lg:w-[68%]"
             aria-hidden="true"
           />
 
@@ -730,7 +730,7 @@ export function GuestHomeV2({
                 </span>
                 <span className="mt-2 flex items-center justify-start gap-x-3 overflow-visible py-5 text-5xl leading-[1.2] sm:mt-3 sm:gap-x-6 sm:text-7xl lg:text-[88px]">
                   <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text py-2 leading-[1.25] text-transparent">Nga</span>
-                  <span className="font-medium text-slate-300">-</span>
+                  <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-medium text-transparent">-</span>
                   <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text py-2 leading-[1.25] text-transparent">Việt</span>
                 </span>
               </h1>
