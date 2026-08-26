@@ -6,27 +6,119 @@ import { BrandMark } from "@/components/shared/BrandMark";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { useLocale } from "@/core/i18n/locale";
 
-type Category = "all" | "science" | "international" | "innovation" | "education" | "society";
-type NewsItem = { title: string; category: Exclude<Category, "all">; time: string };
+type Category =
+  | "all"
+  | "science"
+  | "international"
+  | "innovation"
+  | "education"
+  | "society";
+
+type NewsItem = {
+  title: string;
+  category: Exclude<Category, "all">;
+  time: string;
+};
 
 const labels = {
   vi: {
-    home: "Trang chủ", about: "Giới thiệu", explore: "Khám phá", login: "Đăng nhập", news: "Tin tức",
-    search: "Tìm kiếm tin tức...", latest: "Tin mới nhất", featured: "Tin tức nổi bật", experts: "Góc nhìn chuyên gia",
-    viewAll: "Xem tất cả", spotlight: "Tiêu điểm", newsletter: "Đăng ký nhận bản tin", subscribe: "Đăng ký",
-    categories: { all: "Tất cả", science: "Khoa học - Công nghệ", international: "Hợp tác quốc tế", innovation: "Đổi mới sáng tạo", education: "Giáo dục - Nhân lực", society: "Kinh tế - Xã hội" },
+    home: "Trang chủ",
+    about: "Giới thiệu",
+    explore: "Khám phá",
+    login: "Đăng nhập",
+    news: "Tin tức",
+    newsLead:
+      "Theo dõi những chuyển động mới nhất về khoa học, công nghệ, đổi mới sáng tạo và hợp tác tri thức Nga - Việt.",
+    live: "Cập nhật liên tục",
+    stats: [
+      ["06", "Chuyên mục"],
+      ["24/7", "Cập nhật"],
+      ["VN · RU", "Song phương"],
+    ],
+    search: "Tìm kiếm tin tức...",
+    latest: "Tin mới nhất",
+    featured: "Tin tức nổi bật",
+    experts: "Góc nhìn chuyên gia",
+    viewAll: "Xem tất cả",
+    spotlight: "Tiêu điểm",
+    newsletter: "Đăng ký nhận bản tin",
+    newsletterLead:
+      "Nhận những tin tức mới nhất về khoa học, công nghệ và hợp tác Việt - Nga.",
+    subscribe: "Đăng ký",
+    categories: {
+      all: "Tất cả",
+      science: "Khoa học - Công nghệ",
+      international: "Hợp tác quốc tế",
+      innovation: "Đổi mới sáng tạo",
+      education: "Giáo dục - Nhân lực",
+      society: "Kinh tế - Xã hội",
+    },
   },
   en: {
-    home: "Home", about: "About", explore: "Explore", login: "Sign in", news: "News",
-    search: "Search news...", latest: "Latest news", featured: "Featured news", experts: "Expert perspectives",
-    viewAll: "View all", spotlight: "Spotlight", newsletter: "Subscribe to newsletter", subscribe: "Subscribe",
-    categories: { all: "All", science: "Science - Technology", international: "International cooperation", innovation: "Innovation", education: "Education - Talent", society: "Economy - Society" },
+    home: "Home",
+    about: "About",
+    explore: "Explore",
+    login: "Sign in",
+    news: "News",
+    newsLead:
+      "Follow the latest developments in science, technology, innovation and Vietnam - Russia knowledge cooperation.",
+    live: "Continuous updates",
+    stats: [
+      ["06", "Categories"],
+      ["24/7", "Updates"],
+      ["VN · RU", "Bilateral"],
+    ],
+    search: "Search news...",
+    latest: "Latest news",
+    featured: "Featured news",
+    experts: "Expert perspectives",
+    viewAll: "View all",
+    spotlight: "Spotlight",
+    newsletter: "Subscribe to newsletter",
+    newsletterLead:
+      "Receive the latest updates on science, technology and Vietnam - Russia cooperation.",
+    subscribe: "Subscribe",
+    categories: {
+      all: "All",
+      science: "Science - Technology",
+      international: "International cooperation",
+      innovation: "Innovation",
+      education: "Education - Talent",
+      society: "Economy - Society",
+    },
   },
   ru: {
-    home: "Главная", about: "О сети", explore: "Обзор", login: "Войти", news: "Новости",
-    search: "Поиск новостей...", latest: "Последние новости", featured: "Главные материалы", experts: "Мнения экспертов",
-    viewAll: "Все материалы", spotlight: "Главное", newsletter: "Подписка на новости", subscribe: "Подписаться",
-    categories: { all: "Все", science: "Наука - Технологии", international: "Международное сотрудничество", innovation: "Инновации", education: "Образование - Кадры", society: "Экономика - Общество" },
+    home: "Главная",
+    about: "О сети",
+    explore: "Обзор",
+    login: "Войти",
+    news: "Новости",
+    newsLead:
+      "Следите за последними новостями науки, технологий, инноваций и российско-вьетнамского сотрудничества.",
+    live: "Постоянное обновление",
+    stats: [
+      ["06", "Разделов"],
+      ["24/7", "Обновления"],
+      ["VN · RU", "Партнёрство"],
+    ],
+    search: "Поиск новостей...",
+    latest: "Последние новости",
+    featured: "Главные материалы",
+    experts: "Мнения экспертов",
+    viewAll: "Все материалы",
+    spotlight: "Главное",
+    newsletter: "Подписка на новости",
+    newsletterLead:
+      "Получайте новости науки, технологий и российско-вьетнамского сотрудничества.",
+    subscribe: "Подписаться",
+    categories: {
+      all: "Все",
+      science: "Наука - Технологии",
+      international: "Международное сотрудничество",
+      innovation: "Инновации",
+      education: "Образование - Кадры",
+      society: "Экономика - Общество",
+    },
   },
 } as const;
 
@@ -81,8 +173,21 @@ const catalogs = [
   ["society", ["Kinh tế số", "Công nghiệp", "Thương mại", "Chính sách", "Phát triển bền vững", "Xã hội - Đời sống"]],
 ] as const;
 
-const featured: NewsItem[] = [news.international[1], news.science[3], news.education[0], news.innovation[1]];
-const latest = [news.science[0], news.science[1], news.international[0], news.science[2], news.innovation[0]];
+const featured: NewsItem[] = [
+  news.international[1],
+  news.science[3],
+  news.education[0],
+  news.innovation[1],
+];
+
+const latest = [
+  news.science[0],
+  news.science[1],
+  news.international[0],
+  news.science[2],
+  news.innovation[0],
+];
+
 const experts = [
   ["TV", "GS. Trần Văn Minh", "Viện Hàn lâm KHCN Việt Nam", "Hợp tác khoa học Việt - Nga có bề dày lịch sử và tiềm năng phát triển mạnh mẽ trong kỷ nguyên mới."],
   ["AP", "TS. Anna Petrova", "Viện Hàn lâm KH Nga", "Việt Nam là đối tác chiến lược quan trọng của Nga trong lĩnh vực khoa học và công nghệ tại Đông Nam Á."],
@@ -90,12 +195,50 @@ const experts = [
   ["SI", "TS. Sergey Ivanov", "Trường ĐH Kỹ thuật Bauman", "Chúng tôi tin tưởng vào tương lai hợp tác bền vững và hiệu quả giữa hai quốc gia trong lĩnh vực công nghệ cao."],
 ] as const;
 
-function Placeholder({ className = "", text = "Ảnh" }: { className?: string; text?: string }) {
-  return <div className={`relative grid place-items-center overflow-hidden bg-[linear-gradient(135deg,#12428b_0%,#3d79c9_48%,#173f78_100%)] ${className}`}><div className="absolute -right-10 -top-10 size-32 rounded-full bg-white/10"/><div className="absolute -bottom-14 -left-8 size-36 rounded-full bg-white/10"/><span className="relative z-10 text-xs font-black uppercase tracking-[0.12em] text-white/75">{text}</span></div>;
+function Placeholder({
+  className = "",
+  text = "Ảnh",
+}: {
+  className?: string;
+  text?: string;
+}) {
+  return (
+    <div
+      className={`relative grid place-items-center overflow-hidden bg-[linear-gradient(135deg,#12428b_0%,#3d79c9_48%,#173f78_100%)] ${className}`}
+    >
+      <div className="absolute -right-10 -top-10 size-32 rounded-full bg-white/10" />
+      <div className="absolute -bottom-14 -left-8 size-36 rounded-full bg-white/10" />
+      <span className="relative z-10 text-xs font-black uppercase tracking-[0.12em] text-white/75">
+        {text}
+      </span>
+    </div>
+  );
 }
 
-function ListItem({ item, t }: { item: NewsItem; t: (typeof labels)[keyof typeof labels] }) {
-  return <article className="grid grid-cols-[116px_minmax(0,1fr)] gap-4 border-b border-blue-100 py-4 first:pt-0 sm:grid-cols-[150px_minmax(0,1fr)]"><Placeholder className="h-[78px] rounded-xl sm:h-[92px]"/><div><h3 className="text-[15px] font-extrabold leading-[1.4] tracking-[-0.02em] sm:text-base">{item.title}</h3><div className="mt-2 flex flex-wrap gap-2 text-xs text-slate-500"><span className="font-black uppercase text-blue-600">{t.categories[item.category]}</span><span>•</span><span>{item.time}</span></div></div></article>;
+function ListItem({
+  item,
+  t,
+}: {
+  item: NewsItem;
+  t: (typeof labels)[keyof typeof labels];
+}) {
+  return (
+    <article className="group grid grid-cols-[116px_minmax(0,1fr)] gap-4 border-b border-blue-100 py-4 first:pt-0 sm:grid-cols-[150px_minmax(0,1fr)]">
+      <Placeholder className="h-[78px] rounded-xl transition duration-200 group-hover:brightness-105 sm:h-[92px]" />
+      <div className="min-w-0">
+        <h3 className="text-[15px] font-extrabold leading-[1.4] tracking-[-0.02em] transition-colors group-hover:text-blue-700 sm:text-base">
+          {item.title}
+        </h3>
+        <div className="mt-2 flex flex-wrap gap-2 text-xs text-slate-500">
+          <span className="font-black uppercase text-blue-600">
+            {t.categories[item.category]}
+          </span>
+          <span>•</span>
+          <span>{item.time}</span>
+        </div>
+      </div>
+    </article>
+  );
 }
 
 export function GuestExploreV2() {
@@ -103,42 +246,381 @@ export function GuestExploreV2() {
   const t = labels[locale] ?? labels.vi;
   const [category, setCategory] = useState<Category>("all");
   const [query, setQuery] = useState("");
+
   const allItems = useMemo(() => Object.values(news).flat(), []);
   const filtered = useMemo(() => {
     const source = category === "all" ? allItems : news[category];
     const q = query.trim().toLocaleLowerCase(locale);
-    return q ? source.filter((item) => item.title.toLocaleLowerCase(locale).includes(q)) : source;
+    return q
+      ? source.filter((item) =>
+          item.title.toLocaleLowerCase(locale).includes(q),
+        )
+      : source;
   }, [allItems, category, locale, query]);
+
   const half = Math.ceil(filtered.length / 2);
 
-  return <div className="min-h-screen bg-white text-slate-950">
-    <header className="sticky top-0 z-50 border-b border-blue-200/80 bg-[#edf5fe]/95 backdrop-blur-xl">
-      <div className="mx-auto flex h-[74px] max-w-[1460px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-3"><BrandMark className="size-11"/><strong className="hidden text-base font-extrabold sm:block">Mạng lưới tri thức Nga - Việt</strong></Link>
-        <nav className="hidden items-center gap-8 xl:flex"><Link href="/" className="text-sm font-extrabold uppercase text-slate-700">{t.home}</Link><Link href="/#about" className="text-sm font-extrabold uppercase text-slate-700">{t.about}</Link><Link href="/explore" className="relative py-6 text-sm font-extrabold uppercase text-blue-700">{t.explore}<span className="absolute inset-x-0 bottom-4 h-0.5 bg-blue-600"/></Link></nav>
-        <div className="flex items-center gap-3"><LanguageSwitcher variant="light"/><Link href="/login" className="inline-flex h-10 items-center rounded-xl bg-blue-600 px-4 text-sm font-bold text-white">{t.login}</Link></div>
-      </div>
-    </header>
+  return (
+    <div className="min-h-screen bg-white text-slate-950">
+      <style>{`
+        .rvstin-category-scroll {
+          scrollbar-width: thin;
+          scrollbar-color: transparent transparent;
+        }
+        .rvstin-category-scroll::-webkit-scrollbar {
+          height: 6px;
+        }
+        .rvstin-category-scroll::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .rvstin-category-scroll::-webkit-scrollbar-thumb {
+          background: transparent;
+          border-radius: 999px;
+        }
+        .rvstin-category-scroll:hover,
+        .rvstin-category-scroll:focus-within {
+          scrollbar-color: rgba(100,116,139,.42) transparent;
+        }
+        .rvstin-category-scroll:hover::-webkit-scrollbar-thumb,
+        .rvstin-category-scroll:focus-within::-webkit-scrollbar-thumb {
+          background: rgba(100,116,139,.42);
+        }
+        .rvstin-category-scroll:hover::-webkit-scrollbar-thumb:hover {
+          background: rgba(71,85,105,.62);
+        }
+      `}</style>
 
-    <main className="mx-auto max-w-[1460px] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-      <h1 className="mb-5 text-2xl font-black uppercase text-blue-600 sm:text-3xl">{t.news}</h1>
-      <section className="mb-7 flex flex-col gap-3 rounded-2xl border border-blue-200 bg-blue-50/40 p-3 xl:flex-row xl:items-center xl:justify-between">
-        <div className="flex gap-2 overflow-x-auto">{(["all","science","international","innovation","education","society"] as Category[]).map((key) => <button key={key} type="button" onClick={() => setCategory(key)} className={`min-h-11 shrink-0 rounded-xl border px-5 text-sm font-bold ${category===key?"border-blue-600 bg-blue-600 text-white":"border-blue-100 bg-white text-slate-700"}`}>{t.categories[key]}</button>)}</div>
-        <div className="flex items-center gap-3">
-          <details className="group relative"><summary className="grid size-11 cursor-pointer list-none place-items-center rounded-xl border border-blue-200 bg-white text-blue-600 [&::-webkit-details-marker]:hidden"><svg viewBox="0 0 24 24" className="size-5"><path d="M5 7h14M5 12h14M5 17h14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"/></svg></summary><div className="absolute right-0 top-[calc(100%+10px)] z-40 w-[min(1120px,calc(100vw-32px))] overflow-hidden rounded-2xl border border-blue-200 bg-white shadow-2xl"><div className="grid sm:grid-cols-2 xl:grid-cols-4">{catalogs.map(([key,children],i)=><section key={key} className="border-b border-r border-blue-100 p-5"><button type="button" onClick={()=>setCategory(key)} className="flex gap-2 text-left text-sm font-black"><span className="text-xs text-blue-600">0{i+1}</span><span>{t.categories[key]}</span></button><div className="mt-3 grid gap-1">{children.map(c=><button key={c} type="button" className="rounded-lg px-3 py-2 text-left text-xs text-slate-600 hover:bg-blue-50 hover:text-blue-700"><span className="mr-2 text-blue-200">•</span>{c}</button>)}</div></section>)}<section className="border-b border-r border-blue-100 bg-blue-50/35 p-5"><button type="button" onClick={()=>setCategory("all")} className="flex gap-2 text-sm font-black"><span className="text-xs text-blue-600">00</span><span>{t.categories.all}</span></button></section></div></div></details>
-          <label className="flex h-11 min-w-0 flex-1 items-center rounded-xl border border-blue-200 bg-white px-4 xl:w-[330px] xl:flex-none"><input value={query} onChange={e=>setQuery(e.target.value)} type="search" placeholder={t.search} className="min-w-0 flex-1 bg-transparent text-sm outline-none"/><svg viewBox="0 0 24 24" className="size-5 text-slate-500"><circle cx="11" cy="11" r="6.7" fill="none" stroke="currentColor" strokeWidth="1.8"/><path d="m16 16 4 4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg></label>
+      <header className="sticky top-0 z-50 border-b border-blue-200/80 bg-[#edf5fe]/95 backdrop-blur-xl">
+        <div className="mx-auto flex h-[74px] max-w-[1460px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+          <Link href="/" className="flex min-w-0 items-center gap-3">
+            <BrandMark className="size-11 shrink-0" />
+            <strong className="hidden truncate text-base font-extrabold sm:block">
+              Mạng lưới tri thức Nga - Việt
+            </strong>
+          </Link>
+
+          <nav className="hidden items-center gap-8 xl:flex">
+            <Link href="/" className="text-sm font-extrabold uppercase text-slate-700 transition hover:text-blue-700">
+              {t.home}
+            </Link>
+            <Link href="/#about" className="text-sm font-extrabold uppercase text-slate-700 transition hover:text-blue-700">
+              {t.about}
+            </Link>
+            <Link href="/explore" className="relative py-6 text-sm font-extrabold uppercase text-blue-700">
+              {t.explore}
+              <span className="absolute inset-x-0 bottom-4 h-0.5 rounded-full bg-blue-600" />
+            </Link>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher variant="light" />
+            <Link
+              href="/login"
+              className="inline-flex h-10 items-center justify-center rounded-xl bg-blue-600 px-4 text-sm font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            >
+              {t.login}
+            </Link>
+          </div>
         </div>
-      </section>
+      </header>
 
-      {category==="all" && !query ? <>
-        <section className="grid gap-8 lg:grid-cols-[1.35fr_.9fr]"><article className="relative min-h-[500px] overflow-hidden rounded-2xl bg-slate-950 text-white"><Placeholder text="Ảnh bài viết nổi bật" className="absolute inset-0 h-full w-full rounded-none"/><div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,18,45,.02),rgba(2,14,35,.93))]"/><div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8"><span className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-black uppercase">{t.spotlight}</span><h2 className="mt-4 max-w-4xl text-3xl font-black leading-tight sm:text-4xl">Việt Nam - Nga tăng cường hợp tác Khoa học, Công nghệ và Đổi mới sáng tạo</h2><p className="mt-4 max-w-3xl text-sm leading-7 text-white/85 sm:text-base">Thúc đẩy các chương trình nghiên cứu chung, chuyển giao công nghệ và đào tạo nhân lực chất lượng cao trong giai đoạn mới.</p><div className="mt-5 text-xs">RVSTIN News • 2 giờ trước</div></div></article><aside><div className="mb-4 flex items-center justify-between"><h2 className="text-xl font-black uppercase text-blue-600">{t.latest}</h2><button type="button" className="text-xs font-black text-blue-600">{t.viewAll} →</button></div>{latest.map(item=><ListItem key={item.title} item={item} t={t}/>)}</aside></section>
-        <section className="mt-12"><div className="mb-5 flex items-center gap-4"><h2 className="text-xl font-black uppercase text-blue-600">{t.featured}</h2><div className="h-px flex-1 bg-blue-100"/></div><div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">{featured.map(item=><article key={item.title} className="overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm"><Placeholder text="Ảnh bài viết" className="h-44"/><div className="p-4"><h3 className="text-base font-extrabold leading-relaxed">{item.title}</h3><div className="mt-4 text-xs text-slate-500">{item.time} • <span className="font-black uppercase text-blue-600">{t.categories[item.category]}</span></div></div></article>)}</div></section>
-      </> : <section className="mt-9"><div className="mb-5 flex items-center gap-4"><h2 className="text-xl font-black uppercase text-blue-600">{t.latest}</h2><div className="h-px flex-1 bg-blue-100"/></div><div className="grid gap-x-10 lg:grid-cols-2"><div>{filtered.slice(0,half).map(item=><ListItem key={item.title} item={item} t={t}/>)}</div><div>{filtered.slice(half).map(item=><ListItem key={item.title} item={item} t={t}/>)}</div></div></section>}
+      <main className="mx-auto max-w-[1460px] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+        <section className="mb-6 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+          <div className="max-w-[780px]">
+            <div className="flex flex-wrap items-center gap-3">
+              <h1 className="text-2xl font-black uppercase tracking-[-0.02em] text-blue-600 sm:text-3xl">
+                {t.news}
+              </h1>
+              <span className="inline-flex min-h-7 items-center gap-2 rounded-full border border-blue-200 bg-blue-50/70 px-3 text-[11px] font-black uppercase tracking-[0.045em] text-blue-600">
+                <span className="size-1.5 rounded-full bg-blue-600 shadow-[0_0_0_4px_rgba(37,99,235,.10)]" />
+                {t.live}
+              </span>
+            </div>
+            <p className="mt-3 max-w-[720px] text-sm leading-6 text-slate-600">
+              {t.newsLead}
+            </p>
+          </div>
 
-      <section className="mt-12" id="experts"><div className="mb-5 flex items-center gap-4"><h2 className="text-xl font-black uppercase text-blue-600">{t.experts}</h2><div className="h-px flex-1 bg-blue-100"/></div><div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">{experts.map(([initials,name,org,quote])=><article key={name} className="rounded-2xl border border-blue-100 bg-blue-50/35 p-5"><div className="flex items-center gap-3"><div className="grid size-14 place-items-center rounded-full bg-blue-600 text-sm font-black text-white">{initials}</div><div><h3 className="text-sm font-black">{name}</h3><p className="mt-1 text-xs text-slate-500">{org}</p></div></div><blockquote className="mt-5 text-sm leading-6 text-slate-700">“{quote}”</blockquote></article>)}</div></section>
-      <section className="mt-10 grid gap-5 rounded-2xl border border-blue-200 bg-blue-50/40 p-5 lg:grid-cols-[1fr_minmax(420px,.8fr)] lg:items-center"><div><h2 className="text-xl font-black uppercase text-blue-600">{t.newsletter}</h2><p className="mt-2 text-sm text-slate-600">Nhận những tin tức mới nhất về khoa học, công nghệ và hợp tác Việt - Nga.</p></div><form className="flex h-12 overflow-hidden rounded-xl border border-blue-200 bg-white" onSubmit={e=>e.preventDefault()}><input type="email" placeholder="Email" className="min-w-0 flex-1 px-4 text-sm outline-none"/><button type="submit" className="min-w-28 bg-blue-600 px-5 text-sm font-black text-white">{t.subscribe}</button></form></section>
-    </main>
+          <div className="flex overflow-x-auto rounded-xl border border-blue-200 bg-[#fbfdff]">
+            {t.stats.map(([value, label], index) => (
+              <div
+                key={`${value}-${label}`}
+                className={`grid min-w-[112px] gap-0.5 px-4 py-2.5 text-center ${index ? "border-l border-blue-100" : ""}`}
+              >
+                <strong className="text-[13px] font-black text-slate-900">
+                  {value}
+                </strong>
+                <span className="text-[10px] font-bold uppercase tracking-[0.045em] text-slate-400">
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
 
-    <footer className="mt-8 border-t border-blue-100 bg-[#f6f9ff]"><div className="mx-auto grid max-w-[1460px] gap-8 px-4 py-9 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-8"><div><div className="flex items-center gap-3"><BrandMark className="size-10"/><strong className="text-sm font-black">Mạng lưới tri thức Nga - Việt</strong></div><p className="mt-4 max-w-md text-sm leading-6 text-slate-600">Cầu nối tri thức và công nghệ giữa Việt Nam và Nga, thúc đẩy hợp tác, đổi mới và phát triển bền vững.</p></div><div><h3 className="text-xs font-black uppercase text-blue-600">Liên kết nhanh</h3><div className="mt-4 grid gap-2 text-sm text-slate-600"><Link href="/#about">{t.about}</Link><Link href="/experts">{t.experts}</Link><Link href="/knowledge">{t.categories.science}</Link></div></div><div><h3 className="text-xs font-black uppercase text-blue-600">Liên hệ</h3><div className="mt-4 grid gap-2 text-sm text-slate-600"><span>Hà Nội, Việt Nam</span><a href="mailto:info@rvstin.com">info@rvstin.com</a><a href="tel:+842437911234">+84 24 3791 1234</a></div></div></div></footer>
-  </div>;
+        <section className="mb-7 flex flex-col gap-3 rounded-2xl border border-blue-200 bg-[linear-gradient(90deg,rgba(37,99,235,.045),rgba(37,99,235,.015))] p-3 shadow-[0_5px_18px_rgba(37,99,235,.04)] xl:flex-row xl:items-center xl:justify-between">
+          <div className="rvstin-category-scroll flex min-w-0 gap-2 overflow-x-auto overflow-y-hidden pb-1 xl:pb-0">
+            {(Object.keys(t.categories) as Category[]).map((key) => {
+              const active = key === category;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setCategory(key)}
+                  className={`min-h-11 shrink-0 rounded-xl border px-5 text-sm font-bold transition duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+                    active
+                      ? "border-blue-600 bg-blue-600 text-white shadow-[0_4px_12px_rgba(37,99,235,.2)]"
+                      : "border-blue-100 bg-slate-50 text-slate-700 hover:-translate-y-px hover:border-blue-300 hover:bg-white hover:text-blue-700 hover:shadow-[0_0_0_3px_rgba(37,99,235,.08)]"
+                  }`}
+                >
+                  {t.categories[key]}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex shrink-0 items-center gap-3">
+            <details className="group relative">
+              <summary className="grid size-11 list-none cursor-pointer place-items-center rounded-xl border border-blue-200 bg-white text-blue-600 transition hover:border-blue-400 hover:bg-blue-50 hover:shadow-[0_0_0_3px_rgba(37,99,235,.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 [&::-webkit-details-marker]:hidden">
+                <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+                  <path d="M5 7h14M5 12h14M5 17h14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                </svg>
+              </summary>
+
+              <div className="absolute right-0 top-[calc(100%+10px)] z-40 w-[min(1120px,calc(100vw-32px))] overflow-hidden rounded-2xl border border-blue-200 bg-white shadow-[0_24px_60px_rgba(20,59,135,.18)]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
+                  {catalogs.map(([key, children], index) => (
+                    <section
+                      key={key}
+                      className="border-b border-r border-blue-100 p-4 transition-colors hover:bg-blue-50/25 xl:[&:nth-child(4n)]:border-r-0"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setCategory(key)}
+                        className="flex w-full items-start gap-2 rounded-xl border border-transparent px-3 py-2.5 text-left text-sm font-black text-slate-950 transition duration-150 hover:-translate-y-px hover:border-blue-200 hover:bg-white hover:text-blue-700 hover:shadow-[0_8px_18px_rgba(37,99,235,.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                      >
+                        <span className="text-xs font-black tabular-nums text-blue-600">
+                          0{index + 1}
+                        </span>
+                        <span>{t.categories[key]}</span>
+                      </button>
+
+                      <div className="mt-2 grid gap-1">
+                        {children.map((child) => (
+                          <button
+                            key={child}
+                            type="button"
+                            className="relative rounded-lg border border-transparent px-4 py-2 text-left text-xs font-medium text-slate-600 transition duration-150 before:absolute before:left-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-blue-200 hover:translate-x-0.5 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 hover:before:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                          >
+                            {child}
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+
+                  <section className="border-b border-r border-blue-100 bg-blue-50/35 p-4">
+                    <button
+                      type="button"
+                      onClick={() => setCategory("all")}
+                      className="flex w-full items-start gap-2 rounded-xl border border-transparent px-3 py-2.5 text-left text-sm font-black text-slate-950 transition duration-150 hover:-translate-y-px hover:border-blue-200 hover:bg-white hover:text-blue-700 hover:shadow-[0_8px_18px_rgba(37,99,235,.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    >
+                      <span className="text-xs font-black text-blue-600">00</span>
+                      <span>{t.categories.all}</span>
+                    </button>
+                    <div className="mt-2 grid gap-1 text-xs text-slate-600">
+                      <span className="rounded-lg px-4 py-2">• {t.latest}</span>
+                      <span className="rounded-lg px-4 py-2">• {t.featured}</span>
+                      <span className="rounded-lg px-4 py-2">• {t.experts}</span>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </details>
+
+            <label className="flex h-11 min-w-0 flex-1 items-center rounded-xl border border-blue-200 bg-white px-4 transition focus-within:border-blue-400 focus-within:shadow-[0_0_0_3px_rgba(37,99,235,.08)] xl:w-[330px] xl:flex-none">
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                type="search"
+                placeholder={t.search}
+                className="min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+              />
+              <svg viewBox="0 0 24 24" className="size-5 text-slate-500" aria-hidden="true">
+                <circle cx="11" cy="11" r="6.7" fill="none" stroke="currentColor" strokeWidth="1.8" />
+                <path d="m16 16 4 4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            </label>
+          </div>
+        </section>
+
+        {category === "all" && !query ? (
+          <>
+            <section className="grid gap-8 lg:grid-cols-[1.35fr_.9fr]">
+              <article className="relative min-h-[500px] overflow-hidden rounded-2xl bg-slate-950 text-white shadow-[0_12px_32px_rgba(20,59,135,.12)]">
+                <Placeholder text="Ảnh bài viết nổi bật" className="absolute inset-0 h-full w-full rounded-none" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,18,45,.03)_15%,rgba(3,18,45,.18)_50%,rgba(2,14,35,.93)_100%)]" />
+                <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8">
+                  <span className="inline-flex min-h-8 items-center rounded-lg bg-blue-600 px-3 text-xs font-black uppercase">
+                    {t.spotlight}
+                  </span>
+                  <h2 className="mt-4 max-w-4xl text-3xl font-black leading-[1.15] tracking-[-0.035em] sm:text-4xl">
+                    Việt Nam - Nga tăng cường hợp tác Khoa học, Công nghệ và Đổi mới sáng tạo
+                  </h2>
+                  <p className="mt-4 max-w-3xl text-sm leading-7 text-white/85 sm:text-base">
+                    Thúc đẩy các chương trình nghiên cứu chung, chuyển giao công nghệ và đào tạo nhân lực chất lượng cao trong giai đoạn mới.
+                  </p>
+                  <div className="mt-5 flex items-center gap-2 text-xs font-semibold text-white/85">
+                    <span>RVSTIN News</span><span>•</span><span>2 giờ trước</span>
+                  </div>
+                </div>
+              </article>
+
+              <aside>
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="text-lg font-black uppercase text-blue-600 sm:text-xl">
+                    {t.latest}
+                  </h2>
+                  <button type="button" className="text-xs font-black text-blue-600 transition hover:text-blue-800">
+                    {t.viewAll} →
+                  </button>
+                </div>
+                <div>
+                  {latest.map((item) => (
+                    <ListItem key={`${item.category}-${item.title}`} item={item} t={t} />
+                  ))}
+                </div>
+              </aside>
+            </section>
+
+            <section className="mt-12">
+              <div className="mb-5 flex items-center gap-4">
+                <h2 className="shrink-0 text-lg font-black uppercase text-blue-600 sm:text-xl">
+                  {t.featured}
+                </h2>
+                <div className="h-px flex-1 bg-blue-100" />
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                {featured.map((item) => (
+                  <article
+                    key={item.title}
+                    className="group overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-[0_5px_18px_rgba(37,99,235,.06)] transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_12px_28px_rgba(37,99,235,.10)]"
+                  >
+                    <Placeholder text="Ảnh bài viết" className="h-44 rounded-none transition duration-200 group-hover:brightness-105" />
+                    <div className="p-4">
+                      <h3 className="text-base font-extrabold leading-[1.45] tracking-[-0.02em] transition-colors group-hover:text-blue-700">
+                        {item.title}
+                      </h3>
+                      <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                        <span>{item.time}</span><span>•</span>
+                        <span className="font-black uppercase text-blue-600">
+                          {t.categories[item.category]}
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </>
+        ) : (
+          <section className="mt-9">
+            <div className="mb-5 flex items-center justify-between gap-4">
+              <div className="flex min-w-0 flex-1 items-center gap-4">
+                <h2 className="shrink-0 text-lg font-black uppercase text-blue-600 sm:text-xl">
+                  {t.latest}
+                </h2>
+                <div className="h-px flex-1 bg-blue-100" />
+              </div>
+              <button type="button" className="shrink-0 text-xs font-black text-blue-600 transition hover:text-blue-800">
+                {t.viewAll} →
+              </button>
+            </div>
+
+            {filtered.length ? (
+              <div className="grid gap-x-10 lg:grid-cols-2">
+                <div>
+                  {filtered.slice(0, half).map((item) => (
+                    <ListItem key={`${item.category}-${item.title}`} item={item} t={t} />
+                  ))}
+                </div>
+                <div>
+                  {filtered.slice(half).map((item) => (
+                    <ListItem key={`${item.category}-${item.title}`} item={item} t={t} />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-dashed border-blue-200 bg-blue-50/40 px-6 py-16 text-center text-sm font-semibold text-slate-500">
+                Không tìm thấy bài viết phù hợp.
+              </div>
+            )}
+          </section>
+        )}
+
+        <section className="mt-12" id="experts">
+          <div className="mb-5 flex items-center gap-4">
+            <h2 className="shrink-0 text-lg font-black uppercase text-blue-600 sm:text-xl">
+              {t.experts}
+            </h2>
+            <div className="h-px flex-1 bg-blue-100" />
+            <button type="button" className="text-xs font-black text-blue-600 transition hover:text-blue-800">
+              {t.viewAll} →
+            </button>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {experts.map(([initials, name, org, quote]) => (
+              <article
+                key={name}
+                className="rounded-2xl border border-blue-100 bg-[linear-gradient(145deg,rgba(37,99,235,.045),rgba(255,255,255,0)_55%)] p-5 shadow-[0_5px_18px_rgba(37,99,235,.05)] transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_12px_28px_rgba(37,99,235,.09)]"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="grid size-14 shrink-0 place-items-center rounded-full border-4 border-white bg-[linear-gradient(135deg,#2563eb,#85a9ff)] text-sm font-black text-white shadow-sm">
+                    {initials}
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="truncate text-sm font-black">{name}</h3>
+                    <p className="mt-1 text-xs text-slate-500">{org}</p>
+                  </div>
+                </div>
+                <blockquote className="mt-5 text-sm leading-6 text-slate-700">
+                  “{quote}”
+                </blockquote>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 grid gap-5 rounded-2xl border border-blue-200 bg-[linear-gradient(90deg,rgba(37,99,235,.055),rgba(37,99,235,.012))] p-5 lg:grid-cols-[1fr_minmax(420px,.8fr)] lg:items-center">
+          <div>
+            <h2 className="text-lg font-black uppercase text-blue-600 sm:text-xl">
+              {t.newsletter}
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              {t.newsletterLead}
+            </p>
+          </div>
+          <form
+            className="flex h-12 overflow-hidden rounded-xl border border-blue-200 bg-white transition focus-within:border-blue-400 focus-within:shadow-[0_0_0_3px_rgba(37,99,235,.08)]"
+            onSubmit={(event) => event.preventDefault()}
+          >
+            <input
+              type="email"
+              aria-label="Email"
+              placeholder="Nhập email của bạn"
+              className="min-w-0 flex-1 px-4 text-sm outline-none"
+            />
+            <button
+              type="submit"
+              className="min-w-28 bg-blue-600 px-5 text-sm font-black text-white transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-white"
+            >
+              {t.subscribe}
+            </button>
+          </form>
+        </section>
+      </main>
+    </div>
+  );
 }
