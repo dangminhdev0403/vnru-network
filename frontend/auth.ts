@@ -26,6 +26,12 @@ async function findAccount(account: string, password: string) {
   });
 }
 
+async function verifyRegisteredAccount(account: string, password: string): Promise<boolean> {
+  const response = await fetch(backendUrl("api/v1/auth/credentials/verify"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ account, password }), cache: "no-store" }).catch(() => null);
+  if (!response?.ok) return false;
+  return ((await response.json()) as { valid?: boolean }).valid === true;
+}
+
 async function createBackendSession(account: string): Promise<string> {
   const secret = process.env.AUTH_BRIDGE_SECRET;
   if (!secret) throw new Error("AUTH_BRIDGE_SECRET is required");
@@ -54,6 +60,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async authorize(credentials) {
       const parsed = z.object({ account: z.string().trim().min(1), password: z.string().min(1) }).safeParse(credentials);
       if (!parsed.success) return null;
+      if (await verifyRegisteredAccount(parsed.data.account, parsed.data.password)) return { id: parsed.data.account.toLowerCase(), name: parsed.data.account };
       const matched = await findAccount(parsed.data.account, parsed.data.password);
       return matched ? { id: matched.account, name: matched.account } : null;
     },

@@ -36,6 +36,16 @@ model User {
   externalIdentities ExternalIdentity[]
   sessions           Session[]
   roleAssignments    RoleAssignment[]
+  credential         LocalCredential?
+
+  @@unique([email])
+}
+
+model LocalCredential {
+  userId       String @id
+  passwordHash String
+  salt         String
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model ExternalIdentity {

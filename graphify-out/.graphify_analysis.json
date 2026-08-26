@@ -156,54 +156,54 @@
       "frontend_lib_form_validation_getfielderrors"
     ],
     "2": [
-      "frontend_components_tailgrids_core_badge",
-      "frontend_components_tailgrids_core_badge_badge",
-      "frontend_components_tailgrids_core_badge_badgeprops",
-      "frontend_components_tailgrids_core_badge_badgestyles",
-      "frontend_components_tailgrids_core_button",
-      "frontend_components_tailgrids_core_button_button",
-      "frontend_components_tailgrids_core_button_buttonprops",
-      "frontend_components_tailgrids_core_button_buttonstyles",
-      "frontend_components_tailgrids_core_card",
-      "frontend_components_tailgrids_core_card_card",
-      "frontend_components_tailgrids_core_card_cardaction",
-      "frontend_components_tailgrids_core_card_cardcontent",
-      "frontend_components_tailgrids_core_card_carddescription",
-      "frontend_components_tailgrids_core_card_cardfooter",
-      "frontend_components_tailgrids_core_card_cardheader",
-      "frontend_components_tailgrids_core_card_cardtitle",
-      "frontend_components_tailgrids_core_collapsible",
-      "frontend_components_tailgrids_core_collapsible_collapsible",
-      "frontend_components_tailgrids_core_collapsible_collapsiblecontent",
-      "frontend_components_tailgrids_core_collapsible_collapsiblecontentprops",
-      "frontend_components_tailgrids_core_collapsible_collapsiblegroup",
-      "frontend_components_tailgrids_core_collapsible_collapsiblegroupprops",
-      "frontend_components_tailgrids_core_collapsible_collapsibleprops",
-      "frontend_components_tailgrids_core_collapsible_collapsibletrigger",
-      "frontend_components_tailgrids_core_collapsible_collapsibletriggerprops",
-      "frontend_components_tailgrids_core_dropdown",
-      "frontend_components_tailgrids_core_dropdown_dropdowncontentprops",
-      "frontend_components_tailgrids_core_dropdown_dropdownmenu",
-      "frontend_components_tailgrids_core_dropdown_dropdownmenucontent",
-      "frontend_components_tailgrids_core_dropdown_dropdownmenuheader",
-      "frontend_components_tailgrids_core_dropdown_dropdownmenuitem",
-      "frontend_components_tailgrids_core_dropdown_dropdownmenuitemprops",
-      "frontend_components_tailgrids_core_dropdown_dropdownmenusection",
-      "frontend_components_tailgrids_core_dropdown_dropdownmenuseparator",
-      "frontend_components_tailgrids_core_dropdown_dropdownmenutrigger",
-      "frontend_components_tailgrids_core_table",
-      "frontend_components_tailgrids_core_table_tablebody",
-      "frontend_components_tailgrids_core_table_tablecell",
-      "frontend_components_tailgrids_core_table_tablecellstyles",
-      "frontend_components_tailgrids_core_table_tablehead",
-      "frontend_components_tailgrids_core_table_tableheader",
-      "frontend_components_tailgrids_core_table_tableheaderstyles",
-      "frontend_components_tailgrids_core_table_tableheadstyles",
-      "frontend_components_tailgrids_core_table_tableroot",
-      "frontend_components_tailgrids_core_table_tablerootprops",
-      "frontend_components_tailgrids_core_table_tablerootstyles",
-      "frontend_components_tailgrids_core_table_tablerow",
-      "frontend_lib_cn_cn"
+      "query",
+      "services_auth_service_src_modules_access_control_iam_admin_controller",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_constructor",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_listroles",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_listusers",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_replacerolepermissions",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_setuserstatus",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_upsertroleassignment",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_paginationschema",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_roleassignmentschema",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_rolepermissionsschema",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_spec",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_body",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_controller",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_get",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_param",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_patch",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_post",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_req",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_useguards",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_userstatusschema",
+      "services_auth_service_src_modules_access_control_iam_admin_controller_uuidschema",
+      "services_auth_service_src_modules_access_control_iam_admin_service",
+      "services_auth_service_src_modules_access_control_iam_admin_service_create",
+      "services_auth_service_src_modules_access_control_iam_admin_service_createmany",
+      "services_auth_service_src_modules_access_control_iam_admin_service_deletemany",
+      "services_auth_service_src_modules_access_control_iam_admin_service_findmany",
+      "services_auth_service_src_modules_access_control_iam_admin_service_findunique",
+      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminprismaclient",
+      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminprismaclient_transaction",
+      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice",
+      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_constructor",
+      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_listroles",
+      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_listusers",
+      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_replacerolepermissions",
+      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_setuserstatus",
+      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_upsertroleassignment",
+      "services_auth_service_src_modules_access_control_iam_admin_service_issuperadminrole",
+      "services_auth_service_src_modules_access_control_iam_admin_service_mappedrole",
+      "services_auth_service_src_modules_access_control_iam_admin_service_rolewithpermissions",
+      "services_auth_service_src_modules_access_control_iam_admin_service_spec",
+      "services_auth_service_src_modules_access_control_iam_admin_service_ts_inject",
+      "services_auth_service_src_modules_access_control_iam_admin_service_ts_injectable",
+      "services_auth_service_src_modules_access_control_iam_admin_service_update",
+      "services_auth_service_src_modules_access_control_iam_admin_service_updatemany",
+      "services_auth_service_src_modules_access_control_iam_admin_service_upsert",
+      "services_auth_service_src_modules_access_control_iam_admin_service_userselectresult"
     ],
     "3": [
       "class_variance_authority",
@@ -296,44 +296,6 @@
       "services_auth_service_service_spec_auth_service_specification_module_1"
     ],
     "5": [
-      "body",
-      "controller",
-      "post",
-      "req",
-      "services_auth_service_src_modules_authentication_authentication_service_callbackresult",
-      "services_auth_service_src_modules_identity_identity_module",
-      "services_auth_service_src_modules_identity_identity_module_identitymodule",
-      "services_auth_service_src_modules_identity_identity_module_ts_module",
-      "services_auth_service_src_modules_identity_identity_public",
-      "services_auth_service_src_modules_identity_identity_service",
-      "services_auth_service_src_modules_identity_identity_service_externalidentityrecord",
-      "services_auth_service_src_modules_identity_identity_service_identity_prisma",
-      "services_auth_service_src_modules_identity_identity_service_identityprismaclient",
-      "services_auth_service_src_modules_identity_identity_service_identityservice",
-      "services_auth_service_src_modules_identity_identity_service_identityservice_constructor",
-      "services_auth_service_src_modules_identity_identity_service_identityservice_findexternalsubject",
-      "services_auth_service_src_modules_identity_identity_service_identityservice_resolveorcreatebyexternalidentity",
-      "services_auth_service_src_modules_identity_identity_service_identityservice_updateprofile",
-      "services_auth_service_src_modules_identity_identity_service_identityuser",
-      "services_auth_service_src_modules_identity_identity_service_resolveexternalidentityinput",
-      "services_auth_service_src_modules_identity_identity_service_spec",
-      "services_auth_service_src_modules_identity_identity_service_ts_inject",
-      "services_auth_service_src_modules_identity_identity_service_ts_injectable",
-      "services_auth_service_src_modules_identity_membership_application_controller",
-      "services_auth_service_src_modules_identity_membership_application_controller_membershipapplicationcontroller",
-      "services_auth_service_src_modules_identity_membership_application_controller_membershipapplicationcontroller_constructor",
-      "services_auth_service_src_modules_identity_membership_application_controller_membershipapplicationcontroller_create",
-      "services_auth_service_src_modules_identity_membership_application_controller_membershipapplicationschema",
-      "services_auth_service_src_modules_identity_membership_application_service",
-      "services_auth_service_src_modules_identity_membership_application_service_membershipapplicationprismaclient",
-      "services_auth_service_src_modules_identity_membership_application_service_membershipapplicationservice",
-      "services_auth_service_src_modules_identity_membership_application_service_membershipapplicationservice_constructor",
-      "services_auth_service_src_modules_identity_membership_application_service_membershipapplicationservice_create",
-      "services_auth_service_src_modules_identity_membership_application_service_ts_inject",
-      "services_auth_service_src_modules_identity_membership_application_service_ts_injectable",
-      "services_auth_service_src_modules_identity_membership_application_spec"
-    ],
-    "6": [
       "frontend_tsconfig",
       "frontend_tsconfig_compileroptions",
       "frontend_tsconfig_compileroptions_allowjs",
@@ -371,6 +333,43 @@
       "services_auth_service_tsconfig_build_exclude",
       "services_auth_service_tsconfig_build_extends"
     ],
+    "6": [
+      "body",
+      "controller",
+      "post",
+      "req",
+      "services_auth_service_src_modules_identity_identity_module",
+      "services_auth_service_src_modules_identity_identity_module_identitymodule",
+      "services_auth_service_src_modules_identity_identity_module_ts_module",
+      "services_auth_service_src_modules_identity_identity_public",
+      "services_auth_service_src_modules_identity_identity_service",
+      "services_auth_service_src_modules_identity_identity_service_externalidentityrecord",
+      "services_auth_service_src_modules_identity_identity_service_identity_prisma",
+      "services_auth_service_src_modules_identity_identity_service_identityprismaclient",
+      "services_auth_service_src_modules_identity_identity_service_identityservice",
+      "services_auth_service_src_modules_identity_identity_service_identityservice_constructor",
+      "services_auth_service_src_modules_identity_identity_service_identityservice_findexternalsubject",
+      "services_auth_service_src_modules_identity_identity_service_identityservice_resolveorcreatebyexternalidentity",
+      "services_auth_service_src_modules_identity_identity_service_identityservice_updateprofile",
+      "services_auth_service_src_modules_identity_identity_service_identityuser",
+      "services_auth_service_src_modules_identity_identity_service_resolveexternalidentityinput",
+      "services_auth_service_src_modules_identity_identity_service_spec",
+      "services_auth_service_src_modules_identity_identity_service_ts_inject",
+      "services_auth_service_src_modules_identity_identity_service_ts_injectable",
+      "services_auth_service_src_modules_identity_membership_application_controller",
+      "services_auth_service_src_modules_identity_membership_application_controller_membershipapplicationcontroller",
+      "services_auth_service_src_modules_identity_membership_application_controller_membershipapplicationcontroller_constructor",
+      "services_auth_service_src_modules_identity_membership_application_controller_membershipapplicationcontroller_create",
+      "services_auth_service_src_modules_identity_membership_application_controller_membershipapplicationschema",
+      "services_auth_service_src_modules_identity_membership_application_service",
+      "services_auth_service_src_modules_identity_membership_application_service_membershipapplicationprismaclient",
+      "services_auth_service_src_modules_identity_membership_application_service_membershipapplicationservice",
+      "services_auth_service_src_modules_identity_membership_application_service_membershipapplicationservice_constructor",
+      "services_auth_service_src_modules_identity_membership_application_service_membershipapplicationservice_create",
+      "services_auth_service_src_modules_identity_membership_application_service_ts_inject",
+      "services_auth_service_src_modules_identity_membership_application_service_ts_injectable",
+      "services_auth_service_src_modules_identity_membership_application_spec"
+    ],
     "7": [
       "agents_skills_ui_quality_promax_skill",
       "agents_skills_ui_quality_promax_skill_10_spacing_geometry_and_visual_rhythm",
@@ -407,41 +406,6 @@
       "agents_skills_ui_quality_promax_skill_ui_quality_pro_max_vn_ru_portal"
     ],
     "8": [
-      "services_auth_service_src_modules_access_control_iam_admin_controller",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_paginationschema",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_roleassignmentschema",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_rolepermissionsschema",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_spec",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_userstatusschema",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_uuidschema",
-      "services_auth_service_src_modules_authentication_authenticated_request_context",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_authenticatedrequestguard",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_authenticatedrequestguard_canactivate",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_authenticatedrequestguard_constructor",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_extractsessioncookie",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_isrecord",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_require_mfa_key",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_requiremfa",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_requirepermission",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_session_cookie_name",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_spec",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_spec_context",
-      "services_auth_service_src_modules_authentication_authenticated_request_context_ts_injectable",
-      "services_auth_service_src_modules_authentication_authentication_controller",
-      "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_constructor",
-      "services_auth_service_src_modules_authentication_authentication_controller_session_cookie_options",
-      "services_auth_service_src_modules_authentication_authentication_controller_userprofile",
-      "services_auth_service_src_modules_authentication_authentication_service",
-      "services_auth_service_src_modules_authentication_authentication_service_authenticationservice",
-      "services_auth_service_src_modules_authentication_authentication_service_authenticationservice_logout",
-      "services_auth_service_src_modules_authentication_authentication_service_authjs_credentials_issuer",
-      "services_auth_service_src_modules_authentication_authentication_service_authjsexchangeinput",
-      "services_auth_service_src_modules_authentication_authentication_service_exchangeresult",
-      "services_auth_service_src_modules_authentication_authentication_service_spec",
-      "services_auth_service_src_modules_authentication_authentication_service_ts_injectable",
-      "services_auth_service_src_modules_session_session_service_sessionservice_revokesession"
-    ],
-    "9": [
       "shared_templates_vnru_public_discovery_v2_public_discovery_ui_guide",
       "shared_templates_vnru_public_discovery_v2_public_discovery_ui_guide_10_2_2_rule",
       "shared_templates_vnru_public_discovery_v2_public_discovery_ui_guide_11_interaction_integrity",
@@ -476,7 +440,7 @@
       "shared_templates_vnru_public_discovery_v2_public_discovery_ui_guide_search",
       "shared_templates_vnru_public_discovery_v2_public_discovery_ui_guide_vn_ru_public_discovery_ui_guide"
     ],
-    "10": [
+    "9": [
       "agents_skills_design_taste_frontend_v1_skill",
       "agents_skills_design_taste_frontend_v1_skill_10_final_pre_flight_check",
       "agents_skills_design_taste_frontend_v1_skill_1_active_baseline_configuration",
@@ -508,6 +472,39 @@
       "agents_skills_design_taste_frontend_v1_skill_typography_text",
       "agents_skills_design_taste_frontend_v1_skill_visual_css",
       "agents_skills_design_taste_frontend_v1_skill_visual_density_level_1_10"
+    ],
+    "10": [
+      "frontend_app_news_page",
+      "frontend_app_news_page_metadata",
+      "frontend_app_news_page_page",
+      "frontend_components_shared_brandmark",
+      "frontend_components_shared_brandmark_brandmark",
+      "frontend_components_shared_brandmark_brandmarkprops",
+      "frontend_features_public_v2_components_guestexplorev2",
+      "frontend_features_public_v2_components_guestexplorev2_articleid",
+      "frontend_features_public_v2_components_guestexplorev2_catalogs",
+      "frontend_features_public_v2_components_guestexplorev2_category",
+      "frontend_features_public_v2_components_guestexplorev2_featured",
+      "frontend_features_public_v2_components_guestexplorev2_feedcategory",
+      "frontend_features_public_v2_components_guestexplorev2_guestexplorev2",
+      "frontend_features_public_v2_components_guestexplorev2_items",
+      "frontend_features_public_v2_components_guestexplorev2_latest",
+      "frontend_features_public_v2_components_guestexplorev2_newsimage",
+      "frontend_features_public_v2_components_guestexplorev2_newsitem",
+      "frontend_features_public_v2_components_guestexplorev2_smallrow",
+      "frontend_features_public_v2_components_guestexplorev2_stream",
+      "frontend_features_public_v2_components_guestexplorev2_text",
+      "frontend_features_public_v2_components_guesthomev2",
+      "frontend_features_public_v2_components_guesthomev2_guesthomev2",
+      "frontend_features_public_v2_components_guesthomev2_hero_banners",
+      "frontend_features_public_v2_components_guesthomev2_home_copy",
+      "frontend_features_public_v2_components_guestpublicfooter",
+      "frontend_features_public_v2_components_guestpublicfooter_guestpublicfooter",
+      "frontend_features_public_v2_components_guestpublicfooter_guestpublicfootercopy",
+      "frontend_features_public_v2_components_guestpublicnav",
+      "frontend_features_public_v2_components_guestpublicnav_copy",
+      "frontend_features_public_v2_components_guestpublicnav_guestnavactive",
+      "frontend_features_public_v2_components_guestpublicnav_guestpublicnavprops"
     ],
     "11": [
       "agents_skills_archon_guides_discord",
@@ -574,37 +571,6 @@
       "agents_skills_archon_references_cli_commands_workflow_commands"
     ],
     "13": [
-      "frontend_components_shared_sidebar",
-      "frontend_components_shared_sidebar_sidebar",
-      "frontend_components_shared_sidebar_sidebarprops",
-      "frontend_components_shared_sidebarframe",
-      "frontend_components_shared_sidebarframe_copy",
-      "frontend_components_shared_sidebarframe_navitem",
-      "frontend_components_shared_sidebarframe_navsection",
-      "frontend_components_shared_sidebarframe_sidebarframe",
-      "frontend_components_shared_sidebarframe_sidebarframeprops",
-      "frontend_components_tailgrids_core_tooltip",
-      "frontend_components_tailgrids_core_tooltip_tooltip",
-      "frontend_components_tailgrids_core_tooltip_tooltipcontent",
-      "frontend_components_tailgrids_core_tooltip_tooltipprops",
-      "frontend_components_tailgrids_core_tooltip_tooltiptrigger",
-      "frontend_features_admin_components_adminsidebar",
-      "frontend_features_admin_components_adminsidebar_adminsidebar",
-      "frontend_features_admin_components_adminsidebar_adminsidebarprops",
-      "frontend_features_admin_components_adminsidebar_labels",
-      "frontend_features_admin_config_admin_nav_registry",
-      "frontend_features_admin_config_admin_nav_registry_admin_nav_registry",
-      "frontend_features_admin_config_admin_nav_registry_adminnaventry",
-      "frontend_features_admin_config_admin_nav_registry_adminnavsection",
-      "frontend_features_admin_config_admin_nav_registry_filteradminnavsections",
-      "frontend_features_admin_config_admin_nav_registry_hasadmincapability",
-      "frontend_features_auth_server_state_usecurrentuser",
-      "frontend_features_workspace_components_workspacesidebar",
-      "frontend_features_workspace_components_workspacesidebar_labels",
-      "frontend_features_workspace_components_workspacesidebar_workspacesidebar",
-      "frontend_features_workspace_components_workspacesidebar_workspacesidebarprops"
-    ],
-    "14": [
       "agents_skills_archon_references_dag_advanced",
       "agents_skills_archon_references_dag_advanced_advanced_features_hooks_mcp_skills_retry_sessions_typed_artifacts",
       "agents_skills_archon_references_dag_advanced_automatic_tool_wildcards",
@@ -634,7 +600,7 @@
       "agents_skills_archon_references_dag_advanced_two_layer_retry_stack",
       "agents_skills_archon_references_dag_advanced_typed_output_artifacts_output_type"
     ],
-    "15": [
+    "14": [
       "docs_mock_data_agent_guide",
       "docs_mock_data_agent_guide_activity_fixtures",
       "docs_mock_data_agent_guide_collaboration_manager",
@@ -664,37 +630,95 @@
       "docs_mock_data_agent_guide_validation_checklist",
       "docs_mock_data_agent_guide_y\u00eau_c\u1ea7u_\u0111\u1ea7u_ra"
     ],
+    "15": [
+      "frontend_app_admin_admin_audit_page",
+      "frontend_app_admin_admin_audit_page_auditcopy",
+      "frontend_app_register_page",
+      "frontend_app_register_page_copy",
+      "frontend_app_register_page_registerpage",
+      "frontend_components_shared_header",
+      "frontend_components_shared_header_headercopy",
+      "frontend_components_shared_header_headerprops",
+      "frontend_components_shared_languageswitcher",
+      "frontend_components_shared_languageswitcher_flaggb",
+      "frontend_components_shared_languageswitcher_flagprops",
+      "frontend_components_shared_languageswitcher_flagru",
+      "frontend_components_shared_languageswitcher_flagvn",
+      "frontend_components_shared_languageswitcher_language_options",
+      "frontend_components_shared_languageswitcher_languageoption",
+      "frontend_components_shared_languageswitcher_languageswitcher",
+      "frontend_components_shared_languageswitcher_languageswitcherprops",
+      "frontend_components_shared_languageswitcher_languageswitchervariant",
+      "frontend_components_shared_languageswitcher_switchercopy",
+      "frontend_core_i18n_locale",
+      "frontend_core_i18n_locale_locale",
+      "frontend_features_public_discovery_components_publicdiscoveryshell",
+      "frontend_features_public_discovery_components_publicdiscoveryshell_copy",
+      "frontend_features_public_discovery_components_publicdiscoveryshell_publicdiscoveryshell",
+      "frontend_features_workspace_components_unifiedworkspacedashboard",
+      "frontend_features_workspace_components_unifiedworkspacedashboard_copy",
+      "frontend_features_workspace_components_unifiedworkspacedashboard_surfacekey",
+      "frontend_features_workspace_components_unifiedworkspacedashboard_surfaces"
+    ],
     "16": [
-      "frontend_app_news_page",
-      "frontend_app_news_page_metadata",
-      "frontend_app_news_page_page",
-      "frontend_features_public_v2_components_guestexploremedia",
-      "frontend_features_public_v2_components_guestexploremedia_guestexploremedia",
-      "frontend_features_public_v2_components_guestexploremedia_media_copy",
-      "frontend_features_public_v2_components_guestexploremedia_revealitem",
-      "frontend_features_public_v2_components_guestexplorev2",
-      "frontend_features_public_v2_components_guestexplorev2_articleid",
-      "frontend_features_public_v2_components_guestexplorev2_catalogs",
-      "frontend_features_public_v2_components_guestexplorev2_category",
-      "frontend_features_public_v2_components_guestexplorev2_featured",
-      "frontend_features_public_v2_components_guestexplorev2_feedcategory",
-      "frontend_features_public_v2_components_guestexplorev2_guestexplorev2",
-      "frontend_features_public_v2_components_guestexplorev2_items",
-      "frontend_features_public_v2_components_guestexplorev2_latest",
-      "frontend_features_public_v2_components_guestexplorev2_newsimage",
-      "frontend_features_public_v2_components_guestexplorev2_newsitem",
-      "frontend_features_public_v2_components_guestexplorev2_smallrow",
-      "frontend_features_public_v2_components_guestexplorev2_stream",
-      "frontend_features_public_v2_components_guestexplorev2_text",
-      "frontend_features_public_v2_components_guesthomev2",
-      "frontend_features_public_v2_components_guesthomev2_guesthomev2",
-      "frontend_features_public_v2_components_guesthomev2_hero_banners",
-      "frontend_features_public_v2_components_guesthomev2_home_copy",
-      "frontend_features_public_v2_components_guestpublicfooter",
-      "frontend_features_public_v2_components_guestpublicfooter_guestpublicfooter",
-      "frontend_features_public_v2_components_guestpublicfooter_guestpublicfootercopy"
+      "frontend_features_public_discovery_components_publicdiscoverypages",
+      "frontend_features_public_discovery_components_publicdiscoverypages_darkintro",
+      "frontend_features_public_discovery_components_publicdiscoverypages_expertdetailpage",
+      "frontend_features_public_discovery_components_publicdiscoverypages_expertsindexpage",
+      "frontend_features_public_discovery_components_publicdiscoverypages_opportunitiesindexpage",
+      "frontend_features_public_discovery_components_publicdiscoverypages_opportunitydetailpage",
+      "frontend_features_public_discovery_components_publicdiscoverypages_topiclist",
+      "frontend_features_public_discovery_components_publicdiscoverypages_ui",
+      "frontend_features_public_discovery_mock_data",
+      "frontend_features_public_discovery_mock_data_expert",
+      "frontend_features_public_discovery_mock_data_experts",
+      "frontend_features_public_discovery_mock_data_getexpert",
+      "frontend_features_public_discovery_mock_data_getopportunity",
+      "frontend_features_public_discovery_mock_data_localized",
+      "frontend_features_public_discovery_mock_data_opportunities",
+      "frontend_features_public_discovery_mock_data_opportunity",
+      "frontend_features_public_home_components_knowledgediscovery",
+      "frontend_features_public_home_components_knowledgediscovery_bilateralmap",
+      "frontend_features_public_home_components_knowledgediscovery_copy",
+      "frontend_features_public_home_components_knowledgediscovery_discovery_copy",
+      "frontend_features_public_home_components_knowledgediscovery_knowledgediscovery",
+      "frontend_features_public_home_components_knowledgediscovery_resource",
+      "frontend_features_public_home_components_knowledgediscovery_resource_routes",
+      "frontend_features_public_home_components_knowledgediscovery_usetyping",
+      "frontend_features_public_v2_components_guestexpertsv2",
+      "frontend_features_public_v2_components_guestexpertsv2_copy",
+      "frontend_features_public_v2_components_guestexpertsv2_guestexpertsv2"
     ],
     "17": [
+      "services_auth_service_src_modules_authentication_authenticated_request_context",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_authenticatedrequestguard",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_authenticatedrequestguard_canactivate",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_authenticatedrequestguard_constructor",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_extractsessioncookie",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_isrecord",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_require_mfa_key",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_requiremfa",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_requirepermission",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_session_cookie_name",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_spec",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_spec_context",
+      "services_auth_service_src_modules_authentication_authenticated_request_context_ts_injectable",
+      "services_auth_service_src_modules_authentication_authentication_controller",
+      "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_constructor",
+      "services_auth_service_src_modules_authentication_authentication_controller_session_cookie_options",
+      "services_auth_service_src_modules_authentication_authentication_controller_userprofile",
+      "services_auth_service_src_modules_authentication_authentication_service",
+      "services_auth_service_src_modules_authentication_authentication_service_authenticationservice",
+      "services_auth_service_src_modules_authentication_authentication_service_authenticationservice_logout",
+      "services_auth_service_src_modules_authentication_authentication_service_authjs_credentials_issuer",
+      "services_auth_service_src_modules_authentication_authentication_service_authjsexchangeinput",
+      "services_auth_service_src_modules_authentication_authentication_service_callbackresult",
+      "services_auth_service_src_modules_authentication_authentication_service_exchangeresult",
+      "services_auth_service_src_modules_authentication_authentication_service_spec",
+      "services_auth_service_src_modules_authentication_authentication_service_ts_injectable",
+      "services_auth_service_src_modules_session_session_service_sessionservice_revokesession"
+    ],
+    "18": [
       "delete",
       "res",
       "services_auth_service_src_modules_authentication_authenticated_request_context_authenticatedrequest",
@@ -721,59 +745,7 @@
       "services_auth_service_src_modules_authentication_authentication_controller_ts_useguards",
       "services_auth_service_src_modules_authentication_authentication_service_authenticateduser"
     ],
-    "18": [
-      "agents_skills_motion_design_patterns_state_feedback",
-      "agents_skills_motion_design_patterns_state_feedback_button_press",
-      "agents_skills_motion_design_patterns_state_feedback_checkmark_success",
-      "agents_skills_motion_design_patterns_state_feedback_confirmation_badge",
-      "agents_skills_motion_design_patterns_state_feedback_corporate",
-      "agents_skills_motion_design_patterns_state_feedback_disabled_enabled",
-      "agents_skills_motion_design_patterns_state_feedback_error_shake",
-      "agents_skills_motion_design_patterns_state_feedback_error_state",
-      "agents_skills_motion_design_patterns_state_feedback_focus_states",
-      "agents_skills_motion_design_patterns_state_feedback_form_submission_error",
-      "agents_skills_motion_design_patterns_state_feedback_hover_states",
-      "agents_skills_motion_design_patterns_state_feedback_indeterminate",
-      "agents_skills_motion_design_patterns_state_feedback_inline_validation",
-      "agents_skills_motion_design_patterns_state_feedback_loading_states",
-      "agents_skills_motion_design_patterns_state_feedback_payment_success",
-      "agents_skills_motion_design_patterns_state_feedback_playful",
-      "agents_skills_motion_design_patterns_state_feedback_premium",
-      "agents_skills_motion_design_patterns_state_feedback_progress_bar",
-      "agents_skills_motion_design_patterns_state_feedback_skeleton",
-      "agents_skills_motion_design_patterns_state_feedback_spinner",
-      "agents_skills_motion_design_patterns_state_feedback_state_feedback_patterns",
-      "agents_skills_motion_design_patterns_state_feedback_success_state",
-      "agents_skills_motion_design_patterns_state_feedback_toggle_switch",
-      "agents_skills_motion_design_patterns_state_feedback_warning_state"
-    ],
     "19": [
-      "frontend_app_admin_layout",
-      "frontend_app_admin_layout_adminlayout",
-      "frontend_app_workspace_layout",
-      "frontend_app_workspace_layout_workspacelayout",
-      "frontend_components_shared_header",
-      "frontend_components_shared_header_header",
-      "frontend_components_shared_header_headercopy",
-      "frontend_components_shared_header_headerprops",
-      "frontend_components_shared_workspaceshell",
-      "frontend_components_shared_workspaceshell_shellcopy",
-      "frontend_components_shared_workspaceshell_workspaceshell",
-      "frontend_components_tailgrids_core_sheet",
-      "frontend_components_tailgrids_core_sheet_sheet",
-      "frontend_components_tailgrids_core_sheet_sheetcontent",
-      "frontend_components_tailgrids_core_sheet_sheetcontentprops",
-      "frontend_components_tailgrids_core_sheet_sheetoverlay",
-      "frontend_components_tailgrids_core_sheet_sheetoverlayprops",
-      "frontend_components_tailgrids_core_sheet_sheetprops",
-      "frontend_components_tailgrids_core_sheet_sheettitle",
-      "frontend_core_i18n_locale",
-      "frontend_features_admin_components_adminshell",
-      "frontend_features_admin_components_adminshell_adminshell",
-      "frontend_features_admin_components_adminshell_shellcopy",
-      "frontend_lib_cn"
-    ],
-    "20": [
       "optional",
       "services_auth_service_src_modules_access_control_access_control_service_accesscontrolservice",
       "services_auth_service_src_modules_access_control_access_control_service_accesscontrolservice_constructor",
@@ -799,7 +771,7 @@
       "services_auth_service_src_modules_session_session_service_ts_inject",
       "services_auth_service_src_modules_session_session_service_ts_injectable"
     ],
-    "21": [
+    "20": [
       "agents_skills_archon_guides_setup",
       "agents_skills_archon_guides_setup_4a_launch_the_setup_wizard",
       "agents_skills_archon_guides_setup_4b_wait_for_user_confirmation",
@@ -824,7 +796,7 @@
       "agents_skills_archon_guides_setup_step_9_copy_skill_to_target_repo_optional",
       "agents_skills_archon_guides_setup_troubleshooting"
     ],
-    "22": [
+    "21": [
       "agents_skills_archon_references_good_practices",
       "agents_skills_archon_references_good_practices_1_use_deterministic_nodes_for_deterministic_work",
       "agents_skills_archon_references_good_practices_2_use_output_format_for_every_node_whose_output_downstream_when_reads",
@@ -849,32 +821,7 @@
       "agents_skills_archon_references_good_practices_tool_restricted_nodes_without_the_mcp_wildcard",
       "agents_skills_archon_references_good_practices_workflow_good_practices_and_anti_patterns"
     ],
-    "23": [
-      "frontend_features_public_discovery_components_publicdiscoverypages",
-      "frontend_features_public_discovery_components_publicdiscoverypages_darkintro",
-      "frontend_features_public_discovery_components_publicdiscoverypages_expertdetailpage",
-      "frontend_features_public_discovery_components_publicdiscoverypages_expertsindexpage",
-      "frontend_features_public_discovery_components_publicdiscoverypages_opportunitiesindexpage",
-      "frontend_features_public_discovery_components_publicdiscoverypages_opportunitydetailpage",
-      "frontend_features_public_discovery_components_publicdiscoverypages_topiclist",
-      "frontend_features_public_discovery_components_publicdiscoverypages_ui",
-      "frontend_features_public_discovery_mock_data",
-      "frontend_features_public_discovery_mock_data_experts",
-      "frontend_features_public_discovery_mock_data_getexpert",
-      "frontend_features_public_discovery_mock_data_getopportunity",
-      "frontend_features_public_discovery_mock_data_localized",
-      "frontend_features_public_discovery_mock_data_opportunities",
-      "frontend_features_public_discovery_mock_data_opportunity",
-      "frontend_features_public_home_components_knowledgediscovery",
-      "frontend_features_public_home_components_knowledgediscovery_bilateralmap",
-      "frontend_features_public_home_components_knowledgediscovery_copy",
-      "frontend_features_public_home_components_knowledgediscovery_discovery_copy",
-      "frontend_features_public_home_components_knowledgediscovery_knowledgediscovery",
-      "frontend_features_public_home_components_knowledgediscovery_resource",
-      "frontend_features_public_home_components_knowledgediscovery_resource_routes",
-      "frontend_features_public_home_components_knowledgediscovery_usetyping"
-    ],
-    "24": [
+    "22": [
       "services_auth_service_tsconfig",
       "services_auth_service_tsconfig_compileroptions",
       "services_auth_service_tsconfig_compileroptions_allowsyntheticdefaultimports",
@@ -899,7 +846,7 @@
       "services_auth_service_tsconfig_compileroptions_strictnullchecks",
       "services_auth_service_tsconfig_compileroptions_target"
     ],
-    "25": [
+    "23": [
       "agents_skills_archon_skill",
       "agents_skills_archon_skill_advanced_features_command_prompt_nodes",
       "agents_skills_archon_skill_archon_cli_skill",
@@ -923,7 +870,7 @@
       "agents_skills_archon_skill_workflow_selection",
       "agents_skills_archon_skill_workflow_structure"
     ],
-    "26": [
+    "24": [
       "agents_skills_design_taste_frontend_skill",
       "agents_skills_design_taste_frontend_skill_appendices_real_source_backed_reference_material",
       "agents_skills_design_taste_frontend_skill_appendix_a_install_commands_per_design_system",
@@ -947,31 +894,7 @@
       "agents_skills_design_taste_frontend_skill_what_is_not_official",
       "agents_skills_design_taste_frontend_skill_what_is_official"
     ],
-    "27": [
-      "services_auth_service_src_modules_access_control_iam_admin_service",
-      "services_auth_service_src_modules_access_control_iam_admin_service_create",
-      "services_auth_service_src_modules_access_control_iam_admin_service_createmany",
-      "services_auth_service_src_modules_access_control_iam_admin_service_deletemany",
-      "services_auth_service_src_modules_access_control_iam_admin_service_findmany",
-      "services_auth_service_src_modules_access_control_iam_admin_service_findunique",
-      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminprismaclient",
-      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminprismaclient_transaction",
-      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice",
-      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_constructor",
-      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_listusers",
-      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_replacerolepermissions",
-      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_setuserstatus",
-      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_upsertroleassignment",
-      "services_auth_service_src_modules_access_control_iam_admin_service_issuperadminrole",
-      "services_auth_service_src_modules_access_control_iam_admin_service_rolewithpermissions",
-      "services_auth_service_src_modules_access_control_iam_admin_service_spec",
-      "services_auth_service_src_modules_access_control_iam_admin_service_ts_inject",
-      "services_auth_service_src_modules_access_control_iam_admin_service_ts_injectable",
-      "services_auth_service_src_modules_access_control_iam_admin_service_update",
-      "services_auth_service_src_modules_access_control_iam_admin_service_updatemany",
-      "services_auth_service_src_modules_access_control_iam_admin_service_upsert"
-    ],
-    "28": [
+    "25": [
       "agents_skills_motion_design_skill_button_press_playful",
       "agents_skills_motion_design_skill_card_entrance_premium",
       "agents_skills_motion_design_skill_choreography_essentials",
@@ -994,30 +917,52 @@
       "agents_skills_motion_design_skill_weight_classification",
       "agents_skills_motion_design_skill_when_to_apply"
     ],
-    "29": [
-      "frontend_app_news_id_page",
-      "frontend_app_news_id_page_generatemetadata",
-      "frontend_app_news_id_page_page",
-      "frontend_app_news_id_page_pageprops",
-      "frontend_app_news_id_page_valid_ids",
-      "frontend_app_register_page",
-      "frontend_app_register_page_copy",
-      "frontend_app_register_page_registerpage",
-      "frontend_components_shared_brandmark",
-      "frontend_components_shared_brandmark_brandmark",
-      "frontend_components_shared_brandmark_brandmarkprops",
-      "frontend_features_public_v2_components_guestnewsarticlev2",
-      "frontend_features_public_v2_components_guestnewsarticlev2_articlerecord",
-      "frontend_features_public_v2_components_guestnewsarticlev2_articles",
-      "frontend_features_public_v2_components_guestnewsarticlev2_articlevisual",
-      "frontend_features_public_v2_components_guestnewsarticlev2_category",
-      "frontend_features_public_v2_components_guestnewsarticlev2_categorylabels",
-      "frontend_features_public_v2_components_guestnewsarticlev2_guestnewsarticlev2",
-      "frontend_features_public_v2_components_guestnewsarticlev2_sharebutton",
-      "frontend_features_public_v2_components_guestnewsarticlev2_thumb",
-      "frontend_features_public_v2_components_guestnewsarticlev2_ui"
+    "26": [
+      "services_auth_service_src_modules_access_control_access_control_service",
+      "services_auth_service_src_modules_access_control_access_control_service_accesscontrolprismaclient",
+      "services_auth_service_src_modules_access_control_access_control_service_permissionrecord",
+      "services_auth_service_src_modules_access_control_access_control_service_resolvecapabilitiesinput",
+      "services_auth_service_src_modules_access_control_access_control_service_roleassignmentrecord",
+      "services_auth_service_src_modules_access_control_access_control_service_rolepermissionrecord",
+      "services_auth_service_src_modules_access_control_access_control_service_rolerecord",
+      "services_auth_service_src_modules_access_control_access_control_service_spec",
+      "services_auth_service_src_modules_session_session_module",
+      "services_auth_service_src_modules_session_session_module_sessionmodule",
+      "services_auth_service_src_modules_session_session_module_ts_module",
+      "services_auth_service_src_modules_session_session_public",
+      "services_auth_service_src_modules_session_session_service",
+      "services_auth_service_src_modules_session_session_service_createsessioninput",
+      "services_auth_service_src_modules_session_session_service_createsessionresult",
+      "services_auth_service_src_modules_session_session_service_default_max_session_ttl_ms",
+      "services_auth_service_src_modules_session_session_service_session_prisma",
+      "services_auth_service_src_modules_session_session_service_sessionprismaclient",
+      "services_auth_service_src_modules_session_session_service_sessionrecord",
+      "services_auth_service_src_modules_session_session_service_sessionserviceoptions",
+      "services_auth_service_src_modules_session_session_service_spec"
     ],
-    "30": [
+    "27": [
+      "agents_skills_motion_design_patterns_state_feedback",
+      "agents_skills_motion_design_patterns_state_feedback_button_press",
+      "agents_skills_motion_design_patterns_state_feedback_checkmark_success",
+      "agents_skills_motion_design_patterns_state_feedback_confirmation_badge",
+      "agents_skills_motion_design_patterns_state_feedback_corporate",
+      "agents_skills_motion_design_patterns_state_feedback_disabled_enabled",
+      "agents_skills_motion_design_patterns_state_feedback_focus_states",
+      "agents_skills_motion_design_patterns_state_feedback_hover_states",
+      "agents_skills_motion_design_patterns_state_feedback_indeterminate",
+      "agents_skills_motion_design_patterns_state_feedback_loading_states",
+      "agents_skills_motion_design_patterns_state_feedback_payment_success",
+      "agents_skills_motion_design_patterns_state_feedback_playful",
+      "agents_skills_motion_design_patterns_state_feedback_premium",
+      "agents_skills_motion_design_patterns_state_feedback_progress_bar",
+      "agents_skills_motion_design_patterns_state_feedback_skeleton",
+      "agents_skills_motion_design_patterns_state_feedback_spinner",
+      "agents_skills_motion_design_patterns_state_feedback_state_feedback_patterns",
+      "agents_skills_motion_design_patterns_state_feedback_success_state",
+      "agents_skills_motion_design_patterns_state_feedback_toggle_switch",
+      "agents_skills_motion_design_patterns_state_feedback_warning_state"
+    ],
+    "28": [
       "agents_skills_redesign_existing_projects_skill",
       "agents_skills_redesign_existing_projects_skill_code_quality",
       "agents_skills_redesign_existing_projects_skill_color_and_surfaces",
@@ -1039,29 +984,7 @@
       "agents_skills_redesign_existing_projects_skill_typography_upgrades",
       "agents_skills_redesign_existing_projects_skill_upgrade_techniques"
     ],
-    "31": [
-      "frontend_app_admin_admin_audit_page",
-      "frontend_app_admin_admin_audit_page_adminauditpage",
-      "frontend_app_admin_admin_audit_page_auditcopy",
-      "frontend_components_tailgrids_core_breadcrumbs",
-      "frontend_components_tailgrids_core_breadcrumbs_breadcrumbitem",
-      "frontend_components_tailgrids_core_breadcrumbs_breadcrumbs",
-      "frontend_components_tailgrids_core_breadcrumbs_breadcrumbsprops",
-      "frontend_core_i18n_locale_uselocale",
-      "frontend_features_public_discovery_mock_data_expert",
-      "frontend_features_public_v2_components_guestexpertsv2",
-      "frontend_features_public_v2_components_guestexpertsv2_copy",
-      "frontend_features_public_v2_components_guestexpertsv2_guestexpertsv2",
-      "frontend_features_public_v2_components_guestopportunitiesv2",
-      "frontend_features_public_v2_components_guestopportunitiesv2_copy",
-      "frontend_features_public_v2_components_guestopportunitiesv2_guestopportunitiesv2",
-      "frontend_features_public_v2_components_guestpublicnav",
-      "frontend_features_public_v2_components_guestpublicnav_copy",
-      "frontend_features_public_v2_components_guestpublicnav_guestnavactive",
-      "frontend_features_public_v2_components_guestpublicnav_guestpublicnav",
-      "frontend_features_public_v2_components_guestpublicnav_guestpublicnavprops"
-    ],
-    "32": [
+    "29": [
       "shared_templates_vnru_full_modules_prototype_v3_role_ui_flow_guide",
       "shared_templates_vnru_full_modules_prototype_v3_role_ui_flow_guide_1_canonical_demo_architecture",
       "shared_templates_vnru_full_modules_prototype_v3_role_ui_flow_guide_2_public_is_physically_separated",
@@ -1083,7 +1006,7 @@
       "shared_templates_vnru_full_modules_prototype_v3_role_ui_flow_guide_role_switcher",
       "shared_templates_vnru_full_modules_prototype_v3_role_ui_flow_guide_vn_ru_full_modules_prototype_v3_role_flow_ui_guide"
     ],
-    "33": [
+    "30": [
       "agents_skills_stitch_design_taste_skill",
       "agents_skills_stitch_design_taste_skill_1_define_the_atmosphere",
       "agents_skills_stitch_design_taste_skill_2_map_the_color_palette",
@@ -1104,91 +1027,49 @@
       "agents_skills_stitch_design_taste_skill_the_goal",
       "agents_skills_stitch_design_taste_skill_tips_for_success"
     ],
-    "34": [
-      "frontend_components_shared_languageswitcher",
-      "frontend_components_shared_languageswitcher_flaggb",
-      "frontend_components_shared_languageswitcher_flagprops",
-      "frontend_components_shared_languageswitcher_flagru",
-      "frontend_components_shared_languageswitcher_flagvn",
-      "frontend_components_shared_languageswitcher_language_options",
-      "frontend_components_shared_languageswitcher_languageoption",
-      "frontend_components_shared_languageswitcher_languageswitcher",
-      "frontend_components_shared_languageswitcher_languageswitcherprops",
-      "frontend_components_shared_languageswitcher_languageswitchervariant",
-      "frontend_components_shared_languageswitcher_switchercopy",
-      "frontend_core_i18n_locale_locale",
-      "frontend_features_public_discovery_components_publicdiscoveryshell",
-      "frontend_features_public_discovery_components_publicdiscoveryshell_copy",
-      "frontend_features_public_discovery_components_publicdiscoveryshell_publicdiscoveryshell",
-      "frontend_features_workspace_components_unifiedworkspacedashboard",
-      "frontend_features_workspace_components_unifiedworkspacedashboard_copy",
-      "frontend_features_workspace_components_unifiedworkspacedashboard_surfacekey",
-      "frontend_features_workspace_components_unifiedworkspacedashboard_surfaces"
+    "31": [
+      "frontend_components_shared_sidebar",
+      "frontend_components_shared_sidebar_sidebar",
+      "frontend_components_shared_sidebar_sidebarprops",
+      "frontend_features_auth_server_state_usecurrentuser",
+      "frontend_features_workspace_components_workspacesidebar",
+      "frontend_features_workspace_components_workspacesidebar_labels",
+      "frontend_features_workspace_components_workspacesidebar_workspacesidebar",
+      "frontend_features_workspace_components_workspacesidebar_workspacesidebarprops",
+      "frontend_features_workspace_config_workspace_registry",
+      "frontend_features_workspace_config_workspace_registry_filternavsections",
+      "frontend_features_workspace_config_workspace_registry_hascapability",
+      "frontend_features_workspace_config_workspace_registry_resolveuserpersonas",
+      "frontend_features_workspace_config_workspace_registry_workspace_member_capabilities",
+      "frontend_features_workspace_config_workspace_registry_workspace_nav_registry",
+      "frontend_features_workspace_config_workspace_registry_workspace_personas",
+      "frontend_features_workspace_config_workspace_registry_workspacenaventry",
+      "frontend_features_workspace_config_workspace_registry_workspacenavsection",
+      "frontend_features_workspace_config_workspace_registry_workspacepersona",
+      "frontend_tests_workspace_registry_test"
     ],
-    "35": [
-      "query",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_constructor",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_listroles",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_listusers",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_replacerolepermissions",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_setuserstatus",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_iamadmincontroller_upsertroleassignment",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_body",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_controller",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_get",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_param",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_patch",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_post",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_req",
-      "services_auth_service_src_modules_access_control_iam_admin_controller_ts_useguards",
-      "services_auth_service_src_modules_access_control_iam_admin_service_iamadminservice_listroles",
-      "services_auth_service_src_modules_access_control_iam_admin_service_mappedrole",
-      "services_auth_service_src_modules_access_control_iam_admin_service_userselectresult"
+    "32": [
+      "frontend_components_tailgrids_core_card",
+      "frontend_components_tailgrids_core_card_card",
+      "frontend_components_tailgrids_core_card_cardaction",
+      "frontend_components_tailgrids_core_card_cardcontent",
+      "frontend_components_tailgrids_core_card_carddescription",
+      "frontend_components_tailgrids_core_card_cardfooter",
+      "frontend_components_tailgrids_core_card_cardheader",
+      "frontend_components_tailgrids_core_card_cardtitle",
+      "frontend_components_tailgrids_core_dropdown",
+      "frontend_components_tailgrids_core_dropdown_dropdowncontentprops",
+      "frontend_components_tailgrids_core_dropdown_dropdownmenu",
+      "frontend_components_tailgrids_core_dropdown_dropdownmenucontent",
+      "frontend_components_tailgrids_core_dropdown_dropdownmenuheader",
+      "frontend_components_tailgrids_core_dropdown_dropdownmenuitem",
+      "frontend_components_tailgrids_core_dropdown_dropdownmenuitemprops",
+      "frontend_components_tailgrids_core_dropdown_dropdownmenusection",
+      "frontend_components_tailgrids_core_dropdown_dropdownmenuseparator",
+      "frontend_components_tailgrids_core_dropdown_dropdownmenutrigger",
+      "frontend_lib_cn_cn"
     ],
-    "36": [
-      "services_auth_service_src_app_controller",
-      "services_auth_service_src_app_controller_appcontroller",
-      "services_auth_service_src_app_controller_appcontroller_constructor",
-      "services_auth_service_src_app_controller_appcontroller_gethello",
-      "services_auth_service_src_app_controller_spec",
-      "services_auth_service_src_app_controller_ts_controller",
-      "services_auth_service_src_app_controller_ts_get",
-      "services_auth_service_src_app_module",
-      "services_auth_service_src_app_module_appmodule",
-      "services_auth_service_src_app_module_ts_module",
-      "services_auth_service_src_app_service",
-      "services_auth_service_src_app_service_appservice",
-      "services_auth_service_src_app_service_appservice_gethello",
-      "services_auth_service_src_app_service_ts_injectable",
-      "services_auth_service_src_main",
-      "services_auth_service_src_main_bootstrap",
-      "services_auth_service_src_modules_authentication_authentication_module_authenticationmodule",
-      "services_auth_service_src_modules_authentication_authentication_module_ts_module",
-      "services_auth_service_test_app_e2e_spec"
-    ],
-    "37": [
-      "services_auth_service_src_modules_access_control_access_control_service",
-      "services_auth_service_src_modules_access_control_access_control_service_access_control_prisma",
-      "services_auth_service_src_modules_access_control_access_control_service_accesscontrolprismaclient",
-      "services_auth_service_src_modules_access_control_access_control_service_permissionrecord",
-      "services_auth_service_src_modules_access_control_access_control_service_resolvecapabilitiesinput",
-      "services_auth_service_src_modules_access_control_access_control_service_roleassignmentrecord",
-      "services_auth_service_src_modules_access_control_access_control_service_rolepermissionrecord",
-      "services_auth_service_src_modules_access_control_access_control_service_rolerecord",
-      "services_auth_service_src_modules_access_control_access_control_service_spec",
-      "services_auth_service_src_modules_session_session_public",
-      "services_auth_service_src_modules_session_session_service",
-      "services_auth_service_src_modules_session_session_service_createsessioninput",
-      "services_auth_service_src_modules_session_session_service_createsessionresult",
-      "services_auth_service_src_modules_session_session_service_default_max_session_ttl_ms",
-      "services_auth_service_src_modules_session_session_service_session_prisma",
-      "services_auth_service_src_modules_session_session_service_sessionprismaclient",
-      "services_auth_service_src_modules_session_session_service_sessionrecord",
-      "services_auth_service_src_modules_session_session_service_sessionserviceoptions",
-      "services_auth_service_src_modules_session_session_service_spec"
-    ],
-    "38": [
+    "33": [
       "agents_skills_archon_references_troubleshooting",
       "agents_skills_archon_references_troubleshooting_a_node_was_skipped_and_i_don_t_know_why",
       "agents_skills_archon_references_troubleshooting_a_workflow_level_field_seems_to_have_no_effect",
@@ -1208,7 +1089,7 @@
       "agents_skills_archon_references_troubleshooting_workflow_fails_mid_way_how_do_i_resume",
       "agents_skills_archon_references_troubleshooting_workflow_shows_running_for_a_long_time_but_nothing_happens"
     ],
-    "39": [
+    "34": [
       "agents_skills_high_end_visual_design_skill",
       "agents_skills_high_end_visual_design_skill_1_meta_information_core_directive",
       "agents_skills_high_end_visual_design_skill_2_the_absolute_zero_directive_strict_anti_patterns",
@@ -1228,7 +1109,7 @@
       "agents_skills_high_end_visual_design_skill_c_scroll_interpolation_entry_animations",
       "agents_skills_high_end_visual_design_skill_c_spatial_rhythm_tension"
     ],
-    "40": [
+    "35": [
       "agents_skills_motion_design_patterns_entrance_exit",
       "agents_skills_motion_design_patterns_entrance_exit_1_direct_entrance_slide_in",
       "agents_skills_motion_design_patterns_entrance_exit_1_direct_exit_slide_out",
@@ -1248,7 +1129,7 @@
       "agents_skills_motion_design_patterns_entrance_exit_page_transition_forward",
       "agents_skills_motion_design_patterns_entrance_exit_toast_dismiss"
     ],
-    "41": [
+    "36": [
       "agents_skills_motion_design_patterns_multi_element",
       "agents_skills_motion_design_patterns_multi_element_accordion",
       "agents_skills_motion_design_patterns_multi_element_choreography_rules",
@@ -1268,7 +1149,7 @@
       "agents_skills_motion_design_patterns_multi_element_tab_switch",
       "agents_skills_motion_design_patterns_multi_element_timing_overlap"
     ],
-    "42": [
+    "37": [
       "docs_verification_guide",
       "docs_verification_guide_1_command_dispatch",
       "docs_verification_guide_2_common_verification_rules",
@@ -1288,7 +1169,27 @@
       "docs_verification_guide_gate_f_regression_sanity",
       "docs_verification_guide_pro_max_verification_guide_selectable_test_profiles"
     ],
-    "43": [
+    "38": [
+      "frontend_app_admin_layout",
+      "frontend_app_admin_layout_adminlayout",
+      "frontend_app_workspace_layout",
+      "frontend_app_workspace_layout_workspacelayout",
+      "frontend_components_shared_workspaceshell",
+      "frontend_components_shared_workspaceshell_shellcopy",
+      "frontend_components_shared_workspaceshell_workspaceshell",
+      "frontend_components_tailgrids_core_sheet",
+      "frontend_components_tailgrids_core_sheet_sheet",
+      "frontend_components_tailgrids_core_sheet_sheetcontent",
+      "frontend_components_tailgrids_core_sheet_sheetcontentprops",
+      "frontend_components_tailgrids_core_sheet_sheetoverlay",
+      "frontend_components_tailgrids_core_sheet_sheetoverlayprops",
+      "frontend_components_tailgrids_core_sheet_sheetprops",
+      "frontend_components_tailgrids_core_sheet_sheettitle",
+      "frontend_features_admin_components_adminshell",
+      "frontend_features_admin_components_adminshell_adminshell",
+      "frontend_features_admin_components_adminshell_shellcopy"
+    ],
+    "39": [
       "prisma_client",
       "services_auth_service_package_dependencies_prisma_client",
       "services_auth_service_prisma_import_fixture",
@@ -1308,27 +1209,7 @@
       "services_auth_service_prisma_seed_demo_roles",
       "services_auth_service_src_modules_access_control_workflow_fixture_spec"
     ],
-    "44": [
-      "services_auth_service_src_config",
-      "services_auth_service_src_config_configschema",
-      "services_auth_service_src_config_spec",
-      "services_auth_service_src_config_validateconfig",
-      "services_auth_service_src_database_database_module",
-      "services_auth_service_src_database_database_module_databaseclient",
-      "services_auth_service_src_database_database_module_databaseclient_constructor",
-      "services_auth_service_src_database_database_module_databaseclient_onmoduledestroy",
-      "services_auth_service_src_database_database_module_databasemodule",
-      "services_auth_service_src_database_database_module_ts_injectable",
-      "services_auth_service_src_database_database_module_ts_module",
-      "services_auth_service_src_modules_access_control_access_control_module",
-      "services_auth_service_src_modules_access_control_access_control_module_accesscontrolmodule",
-      "services_auth_service_src_modules_access_control_access_control_module_ts_module",
-      "services_auth_service_src_modules_authentication_authentication_module",
-      "services_auth_service_src_modules_session_session_module",
-      "services_auth_service_src_modules_session_session_module_sessionmodule",
-      "services_auth_service_src_modules_session_session_module_ts_module"
-    ],
-    "45": [
+    "40": [
       "agents_skills_archon_guides_config",
       "agents_skills_archon_guides_config_archon_configuration_guide",
       "agents_skills_archon_guides_config_environment_variable_overrides",
@@ -1347,7 +1228,7 @@
       "agents_skills_archon_guides_config_step_5_apply_changes",
       "agents_skills_archon_guides_config_step_6_offer_further_changes"
     ],
-    "46": [
+    "41": [
       "eslint_config_next",
       "frontend_package_devdependencies",
       "frontend_package_devdependencies_eslint_config_next",
@@ -1366,7 +1247,7 @@
       "types_react",
       "types_react_dom"
     ],
-    "47": [
+    "42": [
       "nestjs_common",
       "nestjs_core",
       "nestjs_platform_express",
@@ -1385,7 +1266,7 @@
       "services_auth_service_package_dependencies_zod",
       "services_auth_service_package_json_zod"
     ],
-    "48": [
+    "43": [
       "agents_skills_motion_design_director_choreography",
       "agents_skills_motion_design_director_choreography_1_lead_with_the_hero",
       "agents_skills_motion_design_director_choreography_2_spatial_origin_consistency",
@@ -1403,7 +1284,25 @@
       "agents_skills_motion_design_director_choreography_stagger_patterns",
       "agents_skills_motion_design_director_choreography_the_1_3_rules"
     ],
-    "49": [
+    "44": [
+      "frontend_app_admin_admin_audit_page_adminauditpage",
+      "frontend_core_i18n_locale_uselocale",
+      "frontend_features_public_v2_components_guestexploremedia",
+      "frontend_features_public_v2_components_guestexploremedia_guestexploremedia",
+      "frontend_features_public_v2_components_guestexploremedia_media_copy",
+      "frontend_features_public_v2_components_guestexploremedia_revealitem",
+      "frontend_features_public_v2_components_guestopportunitiesv2",
+      "frontend_features_public_v2_components_guestopportunitiesv2_copy",
+      "frontend_features_public_v2_components_guestopportunitiesv2_guestopportunitiesv2",
+      "frontend_features_public_v2_components_guestpublicnav_guestpublicnav",
+      "frontend_features_workspace_mock_data_opportunities",
+      "frontend_features_workspace_mock_data_opportunities_demo_opportunities",
+      "frontend_features_workspace_mock_data_opportunities_detailedopportunity",
+      "frontend_features_workspace_mock_data_opportunities_getopportunitiesbystate",
+      "frontend_features_workspace_mock_data_opportunities_getopportunitybyid",
+      "frontend_features_workspace_mock_data_opportunities_opportunity"
+    ],
+    "45": [
       "frontend_components_shared_icons_sidebaricons",
       "frontend_components_shared_icons_sidebaricons_adminicon",
       "frontend_components_shared_icons_sidebaricons_chevronlefticon",
@@ -1421,7 +1320,25 @@
       "frontend_components_shared_icons_sidebaricons_threedotsicon",
       "frontend_components_shared_icons_sidebaricons_vnrulogobadge"
     ],
-    "50": [
+    "46": [
+      "frontend_components_shared_sidebarframe",
+      "frontend_components_shared_sidebarframe_copy",
+      "frontend_components_shared_sidebarframe_navitem",
+      "frontend_components_shared_sidebarframe_navsection",
+      "frontend_components_shared_sidebarframe_sidebarframe",
+      "frontend_components_shared_sidebarframe_sidebarframeprops",
+      "frontend_features_admin_components_adminsidebar",
+      "frontend_features_admin_components_adminsidebar_adminsidebar",
+      "frontend_features_admin_components_adminsidebar_adminsidebarprops",
+      "frontend_features_admin_components_adminsidebar_labels",
+      "frontend_features_admin_config_admin_nav_registry",
+      "frontend_features_admin_config_admin_nav_registry_admin_nav_registry",
+      "frontend_features_admin_config_admin_nav_registry_adminnaventry",
+      "frontend_features_admin_config_admin_nav_registry_adminnavsection",
+      "frontend_features_admin_config_admin_nav_registry_filteradminnavsections",
+      "frontend_features_admin_config_admin_nav_registry_hasadmincapability"
+    ],
+    "47": [
       "frontend_docs_contract_guide",
       "frontend_docs_contract_guide_anti_patterns",
       "frontend_docs_contract_guide_authentication_and_session",
@@ -1439,7 +1356,7 @@
       "frontend_docs_contract_guide_route_handlers_and_bff",
       "frontend_docs_contract_guide_standard_api_flow"
     ],
-    "51": [
+    "48": [
       "agents_skills_stitch_design_taste_design",
       "agents_skills_stitch_design_taste_design_1_visual_theme_atmosphere",
       "agents_skills_stitch_design_taste_design_2_color_palette_roles",
@@ -1456,72 +1373,42 @@
       "agents_skills_stitch_design_taste_design_configuration_set_your_style",
       "agents_skills_stitch_design_taste_design_design_system_taste_standard"
     ],
-    "52": [
+    "49": [
       "eslint_config_prettier",
+      "eslint_eslintrc",
       "nestjs_cli",
       "services_auth_service_package_devdependencies",
       "services_auth_service_package_devdependencies_eslint_config_prettier",
+      "services_auth_service_package_devdependencies_eslint_eslintrc",
       "services_auth_service_package_devdependencies_nestjs_cli",
       "services_auth_service_package_devdependencies_source_map_support",
       "services_auth_service_package_devdependencies_ts_jest",
       "services_auth_service_package_devdependencies_ts_loader",
       "services_auth_service_package_devdependencies_tsconfig_paths",
-      "services_auth_service_package_devdependencies_types_express",
       "source_map_support",
       "ts_jest",
       "ts_loader",
-      "tsconfig_paths",
-      "types_express"
+      "tsconfig_paths"
     ],
-    "53": [
-      "agents_skills_manage_run_references_commands",
-      "agents_skills_manage_run_references_commands_archon_workflow_abandon_run_id_json",
-      "agents_skills_manage_run_references_commands_archon_workflow_approve_run_id_comment_json",
-      "agents_skills_manage_run_references_commands_archon_workflow_get_run_id_verbose_json",
-      "agents_skills_manage_run_references_commands_archon_workflow_reject_run_id_reason_json",
-      "agents_skills_manage_run_references_commands_archon_workflow_resume_run_id_json",
-      "agents_skills_manage_run_references_commands_archon_workflow_run_workflow_message_detach_json",
-      "agents_skills_manage_run_references_commands_archon_workflow_runs_all_status_s_limit_n_json",
-      "agents_skills_manage_run_references_commands_archon_workflow_status_verbose_json",
-      "agents_skills_manage_run_references_commands_continuation_model_paused_done",
-      "agents_skills_manage_run_references_commands_control",
-      "agents_skills_manage_run_references_commands_manage_run_command_reference",
-      "agents_skills_manage_run_references_commands_read",
-      "agents_skills_manage_run_references_commands_start"
+    "50": [
+      "frontend_app_news_id_page",
+      "frontend_app_news_id_page_generatemetadata",
+      "frontend_app_news_id_page_page",
+      "frontend_app_news_id_page_pageprops",
+      "frontend_app_news_id_page_valid_ids",
+      "frontend_features_public_v2_components_guestnewsarticlev2",
+      "frontend_features_public_v2_components_guestnewsarticlev2_articlerecord",
+      "frontend_features_public_v2_components_guestnewsarticlev2_articles",
+      "frontend_features_public_v2_components_guestnewsarticlev2_articlevisual",
+      "frontend_features_public_v2_components_guestnewsarticlev2_category",
+      "frontend_features_public_v2_components_guestnewsarticlev2_categorylabels",
+      "frontend_features_public_v2_components_guestnewsarticlev2_guestnewsarticlev2",
+      "frontend_features_public_v2_components_guestnewsarticlev2_sharebutton",
+      "frontend_features_public_v2_components_guestnewsarticlev2_thumb",
+      "frontend_features_public_v2_components_guestnewsarticlev2_ui"
     ],
-    "54": [
-      "agents_skills_motion_design_director_disney_principles_10_exaggeration",
-      "agents_skills_motion_design_director_disney_principles_11_solid_drawing",
-      "agents_skills_motion_design_director_disney_principles_12_appeal",
-      "agents_skills_motion_design_director_disney_principles_1_squash_and_stretch",
-      "agents_skills_motion_design_director_disney_principles_2_anticipation",
-      "agents_skills_motion_design_director_disney_principles_3_staging",
-      "agents_skills_motion_design_director_disney_principles_4_straight_ahead_vs_pose_to_pose",
-      "agents_skills_motion_design_director_disney_principles_5_follow_through_and_overlapping_action",
-      "agents_skills_motion_design_director_disney_principles_6_slow_in_and_slow_out",
-      "agents_skills_motion_design_director_disney_principles_7_arcs",
-      "agents_skills_motion_design_director_disney_principles_8_secondary_action",
-      "agents_skills_motion_design_director_disney_principles_9_timing",
-      "agents_skills_motion_design_director_disney_principles_combining_principles",
-      "agents_skills_motion_design_director_disney_principles_disney_s_12_principles_ui_adapted"
-    ],
-    "55": [
-      "docs_api_spec",
-      "docs_api_spec_module_1_api_contract_policy",
-      "docs_rbac_architecture",
-      "docs_rbac_architecture_module_1_rbac_architecture",
-      "docs_rbac_architecture_product_access_classes",
-      "docs_readme",
-      "docs_readme_documentation_index",
-      "frontend_docs_architecture",
-      "frontend_docs_architecture_frontend_architecture",
-      "frontend_docs_runtime_ui_guide",
-      "services_docs_architecture",
-      "services_docs_architecture_backend_architecture",
-      "services_docs_service_guide",
-      "services_docs_service_guide_backend_module_guide"
-    ],
-    "56": [
+    "51": [
+      "frontend_components_shared_header_header",
       "frontend_features_auth_server_state",
       "frontend_features_auth_server_state_auth",
       "frontend_features_auth_server_state_authresource",
@@ -1537,7 +1424,55 @@
       "frontend_lib_httpclient",
       "frontend_lib_httpclient_httpclient"
     ],
-    "57": [
+    "52": [
+      "agents_skills_manage_run_references_commands",
+      "agents_skills_manage_run_references_commands_archon_workflow_abandon_run_id_json",
+      "agents_skills_manage_run_references_commands_archon_workflow_approve_run_id_comment_json",
+      "agents_skills_manage_run_references_commands_archon_workflow_get_run_id_verbose_json",
+      "agents_skills_manage_run_references_commands_archon_workflow_reject_run_id_reason_json",
+      "agents_skills_manage_run_references_commands_archon_workflow_resume_run_id_json",
+      "agents_skills_manage_run_references_commands_archon_workflow_run_workflow_message_detach_json",
+      "agents_skills_manage_run_references_commands_archon_workflow_runs_all_status_s_limit_n_json",
+      "agents_skills_manage_run_references_commands_archon_workflow_status_verbose_json",
+      "agents_skills_manage_run_references_commands_continuation_model_paused_done",
+      "agents_skills_manage_run_references_commands_control",
+      "agents_skills_manage_run_references_commands_manage_run_command_reference",
+      "agents_skills_manage_run_references_commands_read",
+      "agents_skills_manage_run_references_commands_start"
+    ],
+    "53": [
+      "agents_skills_motion_design_director_disney_principles_10_exaggeration",
+      "agents_skills_motion_design_director_disney_principles_11_solid_drawing",
+      "agents_skills_motion_design_director_disney_principles_12_appeal",
+      "agents_skills_motion_design_director_disney_principles_1_squash_and_stretch",
+      "agents_skills_motion_design_director_disney_principles_2_anticipation",
+      "agents_skills_motion_design_director_disney_principles_3_staging",
+      "agents_skills_motion_design_director_disney_principles_4_straight_ahead_vs_pose_to_pose",
+      "agents_skills_motion_design_director_disney_principles_5_follow_through_and_overlapping_action",
+      "agents_skills_motion_design_director_disney_principles_6_slow_in_and_slow_out",
+      "agents_skills_motion_design_director_disney_principles_7_arcs",
+      "agents_skills_motion_design_director_disney_principles_8_secondary_action",
+      "agents_skills_motion_design_director_disney_principles_9_timing",
+      "agents_skills_motion_design_director_disney_principles_combining_principles",
+      "agents_skills_motion_design_director_disney_principles_disney_s_12_principles_ui_adapted"
+    ],
+    "54": [
+      "docs_api_spec",
+      "docs_api_spec_module_1_api_contract_policy",
+      "docs_rbac_architecture",
+      "docs_rbac_architecture_module_1_rbac_architecture",
+      "docs_rbac_architecture_product_access_classes",
+      "docs_readme",
+      "docs_readme_documentation_index",
+      "frontend_docs_architecture",
+      "frontend_docs_architecture_frontend_architecture",
+      "frontend_docs_runtime_ui_guide",
+      "services_docs_architecture",
+      "services_docs_architecture_backend_architecture",
+      "services_docs_service_guide",
+      "services_docs_service_guide_backend_module_guide"
+    ],
+    "55": [
       "agents_skills_archon_references_authoring_commands",
       "agents_skills_archon_references_authoring_commands_anti_patterns",
       "agents_skills_archon_references_authoring_commands_artifact_conventions",
@@ -1552,7 +1487,7 @@
       "agents_skills_archon_references_authoring_commands_simple_command_example",
       "agents_skills_archon_references_authoring_commands_variable_substitution"
     ],
-    "58": [
+    "56": [
       "agents_skills_archon_references_workflow_dag",
       "agents_skills_archon_references_workflow_dag_complete_example",
       "agents_skills_archon_references_workflow_dag_dependencies_and_parallel_execution",
@@ -1567,7 +1502,7 @@
       "agents_skills_archon_references_workflow_dag_validation_rules_load_time",
       "agents_skills_archon_references_workflow_dag_workflow_authoring"
     ],
-    "59": [
+    "57": [
       "agents_skills_motion_design_patterns_ambient_continuous",
       "agents_skills_motion_design_patterns_ambient_continuous_ambient_continuous_patterns",
       "agents_skills_motion_design_patterns_ambient_continuous_breathing_pulse",
@@ -1582,7 +1517,7 @@
       "agents_skills_motion_design_patterns_ambient_continuous_snow_falling_10_20_elements_20_60px_s_down_10_20px_drift_3_8px_30_70_opacity",
       "agents_skills_motion_design_patterns_ambient_continuous_sparkle_stars_8_15_elements_opacity_pulse_0_100_0_500_1500ms_sparkle_random_stagger"
     ],
-    "60": [
+    "58": [
       "ref_js",
       "ref_json",
       "ref_t_j_s",
@@ -1597,7 +1532,7 @@
       "services_auth_service_package_jest_transform",
       "services_auth_service_package_transform_t_j_s"
     ],
-    "61": [
+    "59": [
       "services_auth_service_package_scripts",
       "services_auth_service_package_scripts_build",
       "services_auth_service_package_scripts_format",
@@ -1612,7 +1547,22 @@
       "services_auth_service_package_scripts_test_e2e",
       "services_auth_service_package_scripts_test_watch"
     ],
-    "62": [
+    "60": [
+      "services_auth_service_src_config",
+      "services_auth_service_src_config_configschema",
+      "services_auth_service_src_config_spec",
+      "services_auth_service_src_config_validateconfig",
+      "services_auth_service_src_database_database_module",
+      "services_auth_service_src_database_database_module_databaseclient",
+      "services_auth_service_src_database_database_module_databaseclient_constructor",
+      "services_auth_service_src_database_database_module_databaseclient_onmoduledestroy",
+      "services_auth_service_src_database_database_module_databasemodule",
+      "services_auth_service_src_database_database_module_ts_injectable",
+      "services_auth_service_src_database_database_module_ts_module",
+      "services_auth_service_src_modules_access_control_access_control_module",
+      "services_auth_service_src_modules_access_control_access_control_service_access_control_prisma"
+    ],
+    "61": [
       "agents_skills_archon_references_workflow_dag_approval_nodes",
       "agents_skills_archon_references_workflow_dag_approve_and_reject_commands",
       "agents_skills_archon_references_workflow_dag_body_semantics",
@@ -1626,7 +1576,7 @@
       "agents_skills_archon_references_workflow_dag_when_to_use_cancel_vs_failing_a_bash_check",
       "agents_skills_archon_references_workflow_dag_when_to_use_loop_vs_loop_group"
     ],
-    "63": [
+    "62": [
       "agents_skills_design_taste_frontend_skill_4_10_quotes_testimonials",
       "agents_skills_design_taste_frontend_skill_4_11_page_theme_lock_light_dark_mode_consistency",
       "agents_skills_design_taste_frontend_skill_4_1_typography",
@@ -1640,7 +1590,7 @@
       "agents_skills_design_taste_frontend_skill_4_9_content_density",
       "agents_skills_design_taste_frontend_skill_4_design_engineering_directives_bias_correction"
     ],
-    "64": [
+    "63": [
       "agents_skills_motion_design_director_decision_framework_1_purpose",
       "agents_skills_motion_design_director_decision_framework_2_audience",
       "agents_skills_motion_design_director_decision_framework_3_context",
@@ -1654,7 +1604,7 @@
       "agents_skills_motion_design_director_decision_framework_level_4_implementation_properties",
       "agents_skills_motion_design_director_decision_framework_the_first_questions"
     ],
-    "65": [
+    "64": [
       "agents_skills_motion_design_director_motion_personality_1_signature_easing_80_of_animations",
       "agents_skills_motion_design_director_motion_personality_2_duration_palette",
       "agents_skills_motion_design_director_motion_personality_3_entrance_pattern",
@@ -1668,7 +1618,7 @@
       "agents_skills_motion_design_director_motion_personality_playful",
       "agents_skills_motion_design_director_motion_personality_premium_luxury"
     ],
-    "66": [
+    "65": [
       "agents_skills_motion_design_reference_timing_easing_tables_distance_duration_scaling",
       "agents_skills_motion_design_reference_timing_easing_tables_duration_by_element_type",
       "agents_skills_motion_design_reference_timing_easing_tables_duration_by_personality",
@@ -1681,6 +1631,20 @@
       "agents_skills_motion_design_reference_timing_easing_tables_spring_parameters",
       "agents_skills_motion_design_reference_timing_easing_tables_stagger_patterns",
       "agents_skills_motion_design_reference_timing_easing_tables_timing_easing_tables"
+    ],
+    "66": [
+      "frontend_components_tailgrids_core_table",
+      "frontend_components_tailgrids_core_table_tablebody",
+      "frontend_components_tailgrids_core_table_tablecell",
+      "frontend_components_tailgrids_core_table_tablecellstyles",
+      "frontend_components_tailgrids_core_table_tablehead",
+      "frontend_components_tailgrids_core_table_tableheader",
+      "frontend_components_tailgrids_core_table_tableheaderstyles",
+      "frontend_components_tailgrids_core_table_tableheadstyles",
+      "frontend_components_tailgrids_core_table_tableroot",
+      "frontend_components_tailgrids_core_table_tablerootprops",
+      "frontend_components_tailgrids_core_table_tablerootstyles",
+      "frontend_components_tailgrids_core_table_tablerow"
     ],
     "67": [
       "agents",
@@ -1787,19 +1751,32 @@
       "agents_skills_motion_design_reference_troubleshooting_troubleshooting"
     ],
     "75": [
-      "frontend_features_workspace_config_workspace_registry",
-      "frontend_features_workspace_config_workspace_registry_filternavsections",
-      "frontend_features_workspace_config_workspace_registry_hascapability",
-      "frontend_features_workspace_config_workspace_registry_resolveuserpersonas",
-      "frontend_features_workspace_config_workspace_registry_workspace_member_capabilities",
-      "frontend_features_workspace_config_workspace_registry_workspace_nav_registry",
-      "frontend_features_workspace_config_workspace_registry_workspace_personas",
-      "frontend_features_workspace_config_workspace_registry_workspacenaventry",
-      "frontend_features_workspace_config_workspace_registry_workspacenavsection",
-      "frontend_features_workspace_config_workspace_registry_workspacepersona",
-      "frontend_tests_workspace_registry_test"
+      "services_auth_service_src_app_controller",
+      "services_auth_service_src_app_controller_appcontroller",
+      "services_auth_service_src_app_controller_appcontroller_constructor",
+      "services_auth_service_src_app_controller_appcontroller_gethello",
+      "services_auth_service_src_app_controller_spec",
+      "services_auth_service_src_app_controller_ts_controller",
+      "services_auth_service_src_app_controller_ts_get",
+      "services_auth_service_src_app_service",
+      "services_auth_service_src_app_service_appservice",
+      "services_auth_service_src_app_service_appservice_gethello",
+      "services_auth_service_src_app_service_ts_injectable"
     ],
     "76": [
+      "services_auth_service_src_app_module",
+      "services_auth_service_src_app_module_appmodule",
+      "services_auth_service_src_app_module_ts_module",
+      "services_auth_service_src_main",
+      "services_auth_service_src_main_bootstrap",
+      "services_auth_service_src_modules_access_control_access_control_module_accesscontrolmodule",
+      "services_auth_service_src_modules_access_control_access_control_module_ts_module",
+      "services_auth_service_src_modules_authentication_authentication_module",
+      "services_auth_service_src_modules_authentication_authentication_module_authenticationmodule",
+      "services_auth_service_src_modules_authentication_authentication_module_ts_module",
+      "services_auth_service_test_app_e2e_spec"
+    ],
+    "77": [
       "agents_skills_archon_references_repo_init",
       "agents_skills_archon_references_repo_init_directory_structure",
       "agents_skills_archon_references_repo_init_gitignore_considerations",
@@ -1811,7 +1788,7 @@
       "agents_skills_archon_references_repo_init_three_path_env_model",
       "agents_skills_archon_references_repo_init_verification"
     ],
-    "77": [
+    "78": [
       "agents_skills_design_taste_frontend_skill_10_reference_vocabulary_pattern_names_the_agent_should_know",
       "agents_skills_design_taste_frontend_skill_animation_library_choice",
       "agents_skills_design_taste_frontend_skill_cards_containers",
@@ -1823,7 +1800,7 @@
       "agents_skills_design_taste_frontend_skill_scroll_animations",
       "agents_skills_design_taste_frontend_skill_typography_text"
     ],
-    "78": [
+    "79": [
       "agents_skills_design_taste_frontend_skill_13_out_of_scope",
       "agents_skills_design_taste_frontend_skill_14_final_pre_flight_check",
       "agents_skills_design_taste_frontend_skill_1_a_dial_inference_design_read_dial_values",
@@ -1835,7 +1812,7 @@
       "agents_skills_design_taste_frontend_skill_2_brief_design_system_map",
       "agents_skills_design_taste_frontend_skill_tasteskill_anti_slop_frontend_skill"
     ],
-    "79": [
+    "80": [
       "frontend_docs_runtime_ui_guide_component_ownership",
       "frontend_docs_runtime_ui_guide_frontend_runtime_and_ui_guide",
       "frontend_docs_runtime_ui_guide_loading_error_and_standard_ui_states_design",
@@ -1847,7 +1824,7 @@
       "frontend_docs_runtime_ui_guide_workspace_context_switching",
       "frontend_docs_runtime_ui_guide_workspace_navigation_and_rbac_rendering"
     ],
-    "80": [
+    "81": [
       "frontend_features_public_v2_components_guestknowledgev2",
       "frontend_features_public_v2_components_guestknowledgev2_copy",
       "frontend_features_public_v2_components_guestknowledgev2_guestknowledgev2",
@@ -1859,7 +1836,7 @@
       "frontend_features_workspace_mock_data_knowledge_knowledgeresource",
       "frontend_features_workspace_mock_data_knowledge_knowledgetype"
     ],
-    "81": [
+    "82": [
       "frontend_style",
       "frontend_style_blurtext_component",
       "frontend_style_custom_svg_icons_no_external_icon_library_needed_for_these",
@@ -1871,7 +1848,7 @@
       "frontend_style_section_1_hero",
       "frontend_style_section_2_capabilities"
     ],
-    "82": [
+    "83": [
       "agents_skills_archon_examples_command_template",
       "agents_skills_archon_examples_command_template_command_name",
       "agents_skills_archon_examples_command_template_phase_1_checkpoint",
@@ -1882,7 +1859,7 @@
       "agents_skills_archon_examples_command_template_phase_3_generate",
       "agents_skills_archon_examples_command_template_phase_4_report"
     ],
-    "83": [
+    "84": [
       "agents_skills_archon_references_parameter_matrix",
       "agents_skills_archon_references_parameter_matrix_cross_references_to_detailed_guides",
       "agents_skills_archon_references_parameter_matrix_inline_agents_task_tool_sub_agents",
@@ -1893,7 +1870,7 @@
       "agents_skills_archon_references_parameter_matrix_silent_failures_what_gets_ignored_without_erroring",
       "agents_skills_archon_references_parameter_matrix_ten_principles_for_safe_workflow_design"
     ],
-    "84": [
+    "85": [
       "agents_skills_archon_references_variables",
       "agents_skills_archon_references_variables_context_auto_append",
       "agents_skills_archon_references_variables_escaped_dollar_signs",
@@ -1904,7 +1881,7 @@
       "agents_skills_archon_references_variables_variable_table",
       "agents_skills_archon_references_variables_where_variables_are_substituted"
     ],
-    "85": [
+    "86": [
       "agents_skills_motion_design_director_core_philosophy",
       "agents_skills_motion_design_director_core_philosophy_core_philosophy",
       "agents_skills_motion_design_director_core_philosophy_pillar_1_emotional_intent",
@@ -1915,7 +1892,7 @@
       "agents_skills_motion_design_director_core_philosophy_three_motion_layers",
       "agents_skills_motion_design_director_core_philosophy_three_pillars"
     ],
-    "86": [
+    "87": [
       "docs_rules",
       "docs_rules_1_security_authentication_boundaries",
       "docs_rules_2_data_ownership_module_boundaries",
@@ -1926,7 +1903,29 @@
       "docs_rules_7_ui_quality_impeccable_gate",
       "docs_rules_russia_vietnam_science_technology_intelligence_network_global_rules_authoritative"
     ],
-    "87": [
+    "88": [
+      "frontend_components_tailgrids_core_badge",
+      "frontend_components_tailgrids_core_badge_badge",
+      "frontend_components_tailgrids_core_badge_badgeprops",
+      "frontend_components_tailgrids_core_badge_badgestyles",
+      "frontend_components_tailgrids_core_breadcrumbs",
+      "frontend_components_tailgrids_core_breadcrumbs_breadcrumbitem",
+      "frontend_components_tailgrids_core_breadcrumbs_breadcrumbs",
+      "frontend_components_tailgrids_core_breadcrumbs_breadcrumbsprops",
+      "frontend_lib_cn"
+    ],
+    "89": [
+      "frontend_components_tailgrids_core_collapsible",
+      "frontend_components_tailgrids_core_collapsible_collapsible",
+      "frontend_components_tailgrids_core_collapsible_collapsiblecontent",
+      "frontend_components_tailgrids_core_collapsible_collapsiblecontentprops",
+      "frontend_components_tailgrids_core_collapsible_collapsiblegroup",
+      "frontend_components_tailgrids_core_collapsible_collapsiblegroupprops",
+      "frontend_components_tailgrids_core_collapsible_collapsibleprops",
+      "frontend_components_tailgrids_core_collapsible_collapsibletrigger",
+      "frontend_components_tailgrids_core_collapsible_collapsibletriggerprops"
+    ],
+    "90": [
       "frontend_product",
       "frontend_product_audience",
       "frontend_product_constraints",
@@ -1937,7 +1936,7 @@
       "frontend_product_product",
       "frontend_product_product_truth"
     ],
-    "88": [
+    "91": [
       "ponytail",
       "ponytail_boundaries",
       "ponytail_intensity",
@@ -1948,18 +1947,7 @@
       "ponytail_the_ladder",
       "ponytail_when_not_to_be_lazy"
     ],
-    "89": [
-      "secrets_dev_actor_session_bridge",
-      "secrets_dev_actor_session_bridge_account",
-      "secrets_dev_actor_session_bridge_accounts",
-      "secrets_dev_actor_session_bridge_env",
-      "secrets_dev_actor_session_bridge_fs",
-      "secrets_dev_actor_session_bridge_http",
-      "secrets_dev_actor_session_bridge_inventory",
-      "secrets_dev_actor_session_bridge_server",
-      "secrets_dev_actor_session_bridge_session"
-    ],
-    "90": [
+    "92": [
       "agents_skills_design_dna_references_primitives",
       "agents_skills_design_dna_references_primitives_color",
       "agents_skills_design_dna_references_primitives_elevation",
@@ -1969,7 +1957,7 @@
       "agents_skills_design_dna_references_primitives_spacing",
       "agents_skills_design_dna_references_primitives_typography"
     ],
-    "91": [
+    "93": [
       "agents_skills_design_taste_frontend_skill_9_a_visual_css",
       "agents_skills_design_taste_frontend_skill_9_ai_tells_forbidden_patterns",
       "agents_skills_design_taste_frontend_skill_9_b_typography",
@@ -1979,7 +1967,7 @@
       "agents_skills_design_taste_frontend_skill_9_f_production_test_tells_banned_outright",
       "agents_skills_design_taste_frontend_skill_9_g_em_dash_ban_the_single_most_violated_tell"
     ],
-    "92": [
+    "94": [
       "agents_skills_motion_design_director_emotion_mapping",
       "agents_skills_motion_design_director_emotion_mapping_color_psychology",
       "agents_skills_motion_design_director_emotion_mapping_color_transition_rules",
@@ -1989,7 +1977,7 @@
       "agents_skills_motion_design_director_emotion_mapping_emotional_intensity",
       "agents_skills_motion_design_director_emotion_mapping_path_as_emotional_language"
     ],
-    "93": [
+    "95": [
       "agents_skills_motion_design_reference_property_selection_color",
       "agents_skills_motion_design_reference_property_selection_combined_properties",
       "agents_skills_motion_design_reference_property_selection_opacity",
@@ -1999,7 +1987,7 @@
       "agents_skills_motion_design_reference_property_selection_rotation",
       "agents_skills_motion_design_reference_property_selection_scale"
     ],
-    "94": [
+    "96": [
       "frontend_app_layout",
       "frontend_app_layout_bevietnampro",
       "frontend_app_layout_metadata",
@@ -2009,7 +1997,7 @@
       "frontend_components_providers_queryprovider",
       "frontend_components_providers_queryprovider_queryprovider"
     ],
-    "95": [
+    "97": [
       "frontend_design",
       "frontend_design_brand_style",
       "frontend_design_colors",
@@ -2019,7 +2007,7 @@
       "frontend_design_shapes",
       "frontend_design_typography"
     ],
-    "96": [
+    "98": [
       "frontend_docs_rules",
       "frontend_docs_rules_before_code",
       "frontend_docs_rules_boundaries",
@@ -2029,7 +2017,7 @@
       "frontend_docs_rules_state",
       "frontend_docs_rules_ui_quality_impeccable_gate"
     ],
-    "97": [
+    "99": [
       "services_docs_rules",
       "services_docs_rules_backend_modular_monolith_rules",
       "services_docs_rules_before_code",
@@ -2039,7 +2027,7 @@
       "services_docs_rules_testing_and_completion",
       "services_docs_rules_trust_boundaries"
     ],
-    "98": [
+    "100": [
       "shared_templates_vnru_full_modules_prototype_v3_assets_app",
       "shared_templates_vnru_full_modules_prototype_v3_assets_app_esc",
       "shared_templates_vnru_full_modules_prototype_v3_assets_app_opendrawer",
@@ -2049,7 +2037,7 @@
       "shared_templates_vnru_full_modules_prototype_v3_assets_app_toast",
       "shared_templates_vnru_full_modules_prototype_v3_assets_app_updaterubricscore"
     ],
-    "99": [
+    "101": [
       "agents_skills_archon_guides_cli",
       "agents_skills_archon_guides_cli_1_install_dependencies",
       "agents_skills_archon_guides_cli_2_link_the_cli_globally",
@@ -2058,7 +2046,7 @@
       "agents_skills_archon_guides_cli_cli_setup_guide",
       "agents_skills_archon_guides_cli_notes"
     ],
-    "100": [
+    "102": [
       "agents_skills_archon_references_workflow_dag_bash_node",
       "agents_skills_archon_references_workflow_dag_command_node",
       "agents_skills_archon_references_workflow_dag_loop_group_node",
@@ -2067,7 +2055,7 @@
       "agents_skills_archon_references_workflow_dag_prompt_node",
       "agents_skills_archon_references_workflow_dag_script_node"
     ],
-    "101": [
+    "103": [
       "agents_skills_archon_references_workflow_dag_completion_detection",
       "agents_skills_archon_references_workflow_dag_interactive_loops",
       "agents_skills_archon_references_workflow_dag_loop_nodes",
@@ -2076,7 +2064,7 @@
       "agents_skills_archon_references_workflow_dag_session_patterns",
       "agents_skills_archon_references_workflow_dag_what_works_does_not_work_on_loop_nodes"
     ],
-    "102": [
+    "104": [
       "agents_skills_design_dna_references_dna",
       "agents_skills_design_dna_references_dna_inventory",
       "agents_skills_design_dna_references_dna_non_negotiable_readability_gate",
@@ -2085,7 +2073,7 @@
       "agents_skills_design_dna_references_dna_visual_direction",
       "agents_skills_design_dna_references_dna_vn_ru_portal_design_dna"
     ],
-    "103": [
+    "105": [
       "agents_skills_design_dna_references_scales",
       "agents_skills_design_dna_references_scales_color_modes",
       "agents_skills_design_dna_references_scales_density",
@@ -2094,7 +2082,7 @@
       "agents_skills_design_dna_references_scales_scales",
       "agents_skills_design_dna_references_scales_stability"
     ],
-    "104": [
+    "106": [
       "agents_skills_design_dna_skill",
       "agents_skills_design_dna_skill_design_dna",
       "agents_skills_design_dna_skill_natural_language_operations",
@@ -2103,7 +2091,7 @@
       "agents_skills_design_dna_skill_source_order",
       "agents_skills_design_dna_skill_trigger"
     ],
-    "105": [
+    "107": [
       "agents_skills_design_taste_frontend_skill_11_a_detect_the_mode_first_action",
       "agents_skills_design_taste_frontend_skill_11_b_audit_before_touching",
       "agents_skills_design_taste_frontend_skill_11_c_preservation_rules",
@@ -2112,7 +2100,7 @@
       "agents_skills_design_taste_frontend_skill_11_f_what_never_changes_silently",
       "agents_skills_design_taste_frontend_skill_11_redesign_protocol"
     ],
-    "106": [
+    "108": [
       "agents_skills_design_taste_frontend_skill_3_a_stack",
       "agents_skills_design_taste_frontend_skill_3_b_state",
       "agents_skills_design_taste_frontend_skill_3_c_icons",
@@ -2121,7 +2109,7 @@
       "agents_skills_design_taste_frontend_skill_3_e_responsiveness_layout_mechanics",
       "agents_skills_design_taste_frontend_skill_3_f_dependency_verification_mandatory"
     ],
-    "107": [
+    "109": [
       "agents_skills_design_taste_frontend_skill_6_a_hardware_acceleration",
       "agents_skills_design_taste_frontend_skill_6_b_reduced_motion_mandatory",
       "agents_skills_design_taste_frontend_skill_6_c_dark_mode_mandatory_for_any_consumer_facing_page",
@@ -2130,7 +2118,7 @@
       "agents_skills_design_taste_frontend_skill_6_f_z_index_restraint",
       "agents_skills_design_taste_frontend_skill_6_performance_accessibility_guardrails"
     ],
-    "108": [
+    "110": [
       "agents_skills_motion_design_director_decision_framework",
       "agents_skills_motion_design_director_disney_principles",
       "agents_skills_motion_design_director_motion_personality",
@@ -2139,7 +2127,7 @@
       "agents_skills_motion_design_reference_troubleshooting",
       "agents_skills_motion_design_skill"
     ],
-    "109": [
+    "111": [
       "frontend_app_not_found",
       "frontend_app_not_found_metadata",
       "frontend_app_not_found_notfound",
@@ -2148,16 +2136,7 @@
       "frontend_app_notfoundclient_notfoundclient",
       "frontend_app_notfoundclient_routemap"
     ],
-    "110": [
-      "secrets_promax_actor_preflight",
-      "secrets_promax_actor_preflight_accounts",
-      "secrets_promax_actor_preflight_env",
-      "secrets_promax_actor_preflight_fs",
-      "secrets_promax_actor_preflight_inventory",
-      "secrets_promax_actor_preflight_preflight",
-      "secrets_promax_actor_preflight_required"
-    ],
-    "111": [
+    "112": [
       "services_auth_service_package",
       "services_auth_service_package_author",
       "services_auth_service_package_description",
@@ -2166,7 +2145,7 @@
       "services_auth_service_package_private",
       "services_auth_service_package_version"
     ],
-    "112": [
+    "113": [
       "agents_skills_archon_references_workflow_dag_claude_sdk_advanced_options",
       "agents_skills_archon_references_workflow_dag_codex_specific_options",
       "agents_skills_archon_references_workflow_dag_complete_workflow_level_example",
@@ -2174,7 +2153,7 @@
       "agents_skills_archon_references_workflow_dag_isolation",
       "agents_skills_archon_references_workflow_dag_workflow_level_fields"
     ],
-    "113": [
+    "114": [
       "agents_skills_design_dna_references_behaviors",
       "agents_skills_design_dna_references_behaviors_behaviors",
       "agents_skills_design_dna_references_behaviors_forms",
@@ -2182,7 +2161,7 @@
       "agents_skills_design_dna_references_behaviors_loading_and_state",
       "agents_skills_design_dna_references_behaviors_motion"
     ],
-    "114": [
+    "115": [
       "agents_skills_design_dna_references_components_core",
       "agents_skills_design_dna_references_components_core_buttons_and_inputs",
       "agents_skills_design_dna_references_components_core_cards",
@@ -2190,7 +2169,7 @@
       "agents_skills_design_dna_references_components_core_navigation",
       "agents_skills_design_dna_references_components_core_tables_and_status"
     ],
-    "115": [
+    "116": [
       "agents_skills_design_dna_references_patterns_surfaces",
       "agents_skills_design_dna_references_patterns_surfaces_authentication",
       "agents_skills_design_dna_references_patterns_surfaces_operational_workspace",
@@ -2198,7 +2177,7 @@
       "agents_skills_design_dna_references_patterns_surfaces_responsive",
       "agents_skills_design_dna_references_patterns_surfaces_surface_patterns"
     ],
-    "116": [
+    "117": [
       "frontend_app_explore_loading",
       "frontend_app_explore_loading_bar",
       "frontend_app_explore_loading_imageicon",
@@ -2206,21 +2185,13 @@
       "frontend_app_loading_preview_page",
       "frontend_app_news_loading"
     ],
-    "117": [
+    "118": [
       "frontend_docs_query_resource_guide",
       "frontend_docs_query_resource_guide_before_coding",
       "frontend_docs_query_resource_guide_minimal_pattern",
       "frontend_docs_query_resource_guide_query_resource_guide",
       "frontend_docs_query_resource_guide_required_practices",
       "frontend_docs_query_resource_guide_rule"
-    ],
-    "118": [
-      "frontend_features_workspace_mock_data_opportunities",
-      "frontend_features_workspace_mock_data_opportunities_demo_opportunities",
-      "frontend_features_workspace_mock_data_opportunities_detailedopportunity",
-      "frontend_features_workspace_mock_data_opportunities_getopportunitiesbystate",
-      "frontend_features_workspace_mock_data_opportunities_getopportunitybyid",
-      "frontend_features_workspace_mock_data_opportunities_opportunity"
     ],
     "119": [
       "prompts_core_change_branding",
@@ -2303,337 +2274,359 @@
       "docs_architecture_system_architecture"
     ],
     "130": [
+      "frontend_components_tailgrids_core_tooltip",
+      "frontend_components_tailgrids_core_tooltip_tooltip",
+      "frontend_components_tailgrids_core_tooltip_tooltipcontent",
+      "frontend_components_tailgrids_core_tooltip_tooltipprops",
+      "frontend_components_tailgrids_core_tooltip_tooltiptrigger"
+    ],
+    "131": [
       "readme",
       "readme_development",
       "readme_documentation",
       "readme_kept_runtime",
       "readme_vn_ru_network_portal"
     ],
-    "131": [
+    "132": [
       "agents_skills_design_taste_frontend_skill_7_dial_definitions_technical_reference",
       "agents_skills_design_taste_frontend_skill_design_variance_level_1_10",
       "agents_skills_design_taste_frontend_skill_motion_intensity_level_1_10",
       "agents_skills_design_taste_frontend_skill_visual_density_level_1_10"
     ],
-    "132": [
+    "133": [
+      "agents_skills_motion_design_patterns_state_feedback_error_shake",
+      "agents_skills_motion_design_patterns_state_feedback_error_state",
+      "agents_skills_motion_design_patterns_state_feedback_form_submission_error",
+      "agents_skills_motion_design_patterns_state_feedback_inline_validation"
+    ],
+    "134": [
       "docs_portal_foundation_refactor",
       "docs_portal_foundation_refactor_access_model",
       "docs_portal_foundation_refactor_current_product_boundary",
       "docs_portal_foundation_refactor_portal_foundation_decisions"
     ],
-    "133": [
+    "135": [
+      "frontend_components_tailgrids_core_button",
+      "frontend_components_tailgrids_core_button_button",
+      "frontend_components_tailgrids_core_button_buttonprops",
+      "frontend_components_tailgrids_core_button_buttonstyles"
+    ],
+    "136": [
       "services_auth_service_prisma_readme",
       "services_auth_service_prisma_readme_critical_notice",
       "services_auth_service_prisma_readme_synthetic_iam_workflow_fixtures",
       "services_auth_service_prisma_readme_usage"
     ],
-    "134": [
+    "137": [
       "deploy",
       "deploy_check",
       "deploy_sh__entry"
     ],
-    "135": [
+    "138": [
       "frontend_agents",
       "frontend_agents_this_is_not_the_next_js_you_know",
       "frontend_agents_vn_ru_mandatory_project_instructions"
     ],
-    "136": [
+    "139": [
       "frontend_package_devdependencies_eslint",
       "frontend_package_json_eslint",
       "services_auth_service_package_devdependencies_eslint"
     ],
-    "137": [
+    "140": [
       "agents_rules_graphify",
       "agents_rules_graphify_graphify"
     ],
-    "138": [
+    "141": [
       "agents_rules_impeccable",
       "agents_rules_impeccable_ui_quality_impeccable_gate"
     ],
-    "139": [
+    "142": [
       "agents_skills_design_dna_references_principles",
       "agents_skills_design_dna_references_principles_principles"
     ],
-    "140": [
+    "143": [
       "agents_workflows_graphify",
       "agents_workflows_graphify_workflow_graphify"
     ],
-    "141": [
+    "144": [
       "docs_deployment",
       "docs_deployment_deployment_and_local_operation"
     ],
-    "142": [
-      "eslint_eslintrc",
-      "services_auth_service_package_devdependencies_eslint_eslintrc"
-    ],
-    "143": [
+    "145": [
       "eslint_js",
       "services_auth_service_package_devdependencies_eslint_js"
     ],
-    "144": [
+    "146": [
       "eslint_plugin_prettier",
       "services_auth_service_package_devdependencies_eslint_plugin_prettier"
     ],
-    "145": [
+    "147": [
       "frontend_app_admin_admin_page",
       "frontend_app_admin_admin_page_adminrootpage"
     ],
-    "146": [
+    "148": [
       "frontend_app_explore_page",
       "frontend_app_explore_page_page"
     ],
-    "147": [
+    "149": [
       "frontend_app_workspace_governance_page",
       "frontend_app_workspace_governance_page_page"
     ],
-    "148": [
+    "150": [
       "frontend_app_workspace_workspace_iam_admin_page",
       "frontend_app_workspace_workspace_iam_admin_page_legacyiamadminpage"
     ],
-    "149": [
+    "151": [
       "frontend_app_workspace_workspace_iam_page",
       "frontend_app_workspace_workspace_iam_page_legacyiampage"
     ],
-    "150": [
+    "152": [
       "frontend_app_workspace_workspace_iam_security_page",
       "frontend_app_workspace_workspace_iam_security_page_legacyiamsecuritypage"
     ],
-    "151": [
+    "153": [
       "frontend_docs_module_guide",
       "frontend_docs_module_guide_frontend_module_guide"
     ],
-    "152": [
+    "154": [
       "frontend_docs_prompt_pre_test_focused_fix",
       "frontend_docs_prompt_pre_test_focused_fix_prompt_vn_ru_pre_test_focused_fix"
     ],
-    "153": [
+    "155": [
       "frontend_eslint_config",
       "frontend_eslint_config_eslintconfig"
     ],
-    "154": [
+    "156": [
       "frontend_home_i18n_test",
       "frontend_home_i18n_test_keys"
     ],
-    "155": [
+    "157": [
       "frontend_next_config",
       "frontend_next_config_nextconfig"
     ],
-    "156": [
+    "158": [
       "frontend_postcss_config",
       "frontend_postcss_config_config"
     ],
-    "157": [
+    "159": [
       "frontend_readme",
       "frontend_readme_vn_ru_portal_frontend"
     ],
-    "158": [
+    "160": [
       "frontend_tests_membership_registration_test",
       "frontend_tests_membership_registration_test_read"
     ],
-    "159": [
+    "161": [
       "frontend_tests_public_news_routing_test",
       "frontend_tests_public_news_routing_test_exists"
     ],
-    "160": [
+    "162": [
       "frontend_tests_workspace_runtime_test",
       "frontend_tests_workspace_runtime_test_read"
     ],
-    "161": [
+    "163": [
       "github_copilot_instructions",
       "github_copilot_instructions_copilot_repository_instructions"
     ],
-    "162": [
+    "164": [
       "globals",
       "services_auth_service_package_devdependencies_globals"
     ],
-    "163": [
+    "165": [
       "jest",
       "services_auth_service_package_devdependencies_jest"
     ],
-    "164": [
+    "166": [
       "nestjs_schematics",
       "services_auth_service_package_devdependencies_nestjs_schematics"
     ],
-    "165": [
+    "167": [
       "nestjs_testing",
       "services_auth_service_package_devdependencies_nestjs_testing"
     ],
-    "166": [
+    "168": [
       "prettier",
       "services_auth_service_package_devdependencies_prettier"
     ],
-    "167": [
+    "169": [
       "prisma",
       "services_auth_service_package_devdependencies_prisma"
     ],
-    "168": [
+    "170": [
       "services_agents",
       "services_agents_backend_agent_instructions"
     ],
-    "169": [
+    "171": [
       "services_auth_service_package_devdependencies_supertest",
       "supertest"
     ],
-    "170": [
+    "172": [
       "services_auth_service_package_devdependencies_ts_node",
       "ts_node"
     ],
-    "171": [
+    "173": [
+      "services_auth_service_package_devdependencies_types_express",
+      "types_express"
+    ],
+    "174": [
       "services_auth_service_package_devdependencies_types_jest",
       "types_jest"
     ],
-    "172": [
+    "175": [
       "services_auth_service_package_devdependencies_types_supertest",
       "types_supertest"
     ],
-    "173": [
+    "176": [
       "services_auth_service_package_devdependencies_typescript_eslint",
       "typescript_eslint"
     ],
-    "174": [
+    "177": [
       "services_auth_service_src_backend_architecture_spec",
       "services_auth_service_src_backend_architecture_spec_source"
     ],
-    "175": [
+    "178": [
       "services_docs_migration_guide",
       "services_docs_migration_guide_database_migration_guide"
     ],
-    "176": [
+    "179": [
       "services_docs_multilingual_backend_plan",
       "services_docs_multilingual_backend_plan_multilingual_backend_plan"
     ],
-    "177": [
+    "180": [
       "shared_templates_vnru_full_modules_prototype_v3_readme",
       "shared_templates_vnru_full_modules_prototype_v3_readme_vn_ru_full_modules_prototype_v3"
     ],
-    "178": [
+    "181": [
       "shared_templates_vnru_full_modules_prototype_v3_screen_ownership_matrix",
       "shared_templates_vnru_full_modules_prototype_v3_screen_ownership_matrix_screen_ownership_matrix"
     ],
-    "179": [
+    "182": [
       "tests_deploy_script_test",
       "tests_deploy_script_test_sh__entry"
     ],
-    "180": [
+    "183": [
       "claude"
     ],
-    "181": [
+    "184": [
       "frontend_app_api_auth_nextauth_route_get_post"
     ],
-    "182": [
+    "185": [
       "frontend_claude"
     ],
-    "183": [
+    "186": [
       "frontend_gemini"
     ],
-    "184": [
+    "187": [
       "frontend_html_templates_promax"
     ],
-    "185": [
+    "188": [
       "frontend_tests_iam_admin_test"
     ],
-    "186": [
+    "189": [
       "frontend_tests_motion_typography_test"
     ],
-    "187": [
-      "frontend_tests_not_found_test"
-    ],
-    "188": [
-      "frontend_tests_public_explore_stream_test"
-    ],
-    "189": [
-      "frontend_tests_security_test"
-    ],
     "190": [
-      "gemini"
+      "frontend_tests_no_keycloak_test"
     ],
     "191": [
-      "services_auth_service_eslint_config"
+      "frontend_tests_not_found_test"
     ],
     "192": [
-      "services_auth_service_prisma_config"
+      "frontend_tests_public_explore_stream_test"
     ],
     "193": [
-      "services_auth_service_src_modules_security_security_module_ts_module"
+      "frontend_tests_security_test"
     ],
     "194": [
-      "services_claude"
+      "gemini"
     ],
     "195": [
-      "services_gemini"
+      "services_auth_service_eslint_config"
     ],
     "196": [
+      "services_auth_service_prisma_config"
+    ],
+    "197": [
+      "services_auth_service_src_modules_security_security_module_ts_module"
+    ],
+    "198": [
+      "services_claude"
+    ],
+    "199": [
+      "services_gemini"
+    ],
+    "200": [
       "shared_templates_vnru_public_discovery_v2_assets_app"
     ]
   },
   "cohesion": {
     "0": 0.05721168322794339,
     "1": 0.056692242114237,
-    "2": 0.06826241134751773,
+    "2": 0.0851063829787234,
     "3": 0.044444444444444446,
     "4": 0.04878048780487805,
-    "5": 0.09841269841269841,
-    "6": 0.05555555555555555,
+    "5": 0.05555555555555555,
+    "6": 0.10252100840336134,
     "7": 0.06060606060606061,
-    "8": 0.10416666666666667,
-    "9": 0.06060606060606061,
-    "10": 0.06451612903225806,
+    "8": 0.06060606060606061,
+    "9": 0.06451612903225806,
+    "10": 0.09032258064516129,
     "11": 0.06666666666666667,
     "12": 0.06666666666666667,
-    "13": 0.10344827586206896,
-    "14": 0.07671957671957672,
-    "15": 0.07142857142857142,
-    "16": 0.09523809523809523,
-    "17": 0.2,
-    "18": 0.08333333333333333,
-    "19": 0.14130434782608695,
-    "20": 0.09782608695652174,
+    "13": 0.07671957671957672,
+    "14": 0.07142857142857142,
+    "15": 0.10846560846560846,
+    "16": 0.1168091168091168,
+    "17": 0.1225071225071225,
+    "18": 0.2,
+    "19": 0.09782608695652174,
+    "20": 0.08695652173913043,
     "21": 0.08695652173913043,
     "22": 0.08695652173913043,
-    "23": 0.1383399209486166,
-    "24": 0.08695652173913043,
-    "25": 0.09090909090909091,
-    "26": 0.09090909090909091,
-    "27": 0.19047619047619047,
-    "28": 0.09523809523809523,
-    "29": 0.11428571428571428,
-    "30": 0.1,
-    "31": 0.14736842105263157,
-    "32": 0.1,
-    "33": 0.10526315789473684,
-    "34": 0.1286549707602339,
-    "35": 0.1695906432748538,
-    "36": 0.1695906432748538,
-    "37": 0.1871345029239766,
-    "38": 0.1111111111111111,
-    "39": 0.1111111111111111,
-    "40": 0.1111111111111111,
-    "41": 0.1111111111111111,
-    "42": 0.1111111111111111,
-    "43": 0.13725490196078433,
-    "44": 0.1895424836601307,
-    "45": 0.11764705882352941,
-    "46": 0.11764705882352941,
-    "47": 0.11764705882352941,
-    "48": 0.125,
-    "49": 0.125,
-    "50": 0.125,
-    "51": 0.13333333333333333,
-    "52": 0.13333333333333333,
+    "23": 0.09090909090909091,
+    "24": 0.09090909090909091,
+    "25": 0.09523809523809523,
+    "26": 0.1761904761904762,
+    "27": 0.1,
+    "28": 0.1,
+    "29": 0.1,
+    "30": 0.10526315789473684,
+    "31": 0.17543859649122806,
+    "32": 0.18128654970760233,
+    "33": 0.1111111111111111,
+    "34": 0.1111111111111111,
+    "35": 0.1111111111111111,
+    "36": 0.1111111111111111,
+    "37": 0.1111111111111111,
+    "38": 0.16339869281045752,
+    "39": 0.13725490196078433,
+    "40": 0.11764705882352941,
+    "41": 0.11764705882352941,
+    "42": 0.11764705882352941,
+    "43": 0.125,
+    "44": 0.16666666666666666,
+    "45": 0.125,
+    "46": 0.16666666666666666,
+    "47": 0.125,
+    "48": 0.13333333333333333,
+    "49": 0.13333333333333333,
+    "50": 0.1523809523809524,
+    "51": 0.18095238095238095,
+    "52": 0.14285714285714285,
     "53": 0.14285714285714285,
     "54": 0.14285714285714285,
-    "55": 0.14285714285714285,
-    "56": 0.1978021978021978,
+    "55": 0.15384615384615385,
+    "56": 0.15384615384615385,
     "57": 0.15384615384615385,
     "58": 0.15384615384615385,
     "59": 0.15384615384615385,
-    "60": 0.15384615384615385,
-    "61": 0.15384615384615385,
-    "62": 0.18181818181818182,
+    "60": 0.21794871794871795,
+    "61": 0.18181818181818182,
+    "62": 0.16666666666666666,
     "63": 0.16666666666666666,
     "64": 0.16666666666666666,
     "65": 0.16666666666666666,
-    "66": 0.16666666666666666,
+    "66": 0.22727272727272727,
     "67": 0.18181818181818182,
     "68": 0.18181818181818182,
     "69": 0.18181818181818182,
@@ -2642,32 +2635,32 @@
     "72": 0.18181818181818182,
     "73": 0.18181818181818182,
     "74": 0.18181818181818182,
-    "75": 0.2727272727272727,
-    "76": 0.2,
+    "75": 0.2909090909090909,
+    "76": 0.2545454545454545,
     "77": 0.2,
     "78": 0.2,
     "79": 0.2,
-    "80": 0.26666666666666666,
-    "81": 0.2,
-    "82": 0.2222222222222222,
+    "80": 0.2,
+    "81": 0.26666666666666666,
+    "82": 0.2,
     "83": 0.2222222222222222,
     "84": 0.2222222222222222,
     "85": 0.2222222222222222,
     "86": 0.2222222222222222,
     "87": 0.2222222222222222,
-    "88": 0.2222222222222222,
+    "88": 0.25,
     "89": 0.2222222222222222,
-    "90": 0.25,
-    "91": 0.25,
+    "90": 0.2222222222222222,
+    "91": 0.2222222222222222,
     "92": 0.25,
     "93": 0.25,
-    "94": 0.2857142857142857,
+    "94": 0.25,
     "95": 0.25,
-    "96": 0.25,
+    "96": 0.2857142857142857,
     "97": 0.25,
-    "98": 0.42857142857142855,
-    "99": 0.2857142857142857,
-    "100": 0.2857142857142857,
+    "98": 0.25,
+    "99": 0.25,
+    "100": 0.42857142857142855,
     "101": 0.2857142857142857,
     "102": 0.2857142857142857,
     "103": 0.2857142857142857,
@@ -2675,17 +2668,17 @@
     "105": 0.2857142857142857,
     "106": 0.2857142857142857,
     "107": 0.2857142857142857,
-    "108": 0.38095238095238093,
-    "109": 0.3333333333333333,
-    "110": 0.2857142857142857,
-    "111": 0.2857142857142857,
-    "112": 0.3333333333333333,
+    "108": 0.2857142857142857,
+    "109": 0.2857142857142857,
+    "110": 0.38095238095238093,
+    "111": 0.3333333333333333,
+    "112": 0.2857142857142857,
     "113": 0.3333333333333333,
     "114": 0.3333333333333333,
     "115": 0.3333333333333333,
     "116": 0.3333333333333333,
     "117": 0.3333333333333333,
-    "118": 0.4,
+    "118": 0.3333333333333333,
     "119": 0.3333333333333333,
     "120": 0.3333333333333333,
     "121": 0.3333333333333333,
@@ -2698,15 +2691,15 @@
     "128": 0.4,
     "129": 0.4,
     "130": 0.4,
-    "131": 0.5,
+    "131": 0.4,
     "132": 0.5,
     "133": 0.5,
-    "134": 1.0,
+    "134": 0.5,
     "135": 0.6666666666666666,
-    "136": 0.6666666666666666,
+    "136": 0.5,
     "137": 1.0,
-    "138": 1.0,
-    "139": 1.0,
+    "138": 0.6666666666666666,
+    "139": 0.6666666666666666,
     "140": 1.0,
     "141": 1.0,
     "142": 1.0,
@@ -2763,7 +2756,11 @@
     "193": 1.0,
     "194": 1.0,
     "195": 1.0,
-    "196": 1.0
+    "196": 1.0,
+    "197": 1.0,
+    "198": 1.0,
+    "199": 1.0,
+    "200": 1.0
   },
   "gods": [
     {
@@ -2830,48 +2827,48 @@
       "why": "connects across different repos/directories; peripheral node `node_modules` unexpectedly reaches hub `exclude`"
     },
     {
-      "source": "RegisterPage()",
-      "target": "useLocale",
+      "source": "Collapsible()",
+      "target": "cn()",
       "source_files": [
-        "frontend/app/register/page.tsx",
-        "frontend/core/i18n/locale.ts"
+        "frontend/components/tailgrids/core/collapsible.tsx",
+        "frontend/lib/cn.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
-      "why": "bridges separate communities; peripheral node `RegisterPage()` unexpectedly reaches hub `useLocale`"
+      "why": "bridges separate communities; peripheral node `Collapsible()` unexpectedly reaches hub `cn()`"
     },
     {
-      "source": "ExpertsIndexPage()",
-      "target": "useLocale",
+      "source": "CollapsibleTrigger()",
+      "target": "cn()",
       "source_files": [
-        "frontend/features/public-discovery/components/PublicDiscoveryPages.tsx",
-        "frontend/core/i18n/locale.ts"
+        "frontend/components/tailgrids/core/collapsible.tsx",
+        "frontend/lib/cn.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
-      "why": "bridges separate communities; peripheral node `ExpertsIndexPage()` unexpectedly reaches hub `useLocale`"
+      "why": "bridges separate communities; peripheral node `CollapsibleTrigger()` unexpectedly reaches hub `cn()`"
     },
     {
-      "source": "AdminAuditPage()",
-      "target": "useLocale",
+      "source": "CollapsibleContent()",
+      "target": "cn()",
       "source_files": [
-        "frontend/app/(admin)/admin/audit/page.tsx",
-        "frontend/core/i18n/locale.ts"
+        "frontend/components/tailgrids/core/collapsible.tsx",
+        "frontend/lib/cn.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
-      "why": "peripheral node `AdminAuditPage()` unexpectedly reaches hub `useLocale`"
+      "why": "bridges separate communities; peripheral node `CollapsibleContent()` unexpectedly reaches hub `cn()`"
     },
     {
-      "source": "NotFoundClient()",
-      "target": "useLocale",
+      "source": "TableBody()",
+      "target": "cn()",
       "source_files": [
-        "frontend/app/NotFoundClient.tsx",
-        "frontend/core/i18n/locale.ts"
+        "frontend/components/tailgrids/core/table.tsx",
+        "frontend/lib/cn.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
-      "why": "bridges separate communities"
+      "why": "bridges separate communities; peripheral node `TableBody()` unexpectedly reaches hub `cn()`"
     }
   ],
   "tokens": {

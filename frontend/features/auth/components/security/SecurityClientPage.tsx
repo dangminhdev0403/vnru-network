@@ -13,7 +13,6 @@ import MfaControl from "./MfaControl";
 const securityCopy: Record<
   Locale,
   {
-    gateBadge: string;
     title: string;
     description: string;
     refreshBtn: string;
@@ -58,10 +57,9 @@ const securityCopy: Record<
   }
 > = {
   vi: {
-    gateBadge: "Cổng bảo mật Auth.js",
-    title: "Phiên hoạt động & Quản lý Bảo mật",
+    title: "Tài khoản",
     description:
-      "Giám sát các phiên trình duyệt được mã hóa và đảm bảo ranh giới danh tính trên các dịch vụ song phương.",
+      "Quản lý thông tin hồ sơ cá nhân, xác thực đa yếu tố và các phiên đăng nhập đang hoạt động.",
     refreshBtn: "Làm mới trạng thái",
     profileTitle: "Hồ sơ cá nhân",
     profileDesc:
@@ -109,10 +107,9 @@ const securityCopy: Record<
     actionColumn: "Hành động",
   },
   en: {
-    gateBadge: "Auth.js Security Gate",
-    title: "Security & Active Sessions",
+    title: "Account",
     description:
-      "Monitor cryptographic browser sessions and ensure identity boundaries across bilateral services.",
+      "Manage personal account details, multi-factor authentication, and active sign-in sessions.",
     refreshBtn: "Refresh Status",
     profileTitle: "Personal Profile",
     profileDesc:
@@ -159,10 +156,9 @@ const securityCopy: Record<
     actionColumn: "Action",
   },
   ru: {
-    gateBadge: "Шлюз безопасности Auth.js",
-    title: "Безопасность и активные сессии",
+    title: "Учётная запись",
     description:
-      "Мониторинг зашифрованных сессий браузера и обеспечение границ безопасности двусторонних сервисов.",
+      "Управление личным профилем, многофакторной аутентификацией и активными сессиями.",
     refreshBtn: "Обновить статус",
     profileTitle: "Личный профиль",
     profileDesc:
@@ -234,7 +230,16 @@ export default function SecurityClientPage() {
 
   const handleRevokeSession = async (session = sessionToRevoke) => {
     if (!session) return;
-    if (!(await confirmAction({ title: session.current ? t.modalSignOutTitle : t.modalRevokeTitle, text: session.current ? t.modalSignOutDesc : t.modalRevokeDesc, isDestructive: true })).isConfirmed) return;
+    if (
+      !(
+        await confirmAction({
+          title: session.current ? t.modalSignOutTitle : t.modalRevokeTitle,
+          text: session.current ? t.modalSignOutDesc : t.modalRevokeDesc,
+          isDestructive: true,
+        })
+      ).isConfirmed
+    )
+      return;
     setActionError(null);
     try {
       await sessionState.revokeSession.mutateAsync(session.id);
@@ -260,7 +265,16 @@ export default function SecurityClientPage() {
   };
 
   const handleRevokeOthers = async () => {
-    if (!(await confirmAction({ title: t.modalOthersTitle, text: t.modalOthersDesc, isDestructive: true })).isConfirmed) return;
+    if (
+      !(
+        await confirmAction({
+          title: t.modalOthersTitle,
+          text: t.modalOthersDesc,
+          isDestructive: true,
+        })
+      ).isConfirmed
+    )
+      return;
     setActionError(null);
     try {
       await sessionState.revokeOtherSessions.mutateAsync();
@@ -304,32 +318,14 @@ export default function SecurityClientPage() {
 
   return (
     <>
-      <main className="mx-auto w-full max-w-7xl space-y-6 p-4 sm:p-6 lg:p-8">
-        <header className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <div className="min-w-0 space-y-5 p-4 text-text-primary sm:p-6 lg:p-8">
+        <header className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[.12em] text-[var(--accent-primary)]">
-              {t.gateBadge}
-            </p>
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-text-primary">
-              {t.title}
-            </h1>
-            <p className="mt-1 max-w-3xl text-sm text-text-secondary">
+            <h1 className="text-3xl font-bold tracking-[-.035em]">{t.title}</h1>
+            <p className="mt-1 max-w-3xl text-base leading-6 text-text-secondary">
               {t.description}
             </p>
           </div>
-          <button
-            type="button"
-            onClick={triggerRefresh}
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-card-border bg-card-background px-4 text-sm font-semibold text-text-primary hover:bg-card-surface-area"
-          >
-            <span
-              className="material-symbols-outlined text-lg"
-              aria-hidden="true"
-            >
-              refresh
-            </span>
-            {t.refreshBtn}
-          </button>
         </header>
 
         <section
@@ -561,7 +557,7 @@ export default function SecurityClientPage() {
             </p>
           ) : null}
         </section>
-      </main>
+      </div>
 
       {showProfileDialog && (
         <ProfileDialog

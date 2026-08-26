@@ -4,7 +4,6 @@ export interface WorkspaceNavEntry {
   labelKey: string;
   icon: string;
   requiredCapabilities?: string[];
-
 }
 
 export interface WorkspaceNavSection {
@@ -14,22 +13,13 @@ export interface WorkspaceNavSection {
   requiredCapabilities?: string[];
 }
 
-
 export interface WorkspacePersona {
   key: string;
   name: string;
   matchCapabilities: string[];
 }
 
-export const WORKSPACE_MEMBER_CAPABILITIES = [
-  "collab.proposals.create",
-  "reviews.assignments.view_assigned",
-  "collab.proposals.endorse",
-  "collab.opportunities.create",
-  "collab.proposals.screen",
-  "reviews.assignments.manage",
-  "collab.decisions.issue_foundation",
-] as const;
+export const WORKSPACE_MEMBER_CAPABILITIES = ["portal.member.access"] as const;
 
 export const WORKSPACE_PERSONAS: Record<string, WorkspacePersona> = {
   SUPER_ADMIN: {
@@ -50,56 +40,100 @@ export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
     labelKey: "networkWorkspace",
     requiredCapabilities: [...WORKSPACE_MEMBER_CAPABILITIES],
     items: [
-      { key: "workspace_overview", href: "/workspace", labelKey: "overview", icon: "home", requiredCapabilities: [...WORKSPACE_MEMBER_CAPABILITIES] },
+      {
+        key: "workspace_overview",
+        href: "/workspace",
+        labelKey: "overview",
+        icon: "home",
+        requiredCapabilities: [...WORKSPACE_MEMBER_CAPABILITIES],
+      },
+      {
+        key: "workspace_publish",
+        href: "/workspace/publish",
+        labelKey: "publish",
+        icon: "post_add",
+        requiredCapabilities: [...WORKSPACE_MEMBER_CAPABILITIES],
+      },
     ],
   },
-
   {
     key: "administration",
     labelKey: "administration",
     items: [
-      { key: "governance", href: "/admin/access", labelKey: "governance", icon: "policy", requiredCapabilities: ["iam.roles.manage"] },
+      {
+        key: "governance",
+        href: "/admin/access",
+        labelKey: "governance",
+        icon: "policy",
+        requiredCapabilities: ["iam.roles.manage"],
+      },
     ],
   },
   {
     key: "account",
-    labelKey: "account",
+    labelKey: "accountSection",
     items: [
-      { key: "account_profile", href: "/account", labelKey: "accountProfile", icon: "person" },
-      { key: "sessions_security", href: "/security", labelKey: "security", icon: "shield_lock" },
+      {
+        key: "sessions_security",
+        href: "/security",
+        labelKey: "account",
+        icon: "person",
+      },
     ],
   },
 ];
 
-export function hasCapability(userCapabilities: string[], required?: string | string[]): boolean {
-  if (!required || (Array.isArray(required) && required.length === 0)) return true;
+export function hasCapability(
+  userCapabilities: string[],
+  required?: string | string[],
+): boolean {
+  if (!required || (Array.isArray(required) && required.length === 0))
+    return true;
   if (Array.isArray(required)) {
     return required.some((cap) => userCapabilities.includes(cap));
   }
   return userCapabilities.includes(required);
 }
 
-export function filterNavSections(userCapabilities: string[] = []): WorkspaceNavSection[] {
-  const allowedSections = hasCapability(userCapabilities, ["iam.roles.manage", "iam.users.manage"])
-    ? WORKSPACE_NAV_REGISTRY.filter((section) => section.key !== "workspace_overview")
+export function filterNavSections(
+  userCapabilities: string[] = [],
+): WorkspaceNavSection[] {
+  const allowedSections = hasCapability(userCapabilities, [
+    "iam.roles.manage",
+    "iam.users.manage",
+  ])
+    ? WORKSPACE_NAV_REGISTRY.filter(
+        (section) => section.key !== "workspace_overview",
+      )
     : WORKSPACE_NAV_REGISTRY;
 
-  return allowedSections.filter((section) =>
-    hasCapability(userCapabilities, section.requiredCapabilities),
-  ).map((section) => {
-    const visibleItems = section.items.filter((item) => hasCapability(userCapabilities, item.requiredCapabilities));
-    return {
-      ...section,
-      items: visibleItems,
-    };
-  }).filter((section) => section.items.length > 0);
+  return allowedSections
+    .filter((section) =>
+      hasCapability(userCapabilities, section.requiredCapabilities),
+    )
+    .map((section) => {
+      const visibleItems = section.items.filter((item) =>
+        hasCapability(userCapabilities, item.requiredCapabilities),
+      );
+      return {
+        ...section,
+        items: visibleItems,
+      };
+    })
+    .filter((section) => section.items.length > 0);
 }
 
-export function resolveUserPersonas(userCapabilities: string[] = []): WorkspacePersona[] {
-  if (hasCapability(userCapabilities, ["iam.roles.manage", "iam.users.manage"])) {
+export function resolveUserPersonas(
+  userCapabilities: string[] = [],
+): WorkspacePersona[] {
+  if (
+    hasCapability(userCapabilities, ["iam.roles.manage", "iam.users.manage"])
+  ) {
     return [WORKSPACE_PERSONAS.SUPER_ADMIN];
   }
-  return WORKSPACE_PERSONAS.WORKSPACE_MEMBER.matchCapabilities.some((cap) => userCapabilities.includes(cap))
+  return WORKSPACE_PERSONAS.WORKSPACE_MEMBER.matchCapabilities.some((cap) =>
+    userCapabilities.includes(cap),
+  )
     ? [WORKSPACE_PERSONAS.WORKSPACE_MEMBER]
     : [];
 }

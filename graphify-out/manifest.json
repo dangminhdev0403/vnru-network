@@ -1045,9 +1045,9 @@
     "semantic_hash": "64ec3788e9ee9ca1a23844e02afe7b48"
   },
   "frontend/html-templates/promax.js": {
-    "mtime": 1787426426.7327225,
-    "ast_hash": "0ab72b3b5f7ca7ad21fe7f45c269c46f",
-    "semantic_hash": "0ab72b3b5f7ca7ad21fe7f45c269c46f"
+    "mtime": 1787748335.4001417,
+    "ast_hash": "46f5f2c035e5909ee7fada6ee73ea7c5",
+    "semantic_hash": "46f5f2c035e5909ee7fada6ee73ea7c5"
   },
   "frontend/html-templates/iam.html": {
     "mtime": 1787735172.334552,
@@ -1058,16 +1058,6 @@
     "mtime": 1787426426.733731,
     "ast_hash": "94b1dcd19b7ac4793cd1dd0b8a15de35",
     "semantic_hash": ""
-  },
-  "secrets/dev-actor-session-bridge.js": {
-    "mtime": 1787457004.040519,
-    "ast_hash": "ee8921d26055e5c8cafe62afe81fd240",
-    "semantic_hash": "ee8921d26055e5c8cafe62afe81fd240"
-  },
-  "secrets/promax-actor-preflight.js": {
-    "mtime": 1787455634.3124337,
-    "ast_hash": "808085a49030521f7d429a41fcfef0e0",
-    "semantic_hash": "808085a49030521f7d429a41fcfef0e0"
   },
   "frontend/app/(workspace)/account/page.tsx": {
     "mtime": 1787507335.141055,
@@ -1793,5 +1783,10 @@
     "mtime": 1787744271.123683,
     "ast_hash": "b9bf5445b0c905a0e0a5dd34a5843965",
     "semantic_hash": "b9bf5445b0c905a0e0a5dd34a5843965"
+  },
+  "frontend/tests/no-keycloak.test.mjs": {
+    "mtime": 1787748405.3553767,
+    "ast_hash": "3f71b353ac1c933767c8c7893ede95dc",
+    "semantic_hash": "3f71b353ac1c933767c8c7893ede95dc"
   }
 }

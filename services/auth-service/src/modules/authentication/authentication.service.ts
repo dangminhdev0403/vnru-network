@@ -24,6 +24,9 @@ export interface AuthJsExchangeInput {
 
 export interface AuthenticatedUser {
   userId: string;
+  email: string | null;
+  fullName: string | null;
+  roles: string[];
   sessionId: string;
   activeContext: { contextType: string; contextId: string } | null;
   capabilities: string[];
@@ -89,14 +92,22 @@ export class AuthenticationService {
             contextId: session.activeContextId,
           }
         : null;
-    const capabilities = activeContext
-      ? await this.accessControlService.resolveCapabilities({
-          userId: session.userId,
-          ...activeContext,
-        })
-      : [];
+    const authorizationInput = activeContext
+      ? { userId: session.userId, ...activeContext }
+      : null;
+    const [capabilities, roles] = authorizationInput
+      ? await Promise.all([
+          this.accessControlService.resolveCapabilities(authorizationInput),
+          this.accessControlService.resolveActiveRoleNames(authorizationInput),
+        ])
+      : [[], []];
+    const fullName =
+      [user.firstName, user.lastName].filter(Boolean).join(' ').trim() || null;
     return {
       userId: session.userId,
+      email: user.email ?? null,
+      fullName,
+      roles,
       sessionId: session.id,
       activeContext,
       capabilities,

@@ -44,7 +44,7 @@ const COPY: Record<
     workspace: "Không gian làm việc",
   },
   en: {
-    brandTitle: "Mạng lưới tri thức Nga - Việt",
+    brandTitle: "Russia - Vietnam Knowledge Network",
     home: "Home",
     about: "About",
     news: "News",
@@ -53,7 +53,7 @@ const COPY: Record<
     workspace: "Workspace",
   },
   ru: {
-    brandTitle: "Mạng lưới tri thức Nga - Việt",
+    brandTitle: "Сеть знаний Россия – Вьетнам",
     home: "Главная",
     about: "О сети",
     news: "Новости",
@@ -107,12 +107,12 @@ export function GuestPublicNav({
       <div className="mx-auto flex h-[74px] max-w-[1460px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex min-w-0 shrink-0 items-center gap-3"
+          className="flex min-w-0 shrink-0 items-center gap-3.5"
           aria-label={t.brandTitle}
           onClick={() => setClickedKey("home")}
         >
-          <BrandMark className="size-11 shadow-xs" />
-          <strong className="hidden truncate text-base font-extrabold text-slate-950 sm:block">
+          <BrandMark className="size-[52px] shadow-xs" />
+          <strong className="hidden truncate text-base lg:text-lg font-black tracking-tight text-slate-950 sm:block">
             {t.brandTitle}
           </strong>
         </Link>

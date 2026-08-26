@@ -124,6 +124,7 @@ describe('SessionService', () => {
       await service.createSession({ userId: 'usr-admin', ttlMs: 60_000 });
 
       expect(prisma.session.create).toHaveBeenCalledWith({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         data: expect.objectContaining({
           activeContextType: 'PLATFORM',
           activeContextId: 'GLOBAL',

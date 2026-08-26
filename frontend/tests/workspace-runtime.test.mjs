@@ -16,7 +16,7 @@ test("workspace root renders the unified member dashboard while legacy IAM route
   assert.match(workspace, /UnifiedWorkspaceDashboard/);
   assert.match(guard, /isSystemAdministrator\(capabilities\)/);
   assert.match(guard, /resolveLandingPath\(capabilities\) !== "\/workspace"/);
-  assert.match(iam, /redirect\("\/account"\)/);
+  assert.match(iam, /redirect\("\/security"\)/);
   assert.match(iamSecurity, /redirect\("\/security"\)/);
 });
 
@@ -28,13 +28,19 @@ test("authenticated shell contains one member workspace and canonical IAM bridge
     read("app/(workspace)/layout.tsx"),
   ]);
 
-  for (const href of ["/workspace", "/account", "/security", "/admin/access"]) {
+  for (const href of ["/workspace", "/security", "/admin/access"]) {
     assert.match(registry, new RegExp(`href: "${href}`));
   }
-  assert.doesNotMatch(registry, /href: "\/workspace\/(researcher|reviewer|organization|collaboration|decisions|enterprise|leadership)"/);
+  assert.doesNotMatch(
+    registry,
+    /href: "\/workspace\/(researcher|reviewer|organization|collaboration|decisions|enterprise|leadership)"/,
+  );
   assert.doesNotMatch(layout, /DemoWorkflowProvider/);
   assert.doesNotMatch(registry, /href: "\/governance"/);
   assert.doesNotMatch(header, /searchPlaceholder|\/admin\/catalogs/);
+  assert.match(header, /roleName/);
+  assert.match(header, /currentUser\.data\?\.roles\?\.\[0\]/);
+  assert.match(header, /SYSTEM_ADMIN/);
   assert.match(proxy, /"\/workspace\/:path\*"/);
   assert.match(proxy, /isSystemAdministrator\(capabilities\)/);
   assert.match(proxy, /target\.pathname = "\/admin\/access"/);
@@ -49,7 +55,10 @@ test("unified workspace presents member-only content access without fake workflo
     read("app/experts/page.tsx"),
     read("app/opportunities/page.tsx"),
   ]);
-  assert.doesNotMatch(dashboard, /useDemoWorkflow|WorkflowStepper|ActivityTimeline|WorkspacePreviewNotice/);
+  assert.doesNotMatch(
+    dashboard,
+    /useDemoWorkflow|WorkflowStepper|ActivityTimeline|WorkspacePreviewNotice/,
+  );
   for (const href of ["/news", "/knowledge", "/experts", "/opportunities"]) {
     assert.match(dashboard, new RegExp(`href: "${href}"`));
   }
@@ -58,6 +67,9 @@ test("unified workspace presents member-only content access without fake workflo
     [experts, "/experts"],
     [opportunities, "/opportunities"],
   ]) {
-    assert.match(source, new RegExp(`requireMemberSession\\(\"${returnTo}\"\\)`));
+    assert.match(
+      source,
+      new RegExp(`requireMemberSession\\(\"${returnTo}\"\\)`),
+    );
   }
 });

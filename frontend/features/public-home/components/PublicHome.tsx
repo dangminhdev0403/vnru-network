@@ -11,8 +11,8 @@ import { confirmAction } from "@/lib/alerts";
 
 const HERO_STATIC_TITLE: Record<Locale, string> = {
   vi: "Mạng lưới tri thức Nga - Việt",
-  ru: "Mạng lưới tri thức Nga - Việt",
-  en: "Mạng lưới tri thức Nga - Việt",
+  ru: "Сеть знаний Россия – Вьетнам",
+  en: "Russia - Vietnam Knowledge Network",
 };
 
 const HERO_FADE_DURATION_MS = 650;

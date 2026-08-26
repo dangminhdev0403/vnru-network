@@ -19,6 +19,7 @@ Do not edit until this gate is complete. In the final report, list `Docs read:` 
 
 ## Execution rules
 
+- Local development uses the existing `postgres-local` Docker container and its `vnru_auth_local` database. Do not create another project PostgreSQL container or volume for dev. Do not infer or change VPS database policy from this local rule.
 - **Ponytail full is always active**, including corrective runs: understand the flow first; then stop at the first sufficient rung: delete/skip, reuse existing code, standard library, native platform, installed dependency, one line, minimum new code.
 - Preserve unrelated dirty/untracked work. Never reset, checkout, overwrite, or delete it.
 - No dependency, `package.json`, or lockfile change without explicit approval.
@@ -81,7 +82,7 @@ UI is validated by code checks and static gates during development. For web UI w
 
 - `secrets/account.json` is the ignored, local source of truth for test login accounts. Read it at test time; each entry's `role` identifies the corresponding test persona. Never copy usernames/passwords into source, docs, plans, prompts, logs, screenshots, commits, or final reports.
 - Select an account by exact `environment` and `role`; use its `loginUrl` and `realm`. Nested entries inherit the surrounding environment/login context. If the requested role is absent, report it instead of reusing a broader role or inventing credentials.
-- Missing login identity: create/provision it in the configured Keycloak realm; Keycloak owns credentials. Missing application role/context: assign it through the canonical IAM Administration surface/API (`/admin/access`, `POST /api/v1/admin/role-assignments`) using an authorized administrator. Never grant `SUPER_ADMIN` as a substitute; the API intentionally forbids assigning it.
+- Missing login identity: add it to the ignored runtime account config and provision its application identity through the existing demo seed. Missing application role/context: assign it through the canonical IAM Administration surface/API (`/admin/access`, `POST /api/v1/admin/role-assignments`) using an authorized administrator. Never grant `SUPER_ADMIN` as a substitute; the API intentionally forbids assigning it.
 - Keep `secrets/account.json` ignored and local. Do not edit, delete, rotate, or expose existing accounts without explicit approval.
 
 ## Navigation

@@ -18,7 +18,10 @@ describe('AuthenticationService Auth.js bridge', () => {
     validateSession: jest.fn(),
     revokeSession: jest.fn(),
   };
-  const accessControlService = { resolveCapabilities: jest.fn() };
+  const accessControlService = {
+    resolveCapabilities: jest.fn(),
+    resolveActiveRoleNames: jest.fn(),
+  };
   const service = new AuthenticationService(
     identityService as never,
     sessionService as never,
@@ -57,5 +60,37 @@ describe('AuthenticationService Auth.js bridge', () => {
         signature: '0'.repeat(64),
       }),
     ).rejects.toBeInstanceOf(UnauthorizedException);
+  });
+
+  it('returns profile and active role names for the header', async () => {
+    sessionService.validateSession.mockResolvedValue({
+      id: 'session-1',
+      userId: 'user-1',
+      activeContextType: 'PLATFORM',
+      activeContextId: 'GLOBAL',
+      authenticationLevel: 'PASSWORD',
+    });
+    identityService.findById.mockResolvedValue({
+      ...identity,
+      firstName: 'Hung',
+      lastName: 'Nguyen',
+    });
+    accessControlService.resolveCapabilities.mockResolvedValue([
+      'portal.member.access',
+    ]);
+    accessControlService.resolveActiveRoleNames.mockResolvedValue([
+      'PORTAL_MEMBER',
+    ]);
+
+    await expect(service.getCurrentUser('session-token')).resolves.toEqual({
+      userId: 'user-1',
+      email: 'member@example.test',
+      fullName: 'Hung Nguyen',
+      roles: ['PORTAL_MEMBER'],
+      sessionId: 'session-1',
+      activeContext: { contextType: 'PLATFORM', contextId: 'GLOBAL' },
+      capabilities: ['portal.member.access'],
+      authenticationLevel: 'PASSWORD',
+    });
   });
 });

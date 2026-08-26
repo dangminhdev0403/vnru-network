@@ -1,5 +1,6 @@
 export { IdentityModule } from './identity.module';
 export { IdentityService, IDENTITY_PRISMA } from './identity.service';
+export { createLocalPasswordDigest } from './local-credential.service';
 export type {
   ResolveExternalIdentityInput,
   IdentityUser,

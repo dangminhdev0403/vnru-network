@@ -12,14 +12,34 @@ export interface ConfirmActionOptions {
 }
 
 const alertCopy = {
-  vi: { confirm: "Xác nhận", cancel: "Hủy", close: "Đóng", understood: "Đã hiểu", action: "Xác nhận thao tác?" },
-  en: { confirm: "Confirm", cancel: "Cancel", close: "Close", understood: "Understood", action: "Confirm this action?" },
-  ru: { confirm: "Подтвердить", cancel: "Отмена", close: "Закрыть", understood: "Понятно", action: "Подтвердить действие?" },
+  vi: {
+    confirm: "Xác nhận",
+    cancel: "Hủy",
+    close: "Đóng",
+    understood: "Đã hiểu",
+    action: "Xác nhận thao tác?",
+  },
+  en: {
+    confirm: "Confirm",
+    cancel: "Cancel",
+    close: "Close",
+    understood: "Understood",
+    action: "Confirm this action?",
+  },
+  ru: {
+    confirm: "Подтвердить",
+    cancel: "Отмена",
+    close: "Закрыть",
+    understood: "Понятно",
+    action: "Подтвердить действие?",
+  },
 } as const;
 
 function currentAlertCopy() {
   if (typeof document === "undefined") return alertCopy.vi;
-  const locale = document.cookie.match(/(?:^|; )vnru_locale=(vi|en|ru)(?:;|$)/)?.[1] as keyof typeof alertCopy | undefined;
+  const locale = document.cookie.match(
+    /(?:^|; )vnru_locale=(vi|en|ru)(?:;|$)/,
+  )?.[1] as keyof typeof alertCopy | undefined;
   return alertCopy[locale ?? "vi"];
 }
 
@@ -27,7 +47,13 @@ export interface ToastOptions {
   title: string;
   icon?: "success" | "error" | "info" | "warning";
   duration?: number;
-  position?: "top-end" | "top-start" | "bottom-end" | "bottom-start" | "top" | "center";
+  position?:
+    | "top-end"
+    | "top-start"
+    | "bottom-end"
+    | "bottom-start"
+    | "top"
+    | "center";
 }
 
 /**
@@ -62,7 +88,7 @@ export async function confirmAction({
         ? "vnru-swal-confirm-btn vnru-swal-danger-btn"
         : "vnru-swal-confirm-btn",
       cancelButton: "vnru-swal-cancel-btn",
-      actions: "flex gap-3 justify-end mt-4",
+      actions: "flex gap-3.5 justify-center w-full mt-6",
     },
     showClass: {
       popup: "animate-scale-in",

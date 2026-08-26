@@ -1,0 +1,1254 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: Architecture/**/*.md, AGENTS.md, README.md, docs/{README,ARCHITECTURE,RULES,API_SPEC,RBAC_ARCHITECTURE,DEPLOYMENT}.md, frontend/AGENTS.md, frontend/docs/{ARCHITECTURE,RULES,CONTRACT_GUIDE,MODULE_GUIDE,QUERY_RESOURCE_GUIDE,RUNTIME_UI_GUIDE}.md, services/AGENTS.md, services/docs/{ARCHITECTURE,RULES,SERVICE_GUIDE,MIGRATION_GUIDE}.md
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+Architecture/
+  ARCHITECTURE.md
+  GUIDES.md
+  MODULE_MAP.md
+  README.md
+  RULES.md
+docs/
+  API_SPEC.md
+  ARCHITECTURE.md
+  DEPLOYMENT.md
+  RBAC_ARCHITECTURE.md
+  README.md
+  RULES.md
+frontend/
+  docs/
+    ARCHITECTURE.md
+    CONTRACT_GUIDE.md
+    MODULE_GUIDE.md
+    QUERY_RESOURCE_GUIDE.md
+    RULES.md
+    RUNTIME_UI_GUIDE.md
+  AGENTS.md
+services/
+  docs/
+    ARCHITECTURE.md
+    MIGRATION_GUIDE.md
+    RULES.md
+    SERVICE_GUIDE.md
+  AGENTS.md
+AGENTS.md
+README.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="Architecture/ARCHITECTURE.md">
+# VN-RU Monorepo Architecture
+
+## Decision
+
+VN-RU is a product workspace with two deployables. The NestJS API is the modular monolith. The repository itself is not a single runtime process.
+
+```text
+Browser
+  -> frontend/                 Next.js web + BFF
+     -> HTTP /api/v1
+        -> services/auth-service/  NestJS modular monolith
+           -> PostgreSQL auth_db
+```
+
+## Dependency direction
+
+```text
+Route/UI
+  -> feature/server boundary
+  -> Next.js BFF when session isolation is needed
+  -> versioned HTTP contract
+  -> NestJS controller
+  -> owning application service
+  -> owning persistence contract
+  -> shared DatabaseClient/PostgreSQL
+```
+
+Rules:
+
+- Frontend never imports backend source or accesses PostgreSQL.
+- Backend never depends on frontend implementation.
+- Controllers map transport; application services own workflows and authorization decisions.
+- Backend modules call exported application contracts, never another module's repository/table internals.
+- One `DatabaseModule` owns one Prisma client/pool; domain modules retain model and mutation ownership.
+- No internal HTTP, broker, distributed transaction, service mesh or module-specific database.
+
+## Repository shape
+
+```text
+vnru-network/
+├── Architecture/          architecture entry and ownership map
+├── frontend/              Next.js deployable
+├── services/
+│   └── auth-service/      NestJS API modular monolith (legacy name retained)
+├── docs/                  global operational/product contracts
+├── shared/                retained templates/artifacts; not a runtime boundary
+├── infra/                 reverse-proxy/runtime infrastructure
+└── docker-compose*.yml    local/production composition
+```
+
+## Extraction policy
+
+A module is not a microservice. Consider extraction only for measured independent deployment, scaling, team ownership, SLA or compliance pressure. Until then, keep calls in-process and persistence transactional inside `auth_db`.
+</file>
+
+<file path="Architecture/GUIDES.md">
+# Task Guide Router
+
+Read only the guide matching the task.
+
+| Task | Guide |
+| --- | --- |
+| Frontend architecture | [`../frontend/docs/ARCHITECTURE.md`](../frontend/docs/ARCHITECTURE.md) |
+| Frontend module/feature | [`../frontend/docs/MODULE_GUIDE.md`](../frontend/docs/MODULE_GUIDE.md) |
+| Frontend API/session | [`../frontend/docs/CONTRACT_GUIDE.md`](../frontend/docs/CONTRACT_GUIDE.md) |
+| Frontend server state | [`../frontend/docs/QUERY_RESOURCE_GUIDE.md`](../frontend/docs/QUERY_RESOURCE_GUIDE.md) |
+| Runtime UI | [`../frontend/docs/RUNTIME_UI_GUIDE.md`](../frontend/docs/RUNTIME_UI_GUIDE.md) |
+| Backend architecture/module | [`../services/docs/SERVICE_GUIDE.md`](../services/docs/SERVICE_GUIDE.md) |
+| Backend migration | [`../services/docs/MIGRATION_GUIDE.md`](../services/docs/MIGRATION_GUIDE.md) |
+| Backend multilingual | [`../services/docs/MULTILINGUAL_BACKEND_PLAN.md`](../services/docs/MULTILINGUAL_BACKEND_PLAN.md) |
+| API contract | [`../docs/API_SPEC.md`](../docs/API_SPEC.md) |
+| RBAC | [`../docs/RBAC_ARCHITECTURE.md`](../docs/RBAC_ARCHITECTURE.md) |
+| Deployment | [`../docs/DEPLOYMENT.md`](../docs/DEPLOYMENT.md) |
+| Verification | [`../docs/VERIFICATION_GUIDE.md`](../docs/VERIFICATION_GUIDE.md) |
+
+Do not treat plans, generated Graphify reports or retained templates as current runtime capability.
+</file>
+
+<file path="Architecture/MODULE_MAP.md">
+# VN-RU Module Map
+
+Operational ownership map. Current source is capability truth; absent modules are not implemented.
+
+## Current backend modules
+
+| Module | Owns | Public/internal seam |
+| --- | --- | --- |
+| `identity` | users, external identities, member applications/profile state | `IdentityService`; public membership-application controller |
+| `authentication` | Auth.js assertion exchange, login/logout orchestration, authenticated request context | `AuthenticationService`, `AuthenticatedRequestGuard`, `/api/v1/auth/*` |
+| `session` | opaque session lifecycle, expiry, revoke, active-context rotation | `SessionService` |
+| `access-control` | roles, permissions, assignments, capability resolution, IAM audit mutations | `AccessControlService`, `IamAdminService`, `/api/v1/admin/*` |
+| `database` | one Prisma client/pool and shutdown lifecycle | `DatabaseClient`; infrastructure only, no business ownership |
+
+## Ownership rules
+
+1. Identity data is written by `identity` only.
+2. Session state is written by `session`; IAM status changes may revoke sessions atomically through the existing access-control workflow.
+3. Roles, permissions and assignments are written by `access-control` only.
+4. `authentication` orchestrates identity, session and access-control; it does not own their tables.
+5. `database` provides connectivity only. Sharing a client does not grant cross-module model ownership.
+6. `SUPER_ADMIN` is technical IAM administration, not portal-content management.
+
+## Frontend ownership
+
+| Area | Owner |
+| --- | --- |
+| `app/` | routes and composition only |
+| `features/` | feature UI, API/service orchestration and feature state |
+| `components/shared/` | presentation primitives/shells only |
+| `app/api/` | BFF/session-sensitive transport boundary |
+| backend authorization | never frontend-owned |
+
+## Future modules
+
+Knowledge, content and portal-management capabilities must enter `services/auth-service/src/modules/` as complete vertical slices. Do not create empty folders/modules from target-state prose.
+
+Before adding a module answer: owner, actor, contract impact, authorization impact, persistence owner, smallest testable slice.
+</file>
+
+<file path="Architecture/README.md">
+# VN-RU Architecture Hub
+
+This folder is the entry point for architecture and task routing. Detailed rules remain in their owning scope; do not duplicate them here.
+
+## Runtime model
+
+The repository is a product workspace/monorepo, not one runtime layer:
+
+- `frontend/`: Next.js web deployable and BFF.
+- `services/auth-service/`: current NestJS API modular monolith; the legacy folder name avoids destructive runtime/deploy renames.
+- PostgreSQL `auth_db`: one database owned exclusively by the API.
+- HTTP `/api/v1`: frontend/backend integration seam.
+
+## Read order
+
+1. [`ARCHITECTURE.md`](ARCHITECTURE.md)
+2. [`MODULE_MAP.md`](MODULE_MAP.md)
+3. [`RULES.md`](RULES.md)
+4. One task guide via [`GUIDES.md`](GUIDES.md)
+
+Current source, manifests, schemas, migrations and tests override target-state prose. Do not load every Markdown file by default.
+
+## Task routing
+
+| Task | Required docs |
+| --- | --- |
+| Architecture or ownership | `ARCHITECTURE.md`, `MODULE_MAP.md`, `RULES.md` |
+| Backend/API | `MODULE_MAP.md`, `../services/docs/ARCHITECTURE.md`, `../services/docs/RULES.md`, one backend guide |
+| Frontend/UI | `MODULE_MAP.md`, `../frontend/docs/ARCHITECTURE.md`, `../frontend/docs/RULES.md`, one frontend guide |
+| API contract | `../docs/API_SPEC.md`, `../frontend/docs/CONTRACT_GUIDE.md`, affected producer/consumer source |
+| Deployment | `../docs/DEPLOYMENT.md`, current Compose/deploy scripts |
+| Verification | `../docs/VERIFICATION_GUIDE.md` |
+
+## Canonical detailed docs
+
+- Global: [`../docs/README.md`](../docs/README.md)
+- Frontend: [`../frontend/docs/ARCHITECTURE.md`](../frontend/docs/ARCHITECTURE.md)
+- Backend: [`../services/docs/ARCHITECTURE.md`](../services/docs/ARCHITECTURE.md)
+- API: [`../docs/API_SPEC.md`](../docs/API_SPEC.md)
+- RBAC: [`../docs/RBAC_ARCHITECTURE.md`](../docs/RBAC_ARCHITECTURE.md)
+</file>
+
+<file path="Architecture/RULES.md">
+# VN-RU Monorepo Rules
+
+## Source precedence
+
+Current manifests, source, schemas, migrations and tests are capability truth. Documentation describes constraints and current direction; it does not authorize missing packages, routes or infrastructure.
+
+## Workspace boundaries
+
+- Repository = product workspace/monorepo.
+- `frontend/` = web deployable and BFF.
+- `services/auth-service/` = API modular monolith.
+- PostgreSQL = API-owned; frontend has no database access.
+- HTTP contract = frontend/backend integration seam.
+
+## Implementation
+
+- Preserve unrelated dirty work.
+- No package/lockfile change without explicit approval.
+- Prefer the smallest complete vertical slice; no speculative scaffolding.
+- Keep routes/controllers thin; business workflow belongs to owning application services.
+- Another backend module must not write an owner's tables directly.
+- Cross-module interaction is in-process through exported contracts.
+- Validate every trust boundary. Backend authorization remains authoritative.
+- Never put secrets, credentials or connection strings in source/docs/logs.
+
+## Documentation
+
+- `Architecture/` is the routing hub and ownership map.
+- Existing `docs/`, `frontend/docs/` and `services/docs/` remain canonical for detailed scope rules.
+- Do not duplicate endpoint catalogs when controller/source or generated contracts are authoritative.
+- Update `MODULE_MAP.md` when ownership or dependency direction changes.
+- Final reports list exact docs read, files changed, commands/results and blockers.
+
+## Non-goals
+
+No premature microservices, API gateway, broker, Redis, service mesh, distributed transaction, database-per-module, generic repository layer or empty future folders.
+</file>
+
+<file path="docs/README.md">
+# Documentation Index
+
+The repository is a product workspace with a Next.js deployable and one NestJS API modular monolith.
+
+Read in this order:
+
+1. [`../AGENTS.md`](../AGENTS.md)
+2. Architecture hub: [`../Architecture/README.md`](../Architecture/README.md)
+3. This global operational/product documentation
+4. One frontend/backend task guide selected through [`../Architecture/GUIDES.md`](../Architecture/GUIDES.md)
+
+Future backend modules must be added inside the existing modular monolith, not as microservices. Retained templates or synthetic display data are not implemented backend capabilities.
+</file>
+
+<file path="frontend/docs/CONTRACT_GUIDE.md">
+# Frontend API Contract Guide
+
+## Purpose
+
+Define how frontend code consumes backend APIs, generated contracts, route handlers, and authentication/session-sensitive flows.
+
+This document focuses on frontend integration. Backend API design and authorization rules remain owned by the backend.
+
+## Standard API Flow
+
+```txt
+Route / UI
+  ↓
+Feature Hook / Query
+  ↓
+Feature Service
+  ↓
+Core HTTP Utility or Route Handler
+  ↓
+Backend API
+```
+
+## Contract Rules
+
+* Generated API artifacts should live under `src/generated/`.
+* Backend-backed feature types should use generated contracts or narrow wrappers around them.
+* Do not invent response shapes that are not backed by a backend contract.
+* Do not manually duplicate backend DTO definitions when generated contracts are available.
+* Contract changes must be synchronized through the agreed API contract workflow before frontend assumptions change.
+* Breaking contract changes require explicit coordination between frontend and backend.
+
+## HTTP Rules
+
+* Do not introduce raw backend `fetch` calls in pages, layouts, or reusable UI components.
+* Use feature services for domain-specific API calls.
+* Use core HTTP utilities for shared transport concerns.
+* Use Route Handlers for BFF/proxy behavior or session-sensitive calls.
+* Feature services must not contain UI display decisions.
+* Transport concerns must remain separate from feature presentation logic.
+
+## Generated Contracts
+
+Generated contracts are the preferred source for backend-backed types.
+
+```txt
+Backend OpenAPI
+  ↓
+Generated contract
+  ↓
+Feature service
+  ↓
+Feature hook/query
+  ↓
+UI
+```
+
+When the backend contract changes:
+
+1. Update/export the backend contract.
+2. Regenerate or synchronize frontend contract artifacts.
+3. Update affected feature wrappers.
+4. Run the relevant frontend validation.
+
+Do not silently modify generated files to represent an API that the backend does not expose.
+
+## Authentication and Session
+
+* Backend remains the authentication and authorization source of truth.
+* Frontend session state is a UX/session bridge, not a security authority.
+* Refresh tokens and sensitive credentials must remain in server-safe boundaries.
+* Client Components must never access backend refresh tokens directly.
+* Do not expose authentication secrets through browser-exposed environment variables.
+* Do not rotate refresh tokens from arbitrary Server Components.
+* Session-sensitive backend calls should use a server-safe boundary such as a Route Handler or server-side service.
+* Route protection must remain consistent with backend authorization.
+* Frontend permission checks may control visibility and UX, but must never replace backend authorization.
+
+## Authorization Context
+
+Frontend should consume the authorization context provided by the backend.
+
+Use the backend-provided:
+
+```txt
+role
+permissions
+resource/tenant scope
+```
+
+according to the active session/workspace context.
+
+Rules:
+
+* Do not infer permissions from role names.
+* Do not infer permissions from route names.
+* Do not merge unrelated roles or authorization contexts.
+* Do not assume resource access from a permission alone.
+* Treat missing authorization information as unavailable access.
+
+The frontend may hide unavailable actions, but the backend must enforce the operation.
+
+## Route Handlers and BFF
+
+Use Route Handlers when a backend call requires a server-side boundary.
+
+Valid reasons include:
+
+* session/cookie handling;
+* refresh-token handling;
+* secure backend communication;
+* request transformation required by the BFF;
+* hiding server-only configuration from the browser.
+
+Do not create Route Handlers merely to proxy every backend endpoint.
+
+If no server-side boundary is required, the feature service may communicate through the core HTTP layer according to the application's runtime model.
+
+## Error Contract
+
+Backend errors must be mapped before reaching user-facing UI.
+
+Rules:
+
+* Preserve stable backend error codes where deterministic UI behavior requires them.
+* Convert technical errors into user-facing messages.
+* Localize user-facing error messages where required.
+* Never expose raw database, provider, stack-trace, or infrastructure errors.
+* Keep error mapping close to the transport/feature boundary rather than inside reusable UI components.
+
+Standard flow:
+
+```txt
+Backend Error
+  ↓
+HTTP / Route Handler
+  ↓
+Feature Error Mapping
+  ↓
+Feature Hook / Query
+  ↓
+UI Error State
+```
+
+## Loading and Empty States
+
+API integration must distinguish:
+
+```txt
+Loading
+Empty
+Success
+Error
+Unauthorized
+Forbidden
+```
+
+Do not treat an empty result as an error.
+
+Do not use loading state as a substitute for authorization state.
+
+## Pagination
+
+Pagination parameters and response structures must follow the backend contract.
+
+Frontend must not:
+
+* invent pagination semantics;
+* assume an unbounded list;
+* calculate total counts from incomplete pages;
+* duplicate backend filtering rules.
+
+Feature query state should preserve pagination/filter state consistently with the route or product surface.
+
+## Caching
+
+Use the application's server-state/query layer for API response caching.
+
+Do not introduce custom global caches for ordinary API data.
+
+When caching API data:
+
+* use stable query keys;
+* invalidate after relevant mutations;
+* avoid duplicated cache representations;
+* respect backend data freshness requirements.
+
+Caching must not bypass authorization or resource-scope checks.
+
+## Realtime
+
+Realtime data must remain consistent with the backend API contract.
+
+Rules:
+
+* Authenticate realtime connections through the approved session mechanism.
+* Do not expose long-lived secrets to the browser.
+* Realtime events should update or invalidate feature-owned server state.
+* Do not treat realtime delivery as the only source of correctness.
+* Re-fetch or reconcile with the backend when required after reconnect or missed events.
+
+## Anti-patterns
+
+Do not:
+
+* scatter raw `fetch` calls through components;
+* manually duplicate generated API types;
+* invent backend response shapes;
+* duplicate backend business rules;
+* use frontend authorization as security;
+* expose refresh tokens or private credentials;
+* create unnecessary Route Handlers;
+* create global stores for server data;
+* introduce custom caches without a concrete requirement;
+* couple reusable UI components directly to backend endpoints.
+</file>
+
+<file path="frontend/docs/MODULE_GUIDE.md">
+# Frontend Module Guide
+
+The only implemented business module is Module 1.
+
+```text
+app route or BFF
+  -> auth/IAM feature
+  -> query resource or repository
+  -> shared HTTP utility
+  -> auth-service
+```
+
+- `features/auth`: session, account, profile, MFA and logout.
+- `features/iam`: IAM repositories/resources/hooks.
+- `features/admin/access`: user, role, permission and assignment administration.
+- `features/admin`: Module 1 administration shell and navigation.
+- `features/public-home`: standalone informational landing page.
+- `features/workspace`: shared authenticated shell navigation limited to account, security and the authorized admin bridge.
+
+Do not scaffold removed business modules without a new explicit product decision.
+</file>
+
+<file path="frontend/docs/QUERY_RESOURCE_GUIDE.md">
+# Query Resource Guide
+
+Authoritative upstream: <https://www.npmjs.com/package/@dangminhdev04032005/query-resource>
+Installed API reference: `node_modules/@dangminhdev04032005/query-resource/README.md`
+Current installed version: `0.1.1`
+
+## Rule
+
+For browser server-state, use `@dangminhdev04032005/query-resource` over raw `fetch`, direct `httpClient` calls in components, handwritten query keys, or ordinary ad-hoc TanStack Query options.
+
+Keep these outside it:
+
+- Server Components and repositories that fetch SEO-rendered content.
+- Next.js Route Handlers/BFF transport.
+- Server-only authentication helpers.
+- Purely local UI state.
+
+## Minimal pattern
+
+```ts
+const resource = createResource<Scope>()({
+  name: "publications",
+  namespace: ["vnru", "knowledge"],
+  scopeKey: (scope) => [scope.workspaceId],
+  queries: {
+    list: defineQuery({
+      inputKey: (filters: Filters) => [filters],
+      queryFn: ({ input, signal }) => repository.list(input, signal),
+    }),
+  },
+  mutations: {
+    update: defineMutation<Scope, UpdateInput, Publication>({
+      mutationFn: ({ variables }) => repository.update(variables),
+    }),
+  },
+});
+
+const bound = resource.bind(scope);
+const list = useQuery(bound.queries.list.options(filters));
+const update = useMutation(
+  bound.mutations.update.options({
+    optimistic: ({ client, cache, variables }) =>
+      cache.queries.list.patch(client, filters, (current) =>
+        current?.map((item) =>
+          item.id === variables.id ? { ...item, ...variables } : item,
+        ),
+      ),
+    onSettled: ({ client, cache }) =>
+      cache.queries.list.invalidateAll(client),
+  }),
+);
+```
+
+## Required practices
+
+1. Colocate transport in a domain repository; pass `AbortSignal` to GET requests.
+2. Let the resource generate keys from `namespace`, `scopeKey`, operation, and `inputKey`.
+3. Use generated cache helpers: `patch`, `set`, `invalidate`, or `invalidateAll`.
+4. Use optimistic updates only when rollback is safe and the expected result is deterministic.
+5. Invalidate only affected domain queries after writes.
+6. Render initial loading, error, empty, background-refetch, and stale-data states.
+7. Never mirror query data into Zustand, Context, or component state.
+8. Do not retry security mutations blindly after `401`.
+
+## Before coding
+
+Read the installed README and existing examples in `features/iam/resource.ts`, `features/iam/hooks.ts`, and `features/auth/server-state.ts`. If the installed API or upstream guidance is unclear, stop and request the authoritative guide instead of implementing raw query/cache logic.
+</file>
+
+<file path="frontend/docs/RULES.md">
+# Frontend Rules
+
+Read `../../docs/RULES.md` first. Current `frontend/package.json`, source, and tests are capability truth; target-state docs never authorize inventing missing packages or paths.
+
+## Before code
+
+1. Read `../AGENTS.md`, `docs/ARCHITECTURE.md`, this file, one matching guide, and relevant Next.js 16.3 docs under `node_modules/next/dist/docs/`.
+2. Inspect the affected route/component, every caller of a changed shared symbol, current package manifest, and nearest tests.
+3. If a named dependency/path does not exist, stop or request its separately approved setup. Do not create a substitute abstraction.
+
+## Boundaries
+
+- Prefer Server Components. Add `"use client"` only for browser APIs, events, or client hooks.
+- Presentation components render state and emit events; they do not own transport, authorization, or business workflows.
+- No raw backend `fetch`/Axios in pages, layouts, or reusable UI. Use an existing repository/service/HTTP boundary.
+- Backend authorization is authoritative. Frontend capability checks only control UX.
+- Forms select entities by human-readable labels, never raw-ID typing.
+- Show localized inline errors where possible; never expose raw backend/stack/database errors.
+- Reuse current UI primitives. Preserve responsive layout and accessibility basics.
+
+## Server state
+
+The installed `@tanstack/react-query` and `@dangminhdev04032005/query-resource` packages define this client server-state path:
+
+```text
+repository -> query-resource resource -> feature hook -> component
+```
+
+Repositories own transport and DTO mapping. Resources own keys/options/cache operations. Feature hooks own permissions, enabled guards, cross-resource coordination, navigation, and UI feedback. Every response-affecting scope/input belongs in deterministic serializable keys.
+
+Do not add a local query-resource copy or second cache abstraction. Add an app-level `QueryClient` provider only with the first approved client query consumer; no provider is needed while the app has no client server-state usage.
+
+## State
+
+- Server data stays in server loading/query cache, not a client store.
+- Shareable filters/pagination use URL state.
+- Local interaction uses React state.
+- Cross-route persistent client state uses an existing store/storage utility only when current source already provides one or the task explicitly adds it.
+
+## UI Quality & Impeccable Gate
+
+- After modifying, updating, or creating any UI component, the Agent is required to manually run `npx impeccable detect` and automatically resolve all anti-patterns (font scale, contrast, explicit button types, reduced motion) before completing the task.
+
+## Completion
+
+Run the smallest available lint/typecheck/test/build gate for touched behavior. Final report must include `Docs read:`, changed files, exact commands/results, and blockers. Do not update plans unless milestone state actually changed.
+</file>
+
+<file path="frontend/AGENTS.md">
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
+
+<!-- BEGIN:vnru-agent-routing -->
+## VN-RU mandatory project instructions
+
+Before frontend code changes, read in order:
+
+1. `../Architecture/README.md`, `../Architecture/ARCHITECTURE.md`, `../Architecture/MODULE_MAP.md`, and `../Architecture/RULES.md`
+2. `../docs/PORTAL_FOUNDATION_REFACTOR.md` for route, navigation, access-area, or capability-label work
+3. `docs/ARCHITECTURE.md` and `docs/RULES.md`
+4. One matching guide routed by `../Architecture/GUIDES.md`: `docs/MODULE_GUIDE.md`, `docs/CONTRACT_GUIDE.md`, or `docs/RUNTIME_UI_GUIDE.md`
+   - Any browser API/server-state work must also read `docs/QUERY_RESOURCE_GUIDE.md`; do not handwrite query keys/cache or call APIs directly from components.
+5. Relevant Next.js 16.3 documentation under `node_modules/next/dist/docs/`
+
+Current `package.json` is capability truth. Do not use or document an uninstalled package as active. Final report must list exact docs read.
+<!-- END:vnru-agent-routing -->
+</file>
+
+<file path="services/docs/MIGRATION_GUIDE.md">
+# Database Migration Guide
+
+Use only for a service that currently contains a database schema and migration tool. The current scaffold has no approved migration baseline; documentation must not invent one.
+
+1. Read the affected service `package.json`, schema, existing migration directory, and deployment workflow.
+2. If any prerequisite is absent, stop and request a separate approved setup slice.
+3. Never rename or rewrite an applied migration.
+4. Generate reviewable migration output with the repository’s existing tool. Do not use schema push/reset in shared, staging, or production environments.
+5. Validate status, generated client/types, focused tests, and rollback/recovery notes with commands that actually exist.
+
+Final report: exact docs/source read, migration files changed, commands/results, rollback risk.
+</file>
+
+<file path="services/docs/RULES.md">
+# Backend Modular Monolith Rules
+
+Read `../../docs/RULES.md` first. Current service manifests, source, schemas, migrations, and tests are capability truth; target-state docs never authorize inventing missing tools or infrastructure.
+
+## Before code
+
+1. Read `../AGENTS.md`, `docs/ARCHITECTURE.md`, this file, one matching guide, and the affected service manifest/README/tests.
+2. Trace the endpoint or workflow end to end. Inspect every caller of a changed shared symbol.
+3. If a package, schema, migration tool, route config, OpenAPI exporter, broker, cache, or shared contract is absent, stop or request a separately approved setup slice.
+
+## Boundaries
+
+- Controller handles transport only.
+- Application service/use case owns orchestration, authorization/resource checks, and transaction decisions.
+- Domain owns business rules; it imports no framework or infrastructure.
+- Infrastructure implements inward-facing ports for persistence/providers.
+- One backend application owns one PostgreSQL database.
+- Each domain module owns its tables, repositories and business mutations. Other modules use its typed application contract; never import its repository/entity internals or query its tables directly.
+- Cross-module calls are in-process. Do not add internal HTTP, brokers, versioned events, distributed transactions or module-specific databases.
+
+## Trust boundaries
+
+- Endpoints are private by default. Public routes require an explicit narrow allowlist plus tests for anonymous access.
+- Validate body/query/params at the controller boundary using the validation mechanism actually installed in that service.
+- Zod is preferred only after it exists in the service manifest and an approved slice wires a shared parser. Never reference an uninstalled validator.
+- Enforce resource ownership and permission scope in backend code. Frontend checks are not security.
+- Keep secrets in environment/runtime secret stores; never source/docs/log output.
+
+## Data
+
+- List APIs use explicit bounded pagination.
+- Review query shape for N+1, indexes, selected fields, and redundant reads.
+- Use a local DB transaction for multi-write invariants. No transaction for simple reads.
+- Cache only after a measured need; document key, TTL, invalidation, and stale-data risk.
+- Migrations use the service's existing tool and workflow. Never rename applied migrations or run destructive reset/push against shared/production data.
+
+## Contracts and events
+
+- Current generated OpenAPI, when present, is HTTP source of truth. Do not hand-maintain a conflicting endpoint catalog.
+- Contract changes update producer, consumers, focused tests, and contract history in one approved slice.
+- Events use stable names, versions, IDs, timestamps, producer, correlation ID, and payload. Consumers must define idempotency/retry behavior before activation.
+
+## Testing and completion
+
+Write one smallest real regression check for non-trivial behavior. Run focused tests first; then only existing build/lint/e2e gates required by impact. Final report must include `Docs read:`, root cause/objective, changed files, exact commands/results, contract/migration impact, and blockers. Never claim an unrun gate passed.
+</file>
+
+<file path="services/AGENTS.md">
+# Backend Agent Instructions
+
+Before changing anything under `services/`:
+
+1. Read `../Architecture/README.md`, `../Architecture/ARCHITECTURE.md`, `../Architecture/MODULE_MAP.md`, and `../Architecture/RULES.md`.
+2. Read `docs/ARCHITECTURE.md` and `docs/RULES.md`.
+3. Read only the matching guide routed by `../Architecture/GUIDES.md`: `docs/SERVICE_GUIDE.md`, `docs/MIGRATION_GUIDE.md`, or `docs/MULTILINGUAL_BACKEND_PLAN.md`.
+4. Read the affected service's `package.json`, nearest README/instructions, current code, and tests. Current files override target-state prose.
+
+The backend is a modular monolith. Add capabilities as internal modules; do not create standalone services, internal HTTP calls, brokers, or module-specific databases. Modules access another module only through its application contract, never its repository or tables. No package/lockfile edits without approval. Final report must list exact docs read.
+</file>
+
+<file path="docs/API_SPEC.md">
+# Module 1 API Contract Policy
+
+The current HTTP contract is owned by `auth-service`. Controllers and exported OpenAPI, when generated, are the runtime source of truth.
+
+Implemented API families:
+
+- `/api/v1/auth/*`: OIDC exchange, current session, logout and active-context switching.
+- `/api/v1/auth/profile`: application-owned member profile.
+- `/api/v1/auth/sessions/*`: session listing and revocation.
+- `/api/v1/admin/users/*`: identity administration.
+- `/api/v1/admin/roles/*`: role and permission administration.
+- `/api/v1/admin/role-assignments/*`: assignment administration.
+- `POST /api/v1/membership-applications`: public membership application intake. Stores a normalized `PENDING` application; never creates a user or role assignment.
+
+Membership application body:
+
+```json
+{
+  "fullName": "Nguyễn Văn An",
+  "email": "member@example.org",
+  "organization": "VAST",
+  "professionalRole": "Nhà nghiên cứu",
+  "interest": "Vật liệu mới và hợp tác khoa học"
+}
+```
+
+Responses: `201` accepted, `400` invalid body, `409` pending application already exists for the normalized email.
+
+Rules:
+
+- Validate all external input at the controller boundary.
+- Keep opaque session tokens in secure HttpOnly cookies.
+- Return `401` for missing/invalid authentication and `403` for insufficient capability or scope.
+- Frontend BFF routes forward the opaque session and never expose provider tokens.
+- Collection endpoints must be bounded.
+</file>
+
+<file path="docs/DEPLOYMENT.md">
+# Deployment and Local Operation
+
+The containerized stack contains one PostgreSQL database, one backend monolith (currently named `auth-service`), frontend and Nginx.
+
+```powershell
+Copy-Item .env.docker.example .env
+docker compose up --build -d
+docker compose ps
+docker compose logs -f --tail=100
+```
+
+Endpoints use the ports configured in `.env`; defaults are frontend `3000`, auth-service `3001`, PostgreSQL `5432`, and Nginx `80`/`443`.
+
+For source development, use the local PostgreSQL container, then run:
+
+```powershell
+pnpm --dir services/auth-service start:dev
+pnpm --dir frontend dev
+```
+
+The backend container runs Prisma migrations against shared `auth_db` before startup. No Module 2–6 module or separate database is created.
+</file>
+
+<file path="docs/RBAC_ARCHITECTURE.md">
+# Module 1 RBAC Architecture
+
+Auth.js authenticates a person from the runtime account config. `auth-service` resolves the signed identity assertion to one opaque application session, one active authorization context, roles, resource scopes and capability keys.
+
+Capability keys use `<domain>.<resource>.<action>`. The current frontend consumes Module 1 capabilities such as `iam.users.manage`, `iam.roles.manage` and `iam.audit.view` to shape navigation. Backend guards remain authoritative.
+
+Each session has exactly one active context. Switching context validates the assignment and scope, rotates the session token and never unions permissions from different contexts.
+
+Member self-service is available at `/account` and `/security`. Governance operators use `/admin/access/*` and `/admin/audit`.
+
+## Product access classes
+
+Product copy and navigation use only `PUBLIC`, `MEMBER` and `PORTAL_MANAGER` concepts:
+
+- `PUBLIC`: approved news, events and public information.
+- `MEMBER`: approved member knowledge, topic calls and scientific publications.
+- `PORTAL_MANAGER`: content-management and aggregate-statistics capabilities in addition to member access.
+
+These are access classes, not permission wildcards. Backend capabilities still authorize every protected action and record. `SUPER_ADMIN` remains a technical IAM/security role and must not be assigned as portal-manager access.
+</file>
+
+<file path="docs/RULES.md">
+# Russia-Vietnam Science-Technology Intelligence Network Global Rules (Authoritative)
+
+This document contains the authoritative governance, security, data-ownership, and development rules for the Russia-Vietnam Science-Technology Intelligence Network repository. All domain-specific rule files defer to this document.
+
+## 1. Security & Authentication Boundaries
+
+- **Backend Enforcement**: Security and authorization MUST be validated at every backend entry point and protected module use case.
+- **Frontend non-boundary**: Frontend visual controls, route guards, and hidden buttons are UI conveniences only, never security boundaries.
+- **Secrets Management**: Hardcoding API keys, JWT secrets, passwords, or credentials in source code, default configs, or documentation is strictly forbidden. Use environment variables.
+
+## 2. Data Ownership & Module Boundaries
+
+- **Modular Monolith**: The backend is one deployable application. New business capabilities are internal domain modules, not standalone services.
+- **Exclusive Ownership**: Every business state has exactly one owning domain module. Other modules call its application contract instead of mutating its tables or repository directly.
+- **Shared PostgreSQL**: Modules use one PostgreSQL database. Tables and repositories retain module ownership; a database-per-module topology is forbidden unless a measured future need is separately approved.
+- **In-Process Integration**: Cross-module interaction uses typed application contracts and local transactions where one use case requires atomic writes. Do not introduce internal HTTP, brokers, distributed transactions, or versioned events.
+
+## 3. Package & Dependency Governance
+
+- **Explicit Approval Required**: Adding, upgrading, or removing packages in any `package.json` or lockfile requires explicit user approval before execution.
+- **No Unapproved Packages**: Do not import or reference packages that are not present in `package.json`.
+
+## 4. API & Resource Design
+
+- **Bounded Collection Responses**: All list endpoints MUST enforce pagination boundaries (limit/cursor/offset) to prevent unbounded payload allocation.
+- **Source of Truth**: PostgreSQL database stores serve as the primary source of truth. Redis caches must handle cache invalidation cleanly.
+
+## 5. Working Tree & Scope Constraints
+
+- **Preserve Unrelated Work**: Unrelated uncommitted edits, untracked files, or existing deleted files must remain untouched.
+- **No Speculative Artifacts**: Do not generate unapproved documentation, code abstractions, or placeholder files outside assigned task boundaries.
+- **No Financial Product Domain**: Funding, investment, budget, disbursement, payment, accounting, sponsorship, royalties, deal value, ROI, benefit-sharing calculations, and financial KPIs are outside the current product scope. Source research may mention them only as clearly labeled source or historical context.
+- **Documentation Conflict Stop**: Active implementation-facing docs must agree on canonical routes and current-vs-future capability status. Reconcile conflicts before implementation.
+
+## 6. Verification Request Dispatch & Browser Testing Policy
+
+- **Code Completion -> Report Immediately**: When implementing features or fixing code, the agent runs the smallest reliable validation (lint/typecheck/focused tests) and reports results immediately. Never automatically start servers and launch Chrome DevTools MCP after code edits without user approval.
+- **Propose Browser Testing**: If human-like interactive or rendered visual verification is beneficial, propose it in the completion report and wait for user instruction.
+- **Pro-Max verification framework**: `docs/VERIFICATION_GUIDE.md` is the repository's Pro-Max verification guide. `Pro-Max` names the framework/guide itself; users do not need to append `pro-max` to a test command.
+- **Selectable verification profiles**: When the user explicitly asks to test, verify, check, smoke-test, or validate a module/feature without naming a profile, the agent MUST first present the selector defined in `docs/VERIFICATION_GUIDE.md` and wait for the user's selection before executing verification.
+- **Browser disclosure**: Every selector option MUST state explicitly whether it includes real browser interaction. A generic phrase such as “UI test” is not sufficient.
+- **Named profile executes directly**: If the user explicitly requests `quick`, `integration`, `ui/browser`, `full/toàn diện`, or a custom scope, do not ask for profile selection again.
+- **Full-profile browser requirement**: For a target with a web UI, the Full profile includes actual browser interaction through the configured Chrome DevTools MCP, including relevant user actions plus Network and Console inspection. Code inspection or manual clicking is not an equivalent substitute. If the MCP is unavailable, mark the browser gate `BLOCKED` rather than claiming a full PASS.
+- **Verification before repair**: Verification is not permission to edit source. When a real source defect is found, report the failure, root cause, affected code, minimal proposed fix, and regression risk before changing source, unless the user has explicitly authorized repair in the same request.
+- **Evidence over claims**: A full-module PASS MUST be supported by the gates required by the selected profile. Unit tests or build success alone cannot be reported as Full verification when runtime or browser evidence is required.
+
+## 7. UI Quality & Impeccable Gate
+
+- **Mandatory Anti-Pattern Check**: After modifying, updating, or creating any UI component, the Agent is required to manually run `npx impeccable detect` and automatically resolve all anti-patterns (font scale, contrast, explicit button types, reduced motion) before completing the task.
+</file>
+
+<file path="frontend/docs/RUNTIME_UI_GUIDE.md">
+# Frontend Runtime and UI Guide
+
+## Purpose
+
+This guide contains detailed runtime, component, state, realtime, error, loading, and i18n conventions.
+
+## Server and Client Components
+
+Default to Server Components.
+
+Use Client Components only when the code needs:
+
+- Browser APIs.
+- Event handlers.
+- `useState`, `useEffect`, or client navigation hooks.
+- Zustand or another client store.
+- TanStack Query hooks.
+- Realtime sockets.
+
+Client components must be explicit with `"use client"`.
+
+## Component Ownership
+
+| Component type | Location | Rule |
+| --- | --- | --- |
+| Route-local components | `src/app/**/_components` or colocated route files | Use only within that route area. |
+| Feature components | `src/features/[feature]/components` | May use feature hooks/services. |
+| UI primitives | `src/components/ui` | Must not import feature services or app routes. |
+| Shared app components | `src/components/shared` or route-group `_components` | Shared presentation/shell logic. |
+| Marketing components | `src/components/marketing` | Public marketing sections and shells. |
+
+## State Ownership
+
+| State type | Recommended owner |
+| --- | --- |
+| Server state | TanStack Query or server data loading. |
+| URL/shareable state | Route params and search params. |
+| Local UI state | React state. |
+| Cross-component client state | Zustand or another explicit client store. |
+| Session state | Auth/session provider. |
+| Persistent browser state | Storage abstraction. |
+
+Rules:
+
+- Do not store server state in Zustand.
+- Do not use TanStack Query for purely local UI state.
+- Prefer URL state for shareable filters, pagination, and selected views.
+- Browser storage must be wrapped by feature/core utilities.
+
+Persistent identifiers or server-state resources may be added only when current product contracts require them. Browser identifiers are never authentication authority; backend validation remains authoritative.
+
+## Workspace navigation and RBAC rendering
+
+- The typed workspace registry owns member, account, security, and governance navigation.
+- Business roles do not create separate frontend applications or workflow pages. All non-administrator members land on `/workspace`.
+- Navigation uses session-bound capabilities and explicit resource scope; raw permission keys are not user-facing labels.
+- Mutating controls render only with the matching manage capability.
+- Resource scope belongs in URL/local query state when it must be shareable.
+- Frontend capability filtering improves clarity and request volume; it never replaces backend
+  authorization.
+- Member account and session-security links target `/account` and `/security`. Governance is a separate `/admin/*` surface and may appear in Workspace only as one capability-gated bridge.
+
+## Realtime
+
+- Isolate socket clients behind a feature or core realtime module.
+- Components should subscribe through hooks, not direct socket instances.
+- Realtime events should update or invalidate server-state caches when appropriate.
+- Connection lifecycle, cleanup, reconnect behavior, and auth context must be centralized.
+
+## Loading, Error, and Standard UI States `[DESIGN]`
+
+- Use route-level `loading.tsx` and `error.tsx` when a product surface needs its own boundary.
+- Implement explicit handling for the eight standard UI states:
+  1. `Loading`: Stable layout with skeleton indicators.
+  2. `Empty`: Informative empty-state graphics and actionable reset/create CTA.
+  3. `Error`: Localized error messages with retry action.
+  4. `Forbidden (403)`: Clear permission denial explanation and request-access CTA.
+  5. `Unauthorized (401)`: Redirect to `/login` preserving target return URL.
+  6. `Validation Error`: Form field error highlights and localized feedback strings.
+  7. `Conflict (409)`: Concurrency conflict banner with diff / refresh prompts.
+  8. `Success`: Feedback toasts and automated cache invalidation.
+- Do not display raw backend error objects directly.
+- Use toasts for user-triggered action feedback, not as the only error boundary.
+
+## Multilingual Support & AI Translation `[SOURCE]`
+
+- **Supported Locales**: Vietnamese (`vi`), Russian (`ru`), and English (`en`).
+- App-wide copy belongs in `core/i18n` or config-level i18n dictionaries.
+- Feature-specific copy belongs in `features/[feature]/i18n`.
+- **AI-Assisted Terminology Translation**:
+  - Specialized scientific/technical terminology translation hooks (`useTerminologyTranslation`) are available for reading and authoring interfaces.
+  - Translation suggestions must remain non-blocking and clearly marked as AI-assisted until confirmed by the user.
+- Avoid hardcoding user-facing copy in large interactive flows.
+
+## Workspace Context Switching
+
+- Authenticated users holding multiple roles keep the active authorization context; they do not switch dashboard personas.
+- Context changes update the active session authorization token and refresh capability-gated navigation without creating workflow UI.
+</file>
+
+<file path="services/docs/ARCHITECTURE.md">
+# Backend Architecture
+
+The backend is one modular monolith and one deployable. Its current path and package name remain `services/auth-service` only to avoid a destructive rename.
+
+It contains four internal Module 1 boundaries:
+
+- `identity`;
+- `authentication`;
+- `session`;
+- `access-control`.
+
+These modules share one process, one `DatabaseModule`/Prisma pool and PostgreSQL `auth_db` while retaining explicit table and use-case ownership. Auth.js verifies runtime credentials and sends a short-lived HMAC assertion to the backend for opaque session creation. Security invariants currently live with their owning flows; add a security module only when it owns real behavior.
+
+Future portal content, knowledge and management capabilities belong here as internal domain modules. Do not create additional services, databases, internal HTTP APIs, brokers or distributed transactions.
+</file>
+
+<file path="services/docs/SERVICE_GUIDE.md">
+# Backend Module Guide
+
+The current backend monolith is stored in `services/auth-service`. Its controllers handle transport, application services own workflows and authorization decisions, and Prisma adapters own persistence. The package name is legacy; it is not a microservice boundary.
+
+Internal modules:
+
+- identity: platform user and federated identity linkage;
+- authentication: Auth.js assertion verification and opaque session creation;
+- session: opaque session lifecycle;
+- access-control: roles, permissions, assignments, active context and IAM audit writes.
+
+`DatabaseModule` owns the only Prisma client/pool. Domain modules alias that client behind their narrow persistence contracts. Keep controllers thin, validate trust boundaries, use local database transactions for multi-write invariants and never expose provider tokens to the frontend.
+
+Add future capabilities under `src/modules/` as domain modules. Reuse the same process, deployment and PostgreSQL database. A module may expose a narrow typed application contract; it must not expose repositories to sibling modules.
+</file>
+
+<file path="README.md">
+# VN–RU Network Portal
+
+VN–RU is a product workspace/monorepo with a Next.js web deployable and one NestJS API modular monolith.
+
+## Kept runtime
+
+- `frontend/`: landing page, Keycloak login bridge, account, security/session management, IAM administration and audit UI.
+- `services/auth-service/`: the single backend monolith; currently contains identity, authentication, sessions, access control and security audit modules. The legacy directory name is retained.
+- `infra/keycloak/`: Keycloak login theme.
+- `infra/nginx/`: reverse proxy for frontend, auth-service and Keycloak.
+- PostgreSQL: `auth_db` only.
+
+Knowledge, expert directory, research collaboration, reviews, projects, academic, technology and analytics modules are not present. Add them as internal modules of the same backend and PostgreSQL database; do not create microservices.
+
+## Development
+
+Start local PostgreSQL and Keycloak, then run the two source processes in separate terminals:
+
+```powershell
+docker start postgres-local vnru-keycloak-dev
+pnpm --dir services/auth-service start:dev
+pnpm --dir frontend dev
+```
+
+Local endpoints:
+
+- Frontend: `http://localhost:3000`
+- Auth service: `http://localhost:8080`
+- Keycloak: `http://localhost:8081`
+- PostgreSQL: `localhost:5432`
+
+For the containerized demo stack, keep `secrets/account.json` and `secrets/demo.env` local and ignored:
+
+```bash
+docker compose --env-file secrets/demo.env build
+docker compose --env-file secrets/demo.env up -d
+# First run or whenever demo account passwords change:
+docker compose --env-file secrets/demo.env run --rm -T demo-seed < secrets/account.json
+```
+
+Open `http://localhost:8082`. PostgreSQL and Keycloak data persist in named volumes; normal restarts retain fixtures and demo accounts.
+
+## Documentation
+
+Start at [`Architecture/README.md`](Architecture/README.md). Global operational/product contracts remain indexed by [`docs/README.md`](docs/README.md).
+</file>
+
+<file path="AGENTS.md">
+# Agent Instructions — Russia-Vietnam Science-Technology Intelligence Network
+
+`AGENTS.md` is the repository entry point. Rules remain canonical in their existing docs; this file only routes agents to them.
+
+## Mandatory pre-code gate
+
+Before editing code, tests, config, schemas, migrations, or package files:
+
+1. Read `Architecture/README.md`.
+2. Read `Architecture/ARCHITECTURE.md`, `Architecture/MODULE_MAP.md`, and `Architecture/RULES.md`.
+3. Use `Architecture/GUIDES.md` to open only the task-specific guide.
+4. For Portal routes, navigation, access areas, or capability terminology, read `docs/PORTAL_FOUNDATION_REFACTOR.md`.
+5. Read the nearest scope instructions:
+   - frontend: `frontend/AGENTS.md`, `frontend/docs/ARCHITECTURE.md`, `frontend/docs/RULES.md`;
+   - backend: `services/AGENTS.md`, `services/docs/ARCHITECTURE.md`, `services/docs/RULES.md`.
+6. Inspect current source and package manifests. When docs describe a target not present in source, source/current manifests win; stop before inventing missing packages, paths, scripts, or infrastructure.
+
+Do not edit until this gate is complete. In the final report, list `Docs read:` with the exact paths. Missing that list means the task is incomplete.
+
+## Execution rules
+
+- **Ponytail full is always active**, including corrective runs: understand the flow first; then stop at the first sufficient rung: delete/skip, reuse existing code, standard library, native platform, installed dependency, one line, minimum new code.
+- Preserve unrelated dirty/untracked work. Never reset, checkout, overwrite, or delete it.
+- No dependency, `package.json`, or lockfile change without explicit approval.
+- Fix the shared root cause; inspect every caller of a changed shared symbol. Never patch only the reported symptom.
+- Use the smallest working diff. No speculative services, packages, interfaces, factories, configuration, boilerplate, scaffolding, or docs.
+- Never simplify security, trust-boundary validation, data-loss prevention, or accessibility.
+- Non-trivial logic requires one smallest runnable check. Never claim an unrun command passed.
+- Mark a deliberate ceiling only when real: `ponytail: <ceiling>; upgrade when <measured condition>`.
+- Backend authorization is authoritative; frontend visibility is not a security boundary.
+
+## Mandatory UI/UX quality routing
+
+For any task whose primary intent is UI inspection, UI repair, visual polish, responsive stabilization, UX review, typography/icon/layout correction, redesign of an existing surface, or rendered-browser quality, load and follow:
+
+- `.agents/skills/ui-quality-promax/SKILL.md`
+
+The UI Quality Pro-Max skill is mandatory even when the user does not name it explicitly. Natural-language requests such as `soi lại giao diện`, `fix UI`, `fix UX`, `polish`, `responsive`, `review UX`, `ổn định giao diện`, `soi và fix toàn bộ UI/UX`, or `kiểm tra giao diện` trigger it.
+
+For every UI creation, modification, or review task, also load and follow `.agents/skills/design-dna/SKILL.md`. This applies to typography, spacing, color, components, layout, responsive behavior, motion, accessibility, loading/error/empty states, and visual stability. Skip Design DNA only when the task has no rendered UI effect.
+
+### Default UI scope
+
+When a UI/UX request is generic and does **not** explicitly name a module, route, page, or component, treat the target as the **complete currently implemented frontend product**, not Module 01 or any single workspace.
+
+The agent must discover the actual current surfaces and include, where implemented:
+
+- public/landing/discovery;
+- login/auth transitions where visually relevant;
+- authenticated workspace shell;
+- all implemented module workspaces;
+- governance/admin;
+- security/session;
+- shared navigation/layout/typography/icons/forms/tables/dialogs/states.
+
+Before editing, show a concise discovered surface manifest. Do not silently narrow a generic UI request to one module because that module was discussed previously.
+
+If the user explicitly scopes the request to a module/page/component, follow that narrower scope plus directly affected shared-shell neighbors.
+
+When present locally, the following taste skills may be consulted as supporting design heuristics as directed by UI Quality Pro-Max:
+
+- `.agents/skills/design-taste-frontend/`
+- `.agents/skills/design-taste-frontend-v1/`
+- `.agents/skills/high-end-visual-design/`
+- `.agents/skills/redesign-existing-projects/`
+- `.agents/skills/stitch-design-taste/`
+
+UI is validated by code checks and static gates during development. For web UI work, real rendered-browser inspection (via Chrome DevTools MCP) is on-demand: after completing code edits and standard validation, the agent must report immediately. Do NOT automatically launch Chrome without approval; propose browser testing to the user if interactive or visual verification is recommended.
+
+## Browser Verification Policy (On-Demand / Proposal-First)
+
+- **Code Done -> Report Immediately**: After code edits or UI adjustments, run the smallest reliable validation (e.g. lint, typecheck, or focused tests) and immediately return the report of changed files and results.
+- **No Automatic Chrome Launch**: Do not automatically start dev servers and launch Chrome DevTools MCP after editing code unless explicitly requested by the user in the prompt (e.g., `test browser`, `mở chrome test`).
+- **Propose When Needed**: If human-like interactive or visual verification is needed, explicitly propose it in the completion report (e.g., "Bạn có muốn mở Chrome để test tương tác thực tế luồng này không?") and wait for user confirmation.
+
+## UI Quality & Impeccable Gate
+
+- After modifying, updating, or creating any UI component, the Agent is required to manually run `npx impeccable detect` and automatically resolve all anti-patterns (font scale, contrast, explicit button types, reduced motion) before completing the task.
+
+## Local test accounts
+
+- `secrets/account.json` is the ignored, local source of truth for test login accounts. Read it at test time; each entry's `role` identifies the corresponding test persona. Never copy usernames/passwords into source, docs, plans, prompts, logs, screenshots, commits, or final reports.
+- Select an account by exact `environment` and `role`; use its `loginUrl` and `realm`. Nested entries inherit the surrounding environment/login context. If the requested role is absent, report it instead of reusing a broader role or inventing credentials.
+- Missing login identity: create/provision it in the configured Keycloak realm; Keycloak owns credentials. Missing application role/context: assign it through the canonical IAM Administration surface/API (`/admin/access`, `POST /api/v1/admin/role-assignments`) using an authorized administrator. Never grant `SUPER_ADMIN` as a substitute; the API intentionally forbids assigning it.
+- Keep `secrets/account.json` ignored and local. Do not edit, delete, rotate, or expose existing accounts without explicit approval.
+
+## Navigation
+
+When `graphify-out/graph.json` exists: Graphify query/impact first, scoped Repomix second, exact source last. Otherwise use focused symbol/path search; never broad-scan by default.
+
+## AGY / Ponytail execution policy
+
+- `PONYTAIL.md` is mandatory for every coding agent and corrective run. Read it before editing; Ponytail `full` remains active unless the user explicitly disables it.
+- AGY runs exactly one focused check covering its changed behavior. AGY must not run full lint, the full test suite, or a full build.
+- Host verification runs each slice's targeted gate in parallel.
+- Integration cherry-picks accepted slices without rerunning module-wide gates after every commit.
+- After all slices integrate, run affected/module lint, tests, and build once via the orchestrator final gate. Run the full merge gate once before PR/merge when required.
+- Never skip trust-boundary validation, security, accessibility, or data-loss prevention to save time.
+- Preserve unrelated dirty/untracked work. Dependency, lockfile, migration, destructive, deploy, and production changes remain approval-gated.
+</file>
+
+<file path="docs/ARCHITECTURE.md">
+# System Architecture
+
+## Current scope
+
+The repository is a product workspace/monorepo with one web deployable, one backend modular monolith and one PostgreSQL database. See `../Architecture/` for the architecture entry and ownership map:
+
+```text
+Browser
+  -> Next.js frontend
+     -> Auth.js Credentials for server-side credential verification
+     -> backend monolith (`services/auth-service`) for opaque sessions, identity, RBAC and audit
+        -> PostgreSQL auth_db
+```
+
+Public `/` and `/news` routes are informational. `/knowledge`, `/experts` and `/opportunities` require member access. Their current display data does not prove that a described future backend capability exists.
+
+## Runtime ownership
+
+- Auth.js owns login and encrypted frontend sessions; credentials come from the ignored runtime account config.
+- The backend monolith currently lives at `services/auth-service`; the directory name is retained to avoid an unnecessary runtime rename.
+- Its IAM modules own platform identity, opaque sessions, active authorization context, roles, permissions, assignments and security audit events.
+- The frontend owns presentation and BFF forwarding. Frontend visibility is never an authorization boundary.
+- PostgreSQL `auth_db` is the only application database in the current stack.
+- Future knowledge, content and portal-management capabilities must be internal modules in this backend and share PostgreSQL while retaining table/repository ownership.
+
+## Canonical routes
+
+- `/`: public landing page.
+- `/news`: public science and technology news stream. Legacy `/explore` permanently redirects here.
+- `/login`: Auth.js Credentials authentication entry.
+- `/register`: localized membership application. It creates a pending application only; it does not create identities, credentials or role assignments.
+- `/account`: member profile.
+- `/security`: MFA and session security.
+- `/admin/access/*`: user, role, permission and assignment administration.
+- `/admin/audit`: Module 1 audit surface.
+- `/workspace`: the single authenticated member area. Registered members and experts use the same product surface; capabilities only limit the data and actions they may use.
+- Specialist persona/workflow routes are intentionally absent; `/workspace` is the single member information hub.
+- Legacy `/workspace/iam*`: compatibility redirects to Module 1 routes.
+
+The product has three access classes:
+
+1. **Public visitor**: reads news, events and approved public information.
+2. **Registered member / expert**: also accesses approved member knowledge, topic calls and scientific publications.
+3. **Portal manager**: also manages portal content and views aggregate site statistics.
+
+"Full member access" never means unrestricted system access. Backend authorization and record visibility remain authoritative. `SUPER_ADMIN` is a separate technical IAM/security account, not the portal-manager persona and not a substitute for business permissions.
+
+Knowledge, expert-directory, collaboration, review, project, academic, technology and analytics backend modules are absent. Retained templates and synthetic display data are non-runtime references only.
+</file>
+
+<file path="frontend/docs/ARCHITECTURE.md">
+# Frontend Architecture
+
+The frontend currently contains:
+
+- public landing page `/` and news stream `/news` (with legacy `/explore` redirect);
+- authenticated member information under `/knowledge`, `/experts` and `/opportunities`;
+- Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`, plus a localized `/register` request preview that does not create identities;
+- member account `/account`;
+- MFA and sessions `/security`;
+- IAM governance `/admin/access/*`;
+- Module 1 security audit `/admin/audit`;
+- one member information hub at `/workspace`; specialist persona/workflow routes have been removed;
+- capability-aware `/workspace` navigation and compatibility redirects under `/workspace/iam*`.
+
+Routes remain thin. `features/auth` owns authentication, account and security behavior; `features/iam` and `features/admin/access` own access governance; shared shells own presentation only. Backend authorization is authoritative.
+
+Public visitors read approved news and events. Registered members and experts also access approved knowledge, topic calls and scientific publications. Portal managers additionally receive content-management and aggregate-statistics capabilities. Backend authorization remains authoritative; none of these labels grants unrestricted access.
+
+There are no Knowledge, Expert, Publication, Collaboration, Review or Project business backends. Member information surfaces are read-only and use synthetic display data until content APIs exist. No frontend workflow state or fake mutation is retained.
+</file>
+
+</files>

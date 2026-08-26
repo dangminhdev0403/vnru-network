@@ -20,12 +20,13 @@
   --success: #16825d;
   --warning: #b7791f;
   --danger: #c73745;
-  --shadow-soft: 0 1px 2px rgb(16 24 40 / .04), 0 8px 24px rgb(16 24 40 / .04);
+  --shadow-soft:
+    0 1px 2px rgb(16 24 40 / 0.04), 0 8px 24px rgb(16 24 40 / 0.04);
   --motion-quick: 160ms;
   --motion-standard: 420ms;
   --motion-slow: 680ms;
-  --motion-ease: cubic-bezier(.16, 1, .3, 1);
-  --motion-ease-gentle: cubic-bezier(.4, 0, .2, 1);
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
   color-scheme: light;
 
   /* Compatibility bridge: existing shared components inherit one system. */
@@ -116,7 +117,9 @@
   --color-background-white-primary: var(--background-white-primary);
   --color-background-white-secondary: var(--background-white-secondary);
 
-  --color-sidebar-navigation-nav-item-nav-hover-background: var(--sidebar-navigation-nav-item-nav-hover-background);
+  --color-sidebar-navigation-nav-item-nav-hover-background: var(
+    --sidebar-navigation-nav-item-nav-hover-background
+  );
   --color-sidebar-nav-default-background: var(--sidebar-nav-default-background);
   --color-sidebar-nav-hover-background: var(--sidebar-nav-hover-background);
   --color-sidebar-nav-active-text: var(--sidebar-nav-active-text);
@@ -134,16 +137,22 @@
   --color-input-label-text-color: var(--input-label-text-color);
 
   --color-button-primary-background: var(--button-primary-background);
-  --color-button-primary-hover-background: var(--button-primary-hover-background);
+  --color-button-primary-hover-background: var(
+    --button-primary-hover-background
+  );
   --color-button-primary-text: var(--button-primary-text);
   --color-button-primary-focus-ring: var(--button-primary-focus-ring);
   --color-button-outline-background: var(--button-outline-background);
-  --color-button-outline-hover-background: var(--button-outline-hover-background);
+  --color-button-outline-hover-background: var(
+    --button-outline-hover-background
+  );
   --color-button-outline-border: var(--button-outline-border);
   --color-button-outline-text: var(--button-outline-text);
   --color-button-outline-hover-text: var(--button-outline-hover-text);
   --color-button-primary-outline-stroke: var(--button-primary-outline-stroke);
-  --color-button-primary-outline-background: var(--button-primary-outline-background);
+  --color-button-primary-outline-background: var(
+    --button-primary-outline-background
+  );
   --color-button-primary-outline-text: var(--button-primary-outline-text);
 
   --color-badge-primary-background: var(--badge-primary-background);
@@ -169,7 +178,10 @@
   --spacing-gutter: 24px;
   --spacing-margin-mobile: 16px;
 
-  --font-sans: var(--font-be-vietnam-pro), "Be Vietnam Pro", var(--font-noto-sans), "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-sans:
+    var(--font-be-vietnam-pro), "Be Vietnam Pro", var(--font-noto-sans),
+    "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+    sans-serif;
   --font-serif: var(--font-noto-serif), "Noto Serif", Georgia, serif;
 }
 
@@ -199,11 +211,22 @@ section[id] {
 
 body {
   background: var(--background);
+  min-width: 0;
+  overflow-x: clip;
 }
 
 /* Product-wide readability floor; collapse layouts before shrinking text. */
-body :where(.text-\[8px\], .text-\[9px\], .text-\[10px\], .text-\[11px\], .text-\[12px\], .text-\[13px\], .text-xs) {
-  font-size: .875rem !important;
+body
+  :where(
+    .text-\[8px\],
+    .text-\[9px\],
+    .text-\[10px\],
+    .text-\[11px\],
+    .text-\[12px\],
+    .text-\[13px\],
+    .text-xs
+  ) {
+  font-size: 0.875rem !important;
   line-height: 1.45 !important;
 }
 
@@ -215,23 +238,32 @@ body :where(.text-sm) {
 /* Shared readability floor for descriptive copy across public and app surfaces. */
 main :where(p, li)[class~="text-xs"],
 main :where(small, span)[class~="text-xs"][class~="leading-5"] {
-  font-size: clamp(.9375rem, .91rem + .08vw, 1rem);
+  font-size: clamp(0.9375rem, 0.91rem + 0.08vw, 1rem);
   line-height: 1.65;
 }
 
 main :where(p, li)[class~="text-sm"],
 main :where(small, span)[class~="text-sm"][class*="leading-"] {
-  font-size: clamp(1rem, .97rem + .12vw, 1.0625rem);
+  font-size: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
   line-height: 1.72;
 }
 
 /* VN–RU motion identity: calm corporate movement with restrained depth. */
-.vnru-motion-root,
-.workspace-background {
+.vnru-motion-root {
   background-image:
-    radial-gradient(circle at 12% 8%, rgb(37 99 235 / .045), transparent 26rem),
-    radial-gradient(circle at 88% 72%, rgb(227 75 85 / .035), transparent 30rem);
-  background-position: 0 0, 100% 100%;
+    radial-gradient(
+      circle at 12% 8%,
+      rgb(37 99 235 / 0.045),
+      transparent 26rem
+    ),
+    radial-gradient(
+      circle at 88% 72%,
+      rgb(227 75 85 / 0.035),
+      transparent 30rem
+    );
+  background-position:
+    0 0,
+    100% 100%;
   background-size: 115% 115%;
   animation: vnru-ambient-drift 22s var(--motion-ease-gentle) infinite alternate;
 }
@@ -240,10 +272,18 @@ main :where(small, span)[class~="text-sm"][class*="leading-"] {
   animation: vnru-page-enter var(--motion-slow) var(--motion-ease) both;
 }
 
-.vnru-motion-root main > :nth-child(2) { animation-delay: 50ms; }
-.vnru-motion-root main > :nth-child(3) { animation-delay: 90ms; }
-.vnru-motion-root main > :nth-child(4) { animation-delay: 130ms; }
-.vnru-motion-root main > :nth-child(n + 5) { animation-delay: 170ms; }
+.vnru-motion-root main > :nth-child(2) {
+  animation-delay: 50ms;
+}
+.vnru-motion-root main > :nth-child(3) {
+  animation-delay: 90ms;
+}
+.vnru-motion-root main > :nth-child(4) {
+  animation-delay: 130ms;
+}
+.vnru-motion-root main > :nth-child(n + 5) {
+  animation-delay: 170ms;
+}
 
 .vnru-motion-root main :where(article, a)[class*="rounded"] {
   transition:
@@ -257,7 +297,7 @@ main :where(small, span)[class~="text-sm"][class*="leading-"] {
   .vnru-motion-root main article[class*="rounded"]:hover,
   .vnru-motion-root main a[class*="rounded"]:hover {
     transform: translateY(-3px);
-    box-shadow: 0 18px 38px -24px rgb(15 23 42 / .34);
+    box-shadow: 0 18px 38px -24px rgb(15 23 42 / 0.34);
   }
 }
 
@@ -270,7 +310,7 @@ main :where(small, span)[class~="text-sm"][class*="leading-"] {
 }
 
 .vnru-motion-root :where(button, [role="button"]):not(:disabled):active {
-  transform: translateY(1px) scale(.985);
+  transform: translateY(1px) scale(0.985);
 }
 
 @keyframes vnru-page-enter {
@@ -280,8 +320,8 @@ main :where(small, span)[class~="text-sm"][class*="leading-"] {
     transform: translate3d(6px, 18px, 0);
   }
   58% {
-    opacity: .94;
-    filter: blur(.5px);
+    opacity: 0.94;
+    filter: blur(0.5px);
     transform: translate3d(-1px, 2px, 0);
   }
   to {
@@ -292,25 +332,43 @@ main :where(small, span)[class~="text-sm"][class*="leading-"] {
 }
 
 @keyframes vnru-ambient-drift {
-  to { background-position: 4% 3%, 96% 97%; }
+  to {
+    background-position:
+      4% 3%,
+      96% 97%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
 
   .vnru-motion-root,
   .workspace-background,
   .vnru-motion-root main > *,
   .vnru-motion-root main :where(article, a)[class*="rounded"] {
     animation: none !important;
-    transition-duration: .01ms !important;
+    transition-duration: 0.01ms !important;
     transform: none !important;
   }
 }
 
 .workspace-background {
   background-color: var(--background);
+  background-image: url("/images/dashboard-network-bg.png");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
   color: var(--text-primary);
+}
+
+@media (max-width: 63.999rem), (hover: none), (pointer: coarse) {
+  .workspace-background {
+    background-attachment: scroll;
+    background-position: center top;
+  }
 }
 
 .module-kicker {
@@ -327,6 +385,10 @@ main :where(small, span)[class~="text-sm"][class*="leading-"] {
 :where(a, button, input, select, textarea):focus-visible {
   outline: 2px solid #1f63e9;
   outline-offset: 3px;
+}
+
+.auth-surface :where(input, textarea):focus-visible {
+  outline: none;
 }
 
 main :where(section, article) {
@@ -353,32 +415,42 @@ textarea {
 }
 
 /* Animations & Keyframes */
-button:not(:disabled) { cursor: pointer; }
+button:not(:disabled) {
+  cursor: pointer;
+}
 
 button[aria-busy="true"] {
   cursor: wait;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 button[aria-busy="true"]::before {
   content: "";
   display: inline-block;
-  width: .9em;
-  height: .9em;
-  margin-right: .5em;
-  vertical-align: -.1em;
+  width: 0.9em;
+  height: 0.9em;
+  margin-right: 0.5em;
+  vertical-align: -0.1em;
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: 999px;
-  animation: vnru-button-spin .7s linear infinite;
+  animation: vnru-button-spin 0.7s linear infinite;
 }
 
-button:disabled { cursor: not-allowed; }
+button:disabled {
+  cursor: not-allowed;
+}
 
-@keyframes vnru-button-spin { to { transform: rotate(360deg); } }
+@keyframes vnru-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  button[aria-busy="true"]::before { animation-duration: 1.4s; }
+  button[aria-busy="true"]::before {
+    animation-duration: 1.4s;
+  }
 }
 
 @keyframes fadeInUp {
@@ -413,7 +485,8 @@ button:disabled { cursor: not-allowed; }
 }
 
 @keyframes pulseGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
   }
   50% {
@@ -497,13 +570,30 @@ textarea {
 }
 
 /* SweetAlert2 Modal & Toast Custom Styles */
+.swal2-container {
+  z-index: 100000 !important;
+}
+
+.swal2-icon {
+  margin: 8px auto 18px !important;
+  transform: scale(1.25) !important;
+}
+
+.swal2-icon.swal2-question {
+  border-color: #3b82f6 !important;
+  color: #2563eb !important;
+}
+
 .vnru-swal-popup {
-  border-radius: 24px !important;
-  padding: 24px !important;
+  border-radius: 28px !important;
+  padding: 36px 44px !important;
   background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 25px 50px -12px rgba(11, 28, 48, 0.25) !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 30px 80px -10px rgba(11, 28, 48, 0.4) !important;
   font-family: var(--font-sans) !important;
+  max-width: 600px !important;
+  width: auto !important;
+  min-width: 480px !important;
 }
 
 .vnru-swal-popup-dark {
@@ -512,12 +602,15 @@ textarea {
 }
 
 .vnru-swal-title {
-  font-size: 1.125rem !important;
+  font-size: 1.5rem !important;
   font-weight: 800 !important;
-  letter-spacing: -0.02em !important;
-  color: #0b1c30 !important;
+  letter-spacing: -0.025em !important;
+  color: #0f172a !important;
   padding: 0 !important;
-  margin-bottom: 8px !important;
+  margin-top: 10px !important;
+  margin-bottom: 14px !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
 }
 
 .vnru-swal-popup-dark .vnru-swal-title {
@@ -525,9 +618,37 @@ textarea {
 }
 
 .vnru-swal-html {
-  font-size: 0.875rem !important;
-  line-height: 1.6 !important;
+  font-size: 1.0625rem !important;
+  line-height: 1.65 !important;
   color: #475569 !important;
+  font-weight: 500 !important;
+  margin-bottom: 24px !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 39.999rem) {
+  .vnru-swal-popup {
+    width: calc(100vw - 2rem) !important;
+    min-width: 0 !important;
+    padding: 1.5rem 1.25rem !important;
+    border-radius: 1.25rem !important;
+  }
+
+  .vnru-swal-title,
+  .vnru-swal-html {
+    overflow-wrap: anywhere;
+    white-space: normal !important;
+  }
+
+  .vnru-swal-actions {
+    width: 100%;
+  }
+
+  .vnru-swal-confirm-btn,
+  .vnru-swal-cancel-btn {
+    width: 100%;
+    min-width: 0 !important;
+  }
 }
 
 .vnru-swal-popup-dark .vnru-swal-html {
@@ -535,31 +656,38 @@ textarea {
 }
 
 .vnru-swal-confirm-btn {
-  border-radius: 14px !important;
-  padding: 10px 22px !important;
-  font-size: 0.8125rem !important;
-  font-weight: 700 !important;
+  border-radius: 16px !important;
+  padding: 14px 36px !important;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
   letter-spacing: -0.01em;
-  background: #0b1c30 !important;
+  background: #2563eb !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(11, 28, 48, 0.2) !important;
+  box-shadow: 0 10px 25px -4px rgba(37, 99, 235, 0.45) !important;
   transition: all 0.2s ease !important;
+  min-height: 52px !important;
+  min-width: 140px !important;
+  cursor: pointer !important;
 }
 
 .vnru-swal-confirm-btn:hover {
-  background: #13243d !important;
-  transform: translateY(-1px) !important;
+  background: #1d4ed8 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 14px 28px -4px rgba(37, 99, 235, 0.55) !important;
 }
 
 .vnru-swal-cancel-btn {
-  border-radius: 14px !important;
-  padding: 10px 20px !important;
-  font-size: 0.8125rem !important;
-  font-weight: 600 !important;
+  border-radius: 16px !important;
+  padding: 14px 32px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
   background: #f1f5f9 !important;
   color: #475569 !important;
-  border: 1px solid #e2e8f0 !important;
+  border: 1px solid #cbd5e1 !important;
   transition: all 0.2s ease !important;
+  min-height: 52px !important;
+  min-width: 120px !important;
+  cursor: pointer !important;
 }
 
 .vnru-swal-cancel-btn:hover {
@@ -569,11 +697,12 @@ textarea {
 
 .vnru-swal-danger-btn {
   background: #dc2626 !important;
-  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25) !important;
+  box-shadow: 0 10px 25px -4px rgba(220, 38, 38, 0.45) !important;
 }
 
 .vnru-swal-danger-btn:hover {
   background: #b91c1c !important;
+  box-shadow: 0 14px 28px -4px rgba(220, 38, 38, 0.55) !important;
 }
 
 .vnru-swal-toast {
@@ -587,7 +716,9 @@ textarea {
 
 .vnru-brand-mark {
   box-shadow: 0 10px 28px -18px rgba(15, 56, 125, 0.65);
-  transition: transform var(--motion-standard) var(--ease-emphasized), box-shadow var(--motion-standard) var(--ease-gentle);
+  transition:
+    transform var(--motion-standard) var(--ease-emphasized),
+    box-shadow var(--motion-standard) var(--ease-gentle);
 }
 
 a:hover > .vnru-brand-mark {
@@ -601,8 +732,8 @@ a:hover > .vnru-brand-mark {
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

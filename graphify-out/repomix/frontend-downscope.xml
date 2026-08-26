@@ -1,0 +1,2064 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: app/**/*.{ts,tsx}, features/**/*.{ts,tsx}, PRODUCT.md, docs/**/*.md
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+app/
+  (admin)/
+    admin/
+      access/
+        assignments/
+          page.tsx
+        roles/
+          page.tsx
+        users/
+          page.tsx
+        page.tsx
+      audit/
+        page.tsx
+      page.tsx
+    layout.tsx
+  (workspace)/
+    account/
+      page.tsx
+    governance/
+      page.tsx
+    security/
+      page.tsx
+    workspace/
+      iam/
+        admin/
+          page.tsx
+        security/
+          page.tsx
+        page.tsx
+      page.tsx
+    layout.tsx
+  api/
+    admin/
+      role-assignments/
+        route.ts
+      roles/
+        route.ts
+      users/
+        [id]/
+          status/
+            route.ts
+        route.ts
+    auth/
+      [...nextauth]/
+        route.ts
+      context/
+        route.ts
+      login/
+        route.ts
+      logout/
+        route.ts
+      me/
+        route.ts
+      mfa/
+        route.ts
+      profile/
+        route.ts
+      sessions/
+        [id]/
+          route.ts
+        route.ts
+  experts/
+    page.tsx
+  explore/
+    loading.tsx
+    page.tsx
+  knowledge/
+    page.tsx
+  loading-preview/
+    page.tsx
+  login/
+    page.tsx
+  news/
+    [id]/
+      page.tsx
+    loading.tsx
+    page.tsx
+  opportunities/
+    page.tsx
+  register/
+    page.tsx
+  layout.tsx
+  not-found.tsx
+  NotFoundClient.tsx
+  page.tsx
+docs/
+  ARCHITECTURE.md
+  CONTRACT_GUIDE.md
+  MODULE_GUIDE.md
+  PROMPT_PRE_TEST_FOCUSED_FIX.md
+  QUERY_RESOURCE_GUIDE.md
+  RULES.md
+  RUNTIME_UI_GUIDE.md
+features/
+  admin/
+    access/
+      components/
+        RolePermissionsPage.tsx
+        UserAdministration.tsx
+    components/
+      AdminShell.tsx
+      AdminSidebar.tsx
+    config/
+      admin-nav-registry.ts
+  auth/
+    components/
+      account/
+        AccountClientPage.tsx
+      security/
+        MfaControl.tsx
+        ProfileDialog.tsx
+        SecurityClientPage.tsx
+    server-state.ts
+    server.ts
+    workspace-server.ts
+  iam/
+    hooks.ts
+    repository.ts
+    resource.ts
+  public-discovery/
+    components/
+      PublicDiscoveryPages.tsx
+      PublicDiscoveryShell.tsx
+    mock-data.ts
+  public-home/
+    components/
+      KnowledgeDiscovery.tsx
+      PublicHome.tsx
+  public-v2/
+    components/
+      GuestExpertsV2.tsx
+      GuestExploreMedia.tsx
+      GuestExploreV2.tsx
+      GuestHomeV2.tsx
+      GuestKnowledgeV2.tsx
+      GuestNewsArticleV2.tsx
+      GuestOpportunitiesV2.tsx
+      GuestPublicFooter.tsx
+      GuestPublicNav.tsx
+  workspace/
+    components/
+      UnifiedWorkspaceDashboard.tsx
+      WorkspaceSidebar.tsx
+    config/
+      workspace-registry.ts
+    mock-data/
+      knowledge.ts
+      opportunities.ts
+PRODUCT.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="app/(admin)/admin/access/assignments/page.tsx">
+import RolePermissionsPage from "@/features/admin/access/components/RolePermissionsPage";
+⋮----
+export default function AdminAccessAssignmentsPage()
+</file>
+
+<file path="app/(admin)/admin/access/roles/page.tsx">
+import RolePermissionsPage from "@/features/admin/access/components/RolePermissionsPage";
+⋮----
+export default function AdminAccessRolesPage()
+</file>
+
+<file path="app/(admin)/admin/access/users/page.tsx">
+import UserAdministration from "@/features/admin/access/components/UserAdministration";
+⋮----
+export default function AdminAccessUsersPage()
+</file>
+
+<file path="app/(admin)/admin/access/page.tsx">
+import RolePermissionsPage from "@/features/admin/access/components/RolePermissionsPage";
+⋮----
+export default function AdminAccessPage()
+</file>
+
+<file path="app/(admin)/admin/audit/page.tsx">
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import Link from "next/link";
+import React from "react";
+</file>
+
+<file path="app/(admin)/admin/page.tsx">
+import { redirect } from "next/navigation";
+⋮----
+export default function AdminRootPage()
+</file>
+
+<file path="app/(admin)/layout.tsx">
+import AdminShell from "@/features/admin/components/AdminShell";
+⋮----
+export default function AdminLayout(
+</file>
+
+<file path="app/(workspace)/account/page.tsx">
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import AccountClientPage from "@/features/auth/components/account/AccountClientPage";
+import { SESSION_COOKIE_NAME } from "@/features/auth/server";
+⋮----
+export default async function AccountPage()
+</file>
+
+<file path="app/(workspace)/governance/page.tsx">
+import { redirect } from 'next/navigation';
+⋮----
+export default function Page()
+</file>
+
+<file path="app/(workspace)/security/page.tsx">
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import SecurityClientPage from "@/features/auth/components/security/SecurityClientPage";
+import { SESSION_COOKIE_NAME } from "@/features/auth/server";
+⋮----
+export default async function SecurityPage()
+</file>
+
+<file path="app/(workspace)/workspace/iam/admin/page.tsx">
+import { redirect } from "next/navigation";
+⋮----
+export default function LegacyIamAdminPage()
+</file>
+
+<file path="app/(workspace)/workspace/iam/security/page.tsx">
+import { redirect } from "next/navigation";
+⋮----
+export default function LegacyIamSecurityPage()
+</file>
+
+<file path="app/(workspace)/workspace/iam/page.tsx">
+import { redirect } from "next/navigation";
+⋮----
+export default function LegacyIamPage()
+</file>
+
+<file path="app/(workspace)/workspace/page.tsx">
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { isSystemAdministrator, resolveLandingPath } from "@/features/auth/server";
+import { requireWorkspaceSession } from "@/features/auth/workspace-server";
+import { UnifiedWorkspaceDashboard } from "@/features/workspace/components/UnifiedWorkspaceDashboard";
+⋮----
+export default async function Page()
+</file>
+
+<file path="app/(workspace)/layout.tsx">
+import WorkspaceShell from "@/components/shared/WorkspaceShell";
+⋮----
+export default function WorkspaceLayout(
+</file>
+
+<file path="app/api/admin/role-assignments/route.ts">
+import { NextRequest, NextResponse } from "next/server";
+import {
+  authServiceUrl,
+  backendHeaders,
+} from "../../../../features/auth/server";
+⋮----
+export async function POST(request: NextRequest)
+</file>
+
+<file path="app/api/admin/roles/route.ts">
+import { NextRequest, NextResponse } from "next/server";
+import {
+  authServiceUrl,
+  backendHeaders,
+} from "../../../../features/auth/server";
+⋮----
+export async function GET(request: NextRequest)
+⋮----
+export async function PATCH(request: NextRequest)
+</file>
+
+<file path="app/api/admin/users/[id]/status/route.ts">
+import { NextRequest, NextResponse } from "next/server";
+import {
+  authServiceUrl,
+  backendHeaders,
+} from "../../../../../../features/auth/server";
+⋮----
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+)
+</file>
+
+<file path="app/api/admin/users/route.ts">
+import { NextRequest, NextResponse } from "next/server";
+import {
+  authServiceUrl,
+  backendHeaders,
+} from "../../../../features/auth/server";
+⋮----
+export async function GET(request: NextRequest)
+</file>
+
+<file path="app/api/auth/[...nextauth]/route.ts">
+import { handlers } from "../../../../auth";
+</file>
+
+<file path="app/api/auth/context/route.ts">
+import { NextRequest, NextResponse } from "next/server";
+import {
+  authServiceUrl,
+  backendHeaders,
+  forwardSessionCookie,
+} from "../../../../features/auth/server";
+⋮----
+export async function POST(request: NextRequest)
+</file>
+
+<file path="app/api/auth/login/route.ts">
+import { AuthError } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
+import { signIn } from "../../../../auth";
+import { sanitizeReturnTo } from "../../../../features/auth/server";
+⋮----
+export function GET(request: NextRequest)
+⋮----
+export async function POST(request: NextRequest)
+</file>
+
+<file path="app/api/auth/logout/route.ts">
+import { NextResponse } from "next/server";
+import { signOut } from "../../../../auth";
+import {
+  authServiceUrl,
+  backendHeaders,
+  sanitizeReturnTo,
+  SESSION_COOKIE_NAME,
+} from "../../../../features/auth/server";
+⋮----
+export async function POST(request: Request)
+⋮----
+export async function GET(request: Request)
+</file>
+
+<file path="app/api/auth/me/route.ts">
+import { backendHeaders, authServiceUrl } from "../../../../features/auth/server";
+⋮----
+export async function GET(request: Request)
+</file>
+
+<file path="app/api/auth/mfa/route.ts">
+import { NextRequest, NextResponse } from "next/server";
+import {
+  authServiceUrl,
+  backendHeaders,
+} from "../../../../features/auth/server";
+⋮----
+async function proxy(request: NextRequest, method: "GET" | "DELETE")
+⋮----
+export const GET = (request: NextRequest)
+export const DELETE = (request: NextRequest)
+</file>
+
+<file path="app/api/auth/profile/route.ts">
+import { NextRequest, NextResponse } from "next/server";
+import {
+  authServiceUrl,
+  backendHeaders,
+} from "../../../../features/auth/server";
+⋮----
+async function proxy(request: NextRequest, method: "GET" | "PATCH")
+⋮----
+export const GET = (request: NextRequest)
+export const PATCH = (request: NextRequest)
+</file>
+
+<file path="app/api/auth/sessions/[id]/route.ts">
+import { NextRequest, NextResponse } from "next/server";
+import {
+  authServiceUrl,
+  backendHeaders,
+  forwardSessionCookie,
+} from "../../../../../features/auth/server";
+⋮----
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+)
+</file>
+
+<file path="app/api/auth/sessions/route.ts">
+import { NextRequest, NextResponse } from "next/server";
+import {
+  authServiceUrl,
+  backendHeaders,
+} from "../../../../features/auth/server";
+⋮----
+export async function GET(request: NextRequest)
+⋮----
+export async function DELETE(request: NextRequest)
+</file>
+
+<file path="app/experts/page.tsx">
+import type { Metadata } from "next";
+import { GuestExpertsV2 } from "@/features/public-v2/components/GuestExpertsV2";
+⋮----
+export default function Page()
+</file>
+
+<file path="app/explore/loading.tsx">
+function Bar(
+⋮----
+function ImageIcon()
+</file>
+
+<file path="app/explore/page.tsx">
+import { permanentRedirect } from "next/navigation";
+⋮----
+export default function Page()
+</file>
+
+<file path="app/knowledge/page.tsx">
+import type { Metadata } from "next";
+import { GuestKnowledgeV2 } from "@/features/public-v2/components/GuestKnowledgeV2";
+⋮----
+export default function Page()
+</file>
+
+<file path="app/loading-preview/page.tsx">
+
+</file>
+
+<file path="app/login/page.tsx">
+import Link from "next/link";
+import Image from "next/image";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { getCurrentSession, sanitizeReturnTo, SESSION_COOKIE_NAME } from "../../features/auth/server";
+import { LOCALE_COOKIE_NAME, sanitizeLocale } from "../../features/auth/server";
+import { BrandMark } from "@/components/shared/BrandMark";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+⋮----
+export default async function LoginPage({ searchParams }: Readonly<{
+  searchParams: Promise<{ returnTo?: string; error?: string }>;
+}>)
+</file>
+
+<file path="app/news/[id]/page.tsx">
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { GuestNewsArticleV2 } from "@/features/public-v2/components/GuestNewsArticleV2";
+⋮----
+type PageProps = {
+  params: Promise<{ id: string }>;
+};
+⋮----
+export async function generateMetadata(
+⋮----
+export default async function Page(
+⋮----
+return <GuestNewsArticleV2 articleId=
+</file>
+
+<file path="app/news/loading.tsx">
+
+</file>
+
+<file path="app/news/page.tsx">
+import type { Metadata } from "next";
+import { GuestExploreV2 } from "@/features/public-v2/components/GuestExploreV2";
+⋮----
+export default function Page()
+</file>
+
+<file path="app/opportunities/page.tsx">
+import type { Metadata } from "next";
+import { GuestOpportunitiesV2 } from "@/features/public-v2/components/GuestOpportunitiesV2";
+⋮----
+export default function Page()
+</file>
+
+<file path="app/register/page.tsx">
+import Image from "next/image";
+import Link from "next/link";
+import { FormEvent, useState } from "react";
+import { BrandMark } from "@/components/shared/BrandMark";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+⋮----
+export default function RegisterPage()
+⋮----
+function handleSubmit(event: FormEvent<HTMLFormElement>)
+</file>
+
+<file path="app/layout.tsx">
+import type { Metadata } from "next";
+import { Be_Vietnam_Pro, Noto_Sans, Noto_Serif } from "next/font/google";
+import QueryProvider from "../components/providers/QueryProvider";
+⋮----
+export default function RootLayout(
+⋮----
+{/* eslint-disable-next-line @next/next/no-page-custom-font */}
+</file>
+
+<file path="app/not-found.tsx">
+import type { Metadata } from "next";
+import { NotFoundClient } from "./NotFoundClient";
+⋮----
+export default function NotFound()
+</file>
+
+<file path="app/NotFoundClient.tsx">
+import Link from "next/link";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+⋮----
+type Copy = {
+  title: string;
+  description: string;
+  helper: string;
+  home: string;
+  explore: string;
+  russia: string;
+  vietnam: string;
+};
+</file>
+
+<file path="app/page.tsx">
+import { cookies } from "next/headers";
+import { GuestHomeV2 } from "@/features/public-v2/components/GuestHomeV2";
+import {
+  getCurrentSession,
+  resolveLandingPath,
+  SESSION_COOKIE_NAME,
+} from "../features/auth/server";
+⋮----
+type HomeSession = {
+  capabilities?: string[];
+};
+⋮----
+export default async function Home()
+⋮----
+isAuthenticated=
+</file>
+
+<file path="docs/CONTRACT_GUIDE.md">
+# Frontend API Contract Guide
+
+## Purpose
+
+Define how frontend code consumes backend APIs, generated contracts, route handlers, and authentication/session-sensitive flows.
+
+This document focuses on frontend integration. Backend API design and authorization rules remain owned by the backend.
+
+## Standard API Flow
+
+```txt
+Route / UI
+  ↓
+Feature Hook / Query
+  ↓
+Feature Service
+  ↓
+Core HTTP Utility or Route Handler
+  ↓
+Backend API
+```
+
+## Contract Rules
+
+* Generated API artifacts should live under `src/generated/`.
+* Backend-backed feature types should use generated contracts or narrow wrappers around them.
+* Do not invent response shapes that are not backed by a backend contract.
+* Do not manually duplicate backend DTO definitions when generated contracts are available.
+* Contract changes must be synchronized through the agreed API contract workflow before frontend assumptions change.
+* Breaking contract changes require explicit coordination between frontend and backend.
+
+## HTTP Rules
+
+* Do not introduce raw backend `fetch` calls in pages, layouts, or reusable UI components.
+* Use feature services for domain-specific API calls.
+* Use core HTTP utilities for shared transport concerns.
+* Use Route Handlers for BFF/proxy behavior or session-sensitive calls.
+* Feature services must not contain UI display decisions.
+* Transport concerns must remain separate from feature presentation logic.
+
+## Generated Contracts
+
+Generated contracts are the preferred source for backend-backed types.
+
+```txt
+Backend OpenAPI
+  ↓
+Generated contract
+  ↓
+Feature service
+  ↓
+Feature hook/query
+  ↓
+UI
+```
+
+When the backend contract changes:
+
+1. Update/export the backend contract.
+2. Regenerate or synchronize frontend contract artifacts.
+3. Update affected feature wrappers.
+4. Run the relevant frontend validation.
+
+Do not silently modify generated files to represent an API that the backend does not expose.
+
+## Authentication and Session
+
+* Backend remains the authentication and authorization source of truth.
+* Frontend session state is a UX/session bridge, not a security authority.
+* Refresh tokens and sensitive credentials must remain in server-safe boundaries.
+* Client Components must never access backend refresh tokens directly.
+* Do not expose authentication secrets through browser-exposed environment variables.
+* Do not rotate refresh tokens from arbitrary Server Components.
+* Session-sensitive backend calls should use a server-safe boundary such as a Route Handler or server-side service.
+* Route protection must remain consistent with backend authorization.
+* Frontend permission checks may control visibility and UX, but must never replace backend authorization.
+
+## Authorization Context
+
+Frontend should consume the authorization context provided by the backend.
+
+Use the backend-provided:
+
+```txt
+role
+permissions
+resource/tenant scope
+```
+
+according to the active session/workspace context.
+
+Rules:
+
+* Do not infer permissions from role names.
+* Do not infer permissions from route names.
+* Do not merge unrelated roles or authorization contexts.
+* Do not assume resource access from a permission alone.
+* Treat missing authorization information as unavailable access.
+
+The frontend may hide unavailable actions, but the backend must enforce the operation.
+
+## Route Handlers and BFF
+
+Use Route Handlers when a backend call requires a server-side boundary.
+
+Valid reasons include:
+
+* session/cookie handling;
+* refresh-token handling;
+* secure backend communication;
+* request transformation required by the BFF;
+* hiding server-only configuration from the browser.
+
+Do not create Route Handlers merely to proxy every backend endpoint.
+
+If no server-side boundary is required, the feature service may communicate through the core HTTP layer according to the application's runtime model.
+
+## Error Contract
+
+Backend errors must be mapped before reaching user-facing UI.
+
+Rules:
+
+* Preserve stable backend error codes where deterministic UI behavior requires them.
+* Convert technical errors into user-facing messages.
+* Localize user-facing error messages where required.
+* Never expose raw database, provider, stack-trace, or infrastructure errors.
+* Keep error mapping close to the transport/feature boundary rather than inside reusable UI components.
+
+Standard flow:
+
+```txt
+Backend Error
+  ↓
+HTTP / Route Handler
+  ↓
+Feature Error Mapping
+  ↓
+Feature Hook / Query
+  ↓
+UI Error State
+```
+
+## Loading and Empty States
+
+API integration must distinguish:
+
+```txt
+Loading
+Empty
+Success
+Error
+Unauthorized
+Forbidden
+```
+
+Do not treat an empty result as an error.
+
+Do not use loading state as a substitute for authorization state.
+
+## Pagination
+
+Pagination parameters and response structures must follow the backend contract.
+
+Frontend must not:
+
+* invent pagination semantics;
+* assume an unbounded list;
+* calculate total counts from incomplete pages;
+* duplicate backend filtering rules.
+
+Feature query state should preserve pagination/filter state consistently with the route or product surface.
+
+## Caching
+
+Use the application's server-state/query layer for API response caching.
+
+Do not introduce custom global caches for ordinary API data.
+
+When caching API data:
+
+* use stable query keys;
+* invalidate after relevant mutations;
+* avoid duplicated cache representations;
+* respect backend data freshness requirements.
+
+Caching must not bypass authorization or resource-scope checks.
+
+## Realtime
+
+Realtime data must remain consistent with the backend API contract.
+
+Rules:
+
+* Authenticate realtime connections through the approved session mechanism.
+* Do not expose long-lived secrets to the browser.
+* Realtime events should update or invalidate feature-owned server state.
+* Do not treat realtime delivery as the only source of correctness.
+* Re-fetch or reconcile with the backend when required after reconnect or missed events.
+
+## Anti-patterns
+
+Do not:
+
+* scatter raw `fetch` calls through components;
+* manually duplicate generated API types;
+* invent backend response shapes;
+* duplicate backend business rules;
+* use frontend authorization as security;
+* expose refresh tokens or private credentials;
+* create unnecessary Route Handlers;
+* create global stores for server data;
+* introduce custom caches without a concrete requirement;
+* couple reusable UI components directly to backend endpoints.
+</file>
+
+<file path="docs/MODULE_GUIDE.md">
+# Frontend Module Guide
+
+The only implemented business module is Module 1.
+
+```text
+app route or BFF
+  -> auth/IAM feature
+  -> query resource or repository
+  -> shared HTTP utility
+  -> auth-service
+```
+
+- `features/auth`: session, account, profile, MFA and logout.
+- `features/iam`: IAM repositories/resources/hooks.
+- `features/admin/access`: user, role, permission and assignment administration.
+- `features/admin`: Module 1 administration shell and navigation.
+- `features/public-home`: standalone informational landing page.
+- `features/workspace`: shared authenticated shell navigation limited to account, security and the authorized admin bridge.
+
+Do not scaffold removed business modules without a new explicit product decision.
+</file>
+
+<file path="docs/PROMPT_PRE_TEST_FOCUSED_FIX.md">
+# PROMPT — VN–RU PRE-TEST FOCUSED FIX
+
+Repository:
+`dangminhdev0403/vnru-network`
+
+Baseline:
+`master` at `5f55656428218785f9b0cb1f2140c86224c317a9`
+
+Read and follow:
+`PRE_TEST_FOCUSED_FIX_GUIDE.md`
+
+Goal:
+Make the latest integrated Prototype V3 truthful and safe enough for REAL auth/IAM flow testing.
+
+Do not expand product scope.
+
+Mandatory order:
+
+1. Re-check HEAD.
+2. Read repository instruction/docs gate.
+3. Confirm current runtime services.
+4. Produce a short route/capability manifest BEFORE editing.
+5. Apply only the focused fixes in the guide.
+6. Run lint/build.
+7. Report exact remaining blockers.
+
+Highest priority:
+- `/workspace` must not be an unrestricted persona showcase.
+- capability-gate role navigation.
+- route-guard Researcher/Reviewer/Organization surfaces.
+- canonical Governance = `/admin`.
+- implement canonical `/account` and `/security` using existing auth UI.
+- keep legacy IAM redirects.
+- remove finance wording from CURRENT UI.
+- stop fake backend-success toasts/actions.
+- mark non-runtime role pages as UI preview where appropriate.
+- do not invent Enterprise/Leadership capabilities.
+- do not restore removed standalone business services; future capabilities belong in the backend modular monolith.
+
+Do not redesign the product during this task.
+
+Do not change dependencies unless unavoidable.
+
+Do not create missing backend business capabilities.
+
+Stop if a required existing auth/account component cannot be found; report the exact missing primitive instead of inventing a parallel implementation.
+
+Final report must include:
+- baseline/new SHA;
+- files changed;
+- route map;
+- capability gating map;
+- lint/build results;
+- finance scan;
+- fake-interaction scan;
+- remaining blockers;
+- `Docs read:` exact paths.
+</file>
+
+<file path="docs/QUERY_RESOURCE_GUIDE.md">
+# Query Resource Guide
+
+Authoritative upstream: <https://www.npmjs.com/package/@dangminhdev04032005/query-resource>
+Installed API reference: `node_modules/@dangminhdev04032005/query-resource/README.md`
+Current installed version: `0.1.1`
+
+## Rule
+
+For browser server-state, use `@dangminhdev04032005/query-resource` over raw `fetch`, direct `httpClient` calls in components, handwritten query keys, or ordinary ad-hoc TanStack Query options.
+
+Keep these outside it:
+
+- Server Components and repositories that fetch SEO-rendered content.
+- Next.js Route Handlers/BFF transport.
+- Server-only authentication helpers.
+- Purely local UI state.
+
+## Minimal pattern
+
+```ts
+const resource = createResource<Scope>()({
+  name: "publications",
+  namespace: ["vnru", "knowledge"],
+  scopeKey: (scope) => [scope.workspaceId],
+  queries: {
+    list: defineQuery({
+      inputKey: (filters: Filters) => [filters],
+      queryFn: ({ input, signal }) => repository.list(input, signal),
+    }),
+  },
+  mutations: {
+    update: defineMutation<Scope, UpdateInput, Publication>({
+      mutationFn: ({ variables }) => repository.update(variables),
+    }),
+  },
+});
+
+const bound = resource.bind(scope);
+const list = useQuery(bound.queries.list.options(filters));
+const update = useMutation(
+  bound.mutations.update.options({
+    optimistic: ({ client, cache, variables }) =>
+      cache.queries.list.patch(client, filters, (current) =>
+        current?.map((item) =>
+          item.id === variables.id ? { ...item, ...variables } : item,
+        ),
+      ),
+    onSettled: ({ client, cache }) =>
+      cache.queries.list.invalidateAll(client),
+  }),
+);
+```
+
+## Required practices
+
+1. Colocate transport in a domain repository; pass `AbortSignal` to GET requests.
+2. Let the resource generate keys from `namespace`, `scopeKey`, operation, and `inputKey`.
+3. Use generated cache helpers: `patch`, `set`, `invalidate`, or `invalidateAll`.
+4. Use optimistic updates only when rollback is safe and the expected result is deterministic.
+5. Invalidate only affected domain queries after writes.
+6. Render initial loading, error, empty, background-refetch, and stale-data states.
+7. Never mirror query data into Zustand, Context, or component state.
+8. Do not retry security mutations blindly after `401`.
+
+## Before coding
+
+Read the installed README and existing examples in `features/iam/resource.ts`, `features/iam/hooks.ts`, and `features/auth/server-state.ts`. If the installed API or upstream guidance is unclear, stop and request the authoritative guide instead of implementing raw query/cache logic.
+</file>
+
+<file path="docs/RUNTIME_UI_GUIDE.md">
+# Frontend Runtime and UI Guide
+
+## Purpose
+
+This guide contains detailed runtime, component, state, realtime, error, loading, and i18n conventions.
+
+## Server and Client Components
+
+Default to Server Components.
+
+Use Client Components only when the code needs:
+
+- Browser APIs.
+- Event handlers.
+- `useState`, `useEffect`, or client navigation hooks.
+- Zustand or another client store.
+- TanStack Query hooks.
+- Realtime sockets.
+
+Client components must be explicit with `"use client"`.
+
+## Component Ownership
+
+| Component type | Location | Rule |
+| --- | --- | --- |
+| Route-local components | `src/app/**/_components` or colocated route files | Use only within that route area. |
+| Feature components | `src/features/[feature]/components` | May use feature hooks/services. |
+| UI primitives | `src/components/ui` | Must not import feature services or app routes. |
+| Shared app components | `src/components/shared` or route-group `_components` | Shared presentation/shell logic. |
+| Marketing components | `src/components/marketing` | Public marketing sections and shells. |
+
+## State Ownership
+
+| State type | Recommended owner |
+| --- | --- |
+| Server state | TanStack Query or server data loading. |
+| URL/shareable state | Route params and search params. |
+| Local UI state | React state. |
+| Cross-component client state | Zustand or another explicit client store. |
+| Session state | Auth/session provider. |
+| Persistent browser state | Storage abstraction. |
+
+Rules:
+
+- Do not store server state in Zustand.
+- Do not use TanStack Query for purely local UI state.
+- Prefer URL state for shareable filters, pagination, and selected views.
+- Browser storage must be wrapped by feature/core utilities.
+
+Persistent identifiers or server-state resources may be added only when current product contracts require them. Browser identifiers are never authentication authority; backend validation remains authoritative.
+
+## Workspace navigation and RBAC rendering
+
+- The typed workspace registry owns member, account, security, and governance navigation.
+- Business roles do not create separate frontend applications or workflow pages. All non-administrator members land on `/workspace`.
+- Navigation uses session-bound capabilities and explicit resource scope; raw permission keys are not user-facing labels.
+- Mutating controls render only with the matching manage capability.
+- Resource scope belongs in URL/local query state when it must be shareable.
+- Frontend capability filtering improves clarity and request volume; it never replaces backend
+  authorization.
+- Member account and session-security links target `/account` and `/security`. Governance is a separate `/admin/*` surface and may appear in Workspace only as one capability-gated bridge.
+
+## Realtime
+
+- Isolate socket clients behind a feature or core realtime module.
+- Components should subscribe through hooks, not direct socket instances.
+- Realtime events should update or invalidate server-state caches when appropriate.
+- Connection lifecycle, cleanup, reconnect behavior, and auth context must be centralized.
+
+## Loading, Error, and Standard UI States `[DESIGN]`
+
+- Use route-level `loading.tsx` and `error.tsx` when a product surface needs its own boundary.
+- Implement explicit handling for the eight standard UI states:
+  1. `Loading`: Stable layout with skeleton indicators.
+  2. `Empty`: Informative empty-state graphics and actionable reset/create CTA.
+  3. `Error`: Localized error messages with retry action.
+  4. `Forbidden (403)`: Clear permission denial explanation and request-access CTA.
+  5. `Unauthorized (401)`: Redirect to `/login` preserving target return URL.
+  6. `Validation Error`: Form field error highlights and localized feedback strings.
+  7. `Conflict (409)`: Concurrency conflict banner with diff / refresh prompts.
+  8. `Success`: Feedback toasts and automated cache invalidation.
+- Do not display raw backend error objects directly.
+- Use toasts for user-triggered action feedback, not as the only error boundary.
+
+## Multilingual Support & AI Translation `[SOURCE]`
+
+- **Supported Locales**: Vietnamese (`vi`), Russian (`ru`), and English (`en`).
+- App-wide copy belongs in `core/i18n` or config-level i18n dictionaries.
+- Feature-specific copy belongs in `features/[feature]/i18n`.
+- **AI-Assisted Terminology Translation**:
+  - Specialized scientific/technical terminology translation hooks (`useTerminologyTranslation`) are available for reading and authoring interfaces.
+  - Translation suggestions must remain non-blocking and clearly marked as AI-assisted until confirmed by the user.
+- Avoid hardcoding user-facing copy in large interactive flows.
+
+## Workspace Context Switching
+
+- Authenticated users holding multiple roles keep the active authorization context; they do not switch dashboard personas.
+- Context changes update the active session authorization token and refresh capability-gated navigation without creating workflow UI.
+</file>
+
+<file path="features/admin/access/components/RolePermissionsPage.tsx">
+import { useMemo, useState, type FormEvent } from "react";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { useIamAdministration } from "@/features/iam/hooks";
+import { ApiError, type IamRole } from "@/features/iam/repository";
+import { confirmAction, showError, showToast } from "@/lib/alerts";
+import { z } from "zod";
+⋮----
+type Tab = "permissions" | "assignments" | "scope" | "audit";
+type Modal = "add" | "review" | "assign" | null;
+⋮----
+function isSystemRole(role: IamRole)
+⋮----
+const chooseRole = (role: IamRole) =>
+const togglePermission = (permission: string) =>
+⋮----
+const assignRole = async (event: FormEvent) =>
+⋮----
+const savePermissions = async () =>
+⋮----
+const RoleButton = (
+⋮----
+<article className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]"><div className="flex flex-wrap items-start gap-4 p-5"><span className="material-symbols-outlined grid size-12 place-items-center rounded-[14px] bg-[var(--surface-secondary)] text-2xl text-[var(--accent-primary)]">policy</span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><h2 className="text-2xl font-semibold">
+⋮----
+<article className="min-w-0 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]"><header className="flex flex-wrap items-end justify-between gap-3 border-b border-[var(--border)] p-4"><div><h3 className="text-lg font-semibold">
+⋮----
+</file>
+
+<file path="features/admin/access/components/UserAdministration.tsx">
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { confirmAction, showError, showToast } from "@/lib/alerts";
+import { useIamAdministration } from "@/features/iam/hooks";
+import { ApiError, type IamUser as User } from "@/features/iam/repository";
+import { z } from "zod";
+⋮----
+type View = "overview" | "roles";
+⋮----
+function groupPermissions(permissions: string[] = [], query = "", locale: Locale)
+⋮----
+const updateUserStatus = async () =>
+⋮----
+const assignRole = async (event: React.FormEvent) =>
+⋮----
+key=
+⋮----
+aria-invalid=
+</file>
+
+<file path="features/admin/components/AdminShell.tsx">
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { SheetContent, SheetOverlay, SheetTitle } from "@/components/tailgrids/core/sheet";
+import { cn } from "@/lib/cn";
+import Header from "@/components/shared/Header";
+import AdminSidebar from "./AdminSidebar";
+import React, { Suspense, useState } from "react";
+⋮----
+const toggleSidebar = ()
+⋮----
+{/* Desktop sidebar (xl+) */}
+⋮----
+{/* Mobile sidebar (< xl) */}
+⋮----
+onItemClick=
+⋮----
+{/* Main content */}
+⋮----
+className=
+</file>
+
+<file path="features/admin/components/AdminSidebar.tsx">
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import SidebarFrame, { type NavSection } from "@/components/shared/SidebarFrame";
+import { useCurrentUser } from "@/features/auth/server-state";
+import { filterAdminNavSections } from "@/features/admin/config/admin-nav-registry";
+import React from "react";
+⋮----
+export interface AdminSidebarProps {
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
+  isMobile?: boolean;
+  onItemClick?: () => void;
+}
+⋮----
+export default function AdminSidebar({
+  isSidebarOpen,
+  toggleSidebar,
+  isMobile,
+  onItemClick,
+}: AdminSidebarProps)
+</file>
+
+<file path="features/admin/config/admin-nav-registry.ts">
+export interface AdminNavEntry {
+  key: string;
+  href: string;
+  labelKey: string;
+  icon: string;
+  requiredCapabilities?: string[];
+}
+⋮----
+export interface AdminNavSection {
+  key: string;
+  labelKey: string;
+  items: AdminNavEntry[];
+}
+⋮----
+export function hasAdminCapability(userCapabilities: string[], required?: string | string[]): boolean
+⋮----
+export function filterAdminNavSections(userCapabilities: string[] = []): AdminNavSection[]
+</file>
+
+<file path="features/auth/components/account/AccountClientPage.tsx">
+import { useState } from "react";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { useProfile } from "@/features/iam/hooks";
+import ProfileDialog from "../security/ProfileDialog";
+</file>
+
+<file path="features/auth/components/security/MfaControl.tsx">
+export default function MfaControl(
+</file>
+
+<file path="features/auth/components/security/ProfileDialog.tsx">
+import { type FormEvent, useMemo, useState } from "react";
+import { confirmAction, showError, showToast } from "@/lib/alerts";
+import { useProfile } from "@/features/iam/hooks";
+import { z } from "zod";
+import { getFieldErrors } from "@/lib/form-validation";
+⋮----
+async function save(event: FormEvent<HTMLFormElement>)
+⋮----
+<label className="space-y-2 text-sm font-semibold text-text-primary">
+</file>
+
+<file path="features/auth/components/security/SecurityClientPage.tsx">
+import { useLocale, type Locale } from "@/core/i18n/locale";
+⋮----
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { confirmAction, showToast, showError } from "@/lib/alerts";
+import { useSessions } from "@/features/iam/hooks";
+import type { IamSession as Session } from "@/features/iam/repository";
+import ProfileDialog from "./ProfileDialog";
+import MfaControl from "./MfaControl";
+⋮----
+// Dialog & Action States
+⋮----
+const triggerRefresh = ()
+⋮----
+const handleRevokeSession = async (session = sessionToRevoke) =>
+⋮----
+title: t.toastRevokedOthers, // Assuming simple success message
+⋮----
+const handleRevokeOthers = async () =>
+⋮----
+const formatDate = (isoString: string) =>
+⋮----
+const maskSessionId = (id: string) =>
+⋮----
+onClose=
+⋮----
+{/* Revoke Single Session Modal */}
+⋮----
+{/* Revoke Others Modal */}
+</file>
+
+<file path="features/auth/server-state.ts">
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  createResource,
+  defineMutation,
+  defineQuery,
+} from "@dangminhdev04032005/query-resource";
+import { httpClient } from "@/lib/httpClient";
+⋮----
+export type CurrentUser = {
+  id?: string;
+  email?: string;
+  fullName?: string;
+  roles?: string[];
+  capabilities?: string[];
+  activeContext?: { contextType: string; contextId: string } | null;
+  [key: string]: unknown;
+};
+⋮----
+async function json<T>(path: string, init?: RequestInit): Promise<T>
+⋮----
+export function useCurrentUser()
+⋮----
+export function useLogout()
+</file>
+
+<file path="features/auth/server.ts">
+export function sanitizeLocale(value: string | null | undefined): "vi" | "en" | "ru"
+⋮----
+export function sanitizeReturnTo(value: string | null | undefined): string
+⋮----
+export function isSystemAdministrator(capabilities: string[] = []): boolean
+⋮----
+export function resolveLandingPath(capabilities: string[] = []): string
+⋮----
+export function authServiceUrl(path: string): URL
+⋮----
+export function backendHeaders(request: Request): Headers
+⋮----
+export function forwardSessionCookie(source: Response, target: Headers): void
+⋮----
+export async function getCurrentSession(token?: string): Promise<unknown | null>
+</file>
+
+<file path="features/auth/workspace-server.ts">
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { getCurrentSession, SESSION_COOKIE_NAME } from "./server";
+⋮----
+type WorkspaceSession = {
+  capabilities?: unknown;
+};
+⋮----
+function readCapabilities(session: WorkspaceSession): string[]
+⋮----
+export async function requireWorkspaceSession(returnTo: string): Promise<string[]>
+</file>
+
+<file path="features/iam/hooks.ts">
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { iamResource, securityResource } from "./resource";
+import type { IamUser, Profile } from "./repository";
+⋮----
+export function useIamAdministration()
+⋮----
+export function useSessions()
+⋮----
+export function useProfile()
+⋮----
+export function useMfa()
+</file>
+
+<file path="features/iam/repository.ts">
+import { httpClient } from "@/lib/httpClient";
+⋮----
+export type IamUser = {
+  id: string;
+  email: string | null;
+  status: "ACTIVE" | "INACTIVE";
+  canManageUser?: boolean;
+};
+export type IamRole = { id: string; name: string; permissions: string[] };
+export type IamSession = {
+  id: string;
+  createdAt: string;
+  expiresAt: string;
+  activeContext: { contextType: string; contextId: string } | null;
+  current: boolean;
+};
+export type Profile = { firstName: string; lastName: string; email: string };
+⋮----
+export class ApiError extends Error
+⋮----
+constructor(public readonly status: number, message: string)
+⋮----
+async function json<T>(path: string, init?: RequestInit): Promise<T>
+</file>
+
+<file path="features/iam/resource.ts">
+import {
+  createResource,
+  defineMutation,
+  defineQuery,
+} from "@dangminhdev04032005/query-resource";
+import { iamRepository } from "./repository";
+</file>
+
+<file path="features/public-discovery/components/PublicDiscoveryPages.tsx">
+import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useMemo, useState } from "react";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { EXPERTS, OPPORTUNITIES, getExpert, getOpportunity } from "../mock-data";
+import { PublicDiscoveryShell } from "./PublicDiscoveryShell";
+⋮----
+function DarkIntro(
+</file>
+
+<file path="features/public-discovery/components/PublicDiscoveryShell.tsx">
+import Link from "next/link";
+import { useEffect, type ReactNode } from "react";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+</file>
+
+<file path="features/public-discovery/mock-data.ts">
+import type { Locale } from "@/core/i18n/locale";
+⋮----
+type Localized<T> = Record<Locale, T>;
+⋮----
+export type Expert = {
+  id: string;
+  initials: string;
+  name: string;
+  institution: string;
+  country: "VN" | "RU";
+  topics: string[];
+  publications: string[];
+  copy: Localized<{ discipline: string; bio: string; focus: string }>;
+};
+⋮----
+export type Opportunity = {
+  id: string;
+  topics: string[];
+  relatedExpertIds: string[];
+  copy: Localized<{
+    title: string;
+    summary: string;
+    status: string;
+    scope: string;
+    objective: string;
+    conditions: string[];
+    timeline: string[];
+  }>;
+};
+⋮----
+export function getExpert(id: string)
+⋮----
+export function getOpportunity(id: string)
+</file>
+
+<file path="features/public-home/components/KnowledgeDiscovery.tsx">
+import Link from "next/link";
+import Image from "next/image";
+import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useMemo, useState } from "react";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import { EXPERTS, OPPORTUNITIES } from "@/features/public-discovery/mock-data";
+import knowledgeNetworkArtwork from "@/public/images/vn-ru-knowledge-network.png";
+⋮----
+type Resource = {
+  type: "materials" | "energy" | "digital";
+  kind: string;
+  year: string;
+  title: string;
+  description: string;
+  tags: string[];
+};
+type Copy = {
+  repo: string;
+  topics: string;
+  resourcesLabel: string;
+  join: string;
+  joinNetwork: string;
+  back: string;
+  kicker: string;
+  title: string;
+  typed: string;
+  intro: string;
+  explore: string;
+  connect: string;
+  russia: string;
+  vietnam: string;
+  route: string;
+  caption: string;
+  trails: string;
+  sectionTitle: string;
+  note: string;
+  filters: [string, string, string, string];
+  joinKicker: string;
+  joinTitle: string;
+  joinBody: string;
+  resources: Resource[];
+};
+⋮----
+function useTyping(text: string, reduced: boolean | null)
+⋮----
+function BilateralMap({
+  t,
+  experts,
+  opportunities,
+  reduced,
+}: {
+  t: Copy;
+  experts: string;
+  opportunities: string;
+  reduced: boolean | null;
+})
+⋮----
+onClick=
+</file>
+
+<file path="features/public-home/components/PublicHome.tsx">
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { motion, useReducedMotion } from "motion/react";
+import { useLogout } from "@/features/auth/server-state";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import translations from "../i18n/translations.json";
+import { confirmAction } from "@/lib/alerts";
+⋮----
+function useHeroTyping(locale: Locale, reduceMotion: boolean | null)
+⋮----
+const syncLocale = () =>
+⋮----
+const t = (key: string): string =>
+⋮----
+const handleLogout = async (e: React.MouseEvent) =>
+⋮----
+// Auth logout uses full-page navigation to clear both frontend and backend sessions.
+⋮----
+{/* ─── Top Navigation Bar ─── */}
+⋮----
+aria-label=
+⋮----
+{/* Auth Button */}
+⋮----
+{/* ─── Hero Section ─── */}
+⋮----
+{/* Hero SVG Map Background */}
+⋮----
+{/* ─── Hero Visual Stage ─── */}
+⋮----
+{/* Floating Tags */}
+⋮----
+{/* Flags Bridge Card */}
+⋮----
+{/* Partner Match Card */}
+⋮----
+{/* ─── Trust Bar ─── */}
+⋮----
+{/* ─── Network Knowledge Map Section ─── */}
+⋮----
+{/* Network Map Canvas */}
+⋮----
+{/* Core Knowledge Hub */}
+⋮----
+{/* Bottom Legend */}
+⋮----
+{/* ─── Current portal capabilities ─── */}
+⋮----
+{/* ─── Intelligent Knowledge Repository Section ─── */}
+⋮----
+{/* Search Showcase Component */}
+⋮----
+{/* ─── 2+2 Cooperation Model ─── */}
+⋮----
+{/* Russia Ecosystem */}
+⋮----
+
+⋮----
+{/* Role 01 */}
+⋮----
+{/* Plus */}
+⋮----
+{/* Role 02 */}
+⋮----
+{/* Center 2+2 Connector */}
+⋮----
+{/* Vietnam Ecosystem */}
+⋮----
+{/* Role 03 */}
+⋮----
+{/* Plus */}
+⋮----
+{/* Role 04 */}
+⋮----
+{/* Bottom 3 Cards */}
+⋮----
+{/* ─── Collaboration Flow ─── */}
+⋮----
+{/* 3 Step Cards */}
+⋮----
+{/* Step 1 */}
+⋮----
+{/* Step 2 - Featured */}
+⋮----
+{/* Step 3 */}
+⋮----
+{/* ─── Call to Action ─── */}
+⋮----
+{/* ─── Footer ─── */}
+</file>
+
+<file path="features/public-v2/components/GuestExpertsV2.tsx">
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { EXPERTS, type Expert } from "@/features/public-discovery/mock-data";
+import { GuestPublicNav } from "./GuestPublicNav";
+⋮----
+// Close modal on Escape key
+⋮----
+const handleKeyDown = (e: KeyboardEvent) =>
+⋮----
+{/* Hero Section */}
+⋮----
+{/* Search Bar */}
+⋮----
+{/* Quick stats pills */}
+⋮----
+{/* Experts Explorer Section */}
+⋮----
+{/* Filter Bar */}
+⋮----
+{/* Experts Grid */}
+⋮----
+{/* Avatar & Header */}
+⋮----
+{/* Topic Tags */}
+⋮----
+{/* Bio snippet */}
+⋮----
+{/* Meta stats */}
+⋮----
+{/* View Profile Button (Opens Modal) */}
+⋮----
+{/* CTA Box */}
+⋮----
+{/* Expert Detail Modal Box */}
+⋮----
+{/* Close Button */}
+⋮----
+{/* Modal Header */}
+⋮----
+{/* Modal Body */}
+⋮----
+{/* Biography */}
+⋮----
+{/* Research Focus */}
+⋮----
+{/* Topics */}
+⋮----
+{/* Selected Publications */}
+⋮----
+{/* Stats Summary */}
+⋮----
+{/* Modal Footer Actions */}
+⋮----
+{/* Institutional 4-Column Footer */}
+</file>
+
+<file path="features/public-v2/components/GuestExploreMedia.tsx">
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+</file>
+
+<file path="features/public-v2/components/GuestExploreV2.tsx">
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocale } from "@/core/i18n/locale";
+import { GuestPublicFooter } from "./GuestPublicFooter";
+import { HOME_COPY } from "./GuestHomeV2";
+import { GuestPublicNav } from "./GuestPublicNav";
+⋮----
+type Category =
+  | "all"
+  | "science"
+  | "international"
+  | "innovation"
+  | "education"
+  | "society";
+type FeedCategory = Exclude<Category, "all">;
+type NewsItem = {
+  title: string;
+  summary: string;
+  category: FeedCategory;
+  time: string;
+  image: string;
+};
+⋮----
+/* eslint-disable-next-line @next/next/no-img-element */
+⋮----
+const selectStreamCategory = (nextCategory: Category) =>
+⋮----
+{/* Row 1: Unified Segmented Tabs Strip (Dính kịch với nhau) */}
+⋮----
+{/* Row 2: Category Catalog Button + Full Width Search Input */}
+⋮----
+setSelectedTopics([]);
+setSelectedScope("all");
+setSelectedContentTypes([]);
+setSelectedPeriod("newest");
+</file>
+
+<file path="features/public-v2/components/GuestHomeV2.tsx">
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { GuestExploreMedia } from "./GuestExploreMedia";
+import { GuestPublicFooter } from "./GuestPublicFooter";
+import { GuestPublicNav } from "./GuestPublicNav";
+</file>
+
+<file path="features/public-v2/components/GuestKnowledgeV2.tsx">
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import {
+  DEMO_KNOWLEDGE_RESOURCES,
+  type KnowledgeType,
+} from "@/features/workspace/mock-data/knowledge";
+import { GuestPublicNav } from "./GuestPublicNav";
+⋮----
+// Type match
+⋮----
+// Access match
+⋮----
+// Topic match
+⋮----
+// Query match
+⋮----
+{/* Hero Section */}
+⋮----
+{/* Search Bar */}
+⋮----
+{/* Quick stats pills */}
+⋮----
+{/* Explorer Content Section */}
+⋮----
+{/* Top Filter Bar */}
+⋮----
+{/* Category pills */}
+⋮----
+{/* Secondary Select Dropdowns */}
+⋮----
+{/* Knowledge Resources Cards Grid */}
+⋮----
+{/* Card Top Metadata */}
+⋮----
+{/* Title */}
+⋮----
+{/* Meta snippet */}
+⋮----
+{/* Summary */}
+⋮----
+{/* Card Bottom: Tags & Actions */}
+⋮----
+{/* Featured Thematic Tracks */}
+⋮----
+{/* Open Science Protocol Banner */}
+⋮----
+{/* Join CTA Box */}
+⋮----
+{/* Institutional 4-Column Footer */}
+</file>
+
+<file path="features/public-v2/components/GuestNewsArticleV2.tsx">
+import Link from "next/link";
+import { BrandMark } from "@/components/shared/BrandMark";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import { useLocale } from "@/core/i18n/locale";
+⋮----
+type Category =
+  | "science"
+  | "international"
+  | "innovation"
+  | "education"
+  | "society"
+  | "health"
+  | "space";
+⋮----
+type ArticleRecord = {
+  id: number;
+  title: string;
+  summary: string;
+  category: Category;
+  time: string;
+};
+⋮----
+function ArticleVisual(
+⋮----
+function Thumb(
+⋮----
+function ShareButton(
+</file>
+
+<file path="features/public-v2/components/GuestOpportunitiesV2.tsx">
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { DEMO_OPPORTUNITIES } from "@/features/workspace/mock-data/opportunities";
+import { GuestPublicNav } from "./GuestPublicNav";
+⋮----
+// Status filter
+⋮----
+// Field filter
+⋮----
+// Query filter
+⋮----
+{/* Hero Section */}
+⋮----
+{/* Search Bar */}
+⋮----
+{/* Quick stats pills */}
+⋮----
+{/* Opportunities Explorer */}
+⋮----
+{/* Filter Bar */}
+⋮----
+{/* Field filter buttons */}
+⋮----
+{/* Status filter dropdown and count */}
+⋮----
+{/* Opportunities List / Cards */}
+⋮----
+{/* Top Badges */}
+⋮----
+{/* Title */}
+⋮----
+{/* Summary */}
+⋮----
+{/* Scope & Partner Requirement */}
+⋮----
+{/* Topics */}
+⋮----
+{/* Right Meta & Actions */}
+⋮----
+{/* How Bilateral Collaboration Works */}
+⋮----
+{/* CTA Box */}
+⋮----
+{/* Institutional 4-Column Footer */}
+</file>
+
+<file path="features/public-v2/components/GuestPublicFooter.tsx">
+import Link from "next/link";
+import { BrandMark } from "@/components/shared/BrandMark";
+⋮----
+type GuestPublicFooterCopy = {
+  footer: {
+    brandTitle: string;
+    subtitle: string;
+    desc: string;
+    openDataBadge: string;
+    navTitle: string;
+    pillarsTitle: string;
+    contactTitle: string;
+    hanoiOffice: string;
+    hanoiAddress: string;
+    moscowOffice: string;
+    moscowAddress: string;
+    supportLabel: string;
+    copyright: string;
+    terms: string;
+    privacy: string;
+    ethics: string;
+    openData: string;
+    pillars: string[];
+  };
+  ecosystem: { title: string; cards: { title: string }[] };
+  events: { title: string };
+};
+</file>
+
+<file path="features/public-v2/components/GuestPublicNav.tsx">
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { BrandMark } from "@/components/shared/BrandMark";
+⋮----
+type GuestNavActive =
+  | "home"
+  | "about"
+  | "news"
+  | "opportunities"
+  | "experts"
+  | "knowledge"
+  | "contact";
+⋮----
+type GuestPublicNavProps = {
+  active?: GuestNavActive;
+  isAuthenticated?: boolean;
+  workspaceHref?: string;
+};
+⋮----
+const handleHash = () =>
+⋮----
+const resolveActive = (): string =>
+⋮----
+onClick=
+</file>
+
+<file path="features/workspace/components/UnifiedWorkspaceDashboard.tsx">
+import Link from "next/link";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+⋮----
+type SurfaceKey = "news" | "knowledge" | "experts" | "opportunities";
+</file>
+
+<file path="features/workspace/components/WorkspaceSidebar.tsx">
+import SidebarFrame, { type NavSection } from "@/components/shared/SidebarFrame";
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { useCurrentUser } from "@/features/auth/server-state";
+import { filterNavSections, resolveUserPersonas } from "@/features/workspace/config/workspace-registry";
+⋮----
+export interface WorkspaceSidebarProps {
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
+  isMobile?: boolean;
+  onItemClick?: () => void;
+}
+⋮----
+export default function WorkspaceSidebar({
+  isSidebarOpen,
+  toggleSidebar,
+  isMobile,
+  onItemClick,
+}: WorkspaceSidebarProps)
+</file>
+
+<file path="features/workspace/config/workspace-registry.ts">
+export interface WorkspaceNavEntry {
+  key: string;
+  href: string;
+  labelKey: string;
+  icon: string;
+  requiredCapabilities?: string[];
+
+}
+⋮----
+export interface WorkspaceNavSection {
+  key: string;
+  labelKey: string;
+  items: WorkspaceNavEntry[];
+  requiredCapabilities?: string[];
+}
+⋮----
+export interface WorkspacePersona {
+  key: string;
+  name: string;
+  matchCapabilities: string[];
+}
+⋮----
+export function hasCapability(userCapabilities: string[], required?: string | string[]): boolean
+⋮----
+export function filterNavSections(userCapabilities: string[] = []): WorkspaceNavSection[]
+⋮----
+export function resolveUserPersonas(userCapabilities: string[] = []): WorkspacePersona[]
+</file>
+
+<file path="features/workspace/mock-data/knowledge.ts">
+export type KnowledgeType = "PUBLICATION" | "DATASET" | "MANUSCRIPT" | "TECHNICAL_REPORT" | "GUIDELINE" | "TOPIC";
+⋮----
+export type KnowledgeResource = {
+  id: string;
+  type: KnowledgeType;
+  title: string;
+  state: "Đã công bố" | "Đã chia sẻ" | "Bản nháp" | "Nội bộ" | "Đang theo dõi" | "Đã nghiệm thu";
+  meta: string;
+  summary: string;
+  authors?: string[];
+  year?: number;
+  doi?: string;
+  topics: string[];
+  accessLevel: "OPEN" | "RESTRICTED" | "INTERNAL";
+};
+⋮----
+export function getKnowledgeResourceById(id: string): KnowledgeResource | undefined
+⋮----
+export function getKnowledgeResourcesByType(type: KnowledgeType): KnowledgeResource[]
+</file>
+
+<file path="features/workspace/mock-data/opportunities.ts">
+type Opportunity = {
+  id: string;
+  code: string;
+  title: string;
+  field: string;
+  closes: string;
+  state: "DRAFT" | "PUBLISHED" | "CLOSED";
+};
+⋮----
+export type DetailedOpportunity = Opportunity & {
+  summary?: string;
+  scope?: string;
+  objective?: string;
+  topics?: string[];
+  relatedExpertIds?: string[];
+  eligiblePartners?: string;
+  publishedAt?: string;
+  guidelines?: string[];
+};
+⋮----
+export function getOpportunityById(id: string): DetailedOpportunity | undefined
+⋮----
+export function getOpportunitiesByState(state: Opportunity["state"]): DetailedOpportunity[]
+</file>
+
+<file path="PRODUCT.md">
+# Product
+
+## Identity
+Russia-Vietnam Science-Technology Intelligence Network is an independent bilateral knowledge, research, and technology cooperation portal founded and operated by the Traditions and Friendship Foundation. It is not a ministry portal or a separate legal entity.
+
+## Audience
+- Public visitors reading news, events, and approved public information.
+- Registered members and experts accessing approved knowledge, topic calls, and scientific publications.
+- Portal managers administering content and viewing aggregate site statistics.
+
+System administrators are operational users for IAM, security, and audit. They are not a fourth product audience and do not represent portal managers.
+
+## Core mechanism
+The Portal publishes science and technology information, then opens approved knowledge resources to registered members and experts.
+
+## Implemented surfaces
+- Public landing: `/`.
+- Public information: `/news`, `/knowledge`, `/experts`, `/opportunities`.
+- Authentication and member self-service: `/login`, `/account`, `/security`.
+- Member information hub: `/workspace`.
+- Governance: `/admin/access/*` and `/admin/audit`.
+- Compatibility: legacy `/workspace/iam*` routes redirect to account, security, or governance.
+
+## Product truth
+- Backend authorization is authoritative; frontend permissions only shape UX.
+- Keycloak owns credential UI; the frontend uses an opaque session bridge.
+- Vietnamese, English, and Russian are first-class locales. One selected locale must govern all visible and accessible copy on a surface.
+- Public information surfaces use synthetic display data until content APIs exist; they do not expose fake workflow actions.
+- The landing page is public; account, security and governance surfaces require the appropriate session and capability scope.
+
+## Design success
+- A first-time visitor understands the bilateral network and primary discovery action within seconds.
+- Authenticated users can identify context, security state, available modules, and next action without marketing clutter.
+- The visual system feels institutional, scientific, bilateral, and contemporary rather than generic SaaS.
+- Motion explains connection, hierarchy, and state transition; it never obstructs reading or operation.
+
+## Constraints
+- Preserve routes, information architecture, authentication behavior, domain boundaries, accessibility, and responsive behavior.
+- Preserve the VN-RU blue/red identity while using red sparingly.
+- Do not invent metrics, services, permissions, or production capabilities.
+- Prefer installed `motion` and native CSS. Add dependencies only when an implemented requirement cannot be met otherwise.
+</file>
+
+<file path="docs/RULES.md">
+# Frontend Rules
+
+Read `../../docs/RULES.md` first. Current `frontend/package.json`, source, and tests are capability truth; target-state docs never authorize inventing missing packages or paths.
+
+## Before code
+
+1. Read `../AGENTS.md`, `docs/ARCHITECTURE.md`, this file, one matching guide, and relevant Next.js 16.3 docs under `node_modules/next/dist/docs/`.
+2. Inspect the affected route/component, every caller of a changed shared symbol, current package manifest, and nearest tests.
+3. If a named dependency/path does not exist, stop or request its separately approved setup. Do not create a substitute abstraction.
+
+## Boundaries
+
+- Prefer Server Components. Add `"use client"` only for browser APIs, events, or client hooks.
+- Presentation components render state and emit events; they do not own transport, authorization, or business workflows.
+- No raw backend `fetch`/Axios in pages, layouts, or reusable UI. Use an existing repository/service/HTTP boundary.
+- Backend authorization is authoritative. Frontend capability checks only control UX.
+- Forms select entities by human-readable labels, never raw-ID typing.
+- Show localized inline errors where possible; never expose raw backend/stack/database errors.
+- Reuse current UI primitives. Preserve responsive layout and accessibility basics.
+
+## Server state
+
+The installed `@tanstack/react-query` and `@dangminhdev04032005/query-resource` packages define this client server-state path:
+
+```text
+repository -> query-resource resource -> feature hook -> component
+```
+
+Repositories own transport and DTO mapping. Resources own keys/options/cache operations. Feature hooks own permissions, enabled guards, cross-resource coordination, navigation, and UI feedback. Every response-affecting scope/input belongs in deterministic serializable keys.
+
+Do not add a local query-resource copy or second cache abstraction. Add an app-level `QueryClient` provider only with the first approved client query consumer; no provider is needed while the app has no client server-state usage.
+
+## State
+
+- Server data stays in server loading/query cache, not a client store.
+- Shareable filters/pagination use URL state.
+- Local interaction uses React state.
+- Cross-route persistent client state uses an existing store/storage utility only when current source already provides one or the task explicitly adds it.
+
+## UI Quality & Impeccable Gate
+
+- After modifying, updating, or creating any UI component, the Agent is required to manually run `npx impeccable detect` and automatically resolve all anti-patterns (font scale, contrast, explicit button types, reduced motion) before completing the task.
+
+## Completion
+
+Run the smallest available lint/typecheck/test/build gate for touched behavior. Final report must include `Docs read:`, changed files, exact commands/results, and blockers. Do not update plans unless milestone state actually changed.
+</file>
+
+<file path="docs/ARCHITECTURE.md">
+# Frontend Architecture
+
+The frontend currently contains:
+
+- public landing page `/`, news stream `/news` (with legacy `/explore` redirect), and synthetic discovery previews under `/knowledge`, `/experts` and `/opportunities`;
+- Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`, plus a localized `/register` request preview that does not create identities;
+- member account `/account`;
+- MFA and sessions `/security`;
+- IAM governance `/admin/access/*`;
+- Module 1 security audit `/admin/audit`;
+- one member information hub at `/workspace`; specialist persona/workflow routes have been removed;
+- capability-aware `/workspace` navigation and compatibility redirects under `/workspace/iam*`.
+
+Routes remain thin. `features/auth` owns authentication, account and security behavior; `features/iam` and `features/admin/access` own access governance; shared shells own presentation only. Backend authorization is authoritative.
+
+Public visitors read approved news and events. Registered members and experts also access approved knowledge, topic calls and scientific publications. Portal managers additionally receive content-management and aggregate-statistics capabilities. Backend authorization remains authoritative; none of these labels grants unrestricted access.
+
+There are no Knowledge, Expert, Publication, Collaboration, Review or Project business backends. Public discovery surfaces are read-only and use synthetic display data until content APIs exist. No frontend workflow state or fake mutation is retained.
+</file>
+
+</files>

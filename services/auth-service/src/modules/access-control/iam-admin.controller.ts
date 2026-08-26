@@ -39,6 +39,10 @@ const userStatusSchema = z.enum(['ACTIVE', 'INACTIVE'], {
   message: 'Status must be ACTIVE or INACTIVE',
 });
 
+const passwordResetSchema = z
+  .object({ password: z.string().min(8).max(128) })
+  .strict();
+
 const uuidSchema = z.string().uuid({ message: 'ID must be a valid UUID' });
 
 const roleAssignmentSchema = z.object({
@@ -117,6 +121,31 @@ export class IamAdminController {
     return this.iamAdminService.setUserStatus(
       parsedId.data,
       parsedStatus.data,
+      actorId,
+      req.authContext?.activeContext ?? undefined,
+    );
+  }
+
+  @Patch('users/:id/password')
+  async resetUserPassword(
+    @Param('id') id: string,
+    @Body() body: unknown,
+    @Req() req: AuthenticatedRequest,
+  ): Promise<{ reset: true }> {
+    const parsedId = uuidSchema.safeParse(id);
+    const parsedBody = passwordResetSchema.safeParse(body);
+    if (!parsedId.success || !parsedBody.success) {
+      throw new BadRequestException(
+        parsedId.error?.issues[0]?.message ??
+          parsedBody.error?.issues[0]?.message,
+      );
+    }
+    const actorId = req.authContext?.userId;
+    if (!actorId)
+      throw new UnauthorizedException('Actor ID not found in request context');
+    return this.iamAdminService.resetUserPassword(
+      parsedId.data,
+      parsedBody.data.password,
       actorId,
       req.authContext?.activeContext ?? undefined,
     );

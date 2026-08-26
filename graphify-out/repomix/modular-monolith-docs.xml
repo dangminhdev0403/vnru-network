@@ -1,0 +1,1077 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: README.md, docs/README.md, docs/RULES.md, docs/ARCHITECTURE.md, docs/DEPLOYMENT.md, docs/API_SPEC.md, docs/PORTAL_FOUNDATION_REFACTOR.md, docs/RBAC_ARCHITECTURE.md, services/AGENTS.md, services/docs/ARCHITECTURE.md, services/docs/RULES.md, services/docs/SERVICE_GUIDE.md, services/auth-service/README.md, services/auth-service/SERVICE_SPEC.md, frontend/PRODUCT.md, frontend/docs/ARCHITECTURE.md, frontend/docs/PROMPT_PRE_TEST_FOCUSED_FIX.md
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+docs/
+  API_SPEC.md
+  ARCHITECTURE.md
+  DEPLOYMENT.md
+  PORTAL_FOUNDATION_REFACTOR.md
+  RBAC_ARCHITECTURE.md
+  README.md
+  RULES.md
+frontend/
+  docs/
+    ARCHITECTURE.md
+    PROMPT_PRE_TEST_FOCUSED_FIX.md
+  PRODUCT.md
+services/
+  auth-service/
+    README.md
+    SERVICE_SPEC.md
+  docs/
+    ARCHITECTURE.md
+    RULES.md
+    SERVICE_GUIDE.md
+  AGENTS.md
+README.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="docs/README.md">
+# Documentation Index
+
+The current repository implements Module 1 in one backend monolith, plus public discovery and authenticated role UI previews.
+
+Read in this order:
+
+1. [`../AGENTS.md`](../AGENTS.md)
+2. [`ARCHITECTURE.md`](ARCHITECTURE.md)
+3. [`RBAC_ARCHITECTURE.md`](RBAC_ARCHITECTURE.md)
+4. [`RULES.md`](RULES.md)
+5. [`API_SPEC.md`](API_SPEC.md)
+6. [`PORTAL_FOUNDATION_REFACTOR.md`](PORTAL_FOUNDATION_REFACTOR.md)
+7. Frontend: [`../frontend/docs/ARCHITECTURE.md`](../frontend/docs/ARCHITECTURE.md), [`../frontend/docs/RULES.md`](../frontend/docs/RULES.md), [`../frontend/docs/RUNTIME_UI_GUIDE.md`](../frontend/docs/RUNTIME_UI_GUIDE.md)
+8. Backend: [`../services/docs/ARCHITECTURE.md`](../services/docs/ARCHITECTURE.md), [`../services/docs/RULES.md`](../services/docs/RULES.md), [`../services/docs/SERVICE_GUIDE.md`](../services/docs/SERVICE_GUIDE.md)
+
+Module 2–6 backend modules remain absent. They must be added inside the existing modular monolith, not as microservices. Synthetic public and role-preview routes may demonstrate future network concepts, but they are not implemented backend capabilities.
+</file>
+
+<file path="frontend/docs/PROMPT_PRE_TEST_FOCUSED_FIX.md">
+# PROMPT — VN–RU PRE-TEST FOCUSED FIX
+
+Repository:
+`dangminhdev0403/vnru-network`
+
+Baseline:
+`master` at `5f55656428218785f9b0cb1f2140c86224c317a9`
+
+Read and follow:
+`PRE_TEST_FOCUSED_FIX_GUIDE.md`
+
+Goal:
+Make the latest integrated Prototype V3 truthful and safe enough for REAL auth/IAM flow testing.
+
+Do not expand product scope.
+
+Mandatory order:
+
+1. Re-check HEAD.
+2. Read repository instruction/docs gate.
+3. Confirm current runtime services.
+4. Produce a short route/capability manifest BEFORE editing.
+5. Apply only the focused fixes in the guide.
+6. Run lint/build.
+7. Report exact remaining blockers.
+
+Highest priority:
+- `/workspace` must not be an unrestricted persona showcase.
+- capability-gate role navigation.
+- route-guard Researcher/Reviewer/Organization surfaces.
+- canonical Governance = `/admin`.
+- implement canonical `/account` and `/security` using existing auth UI.
+- keep legacy IAM redirects.
+- remove finance wording from CURRENT UI.
+- stop fake backend-success toasts/actions.
+- mark non-runtime role pages as UI preview where appropriate.
+- do not invent Enterprise/Leadership capabilities.
+- do not restore removed standalone business services; future capabilities belong in the backend modular monolith.
+
+Do not redesign the product during this task.
+
+Do not change dependencies unless unavoidable.
+
+Do not create missing backend business capabilities.
+
+Stop if a required existing auth/account component cannot be found; report the exact missing primitive instead of inventing a parallel implementation.
+
+Final report must include:
+- baseline/new SHA;
+- files changed;
+- route map;
+- capability gating map;
+- lint/build results;
+- finance scan;
+- fake-interaction scan;
+- remaining blockers;
+- `Docs read:` exact paths.
+</file>
+
+<file path="frontend/PRODUCT.md">
+# Product
+
+## Identity
+Russia-Vietnam Science-Technology Intelligence Network is an independent bilateral knowledge, research, and technology cooperation portal founded and operated by the Traditions and Friendship Foundation. It is not a ministry portal or a separate legal entity.
+
+## Audience
+- Public visitors reading news, events, and approved public information.
+- Registered members and experts accessing approved knowledge, topic calls, and scientific publications.
+- Portal managers administering content and viewing aggregate site statistics.
+
+System administrators are operational users for IAM, security, and audit. They are not a fourth product audience and do not represent portal managers.
+
+## Core mechanism
+The Portal publishes science and technology information, then opens approved knowledge resources to registered members and experts.
+
+## Implemented surfaces
+- Public landing: `/`.
+- Authentication and member self-service: `/login`, `/account`, `/security`.
+- Governance: `/admin/access/*` and `/admin/audit`.
+- Compatibility: `/workspace` and legacy `/workspace/iam*` routes redirect to Module 1 surfaces.
+
+## Product truth
+- Backend authorization is authoritative; frontend permissions only shape UX.
+- Keycloak owns credential UI; the frontend uses an opaque session bridge.
+- Vietnamese, English, and Russian are first-class locales. One selected locale must govern all visible and accessible copy on a surface.
+- IAM infrastructure is the only implemented business module. Other business capabilities may appear as landing-page vision only and must not be presented as available runtime surfaces.
+- The landing page is public; account, security and governance surfaces require the appropriate session and capability scope.
+
+## Design success
+- A first-time visitor understands the bilateral network and primary discovery action within seconds.
+- Authenticated users can identify context, security state, available modules, and next action without marketing clutter.
+- The visual system feels institutional, scientific, bilateral, and contemporary rather than generic SaaS.
+- Motion explains connection, hierarchy, and state transition; it never obstructs reading or operation.
+
+## Constraints
+- Preserve routes, information architecture, authentication behavior, domain boundaries, accessibility, and responsive behavior.
+- Preserve the VN-RU blue/red identity while using red sparingly.
+- Do not invent metrics, services, permissions, or production capabilities.
+- Prefer installed `motion` and native CSS. Add dependencies only when an implemented requirement cannot be met otherwise.
+</file>
+
+<file path="services/docs/RULES.md">
+# Backend Modular Monolith Rules
+
+Read `../../docs/RULES.md` first. Current service manifests, source, schemas, migrations, and tests are capability truth; target-state docs never authorize inventing missing tools or infrastructure.
+
+## Before code
+
+1. Read `../AGENTS.md`, `docs/ARCHITECTURE.md`, this file, one matching guide, and the affected service manifest/README/tests.
+2. Trace the endpoint or workflow end to end. Inspect every caller of a changed shared symbol.
+3. If a package, schema, migration tool, route config, OpenAPI exporter, broker, cache, or shared contract is absent, stop or request a separately approved setup slice.
+
+## Boundaries
+
+- Controller handles transport only.
+- Application service/use case owns orchestration, authorization/resource checks, and transaction decisions.
+- Domain owns business rules; it imports no framework or infrastructure.
+- Infrastructure implements inward-facing ports for persistence/providers.
+- One backend application owns one PostgreSQL database.
+- Each domain module owns its tables, repositories and business mutations. Other modules use its typed application contract; never import its repository/entity internals or query its tables directly.
+- Cross-module calls are in-process. Do not add internal HTTP, brokers, versioned events, distributed transactions or module-specific databases.
+
+## Trust boundaries
+
+- Endpoints are private by default. Public routes require an explicit narrow allowlist plus tests for anonymous access.
+- Validate body/query/params at the controller boundary using the validation mechanism actually installed in that service.
+- Zod is preferred only after it exists in the service manifest and an approved slice wires a shared parser. Never reference an uninstalled validator.
+- Enforce resource ownership and permission scope in backend code. Frontend checks are not security.
+- Keep secrets in environment/runtime secret stores; never source/docs/log output.
+
+## Data
+
+- List APIs use explicit bounded pagination.
+- Review query shape for N+1, indexes, selected fields, and redundant reads.
+- Use a local DB transaction for multi-write invariants. No transaction for simple reads.
+- Cache only after a measured need; document key, TTL, invalidation, and stale-data risk.
+- Migrations use the service's existing tool and workflow. Never rename applied migrations or run destructive reset/push against shared/production data.
+
+## Contracts and events
+
+- Current generated OpenAPI, when present, is HTTP source of truth. Do not hand-maintain a conflicting endpoint catalog.
+- Contract changes update producer, consumers, focused tests, and contract history in one approved slice.
+- Events use stable names, versions, IDs, timestamps, producer, correlation ID, and payload. Consumers must define idempotency/retry behavior before activation.
+
+## Testing and completion
+
+Write one smallest real regression check for non-trivial behavior. Run focused tests first; then only existing build/lint/e2e gates required by impact. Final report must include `Docs read:`, root cause/objective, changed files, exact commands/results, contract/migration impact, and blockers. Never claim an unrun gate passed.
+</file>
+
+<file path="services/AGENTS.md">
+# Backend Agent Instructions
+
+Before changing anything under `services/`:
+
+1. Read `../docs/RULES.md` and `../docs/ARCHITECTURE.md`.
+2. Read `docs/ARCHITECTURE.md` and `docs/RULES.md`.
+3. Read only the matching guide: `docs/SERVICE_GUIDE.md`, `docs/MIGRATION_GUIDE.md`, or `docs/MULTILINGUAL_BACKEND_PLAN.md`.
+4. Read the affected service's `package.json`, nearest README/instructions, current code, and tests. Current files override target-state prose.
+
+The backend is a modular monolith. Add capabilities as internal modules; do not create standalone services, internal HTTP calls, brokers, or module-specific databases. Modules access another module only through its application contract, never its repository or tables. No package/lockfile edits without approval. Final report must list exact docs read.
+</file>
+
+<file path="docs/API_SPEC.md">
+# Module 1 API Contract Policy
+
+The current HTTP contract is owned by `auth-service`. Controllers and exported OpenAPI, when generated, are the runtime source of truth.
+
+Implemented API families:
+
+- `/api/v1/auth/*`: OIDC exchange, current session, logout and active-context switching.
+- `/api/v1/auth/profile`: application-owned member profile.
+- `/api/v1/auth/sessions/*`: session listing and revocation.
+- `/api/v1/admin/users/*`: identity administration.
+- `/api/v1/admin/roles/*`: role and permission administration.
+- `/api/v1/admin/role-assignments/*`: assignment administration.
+
+Rules:
+
+- Validate all external input at the controller boundary.
+- Keep opaque session tokens in secure HttpOnly cookies.
+- Return `401` for missing/invalid authentication and `403` for insufficient capability or scope.
+- Frontend BFF routes forward the opaque session and never expose provider tokens.
+- Collection endpoints must be bounded.
+</file>
+
+<file path="docs/DEPLOYMENT.md">
+# Deployment and Local Operation
+
+The containerized stack contains one PostgreSQL database, one backend monolith (currently named `auth-service`), frontend and Nginx.
+
+```powershell
+Copy-Item .env.docker.example .env
+docker compose up --build -d
+docker compose ps
+docker compose logs -f --tail=100
+```
+
+Endpoints use the ports configured in `.env`; defaults are frontend `3000`, auth-service `3001`, PostgreSQL `5432`, and Nginx `80`/`443`.
+
+For source development, use the local PostgreSQL container, then run:
+
+```powershell
+pnpm --dir services/auth-service start:dev
+pnpm --dir frontend dev
+```
+
+The backend container runs Prisma migrations against shared `auth_db` before startup. No Module 2–6 module or separate database is created.
+</file>
+
+<file path="docs/RBAC_ARCHITECTURE.md">
+# Module 1 RBAC Architecture
+
+Auth.js authenticates a person from the runtime account config. `auth-service` resolves the signed identity assertion to one opaque application session, one active authorization context, roles, resource scopes and capability keys.
+
+Capability keys use `<domain>.<resource>.<action>`. The current frontend consumes Module 1 capabilities such as `iam.users.manage`, `iam.roles.manage` and `iam.audit.view` to shape navigation. Backend guards remain authoritative.
+
+Each session has exactly one active context. Switching context validates the assignment and scope, rotates the session token and never unions permissions from different contexts.
+
+Member self-service is available at `/account` and `/security`. Governance operators use `/admin/access/*` and `/admin/audit`.
+
+## Product access classes
+
+Product copy and navigation use only `PUBLIC`, `MEMBER` and `PORTAL_MANAGER` concepts:
+
+- `PUBLIC`: approved news, events and public information.
+- `MEMBER`: approved member knowledge, topic calls and scientific publications.
+- `PORTAL_MANAGER`: content-management and aggregate-statistics capabilities in addition to member access.
+
+These are access classes, not permission wildcards. Backend capabilities still authorize every protected action and record. `SUPER_ADMIN` remains a technical IAM/security role and must not be assigned as portal-manager access.
+</file>
+
+<file path="docs/RULES.md">
+# Russia-Vietnam Science-Technology Intelligence Network Global Rules (Authoritative)
+
+This document contains the authoritative governance, security, data-ownership, and development rules for the Russia-Vietnam Science-Technology Intelligence Network repository. All domain-specific rule files defer to this document.
+
+## 1. Security & Authentication Boundaries
+
+- **Backend Enforcement**: Security and authorization MUST be validated at every backend entry point and protected module use case.
+- **Frontend non-boundary**: Frontend visual controls, route guards, and hidden buttons are UI conveniences only, never security boundaries.
+- **Secrets Management**: Hardcoding API keys, JWT secrets, passwords, or credentials in source code, default configs, or documentation is strictly forbidden. Use environment variables.
+
+## 2. Data Ownership & Module Boundaries
+
+- **Modular Monolith**: The backend is one deployable application. New business capabilities are internal domain modules, not standalone services.
+- **Exclusive Ownership**: Every business state has exactly one owning domain module. Other modules call its application contract instead of mutating its tables or repository directly.
+- **Shared PostgreSQL**: Modules use one PostgreSQL database. Tables and repositories retain module ownership; a database-per-module topology is forbidden unless a measured future need is separately approved.
+- **In-Process Integration**: Cross-module interaction uses typed application contracts and local transactions where one use case requires atomic writes. Do not introduce internal HTTP, brokers, distributed transactions, or versioned events.
+
+## 3. Package & Dependency Governance
+
+- **Explicit Approval Required**: Adding, upgrading, or removing packages in any `package.json` or lockfile requires explicit user approval before execution.
+- **No Unapproved Packages**: Do not import or reference packages that are not present in `package.json`.
+
+## 4. API & Resource Design
+
+- **Bounded Collection Responses**: All list endpoints MUST enforce pagination boundaries (limit/cursor/offset) to prevent unbounded payload allocation.
+- **Source of Truth**: PostgreSQL database stores serve as the primary source of truth. Redis caches must handle cache invalidation cleanly.
+
+## 5. Working Tree & Scope Constraints
+
+- **Preserve Unrelated Work**: Unrelated uncommitted edits, untracked files, or existing deleted files must remain untouched.
+- **No Speculative Artifacts**: Do not generate unapproved documentation, code abstractions, or placeholder files outside assigned task boundaries.
+- **No Financial Product Domain**: Funding, investment, budget, disbursement, payment, accounting, sponsorship, royalties, deal value, ROI, benefit-sharing calculations, and financial KPIs are outside the current product scope. Source research may mention them only as clearly labeled source or historical context.
+- **Documentation Conflict Stop**: Active implementation-facing docs must agree on canonical routes and current-vs-future capability status. Reconcile conflicts before implementation.
+
+## 6. Verification Request Dispatch & Browser Testing Policy
+
+- **Code Completion -> Report Immediately**: When implementing features or fixing code, the agent runs the smallest reliable validation (lint/typecheck/focused tests) and reports results immediately. Never automatically start servers and launch Chrome DevTools MCP after code edits without user approval.
+- **Propose Browser Testing**: If human-like interactive or rendered visual verification is beneficial, propose it in the completion report and wait for user instruction.
+- **Pro-Max verification framework**: `docs/VERIFICATION_GUIDE.md` is the repository's Pro-Max verification guide. `Pro-Max` names the framework/guide itself; users do not need to append `pro-max` to a test command.
+- **Selectable verification profiles**: When the user explicitly asks to test, verify, check, smoke-test, or validate a module/feature without naming a profile, the agent MUST first present the selector defined in `docs/VERIFICATION_GUIDE.md` and wait for the user's selection before executing verification.
+- **Browser disclosure**: Every selector option MUST state explicitly whether it includes real browser interaction. A generic phrase such as “UI test” is not sufficient.
+- **Named profile executes directly**: If the user explicitly requests `quick`, `integration`, `ui/browser`, `full/toàn diện`, or a custom scope, do not ask for profile selection again.
+- **Full-profile browser requirement**: For a target with a web UI, the Full profile includes actual browser interaction through the configured Chrome DevTools MCP, including relevant user actions plus Network and Console inspection. Code inspection or manual clicking is not an equivalent substitute. If the MCP is unavailable, mark the browser gate `BLOCKED` rather than claiming a full PASS.
+- **Verification before repair**: Verification is not permission to edit source. When a real source defect is found, report the failure, root cause, affected code, minimal proposed fix, and regression risk before changing source, unless the user has explicitly authorized repair in the same request.
+- **Evidence over claims**: A full-module PASS MUST be supported by the gates required by the selected profile. Unit tests or build success alone cannot be reported as Full verification when runtime or browser evidence is required.
+
+## 7. UI Quality & Impeccable Gate
+
+- **Mandatory Anti-Pattern Check**: After modifying, updating, or creating any UI component, the Agent is required to manually run `npx impeccable detect` and automatically resolve all anti-patterns (font scale, contrast, explicit button types, reduced motion) before completing the task.
+</file>
+
+<file path="services/auth-service/README.md">
+# Auth Service — Module 1 Base
+
+## Purpose
+
+`auth-service` is the legacy package name of the single backend modular monolith. It currently implements Module 1: unified administration, identity and authentication for Russia-Vietnam Science-Technology Intelligence Network.
+
+IAM modules own IAM state only. Future organization, content, knowledge and management capabilities belong in the same application as separate domain modules with their own tables, repositories and application contracts.
+
+Detailed service contract and Module 1 ownership rules: [`SERVICE_SPEC.md`](./SERVICE_SPEC.md).
+
+## Current Base
+
+The current base intentionally separates Module 1 into five internal modules from the start:
+
+```txt
+src/modules/
+  identity/
+  authentication/
+  session/
+  access-control/
+  security/
+```
+
+At this stage these are structural module boundaries only. There are no domain entities, persistence adapters, SSO/JWT providers, migrations, or 2FA implementations yet.
+
+## Internal Module Responsibilities
+
+### `identity`
+
+Owns the internal identity of a platform user:
+
+- user identity;
+- external/federated identity linkage;
+- account status;
+- identity linking rules.
+
+Primary question: **Who is this person inside Russia-Vietnam Science-Technology Intelligence Network?**
+
+### `authentication`
+
+Owns authentication orchestration:
+
+- login entry flow;
+- SSO / external IdP integration boundary;
+- authentication callback flow;
+- logout orchestration;
+- step-up / 2FA orchestration when required by security policy.
+
+Primary question: **How has this identity proved who it is?**
+
+`authentication` does not own user identity state or session persistence. It coordinates the owning modules.
+
+### `session`
+
+Owns authenticated session lifecycle:
+
+- session creation;
+- current session state;
+- expiration;
+- refresh/renewal when later approved by the authentication design;
+- revoke one session;
+- revoke all sessions for an identity when required.
+
+Primary question: **Is this authenticated session still valid?**
+
+### `access-control`
+
+Owns IAM authorization context and baseline access policy:
+
+- roles;
+- permissions;
+- role assignments;
+- active authorization context;
+- permission resolution;
+- baseline authorization decisions.
+
+Primary question: **In the active context, what platform capabilities may this identity use?**
+
+Owning domain modules remain responsible for resource ownership, workflow state, and domain-specific authorization rules.
+
+### `security`
+
+Owns authentication security policy:
+
+- 2FA policy;
+- failed authentication policy;
+- account lock/disable security rules;
+- suspicious authentication policy;
+- security events required by Module 1.
+
+Primary question: **What additional security controls must be satisfied before access is trusted?**
+
+## Responsibility Flow
+
+### Login
+
+```txt
+Client
+  -> authentication
+  -> external IdP / authentication provider
+  -> identity
+  -> security policy / 2FA when required
+  -> access-control context resolution
+  -> session creation
+  -> authenticated result
+```
+
+### Authenticated request
+
+```txt
+Request
+  -> session validation
+  -> identity/account status validation
+  -> access-control context + permission resolution
+  -> target domain module
+  -> domain module validates resource scope and workflow state
+```
+
+### Logout
+
+```txt
+Client
+  -> authentication logout orchestration
+  -> session revoke
+  -> security/audit hook when required
+  -> completed
+```
+
+## Boundary Rules
+
+- `identity` owns identity state; other internal modules must not duplicate user records.
+- `session` owns session lifecycle; authentication only orchestrates it.
+- `access-control` owns roles, permissions, assignments, and active authorization context.
+- `security` owns security policy; it must not become a second user/session store.
+- Business-domain authorization stays in the owning domain module.
+- Organization/researcher/expert data is not owned by `auth-service`; only stable references may appear in authorization context when required.
+- Do not import repositories or persistence internals across module boundaries; call the owning module's typed application contract.
+
+## Module Growth Pattern
+
+When a module becomes complex, grow it using the repository service convention:
+
+```txt
+<module>/
+  api/
+  application/
+  domain/
+  infrastructure/
+  tests/
+  <module>.module.ts
+  <module>-public.ts   # only when an intentional public internal contract is needed
+```
+
+Do not create empty architecture folders before they are needed.
+
+## Technical Decisions Baseline `[DECISION]`
+
+The Module 1 technical baseline is approved as follows:
+
+- **Authentication**: Auth.js Credentials verifies the ignored runtime account config and exchanges a short-lived signed assertion for an opaque backend session.
+- **Session**: Random opaque token in a `Secure`, `HttpOnly`, `SameSite` cookie; PostgreSQL stores only its SHA-256 digest. No JWT access/refresh tokens.
+- **Authorization Context**: Exactly one active context per session; context switching validates assignment/scope and rotates the session token (resolves OPEN-02).
+- **2FA**: not available with the current Credentials provider.
+- **Persistence & Validation**: PostgreSQL with Prisma migrations; Zod validation at trust boundaries.
+- **Audit**: Append-only IAM and security event logging in PostgreSQL.
+
+## Current Non-Goals
+
+The current slice does not introduce:
+
+- Application-level JWT or Passport;
+- In-app TOTP secret generation;
+- Redis, Kafka, brokers or internal HTTP between modules;
+- Public authentication endpoints before approved slice implementation;
+- Concurrent multi-context sessions.
+</file>
+
+<file path="services/auth-service/SERVICE_SPEC.md">
+# Auth Service Specification — Module 1
+
+## 1. Purpose
+
+`auth-service` is the legacy package name of the single backend modular monolith. It currently implements Module 1: **Unified Administration, Identity & Authentication** for Russia-Vietnam Science-Technology Intelligence Network.
+
+This service is the platform-level source of truth for IAM: internal identities, authentication, login sessions, access context, roles/permissions, and authentication-related security policies.
+
+IAM modules do not own organization, expert, content, knowledge or portal-management state. Those capabilities belong in sibling domain modules inside the same application.
+
+## 2. Current State
+
+The current base only locks the internal module boundaries:
+
+```txt
+src/modules/
+  identity/
+  authentication/
+  session/
+  access-control/
+  security/
+```
+
+These modules are registered in `AppModule`, but no domain entities, controllers, persistence, JWT, SSO/IdP, 2FA implementation, or migrations have been added yet.
+
+## 3. Responsibility Boundaries
+
+### 3.1 `identity`
+
+Owns the internal identity of a user in Russia-Vietnam Science-Technology Intelligence Network.
+
+Responsibilities:
+
+- `User` / internal identity;
+- external/federated identity linkage;
+- account status;
+- identity linking and merging rules.
+
+Does not own:
+
+- researcher/expert profiles;
+- organization profiles;
+- sessions;
+- roles/permissions;
+- provider-specific authentication flows.
+
+Primary question: **Who is this person inside Russia-Vietnam Science-Technology Intelligence Network?**
+
+### 3.2 `authentication`
+
+Owns authentication orchestration.
+
+Responsibilities:
+
+- login entry flow;
+- SSO / external IdP boundary;
+- authentication callback;
+- logout orchestration;
+- step-up/2FA orchestration when required by security policy.
+
+Does not own:
+
+- user state;
+- session persistence;
+- role/permission state.
+
+Primary question: **How has this identity proved who it is?**
+
+### 3.3 `session`
+
+Owns the authenticated session lifecycle.
+
+Responsibilities:
+
+- create a session after successful authentication;
+- validate the current session;
+- expiration;
+- refresh/renewal if approved by the later session design;
+- revoke one session;
+- revoke all sessions for a user when required.
+
+Primary question: **Is this authenticated session still valid?**
+
+### 3.4 `access-control`
+
+Owns the IAM baseline access policy.
+
+Responsibilities:
+
+- Role;
+- Permission;
+- RoleAssignment;
+- Active Authorization Context;
+- permission resolution;
+- baseline authorization decisions.
+
+Principle:
+
+```txt
+Identity
++ active context
++ platform permissions
+= baseline access decision
+```
+
+`access-control` does not decide business state for domain resources. The owning domain module must still validate ownership, assignment, workflow state and its own rules.
+
+Primary question: **In the active context, which platform capabilities may this identity use?**
+
+### 3.5 `security`
+
+Owns authentication-related security policies.
+
+Responsibilities:
+
+- 2FA policy;
+- failed authentication policy;
+- account lock/disable security rules;
+- suspicious authentication policy;
+- security events required by Module 1.
+
+It must not become a second user store or session store.
+
+Primary question: **Which additional security controls must be satisfied before access is trusted?**
+
+## 4. Core Flows
+
+### 4.1 Login
+
+```txt
+Client
+  -> authentication
+  -> external IdP / authentication provider
+  -> identity resolve/link
+  -> identity account-status check
+  -> security policy / 2FA when required
+  -> access-control context resolution
+  -> session creation
+  -> authenticated result
+```
+
+The expected login result is an authenticated session bound to an internal `userId` and a valid authorization context. Token/session transport details are intentionally deferred to the corresponding implementation slice.
+
+### 4.2 Authenticated Request
+
+```txt
+Request
+  -> session validation
+  -> identity/account status validation
+  -> access-control resolves active context + permissions
+  -> target domain module
+  -> domain module validates resource scope + workflow state
+```
+
+IAM provides baseline access only. The owning domain module remains the source of truth for authorization that depends on resource scope and workflow state.
+
+### 4.3 Logout
+
+```txt
+Client
+  -> authentication logout orchestration
+  -> session revoke
+  -> security/audit hook when required
+  -> completed
+```
+
+`authentication` orchestrates logout; `session` owns session invalidation.
+
+### 4.4 Active Context Switching
+
+Implement only after OPEN-02 is resolved.
+
+Expected direction:
+
+```txt
+Authenticated user
+  -> load allowed contexts
+  -> select target context
+  -> access-control validates assignment/scope
+  -> activate context
+  -> resolve permissions for that context
+```
+
+Permissions from different contexts must not be combined by default.
+
+## 5. Logical Data Ownership
+
+The following models logically belong to `auth-service`, but are not yet an approved persistence schema:
+
+```txt
+identity
+  User
+  ExternalIdentity
+
+session
+  Session
+
+access-control
+  Role
+  Permission
+  RoleAssignment
+  AuthorizationContext
+
+security
+  SecurityPolicy / SecurityEvent required for IAM
+```
+
+The following models do **not** belong to `auth-service`:
+
+```txt
+Organization
+Researcher
+ExpertProfile
+FundingOpportunity
+JointProposal
+ReviewAssignment
+Project
+AcademicActivity
+TechnologyProfile
+Publication
+```
+
+
+If authorization context requires organization/resource scope, store only the stable references needed by IAM; do not copy business records into `auth-service`.
+
+## 6. Dependency Direction
+
+Internal dependencies must be intentional and must not create dependency cycles.
+
+Primary orchestration flow:
+
+```txt
+authentication
+  -> identity
+  -> security
+  -> access-control
+  -> session
+```
+
+Modules should use public contracts once a boundary is complex enough to justify `*-public.ts`. Do not import repositories or persistence implementations from another internal module as a shortcut.
+
+## 7. Security Invariants
+
+- The backend is the source of truth for authentication and authorization.
+- Endpoints are private by default; public endpoints must be explicitly declared and tested.
+- Access decisions must fail closed when required identity/session/context data is missing.
+- Disabled or suspended users must not continue using sessions indefinitely.
+- Business permissions do not replace resource ownership or workflow validation in the owning domain module.
+- Do not audit every UI interaction; audit only IAM/security actions that have traceability value.
+- Do not lock the IdP, token model, or multi-context behavior before the corresponding decision is resolved.
+
+## 8. Auth Service Output Contract
+
+The backend provides a stable authenticated request context to sibling domain modules. At a logical level it contains:
+
+```txt
+userId
+sessionId
+activeContext
+organizationScope? / stable scope references
+permissions
+authenticationLevel
+```
+
+Final field names and transport contracts must only be locked when API/session design is implemented and added to OpenAPI.
+
+## 9. Approved Technical Baseline `[DECISION]`
+
+- **OPEN-01**: External institutional identity federation is not implemented; current authentication uses Auth.js Credentials.
+- **OPEN-02**: Exactly one active context per session. Context switching validates assignment/scope and rotates the session token.
+
+## 10. Current Implementation Baseline
+
+The approved implementation baseline for Module 1 specifies:
+
+- PostgreSQL persistence with Prisma migrations;
+- Auth.js Credentials assertion verification;
+- Random opaque session tokens in HttpOnly cookies (storing SHA-256 digests in PostgreSQL);
+- Zod validation at trust boundaries;
+- Append-only PostgreSQL security audit logging.
+
+Not part of the modular-monolith direction:
+- Application-level JWTs / Passport;
+- internal HTTP, Redis coordination, Kafka or an outbox between modules;
+- Public authentication endpoints before approved slice implementation.
+
+
+## 11. Implementation Direction
+
+The expected implementation order is capability-driven; do not create all folders in advance:
+
+```txt
+1. identity model + persistence boundary
+2. authentication provider boundary
+3. session lifecycle
+4. current-user/session contract
+5. access-control context + RBAC
+6. security policy / 2FA
+7. IAM administration + selective audit
+```
+
+Each slice must preserve the boundaries in this document, add corresponding tests, and expand module structure only when real code requires it.
+
+## 12. Module 1 Completion Criteria
+
+Module 1 is capability-complete when the system can:
+
+- resolve a unique internal user from an approved authentication flow;
+- manage user state and external identity linkage;
+- create, validate, expire, and revoke sessions;
+- enforce the approved 2FA/security policy;
+- resolve the active authorization context;
+- resolve roles/permissions within that context;
+- provide a consistent authenticated context to sibling domain modules;
+- administer users/roles/access according to IAM policy;
+- record IAM/security events that require traceability;
+- deny access safely when identity/session/context is invalid.
+</file>
+
+<file path="services/docs/ARCHITECTURE.md">
+# Backend Architecture
+
+The backend is one modular monolith and one deployable. Its current path and package name remain `services/auth-service` only to avoid a destructive rename.
+
+It contains five internal Module 1 boundaries:
+
+- `identity`;
+- `authentication`;
+- `session`;
+- `access-control`;
+- `security`.
+
+These modules share one process and PostgreSQL `auth_db` while retaining explicit table, repository and use-case ownership. Auth.js verifies runtime credentials and sends a short-lived HMAC assertion to the backend for opaque session creation.
+
+Future portal content, knowledge and management capabilities belong here as internal domain modules. Do not create additional services, databases, internal HTTP APIs, brokers or distributed transactions.
+</file>
+
+<file path="services/docs/SERVICE_GUIDE.md">
+# Backend Module Guide
+
+The current backend monolith is stored in `services/auth-service`. Its controllers handle transport, application services own workflows and authorization decisions, and Prisma adapters own persistence. The package name is legacy; it is not a microservice boundary.
+
+Internal modules:
+
+- identity: platform user and federated identity linkage;
+- authentication: Auth.js assertion verification and opaque session creation;
+- session: opaque session lifecycle;
+- access-control: roles, permissions, assignments and active context;
+- security: MFA policy state and append-only security audit.
+
+Keep controllers thin, validate trust boundaries, use local database transactions for multi-write invariants and never expose provider tokens to the frontend.
+
+Add future capabilities under `src/modules/` as domain modules. Reuse the same process, deployment and PostgreSQL database. A module may expose a narrow typed application contract; it must not expose repositories to sibling modules.
+</file>
+
+<file path="README.md">
+# VN–RU Network Portal
+
+Current implementation is intentionally limited to **Module 1: Identity & Access Governance** plus the public landing page.
+
+## Kept runtime
+
+- `frontend/`: landing page, Keycloak login bridge, account, security/session management, IAM administration and audit UI.
+- `services/auth-service/`: the single backend monolith; currently contains identity, authentication, sessions, access control and security audit modules. The legacy directory name is retained.
+- `infra/keycloak/`: Keycloak login theme.
+- `infra/nginx/`: reverse proxy for frontend, auth-service and Keycloak.
+- PostgreSQL: `auth_db` only.
+
+Knowledge, expert directory, research collaboration, reviews, projects, academic, technology and analytics modules are not present. Add them as internal modules of the same backend and PostgreSQL database; do not create microservices.
+
+## Development
+
+Start local PostgreSQL and Keycloak, then run the two source processes in separate terminals:
+
+```powershell
+docker start postgres-local vnru-keycloak-dev
+pnpm --dir services/auth-service start:dev
+pnpm --dir frontend dev
+```
+
+Local endpoints:
+
+- Frontend: `http://localhost:3000`
+- Auth service: `http://localhost:8080`
+- Keycloak: `http://localhost:8081`
+- PostgreSQL: `localhost:5432`
+
+For the containerized demo stack, keep `secrets/account.json` and `secrets/demo.env` local and ignored:
+
+```bash
+docker compose --env-file secrets/demo.env build
+docker compose --env-file secrets/demo.env up -d
+# First run or whenever demo account passwords change:
+docker compose --env-file secrets/demo.env run --rm -T demo-seed < secrets/account.json
+```
+
+Open `http://localhost:8082`. PostgreSQL and Keycloak data persist in named volumes; normal restarts retain fixtures and demo accounts.
+
+## Documentation
+
+Start at [`docs/README.md`](docs/README.md).
+</file>
+
+<file path="docs/PORTAL_FOUNDATION_REFACTOR.md">
+# Portal Foundation Decisions
+
+## Current product boundary
+
+Only Module 1 has an implemented backend runtime. Public discovery and role pages are synthetic UI previews.
+
+| Concern | Canonical route |
+| --- | --- |
+| Landing page | `/` |
+| Public news stream | `/news` (`/explore` redirects here) |
+| Public discovery previews | `/knowledge`, `/experts`, `/opportunities` |
+| Login | `/login` |
+| Registration request preview | `/register` |
+| Member profile | `/account` |
+| MFA and sessions | `/security` |
+| Access administration | `/admin/access/*` |
+| Security audit | `/admin/audit` |
+
+## Access model
+
+The product uses three understandable access classes, not a dashboard persona for each workflow role:
+
+| Access class | Allowed product scope |
+| --- | --- |
+| Public visitor | News, events and approved public information |
+| Registered member / expert | Public scope plus approved member knowledge, topic calls and scientific publications |
+| Portal manager | Member scope plus portal-content management and aggregate site statistics |
+
+`/workspace` is the single member area. Specialist `/workspace/*` pages may remain as previews while the product is simplified, but they do not define separate audiences.
+
+Portal manager and `SUPER_ADMIN` are different. Portal manager is a product responsibility. `SUPER_ADMIN` stays isolated in `/admin/access` and `/admin/audit` for IAM, security and audit only.
+
+Enterprise and Leadership pages remain authenticated UI previews only and are not live persona destinations.
+
+Public pages may communicate and demonstrate the broader VN–RU network vision with synthetic data. They must not present Module 2–6 business backends as available. Role preview actions must remain clearly labeled as demo/local state and must not claim backend persistence.
+
+Backend authorization remains authoritative.
+</file>
+
+<file path="docs/ARCHITECTURE.md">
+# System Architecture
+
+## Current scope
+
+The repository uses a modular monolith: one backend application, one web frontend and one PostgreSQL database. The frontend also serves synthetic public-discovery and authenticated role-preview pages; these do not add backend trust boundaries:
+
+```text
+Browser
+  -> Next.js frontend
+     -> Auth.js Credentials for server-side credential verification
+     -> backend monolith (`services/auth-service`) for opaque sessions, identity, RBAC and audit
+        -> PostgreSQL auth_db
+```
+
+Public `/`, `/news`, `/knowledge`, `/experts` and `/opportunities` routes are informational or synthetic discovery previews. They do not prove that a described future business capability exists.
+
+## Runtime ownership
+
+- Auth.js owns login and encrypted frontend sessions; credentials come from the ignored runtime account config.
+- The backend monolith currently lives at `services/auth-service`; the directory name is retained to avoid an unnecessary runtime rename.
+- Its IAM modules own platform identity, opaque sessions, active authorization context, roles, permissions, assignments and security audit events.
+- The frontend owns presentation and BFF forwarding. Frontend visibility is never an authorization boundary.
+- PostgreSQL `auth_db` is the only application database in the current stack.
+- Future knowledge, content and portal-management capabilities must be internal modules in this backend and share PostgreSQL while retaining table/repository ownership.
+
+## Canonical routes
+
+- `/`: public landing page.
+- `/news`: public science and technology news stream. Legacy `/explore` permanently redirects here.
+- `/login`: Auth.js Credentials authentication entry.
+- `/register`: localized registration-request UI preview; it does not create identities or bypass administrator provisioning.
+- `/account`: member profile.
+- `/security`: MFA and session security.
+- `/admin/access/*`: user, role, permission and assignment administration.
+- `/admin/audit`: Module 1 audit surface.
+- `/workspace`: the single authenticated member area. Registered members and experts use the same product surface; capabilities only limit the data and actions they may use.
+- Existing `/workspace/*` specialist pages are synthetic previews, not separate product personas or proof of implemented workflows.
+- `/workspace/enterprise`, `/workspace/leadership`: authenticated UI previews only and are not selected by current live personas.
+- Legacy `/workspace/iam*`: compatibility redirects to Module 1 routes.
+
+The product has three access classes:
+
+1. **Public visitor**: reads news, events and approved public information.
+2. **Registered member / expert**: also accesses approved member knowledge, topic calls and scientific publications.
+3. **Portal manager**: also manages portal content and views aggregate site statistics.
+
+"Full member access" never means unrestricted system access. Backend authorization and record visibility remain authoritative. `SUPER_ADMIN` is a separate technical IAM/security account, not the portal-manager persona and not a substitute for business permissions.
+
+Knowledge, expert-directory, collaboration, review, project, academic, technology and analytics backend modules are absent. Synthetic frontend previews may still exist for design and flow demonstration.
+</file>
+
+<file path="frontend/docs/ARCHITECTURE.md">
+# Frontend Architecture
+
+The frontend currently contains:
+
+- public landing page `/`, news stream `/news` (with legacy `/explore` redirect), and synthetic discovery previews under `/knowledge`, `/experts` and `/opportunities`;
+- Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`, plus a localized `/register` request preview that does not create identities;
+- member account `/account`;
+- MFA and sessions `/security`;
+- IAM governance `/admin/access/*`;
+- Module 1 security audit `/admin/audit`;
+- one unified member area at `/workspace`; existing specialist `/workspace/*` pages are synthetic previews, not separate product personas;
+- authenticated Enterprise and Leadership UI previews that are not live persona destinations;
+- capability-aware `/workspace` navigation and compatibility redirects under `/workspace/iam*`.
+
+Routes remain thin. `features/auth` owns authentication, account and security behavior; `features/iam` and `features/admin/access` own access governance; shared shells own presentation only. Backend authorization is authoritative.
+
+Public visitors read approved news and events. Registered members and experts also access approved knowledge, topic calls and scientific publications. Portal managers additionally receive content-management and aggregate-statistics capabilities. Backend authorization remains authoritative; none of these labels grants unrestricted access.
+
+Task-module previews may use URL `view` state inside one route family. Demo mutations write only local preview activity/state and must remain clearly labeled.
+
+`KNOWLEDGE_CURATOR` is removed from the current active synthetic role set. Knowledge discovery remains available publicly and inside the Researcher preview.
+
+There are no Knowledge, Expert, Publication, Collaboration, Review or Project business backends. Their current frontend surfaces use synthetic preview data and must remain labeled accordingly.
+</file>
+
+</files>

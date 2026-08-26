@@ -307,6 +307,35 @@ describe('AccessControlService', () => {
     ).resolves.toEqual(['iam.users.manage', 'knowledge.workspace.view']);
   });
 
+  it('returns active role names without exposing SUPER_ADMIN', async () => {
+    prisma.roleAssignment.findMany.mockResolvedValue([
+      {
+        id: 'ra-member',
+        userId: 'usr-1',
+        contextType: 'PLATFORM',
+        contextId: 'GLOBAL',
+        status: 'ACTIVE',
+        role: { id: 'role-member', name: 'PORTAL_MEMBER' },
+      },
+      {
+        id: 'ra-super',
+        userId: 'usr-1',
+        contextType: 'PLATFORM',
+        contextId: 'GLOBAL',
+        status: 'ACTIVE',
+        role: { id: 'role-super', name: 'SUPER_ADMIN' },
+      },
+    ]);
+
+    await expect(
+      service.resolveActiveRoleNames({
+        userId: 'usr-1',
+        contextType: 'PLATFORM',
+        contextId: 'GLOBAL',
+      }),
+    ).resolves.toEqual(['PORTAL_MEMBER']);
+  });
+
   describe('hasActiveAssignment', () => {
     it('returns true if active assignment exists', async () => {
       prisma.roleAssignment.findMany.mockResolvedValue([

@@ -29,22 +29,19 @@
         <h2 style="margin-top:34px">Tạo tài khoản.</h2>
         <p>Visual prototype cho luồng đăng ký. Chính sách self-registration chưa được coi là business rule đã chốt.</p>
 
-        <button class="google-btn" type="button" id="googleLogin">◉ &nbsp; Tiếp tục với Google qua Keycloak</button>
-        <div class="divider">hoặc tạo hồ sơ bằng email</div>
-
         <form id="registerForm" novalidate>
           <div class="field-row">
             <div class="field"><label for="firstName">Tên</label><input id="firstName" autocomplete="given-name" placeholder="Minh" /></div>
             <div class="field"><label for="lastName">Họ</label><input id="lastName" autocomplete="family-name" placeholder="Nguyễn" /></div>
           </div>
           <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email" placeholder="name@institution.edu" /></div>
-          <div class="field"><label for="password">Mật khẩu</label><input id="password" type="password" autocomplete="new-password" placeholder="Thiết lập qua policy của IdP" /></div>
+          <div class="field"><label for="password">Mật khẩu</label><input id="password" type="password" autocomplete="new-password" placeholder="Mật khẩu tài khoản" /></div>
           <div class="field"><label for="confirmPassword">Xác nhận mật khẩu</label><input id="confirmPassword" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu" /></div>
           <label class="remember"><input type="checkbox" /> Tôi đồng ý với Điều khoản sử dụng và Chính sách bảo mật.</label>
           <button class="submit-btn" type="submit">Tạo tài khoản RU–VN →</button>
         </form>
 
-        <div class="note" id="registerNote"><b>Architecture note.</b> Google/provider credentials không nằm trong template. Runtime authentication phải đi qua Keycloak/OIDC và backend authorization vẫn là nguồn sự thật.</div>
+        <div class="note" id="registerNote"><b>Architecture note.</b> Runtime hiện dùng Auth.js Credentials; backend authorization vẫn là nguồn sự thật.</div>
       </div>
     </section>
   </main>

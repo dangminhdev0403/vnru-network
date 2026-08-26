@@ -19,6 +19,7 @@ describe('IamAdminController', () => {
   let serviceMock: {
     listUsers: jest.Mock;
     setUserStatus: jest.Mock;
+    resetUserPassword: jest.Mock;
     listRoles: jest.Mock;
     replaceRolePermissions: jest.Mock;
     upsertRoleAssignment: jest.Mock;
@@ -29,6 +30,7 @@ describe('IamAdminController', () => {
     serviceMock = {
       listUsers: jest.fn(),
       setUserStatus: jest.fn(),
+      resetUserPassword: jest.fn(),
       listRoles: jest.fn(),
       replaceRolePermissions: jest.fn(),
       upsertRoleAssignment: jest.fn(),
@@ -160,6 +162,40 @@ describe('IamAdminController', () => {
       it('throws BadRequestException for missing status in body', async () => {
         await expect(
           controller.setUserStatus(validUuid, {}, mockReq),
+        ).rejects.toThrow(BadRequestException);
+      });
+    });
+
+    describe('resetUserPassword', () => {
+      const validUuid = '123e4567-e89b-12d3-a456-426614174000';
+      const mockReq = {
+        authContext: { userId: 'actor-usr-123' },
+      } as unknown as AuthenticatedRequest;
+
+      it('passes a validated password to the service', async () => {
+        serviceMock.resetUserPassword.mockResolvedValue({ reset: true });
+        await expect(
+          controller.resetUserPassword(
+            validUuid,
+            { password: 'new-password-123' },
+            mockReq,
+          ),
+        ).resolves.toEqual({ reset: true });
+        expect(serviceMock.resetUserPassword).toHaveBeenCalledWith(
+          validUuid,
+          'new-password-123',
+          'actor-usr-123',
+          undefined,
+        );
+      });
+
+      it('rejects a short password', async () => {
+        await expect(
+          controller.resetUserPassword(
+            validUuid,
+            { password: 'short' },
+            mockReq,
+          ),
         ).rejects.toThrow(BadRequestException);
       });
     });

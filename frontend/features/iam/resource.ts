@@ -23,6 +23,9 @@ export const iamResource = createResource<void>()({
     updateUserStatus: defineMutation<void, { id: string; status: "ACTIVE" | "INACTIVE" }, unknown>({
       mutationFn: ({ variables }) => iamRepository.updateUserStatus(variables),
     }),
+    resetUserPassword: defineMutation<void, { id: string; password: string }, { reset: true }>({
+      mutationFn: ({ variables }) => iamRepository.resetUserPassword(variables),
+    }),
     assignRole: defineMutation<void, { userId: string; roleId: string; contextType?: string; contextId?: string }, unknown>({
       mutationFn: ({ variables }) => iamRepository.assignRole(variables),
 

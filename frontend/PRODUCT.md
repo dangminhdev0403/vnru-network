@@ -24,7 +24,7 @@ The Portal publishes science and technology information, then opens approved kno
 
 ## Product truth
 - Backend authorization is authoritative; frontend permissions only shape UX.
-- Keycloak owns credential UI; the frontend uses an opaque session bridge.
+- Auth.js Credentials verifies the ignored runtime account config; the backend owns opaque application sessions and authorization.
 - Vietnamese, English, and Russian are first-class locales. One selected locale must govern all visible and accessible copy on a surface.
 - Member information surfaces use synthetic display data until content APIs exist; they do not expose fake workflow actions.
 - The landing page is public; account, security and governance surfaces require the appropriate session and capability scope.

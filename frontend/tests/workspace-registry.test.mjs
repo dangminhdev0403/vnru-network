@@ -12,47 +12,36 @@ test("workspace navigation exposes only destinations allowed by capability", () 
   assert.equal(hasCapability([], "iam.roles.manage"), false);
 
   const memberItems = filterNavSections([]).flatMap((section) => section.items);
-  assert.deepEqual(memberItems.map((item) => item.href), [
-    "/account",
-    "/security",
-  ]);
+  assert.deepEqual(
+    memberItems.map((item) => item.href),
+    ["/security"],
+  );
 
-  for (const capabilities of [
-    ["collab.proposals.create"],
-    ["reviews.assignments.view_assigned"],
-    ["collab.proposals.endorse"],
-    ["collab.opportunities.create"],
-    ["collab.decisions.issue_foundation"],
-  ]) {
+  for (const capabilities of [["portal.member.access"]]) {
     const hrefs = filterNavSections(capabilities).flatMap((section) =>
       section.items.map((item) => item.href),
     );
-    assert.deepEqual(hrefs, ["/workspace", "/account", "/security"]);
+    assert.deepEqual(hrefs, ["/workspace", "/workspace/publish", "/security"]);
   }
 
   const adminItems = filterNavSections(["iam.roles.manage"]).flatMap(
     (section) => section.items,
   );
-  assert.deepEqual(adminItems.map((item) => item.href), [
-    "/admin/access",
-    "/account",
-    "/security",
-  ]);
+  assert.deepEqual(
+    adminItems.map((item) => item.href),
+    ["/admin/access", "/security"],
+  );
 
   const fullAdminCapabilities = [
     "iam.roles.manage",
     "iam.users.manage",
-    "collab.proposals.create",
-    "reviews.assignments.view_assigned",
-    "collab.proposals.endorse",
-    "collab.opportunities.create",
-    "collab.decisions.issue_foundation",
+    "portal.member.access",
   ];
   assert.deepEqual(
     filterNavSections(fullAdminCapabilities).flatMap((section) =>
       section.items.map((item) => item.href),
     ),
-    ["/admin/access", "/account", "/security"],
+    ["/admin/access", "/security"],
   );
   assert.deepEqual(
     resolveUserPersonas(fullAdminCapabilities).map((persona) => persona.key),
@@ -62,13 +51,7 @@ test("workspace navigation exposes only destinations allowed by capability", () 
 });
 
 test("persona resolution uses one member workspace while IAM stays independent", () => {
-  const roleCases = [
-    "collab.proposals.create",
-    "reviews.assignments.view_assigned",
-    "collab.proposals.endorse",
-    "collab.opportunities.create",
-    "collab.decisions.issue_foundation",
-  ];
+  const roleCases = ["portal.member.access"];
   for (const capability of roleCases) {
     assert.deepEqual(
       resolveUserPersonas([capability]).map((persona) => persona.key),
@@ -83,23 +66,18 @@ test("persona resolution uses one member workspace while IAM stays independent",
 
 test("workspace landing resolves every business role to the unified workspace", () => {
   const roleCases = [
-    ["collab.proposals.create", "/workspace"],
-    ["reviews.assignments.view_assigned", "/workspace"],
-    ["collab.proposals.endorse", "/workspace"],
-    ["collab.opportunities.create", "/workspace"],
-    ["collab.decisions.issue_foundation", "/workspace"],
+    ["portal.member.access", "/workspace"],
     ["iam.roles.manage", "/admin/access"],
   ];
   for (const [capability, expectedPath] of roleCases) {
     assert.equal(resolveLandingPath([capability]), expectedPath);
   }
-  assert.equal(resolveLandingPath([]), "/account");
+  assert.equal(resolveLandingPath([]), "/security");
 });
 
-test("admin navigation contains access governance and security audit only", async () => {
-  const { filterAdminNavSections } = await import(
-    "../features/admin/config/admin-nav-registry.ts"
-  );
+test("admin navigation contains access governance only", async () => {
+  const { filterAdminNavSections } =
+    await import("../features/admin/config/admin-nav-registry.ts");
   const hrefs = filterAdminNavSections([
     "iam.roles.manage",
     "iam.users.manage",
@@ -109,7 +87,7 @@ test("admin navigation contains access governance and security audit only", asyn
     "/admin/access",
     "/admin/access/users",
     "/admin/access/roles",
-    "/admin/access/assignments",
-    "/admin/audit",
+    "/admin/access/permissions",
+    "/admin/access/logs",
   ]);
 });

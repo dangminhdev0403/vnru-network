@@ -26,6 +26,9 @@ export function useIamAdministration() {
       onSuccess: ({ client, cache }) => cache.queries.users.invalidateAll(client),
     }),
   );
+  const resetUserPassword = useMutation(
+    iam.mutations.resetUserPassword.options({}),
+  );
   const replaceRolePermissions = useMutation(
     iam.mutations.replaceRolePermissions.options({
       onSuccess: ({ client, cache }) => cache.queries.roles.invalidateAll(client),
@@ -36,6 +39,7 @@ export function useIamAdministration() {
     users,
     roles,
     updateUserStatus,
+    resetUserPassword,
     assignRole,
     replaceRolePermissions,
     refresh: () => Promise.all([users.refetch(), roles.refetch()]),

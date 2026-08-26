@@ -42,9 +42,9 @@ export function GuestPublicFooter({
               className="inline-flex items-center gap-3.5"
               aria-label={t.footer.brandTitle}
             >
-              <BrandMark className="size-11 shadow-xs" />
+              <BrandMark className="size-14 shadow-xs" />
               <span>
-                <strong className="block text-base sm:text-lg font-black tracking-tight text-[#1A1C1CD9]">
+                <strong className="block text-lg sm:text-xl font-black tracking-tight text-[#1A1C1CD9]">
                   {t.footer.brandTitle}
                 </strong>
                 {t.footer.subtitle ? (

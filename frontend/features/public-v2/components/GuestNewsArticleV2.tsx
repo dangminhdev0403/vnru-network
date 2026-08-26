@@ -133,9 +133,9 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
     <div className="min-h-screen bg-white text-slate-950">
       <header className="sticky top-0 z-50 border-b border-blue-100 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex h-[74px] max-w-[1460px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="flex min-w-0 items-center gap-3">
-            <BrandMark className="size-11 shrink-0" />
-            <strong className="hidden truncate text-base font-extrabold tracking-tight sm:block">Mạng lưới tri thức Nga - Việt</strong>
+          <Link href="/" className="flex min-w-0 items-center gap-3.5">
+            <BrandMark className="size-[52px] shrink-0 shadow-xs" />
+            <strong className="hidden truncate text-base lg:text-lg font-black tracking-tight text-slate-950 sm:block">Mạng lưới tri thức Nga - Việt</strong>
           </Link>
 
           <nav className="hidden items-center gap-8 xl:flex">
@@ -264,7 +264,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
 
       <footer className="mt-12 border-t border-blue-100 bg-slate-50">
         <div className="mx-auto grid max-w-[1460px] gap-8 px-4 py-9 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
-          <div><div className="flex items-center gap-3"><BrandMark className="size-10" /><strong className="text-sm font-black">Mạng lưới tri thức Nga - Việt</strong></div><p className="mt-4 max-w-sm text-sm leading-6 text-slate-600">Kết nối tri thức - Hợp tác bền vững - Kiến tạo tương lai.</p></div>
+          <div><div className="flex items-center gap-3.5"><BrandMark className="size-14 shadow-xs" /><strong className="text-base font-black text-slate-900">Mạng lưới tri thức Nga - Việt</strong></div><p className="mt-4 max-w-sm text-sm leading-6 text-slate-600">Kết nối tri thức - Hợp tác bền vững - Kiến tạo tương lai.</p></div>
           <div><h3 className="text-xs font-black uppercase text-blue-600">Liên kết nhanh</h3><div className="mt-4 grid gap-2 text-sm text-slate-600"><Link href="/">Trang chủ</Link><Link href="/#about">Giới thiệu</Link><Link href="/news">Tin tức</Link></div></div>
           <div><h3 className="text-xs font-black uppercase text-blue-600">Chuyên mục</h3><div className="mt-4 grid gap-2 text-sm text-slate-600"><span>Khoa học - Công nghệ</span><span>Hợp tác quốc tế</span><span>Đổi mới sáng tạo</span><span>Giáo dục - Nhân lực</span></div></div>
           <div><h3 className="text-xs font-black uppercase text-blue-600">Liên hệ</h3><div className="mt-4 grid gap-2 text-sm text-slate-600"><span>Hà Nội, Việt Nam</span><a href="mailto:info@rvstin.com">info@rvstin.com</a><span>+84 24 3791 1234</span></div></div>

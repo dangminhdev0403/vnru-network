@@ -4,9 +4,21 @@ import { readFile } from "node:fs/promises";
 
 test("client components use domain server-state instead of raw API calls", async () => {
   const [home, header, authState] = await Promise.all([
-    readFile(new URL("../features/public-home/components/PublicHome.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../components/shared/Header.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../features/auth/server-state.ts", import.meta.url), "utf8"),
+    readFile(
+      new URL(
+        "../features/public-home/components/PublicHome.tsx",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+    readFile(
+      new URL("../components/shared/Header.tsx", import.meta.url),
+      "utf8",
+    ),
+    readFile(
+      new URL("../features/auth/server-state.ts", import.meta.url),
+      "utf8",
+    ),
   ]);
   for (const component of [home, header]) {
     assert.doesNotMatch(component, /\bfetch\s*\(|\bhttpClient\s*\(/);
@@ -21,7 +33,10 @@ test("IAM server state uses domain resources and targeted cache operations", asy
     readFile(new URL("../features/iam/repository.ts", import.meta.url), "utf8"),
     readFile(new URL("../features/iam/resource.ts", import.meta.url), "utf8"),
     readFile(new URL("../features/iam/hooks.ts", import.meta.url), "utf8"),
-    readFile(new URL("../components/providers/QueryProvider.tsx", import.meta.url), "utf8"),
+    readFile(
+      new URL("../components/providers/QueryProvider.tsx", import.meta.url),
+      "utf8",
+    ),
   ]);
   assert.match(provider, /QueryClientProvider/);
   assert.match(resource, /namespace: \["vnru", "iam"\]/);
@@ -98,10 +113,7 @@ test("BFF individual session delete route forwards cookies and reads params corr
 
 test("Security page route redirects unauthenticated users", async () => {
   const fileContent = await readFile(
-    new URL(
-      "../app/(workspace)/security/page.tsx",
-      import.meta.url,
-    ),
+    new URL("../app/(workspace)/security/page.tsx", import.meta.url),
     "utf8",
   );
 

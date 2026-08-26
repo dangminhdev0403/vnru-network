@@ -1,0 +1,1816 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: services/auth-service/prisma/schema.prisma, services/auth-service/src/app.module.ts, frontend/features/workspace/config/workspace-registry.ts, frontend/features/workspace/demo-v2/types.ts, frontend/features/workspace/demo-v2/mock-data.ts, frontend/features/workspace/mock-data/*.ts, frontend/app/(workspace)/workspace/**/page.tsx, frontend/features/workspace/components/*.tsx, frontend/features/prototype-v3/components/*.tsx, docs/MOCK_DATA_AGENT_GUIDE.md, frontend/docs/ARCHITECTURE.md, docs/PORTAL_FOUNDATION_REFACTOR.md
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+docs/
+  MOCK_DATA_AGENT_GUIDE.md
+  PORTAL_FOUNDATION_REFACTOR.md
+frontend/
+  app/
+    (workspace)/
+      workspace/
+        collaboration/
+          page.tsx
+        decisions/
+          page.tsx
+        enterprise/
+          page.tsx
+        iam/
+          admin/
+            page.tsx
+          security/
+            page.tsx
+          page.tsx
+        leadership/
+          page.tsx
+        organization/
+          page.tsx
+        researcher/
+          page.tsx
+        reviewer/
+          page.tsx
+        page.tsx
+  docs/
+    ARCHITECTURE.md
+  features/
+    prototype-v3/
+      components/
+        DemoActivityPanel.tsx
+        EnterpriseWorkspace.tsx
+        GovernanceWorkspace.tsx
+        LeadershipWorkspace.tsx
+        OrganizationWorkspace.tsx
+        PrototypeHub.tsx
+        ResearcherWorkspace.tsx
+        ReviewerWorkspace.tsx
+        WorkspacePreviewNotice.tsx
+        WorkspaceSectionSync.tsx
+    workspace/
+      components/
+        CollaborationManagerInteractiveWorkspace.tsx
+        CollaborationManagerTaskWorkspace.tsx
+        DecisionInteractiveWorkspace.tsx
+        DecisionTaskWorkspace.tsx
+        OrganizationInteractiveWorkspace.tsx
+        OrganizationTaskWorkspace.tsx
+        ResearcherInteractiveWorkspace.tsx
+        ResearcherTaskWorkspace.tsx
+        ReviewerInteractiveWorkspace.tsx
+        ReviewerTaskWorkspace.tsx
+        UnifiedWorkspaceDashboard.tsx
+        WorkspaceInteractionKit.tsx
+        WorkspaceSidebar.tsx
+        WorkspaceTaskDialog.tsx
+      config/
+        workspace-registry.ts
+      demo-v2/
+        mock-data.ts
+        types.ts
+      mock-data/
+        academic-events.ts
+        activities.ts
+        decisions.ts
+        endorsements.ts
+        experts.ts
+        iam.ts
+        index.ts
+        knowledge.ts
+        notifications.ts
+        opportunities.ts
+        organizations.ts
+        projects.ts
+        proposals.ts
+        reports.ts
+        reviews.ts
+services/
+  auth-service/
+    prisma/
+      schema.prisma
+    src/
+      app.module.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="frontend/app/(workspace)/workspace/enterprise/page.tsx">
+import type { Metadata } from 'next';
+import { EnterpriseWorkspace } from '@/features/prototype-v3/components/EnterpriseWorkspace';
+import { requireWorkspaceSession } from '@/features/auth/workspace-server';
+⋮----
+export default async function Page()
+</file>
+
+<file path="frontend/app/(workspace)/workspace/iam/admin/page.tsx">
+import { redirect } from "next/navigation";
+⋮----
+export default function LegacyIamAdminPage()
+</file>
+
+<file path="frontend/app/(workspace)/workspace/iam/security/page.tsx">
+import { redirect } from "next/navigation";
+⋮----
+export default function LegacyIamSecurityPage()
+</file>
+
+<file path="frontend/app/(workspace)/workspace/iam/page.tsx">
+import { redirect } from "next/navigation";
+⋮----
+export default function LegacyIamPage()
+</file>
+
+<file path="frontend/app/(workspace)/workspace/leadership/page.tsx">
+import type { Metadata } from 'next';
+import { LeadershipWorkspace } from '@/features/prototype-v3/components/LeadershipWorkspace';
+import { requireWorkspaceSession } from '@/features/auth/workspace-server';
+⋮----
+export default async function Page()
+</file>
+
+<file path="frontend/features/prototype-v3/components/EnterpriseWorkspace.tsx">
+import React, { useState } from 'react';
+import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
+import { ConsortiumSlot } from '../types';
+import { INITIAL_2PLUS2_SLOTS, RU_ENTERPRISE_CANDIDATES } from '../mock-data';
+⋮----
+const showToast = (msg: string) =>
+⋮----
+const handleSelectPartner = (candidate: typeof RU_ENTERPRISE_CANDIDATES[0]) =>
+⋮----
+{/* Toast Notification */}
+⋮----
+{/* Partner Selector Modal */}
+⋮----
+{/* Role Ribbon */}
+⋮----
+{/* Hero */}
+⋮----
+{/* 4 Slots Grid - Fluid Widescreen */}
+⋮----
+{/* VN Side */}
+⋮----
+{/* RU Side */}
+</file>
+
+<file path="frontend/features/prototype-v3/components/LeadershipWorkspace.tsx">
+import React, { useState } from 'react';
+import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
+⋮----
+export function LeadershipWorkspace()
+⋮----
+const showToast = (msg: string) =>
+⋮----
+{/* Toast Notification */}
+⋮----
+{/* Strategic Report Modal */}
+⋮----
+{/* Role Ribbon */}
+⋮----
+{/* Hero */}
+⋮----
+{/* 3 Strategic Task Cards - Widescreen Grid */}
+</file>
+
+<file path="frontend/features/prototype-v3/components/OrganizationWorkspace.tsx">
+import React, { useState } from 'react';
+import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
+import { commitDemoMutation } from '../demo-backend';
+import { DemoActivityPanel } from './DemoActivityPanel';
+import { WorkspaceSectionSync } from './WorkspaceSectionSync';
+⋮----
+interface EndorsementItem {
+  id: string;
+  title: string;
+  lead: string;
+  partnerOrg: string;
+  facilities: string;
+  isEndorsed: boolean;
+}
+⋮----
+export function OrganizationWorkspace()
+⋮----
+const showToast = (msg: string) =>
+⋮----
+const handleEndorse = async (id: string) =>
+⋮----
+{/* Toast Notification */}
+⋮----
+{/* Endorsement Confirmation Modal */}
+⋮----
+{/* Role Ribbon */}
+⋮----
+{/* Hero */}
+⋮----
+{/* Main Card */}
+</file>
+
+<file path="frontend/features/prototype-v3/components/ResearcherWorkspace.tsx">
+import React, { useState } from 'react';
+import { MOCK_PROPOSALS } from '../mock-data';
+import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
+import { commitDemoMutation } from '../demo-backend';
+import { DemoActivityPanel } from './DemoActivityPanel';
+import { WorkspaceSectionSync } from './WorkspaceSectionSync';
+⋮----
+const showToast = (msg: string) =>
+⋮----
+const runDemoAction = async (action: string, detail: string) =>
+⋮----
+{/* Toast Notification */}
+⋮----
+{/* Invite Co-PI Modal */}
+⋮----
+{/* Role Ribbon */}
+⋮----
+{/* Header & Actions */}
+⋮----
+{/* KPI Cards - Widescreen Grid */}
+⋮----
+{/* Stepper Pipeline - Spacious */}
+⋮----
+{/* Tabs & Proposals List */}
+</file>
+
+<file path="frontend/features/prototype-v3/components/ReviewerWorkspace.tsx">
+import React, { useState } from 'react';
+import { WorkspacePreviewNotice } from './WorkspacePreviewNotice';
+import { commitDemoMutation } from '../demo-backend';
+import { DemoActivityPanel } from './DemoActivityPanel';
+import { WorkspaceSectionSync } from './WorkspaceSectionSync';
+⋮----
+const submitDemoReview = async () =>
+⋮----
+// Dynamic total score calculation
+⋮----
+{/* Submit Confirmation Modal */}
+⋮----
+{/* Role Ribbon */}
+⋮----
+{/* Hero Dossier Card */}
+⋮----
+{/* Grid: Rubric Scoring vs Dossier Sidebar - Fluid Widescreen */}
+⋮----
+{/* Rubric Form (8 Cols) */}
+⋮----
+{/* Criteria 1 */}
+⋮----
+{/* Criteria 2 */}
+⋮----
+{/* Criteria 3 */}
+⋮----
+{/* Criteria 4 */}
+⋮----
+{/* Live Total Score Box */}
+⋮----
+{/* Comment Box */}
+⋮----
+{/* Action Buttons */}
+⋮----
+{/* Anonymized Dossier Summary (4 Cols) */}
+</file>
+
+<file path="frontend/features/prototype-v3/components/WorkspacePreviewNotice.tsx">
+type WorkspacePreviewNoticeProps = {
+  scope: string;
+};
+⋮----
+export function WorkspacePreviewNotice(
+</file>
+
+<file path="frontend/features/prototype-v3/components/WorkspaceSectionSync.tsx">
+import { useSearchParams } from "next/navigation";
+import React from "react";
+⋮----
+export function WorkspaceSectionSync()
+</file>
+
+<file path="services/auth-service/src/app.module.ts">
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AccessControlModule } from './modules/access-control/access-control.module';
+import { AuthenticationModule } from './modules/authentication/authentication.module';
+import { IdentityModule } from './modules/identity/identity.module';
+import { SecurityModule } from './modules/security/security.module';
+import { SessionModule } from './modules/session/session.module';
+⋮----
+export class AppModule
+</file>
+
+<file path="docs/MOCK_DATA_AGENT_GUIDE.md">
+# Mock Data Agent Guide — Interactive Role Workflows
+
+## Mục tiêu
+Tạo bộ mock data đủ mạnh để kiểm thử toàn bộ UI Workspace của VN–RU Network mà không biến mock thành business backend giả. Mock data phải giúp người dùng nhìn thấy đầy đủ các trạng thái, edge case, deadline, conflict, permission và handoff giữa role.
+
+## Nguyên tắc bắt buộc
+1. Không sao chép cùng một flow giữa các role. Mỗi role có trách nhiệm, action và terminal state khác nhau.
+2. Không tạo dữ liệu tài chính, đầu tư, ngân sách, giải ngân, tài trợ hoặc báo cáo tài chính.
+3. Mỗi collection chính phải có đủ happy path và unhappy path.
+4. Không để phần lớn record cùng một trạng thái.
+5. Các record phải liên kết bằng id/code nhất quán để UI có thể deep-link và hiển thị timeline.
+6. Mock data chỉ phục vụ UI Preview; không được tạo lời nhắn khiến người dùng hiểu nhầm rằng backend nghiệp vụ thật đã ghi nhận.
+7. Dữ liệu song phương phải thể hiện cả phía Việt Nam và Liên bang Nga khi nghiệp vụ yêu cầu.
+
+## Số lượng tối thiểu khuyến nghị
+- experts: 24
+- organizations: 14
+- opportunities: 12
+- proposals: 20
+- projects: 12
+- reviewAssignments: 14
+- reviews: 16
+- reports: 12
+- notifications: 24
+- activities: 36
+- academicEvents: 12
+- knowledgeResources: 20
+- users / IAM demo: 18
+
+## Trạng thái phải được bao phủ
+### Proposal / collaboration
+DRAFT, WAITING_PARTNER, WAITING_ORG_CONFIRMATION, SUBMITTED, NEEDS_INFO, ELIGIBLE, NOT_ELIGIBLE, WITHDRAWN, CANCELLED
+
+### Review assignment / review
+UNASSIGNED, ASSIGNED, NEW, IN_REVIEW, DRAFT, OVERDUE, CONFLICT, SUBMITTED, CANCELLED
+
+### Decision
+PENDING, REVISION, APPROVED, REJECTED
+
+### Project
+PLANNED, ACTIVE, AT_RISK, BLOCKED, COMPLETED, CANCELLED
+
+### Report
+DRAFT, SUBMITTED, PENDING, RETURNED, APPROVED, OVERDUE
+
+### Notification
+UNREAD, READ
+
+### IAM / account
+ACTIVE, INVITED, SUSPENDED, DEACTIVATED; assignment scopes PLATFORM, ORGANIZATION, REVIEW_BOARD khi phù hợp.
+
+## Edge cases bắt buộc
+- record gần deadline
+- record deadline hôm nay
+- record quá hạn
+- reviewer conflict of interest
+- record thiếu tài liệu
+- record yêu cầu bổ sung
+- action bị khóa do state
+- action bị khóa do permission
+- read-only record sau submit
+- cancelled / withdrawn item
+- empty filter result
+- loading / retry fixture nếu UI hỗ trợ
+- notification unread/read
+- duplicate-like titles để kiểm tra code/id differentiation
+
+## Khác biệt dữ liệu theo role
+### RESEARCHER
+Dữ liệu phải nhấn vào việc tạo/hoàn thiện proposal, ghép đối tác, theo dõi xác nhận tổ chức, project milestones, knowledge và academic activities. Researcher không có dữ liệu cho phép tự sàng lọc, tự assign reviewer hoặc ban hành decision.
+
+### ORGANIZATION_REPRESENTATIVE
+Dữ liệu phải nhấn vào endorsement/confirmation trong phạm vi tổ chức, xác nhận nguồn lực phi tài chính, theo dõi project của tổ chức và activity. Không cấp action review chuyên môn hay decision.
+
+### COLLABORATION_MANAGER
+Dữ liệu phải nhấn vào opportunity management, screening queue, reviewer assignment, conflict detection, programme project monitoring và report handling. Manager không chấm rubric phản biện thay reviewer và không ban hành final decision.
+
+### REVIEWER
+Dữ liệu phải là assigned dossiers, deadline, rubric draft, conflict, overdue, submitted history. Reviewer không tự chọn proposal ngoài assignment, không assign reviewer khác, không ban hành decision.
+
+### FOUNDATION_DECISION_MAKER / DECISION AUTHORITY
+Dữ liệu phải là hồ sơ đã qua screening + review summary, queue chờ quyết định, history và linked project. Decision role không sửa nội dung proposal, không chấm rubric và không xử lý tài chính.
+
+### SUPER_ADMIN / IAM
+Dữ liệu phải phục vụ user list, identity status, role assignment, context scope, permission matrix, audit events, session/security. Không dùng SUPER_ADMIN để giả lập nghiệp vụ chuyên môn của các role khác.
+
+## Quan hệ ID bắt buộc
+Một proposal cần có thể liên kết tới:
+- opportunityId (nếu có)
+- vnOrganizationId
+- ruOrganizationId
+- researcher user ids
+- organization confirmations
+- screening event
+- reviewAssignment ids
+- review ids
+- decision id
+- projectId nếu approved
+- activity ids
+- notification ids
+
+Không bắt buộc mọi proposal đi hết flow. Cố ý tạo record dừng ở các bước khác nhau để UI kiểm tra đủ state.
+
+## Notification fixtures
+Notification phải có targetHref hoặc target descriptor để UI deep-link tới đúng collection/detail/workbench. Ví dụ:
+- researcher: proposal needs info
+- organization: proposal awaiting endorsement
+- manager: new submitted proposal / unassigned eligible proposal
+- reviewer: new assignment / deadline soon
+- decision: review completed and ready for decision
+
+## Activity fixtures
+Mỗi entity quan trọng nên có timeline 4–10 event gồm actor, role, timestamp, action, description và state transition. Timeline phải phản ánh đúng quyền của actor.
+
+## Deadline distribution
+Trong mỗi collection có deadline, cố gắng phân bố:
+- 10–15% overdue
+- 10–15% due today / within 24h
+- 20–30% due within 7 days
+- còn lại future / completed / no deadline
+
+## Yêu cầu đầu ra
+Agent nên tạo mock data trong cấu trúc phù hợp với repo hiện tại, ưu tiên tách theo domain thay vì nhét toàn bộ vào một file lớn. Có thể dùng index export tập trung.
+
+Ví dụ mong muốn:
+frontend/features/workspace/mock-data/
+- experts.ts
+- organizations.ts
+- opportunities.ts
+- proposals.ts
+- projects.ts
+- reviews.ts
+- reports.ts
+- notifications.ts
+- activities.ts
+- academic-events.ts
+- knowledge.ts
+- iam.ts
+- index.ts
+
+## Validation checklist
+- [ ] Tất cả role đều có dữ liệu đủ để render collection-first UI.
+- [ ] Có đủ case normal, warning, blocked, overdue, returned, rejected, cancelled, completed.
+- [ ] Không có role nào sở hữu action trái trách nhiệm nghiệp vụ.
+- [ ] Không có dữ liệu tài chính/đầu tư/ngân sách/giải ngân.
+- [ ] Các relation id/code không bị đứt.
+- [ ] Notification deep-link tới đúng entity/workbench.
+- [ ] Timeline actor/role hợp lệ.
+- [ ] Dữ liệu VN/RU cân bằng hợp lý.
+- [ ] Không dùng 2–3 record sơ sài để “demo cho xong”.
+
+## Không làm
+- Không tạo shared action engine hay fake business backend nếu task chỉ là mock data.
+- Không tự đổi RBAC/capability model.
+- Không tự thêm module ngoài phạm vi UI hiện có.
+- Không dùng cùng một template dữ liệu cho mọi role rồi chỉ đổi màu/tên.
+</file>
+
+<file path="frontend/app/(workspace)/workspace/organization/page.tsx">
+import type { Metadata } from 'next';
+import { OrganizationInteractiveWorkspace } from '@/features/workspace/demo-v2/OrganizationInteractiveWorkspace';
+import { requireWorkspaceCapability } from '@/features/auth/workspace-server';
+⋮----
+export default async function Page()
+</file>
+
+<file path="frontend/app/(workspace)/workspace/reviewer/page.tsx">
+import type { Metadata } from 'next';
+import { ReviewerInteractiveWorkspace } from '@/features/workspace/demo-v2/ReviewerInteractiveWorkspace';
+import { requireWorkspaceCapability } from '@/features/auth/workspace-server';
+⋮----
+export default async function Page()
+</file>
+
+<file path="frontend/app/(workspace)/workspace/page.tsx">
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { isSystemAdministrator, resolveLandingPath } from "@/features/auth/server";
+import { requireWorkspaceSession } from "@/features/auth/workspace-server";
+import { UnifiedWorkspaceDashboard } from "@/features/workspace/components/UnifiedWorkspaceDashboard";
+⋮----
+export default async function Page()
+</file>
+
+<file path="frontend/features/prototype-v3/components/DemoActivityPanel.tsx">
+import { useDemoActivity, type DemoScope } from "../demo-backend";
+</file>
+
+<file path="frontend/features/prototype-v3/components/GovernanceWorkspace.tsx">
+import React, { useState } from 'react';
+⋮----
+interface UserRecord {
+  id: string;
+  name: string;
+  email: string;
+  org: string;
+  role: string;
+  status: string;
+  lastActive: string;
+}
+⋮----
+const showToast = (msg: string) =>
+⋮----
+const handleSaveRole = () =>
+⋮----
+{/* Toast Notification */}
+⋮----
+{/* Role Assignment Modal */}
+⋮----
+{/* Role Ribbon */}
+⋮----
+{/* Hero */}
+⋮----
+{/* Users Table Card - Full Width */}
+⋮----
+setSelectedUser(u);
+setNewRole(u.role);
+</file>
+
+<file path="frontend/features/prototype-v3/components/PrototypeHub.tsx">
+import React from 'react';
+import Link from 'next/link';
+⋮----
+export function PrototypeHub()
+⋮----
+{/* Header Banner - Full Width Fluid */}
+⋮----
+{/* 3 Access Zones Grid - Widescreen Layout */}
+⋮----
+{/* Zone 1: Public */}
+⋮----
+{/* Zone 2: Role-based Workspace */}
+⋮----
+{/* Zone 3: Governance */}
+</file>
+
+<file path="frontend/features/workspace/components/CollaborationManagerInteractiveWorkspace.tsx">
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { commitDemoMutation, useDemoHandoffs } from "@/features/prototype-v3/demo-backend";
+import { WorkspaceTaskDialog } from "./WorkspaceTaskDialog";
+import {
+  WorkspaceActivityTimeline,
+  WorkspaceCollectionToolbar,
+  WorkspaceEmptyState,
+  WorkspaceMetric,
+  WorkspaceNotificationPanel,
+  WorkspaceStatus,
+  WorkspaceViewHeader,
+  WorkspaceWorkflowStepper,
+  type WorkspaceTone,
+} from "./WorkspaceInteractionKit";
+⋮----
+type ManagerView = "overview" | "opportunities" | "screening" | "assignments" | "projects" | "reports";
+type OpportunityState = "DRAFT" | "PUBLISHED" | "CLOSED" | "ARCHIVED";
+type ScreeningState = "NEW" | "IN_SCREENING" | "NEEDS_INFO" | "ELIGIBLE" | "NOT_ELIGIBLE";
+type AssignmentState = "UNASSIGNED" | "ASSIGNED" | "CONFLICT" | "DECLINED" | "COMPLETED";
+type ReportState = "PENDING" | "RETURNED" | "APPROVED" | "OVERDUE";
+⋮----
+type Opportunity = { id: string; code: string; title: string; field: string; closes: string; state: OpportunityState; submissions: number };
+type Screening = { id: string; code: string; title: string; organizations: string; state: ScreeningState; completeness: number; note: string };
+type Assignment = { id: string; code: string; title: string; reviewer: string | null; deadline: string; state: AssignmentState; field: string };
+type Report = { id: string; code: string; title: string; period: string; progress: number; state: ReportState; owner: string };
+type ProgrammeProject = { id: string; code: string; title: string; progress: number; state: "ACTIVE" | "AT_RISK" | "PAUSED" | "COMPLETED"; next: string };
+⋮----
+function opportunityMeta(state: OpportunityState):
+function screeningMeta(state: ScreeningState):
+function assignmentMeta(state: AssignmentState):
+function reportMeta(state: ReportState):
+⋮----
+export function CollaborationManagerInteractiveWorkspace()
+⋮----
+const showToast = (message: string) =>
+const mutate = async (action: string, detail: string, after: () => void, options?: Parameters<typeof commitDemoMutation>[3]) =>
+⋮----
+const markEligible = (item: Screening) =>
+⋮----
+const requestInfo = (item: Screening) =>
+⋮----
+const assignReviewer = (item: Assignment) =>
+⋮----
+const updateReport = (item: Report, state: ReportState) =>
+⋮----
+const createOpportunity = () =>
+⋮----
+<section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><WorkspaceMetric value=
+⋮----
+<section className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+<section className="rounded-2xl border border-card-border bg-card-surface-area p-5"><div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"><div><div className="flex gap-2"><WorkspaceStatus tone=
+⋮----
+<section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_460px]"><div className="rounded-2xl border border-card-border bg-card-surface-area p-5"><div className="divide-y divide-card-border">
+⋮----
+<section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_440px]"><div className="rounded-2xl border border-card-border bg-card-surface-area p-5"><div className="divide-y divide-card-border">
+⋮----
+</file>
+
+<file path="frontend/features/workspace/components/DecisionInteractiveWorkspace.tsx">
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { commitDemoMutation, useDemoHandoffs } from "@/features/prototype-v3/demo-backend";
+import { WorkspaceTaskDialog } from "./WorkspaceTaskDialog";
+import {
+  WorkspaceActivityTimeline,
+  WorkspaceCollectionToolbar,
+  WorkspaceEmptyState,
+  WorkspaceMetric,
+  WorkspaceNotificationPanel,
+  WorkspaceStatus,
+  WorkspaceViewHeader,
+  WorkspaceWorkflowStepper,
+  type WorkspaceTone,
+} from "./WorkspaceInteractionKit";
+⋮----
+type DecisionView = "overview" | "queue" | "history" | "projects";
+type DecisionState = "PENDING" | "APPROVED" | "REVISION" | "REJECTED" | "DEFERRED";
+⋮----
+type DecisionItem = { id: string; code: string; title: string; organizations: string; screening: string; reviewSummary: string; score: string; state: DecisionState; rationale?: string; reviewedAt?: string };
+type DecisionProject = { id: string; code: string; title: string; progress: number; state: "PLANNED" | "ACTIVE" | "AT_RISK" | "COMPLETED"; next: string; organizations: string };
+⋮----
+function decisionMeta(state: DecisionState):
+⋮----
+export function DecisionInteractiveWorkspace()
+⋮----
+const showToast = (message: string) =>
+⋮----
+const issueDecision = async (state: DecisionState) =>
+⋮----
+const requestDecision = (state: DecisionState) =>
+⋮----
+<section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><WorkspaceMetric value=
+<section className="grid gap-5 xl:grid-cols-[1.15fr_.85fr]"><div className="rounded-2xl border border-card-border bg-card-surface-area p-5"><div className="flex items-end justify-between gap-3 border-b border-card-border pb-4"><div><h2 className="text-lg font-bold text-slate-950 dark:text-white">Hồ sơ cần quyết định</h2><p className="mt-1 text-sm text-slate-500">Chỉ hiển thị hồ sơ đã hoàn tất các bước trước.</p></div><WorkspaceStatus tone="blue">
+⋮----
+<section className="rounded-2xl border border-card-border bg-card-surface-area p-5"><div className="divide-y divide-card-border">
+⋮----
+</file>
+
+<file path="frontend/features/workspace/components/DecisionTaskWorkspace.tsx">
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import { DemoActivityPanel } from "@/features/prototype-v3/components/DemoActivityPanel";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { commitDemoMutation } from "@/features/prototype-v3/demo-backend";
+import { WorkspaceTaskDialog } from "./WorkspaceTaskDialog";
+⋮----
+type DecisionView = "overview" | "queue" | "history" | "projects";
+type DecisionState = "PENDING" | "APPROVED" | "REVISION" | "REJECTED";
+⋮----
+type DecisionItem = {
+  id: string;
+  code: string;
+  title: string;
+  organizations: string;
+  screening: string;
+  reviewSummary: string;
+  score: string;
+  state: DecisionState;
+  rationale?: string;
+};
+⋮----
+function stateLabel(state: DecisionState)
+⋮----
+function stateClass(state: DecisionState)
+⋮----
+function ViewHeading(
+⋮----
+export function DecisionTaskWorkspace()
+⋮----
+const showToast = (message: string) =>
+⋮----
+const issueDecision = async (state: DecisionState) =>
+⋮----
+<section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Metric value=
+⋮----
+</file>
+
+<file path="frontend/features/workspace/components/OrganizationInteractiveWorkspace.tsx">
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { commitDemoMutation, useDemoHandoffs } from "@/features/prototype-v3/demo-backend";
+import {
+  WorkspaceActivityTimeline,
+  WorkspaceCollectionToolbar,
+  WorkspaceEmptyState,
+  WorkspaceMetric,
+  WorkspaceNotificationPanel,
+  WorkspaceStatus,
+  WorkspaceViewHeader,
+  WorkspaceWorkflowStepper,
+  type WorkspaceTone,
+} from "./WorkspaceInteractionKit";
+⋮----
+type OrganizationView = "overview" | "endorsements" | "projects" | "activity";
+type EndorsementState = "PENDING" | "NEEDS_INFO" | "ENDORSED" | "DECLINED" | "WITHDRAWN" | "EXPIRED";
+type ProjectOrgState = "OK" | "ACTION_REQUIRED" | "WAITING_PARTNER" | "COMPLETED";
+⋮----
+type Endorsement = { id: string; code: string; title: string; lead: string; vnOrg: string; partnerOrg: string; facilities: string; people: string; state: EndorsementState; submittedAt: string };
+type OrgProject = { id: string; code: string; title: string; partner: string; progress: number; state: ProjectOrgState; organizationTask: string; due: string };
+⋮----
+function endorsementMeta(state: EndorsementState):
+⋮----
+function projectMeta(state: ProjectOrgState):
+⋮----
+export function OrganizationInteractiveWorkspace()
+⋮----
+const showToast = (message: string) =>
+⋮----
+const mutate = async (action: string, detail: string, after: () => void, options?: Parameters<typeof commitDemoMutation>[3]) =>
+⋮----
+const endorse = (item: Endorsement) =>
+⋮----
+const requestInfo = (item: Endorsement) =>
+⋮----
+const decline = (item: Endorsement) =>
+⋮----
+<section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><WorkspaceMetric value=
+<section className="grid gap-5 xl:grid-cols-[1.15fr_.85fr]"><div className="rounded-2xl border border-card-border bg-card-surface-area p-5"><div className="flex items-end justify-between gap-3 border-b border-card-border pb-4"><div><h2 className="text-lg font-bold text-slate-950 dark:text-white">Việc tổ chức cần xử lý</h2><p className="mt-1 text-sm text-slate-500">Tách rõ xác nhận proposal và nghĩa vụ dự án.</p></div><WorkspaceStatus tone="amber">
+⋮----
+<section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_430px]"><div className="grid gap-4 lg:grid-cols-2">
+</file>
+
+<file path="frontend/features/workspace/components/OrganizationTaskWorkspace.tsx">
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import { DemoActivityPanel } from "@/features/prototype-v3/components/DemoActivityPanel";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { commitDemoMutation } from "@/features/prototype-v3/demo-backend";
+import { WorkspaceTaskDialog } from "./WorkspaceTaskDialog";
+⋮----
+type OrganizationView = "overview" | "endorsements" | "projects" | "activity";
+type EndorsementState = "PENDING" | "NEEDS_INFO" | "ENDORSED";
+⋮----
+type EndorsementItem = {
+  id: string;
+  code: string;
+  title: string;
+  lead: string;
+  leadOrg: string;
+  partnerOrg: string;
+  facilities: string;
+  state: EndorsementState;
+};
+⋮----
+function stateCopy(state: EndorsementState)
+⋮----
+function ViewHeading(
+⋮----
+export function OrganizationTaskWorkspace()
+⋮----
+const showToast = (message: string) =>
+⋮----
+const updateEndorsement = async (id: string, state: EndorsementState) =>
+⋮----
+<section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Metric value=
+</file>
+
+<file path="frontend/features/workspace/components/ResearcherInteractiveWorkspace.tsx">
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { commitDemoMutation, useDemoHandoffs } from "@/features/prototype-v3/demo-backend";
+import { WorkspaceTaskDialog } from "./WorkspaceTaskDialog";
+import {
+  WorkspaceActivityTimeline,
+  WorkspaceCollectionToolbar,
+  WorkspaceEmptyState,
+  WorkspaceMetric,
+  WorkspaceNotificationPanel,
+  WorkspaceStatus,
+  WorkspaceViewHeader,
+  WorkspaceWorkflowStepper,
+  type WorkspaceTone,
+} from "./WorkspaceInteractionKit";
+⋮----
+type ResearcherView = "overview" | "knowledge" | "collaboration" | "projects" | "academic";
+type ProposalState = "DRAFT" | "WAITING_PARTNER" | "WAITING_ORG" | "NEEDS_INFO" | "SUBMITTED" | "SCREENING" | "IN_REVIEW" | "APPROVED" | "REJECTED" | "WITHDRAWN";
+type ProjectState = "PLANNED" | "ACTIVE" | "AT_RISK" | "PAUSED" | "COMPLETED";
+type AcademicState = "OPEN" | "REGISTERED" | "WAITLIST" | "CLOSED";
+⋮----
+type Proposal = { id: string; code: string; title: string; field: string; vnOrg: string; ruOrg: string; partner: string; state: ProposalState; next: string; updated: string };
+type Project = { id: string; code: string; title: string; partner: string; progress: number; state: ProjectState; milestone: string; due: string };
+type KnowledgeItem = { id: string; type: string; title: string; meta: string; status: string };
+type AcademicItem = { id: string; title: string; date: string; place: string; state: AcademicState; detail: string };
+⋮----
+function proposalMeta(state: ProposalState):
+⋮----
+function projectMeta(state: ProjectState):
+⋮----
+export function ResearcherInteractiveWorkspace()
+⋮----
+const showToast = (message: string) =>
+⋮----
+const mutate = async (action: string, detail: string, after: () => void, options?: Parameters<typeof commitDemoMutation>[3]) =>
+⋮----
+const requestOrganizationEndorsement = (proposal: Proposal) =>
+⋮----
+const resubmitInformation = (proposal: Proposal) =>
+⋮----
+const confirmPartner = (proposal: Proposal) =>
+⋮----
+const createDraft = () =>
+⋮----
+<section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><WorkspaceMetric value=
+<section className="grid gap-5 xl:grid-cols-[1.15fr_.85fr]"><div className="rounded-2xl border border-card-border bg-card-surface-area p-5"><div className="flex items-end justify-between gap-3 border-b border-card-border pb-4"><div><h2 className="text-lg font-bold text-slate-950 dark:text-white">Việc cần làm tiếp theo</h2><p className="mt-1 text-sm text-slate-500">Tác vụ thuộc quyền của Nhà nghiên cứu, không lẫn việc của Reviewer hay Điều phối.</p></div><WorkspaceStatus tone="amber">
+⋮----
+</file>
+
+<file path="frontend/features/workspace/components/ReviewerInteractiveWorkspace.tsx">
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { commitDemoMutation, useDemoHandoffs } from "@/features/prototype-v3/demo-backend";
+import { WorkspaceTaskDialog } from "./WorkspaceTaskDialog";
+import {
+  WorkspaceActivityTimeline,
+  WorkspaceCollectionToolbar,
+  WorkspaceEmptyState,
+  WorkspaceMetric,
+  WorkspaceNotificationPanel,
+  WorkspaceStatus,
+  WorkspaceViewHeader,
+  WorkspaceWorkflowStepper,
+  type WorkspaceTone,
+} from "./WorkspaceInteractionKit";
+⋮----
+type ReviewerView = "overview" | "assignments" | "evaluation" | "history";
+type ReviewState = "NEW" | "IN_REVIEW" | "WAITING_INFO" | "CONFLICT" | "OVERDUE" | "DRAFT" | "SUBMITTED" | "CANCELLED";
+⋮----
+type Assignment = {
+  id: string;
+  code: string;
+  title: string;
+  field: string;
+  due: string;
+  state: ReviewState;
+  summary: string;
+  source: string;
+};
+⋮----
+function stateMeta(state: ReviewState):
+⋮----
+<WorkspaceMetric value=
+⋮----
+<div className="divide-y divide-card-border">
+⋮----
+<aside className="h-fit rounded-2xl border border-card-border bg-card-surface-area p-4"><h2 className="text-sm font-bold text-slate-900 dark:text-white">Chọn hồ sơ để đánh giá</h2><div className="mt-3 space-y-2">
+</file>
+
+<file path="frontend/features/workspace/components/UnifiedWorkspaceDashboard.tsx">
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { useDemoWorkflow } from "@/features/workspace/demo-v2/DemoWorkflowProvider";
+import { ActivityTimeline, WorkflowStepper } from "@/features/workspace/demo-v2/WorkflowUI";
+import type { WorkflowRole } from "@/features/workspace/demo-v2/types";
+import Link from "next/link";
+⋮----
+type ModuleKey = "research" | "review" | "organization" | "coordination" | "decision";
+⋮----
+export function UnifiedWorkspaceDashboard(
+</file>
+
+<file path="frontend/features/workspace/components/WorkspaceInteractionKit.tsx">
+import Link from "next/link";
+import React from "react";
+import {
+  markAllDemoNotificationsRead,
+  markDemoNotificationRead,
+  type DemoScope,
+  useDemoActivity,
+  useDemoNotifications,
+} from "@/features/prototype-v3/demo-backend";
+⋮----
+export type WorkspaceTone = "blue" | "cyan" | "teal" | "purple" | "green" | "amber" | "red" | "slate";
+⋮----
+const markAll = () =>
+</file>
+
+<file path="frontend/features/workspace/mock-data/activities.ts">
+import type { ActivityItem } from "../demo-v2/types";
+⋮----
+// Proposal p02 timeline
+⋮----
+// Proposal p03 & Review rv03 timeline
+⋮----
+// Proposal p07 & Review rv01 timeline
+⋮----
+// Proposal p06 & Review rv02 timeline
+⋮----
+// Proposal p08, Review rv05 & Decision dc01 timeline
+⋮----
+// Proposal p09, Decision dc02 & Project pr01 timeline
+⋮----
+// Proposal p10, Review rv06 & Decision dc03 timeline
+⋮----
+// Proposal p11 & Endorsement en01 timeline
+⋮----
+// Proposal p04 & Project pr04 timeline
+⋮----
+// Proposal p01 & Review rv08 (Conflict) timeline
+⋮----
+// Proposal p12 (Cancelled) timeline
+⋮----
+// Opportunities & Reports timeline
+⋮----
+// Additional timeline items for Project pr02 & pr07
+⋮----
+export function getActivitiesByEntity(entityId: string): ActivityItem[]
+⋮----
+export function getActivitiesByEntityType(entityType: ActivityItem["entityType"]): ActivityItem[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/endorsements.ts">
+import type { OrganizationEndorsement } from "../demo-v2/types";
+⋮----
+export function getEndorsementById(id: string): OrganizationEndorsement | undefined
+⋮----
+export function getEndorsementByProposalId(proposalId: string): OrganizationEndorsement | undefined
+</file>
+
+<file path="frontend/features/workspace/mock-data/experts.ts">
+export type Expert = {
+  id: string;
+  initials: string;
+  name: string;
+  degree: string;
+  roleTitle: string;
+  institution: string;
+  institutionId: string;
+  country: "VN" | "RU";
+  city: string;
+  topics: string[];
+  publications: string[];
+  hIndex: number;
+  activeProjectsCount: number;
+  email: string;
+  bio: string;
+};
+⋮----
+export function getExpertById(id: string): Expert | undefined
+⋮----
+export function getExpertsByCountry(country: "VN" | "RU"): Expert[]
+⋮----
+export function getExpertsByTopic(topic: string): Expert[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/index.ts">
+import { DEMO_ACADEMIC_EVENTS } from "./academic-events";
+import { DEMO_ACTIVITIES } from "./activities";
+import { DEMO_DECISIONS } from "./decisions";
+import { DEMO_ENDORSEMENTS } from "./endorsements";
+import { DEMO_EXPERTS } from "./experts";
+import { DEMO_IAM_USERS } from "./iam";
+import { DEMO_KNOWLEDGE_RESOURCES } from "./knowledge";
+import { DEMO_NOTIFICATIONS } from "./notifications";
+import { DEMO_OPPORTUNITIES } from "./opportunities";
+import { DEMO_ORGANIZATIONS } from "./organizations";
+import { DEMO_PROJECTS } from "./projects";
+import { DEMO_PROPOSALS } from "./proposals";
+import { DEMO_REPORTS } from "./reports";
+import { DEMO_REVIEWS } from "./reviews";
+⋮----
+export function getMockDataStats()
+</file>
+
+<file path="frontend/features/workspace/mock-data/notifications.ts">
+import type { WorkflowNotification, WorkflowRole } from "../demo-v2/types";
+⋮----
+// RESEARCHER notifications (6 items)
+⋮----
+// REVIEWER notifications (6 items)
+⋮----
+// ORGANIZATION_REPRESENTATIVE notifications (6 items)
+⋮----
+// COLLABORATION_MANAGER notifications (5 items)
+⋮----
+// FOUNDATION_DECISION_MAKER notifications (5 items)
+⋮----
+export function getNotificationsByRole(role: WorkflowRole): WorkflowNotification[]
+⋮----
+export function getUnreadNotificationsByRole(role: WorkflowRole): WorkflowNotification[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/opportunities.ts">
+import type { Opportunity } from "../demo-v2/types";
+⋮----
+export type DetailedOpportunity = Opportunity & {
+  summary?: string;
+  scope?: string;
+  objective?: string;
+  topics?: string[];
+  relatedExpertIds?: string[];
+  eligiblePartners?: string;
+  publishedAt?: string;
+  guidelines?: string[];
+};
+⋮----
+export function getOpportunityById(id: string): DetailedOpportunity | undefined
+⋮----
+export function getOpportunitiesByState(state: Opportunity["state"]): DetailedOpportunity[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/projects.ts">
+import type { Project, ProjectState } from "../demo-v2/types";
+⋮----
+export type DetailedProject = Project & {
+  field?: string;
+  leadPi?: string;
+  vnOrg?: string;
+  ruOrg?: string;
+  durationMonths?: number;
+  startDate?: string;
+  endDate?: string;
+  reportIds?: string[];
+};
+⋮----
+export function getProjectById(id: string): DetailedProject | undefined
+⋮----
+export function getProjectsByState(state: ProjectState): DetailedProject[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/proposals.ts">
+import type { Proposal, ProposalState } from "../demo-v2/types";
+⋮----
+export type DetailedProposal = Proposal & {
+  opportunityId?: string;
+  vnOrgId: string;
+  ruOrgId: string;
+  vnPiId: string;
+  ruPiId: string;
+  endorsementId?: string;
+  reviewAssignmentIds?: string[];
+  decisionId?: string;
+  projectId?: string;
+};
+⋮----
+export function getProposalById(id: string): DetailedProposal | undefined
+⋮----
+export function getProposalsByState(state: ProposalState): DetailedProposal[]
+⋮----
+export function getProposalsByOrg(orgCode: string): DetailedProposal[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/reports.ts">
+import type { ReportItem } from "../demo-v2/types";
+⋮----
+export type DetailedReport = ReportItem & {
+  submittedAt?: string;
+  reviewedAt?: string;
+  leadAuthor: string;
+  partnerOrg: string;
+  summary: string;
+  feedback?: string;
+  attachmentsCount: number;
+};
+⋮----
+export function getReportById(id: string): DetailedReport | undefined
+⋮----
+export function getReportsByProjectId(projectId: string): DetailedReport[]
+⋮----
+export function getReportsByState(state: ReportItem["state"]): DetailedReport[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/reviews.ts">
+import type { ReviewAssignment, ReviewState } from "../demo-v2/types";
+⋮----
+export type RubricBreakdown = {
+  novelty: number;
+  methodology: number;
+  feasibility: number;
+  impact: number;
+};
+⋮----
+export type DetailedReview = ReviewAssignment & {
+  reviewerId?: string;
+  conflictReason?: string;
+  rubricBreakdown?: RubricBreakdown;
+  submittedAt?: string;
+};
+⋮----
+export function getReviewById(id: string): DetailedReview | undefined
+⋮----
+export function getReviewsByProposalId(proposalId: string): DetailedReview[]
+⋮----
+export function getReviewsByState(state: ReviewState): DetailedReview[]
+</file>
+
+<file path="services/auth-service/prisma/schema.prisma">
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum RoleAssignmentStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum AuthenticationLevel {
+  PASSWORD
+  MFA
+}
+
+model User {
+  id                 String             @id @default(uuid())
+  email              String?
+  firstName          String?
+  lastName           String?
+  status             UserStatus         @default(ACTIVE)
+  externalIdentities ExternalIdentity[]
+  sessions           Session[]
+  roleAssignments    RoleAssignment[]
+}
+
+model ExternalIdentity {
+  id      String @id @default(uuid())
+  issuer  String
+  subject String
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([issuer, subject])
+}
+
+model Session {
+  id                  String              @id @default(uuid())
+  tokenDigest         String              @unique
+  userId              String
+  user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt           DateTime
+  revokedAt           DateTime?
+  createdAt           DateTime            @default(now())
+  activeContextType   String?
+  activeContextId     String?
+  authenticationLevel AuthenticationLevel @default(PASSWORD)
+
+  @@index([userId, revokedAt])
+}
+
+model Role {
+  id              String           @id @default(uuid())
+  name            String           @unique
+  permissions     RolePermission[]
+  roleAssignments RoleAssignment[]
+}
+
+model Permission {
+  id    String           @id @default(uuid())
+  key   String           @unique
+  roles RolePermission[]
+}
+
+model RolePermission {
+  id           String     @id @default(uuid())
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+}
+
+model RoleAssignment {
+  id          String               @id @default(uuid())
+  userId      String
+  roleId      String
+  contextType String
+  contextId   String
+  status      RoleAssignmentStatus @default(ACTIVE)
+  createdAt   DateTime             @default(now())
+  user        User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        Role                 @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId, contextType, contextId])
+  @@index([userId, contextType, contextId, status])
+}
+
+model SecurityAuditEvent {
+  id        String   @id @default(uuid())
+  event     String
+  actorId   String
+  targetId  String
+  context   Json
+  createdAt DateTime @default(now())
+}
+</file>
+
+<file path="frontend/app/(workspace)/workspace/collaboration/page.tsx">
+import type { Metadata } from "next";
+import { CollaborationManagerInteractiveWorkspace } from "@/features/workspace/demo-v2/CollaborationManagerInteractiveWorkspace";
+import { requireWorkspaceCapability } from "@/features/auth/workspace-server";
+⋮----
+export default async function Page()
+</file>
+
+<file path="frontend/app/(workspace)/workspace/decisions/page.tsx">
+import type { Metadata } from "next";
+import { DecisionInteractiveWorkspace } from "@/features/workspace/demo-v2/DecisionInteractiveWorkspace";
+import { requireWorkspaceCapability } from "@/features/auth/workspace-server";
+⋮----
+export default async function Page()
+</file>
+
+<file path="frontend/app/(workspace)/workspace/researcher/page.tsx">
+import type { Metadata } from 'next';
+import { ResearcherInteractiveWorkspace } from '@/features/workspace/demo-v2/ResearcherInteractiveWorkspace';
+import { requireWorkspaceCapability } from '@/features/auth/workspace-server';
+⋮----
+export default async function Page()
+</file>
+
+<file path="frontend/features/workspace/components/CollaborationManagerTaskWorkspace.tsx">
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import { DemoActivityPanel } from "@/features/prototype-v3/components/DemoActivityPanel";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { commitDemoMutation } from "@/features/prototype-v3/demo-backend";
+import { WorkspaceTaskDialog } from "./WorkspaceTaskDialog";
+⋮----
+type ManagerView = "overview" | "opportunities" | "screening" | "assignments" | "projects" | "reports";
+type OpportunityState = "DRAFT" | "PUBLISHED";
+type ScreeningState = "SUBMITTED" | "NEEDS_INFO" | "ELIGIBLE" | "NOT_ELIGIBLE";
+type ReportState = "PENDING" | "RETURNED" | "APPROVED";
+⋮----
+type Opportunity = { id: string; code: string; title: string; field: string; closes: string; state: OpportunityState };
+type ScreeningItem = { id: string; code: string; title: string; organizations: string; state: ScreeningState; note: string };
+type ReviewAssignment = { id: string; code: string; title: string; reviewer: string | null; deadline: string; conflict: boolean };
+type ReportItem = { id: string; code: string; title: string; period: string; progress: number; state: ReportState };
+⋮----
+type DialogState =
+  | { kind: "create-opportunity" }
+  | { kind: "opportunity"; id: string }
+  | { kind: "screening"; id: string }
+  | { kind: "assignment"; id: string }
+  | { kind: "report"; id: string }
+  | null;
+⋮----
+function statusClass(tone: "green" | "amber" | "blue" | "red" | "slate")
+⋮----
+function ViewHeading(
+⋮----
+export function CollaborationManagerTaskWorkspace()
+⋮----
+const showToast = (message: string) =>
+⋮----
+const mutate = async (action: string, detail: string, after: () => void) =>
+⋮----
+const screeningTone = (state: ScreeningState)
+const reportTone = (state: ReportState)
+⋮----
+const createOpportunity = () =>
+⋮----
+<section className="rounded-2xl border border-card-border bg-card-surface-area p-5 md:p-6"><div className="divide-y divide-card-border">
+⋮----
+</file>
+
+<file path="frontend/features/workspace/components/ResearcherTaskWorkspace.tsx">
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import { DemoActivityPanel } from "@/features/prototype-v3/components/DemoActivityPanel";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { commitDemoMutation } from "@/features/prototype-v3/demo-backend";
+import { MOCK_PROPOSALS } from "@/features/prototype-v3/mock-data";
+import { WorkspaceTaskDialog } from "./WorkspaceTaskDialog";
+⋮----
+type ResearcherView = "overview" | "knowledge" | "collaboration" | "projects" | "academic";
+type MilestoneState = "DONE" | "IN_PROGRESS" | "TODO";
+type DialogState =
+  | { kind: "create-proposal" }
+  | { kind: "report-draft" }
+  | { kind: "proposal"; id: string }
+  | { kind: "knowledge"; id: string }
+  | { kind: "project" }
+  | { kind: "academic"; id: string }
+  | null;
+⋮----
+function pillClass(tone: "blue" | "green" | "amber" | "slate" | "red")
+⋮----
+function ViewHeading(
+⋮----
+export function ResearcherTaskWorkspace()
+⋮----
+const showToast = (message: string) =>
+⋮----
+const runAction = async (action: string, detail: string, after?: () => void) =>
+⋮----
+const completeCurrentMilestone = () =>
+⋮----
+const createProposalDraft = () =>
+⋮----
+const saveReportDraft = () =>
+⋮----
+</file>
+
+<file path="frontend/features/workspace/components/ReviewerTaskWorkspace.tsx">
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import { DemoActivityPanel } from "@/features/prototype-v3/components/DemoActivityPanel";
+import { WorkspacePreviewNotice } from "@/features/prototype-v3/components/WorkspacePreviewNotice";
+import { commitDemoMutation } from "@/features/prototype-v3/demo-backend";
+import { WorkspaceTaskDialog } from "./WorkspaceTaskDialog";
+⋮----
+type ReviewerView = "overview" | "assignments" | "evaluation" | "history";
+type AssignmentState = "NEW" | "IN_REVIEW" | "SUBMITTED";
+type Assignment = { id: string; code: string; title: string; field: string; due: string; state: AssignmentState; summary: string };
+type DialogState = { kind: "assignment"; id: string } | { kind: "submit" } | null;
+⋮----
+function ViewHeading(
+⋮----
+function ScoreField(
+⋮----
+return <div className="rounded-xl border border-card-border p-4"><div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between"><label htmlFor=
+⋮----
+const showToast = (message: string) =>
+⋮----
+const saveDraft = async () =>
+⋮----
+const requestSubmit = () =>
+⋮----
+const confirmSubmit = async () =>
+⋮----
+const startReview = async (id: string) =>
+⋮----
+<section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Metric value=
+</file>
+
+<file path="frontend/features/workspace/components/WorkspaceSidebar.tsx">
+import { useLocale, type Locale } from "@/core/i18n/locale";
+import SidebarFrame, { type NavSection } from "@/components/shared/SidebarFrame";
+import { useCurrentUser } from "@/features/auth/server-state";
+import { filterNavSections, resolveUserPersonas } from "@/features/workspace/config/workspace-registry";
+import React from "react";
+⋮----
+export interface WorkspaceSidebarProps {
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
+  isMobile?: boolean;
+  onItemClick?: () => void;
+}
+⋮----
+export default function WorkspaceSidebar({
+  isSidebarOpen,
+  toggleSidebar,
+  isMobile,
+  onItemClick,
+}: WorkspaceSidebarProps)
+</file>
+
+<file path="frontend/features/workspace/components/WorkspaceTaskDialog.tsx">
+import React from "react";
+import { Dialog, Heading, Modal, ModalOverlay } from "react-aria-components";
+⋮----
+type WorkspaceTaskDialogProps = {
+  title: string;
+  eyebrow?: string;
+  onClose: () => void;
+  children: React.ReactNode;
+  footer?: React.ReactNode;
+  tone?: "blue" | "teal" | "purple" | "slate";
+};
+⋮----
+export function WorkspaceTaskDialog({
+  title,
+  eyebrow = "UI Preview",
+  onClose,
+  children,
+  footer,
+  tone = "blue",
+}: WorkspaceTaskDialogProps)
+</file>
+
+<file path="frontend/features/workspace/demo-v2/mock-data.ts">
+
+</file>
+
+<file path="frontend/features/workspace/demo-v2/types.ts">
+export type WorkflowRole =
+  | "RESEARCHER"
+  | "REVIEWER"
+  | "ORGANIZATION_REPRESENTATIVE"
+  | "COLLABORATION_MANAGER"
+  | "FOUNDATION_DECISION_MAKER";
+⋮----
+export type ProposalState =
+  | "DRAFT"
+  | "WAITING_PARTNER"
+  | "WAITING_ORG_CONFIRMATION"
+  | "SUBMITTED"
+  | "NEEDS_INFO"
+  | "ELIGIBLE"
+  | "NOT_ELIGIBLE"
+  | "IN_REVIEW"
+  | "REVISION"
+  | "APPROVED"
+  | "REJECTED"
+  | "WITHDRAWN"
+  | "CANCELLED";
+⋮----
+export type ReviewState =
+  | "UNASSIGNED"
+  | "ASSIGNED"
+  | "NEW"
+  | "IN_REVIEW"
+  | "DRAFT"
+  | "OVERDUE"
+  | "CONFLICT"
+  | "SUBMITTED"
+  | "CANCELLED";
+⋮----
+export type DecisionState = "PENDING" | "REVISION" | "APPROVED" | "REJECTED";
+export type ProjectState = "PLANNED" | "ACTIVE" | "AT_RISK" | "BLOCKED" | "COMPLETED" | "CANCELLED";
+export type MilestoneState = "TODO" | "IN_PROGRESS" | "DONE" | "OVERDUE";
+⋮----
+export type Proposal = {
+  id: string;
+  code: string;
+  title: string;
+  field: string;
+  vnOrg: string;
+  ruOrg: string;
+  vnPi: string;
+  ruPi: string;
+  state: ProposalState;
+  deadline: string;
+  updatedAt: string;
+  readiness: number;
+  missing?: string[];
+  note?: string;
+};
+⋮----
+export type ReviewAssignment = {
+  id: string;
+  proposalId: string;
+  code: string;
+  title: string;
+  field: string;
+  reviewer: string | null;
+  deadline: string;
+  state: ReviewState;
+  conflict?: boolean;
+  score?: number;
+  comment?: string;
+  savedAt?: string;
+};
+⋮----
+export type Decision = {
+  id: string;
+  proposalId: string;
+  code: string;
+  title: string;
+  organizations: string;
+  score: number;
+  state: DecisionState;
+  rationale?: string;
+  decidedAt?: string;
+};
+⋮----
+export type Milestone = {
+  id: string;
+  title: string;
+  due: string;
+  state: MilestoneState;
+};
+⋮----
+export type Project = {
+  id: string;
+  proposalId: string;
+  code: string;
+  title: string;
+  partner: string;
+  state: ProjectState;
+  progress: number;
+  next: string;
+  milestones: Milestone[];
+};
+⋮----
+export type Opportunity = {
+  id: string;
+  code: string;
+  title: string;
+  field: string;
+  closes: string;
+  state: "DRAFT" | "PUBLISHED" | "CLOSED";
+};
+⋮----
+export type ReportItem = {
+  id: string;
+  projectId: string;
+  code: string;
+  title: string;
+  period: string;
+  progress: number;
+  state: "DRAFT" | "SUBMITTED" | "PENDING" | "RETURNED" | "APPROVED" | "OVERDUE";
+};
+⋮----
+export type OrganizationEndorsement = {
+  id: string;
+  proposalId: string;
+  code: string;
+  title: string;
+  lead: string;
+  partnerOrg: string;
+  facilities: string;
+  state: "PENDING" | "NEEDS_INFO" | "ENDORSED" | "DECLINED";
+  deadline: string;
+};
+⋮----
+export type WorkflowNotification = {
+  id: string;
+  role: WorkflowRole;
+  title: string;
+  message: string;
+  href: string;
+  read: boolean;
+  createdAt: string;
+  tone?: "info" | "warning" | "success" | "danger";
+};
+⋮----
+export type ActivityItem = {
+  id: string;
+  entityId: string;
+  entityType: "proposal" | "review" | "decision" | "project" | "organization" | "opportunity" | "report";
+  actor: string;
+  action: string;
+  detail: string;
+  createdAt: string;
+};
+</file>
+
+<file path="frontend/features/workspace/mock-data/academic-events.ts">
+export type AcademicEvent = {
+  id: string;
+  date: string;
+  title: string;
+  place: string;
+  city: string;
+  country: "VN" | "RU" | "ONLINE";
+  format: "IN_PERSON" | "HYBRID" | "ONLINE";
+  organizer: string;
+  topics: string[];
+  state: "OPEN" | "PLANNED" | "COMPLETED" | "CLOSED";
+  action: string;
+  description: string;
+  attendeesCount: number;
+  registrationDeadline?: string;
+};
+⋮----
+export function getAcademicEventById(id: string): AcademicEvent | undefined
+⋮----
+export function getAcademicEventsByState(state: AcademicEvent["state"]): AcademicEvent[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/decisions.ts">
+import type { Decision, DecisionState } from "../demo-v2/types";
+⋮----
+export type DetailedDecision = Decision & {
+  reviewSummary?: string;
+  signatory?: string;
+};
+⋮----
+export function getDecisionById(id: string): DetailedDecision | undefined
+⋮----
+export function getDecisionByProposalId(proposalId: string): DetailedDecision | undefined
+⋮----
+export function getDecisionsByState(state: DecisionState): DetailedDecision[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/iam.ts">
+export type IamUserStatus = "ACTIVE" | "INVITED" | "SUSPENDED" | "DEACTIVATED";
+export type IamAssignmentScope = "PLATFORM" | "ORGANIZATION" | "REVIEW_BOARD";
+⋮----
+export type IamDemoUser = {
+  id: string;
+  username: string;
+  fullName: string;
+  email: string;
+  institution: string;
+  institutionId?: string;
+  country: "VN" | "RU";
+  status: IamUserStatus;
+  roles: string[];
+  scope: IamAssignmentScope;
+  scopeContext?: string;
+  mfaEnabled: boolean;
+  lastActiveAt: string;
+  capabilities: string[];
+};
+⋮----
+export type IamAuditEvent = {
+  id: string;
+  actor: string;
+  actorRole: string;
+  action: string;
+  targetUser: string;
+  detail: string;
+  timestamp: string;
+  outcome: "SUCCESS" | "DENIED" | "REVOKED";
+};
+⋮----
+export function getIamUserById(id: string): IamDemoUser | undefined
+⋮----
+export function getIamUsersByRole(role: string): IamDemoUser[]
+⋮----
+export function getIamUsersByStatus(status: IamUserStatus): IamDemoUser[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/knowledge.ts">
+export type KnowledgeType = "PUBLICATION" | "DATASET" | "MANUSCRIPT" | "TECHNICAL_REPORT" | "GUIDELINE" | "TOPIC";
+⋮----
+export type KnowledgeResource = {
+  id: string;
+  type: KnowledgeType;
+  title: string;
+  state: "Đã công bố" | "Đã chia sẻ" | "Bản nháp" | "Nội bộ" | "Đang theo dõi" | "Đã nghiệm thu";
+  meta: string;
+  summary: string;
+  authors?: string[];
+  year?: number;
+  doi?: string;
+  topics: string[];
+  accessLevel: "OPEN" | "RESTRICTED" | "INTERNAL";
+};
+⋮----
+export function getKnowledgeResourceById(id: string): KnowledgeResource | undefined
+⋮----
+export function getKnowledgeResourcesByType(type: KnowledgeType): KnowledgeResource[]
+</file>
+
+<file path="frontend/features/workspace/mock-data/organizations.ts">
+export type Organization = {
+  id: string;
+  code: string;
+  shortName: string;
+  fullName: string;
+  country: "VN" | "RU";
+  city: string;
+  address: string;
+  website: string;
+  type: "ACADEMY" | "UNIVERSITY" | "INSTITUTE" | "ENTERPRISE";
+  keyCapabilities: string[];
+  leadContacts: string[];
+  activeProposalsCount: number;
+  activeProjectsCount: number;
+  facilitiesSummary: string;
+  verified: boolean;
+};
+⋮----
+export function getOrganizationById(id: string): Organization | undefined
+⋮----
+export function getOrganizationsByCountry(country: "VN" | "RU"): Organization[]
+</file>
+
+<file path="frontend/features/workspace/config/workspace-registry.ts">
+export interface WorkspaceNavEntry {
+  key: string;
+  href: string;
+  labelKey: string;
+  icon: string;
+  requiredCapabilities?: string[];
+  matchContexts?: string[];
+}
+⋮----
+export interface WorkspaceNavSection {
+  key: string;
+  labelKey: string;
+  items: WorkspaceNavEntry[];
+  requiredCapabilities?: string[];
+}
+⋮----
+export interface WorkspaceWidget {
+  key: string;
+  labelKey: string;
+  icon: string;
+  requiredCapabilities?: string[];
+}
+⋮----
+export interface WorkspacePersona {
+  key: string;
+  name: string;
+  matchCapabilities: string[];
+}
+⋮----
+export function hasCapability(userCapabilities: string[], required?: string | string[]): boolean
+⋮----
+export function filterNavSections(userCapabilities: string[] = []): WorkspaceNavSection[]
+⋮----
+export function resolveUserPersonas(userCapabilities: string[] = []): WorkspacePersona[]
+</file>
+
+<file path="docs/PORTAL_FOUNDATION_REFACTOR.md">
+# Portal Foundation Decisions
+
+## Current product boundary
+
+Only Module 1 has an implemented backend runtime. Public discovery and role pages are synthetic UI previews.
+
+| Concern | Canonical route |
+| --- | --- |
+| Landing page | `/` |
+| Public news stream | `/news` (`/explore` redirects here) |
+| Public discovery previews | `/knowledge`, `/experts`, `/opportunities` |
+| Login | `/login` |
+| Registration request preview | `/register` |
+| Member profile | `/account` |
+| MFA and sessions | `/security` |
+| Access administration | `/admin/access/*` |
+| Security audit | `/admin/audit` |
+
+## Access model
+
+The product uses three understandable access classes, not a dashboard persona for each workflow role:
+
+| Access class | Allowed product scope |
+| --- | --- |
+| Public visitor | News, events and approved public information |
+| Registered member / expert | Public scope plus approved member knowledge, topic calls and scientific publications |
+| Portal manager | Member scope plus portal-content management and aggregate site statistics |
+
+`/workspace` is the single member area. Specialist `/workspace/*` pages may remain as previews while the product is simplified, but they do not define separate audiences.
+
+Portal manager and `SUPER_ADMIN` are different. Portal manager is a product responsibility. `SUPER_ADMIN` stays isolated in `/admin/access` and `/admin/audit` for IAM, security and audit only.
+
+Enterprise and Leadership pages remain authenticated UI previews only and are not live persona destinations.
+
+Public pages may communicate and demonstrate the broader VN–RU network vision with synthetic data. They must not present Module 2–6 business backends as available. Role preview actions must remain clearly labeled as demo/local state and must not claim backend persistence.
+
+Backend authorization remains authoritative.
+</file>
+
+<file path="frontend/docs/ARCHITECTURE.md">
+# Frontend Architecture
+
+The frontend currently contains:
+
+- public landing page `/`, news stream `/news` (with legacy `/explore` redirect), and synthetic discovery previews under `/knowledge`, `/experts` and `/opportunities`;
+- Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`, plus a localized `/register` request preview that does not create identities;
+- member account `/account`;
+- MFA and sessions `/security`;
+- IAM governance `/admin/access/*`;
+- Module 1 security audit `/admin/audit`;
+- one unified member area at `/workspace`; existing specialist `/workspace/*` pages are synthetic previews, not separate product personas;
+- authenticated Enterprise and Leadership UI previews that are not live persona destinations;
+- capability-aware `/workspace` navigation and compatibility redirects under `/workspace/iam*`.
+
+Routes remain thin. `features/auth` owns authentication, account and security behavior; `features/iam` and `features/admin/access` own access governance; shared shells own presentation only. Backend authorization is authoritative.
+
+Public visitors read approved news and events. Registered members and experts also access approved knowledge, topic calls and scientific publications. Portal managers additionally receive content-management and aggregate-statistics capabilities. Backend authorization remains authoritative; none of these labels grants unrestricted access.
+
+Task-module previews may use URL `view` state inside one route family. Demo mutations write only local preview activity/state and must remain clearly labeled.
+
+`KNOWLEDGE_CURATOR` is removed from the current active synthetic role set. Knowledge discovery remains available publicly and inside the Researcher preview.
+
+There are no Knowledge, Expert, Publication, Collaboration, Review or Project business backends. Their current frontend surfaces use synthetic preview data and must remain labeled accordingly.
+</file>
+
+</files>

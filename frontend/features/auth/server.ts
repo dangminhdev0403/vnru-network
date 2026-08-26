@@ -2,34 +2,31 @@ export const SESSION_COOKIE_NAME = "vnru_session";
 export const RETURN_TO_COOKIE_NAME = "vnru_return_to";
 export const LOCALE_COOKIE_NAME = "vnru_locale";
 
-export function sanitizeLocale(value: string | null | undefined): "vi" | "en" | "ru" {
+export function sanitizeLocale(
+  value: string | null | undefined,
+): "vi" | "en" | "ru" {
   return value === "en" || value === "ru" ? value : "vi";
 }
 
 export function sanitizeReturnTo(value: string | null | undefined): string {
-  return value?.startsWith("/") && !value.startsWith("//") ? value : "/account";
+  return value?.startsWith("/") && !value.startsWith("//") ? value : "/security";
 }
 
 export function isSystemAdministrator(capabilities: string[] = []): boolean {
-  return capabilities.includes("iam.roles.manage") || capabilities.includes("iam.users.manage");
+  return (
+    capabilities.includes("iam.roles.manage") ||
+    capabilities.includes("iam.users.manage")
+  );
 }
 
 export function resolveLandingPath(capabilities: string[] = []): string {
   if (isSystemAdministrator(capabilities)) {
     return "/admin/access";
   }
-  if (capabilities.some((capability) => [
-    "collab.proposals.create",
-    "reviews.assignments.view_assigned",
-    "collab.proposals.endorse",
-    "collab.opportunities.create",
-    "collab.proposals.screen",
-    "reviews.assignments.manage",
-    "collab.decisions.issue_foundation",
-  ].includes(capability))) {
+  if (capabilities.includes("portal.member.access")) {
     return "/workspace";
   }
-  return "/account";
+  return "/security";
 }
 
 export function authServiceUrl(path: string): URL {
@@ -48,10 +45,17 @@ export function backendHeaders(request: Request): Headers {
 export function forwardSessionCookie(source: Response, target: Headers): void {
   const cookie = source.headers.get("set-cookie");
   if (!cookie) return;
-  target.append("set-cookie", process.env.NODE_ENV === "production" ? cookie : cookie.replace(/;\s*Secure/gi, ""));
+  target.append(
+    "set-cookie",
+    process.env.NODE_ENV === "production"
+      ? cookie
+      : cookie.replace(/;\s*Secure/gi, ""),
+  );
 }
 
-export async function getCurrentSession(token?: string): Promise<unknown | null> {
+export async function getCurrentSession(
+  token?: string,
+): Promise<unknown | null> {
   if (!token) return null;
   const response = await fetch(authServiceUrl("api/v1/auth/me"), {
     cache: "no-store",

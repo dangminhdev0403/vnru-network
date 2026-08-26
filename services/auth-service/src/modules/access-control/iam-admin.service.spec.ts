@@ -21,6 +21,8 @@ describe('IamAdminService', () => {
       findMany: jest.Mock;
       upsert: jest.Mock;
     };
+    localCredential: { upsert: jest.Mock };
+    externalIdentity: { findUnique: jest.Mock; create: jest.Mock };
     session: {
       updateMany: jest.Mock;
     };
@@ -50,6 +52,11 @@ describe('IamAdminService', () => {
       roleAssignment: {
         findMany: jest.fn().mockResolvedValue([]),
         upsert: jest.fn(),
+      },
+      localCredential: { upsert: jest.fn() },
+      externalIdentity: {
+        findUnique: jest.fn().mockResolvedValue(null),
+        create: jest.fn(),
       },
       session: {
         updateMany: jest.fn(),
@@ -86,7 +93,7 @@ describe('IamAdminService', () => {
           status: true,
         },
       });
-      expect(result).toEqual(users);
+      expect(result).toEqual(users.map((user) => ({ ...user, roles: [] })));
     });
 
     it('marks self and same-role peers as not assignable in the active context', async () => {
@@ -106,8 +113,21 @@ describe('IamAdminService', () => {
       prismaMock.user.findMany.mockResolvedValue(users.slice(1));
       prismaMock.roleAssignment.findMany.mockResolvedValue([
         { userId: 'actor-1', roleId: 'role-admin' },
-        { userId: 'peer-1', roleId: 'role-admin' },
-        { userId: 'other-1', roleId: 'role-user' },
+        {
+          userId: 'peer-1',
+          roleId: 'role-admin',
+          role: { name: 'PORTAL_MANAGER' },
+        },
+        {
+          userId: 'other-1',
+          roleId: 'role-user',
+          role: { name: 'MEMBER' },
+        },
+        {
+          userId: 'other-1',
+          roleId: 'role-super',
+          role: { name: 'SUPER_ADMIN' },
+        },
       ]);
 
       const result = await service.listUsers(10, 0, 'actor-1', {
@@ -119,10 +139,22 @@ describe('IamAdminService', () => {
         expect.objectContaining({ where: { id: { not: 'actor-1' } } }),
       );
       expect(
-        result.map(({ id, canManageUser }) => ({ id, canManageUser })),
+        result.map(({ id, roles, canManageUser }) => ({
+          id,
+          roles,
+          canManageUser,
+        })),
       ).toEqual([
-        { id: 'peer-1', canManageUser: false },
-        { id: 'other-1', canManageUser: true },
+        {
+          id: 'peer-1',
+          roles: [{ id: 'role-admin', name: 'PORTAL_MANAGER' }],
+          canManageUser: false,
+        },
+        {
+          id: 'other-1',
+          roles: [{ id: 'role-user', name: 'MEMBER' }],
+          canManageUser: false,
+        },
       ]);
     });
   });
@@ -236,7 +268,7 @@ describe('IamAdminService', () => {
           context: { status: UserStatus.INACTIVE },
         },
       });
-      expect(result).toEqual(updatedUser);
+      expect(result).toEqual({ ...updatedUser, roles: [] });
     });
 
     it('updates user status, does NOT revoke sessions if status is ACTIVE, and writes audit event in transaction', async () => {
@@ -274,7 +306,7 @@ describe('IamAdminService', () => {
           context: { status: UserStatus.ACTIVE },
         },
       });
-      expect(result).toEqual(updatedUser);
+      expect(result).toEqual({ ...updatedUser, roles: [] });
     });
 
     it('throws NotFoundException if user is not found and does not start transaction', async () => {
@@ -318,6 +350,57 @@ describe('IamAdminService', () => {
     });
   });
 
+  describe('resetUserPassword', () => {
+    it('replaces the credential, binds the login identity, revokes sessions and audits atomically', async () => {
+      prismaMock.user.findUnique.mockResolvedValue({
+        id: 'usr-1',
+        email: 'Member@Example.com',
+        status: UserStatus.ACTIVE,
+      });
+      prismaMock.localCredential.upsert.mockResolvedValue({});
+      prismaMock.externalIdentity.create.mockResolvedValue({});
+      prismaMock.session.updateMany.mockResolvedValue({ count: 2 });
+      prismaMock.securityAuditEvent.create.mockResolvedValue({ id: 'audit-1' });
+
+      await expect(
+        service.resetUserPassword('usr-1', 'new-password-123', 'actor-1'),
+      ).resolves.toEqual({ reset: true });
+
+      expect(prismaMock.$transaction).toHaveBeenCalled();
+      expect(prismaMock.localCredential.upsert).toHaveBeenCalledWith({
+        where: { userId: 'usr-1' },
+        update: {
+          salt: expect.any(String) as unknown,
+          passwordHash: expect.any(String) as unknown,
+        },
+        create: {
+          userId: 'usr-1',
+          salt: expect.any(String) as unknown,
+          passwordHash: expect.any(String) as unknown,
+        },
+      });
+      expect(prismaMock.externalIdentity.create).toHaveBeenCalledWith({
+        data: {
+          issuer: 'authjs:credentials',
+          subject: 'member@example.com',
+          userId: 'usr-1',
+        },
+      });
+      expect(prismaMock.session.updateMany).toHaveBeenCalledWith({
+        where: { userId: 'usr-1', revokedAt: null },
+        data: { revokedAt: expect.any(Date) as unknown },
+      });
+      expect(prismaMock.securityAuditEvent.create).toHaveBeenCalledWith({
+        data: {
+          event: 'IAM_USER_PASSWORD_RESET',
+          actorId: 'actor-1',
+          targetId: 'usr-1',
+          context: { sessionsRevoked: true },
+        },
+      });
+    });
+  });
+
   describe('listRoles', () => {
     it('returns roles with mapped and sorted permission keys', async () => {
       const rolesFromPrisma = [
@@ -336,6 +419,11 @@ describe('IamAdminService', () => {
             { permission: { key: 'knowledge.publications.submit' } },
           ],
         },
+        {
+          id: 'role-super',
+          name: 'SUPER_ADMIN',
+          permissions: [{ permission: { key: 'iam.roles.manage' } }],
+        },
       ];
       prismaMock.role.findMany.mockResolvedValue(rolesFromPrisma);
 
@@ -344,6 +432,7 @@ describe('IamAdminService', () => {
       expect(prismaMock.role.findMany).toHaveBeenCalledWith({
         take: 5,
         skip: 0,
+        where: { name: { not: 'SUPER_ADMIN' } },
         orderBy: { name: 'asc' },
         include: {
           permissions: {
@@ -369,6 +458,23 @@ describe('IamAdminService', () => {
   });
 
   describe('replaceRolePermissions', () => {
+    it('rejects changing SUPER_ADMIN permissions before any write', async () => {
+      prismaMock.role.findUnique.mockResolvedValue({
+        id: 'role-super',
+        name: 'SUPER_ADMIN',
+      });
+
+      await expect(
+        service.replaceRolePermissions(
+          'role-super',
+          ['iam.roles.manage'],
+          'actor-1',
+        ),
+      ).rejects.toThrow(ForbiddenException);
+      expect(prismaMock.rolePermission.deleteMany).not.toHaveBeenCalled();
+      expect(prismaMock.rolePermission.createMany).not.toHaveBeenCalled();
+    });
+
     it('replaces mappings and audits in one transaction', async () => {
       prismaMock.role.findUnique.mockResolvedValue({
         id: 'role-1',

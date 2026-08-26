@@ -23,7 +23,7 @@ export interface RolePermissionRecord {
 export interface RoleRecord {
   id: string;
   name: string;
-  permissions: RolePermissionRecord[];
+  permissions?: RolePermissionRecord[];
 }
 
 export interface RoleAssignmentRecord {
@@ -50,13 +50,14 @@ export interface AccessControlPrismaClient {
       };
       include?: {
         role: {
-          include: {
+          include?: {
             permissions: {
               include: {
                 permission: boolean;
               };
             };
           };
+          select?: { name: boolean };
         };
       };
     }) => Promise<RoleAssignmentRecord[]>;
@@ -124,6 +125,32 @@ export class AccessControlService {
     }
 
     return Array.from(permissionKeys).sort();
+  }
+
+  async resolveActiveRoleNames(
+    input: ResolveCapabilitiesInput,
+  ): Promise<string[]> {
+    if (!input.userId || !input.contextType || !input.contextId) return [];
+
+    const assignments = await this.prisma.roleAssignment.findMany({
+      where: {
+        userId: input.userId,
+        contextType: input.contextType,
+        contextId: input.contextId,
+        status: 'ACTIVE',
+      },
+      include: { role: { select: { name: true } } },
+    });
+
+    return [
+      ...new Set(
+        assignments
+          .map(({ role }) => role?.name)
+          .filter(
+            (name): name is string => Boolean(name) && name !== 'SUPER_ADMIN',
+          ),
+      ),
+    ].sort();
   }
 
   async resolveSoleActiveContext(

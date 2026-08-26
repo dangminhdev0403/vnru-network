@@ -52,11 +52,13 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: "Invalid role permissions" }, { status: 400 });
     }
     const { roleId, permissions } = body;
+    const headers = backendHeaders(request);
+    headers.set("content-type", "application/json");
     const backendRes = await fetch(
       authServiceUrl(`api/v1/admin/roles/${encodeURIComponent(roleId)}/permissions`),
       {
         method: "PATCH",
-        headers: { ...backendHeaders(request), "content-type": "application/json" },
+        headers,
         body: JSON.stringify({ permissions }),
       },
     );

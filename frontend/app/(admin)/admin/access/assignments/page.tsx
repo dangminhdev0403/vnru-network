@@ -1,5 +1,5 @@
-import RolePermissionsPage from "@/features/admin/access/components/RolePermissionsPage";
+import { redirect } from "next/navigation";
 
 export default function AdminAccessAssignmentsPage() {
-  return <RolePermissionsPage />;
+  redirect("/admin/access/roles");
 }

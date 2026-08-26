@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   ForbiddenException,
   Inject,
   Injectable,
@@ -11,12 +12,14 @@ import {
   Role,
   RoleAssignment,
 } from '@prisma/client';
+import { createLocalPasswordDigest } from '../identity/identity-public';
 import { ACCESS_CONTROL_PRISMA } from './access-control.service';
 
 export interface UserSelectResult {
   id: string;
   email: string | null;
   status: UserStatus;
+  roles: { id: string; name: string }[];
   canManageUser?: boolean;
 }
 
@@ -50,7 +53,7 @@ export interface IamAdminPrismaClient {
       where?: { id: { not: string } };
       orderBy?: { id: 'asc' | 'desc' };
       select?: { id: boolean; email: boolean; status: boolean };
-    }): Promise<UserSelectResult[]>;
+    }): Promise<Omit<UserSelectResult, 'roles'>[]>;
     findUnique(args: { where: { id: string } }): Promise<User | null>;
     update(args: {
       where: { id: string };
@@ -62,6 +65,7 @@ export interface IamAdminPrismaClient {
     findMany(args: {
       take: number;
       skip: number;
+      where?: { name: { not: string } };
       orderBy?: { name: 'asc' | 'desc' };
       include?: {
         permissions: {
@@ -118,6 +122,21 @@ export interface IamAdminPrismaClient {
       };
     }): Promise<RoleAssignment>;
   };
+  localCredential: {
+    upsert(args: {
+      where: { userId: string };
+      update: { salt: string; passwordHash: string };
+      create: { userId: string; salt: string; passwordHash: string };
+    }): Promise<unknown>;
+  };
+  externalIdentity: {
+    findUnique(args: {
+      where: { issuer_subject: { issuer: string; subject: string } };
+    }): Promise<{ userId: string } | null>;
+    create(args: {
+      data: { issuer: string; subject: string; userId: string };
+    }): Promise<unknown>;
+  };
   session: {
     updateMany(args: {
       where: { userId: string; revokedAt: null };
@@ -143,6 +162,42 @@ export class IamAdminService {
     private readonly prisma: IamAdminPrismaClient,
   ) {}
 
+  private async assertCanManageUser(
+    id: string,
+    actorId: string,
+    activeContext?: { contextType: string; contextId: string },
+  ): Promise<User> {
+    if (id === actorId) {
+      throw new ForbiddenException('Users cannot manage themselves');
+    }
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) throw new NotFoundException('User not found');
+    if (!activeContext) return user;
+
+    const assignmentScope = {
+      ...activeContext,
+      status: RoleAssignmentStatus.ACTIVE,
+    };
+    const [actorRoles, targetRoles] = await Promise.all([
+      this.prisma.roleAssignment.findMany({
+        where: { userId: actorId, ...assignmentScope },
+        select: { roleId: true },
+      }),
+      this.prisma.roleAssignment.findMany({
+        where: { userId: id, ...assignmentScope },
+        select: { roleId: true, role: { select: { name: true } } },
+      }),
+    ]);
+    if (targetRoles.some(({ role }) => isSuperAdminRole(role?.name))) {
+      throw new ForbiddenException('SUPER_ADMIN cannot be managed');
+    }
+    const actorRoleIds = new Set(actorRoles.map(({ roleId }) => roleId));
+    if (targetRoles.some(({ roleId }) => actorRoleIds.has(roleId))) {
+      throw new ForbiddenException('Users cannot manage peers');
+    }
+    return user;
+  }
+
   async listUsers(
     limit: number,
     offset: number,
@@ -160,7 +215,9 @@ export class IamAdminService {
         status: true,
       },
     });
-    if (!actorId || !activeContext) return users;
+    if (!actorId || !activeContext) {
+      return users.map((user) => ({ ...user, roles: [] }));
+    }
 
     const assignments = await this.prisma.roleAssignment.findMany({
       where: {
@@ -177,6 +234,13 @@ export class IamAdminService {
     );
     return users.map((user) => ({
       ...user,
+      roles: assignments
+        .filter(
+          ({ userId, role }) =>
+            userId === user.id && role && !isSuperAdminRole(role.name),
+        )
+        .map(({ roleId, role }) => ({ id: roleId, name: role!.name }))
+        .sort((a, b) => a.name.localeCompare(b.name)),
       canManageUser:
         user.id !== actorId &&
         !assignments.some(
@@ -196,40 +260,7 @@ export class IamAdminService {
     actorId: string,
     activeContext?: { contextType: string; contextId: string },
   ): Promise<UserSelectResult> {
-    if (id === actorId) {
-      throw new ForbiddenException('Users cannot change their own status');
-    }
-
-    const user = await this.prisma.user.findUnique({
-      where: { id },
-    });
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    if (activeContext) {
-      const assignmentScope = {
-        ...activeContext,
-        status: RoleAssignmentStatus.ACTIVE,
-      };
-      const [actorRoles, targetRoles] = await Promise.all([
-        this.prisma.roleAssignment.findMany({
-          where: { userId: actorId, ...assignmentScope },
-          select: { roleId: true },
-        }),
-        this.prisma.roleAssignment.findMany({
-          where: { userId: id, ...assignmentScope },
-          select: { roleId: true, role: { select: { name: true } } },
-        }),
-      ]);
-      if (targetRoles.some(({ role }) => isSuperAdminRole(role?.name))) {
-        throw new ForbiddenException('SUPER_ADMIN status cannot be changed');
-      }
-      const actorRoleIds = new Set(actorRoles.map(({ roleId }) => roleId));
-      if (targetRoles.some(({ roleId }) => actorRoleIds.has(roleId))) {
-        throw new ForbiddenException('Users cannot change peer status');
-      }
-    }
+    await this.assertCanManageUser(id, actorId, activeContext);
 
     return this.prisma.$transaction(async (tx) => {
       const updatedUser = await tx.user.update({
@@ -263,14 +294,66 @@ export class IamAdminService {
         },
       });
 
-      return updatedUser;
+      return { ...updatedUser, roles: [] };
     });
+  }
+
+  async resetUserPassword(
+    id: string,
+    password: string,
+    actorId: string,
+    activeContext?: { contextType: string; contextId: string },
+  ): Promise<{ reset: true }> {
+    const user = await this.assertCanManageUser(id, actorId, activeContext);
+    if (!user.email) throw new ConflictException('User has no login email');
+    const email = user.email.trim().toLowerCase();
+    const credential = await createLocalPasswordDigest(password);
+
+    await this.prisma.$transaction(async (tx) => {
+      const identity = await tx.externalIdentity.findUnique({
+        where: {
+          issuer_subject: { issuer: 'authjs:credentials', subject: email },
+        },
+      });
+      if (identity && identity.userId !== id) {
+        throw new ConflictException('Login identity belongs to another user');
+      }
+      await tx.localCredential.upsert({
+        where: { userId: id },
+        update: credential,
+        create: { userId: id, ...credential },
+      });
+      if (!identity) {
+        await tx.externalIdentity.create({
+          data: {
+            issuer: 'authjs:credentials',
+            subject: email,
+            userId: id,
+          },
+        });
+      }
+      await tx.session.updateMany({
+        where: { userId: id, revokedAt: null },
+        data: { revokedAt: new Date() },
+      });
+      await tx.securityAuditEvent.create({
+        data: {
+          event: 'IAM_USER_PASSWORD_RESET',
+          actorId,
+          targetId: id,
+          context: { sessionsRevoked: true },
+        },
+      });
+    });
+
+    return { reset: true };
   }
 
   async listRoles(limit: number, offset: number): Promise<MappedRole[]> {
     const roles = await this.prisma.role.findMany({
       take: limit,
       skip: offset,
+      where: { name: { not: 'SUPER_ADMIN' } },
       orderBy: { name: 'asc' },
       include: {
         permissions: {
@@ -281,17 +364,19 @@ export class IamAdminService {
       },
     });
 
-    return roles.map((role) => {
-      const permissionKeys: string[] = role.permissions
-        .map((rp) => rp.permission?.key)
-        .filter((key): key is string => typeof key === 'string');
+    return roles
+      .filter((role) => !isSuperAdminRole(role.name))
+      .map((role) => {
+        const permissionKeys: string[] = role.permissions
+          .map((rp) => rp.permission?.key)
+          .filter((key): key is string => typeof key === 'string');
 
-      return {
-        id: role.id,
-        name: role.name,
-        permissions: [...permissionKeys].sort(),
-      };
-    });
+        return {
+          id: role.id,
+          name: role.name,
+          permissions: [...permissionKeys].sort(),
+        };
+      });
   }
 
   async replaceRolePermissions(

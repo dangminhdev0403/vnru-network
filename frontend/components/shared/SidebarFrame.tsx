@@ -55,7 +55,7 @@ const copy: Record<
     navigation: "Điều hướng",
   },
   en: {
-    brand: "Mạng lưới tri thức Nga - Việt",
+    brand: "Russia - Vietnam Knowledge Network",
     currentContext: "Active context",
     authenticated: "Authenticated workspace",
     active: "Session active",
@@ -65,7 +65,7 @@ const copy: Record<
     navigation: "Navigation",
   },
   ru: {
-    brand: "Mạng lưới tri thức Nga - Việt",
+    brand: "Сеть знаний Россия – Вьетнам",
     currentContext: "Текущий контекст",
     authenticated: "Защищённое пространство",
     active: "Сессия активна",
@@ -151,12 +151,12 @@ export default function SidebarFrame({
         <Link
           href="/"
           onClick={onItemClick}
-          className="flex min-w-0 flex-1 items-center gap-3 rounded-xl p-1"
+          className="flex min-w-0 flex-1 items-center gap-2.5 rounded-xl p-1 transition-opacity hover:opacity-90"
         >
-          <BrandMark className="size-11 shadow-[0_6px_18px_-12px_rgba(15,23,42,.45)] ring-1 ring-[#e3eaf3] dark:ring-white/10" />
+          <BrandMark className="size-12 shrink-0 shadow-[0_6px_18px_-12px_rgba(15,23,42,.45)] ring-1 ring-[#e3eaf3] dark:ring-white/10" />
           {isSidebarOpen && (
             <span className="min-w-0 leading-tight">
-              <strong className="block truncate text-sm font-semibold text-[#0d1d35] dark:text-white">
+              <strong className="block text-xs font-black uppercase tracking-tight text-[#0d1d35] dark:text-white sm:text-[13px]">
                 {t.brand}
               </strong>
             </span>
@@ -171,7 +171,11 @@ export default function SidebarFrame({
           className="grid size-9 shrink-0 place-items-center rounded-xl text-[#75859a] transition-colors hover:bg-[#eef3f8] hover:text-[#155bd7] dark:text-[#8fa2b8] dark:hover:bg-[#162432] dark:hover:text-white"
         >
           <span className="material-symbols-outlined text-xl">
-            {isMobile ? "close" : isSidebarOpen ? "chevron_left" : "chevron_right"}
+            {isMobile
+              ? "close"
+              : isSidebarOpen
+                ? "chevron_left"
+                : "chevron_right"}
           </span>
         </button>
       </div>
@@ -182,8 +186,20 @@ export default function SidebarFrame({
             {userName.trim().charAt(0).toLocaleUpperCase(locale)}
           </span>
           <span className="min-w-0">
-            <strong className="block truncate text-sm font-bold text-[#10213a] dark:text-white" title={userName}>{userName}</strong>
-            {userMeta && <small className="mt-0.5 block truncate text-xs text-[#60738c] dark:text-[#9bacc0]" title={userMeta}>{userMeta}</small>}
+            <strong
+              className="block truncate text-sm font-bold text-[#10213a] dark:text-white"
+              title={userName}
+            >
+              {userName}
+            </strong>
+            {userMeta && (
+              <small
+                className="mt-0.5 block truncate text-xs text-[#60738c] dark:text-[#9bacc0]"
+                title={userMeta}
+              >
+                {userMeta}
+              </small>
+            )}
           </span>
         </div>
       )}

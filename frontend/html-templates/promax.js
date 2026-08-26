@@ -19,11 +19,6 @@
   form?.addEventListener('submit', (event) => {
     event.preventDefault();
     const note = qs('#registerNote');
-    if (note) note.textContent = 'Prototype only — self-registration policy is not finalized. Runtime authentication remains behind Keycloak/OIDC.';
-  });
-
-  qs('#googleLogin')?.addEventListener('click', () => {
-    const note = qs('#registerNote');
-    if (note) note.textContent = 'Google is presented as an identity-provider option through the Keycloak/OIDC boundary; this template does not implement provider credentials.';
+    if (note) note.textContent = 'Prototype only — runtime authentication uses Auth.js Credentials and backend authorization remains authoritative.';
   });
 })();

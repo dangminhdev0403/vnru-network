@@ -1,143 +1,157 @@
 {
   "_metadata": {
-    "description": "NON-SECRET IAM policy fixtures for the current workflow roles. Login accounts exist only in the ignored secrets/account.json file.",
-    "warning": "This file does not contain passwords or credentials. Runtime credentials stay in the ignored secrets/account.json file."
+    "description": "NON-SECRET IAM policy fixtures for the current portal access classes. Login accounts exist only in ignored secrets/account.json.",
+    "warning": "This file contains no passwords, tokens, or credentials."
   },
   "fixtures": [
     {
       "user": {
+        "id": "6a63ec6d-f493-4d7a-8fb3-fc8f08fd26db",
+        "email": "super-admin-fixture@vnru.invalid",
+        "status": "ACTIVE"
+      },
+      "externalIdentity": {
+        "id": "1b09a446-c7c5-47d8-a027-c66a518dc93a",
+        "issuer": "fixture:local",
+        "subject": "super-admin"
+      },
+      "role": {
+        "id": "e4f570dc-3a5d-4091-b5ee-4274fe9a6a7d",
+        "name": "SUPER_ADMIN"
+      },
+      "permissions": [
+        {
+          "id": "f4f7c8c6-172b-4574-960a-75019392d2f1",
+          "key": "iam.users.manage"
+        },
+        {
+          "id": "64df1450-c2f2-477b-910f-856181ca61d7",
+          "key": "iam.roles.manage"
+        },
+        {
+          "id": "29a718ba-f38a-4d47-882d-12791cd9a90f",
+          "key": "iam.audit.view"
+        }
+      ],
+      "roleAssignment": {
+        "id": "7a23f350-6cbb-49d9-a63a-10e2f136d20e",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "user": {
         "id": "7809a72b-8a8e-49b8-897b-bb663ee38021",
-        "email": "researcher_ru@vnru.network",
+        "email": "member-ru@vnru.network",
         "status": "ACTIVE"
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-bb663ee38022",
-        "issuer": "http://127.0.0.1:8081/realms/vnru",
-        "subject": "b2674fba-48c8-414f-926f-3ecfe1aab351"
+        "issuer": "fixture:local",
+        "subject": "member-ru"
       },
       "role": {
-        "id": "7809a72b-8a8e-49b8-897b-ff663ee38001",
-        "name": "RESEARCHER"
+        "id": "b41ae39a-6bbe-4618-b202-be0cc6746489",
+        "name": "READER"
       },
-      "permissions": [
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38020", "key": "knowledge.workspace.view" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38021", "key": "collab.proposals.create" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38022", "key": "collab.proposals.confirm_paired" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38023", "key": "collab.proposals.submit" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38024", "key": "projects.projects.view" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38025", "key": "projects.milestones.update" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38026", "key": "projects.reports.submit" }
-      ],
+      "permissions": [],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38021",
-        "contextType": "ORGANIZATION",
-        "contextId": "a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
         "status": "ACTIVE"
       }
     },
     {
       "user": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38003",
-        "email": "org_rep@vnru.network",
+        "email": "member-vn@vnru.network",
         "status": "ACTIVE"
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38004",
-        "issuer": "http://127.0.0.1:8081/realms/vnru",
-        "subject": "fed2a1c0-4417-41ff-b81e-9eb3d01902ed"
+        "issuer": "fixture:local",
+        "subject": "member-vn"
       },
       "role": {
-        "id": "7809a72b-8a8e-49b8-897b-ff663ee38002",
-        "name": "ORGANIZATION_REPRESENTATIVE"
+        "id": "b41ae39a-6bbe-4618-b202-be0cc6746489",
+        "name": "READER"
       },
-      "permissions": [
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38007", "key": "collab.proposals.endorse" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38004", "key": "projects.projects.view" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38008", "key": "projects.reports.view_org" }
-      ],
+      "permissions": [],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38002",
-        "contextType": "ORGANIZATION",
-        "contextId": "e1d5a7d3-7d1a-47ef-b203-d2d89f7db387",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
         "status": "ACTIVE"
       }
     },
     {
       "user": {
         "id": "7809a72b-8a8e-49b8-897b-bb663ee38023",
-        "email": "org_rep_ru@vnru.network",
+        "email": "member-2@vnru.network",
         "status": "ACTIVE"
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-bb663ee38024",
-        "issuer": "http://127.0.0.1:8081/realms/vnru",
-        "subject": "2abeca26-e327-4ee0-970c-e1cc0b03082c"
+        "issuer": "fixture:local",
+        "subject": "member-2"
       },
       "role": {
-        "id": "7809a72b-8a8e-49b8-897b-ff663ee38002",
-        "name": "ORGANIZATION_REPRESENTATIVE"
+        "id": "b41ae39a-6bbe-4618-b202-be0cc6746489",
+        "name": "READER"
       },
-      "permissions": [
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38027", "key": "collab.proposals.endorse" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38028", "key": "projects.projects.view" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38029", "key": "projects.reports.view_org" }
-      ],
+      "permissions": [],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38022",
-        "contextType": "ORGANIZATION",
-        "contextId": "a5b7d6e4-8d4e-4fdf-9753-1579b248a3e7",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
         "status": "ACTIVE"
       }
     },
     {
       "user": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38005",
-        "email": "reviewer@vnru.network",
+        "email": "member-3@vnru.network",
         "status": "ACTIVE"
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38006",
-        "issuer": "http://127.0.0.1:8081/realms/vnru",
-        "subject": "7530ce9b-fb60-451e-81b7-b48f4f75b007"
+        "issuer": "fixture:local",
+        "subject": "member-3"
       },
       "role": {
-        "id": "7809a72b-8a8e-49b8-897b-ff663ee38003",
-        "name": "REVIEWER"
+        "id": "b41ae39a-6bbe-4618-b202-be0cc6746489",
+        "name": "READER"
       },
-      "permissions": [
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38009", "key": "reviews.assignments.view_assigned" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38010", "key": "reviews.evaluations.score" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38011", "key": "reviews.evaluations.submit" }
-      ],
+      "permissions": [],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38003",
-        "contextType": "REVIEW_BOARD",
-        "contextId": "BOARD_001",
+        "contextType": "PLATFORM",
+        "contextId": "GLOBAL",
         "status": "ACTIVE"
       }
     },
     {
       "user": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38007",
-        "email": "program_manager@vnru.network",
+        "email": "portal-manager@vnru.network",
         "status": "ACTIVE"
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38008",
-        "issuer": "http://127.0.0.1:8081/realms/vnru",
-        "subject": "5499c30e-9183-403b-8e9e-fbc664541096"
+        "issuer": "fixture:local",
+        "subject": "portal-manager"
       },
       "role": {
-        "id": "7809a72b-8a8e-49b8-897b-ff663ee38004",
-        "name": "COLLABORATION_MANAGER"
+        "id": "5aa65af4-21f6-4507-a54f-b14c7edadd90",
+        "name": "PORTAL_MEMBER"
       },
       "permissions": [
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38012", "key": "collab.opportunities.create" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38013", "key": "collab.opportunities.publish" },
-        { "id": "343736e9-fa64-487f-b7ea-17e563591ad7", "key": "collab.proposals.screen" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38014", "key": "reviews.assignments.manage" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38004", "key": "projects.projects.view" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38015", "key": "projects.reports.approve" }
+        {
+          "id": "3c410953-5299-49b6-8f93-a0af87f66141",
+          "key": "portal.member.access"
+        }
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38004",
@@ -149,51 +163,26 @@
     {
       "user": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38009",
-        "email": "decision_maker@vnru.network",
+        "email": "portal-manager-2@vnru.network",
         "status": "ACTIVE"
       },
       "externalIdentity": {
         "id": "7809a72b-8a8e-49b8-897b-aa663ee38010",
-        "issuer": "http://127.0.0.1:8081/realms/vnru",
-        "subject": "13d2c564-39d9-4365-b5bf-8e06ce2ea07b"
+        "issuer": "fixture:local",
+        "subject": "portal-manager-2"
       },
       "role": {
-        "id": "7809a72b-8a8e-49b8-897b-ff663ee38005",
-        "name": "FOUNDATION_DECISION_MAKER"
+        "id": "5aa65af4-21f6-4507-a54f-b14c7edadd90",
+        "name": "PORTAL_MEMBER"
       },
       "permissions": [
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38016", "key": "collab.decisions.issue_foundation" },
-        { "id": "7809a72b-8a8e-49b8-897b-ee663ee38004", "key": "projects.projects.view" }
+        {
+          "id": "3c410953-5299-49b6-8f93-a0af87f66141",
+          "key": "portal.member.access"
+        }
       ],
       "roleAssignment": {
         "id": "7809a72b-8a8e-49b8-897b-dd663ee38005",
-        "contextType": "PLATFORM",
-        "contextId": "GLOBAL",
-        "status": "ACTIVE"
-      }
-    },
-    {
-      "user": {
-        "id": "6a63ec6d-f493-4d7a-8fb3-fc8f08fd26db",
-        "email": "super-admin-fixture@vnru.invalid",
-        "status": "ACTIVE"
-      },
-      "externalIdentity": {
-        "id": "1b09a446-c7c5-47d8-a027-c66a518dc93a",
-        "issuer": "http://127.0.0.1:8081/realms/vnru",
-        "subject": "de503a91-0397-4fab-98b0-d26b2764954c"
-      },
-      "role": {
-        "id": "e4f570dc-3a5d-4091-b5ee-4274fe9a6a7d",
-        "name": "SUPER_ADMIN"
-      },
-      "permissions": [
-        { "id": "f4f7c8c6-172b-4574-960a-75019392d2f1", "key": "iam.users.manage" },
-        { "id": "64df1450-c2f2-477b-910f-856181ca61d7", "key": "iam.roles.manage" },
-        { "id": "29a718ba-f38a-4d47-882d-12791cd9a90f", "key": "iam.audit.view" }
-      ],
-      "roleAssignment": {
-        "id": "7a23f350-6cbb-49d9-a63a-10e2f136d20e",
         "contextType": "PLATFORM",
         "contextId": "GLOBAL",
         "status": "ACTIVE"

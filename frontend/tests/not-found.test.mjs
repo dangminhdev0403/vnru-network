@@ -13,7 +13,7 @@ test("Root not-found route renders NotFoundClient with metadata", async () => {
   assert.match(notFoundPage, /404 - Trang không tìm thấy/);
 });
 
-test("NotFoundClient provides trilingual navigation focused on Home and Go Back", async () => {
+test("NotFoundClient provides trilingual navigation to Home and News", async () => {
   const clientPage = await readFile(
     new URL("../app/NotFoundClient.tsx", import.meta.url),
     "utf8",
@@ -30,15 +30,10 @@ test("NotFoundClient provides trilingual navigation focused on Home and Go Back"
   // Must provide Home navigation
   assert.match(clientPage, /href=["']\/["']/);
 
-  // Must provide Go Back action
-  assert.match(clientPage, /router\.back\(\)/);
+  assert.match(clientPage, /href=["']\/news["']/);
 
   // Must display 404 status
-  assert.match(clientPage, /404 Not Found/);
-
-  // Must cite Traditions and Friendship Foundation operator
-  assert.match(clientPage, /Quỹ Truyền thống và Hữu nghị/);
-  assert.match(clientPage, /Traditions and Friendship Foundation/);
+  assert.match(clientPage, /HTTP<br \/>NOT FOUND/);
 
   // Must not expose secret tokens or unapproved API calls
   assert.doesNotMatch(clientPage, /accessToken|refreshToken/i);

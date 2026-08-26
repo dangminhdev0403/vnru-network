@@ -1,5 +1,5 @@
-import RolePermissionsPage from "@/features/admin/access/components/RolePermissionsPage";
+import RoleListPage from "@/features/admin/access/components/RoleListPage";
 
 export default function AdminAccessRolesPage() {
-  return <RolePermissionsPage />;
+  return <RoleListPage />;
 }

@@ -33,6 +33,10 @@ export const HOME_COPY: Record<
   Locale,
   {
     eyebrow: string;
+    titleMain: string;
+    country1: string;
+    hyphen: string;
+    country2: string;
     title1: string;
     title2: string;
     title3: string;
@@ -116,6 +120,10 @@ export const HOME_COPY: Record<
 > = {
   vi: {
     eyebrow: "Cổng kết nối hợp tác song phương",
+    titleMain: "Mạng lưới tri thức",
+    country1: "Nga",
+    hyphen: "-",
+    country2: "Việt",
     title1: "Mạng lưới Tri thức Nga – Việt",
     title2: "",
     title3: "",
@@ -300,6 +308,10 @@ export const HOME_COPY: Record<
   },
   ru: {
     eyebrow: "Портал двустороннего сотрудничества",
+    titleMain: "Сеть знаний",
+    country1: "Россия",
+    hyphen: "–",
+    country2: "Вьетнам",
     title1: "РОССИЙСКО-ВЬЕТНАМСКАЯ",
     title2: "ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
     title3: "",
@@ -446,7 +458,7 @@ export const HOME_COPY: Record<
       { val: "50+", lbl: "Организаций", col: "from-amber-600 to-orange-600" },
     ],
     footer: {
-      brandTitle: "Mạng lưới tri thức Nga - Việt",
+      brandTitle: "Сеть знаний Россия – Вьетнам",
       subtitle: "",
       desc: "Независимый портал координации научно-технологического сотрудничества между ведущими институтами и университетами Вьетнама и Российской Федерации.",
       openDataBadge: "Портал открытых данных НТИ 2026",
@@ -460,7 +472,7 @@ export const HOME_COPY: Record<
       moscowAddress:
         "125047, Москва, 1-я Тверская-Ямская улица, д.30, к. 01Б, Российская Федерация",
       supportLabel: "Техническая поддержка и сотрудничество:",
-      copyright: "© 2026 Mạng lưới tri thức Nga - Việt. Все права защищены.",
+      copyright: "© 2026 Сеть знаний Россия – Вьетнам. Все права защищены.",
       terms: "Условия сотрудничества",
       privacy: "Политика конфиденциальности",
       ethics: "Научная этика",
@@ -476,6 +488,10 @@ export const HOME_COPY: Record<
   },
   en: {
     eyebrow: "Bilateral Cooperation Gateway",
+    titleMain: "Knowledge Network",
+    country1: "Russia",
+    hyphen: "-",
+    country2: "Vietnam",
     title1: "Science & Technology",
     title2: "Knowledge Network",
     title3: "Russia – Vietnam",
@@ -493,7 +509,7 @@ export const HOME_COPY: Record<
       {
         tag: "Open Data",
         title: "Bilateral Mode",
-        desc: "Joint Grants & Shared Research Labs",
+        desc: "Joint Funding & Shared Labs",
       },
     ],
     metrics: [
@@ -579,34 +595,34 @@ export const HOME_COPY: Record<
     events: {
       eyebrow: "Events & Conferences",
       title: "Featured Events",
-      desc: "Academic forums, scientific summits, and joint training programs between Russia and Vietnam.",
+      desc: "Academic forums, science congresses, and joint training programs between the two countries.",
       viewAll: "View All Events →",
       items: [
         {
           date: "25",
           month: "AUG",
-          kind: "WORKSHOP",
-          title: "Russia – Vietnam Science & Technology Workshop 2026",
+          kind: "SYMPOSIUM",
+          title: "Vietnam – Russia Science & Technology Symposium 2026",
           place: "Hanoi, Vietnam",
-          year: "2026",
+          year: "Year 2026",
           tone: "from-blue-700 via-blue-500 to-cyan-300",
         },
         {
           date: "10",
           month: "SEP",
-          kind: "SUMMIT",
-          title: "Vietnam – Russian Federation Innovation Summit",
+          kind: "CONGRESS",
+          title: "Vietnam – Russian Federation Innovation Forum",
           place: "Ho Chi Minh City, Vietnam",
-          year: "2026",
+          year: "Year 2026",
           tone: "from-sky-700 via-blue-500 to-indigo-300",
         },
         {
           date: "18",
           month: "SEP",
-          kind: "TRAINING",
-          title: "AI & Robotics in Scientific Research Training Program",
+          kind: "WORKSHOP",
+          title: "Applied AI & Robotics in Research Training Workshop",
           place: "Online",
-          year: "2026",
+          year: "Year 2026",
           tone: "from-indigo-700 via-blue-600 to-sky-300",
         },
       ],
@@ -614,7 +630,7 @@ export const HOME_COPY: Record<
     stats: [
       {
         val: "500+",
-        lbl: "Verified Experts",
+        lbl: "Scientists & Experts",
         col: "from-blue-600 to-indigo-600",
       },
       {
@@ -634,7 +650,7 @@ export const HOME_COPY: Record<
       },
     ],
     footer: {
-      brandTitle: "Mạng lưới tri thức Nga - Việt",
+      brandTitle: "Russia - Vietnam Knowledge Network",
       subtitle: "",
       desc: "Independent portal for coordinating science and technology cooperation between leading institutes and universities of Vietnam and the Russian Federation.",
       openDataBadge: "Open S & T Data Portal 2026",
@@ -648,7 +664,8 @@ export const HOME_COPY: Record<
       moscowAddress:
         "125047, Moscow, 1st Tverskaya-Yamskaya St., Bldg 30, Office 01B, Russian Federation",
       supportLabel: "Technical Support & Inquiries:",
-      copyright: "© 2026 Mạng lưới tri thức Nga - Việt. All rights reserved.",
+      copyright:
+        "© 2026 Russia - Vietnam Knowledge Network. All rights reserved.",
       terms: "Terms of Collaboration",
       privacy: "Privacy Policy",
       ethics: "Research Ethics",
@@ -717,24 +734,32 @@ export function GuestHomeV2({
           <div className="mx-auto flex min-h-[560px] max-w-[1460px] items-center px-4 py-12 sm:min-h-[620px] sm:px-6 sm:py-16 lg:px-8">
             <div className="mr-auto w-full max-w-[760px] text-left">
               <div className="mb-5 inline-flex max-w-full items-center gap-2.5 rounded-full border-[2.5px] border-amber-400/90 bg-black/20 px-4 py-2 text-[15px] font-black text-amber-300 sm:mb-6 sm:px-5 sm:text-[17px]">
-                <span className="size-2.5 shrink-0 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.9)]" aria-hidden="true" />
+                <span
+                  className="size-2.5 shrink-0 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.9)]"
+                  aria-hidden="true"
+                />
                 <span>{t.eyebrow}</span>
               </div>
 
               <h1
-                aria-label="Mạng lưới tri thức Nga - Việt"
+                aria-label={`${t.titleMain} ${t.country1} ${t.hyphen} ${t.country2}`}
                 className="overflow-visible font-sans font-black leading-[1.15] text-slate-300 drop-shadow-[0_3px_12px_rgba(0,0,0,0.38)]"
               >
                 <span className="block text-3xl sm:text-5xl lg:text-[62px]">
-                  Mạng lưới tri thức
+                  {t.titleMain}
                 </span>
                 <span className="flex w-fit items-center justify-start gap-x-3 overflow-visible pb-2 pt-0 text-5xl leading-[1.15] sm:gap-x-6 sm:text-[80px] lg:text-[104px]">
-                  <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">Nga</span>
-                  <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-medium text-transparent">-</span>
-                  <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">Việt</span>
+                  <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">
+                    {t.country1}
+                  </span>
+                  <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-medium text-transparent">
+                    {t.hyphen}
+                  </span>
+                  <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">
+                    {t.country2}
+                  </span>
                 </span>
               </h1>
-
             </div>
           </div>
         </section>

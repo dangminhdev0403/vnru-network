@@ -1,0 +1,239 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: docs/ARCHITECTURE.md, docs/PORTAL_FOUNDATION_REFACTOR.md, docs/RBAC_ARCHITECTURE.md, frontend/PRODUCT.md, frontend/docs/ARCHITECTURE.md
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+docs/
+  ARCHITECTURE.md
+  PORTAL_FOUNDATION_REFACTOR.md
+  RBAC_ARCHITECTURE.md
+frontend/
+  docs/
+    ARCHITECTURE.md
+  PRODUCT.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="frontend/PRODUCT.md">
+# Product
+
+## Identity
+Russia-Vietnam Science-Technology Intelligence Network is an independent bilateral knowledge, research, and technology cooperation portal founded and operated by the Traditions and Friendship Foundation. It is not a ministry portal or a separate legal entity.
+
+## Audience
+- Public visitors reading news, events, and approved public information.
+- Registered members and experts accessing approved knowledge, topic calls, and scientific publications.
+- Portal managers administering content and viewing aggregate site statistics.
+
+System administrators are operational users for IAM, security, and audit. They are not a fourth product audience and do not represent portal managers.
+
+## Core mechanism
+The Portal publishes science and technology information, then opens approved knowledge resources to registered members and experts.
+
+## Implemented surfaces
+- Public landing: `/`.
+- Authentication and member self-service: `/login`, `/account`, `/security`.
+- Governance: `/admin/access/*` and `/admin/audit`.
+- Compatibility: `/workspace` and legacy `/workspace/iam*` routes redirect to Module 1 surfaces.
+
+## Product truth
+- Backend authorization is authoritative; frontend permissions only shape UX.
+- Keycloak owns credential UI; the frontend uses an opaque session bridge.
+- Vietnamese, English, and Russian are first-class locales. One selected locale must govern all visible and accessible copy on a surface.
+- IAM infrastructure is the only implemented business module. Other business capabilities may appear as landing-page vision only and must not be presented as available runtime surfaces.
+- The landing page is public; account, security and governance surfaces require the appropriate session and capability scope.
+
+## Design success
+- A first-time visitor understands the bilateral network and primary discovery action within seconds.
+- Authenticated users can identify context, security state, available modules, and next action without marketing clutter.
+- The visual system feels institutional, scientific, bilateral, and contemporary rather than generic SaaS.
+- Motion explains connection, hierarchy, and state transition; it never obstructs reading or operation.
+
+## Constraints
+- Preserve routes, information architecture, authentication behavior, domain boundaries, accessibility, and responsive behavior.
+- Preserve the VN-RU blue/red identity while using red sparingly.
+- Do not invent metrics, services, permissions, or production capabilities.
+- Prefer installed `motion` and native CSS. Add dependencies only when an implemented requirement cannot be met otherwise.
+</file>
+
+<file path="docs/RBAC_ARCHITECTURE.md">
+# Module 1 RBAC Architecture
+
+Auth.js authenticates a person from the runtime account config. `auth-service` resolves the signed identity assertion to one opaque application session, one active authorization context, roles, resource scopes and capability keys.
+
+Capability keys use `<domain>.<resource>.<action>`. The current frontend consumes Module 1 capabilities such as `iam.users.manage`, `iam.roles.manage` and `iam.audit.view` to shape navigation. Backend guards remain authoritative.
+
+Each session has exactly one active context. Switching context validates the assignment and scope, rotates the session token and never unions permissions from different contexts.
+
+Member self-service is available at `/account` and `/security`. Governance operators use `/admin/access/*` and `/admin/audit`.
+
+## Product access classes
+
+Product copy and navigation use only `PUBLIC`, `MEMBER` and `PORTAL_MANAGER` concepts:
+
+- `PUBLIC`: approved news, events and public information.
+- `MEMBER`: approved member knowledge, topic calls and scientific publications.
+- `PORTAL_MANAGER`: content-management and aggregate-statistics capabilities in addition to member access.
+
+These are access classes, not permission wildcards. Backend capabilities still authorize every protected action and record. `SUPER_ADMIN` remains a technical IAM/security role and must not be assigned as portal-manager access.
+</file>
+
+<file path="docs/PORTAL_FOUNDATION_REFACTOR.md">
+# Portal Foundation Decisions
+
+## Current product boundary
+
+Only Module 1 has an implemented backend runtime. Public discovery and role pages are synthetic UI previews.
+
+| Concern | Canonical route |
+| --- | --- |
+| Landing page | `/` |
+| Public news stream | `/news` (`/explore` redirects here) |
+| Public discovery previews | `/knowledge`, `/experts`, `/opportunities` |
+| Login | `/login` |
+| Registration request preview | `/register` |
+| Member profile | `/account` |
+| MFA and sessions | `/security` |
+| Access administration | `/admin/access/*` |
+| Security audit | `/admin/audit` |
+
+## Access model
+
+The product uses three understandable access classes, not a dashboard persona for each workflow role:
+
+| Access class | Allowed product scope |
+| --- | --- |
+| Public visitor | News, events and approved public information |
+| Registered member / expert | Public scope plus approved member knowledge, topic calls and scientific publications |
+| Portal manager | Member scope plus portal-content management and aggregate site statistics |
+
+`/workspace` is the single member area. Specialist `/workspace/*` pages may remain as previews while the product is simplified, but they do not define separate audiences.
+
+Portal manager and `SUPER_ADMIN` are different. Portal manager is a product responsibility. `SUPER_ADMIN` stays isolated in `/admin/access` and `/admin/audit` for IAM, security and audit only.
+
+Enterprise and Leadership pages remain authenticated UI previews only and are not live persona destinations.
+
+Public pages may communicate and demonstrate the broader VN–RU network vision with synthetic data. They must not present Module 2–6 business backends as available. Role preview actions must remain clearly labeled as demo/local state and must not claim backend persistence.
+
+Backend authorization remains authoritative.
+</file>
+
+<file path="docs/ARCHITECTURE.md">
+# System Architecture
+
+## Current scope
+
+The repository contains one backend trust boundary and one web frontend. The frontend also serves synthetic public-discovery and authenticated role-preview pages; these do not add backend trust boundaries:
+
+```text
+Browser
+  -> Next.js frontend
+     -> Auth.js Credentials for server-side credential verification
+     -> auth-service for opaque sessions, identity, RBAC and audit
+        -> PostgreSQL auth_db
+```
+
+Public `/`, `/news`, `/knowledge`, `/experts` and `/opportunities` routes are informational or synthetic discovery previews. They do not prove that a described future business capability exists.
+
+## Runtime ownership
+
+- Auth.js owns login and encrypted frontend sessions; credentials come from the ignored runtime account config.
+- `auth-service` owns platform identity, opaque sessions, active authorization context, roles, permissions, assignments and security audit events.
+- The frontend owns presentation and BFF forwarding. Frontend visibility is never an authorization boundary.
+- PostgreSQL `auth_db` is the only application database in the current stack.
+
+## Canonical routes
+
+- `/`: public landing page.
+- `/news`: public science and technology news stream. Legacy `/explore` permanently redirects here.
+- `/login`: Auth.js Credentials authentication entry.
+- `/register`: localized registration-request UI preview; it does not create identities or bypass administrator provisioning.
+- `/account`: member profile.
+- `/security`: MFA and session security.
+- `/admin/access/*`: user, role, permission and assignment administration.
+- `/admin/audit`: Module 1 audit surface.
+- `/workspace`: the single authenticated member area. Registered members and experts use the same product surface; capabilities only limit the data and actions they may use.
+- Existing `/workspace/*` specialist pages are synthetic previews, not separate product personas or proof of implemented workflows.
+- `/workspace/enterprise`, `/workspace/leadership`: authenticated UI previews only and are not selected by current live personas.
+- Legacy `/workspace/iam*`: compatibility redirects to Module 1 routes.
+
+The product has three access classes:
+
+1. **Public visitor**: reads news, events and approved public information.
+2. **Registered member / expert**: also accesses approved member knowledge, topic calls and scientific publications.
+3. **Portal manager**: also manages portal content and views aggregate site statistics.
+
+"Full member access" never means unrestricted system access. Backend authorization and record visibility remain authoritative. `SUPER_ADMIN` is a separate technical IAM/security account, not the portal-manager persona and not a substitute for business permissions.
+
+Knowledge, expert-directory, collaboration, review, project, academic, technology and analytics business services are absent. Synthetic frontend previews may still exist for design and flow demonstration.
+</file>
+
+<file path="frontend/docs/ARCHITECTURE.md">
+# Frontend Architecture
+
+The frontend currently contains:
+
+- public landing page `/`, news stream `/news` (with legacy `/explore` redirect), and synthetic discovery previews under `/knowledge`, `/experts` and `/opportunities`;
+- Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`, plus a localized `/register` request preview that does not create identities;
+- member account `/account`;
+- MFA and sessions `/security`;
+- IAM governance `/admin/access/*`;
+- Module 1 security audit `/admin/audit`;
+- one unified member area at `/workspace`; existing specialist `/workspace/*` pages are synthetic previews, not separate product personas;
+- authenticated Enterprise and Leadership UI previews that are not live persona destinations;
+- capability-aware `/workspace` navigation and compatibility redirects under `/workspace/iam*`.
+
+Routes remain thin. `features/auth` owns authentication, account and security behavior; `features/iam` and `features/admin/access` own access governance; shared shells own presentation only. Backend authorization is authoritative.
+
+Public visitors read approved news and events. Registered members and experts also access approved knowledge, topic calls and scientific publications. Portal managers additionally receive content-management and aggregate-statistics capabilities. Backend authorization remains authoritative; none of these labels grants unrestricted access.
+
+Task-module previews may use URL `view` state inside one route family. Demo mutations write only local preview activity/state and must remain clearly labeled.
+
+`KNOWLEDGE_CURATOR` is removed from the current active synthetic role set. Knowledge discovery remains available publicly and inside the Researcher preview.
+
+There are no Knowledge, Expert, Publication, Collaboration, Review or Project business backends. Their current frontend surfaces use synthetic preview data and must remain labeled accordingly.
+</file>
+
+</files>
