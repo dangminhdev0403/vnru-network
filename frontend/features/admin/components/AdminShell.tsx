@@ -8,7 +8,7 @@ import AdminSidebar from "./AdminSidebar";
 import React, { Suspense, useState } from "react";
 
 const shellCopy: Record<Locale, Record<string, string>> = {
-  vi: { brand: "Quản trị hệ thống Mạng lưới KH&CN", subtitle: "Quyền hạn · Kiểm toán · Danh mục" },
+  vi: { brand: "Quản trị hệ thống Mạng lưới KH & CN", subtitle: "Quyền hạn · Kiểm toán · Danh mục" },
   en: { brand: "System Administration Portal", subtitle: "Access · Audit · Governance" },
   ru: { brand: "Панель системного администрирования", subtitle: "Доступ · Аудит · Управление" },
 };

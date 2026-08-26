@@ -31,7 +31,7 @@ const copy: Record<Locale, {
   login: string;
 }> = {
   vi: {
-    brand: "Mạng lưới Tri thức KH&CN Nga – Việt",
+    brand: "Mạng lưới Tri thức KH & CN Nga – Việt",
     storyTitle: "Một mạng lưới tri thức",
     storyAccent: "Nhiều cơ hội",
     storyFuture: "hợp tác",
@@ -121,7 +121,7 @@ export default function RegisterPage() {
           <div className="mt-28 max-w-[620px]">
             <h2 id="register-story-title" className="text-[clamp(2rem,3.2vw,3rem)] font-black leading-[1.08] tracking-tight text-slate-950">
               <span className="block whitespace-nowrap">{t.storyTitle}</span>
-              <span className="mt-2 block whitespace-nowrap text-blue-700">{t.storyAccent} <span className="text-red-600">{t.storyFuture}</span></span>
+              <span className="mt-2 block whitespace-nowrap text-blue-700">{t.storyAccent} <span>{t.storyFuture}</span></span>
             </h2>
           </div>
         </section>

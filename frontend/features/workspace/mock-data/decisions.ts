@@ -17,7 +17,7 @@ export const DEMO_DECISIONS: DetailedDecision[] = [
     rationale: "Cần thu hẹp mục tiêu từ ứng dụng đại trà sang thử nghiệm buồng sóng kiểm soát và bổ sung phương án kiểm định độ bền cánh tuabin.",
     decidedAt: "22/08/2026 15:30",
     reviewSummary: "Điểm phản biện trung bình 7.20/10 (Chuyên gia #12 đánh giá 7.20). Khuyến nghị điều chỉnh.",
-    signatory: "Hội đồng Điều hành Quỹ KH&CN Song phương",
+    signatory: "Hội đồng Điều hành Quỹ KH & CN Song phương",
   },
   {
     id: "dc02",
@@ -30,7 +30,7 @@ export const DEMO_DECISIONS: DetailedDecision[] = [
     rationale: "Hồ sơ đáp ứng xuất sắc yêu cầu khoa học, tính cấp thiết và mức độ bổ trợ hạ tầng kỹ thuật giữa hai viện nghiên cứu biển hàng đầu.",
     decidedAt: "18/08/2026 10:20",
     reviewSummary: "Điểm phản biện 8.90/10 (Chuyên gia #07). Đánh giá xuất sắc, sẵn sàng kích hoạt dự án.",
-    signatory: "Hội đồng Điều hành Quỹ KH&CN Song phương",
+    signatory: "Hội đồng Điều hành Quỹ KH & CN Song phương",
   },
   {
     id: "dc03",
@@ -43,7 +43,7 @@ export const DEMO_DECISIONS: DetailedDecision[] = [
     rationale: "Tính khả thi của màng nhạy ion trong điều kiện biển thực tế chưa đạt ngưỡng yêu cầu; chưa có giải pháp chống bám bẩn sinh học.",
     decidedAt: "19/08/2026 14:00",
     reviewSummary: "Điểm phản biện 5.80/10 (Chuyên gia #21). Không đạt ngưỡng tối thiểu 7.0/10.",
-    signatory: "Hội đồng Điều hành Quỹ KH&CN Song phương",
+    signatory: "Hội đồng Điều hành Quỹ KH & CN Song phương",
   },
   {
     id: "dc04",
@@ -66,7 +66,7 @@ export const DEMO_DECISIONS: DetailedDecision[] = [
     rationale: "Hồ sơ đạt điểm khoa học cao nhưng cần thống nhất chuẩn hóa phương pháp đo phổ gamma định tuổi với phòng lab GEOKHI RAS trước khi cấp phép.",
     decidedAt: "22/08/2026 11:30",
     reviewSummary: "Điểm phản biện 8.50/10 (Chuyên gia #31). Đạt yêu cầu khoa học, cần hoàn thiện kỹ thuật.",
-    signatory: "Hội đồng Điều hành Quỹ KH&CN Song phương",
+    signatory: "Hội đồng Điều hành Quỹ KH & CN Song phương",
   },
   {
     id: "dc06",
@@ -79,7 +79,7 @@ export const DEMO_DECISIONS: DetailedDecision[] = [
     rationale: "Đề tài mang tầm chiến lược, tận dụng tối đa dữ liệu các đợt khảo sát hải dương học liên hợp trên tàu Viện sĩ Oparin.",
     decidedAt: "19/08/2026 16:10",
     reviewSummary: "Điểm phản biện 9.10/10 (Chuyên gia #21). Đạt mức xuất sắc cao nhất đợt xét duyệt 2025.",
-    signatory: "Hội đồng Điều hành Quỹ KH&CN Song phương",
+    signatory: "Hội đồng Điều hành Quỹ KH & CN Song phương",
   },
   {
     id: "dc07",

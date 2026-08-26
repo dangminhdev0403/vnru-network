@@ -38,7 +38,7 @@ const headerCopy: Record<
       "/admin/access/assignments": "Phân công vai trò",
       "/admin/audit": "Nhật ký kiểm toán",
     },
-    defaultTitle: "Mạng lưới KH&CN Việt – Nga",
+    defaultTitle: "Mạng lưới KH & CN Việt – Nga",
   },
   en: {
     workspaceCrumb: "Workspace",
@@ -56,7 +56,7 @@ const headerCopy: Record<
       "/admin/access/assignments": "Role Assignments",
       "/admin/audit": "Audit Logs",
     },
-    defaultTitle: "VN–RU S&T Network",
+    defaultTitle: "VN–RU S & T Network",
   },
   ru: {
     workspaceCrumb: "Рабочее пространство",

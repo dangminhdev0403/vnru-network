@@ -65,7 +65,7 @@ const MEDIA_COPY: Record<
       },
       {
         title: "Không gian đổi mới sáng tạo",
-        meta: "Hệ sinh thái KH&CN",
+        meta: "Hệ sinh thái KH & CN",
         tag: "Đổi mới",
         badgeColor: "bg-amber-600/90 text-white",
         image:
@@ -207,7 +207,7 @@ const MEDIA_COPY: Record<
       },
       {
         title: "Innovation Hub",
-        meta: "S&T Ecosystem",
+        meta: "S & T Ecosystem",
         tag: "Innovation",
         badgeColor: "bg-amber-600/90 text-white",
         image:

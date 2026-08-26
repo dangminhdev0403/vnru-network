@@ -9,7 +9,7 @@ import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 
 const copy = {
   vi: {
-    brand: "Mạng lưới Tri thức KH&CN Nga – Việt",
+    brand: "Mạng lưới Tri thức KH & CN Nga – Việt",
     brandLabel: "Mạng lưới Tri thức Khoa học và Công nghệ Nga - Việt",
     storyTitle: "Kết nối tri thức",
     storyAccent: "Kiến tạo tương lai",

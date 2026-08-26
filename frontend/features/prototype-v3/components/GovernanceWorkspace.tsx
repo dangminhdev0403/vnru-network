@@ -18,7 +18,7 @@ export function GovernanceWorkspace() {
       id: 'u-1',
       name: 'GS.TS. Trần Đình Nam',
       email: 'nguyen.vana@vast.vn',
-      org: 'Viện Hàn lâm KH&CN VN (VAST)',
+      org: 'Viện Hàn lâm KH & CN VN (VAST)',
       role: 'RESEARCHER',
       status: 'Active · Keycloak',
       lastActive: '2 giờ trước (Hà Nội)'
@@ -45,7 +45,7 @@ export function GovernanceWorkspace() {
       id: 'u-4',
       name: 'Ban Hợp tác Quốc tế VAST',
       email: 'htqt@vast.vn',
-      org: 'Viện Hàn lâm KH&CN VN',
+      org: 'Viện Hàn lâm KH & CN VN',
       role: 'ORGANIZATION_REP',
       status: 'Active',
       lastActive: '1 ngày trước'

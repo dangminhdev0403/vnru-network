@@ -357,7 +357,7 @@
   // 2+2 Consortium Interactive Slot Selector
   const partnersCatalog = {
     'vn-inst': [
-      { name: 'Viện Hàn lâm KH&CN Việt Nam (VAST)', dept: 'Viện Hải dương học Nha Trang', lead: 'GS.TS. Trần Đình Nam' },
+      { name: 'Viện Hàn lâm KH & CN Việt Nam (VAST)', dept: 'Viện Hải dương học Nha Trang', lead: 'GS.TS. Trần Đình Nam' },
       { name: 'Đại học Quốc gia Hà Nội (VNU)', dept: 'Khoa Vật liệu & Công nghệ Nano', lead: 'PGS.TS. Lê Hoài Thanh' },
       { name: 'Trung tâm Nhiệt đới Việt – Nga', dept: 'Phòng Y sinh Nhiệt đới', lead: 'TS. Vũ Hoàng Long' }
     ],
@@ -478,7 +478,7 @@
         openModal({
           title: 'Xác nhận tư cách đơn vị chủ trì (Institutional Endorsement)',
           content: `
-            <p>Xác nhận tổ chức <strong>Viện Hàn lâm KH&CN Việt Nam (VAST)</strong> bảo trợ cơ sở vật chất và chấp thuận cho chủ nhiệm đề tài tham gia đề xuất:</p>
+            <p>Xác nhận tổ chức <strong>Viện Hàn lâm KH & CN Việt Nam (VAST)</strong> bảo trợ cơ sở vật chất và chấp thuận cho chủ nhiệm đề tài tham gia đề xuất:</p>
             <blockquote style="border-left:3px solid var(--blue);padding-left:12px;margin:12px 0;font-style:italic;color:#334a64">
               "${esc(title)}"
             </blockquote>

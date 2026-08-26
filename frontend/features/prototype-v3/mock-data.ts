@@ -31,7 +31,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
     accentColor: '#287f7a',
     softBg: '#dff4f1',
     avatarText: 'VS',
-    avatarOrg: 'Viện Hàn lâm KH&CN Việt Nam',
+    avatarOrg: 'Viện Hàn lâm KH & CN Việt Nam',
     homePath: '/workspace/organization'
   },
   enterprise: {
@@ -53,7 +53,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
     accentColor: '#435d82',
     softBg: '#e4ebf4',
     avatarText: 'BC',
-    avatarOrg: 'Ủy ban Hợp tác KH&CN Liên Chính phủ',
+    avatarOrg: 'Ủy ban Hợp tác KH & CN Liên Chính phủ',
     homePath: '/workspace/leadership'
   },
   governance: {
@@ -120,7 +120,7 @@ export const INITIAL_2PLUS2_SLOTS: ConsortiumSlot[] = [
     type: 'vn-inst',
     typeLabel: '01 · Viện / Trường Việt Nam',
     country: 'VN',
-    orgName: 'Viện Hàn lâm KH&CN Việt Nam (VAST)',
+    orgName: 'Viện Hàn lâm KH & CN Việt Nam (VAST)',
     deptName: 'Viện Hải dương học Nha Trang',
     leadName: 'GS.TS. Trần Đình Nam',
     isFilled: true

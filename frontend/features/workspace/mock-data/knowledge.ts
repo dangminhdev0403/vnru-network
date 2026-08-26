@@ -305,7 +305,7 @@ export const DEMO_KNOWLEDGE_RESOURCES: KnowledgeResource[] = [
     authors: ["GS.TS Trần Đình Nam", "Prof. Alexei Morozov"],
     year: 2025,
     doi: "10.1007/978-981-99-8420-1",
-    topics: ["Chiến lược KH&CN", "Hợp tác song phương"],
+    topics: ["Chiến lược KH & CN", "Hợp tác song phương"],
     accessLevel: "OPEN",
   },
 ];

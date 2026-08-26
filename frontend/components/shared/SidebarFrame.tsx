@@ -46,7 +46,7 @@ const copy: Record<
   }
 > = {
   vi: {
-    brand: "Mạng lưới KH&CN Việt – Nga",
+    brand: "Mạng lưới KH & CN Việt – Nga",
     subtitle: "Khoa học · Công nghệ · Hợp tác",
     currentContext: "Ngữ cảnh hiện tại",
     authenticated: "Không gian đã xác thực",

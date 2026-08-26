@@ -8,7 +8,7 @@ import Header from "./Header";
 import WorkspaceSidebar from "@/features/workspace/components/WorkspaceSidebar";
 
 const shellCopy: Record<Locale, Record<string, string>> = {
-  vi: { brand: "Mạng lưới KH&CN Việt - Nga", subtitle: "Khoa học · Công nghệ · Hợp tác" },
+  vi: { brand: "Mạng lưới KH & CN Việt - Nga", subtitle: "Khoa học · Công nghệ · Hợp tác" },
   en: { brand: "VN-RU Science & Technology Network", subtitle: "Science · Technology · Cooperation" },
   ru: { brand: "Научно-технологическая сеть Россия — Вьетнам", subtitle: "Наука · Технологии · Сотрудничество" },
 };

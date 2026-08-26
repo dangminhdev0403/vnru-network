@@ -106,7 +106,7 @@ const COPY: Record<
       "Các cụm nghiên cứu liên ngành đang có tiến độ phối hợp cao giữa các nhóm nghiên cứu hai nước.",
     openScienceTitle: "Cam kết Khoa học Mở & Bảo mật Dữ liệu Song phương",
     openScienceDesc:
-      "Tất cả bộ dữ liệu và tài liệu công bố trong kho tri thức tuân thủ nguyên tắc dữ liệu FAIR (Findable, Accessible, Interoperable, Reusable) và thỏa thuận trao đổi học thuật độc lập giữa Viện Hàn lâm KH&CN Việt Nam (VAST) và Viện Hàn lâm Khoa học Nga (RAS).",
+      "Tất cả bộ dữ liệu và tài liệu công bố trong kho tri thức tuân thủ nguyên tắc dữ liệu FAIR (Findable, Accessible, Interoperable, Reusable) và thỏa thuận trao đổi học thuật độc lập giữa Viện Hàn lâm KH & CN Việt Nam (VAST) và Viện Hàn lâm Khoa học Nga (RAS).",
     joinTitle: "Bạn có công trình hoặc bộ dữ liệu muốn đóng góp vào Mạng lưới?",
     joinDesc:
       "Gia nhập mạng lưới với tư cách nhà khoa học hoặc đại diện tổ chức để chia sẻ ấn phẩm, đồng tác giả và tiếp cận các nguồn tư liệu học thuật độc quyền.",
@@ -586,8 +586,8 @@ export function GuestKnowledgeV2() {
 
       {/* Institutional 4-Column Footer */}
       <footer
-        id="news"
-        className="border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700"
+        id="contact"
+        className="scroll-mt-24 border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700"
       >
         <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
@@ -615,7 +615,7 @@ export function GuestKnowledgeV2() {
               <div className="mt-5 flex items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-white/90 px-3 py-1 text-xs font-bold text-blue-800 shadow-xs">
                   <span className="size-2 rounded-full bg-emerald-500" />
-                  Cổng dữ liệu mở KH&CN 2026
+                  Cổng dữ liệu mở KH & CN 2026
                 </span>
               </div>
             </div>
@@ -646,7 +646,7 @@ export function GuestKnowledgeV2() {
                     href="/knowledge"
                     className="transition hover:text-blue-700 hover:underline"
                   >
-                    Kho tri thức & Báo cáo KH&CN
+                    Kho tri thức & Báo cáo KH & CN
                   </Link>
                 </li>
                 <li>
@@ -704,15 +704,6 @@ export function GuestKnowledgeV2() {
                 Điều phối & Liên hệ
               </h4>
               <div className="mt-4 space-y-3 text-xs sm:text-sm text-slate-600">
-                <div>
-                  <strong className="block font-bold text-slate-900">
-                    Văn phòng Điều phối Hà Nội:
-                  </strong>
-                  <span>
-                    Viện Hàn lâm KH&CN Việt Nam (VAST), 18 Hoàng Quốc Việt, Cầu
-                    Giấy, Hà Nội
-                  </span>
-                </div>
                 <div>
                   <strong className="block font-bold text-slate-900">
                     Quỹ Truyền thống và Hữu nghị:
