@@ -718,20 +718,20 @@ export function GuestHomeV2({
             <div className="mr-auto w-full max-w-[760px] text-left">
               <div className="mb-5 inline-flex max-w-full items-center gap-2.5 rounded-full border-[2.5px] border-amber-400/90 bg-black/20 px-4 py-2 text-[15px] font-black text-amber-300 sm:mb-6 sm:px-5 sm:text-[17px]">
                 <span className="size-2.5 shrink-0 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.9)]" aria-hidden="true" />
-                <span>Cổng kết nối hợp tác song phương</span>
+                <span>{t.eyebrow}</span>
               </div>
 
               <h1
                 aria-label="Mạng lưới tri thức Nga - Việt"
-                className="overflow-visible font-sans font-black leading-[1.15] text-slate-200 drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]"
+                className="overflow-visible font-sans font-black leading-[1.15] text-slate-300 drop-shadow-[0_3px_12px_rgba(0,0,0,0.38)]"
               >
                 <span className="block text-3xl sm:text-5xl lg:text-[62px]">
                   Mạng lưới tri thức
                 </span>
-                <span className="mt-2 flex items-center justify-start gap-x-3 overflow-visible py-5 text-5xl leading-[1.2] sm:mt-3 sm:gap-x-6 sm:text-7xl lg:text-[88px]">
-                  <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text py-2 leading-[1.25] text-transparent">Nga</span>
+                <span className="flex w-fit items-center justify-start gap-x-3 overflow-visible pb-2 pt-0 text-5xl leading-[1.15] sm:gap-x-6 sm:text-[80px] lg:text-[104px]">
+                  <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">Nga</span>
                   <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-medium text-transparent">-</span>
-                  <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text py-2 leading-[1.25] text-transparent">Việt</span>
+                  <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">Việt</span>
                 </span>
               </h1>
 
