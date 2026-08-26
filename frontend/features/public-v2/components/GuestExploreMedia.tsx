@@ -79,6 +79,22 @@ const MEDIA_COPY: Record<
         image:
           "https://images.unsplash.com/photo-1484417894907-623942c8ee29?auto=format&fit=crop&w=1200&q=82",
       },
+      {
+        title: "Dự án nghiên cứu chung",
+        meta: "Từ ý tưởng đến triển khai",
+        tag: "Dự án",
+        badgeColor: "bg-cyan-600/90 text-white",
+        image:
+          "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=82",
+      },
+      {
+        title: "Kết nối doanh nghiệp công nghệ",
+        meta: "Nghiên cứu gắn với thị trường",
+        tag: "Doanh nghiệp",
+        badgeColor: "bg-red-600/90 text-white",
+        image:
+          "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=82",
+      },
     ],
     bannerTag: "Mạng lưới đang chuyển động",
     bannerTitle:
@@ -150,6 +166,22 @@ const MEDIA_COPY: Record<
         image:
           "https://images.unsplash.com/photo-1484417894907-623942c8ee29?auto=format&fit=crop&w=1200&q=82",
       },
+      {
+        title: "Совместные исследовательские проекты",
+        meta: "От идеи до реализации",
+        tag: "Проекты",
+        badgeColor: "bg-cyan-600/90 text-white",
+        image:
+          "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=82",
+      },
+      {
+        title: "Связи с технологическим бизнесом",
+        meta: "Исследования для рынка",
+        tag: "Бизнес",
+        badgeColor: "bg-red-600/90 text-white",
+        image:
+          "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=82",
+      },
     ],
     bannerTag: "Сеть в движении",
     bannerTitle:
@@ -220,6 +252,22 @@ const MEDIA_COPY: Record<
         badgeColor: "bg-rose-600/90 text-white",
         image:
           "https://images.unsplash.com/photo-1484417894907-623942c8ee29?auto=format&fit=crop&w=1200&q=82",
+      },
+      {
+        title: "Joint Research Projects",
+        meta: "From concept to delivery",
+        tag: "Projects",
+        badgeColor: "bg-cyan-600/90 text-white",
+        image:
+          "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=82",
+      },
+      {
+        title: "Technology Business Connections",
+        meta: "Research aligned with markets",
+        tag: "Enterprise",
+        badgeColor: "bg-red-600/90 text-white",
+        image:
+          "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=82",
       },
     ],
     bannerTag: "Network in Motion",
