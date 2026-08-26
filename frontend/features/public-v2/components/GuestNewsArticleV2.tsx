@@ -64,9 +64,9 @@ const articles: ArticleRecord[] = [
 ];
 
 const ui = {
-  vi: { home: "Trang chủ", about: "Giới thiệu", explore: "Khám phá", login: "Đăng nhập", news: "Tin tức", related: "Tin liên quan", popular: "Tin đọc nhiều", share: "Chia sẻ", tags: "Từ khóa" },
-  en: { home: "Home", about: "About", explore: "Explore", login: "Sign in", news: "News", related: "Related news", popular: "Most read", share: "Share", tags: "Tags" },
-  ru: { home: "Главная", about: "О сети", explore: "Обзор", login: "Войти", news: "Новости", related: "Похожие материалы", popular: "Популярное", share: "Поделиться", tags: "Теги" },
+  vi: { home: "Trang chủ", about: "Giới thiệu", login: "Đăng nhập", news: "Tin tức", related: "Tin liên quan", popular: "Tin đọc nhiều", share: "Chia sẻ", tags: "Từ khóa" },
+  en: { home: "Home", about: "About", login: "Sign in", news: "News", related: "Related news", popular: "Most read", share: "Share", tags: "Tags" },
+  ru: { home: "Главная", about: "О сети", login: "Войти", news: "Новости", related: "Похожие материалы", popular: "Популярное", share: "Поделиться", tags: "Теги" },
 } as const;
 
 function ArticleVisual({ category }: { category: Category }) {
@@ -141,7 +141,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
           <nav className="hidden items-center gap-8 xl:flex">
             <Link href="/" className="text-sm font-extrabold uppercase text-slate-700 hover:text-blue-700">{t.home}</Link>
             <Link href="/#about" className="text-sm font-extrabold uppercase text-slate-700 hover:text-blue-700">{t.about}</Link>
-            <Link href="/explore" className="relative py-6 text-sm font-extrabold uppercase text-blue-700">{t.explore}<span className="absolute inset-x-0 bottom-4 h-0.5 rounded-full bg-blue-600" /></Link>
+            <Link href="/news" className="relative py-6 text-sm font-extrabold uppercase text-blue-700">{t.news}<span className="absolute inset-x-0 bottom-4 h-0.5 rounded-full bg-blue-600" /></Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -167,7 +167,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
         <nav className="mb-7 flex flex-wrap items-center gap-2 rounded-2xl border border-blue-100 bg-slate-50 p-3">
           <Link href="/news" className="rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white">Tất cả</Link>
           {(["science", "international", "innovation", "education", "society"] as Category[]).map((category) => (
-            <Link key={category} href={`/news?category=${category}`} className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 hover:border-blue-200 hover:text-blue-700">{categoryLabels[category]}</Link>
+            <Link key={category} href="/news" className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 hover:border-blue-200 hover:text-blue-700">{categoryLabels[category]}</Link>
           ))}
         </nav>
 
@@ -265,7 +265,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
       <footer className="mt-12 border-t border-blue-100 bg-slate-50">
         <div className="mx-auto grid max-w-[1460px] gap-8 px-4 py-9 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
           <div><div className="flex items-center gap-3"><BrandMark className="size-10" /><strong className="text-sm font-black">Mạng lưới tri thức Nga - Việt</strong></div><p className="mt-4 max-w-sm text-sm leading-6 text-slate-600">Kết nối tri thức - Hợp tác bền vững - Kiến tạo tương lai.</p></div>
-          <div><h3 className="text-xs font-black uppercase text-blue-600">Liên kết nhanh</h3><div className="mt-4 grid gap-2 text-sm text-slate-600"><Link href="/">Trang chủ</Link><Link href="/#about">Giới thiệu</Link><Link href="/news">Tin tức</Link><Link href="/explore">Khám phá</Link></div></div>
+          <div><h3 className="text-xs font-black uppercase text-blue-600">Liên kết nhanh</h3><div className="mt-4 grid gap-2 text-sm text-slate-600"><Link href="/">Trang chủ</Link><Link href="/#about">Giới thiệu</Link><Link href="/news">Tin tức</Link></div></div>
           <div><h3 className="text-xs font-black uppercase text-blue-600">Chuyên mục</h3><div className="mt-4 grid gap-2 text-sm text-slate-600"><span>Khoa học - Công nghệ</span><span>Hợp tác quốc tế</span><span>Đổi mới sáng tạo</span><span>Giáo dục - Nhân lực</span></div></div>
           <div><h3 className="text-xs font-black uppercase text-blue-600">Liên hệ</h3><div className="mt-4 grid gap-2 text-sm text-slate-600"><span>Hà Nội, Việt Nam</span><a href="mailto:info@rvstin.com">info@rvstin.com</a><span>+84 24 3791 1234</span></div></div>
         </div>

@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, type Locale } from "@/core/i18n/locale";
-import { BrandMark } from "@/components/shared/BrandMark";
 import { GuestExploreMedia } from "./GuestExploreMedia";
+import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
 
 const HERO_BANNERS = [
@@ -29,7 +29,7 @@ const HERO_BANNERS = [
   },
 ];
 
-const HOME_COPY: Record<
+export const HOME_COPY: Record<
   Locale,
   {
     eyebrow: string;
@@ -273,13 +273,13 @@ const HOME_COPY: Record<
       brandTitle: "Mạng lưới tri thức Nga - Việt",
       subtitle: "",
       desc: "Cổng thông tin & điều phối hợp tác khoa học công nghệ độc lập giữa các viện nghiên cứu, trường đại học trọng điểm của Việt Nam và Liên bang Nga.",
-      openDataBadge: "Cổng dữ liệu mở KH&CN 2026",
+      openDataBadge: "Cổng dữ liệu mở KH & CN 2026",
       navTitle: "Khám phá hệ sinh thái",
       pillarsTitle: "Hướng trọng điểm",
       contactTitle: "Điều phối & Liên hệ",
       hanoiOffice: "Văn phòng Điều phối Hà Nội:",
       hanoiAddress:
-        "Viện Hàn lâm KH&CN Việt Nam (VAST), 18 Hoàng Quốc Việt, Cầu Giấy, Hà Nội",
+        "Viện Hàn lâm KH & CN Việt Nam (VAST), 18 Hoàng Quốc Việt, Cầu Giấy, Hà Nội",
       moscowOffice: "Quỹ Truyền thống và Hữu nghị:",
       moscowAddress:
         "125047, Moskva, Đường Tverskaya-Yamskaya số 1, Tòa nhà 30, Văn phòng 01B, Liên bang Nga",
@@ -639,7 +639,7 @@ const HOME_COPY: Record<
       brandTitle: "Russia - Vietnam Knowledge Network",
       subtitle: "",
       desc: "Independent portal for coordinating science and technology cooperation between leading institutes and universities of Vietnam and the Russian Federation.",
-      openDataBadge: "Open S&T Data Portal 2026",
+      openDataBadge: "Open S & T Data Portal 2026",
       navTitle: "Explore Ecosystem",
       pillarsTitle: "Strategic Focus",
       contactTitle: "Coordination & Contacts",
@@ -811,7 +811,7 @@ export function GuestHomeV2({
 
             <div
               id="events"
-              className="mt-12 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
+              className="scroll-mt-24 mt-12 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
             >
               <div>
                 <p className="text-xs sm:text-[13px] font-black uppercase tracking-[0.14em] text-blue-700">
@@ -895,153 +895,7 @@ export function GuestHomeV2({
         </section>
       </main>
 
-      <footer
-        id="news"
-        className="border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700"
-      >
-        <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
-            <div className="lg:col-span-4">
-              <Link
-                href="/"
-                className="inline-flex items-center gap-3.5"
-                aria-label={t.footer.brandTitle}
-              >
-                <BrandMark className="size-11 shadow-xs" />
-                <span>
-                  <strong className="block text-base sm:text-lg font-black tracking-tight text-[#1A1C1CD9]">
-                    {t.footer.brandTitle}
-                  </strong>
-                  {t.footer.subtitle ? (
-                    <small className="block text-xs font-extrabold tracking-wider text-slate-600 uppercase">
-                      {t.footer.subtitle}
-                    </small>
-                  ) : null}
-                </span>
-              </Link>
-              <p className="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-slate-600">
-                {t.footer.desc}
-              </p>
-              <div className="mt-5 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-white/90 px-3 py-1 text-xs font-bold text-blue-800 shadow-xs">
-                  <span className="size-2 rounded-full bg-emerald-500" />
-                  {t.footer.openDataBadge}
-                </span>
-              </div>
-            </div>
-
-            <div className="lg:col-span-3">
-              <h4 className="text-sm font-black uppercase tracking-wider text-[#1A1C1CD9]">
-                {t.footer.navTitle}
-              </h4>
-              <ul className="mt-4 space-y-2.5 text-xs sm:text-sm font-semibold text-slate-600">
-                <li>
-                  <Link
-                    href="/opportunities"
-                    className="transition hover:text-blue-700 hover:underline"
-                  >
-                    {t.ecosystem.cards[0].title}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/experts"
-                    className="transition hover:text-blue-700 hover:underline"
-                  >
-                    {t.ecosystem.cards[1].title}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/knowledge"
-                    className="transition hover:text-blue-700 hover:underline"
-                  >
-                    {t.ecosystem.cards[3].title}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/#about"
-                    className="transition hover:text-blue-700 hover:underline"
-                  >
-                    {t.ecosystem.title}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/#events"
-                    className="transition hover:text-blue-700 hover:underline"
-                  >
-                    {t.events.title}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="lg:col-span-2">
-              <h4 className="text-sm font-black uppercase tracking-wider text-[#1A1C1CD9]">
-                {t.footer.pillarsTitle}
-              </h4>
-              <ul className="mt-4 space-y-2.5 text-xs sm:text-sm font-semibold text-slate-600">
-                {t.footer.pillars.map((pillar) => (
-                  <li key={pillar}>
-                    <span className="text-slate-700">{pillar}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="lg:col-span-3">
-              <h4 className="text-sm font-black uppercase tracking-wider text-[#1A1C1CD9]">
-                {t.footer.contactTitle}
-              </h4>
-              <div className="mt-4 space-y-3 text-xs sm:text-sm text-slate-600">
-                <div>
-                  <strong className="block font-bold text-slate-900">
-                    {t.footer.hanoiOffice}
-                  </strong>
-                  <span>{t.footer.hanoiAddress}</span>
-                </div>
-                <div>
-                  <strong className="block font-bold text-slate-900">
-                    {t.footer.moscowOffice}
-                  </strong>
-                  <span>{t.footer.moscowAddress}</span>
-                </div>
-                <div className="pt-1">
-                  <span className="block font-medium">
-                    {t.footer.supportLabel}
-                  </span>
-                  <a
-                    href="mailto:info@fonddruzhba.ru"
-                    className="font-bold text-blue-700 transition hover:underline"
-                  >
-                    info@fonddruzhba.ru
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-blue-200/80 pt-8 text-xs sm:text-sm font-medium text-slate-600 md:flex-row">
-            <p>{t.footer.copyright}</p>
-            <div className="flex flex-wrap gap-5 font-semibold text-slate-600">
-              <Link href="/#about" className="hover:text-blue-700">
-                {t.footer.terms}
-              </Link>
-              <Link href="/#about" className="hover:text-blue-700">
-                {t.footer.privacy}
-              </Link>
-              <Link href="/#about" className="hover:text-blue-700">
-                {t.footer.ethics}
-              </Link>
-              <Link href="/#about" className="hover:text-blue-700">
-                {t.footer.openData}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <GuestPublicFooter copy={t} />
     </div>
   );
 }

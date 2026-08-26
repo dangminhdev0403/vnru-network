@@ -106,7 +106,7 @@ export function NotFoundClient() {
                 <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="m3 11 9-8 9 8M5 10v10h14V10M9 20v-6h6v6" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 {t.home}
               </Link>
-              <Link href="/explore" className="inline-flex min-h-14 items-center justify-center gap-3 rounded-md border border-blue-300 bg-white px-7 text-base font-bold text-blue-900 transition-colors hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600 motion-reduce:transition-none">
+              <Link href="/news" className="inline-flex min-h-14 items-center justify-center gap-3 rounded-md border border-blue-300 bg-white px-7 text-base font-bold text-blue-900 transition-colors hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600 motion-reduce:transition-none">
                 {t.explore}
                 <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="m9 5 7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </Link>

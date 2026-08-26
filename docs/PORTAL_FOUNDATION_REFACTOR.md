@@ -7,7 +7,7 @@ Only Module 1 has an implemented backend runtime. Public discovery and role page
 | Concern | Canonical route |
 | --- | --- |
 | Landing page | `/` |
-| Public discovery hub | `/explore` |
+| Public news stream | `/news` (`/explore` redirects here) |
 | Public discovery previews | `/knowledge`, `/experts`, `/opportunities` |
 | Login | `/login` |
 | Registration request preview | `/register` |

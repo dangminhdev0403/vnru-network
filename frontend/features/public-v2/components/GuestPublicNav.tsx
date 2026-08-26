@@ -10,12 +10,11 @@ import { BrandMark } from "@/components/shared/BrandMark";
 type GuestNavActive =
   | "home"
   | "about"
-  | "explore"
+  | "news"
   | "opportunities"
   | "experts"
   | "knowledge"
-  | "events"
-  | "news";
+  | "contact";
 
 type GuestPublicNavProps = {
   active?: GuestNavActive;
@@ -27,68 +26,48 @@ const COPY: Record<
   Locale,
   {
     brandTitle: string;
+    brandName: string;
+    brandPair: string;
     home: string;
     about: string;
-    explore: string;
-    events: string;
     news: string;
+    contact: string;
     login: string;
     workspace: string;
-    discoveryNav: string;
-    discoveryOverview: string;
-    opportunities: string;
-    experts: string;
-    knowledge: string;
-    currentArea: string;
   }
 > = {
   vi: {
     brandTitle: "Mạng lưới tri thức Nga - Việt",
+    brandName: "Mạng lưới Tri thức KH & CN",
+    brandPair: "NGA - VIỆT",
     home: "Trang chủ",
     about: "Giới thiệu",
-    explore: "Khám phá",
-    events: "Sự kiện",
     news: "Tin tức",
+    contact: "Liên hệ",
     login: "Đăng nhập",
     workspace: "Không gian làm việc",
-    discoveryNav: "Các khu vực khám phá",
-    discoveryOverview: "Tổng quan",
-    opportunities: "Hợp tác",
-    experts: "Chuyên gia",
-    knowledge: "Tri thức",
-    currentArea: "Đang xem",
   },
   en: {
     brandTitle: "Russia - Vietnam Knowledge Network",
+    brandName: "Science & Technology Knowledge Network",
+    brandPair: "RUSSIA - VIETNAM",
     home: "Home",
     about: "About",
-    explore: "Explore",
-    events: "Events",
     news: "News",
+    contact: "Contact",
     login: "Sign in",
     workspace: "Workspace",
-    discoveryNav: "Discovery areas",
-    discoveryOverview: "Overview",
-    opportunities: "Collaboration",
-    experts: "Experts",
-    knowledge: "Knowledge",
-    currentArea: "Current",
   },
   ru: {
     brandTitle: "Российско-вьетнамская сеть знаний",
+    brandName: "Научно-технологическая сеть знаний",
+    brandPair: "РОССИЯ - ВЬЕТНАМ",
     home: "Главная",
     about: "О сети",
-    explore: "Обзор",
-    events: "События",
     news: "Новости",
+    contact: "Контакты",
     login: "Войти",
     workspace: "Рабочее пространство",
-    discoveryNav: "Разделы обзора",
-    discoveryOverview: "Обзор",
-    opportunities: "Сотрудничество",
-    experts: "Эксперты",
-    knowledge: "Знания",
-    currentArea: "Открыто",
   },
 };
 
@@ -114,51 +93,22 @@ export function GuestPublicNav({
 
   const resolveActive = (): string => {
     if (clickedKey) return clickedKey;
-    if (
-      pathname === "/explore" ||
-      pathname.startsWith("/experts") ||
-      pathname.startsWith("/opportunities") ||
-      pathname.startsWith("/knowledge")
-    )
-      return "explore";
+    if (pathname.startsWith("/news")) return "news";
     if (pathname === "/") {
       if (currentHash === "#about") return "about";
-      if (currentHash === "#events") return "events";
-      if (currentHash === "#news") return "news";
+      if (currentHash === "#contact") return "contact";
       return "home";
     }
     return active || "home";
   };
 
   const activeKey = resolveActive();
-  const isDiscoveryRoute =
-    pathname === "/explore" ||
-    pathname.startsWith("/experts") ||
-    pathname.startsWith("/opportunities") ||
-    pathname.startsWith("/knowledge");
-
   const items = [
     { key: "home", label: t.home, href: "/" },
     { key: "about", label: t.about, href: "/#about" },
-    { key: "explore", label: t.explore, href: "/explore" },
-    { key: "events", label: t.events, href: "/#events" },
-    { key: "news", label: t.news, href: "/#news" },
+    { key: "news", label: t.news, href: "/news" },
+    { key: "contact", label: t.contact, href: "/#contact" },
   ];
-
-  const discoveryItems = [
-    { key: "explore", label: t.discoveryOverview, href: "/explore", index: "00" },
-    { key: "opportunities", label: t.opportunities, href: "/opportunities", index: "01" },
-    { key: "experts", label: t.experts, href: "/experts", index: "02" },
-    { key: "knowledge", label: t.knowledge, href: "/knowledge", index: "03" },
-  ];
-
-  const discoveryActiveKey = pathname.startsWith("/opportunities")
-    ? "opportunities"
-    : pathname.startsWith("/experts")
-      ? "experts"
-      : pathname.startsWith("/knowledge")
-        ? "knowledge"
-        : "explore";
 
   return (
     <header className="sticky top-0 z-50 border-b border-blue-200/80 bg-[#edf5fe]/95 shadow-[0_4px_20px_-12px_rgba(37,99,235,.2)] backdrop-blur-xl">
@@ -171,9 +121,12 @@ export function GuestPublicNav({
         >
           <BrandMark className="size-11 shadow-xs" />
           <span className="hidden min-w-0 sm:block">
-            <strong className="block truncate text-[15px] sm:text-[16px] font-extrabold tracking-tight text-slate-950">
-              {t.brandTitle}
+            <strong className="block truncate text-[15px] font-extrabold text-slate-950 sm:text-[16px]">
+              {t.brandName}
             </strong>
+            <span className="mt-0.5 block truncate text-sm font-extrabold text-blue-700">
+              {t.brandPair}
+            </span>
           </span>
         </Link>
 
@@ -229,40 +182,6 @@ export function GuestPublicNav({
           })}
         </div>
       </nav>
-
-      {isDiscoveryRoute && (
-        <nav
-          className="border-t border-blue-200/80 bg-white/95"
-          aria-label={t.discoveryNav}
-        >
-          <div className="mx-auto flex max-w-[1460px] gap-2 overflow-x-auto px-4 py-2.5 sm:px-6 lg:px-8">
-            {discoveryItems.map((item) => {
-              const selected = item.key === discoveryActiveKey;
-              return (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  aria-current={selected ? "page" : undefined}
-                  className={`group inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg border px-3.5 text-base font-bold leading-[1.2] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${selected ? "border-blue-600 bg-blue-600 text-white shadow-sm" : "border-blue-200 bg-blue-50/60 text-slate-700 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700"}`}
-                >
-                  <span
-                    className={`text-sm font-black tabular-nums ${selected ? "text-blue-100" : "text-blue-600"}`}
-                    aria-hidden="true"
-                  >
-                    {item.index}
-                  </span>
-                  <span>{item.label}</span>
-                  {selected && (
-                    <span className="rounded bg-white/16 px-2 py-1 text-sm font-bold">
-                      {t.currentArea}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-        </nav>
-      )}
     </header>
   );
 }
