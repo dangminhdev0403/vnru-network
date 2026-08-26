@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, type Locale } from "@/core/i18n/locale";
@@ -24,10 +24,10 @@ const HERO_BANNERS = [
   {
     id: "banner-3",
     src: "/brand/vnru-hero-slide-3.jpg",
-    alt: "Quốc kỳ và công trình biểu tượng song phương Nga – Việt",
+    alt: "Quốc kỳ và công trình biểu tượng song phương Nga - Việt",
     objectPosition: "object-center",
   },
-];
+] as const;
 
 export const HOME_COPY: Record<
   Locale,
@@ -284,8 +284,7 @@ export const HOME_COPY: Record<
       moscowAddress:
         "125047, Moskva, Đường Tverskaya-Yamskaya số 1, Tòa nhà 30, Văn phòng 01B, Liên bang Nga",
       supportLabel: "Hỗ trợ kỹ thuật & kết nối đề tài:",
-      copyright:
-        "© 2026 Mạng lưới tri thức Nga - Việt. Bảo lưu mọi quyền.",
+      copyright: "© 2026 Mạng lưới tri thức Nga - Việt. Bảo lưu mọi quyền.",
       terms: "Điều khoản hợp tác",
       privacy: "Chính sách bảo mật",
       ethics: "Chuẩn mực đạo đức nghiên cứu",
@@ -461,8 +460,7 @@ export const HOME_COPY: Record<
       moscowAddress:
         "125047, Москва, 1-я Тверская-Ямская улица, д.30, к. 01Б, Российская Федерация",
       supportLabel: "Техническая поддержка и сотрудничество:",
-      copyright:
-        "© 2026 Mạng lưới tri thức Nga - Việt. Все права защищены.",
+      copyright: "© 2026 Mạng lưới tri thức Nga - Việt. Все права защищены.",
       terms: "Условия сотрудничества",
       privacy: "Политика конфиденциальности",
       ethics: "Научная этика",
@@ -650,8 +648,7 @@ export const HOME_COPY: Record<
       moscowAddress:
         "125047, Moscow, 1st Tverskaya-Yamskaya St., Bldg 30, Office 01B, Russian Federation",
       supportLabel: "Technical Support & Inquiries:",
-      copyright:
-        "© 2026 Mạng lưới tri thức Nga - Việt. All rights reserved.",
+      copyright: "© 2026 Mạng lưới tri thức Nga - Việt. All rights reserved.",
       terms: "Terms of Collaboration",
       privacy: "Privacy Policy",
       ethics: "Research Ethics",
@@ -676,10 +673,11 @@ export function GuestHomeV2({
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % HERO_BANNERS.length);
-    }, 3200);
-    return () => clearInterval(timer);
+    const timer = window.setInterval(() => {
+      setCurrentSlide((previous) => (previous + 1) % HERO_BANNERS.length);
+    }, 4200);
+
+    return () => window.clearInterval(timer);
   }, []);
 
   return (
@@ -691,56 +689,52 @@ export function GuestHomeV2({
       />
 
       <main>
-        <section className="relative isolate min-h-[580px] overflow-hidden border-b border-slate-700/40 bg-[#0c1424]">
-          {HERO_BANNERS.map((banner, idx) => (
+        <section className="relative isolate min-h-[560px] overflow-hidden border-b border-blue-100 bg-white sm:min-h-[620px]">
+          {HERO_BANNERS.map((banner, index) => (
             <div
               key={banner.id}
               className={`absolute inset-0 -z-20 transition-opacity duration-700 ease-in-out ${
-                idx === currentSlide
-                  ? "opacity-100 scale-100"
-                  : "opacity-0 pointer-events-none"
+                index === currentSlide
+                  ? "opacity-100"
+                  : "pointer-events-none opacity-0"
               }`}
             >
               <Image
                 src={banner.src}
                 alt={banner.alt}
                 fill
-                priority={idx === 0}
+                priority={index === 0}
                 sizes="100vw"
-                className={`pointer-events-none object-cover ${banner.objectPosition} brightness-[0.98] saturate-[1.02]`}
+                className={`pointer-events-none object-cover brightness-[0.82] saturate-[0.88] ${banner.objectPosition}`}
               />
             </div>
           ))}
-
           <div
-            className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(15,23,42,0.68)_0%,rgba(15,23,42,0.48)_42%,rgba(15,23,42,0.18)_70%,transparent_92%)]"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(3,10,24,0.72)_0%,rgba(3,10,24,0.60)_55%,rgba(3,10,24,0.46)_100%)]"
             aria-hidden="true"
           />
 
-          <div className="mx-auto flex min-h-[480px] sm:min-h-[540px] lg:min-h-[580px] xl:min-h-[620px] max-w-[1460px] items-center px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
-            <div className="w-full max-w-[960px] xl:max-w-[1100px]">
-              <div className="inline-flex items-center gap-2.5 rounded-full border-2 border-amber-500/80 bg-black/35 px-4 py-2 shadow-[0_4px_14px_-2px_rgba(0,0,0,0.35)] backdrop-blur-md">
-                <span
-                  className="relative flex size-2.5 shrink-0"
-                  aria-hidden="true"
-                >
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
-                  <span className="relative inline-flex size-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.9)]" />
-                </span>
-                <span className="text-sm sm:text-base font-bold tracking-wide text-amber-300">
-                  {t.eyebrow}
-                </span>
+          <div className="mx-auto flex min-h-[560px] max-w-[1460px] items-center px-4 py-12 sm:min-h-[620px] sm:px-6 sm:py-16 lg:px-8">
+            <div className="mr-auto w-full max-w-[760px] text-left">
+              <div className="mb-5 inline-flex max-w-full items-center gap-2.5 rounded-full border border-amber-400/90 px-4 py-2 text-sm font-bold text-amber-300 sm:mb-6 sm:px-5 sm:text-base">
+                <span className="size-2.5 shrink-0 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.9)]" aria-hidden="true" />
+                <span>Cổng kết nối hợp tác song phương</span>
               </div>
 
-              <h1 className="mt-6 overflow-visible py-1 font-sans text-4xl sm:text-5xl md:text-[54px] lg:text-[62px] xl:text-[66px] font-black leading-[1.12] tracking-tight text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.7)]">
-                <span className="block">{t.title1}</span>
-                <span className="mt-1 block text-[#38bdf8] drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]">
-                  {t.title2}
+              <h1
+                aria-label="Mạng lưới tri thức Nga - Việt"
+                className="overflow-visible font-sans font-black leading-[1.15] text-slate-200 drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]"
+              >
+                <span className="block text-3xl sm:text-5xl lg:text-[62px]">
+                  Mạng lưới tri thức
                 </span>
-                {t.title3 ? (
-                  <span className="mt-1 block text-white">{t.title3}</span>
-                ) : null}
+                <span className="mt-2 flex items-center justify-start gap-x-3 overflow-visible py-5 text-5xl leading-[1.2] sm:mt-3 sm:gap-x-6 sm:text-7xl lg:text-[88px]">
+                  <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text py-2 leading-[1.25] text-transparent">Nga</span>
+                  <span className="font-medium text-slate-300">-</span>
+                  <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text py-2 leading-[1.25] text-transparent">Việt</span>
+                </span>
               </h1>
+
             </div>
           </div>
         </section>
