@@ -113,7 +113,7 @@ const COPY: Record<
     joinBtn: "Gia nhập mạng lưới tri thức →",
   },
   en: {
-    brandTitle: "Russia - Vietnam Knowledge Network",
+    brandTitle: "Mạng lưới tri thức Nga - Việt",
     kicker: "Bilateral Knowledge Repository · VAST & RAS",
     title1: "Scientific Knowledge Base",
     title2: "& Bilateral Research Data",
@@ -150,11 +150,11 @@ const COPY: Record<
     joinBtn: "Join the Knowledge Network →",
   },
   ru: {
-    brandTitle: "Российско-вьетнамская сеть знаний",
+    brandTitle: "Mạng lưới tri thức Nga - Việt",
     kicker: "База знаний · Фонд «Традиции и дружба»",
     title1: "База научных знаний",
     title2: "и данные совместных исследований",
-    title3: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
+    title3: "Mạng lưới tri thức Nga - Việt",
     intro:
       "Поиск по тематическим обзорам, научным публикациям, массивам данных наблюдений и техническим отчетам ведущих институтов и университетов Вьетнама и РФ.",
     searchPlaceholder: "Поиск по названию, ключевым словам, авторам, DOI...",
@@ -730,7 +730,7 @@ export function GuestKnowledgeV2() {
 
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-blue-200/80 pt-8 text-xs sm:text-sm font-medium text-slate-600 md:flex-row">
             <p>
-              © 2026 Mạng lưới Tri thức Khoa học – Công nghệ Nga – Việt. Bảo lưu
+              © 2026 Mạng lưới tri thức Nga - Việt. Bảo lưu
               mọi quyền.
             </p>
             <div className="flex flex-wrap gap-5 font-semibold text-slate-600">

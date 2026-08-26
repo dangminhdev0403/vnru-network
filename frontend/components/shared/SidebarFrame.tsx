@@ -35,7 +35,6 @@ const copy: Record<
   Locale,
   {
     brand: string;
-    subtitle: string;
     currentContext: string;
     authenticated: string;
     active: string;
@@ -46,8 +45,7 @@ const copy: Record<
   }
 > = {
   vi: {
-    brand: "Mạng lưới KH & CN Việt – Nga",
-    subtitle: "Khoa học · Công nghệ · Hợp tác",
+    brand: "Mạng lưới tri thức Nga - Việt",
     currentContext: "Ngữ cảnh hiện tại",
     authenticated: "Không gian đã xác thực",
     active: "Phiên hoạt động",
@@ -57,8 +55,7 @@ const copy: Record<
     navigation: "Điều hướng",
   },
   en: {
-    brand: "VN–RU Science & Technology Network",
-    subtitle: "Science · Technology · Cooperation",
+    brand: "Mạng lưới tri thức Nga - Việt",
     currentContext: "Active context",
     authenticated: "Authenticated workspace",
     active: "Session active",
@@ -68,8 +65,7 @@ const copy: Record<
     navigation: "Navigation",
   },
   ru: {
-    brand: "Сеть НТИ РФ — СРВ",
-    subtitle: "Наука · Технологии · Сотрудничество",
+    brand: "Mạng lưới tri thức Nga - Việt",
     currentContext: "Текущий контекст",
     authenticated: "Защищённое пространство",
     active: "Сессия активна",
@@ -86,7 +82,6 @@ export default function SidebarFrame({
   toggleSidebar,
   isMobile = false,
   onItemClick,
-  badgeText,
   contextLabel,
   userName,
   userMeta,
@@ -164,9 +159,6 @@ export default function SidebarFrame({
               <strong className="block truncate text-sm font-semibold text-[#0d1d35] dark:text-white">
                 {t.brand}
               </strong>
-              <small className="mt-1 block truncate text-xs font-semibold uppercase tracking-[.08em] text-[#718198] dark:text-[#8fa2b8]">
-                {badgeText || t.subtitle}
-              </small>
             </span>
           )}
         </Link>

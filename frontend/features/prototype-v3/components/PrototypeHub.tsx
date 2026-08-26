@@ -11,7 +11,7 @@ export function PrototypeHub() {
         <div className="relative z-10 max-w-4xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-blue-500/20 text-blue-300 border border-blue-400/30">
             <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-            <span>Mạng lưới Hợp tác KH&amp;CN Việt Nam – Liên bang Nga (VN–RU Network)</span>
+            <span>Mạng lưới tri thức Nga - Việt</span>
           </div>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
             Ba vùng truy cập độc lập.<br className="hidden sm:inline" />Không trộn lẫn vai trò và thẩm quyền.

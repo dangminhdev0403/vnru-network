@@ -65,7 +65,7 @@ const COPY: Record<
     ctaBtn: "Gia nhập mạng lưới chuyên gia →",
   },
   en: {
-    brandTitle: "Russia - Vietnam Knowledge Network",
+    brandTitle: "Mạng lưới tri thức Nga - Việt",
     kicker: "Verified Expert Network · VAST & RAS",
     title1: "Discover Scientific Experts",
     title2: "Russia – Vietnam",
@@ -94,10 +94,10 @@ const COPY: Record<
     ctaBtn: "Join the Expert Directory →",
   },
   ru: {
-    brandTitle: "Российско-вьетнамская сеть знаний",
+    brandTitle: "Mạng lưới tri thức Nga - Việt",
     kicker: "Сеть верифицированных экспертов · Фонд «Традиции и дружба»",
     title1: "Научные эксперты",
-    title2: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
+    title2: "Mạng lưới tri thức Nga - Việt",
     intro:
       "Прямая связь с ведущими профессорами, исследователями и специалистами академических институтов и университетов России и Вьетнама.",
     searchPlaceholder:
@@ -688,7 +688,7 @@ export function GuestExpertsV2() {
 
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-blue-200/80 pt-8 text-xs sm:text-sm font-medium text-slate-600 md:flex-row">
             <p>
-              © 2026 Mạng lưới Tri thức Khoa học – Công nghệ Nga – Việt. Bảo lưu
+              © 2026 Mạng lưới tri thức Nga - Việt. Bảo lưu
               mọi quyền.
             </p>
             <div className="flex flex-wrap gap-5 font-semibold text-slate-600">

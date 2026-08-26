@@ -12,7 +12,7 @@ const HERO_BANNERS = [
   {
     id: "banner-1",
     src: "/brand/vnru-network-banner-2026.png",
-    alt: "Mạng lưới Tri thức Khoa học – Công nghệ Nga – Việt",
+    alt: "Mạng lưới tri thức Nga - Việt",
     objectPosition: "object-[68%_center]",
   },
   {
@@ -116,9 +116,9 @@ export const HOME_COPY: Record<
 > = {
   vi: {
     eyebrow: "Cổng kết nối hợp tác song phương",
-    title1: "Mạng lưới Tri thức",
-    title2: "Khoa học – Công nghệ",
-    title3: "Nga – Việt",
+    title1: "Mạng lưới Tri thức Nga – Việt",
+    title2: "",
+    title3: "",
     focusCards: [
       {
         tag: "Trọng điểm",
@@ -285,7 +285,7 @@ export const HOME_COPY: Record<
         "125047, Moskva, Đường Tverskaya-Yamskaya số 1, Tòa nhà 30, Văn phòng 01B, Liên bang Nga",
       supportLabel: "Hỗ trợ kỹ thuật & kết nối đề tài:",
       copyright:
-        "© 2026 Mạng lưới Tri thức Khoa học – Công nghệ Nga – Việt. Bảo lưu mọi quyền.",
+        "© 2026 Mạng lưới tri thức Nga - Việt. Bảo lưu mọi quyền.",
       terms: "Điều khoản hợp tác",
       privacy: "Chính sách bảo mật",
       ethics: "Chuẩn mực đạo đức nghiên cứu",
@@ -447,7 +447,7 @@ export const HOME_COPY: Record<
       { val: "50+", lbl: "Организаций", col: "from-amber-600 to-orange-600" },
     ],
     footer: {
-      brandTitle: "Российско-вьетнамская сеть знаний",
+      brandTitle: "Mạng lưới tri thức Nga - Việt",
       subtitle: "",
       desc: "Независимый портал координации научно-технологического сотрудничества между ведущими институтами и университетами Вьетнама и Российской Федерации.",
       openDataBadge: "Портал открытых данных НТИ 2026",
@@ -462,7 +462,7 @@ export const HOME_COPY: Record<
         "125047, Москва, 1-я Тверская-Ямская улица, д.30, к. 01Б, Российская Федерация",
       supportLabel: "Техническая поддержка и сотрудничество:",
       copyright:
-        "© 2026 Российско-вьетнамская интеллектуальная сеть. Все права защищены.",
+        "© 2026 Mạng lưới tri thức Nga - Việt. Все права защищены.",
       terms: "Условия сотрудничества",
       privacy: "Политика конфиденциальности",
       ethics: "Научная этика",
@@ -636,7 +636,7 @@ export const HOME_COPY: Record<
       },
     ],
     footer: {
-      brandTitle: "Russia - Vietnam Knowledge Network",
+      brandTitle: "Mạng lưới tri thức Nga - Việt",
       subtitle: "",
       desc: "Independent portal for coordinating science and technology cooperation between leading institutes and universities of Vietnam and the Russian Federation.",
       openDataBadge: "Open S & T Data Portal 2026",
@@ -651,7 +651,7 @@ export const HOME_COPY: Record<
         "125047, Moscow, 1st Tverskaya-Yamskaya St., Bldg 30, Office 01B, Russian Federation",
       supportLabel: "Technical Support & Inquiries:",
       copyright:
-        "© 2026 Russia – Vietnam Science & Technology Knowledge Network. All rights reserved.",
+        "© 2026 Mạng lưới tri thức Nga - Việt. All rights reserved.",
       terms: "Terms of Collaboration",
       privacy: "Privacy Policy",
       ethics: "Research Ethics",

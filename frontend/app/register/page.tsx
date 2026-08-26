@@ -31,7 +31,7 @@ const copy: Record<Locale, {
   login: string;
 }> = {
   vi: {
-    brand: "Mạng lưới Tri thức KH & CN Nga – Việt",
+    brand: "Mạng lưới tri thức Nga - Việt",
     storyTitle: "Một mạng lưới tri thức",
     storyAccent: "Nhiều cơ hội",
     storyFuture: "hợp tác",
@@ -54,7 +54,7 @@ const copy: Record<Locale, {
     login: "Trở về đăng nhập",
   },
   ru: {
-    brand: "Российско-вьетнамская сеть научно-технических знаний",
+    brand: "Mạng lưới tri thức Nga - Việt",
     storyTitle: "Единая сеть знаний",
     storyAccent: "Больше",
     storyFuture: "сотрудничества",
@@ -77,7 +77,7 @@ const copy: Record<Locale, {
     login: "Вернуться ко входу",
   },
   en: {
-    brand: "Russia–Vietnam Science & Technology Knowledge Network",
+    brand: "Mạng lưới tri thức Nga - Việt",
     storyTitle: "One knowledge network",
     storyAccent: "More",
     storyFuture: "collaboration",

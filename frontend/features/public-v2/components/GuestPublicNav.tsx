@@ -26,8 +26,6 @@ const COPY: Record<
   Locale,
   {
     brandTitle: string;
-    brandName: string;
-    brandPair: string;
     home: string;
     about: string;
     news: string;
@@ -38,8 +36,6 @@ const COPY: Record<
 > = {
   vi: {
     brandTitle: "Mạng lưới tri thức Nga - Việt",
-    brandName: "Mạng lưới Tri thức KH & CN",
-    brandPair: "NGA - VIỆT",
     home: "Trang chủ",
     about: "Giới thiệu",
     news: "Tin tức",
@@ -48,9 +44,7 @@ const COPY: Record<
     workspace: "Không gian làm việc",
   },
   en: {
-    brandTitle: "Russia - Vietnam Knowledge Network",
-    brandName: "Science & Technology Knowledge Network",
-    brandPair: "RUSSIA - VIETNAM",
+    brandTitle: "Mạng lưới tri thức Nga - Việt",
     home: "Home",
     about: "About",
     news: "News",
@@ -59,9 +53,7 @@ const COPY: Record<
     workspace: "Workspace",
   },
   ru: {
-    brandTitle: "Российско-вьетнамская сеть знаний",
-    brandName: "Научно-технологическая сеть знаний",
-    brandPair: "РОССИЯ - ВЬЕТНАМ",
+    brandTitle: "Mạng lưới tri thức Nga - Việt",
     home: "Главная",
     about: "О сети",
     news: "Новости",
@@ -120,18 +112,13 @@ export function GuestPublicNav({
           onClick={() => setClickedKey("home")}
         >
           <BrandMark className="size-11 shadow-xs" />
-          <span className="hidden min-w-0 sm:block">
-            <strong className="block truncate text-[15px] font-extrabold text-slate-950 sm:text-[16px]">
-              {t.brandName}
-            </strong>
-            <span className="mt-0.5 block truncate text-sm font-extrabold text-blue-700">
-              {t.brandPair}
-            </span>
-          </span>
+          <strong className="hidden truncate text-base font-extrabold text-slate-950 sm:block">
+            {t.brandTitle}
+          </strong>
         </Link>
 
         <nav
-          className="hidden items-center rounded-xl border border-blue-200/80 bg-blue-100/70 p-1 shadow-2xs xl:flex"
+          className="hidden items-center rounded-xl border border-blue-200/80 bg-blue-100/70 p-1 shadow-2xs lg:flex"
           aria-label="Điều hướng công khai"
         >
           {items.map((item) => {
@@ -163,7 +150,7 @@ export function GuestPublicNav({
       </div>
 
       <nav
-        className="border-t border-blue-200/60 bg-[#edf5fe] xl:hidden"
+        className="border-t border-blue-200/60 bg-[#edf5fe] lg:hidden"
         aria-label="Điều hướng công khai trên di động"
       >
         <div className="mx-auto flex max-w-[1460px] gap-1.5 overflow-x-auto px-4 py-2.5 sm:px-6">

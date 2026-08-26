@@ -10,9 +10,9 @@ import translations from "../i18n/translations.json";
 import { confirmAction } from "@/lib/alerts";
 
 const HERO_STATIC_TITLE: Record<Locale, string> = {
-  vi: "Mạng lưới Trí thức Khoa học - Công nghệ Nga - Việt",
-  ru: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
-  en: "Russia-Vietnam Science-Technology Intelligence Network",
+  vi: "Mạng lưới tri thức Nga - Việt",
+  ru: "Mạng lưới tri thức Nga - Việt",
+  en: "Mạng lưới tri thức Nga - Việt",
 };
 
 const HERO_FADE_DURATION_MS = 650;
@@ -142,9 +142,6 @@ export function PublicHome({
               <strong className="block whitespace-nowrap text-base font-bold tracking-tight text-white">
                 {t("VN–RU Network")}
               </strong>
-              <small className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
-                {t("Science · Technology · Cooperation")}
-              </small>
             </span>
           </Link>
 

@@ -102,7 +102,7 @@ const COPY: Record<
     ctaBtn: "Đăng ký mở đề tài hợp tác →",
   },
   en: {
-    brandTitle: "Russia - Vietnam Knowledge Network",
+    brandTitle: "Mạng lưới tri thức Nga - Việt",
     kicker: "Priority S & T Collaboration Programmes · 2026",
     title1: "Bilateral Research",
     title2: "Collaboration Opportunities",
@@ -152,11 +152,11 @@ const COPY: Record<
     ctaBtn: "Launch a Research Opportunity →",
   },
   ru: {
-    brandTitle: "Российско-вьетнамская сеть знаний",
+    brandTitle: "Mạng lưới tri thức Nga - Việt",
     kicker: "Приоритетные программы НТИ · Фонд «Традиции и дружба»",
     title1: "Возможности совместных",
     title2: "научных исследований",
-    title3: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
+    title3: "Mạng lưới tri thức Nga - Việt",
     intro:
       "Конкурсы совместных исследовательских проектов, грантовые программы и формирование двусторонних научных коллективов институтов и университетов России и Вьетнама.",
     searchPlaceholder:
@@ -694,7 +694,7 @@ export function GuestOpportunitiesV2() {
 
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-blue-200/80 pt-8 text-xs sm:text-sm font-medium text-slate-600 md:flex-row">
             <p>
-              © 2026 Mạng lưới Tri thức Khoa học – Công nghệ Nga – Việt. Bảo lưu
+              © 2026 Mạng lưới tri thức Nga - Việt. Bảo lưu
               mọi quyền.
             </p>
             <div className="flex flex-wrap gap-5 font-semibold text-slate-600">

@@ -3,7 +3,7 @@ import { cn } from "@/lib/cn";
 
 type BrandMarkProps = { className?: string; alt?: string };
 
-export function BrandMark({ className, alt = "Mạng lưới Tri thức Khoa học - Công nghệ Nga - Việt" }: Readonly<BrandMarkProps>) {
+export function BrandMark({ className, alt = "Mạng lưới tri thức Nga - Việt" }: Readonly<BrandMarkProps>) {
   return (
     <span aria-hidden="true" className={cn("vnru-brand-mark relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-xl", className)}>
       <Image

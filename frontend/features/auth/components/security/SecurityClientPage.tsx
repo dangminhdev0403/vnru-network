@@ -92,7 +92,7 @@ const securityCopy: Record<
     modalSignOutDesc:
       "Bạn sẽ được chuyển hướng về trang đăng nhập và phiên làm việc sẽ kết thúc ngay lập tức.",
     modalRevokeDesc:
-      "Thiết bị này sẽ bị ngắt kết nối ngay lập tức khỏi Mạng lưới KH & CN Việt – Nga.",
+      "Thiết bị này sẽ bị ngắt kết nối ngay lập tức khỏi Mạng lưới tri thức Nga - Việt.",
     cancelBtn: "Hủy",
     confirmSignOutBtn: "Xác nhận đăng xuất",
     confirmRevokeBtn: "Xác nhận thu hồi",
@@ -142,7 +142,7 @@ const securityCopy: Record<
     modalSignOutDesc:
       "You will be redirected to the sign-in portal and your session will be invalidated immediately.",
     modalRevokeDesc:
-      "This device will be immediately disconnected from the Russia-Vietnam Science-Technology Intelligence Network.",
+      "This device will be immediately disconnected from Mạng lưới tri thức Nga - Việt.",
     cancelBtn: "Cancel",
     confirmSignOutBtn: "Confirm Sign Out",
     confirmRevokeBtn: "Confirm Revoke",

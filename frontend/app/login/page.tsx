@@ -9,8 +9,8 @@ import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 
 const copy = {
   vi: {
-    brand: "Mạng lưới Tri thức KH & CN Nga – Việt",
-    brandLabel: "Mạng lưới Tri thức Khoa học và Công nghệ Nga - Việt",
+    brand: "Mạng lưới tri thức Nga - Việt",
+    brandLabel: "Mạng lưới tri thức Nga - Việt",
     storyTitle: "Kết nối tri thức",
     storyAccent: "Kiến tạo tương lai",
     storyBody: "Cầu nối hợp tác khoa học và công nghệ giữa Nga và Việt Nam, chia sẻ tri thức – thúc đẩy đổi mới – phát triển bền vững.",
@@ -29,8 +29,8 @@ const copy = {
     register: "Đăng ký thành viên",
   },
   ru: {
-    brand: "Российско-вьетнамская сеть научно-технических знаний",
-    brandLabel: "Российско-вьетнамская сеть научно-технических знаний",
+    brand: "Mạng lưới tri thức Nga - Việt",
+    brandLabel: "Mạng lưới tri thức Nga - Việt",
     storyTitle: "Объединяем знания",
     storyAccent: "Создаём будущее",
     storyBody: "Пространство научно-технологического сотрудничества России и Вьетнама для обмена знаниями, инноваций и устойчивого развития.",
@@ -49,8 +49,8 @@ const copy = {
     register: "Подать заявку",
   },
   en: {
-    brand: "Russia–Vietnam Science & Technology Knowledge Network",
-    brandLabel: "Russia–Vietnam Science and Technology Knowledge Network",
+    brand: "Mạng lưới tri thức Nga - Việt",
+    brandLabel: "Mạng lưới tri thức Nga - Việt",
     storyTitle: "Connecting knowledge",
     storyAccent: "Creating the future",
     storyBody: "A space for science and technology cooperation between Russia and Vietnam, advancing knowledge exchange, innovation, and sustainable development.",
