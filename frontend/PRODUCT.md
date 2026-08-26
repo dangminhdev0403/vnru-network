@@ -4,24 +4,29 @@
 Russia-Vietnam Science-Technology Intelligence Network is an independent bilateral knowledge, research, and technology cooperation portal founded and operated by the Traditions and Friendship Foundation. It is not a ministry portal or a separate legal entity.
 
 ## Audience
-- Public visitors exploring approved knowledge, experts, publications, and cooperation opportunities.
-- Authenticated researchers, reviewers, enterprises, organization representatives, and leadership.
-- Foundation and system operators administering identity, access, security, and governance.
+- Public visitors reading news, events, and approved public information.
+- Registered members and experts accessing approved knowledge, topic calls, and scientific publications.
+- Portal managers administering content and viewing aggregate site statistics.
+
+System administrators are operational users for IAM, security, and audit. They are not a fourth product audience and do not represent portal managers.
 
 ## Core mechanism
-The Portal connects identity, scientific knowledge, experts, organizations, publications, and projects so users can move from discovery to explainable partner matching and bilateral 2+2 cooperation.
+The Portal publishes science and technology information, then opens approved knowledge resources to registered members and experts.
 
 ## Implemented surfaces
 - Public landing: `/`.
+- Public information: `/news`.
+- Member information: `/knowledge`, `/experts`, `/opportunities`.
 - Authentication and member self-service: `/login`, `/account`, `/security`.
+- Member information hub: `/workspace`.
 - Governance: `/admin/access/*` and `/admin/audit`.
-- Compatibility: `/workspace` and legacy `/workspace/iam*` routes redirect to Module 1 surfaces.
+- Compatibility: legacy `/workspace/iam*` routes redirect to account, security, or governance.
 
 ## Product truth
 - Backend authorization is authoritative; frontend permissions only shape UX.
 - Keycloak owns credential UI; the frontend uses an opaque session bridge.
 - Vietnamese, English, and Russian are first-class locales. One selected locale must govern all visible and accessible copy on a surface.
-- IAM infrastructure is the only implemented business module. Other business capabilities may appear as landing-page vision only and must not be presented as available runtime surfaces.
+- Member information surfaces use synthetic display data until content APIs exist; they do not expose fake workflow actions.
 - The landing page is public; account, security and governance surfaces require the appropriate session and capability scope.
 
 ## Design success

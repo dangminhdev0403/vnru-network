@@ -4,16 +4,16 @@ This document contains the authoritative governance, security, data-ownership, a
 
 ## 1. Security & Authentication Boundaries
 
-- **Backend Enforcement**: Security and authorization MUST be validated at every backend service boundary.
+- **Backend Enforcement**: Security and authorization MUST be validated at every backend entry point and protected module use case.
 - **Frontend non-boundary**: Frontend visual controls, route guards, and hidden buttons are UI conveniences only, never security boundaries.
 - **Secrets Management**: Hardcoding API keys, JWT secrets, passwords, or credentials in source code, default configs, or documentation is strictly forbidden. Use environment variables.
 
 ## 2. Data Ownership & Module Boundaries
 
-- **Exclusive Ownership**: Every business state has exactly one owning domain module. No other module may directly mutate that state.
-- **Isolated Persistence**: Process consolidation does not authorize cross-module persistence access. Each module uses its own repository/client and owned schema or database.
-- **Contract-Based Integration**: Cross-module interaction uses explicit application contracts inside one deployable; cross-deployable interaction uses HTTP/REST or versioned events.
-- **Transactional Integrity**: Transactions remain scoped to one owning module's persistence boundary. No distributed multi-database transactions.
+- **Modular Monolith**: The backend is one deployable application. New business capabilities are internal domain modules, not standalone services.
+- **Exclusive Ownership**: Every business state has exactly one owning domain module. Other modules call its application contract instead of mutating its tables or repository directly.
+- **Shared PostgreSQL**: Modules use one PostgreSQL database. Tables and repositories retain module ownership; a database-per-module topology is forbidden unless a measured future need is separately approved.
+- **In-Process Integration**: Cross-module interaction uses typed application contracts and local transactions where one use case requires atomic writes. Do not introduce internal HTTP, brokers, distributed transactions, or versioned events.
 
 ## 3. Package & Dependency Governance
 

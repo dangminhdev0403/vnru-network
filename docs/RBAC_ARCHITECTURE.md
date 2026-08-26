@@ -7,3 +7,13 @@ Capability keys use `<domain>.<resource>.<action>`. The current frontend consume
 Each session has exactly one active context. Switching context validates the assignment and scope, rotates the session token and never unions permissions from different contexts.
 
 Member self-service is available at `/account` and `/security`. Governance operators use `/admin/access/*` and `/admin/audit`.
+
+## Product access classes
+
+Product copy and navigation use only `PUBLIC`, `MEMBER` and `PORTAL_MANAGER` concepts:
+
+- `PUBLIC`: approved news, events and public information.
+- `MEMBER`: approved member knowledge, topic calls and scientific publications.
+- `PORTAL_MANAGER`: content-management and aggregate-statistics capabilities in addition to member access.
+
+These are access classes, not permission wildcards. Backend capabilities still authorize every protected action and record. `SUPER_ADMIN` remains a technical IAM/security role and must not be assigned as portal-manager access.

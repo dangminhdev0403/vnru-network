@@ -6,13 +6,13 @@
 
 Before editing code, tests, config, schemas, migrations, or package files:
 
-1. Read `docs/README.md`.
-2. Read `docs/RULES.md` and `docs/ARCHITECTURE.md`.
-3. For Portal routes, navigation, access areas, or capability terminology, read `docs/PORTAL_FOUNDATION_REFACTOR.md`.
-4. Read the nearest scope instructions:
+1. Read `Architecture/README.md`.
+2. Read `Architecture/ARCHITECTURE.md`, `Architecture/MODULE_MAP.md`, and `Architecture/RULES.md`.
+3. Use `Architecture/GUIDES.md` to open only the task-specific guide.
+4. For Portal routes, navigation, access areas, or capability terminology, read `docs/PORTAL_FOUNDATION_REFACTOR.md`.
+5. Read the nearest scope instructions:
    - frontend: `frontend/AGENTS.md`, `frontend/docs/ARCHITECTURE.md`, `frontend/docs/RULES.md`;
    - backend: `services/AGENTS.md`, `services/docs/ARCHITECTURE.md`, `services/docs/RULES.md`.
-5. Read only the task guide named by `docs/README.md` for that work type.
 6. Inspect current source and package manifests. When docs describe a target not present in source, source/current manifests win; stop before inventing missing packages, paths, scripts, or infrastructure.
 
 Do not edit until this gate is complete. In the final report, list `Docs read:` with the exact paths. Missing that list means the task is incomplete.

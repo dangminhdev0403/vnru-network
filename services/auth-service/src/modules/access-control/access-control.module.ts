@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { validateConfig } from '../../config';
+import { DatabaseClient, DatabaseModule } from '../../database/database.module';
 import {
   ACCESS_CONTROL_PRISMA,
   AccessControlService,
@@ -9,14 +7,11 @@ import {
 import { IamAdminService } from './iam-admin.service';
 
 @Module({
+  imports: [DatabaseModule],
   providers: [
     {
       provide: ACCESS_CONTROL_PRISMA,
-      useFactory: () => {
-        const config = validateConfig();
-        const adapter = new PrismaPg({ connectionString: config.DATABASE_URL });
-        return new PrismaClient({ adapter });
-      },
+      useExisting: DatabaseClient,
     },
     AccessControlService,
     IamAdminService,

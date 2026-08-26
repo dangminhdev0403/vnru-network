@@ -13,10 +13,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Before frontend code changes, read in order:
 
-1. `../docs/RULES.md` and `../docs/ARCHITECTURE.md`
+1. `../Architecture/README.md`, `../Architecture/ARCHITECTURE.md`, `../Architecture/MODULE_MAP.md`, and `../Architecture/RULES.md`
 2. `../docs/PORTAL_FOUNDATION_REFACTOR.md` for route, navigation, access-area, or capability-label work
 3. `docs/ARCHITECTURE.md` and `docs/RULES.md`
-4. One matching guide: `docs/MODULE_GUIDE.md`, `docs/CONTRACT_GUIDE.md`, or `docs/RUNTIME_UI_GUIDE.md`
+4. One matching guide routed by `../Architecture/GUIDES.md`: `docs/MODULE_GUIDE.md`, `docs/CONTRACT_GUIDE.md`, or `docs/RUNTIME_UI_GUIDE.md`
    - Any browser API/server-state work must also read `docs/QUERY_RESOURCE_GUIDE.md`; do not handwrite query keys/cache or call APIs directly from components.
 5. Relevant Next.js 16.3 documentation under `node_modules/next/dist/docs/`
 

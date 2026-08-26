@@ -17,34 +17,17 @@ test("workspace navigation exposes only destinations allowed by capability", () 
     "/security",
   ]);
 
-  const roleCases = [
-    { capabilities: ["collab.proposals.create"], moduleHref: "/workspace/researcher?view=collaboration", minItems: 7 },
-    { capabilities: ["reviews.assignments.view_assigned"], moduleHref: "/workspace/reviewer?view=assignments", minItems: 6 },
-    { capabilities: ["collab.proposals.endorse"], moduleHref: "/workspace/organization?view=endorsements", minItems: 6 },
-    {
-      capabilities: [
-        "collab.opportunities.create",
-        "collab.opportunities.publish",
-        "collab.proposals.screen",
-        "reviews.assignments.manage",
-        "projects.projects.view",
-        "projects.reports.approve",
-      ],
-      moduleHref: "/workspace/collaboration?view=opportunities",
-      minItems: 8,
-    },
-    { capabilities: ["collab.decisions.issue_foundation", "projects.projects.view"], moduleHref: "/workspace/decisions?view=queue", minItems: 6 },
-  ];
-
-  for (const { capabilities, moduleHref, minItems } of roleCases) {
+  for (const capabilities of [
+    ["collab.proposals.create"],
+    ["reviews.assignments.view_assigned"],
+    ["collab.proposals.endorse"],
+    ["collab.opportunities.create"],
+    ["collab.decisions.issue_foundation"],
+  ]) {
     const hrefs = filterNavSections(capabilities).flatMap((section) =>
       section.items.map((item) => item.href),
     );
-    assert.equal(hrefs[0], "/workspace");
-    assert.ok(hrefs.includes(moduleHref));
-    assert.equal(hrefs.at(-2), "/account");
-    assert.equal(hrefs.at(-1), "/security");
-    assert.ok(hrefs.length >= minItems, `/workspace should expose a complete task navigation`);
+    assert.deepEqual(hrefs, ["/workspace", "/account", "/security"]);
   }
 
   const adminItems = filterNavSections(["iam.roles.manage"]).flatMap(

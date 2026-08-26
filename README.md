@@ -1,16 +1,16 @@
 # VN–RU Network Portal
 
-Current implementation is intentionally limited to **Module 1: Identity & Access Governance** plus the public landing page.
+VN–RU is a product workspace/monorepo with a Next.js web deployable and one NestJS API modular monolith.
 
 ## Kept runtime
 
 - `frontend/`: landing page, Keycloak login bridge, account, security/session management, IAM administration and audit UI.
-- `services/auth-service/`: identity, authentication, sessions, access control and security audit.
+- `services/auth-service/`: the single backend monolith; currently contains identity, authentication, sessions, access control and security audit modules. The legacy directory name is retained.
 - `infra/keycloak/`: Keycloak login theme.
 - `infra/nginx/`: reverse proxy for frontend, auth-service and Keycloak.
 - PostgreSQL: `auth_db` only.
 
-Knowledge, expert directory, research collaboration, reviews, projects, academic, technology and analytics runtimes are not present.
+Knowledge, expert directory, research collaboration, reviews, projects, academic, technology and analytics modules are not present. Add them as internal modules of the same backend and PostgreSQL database; do not create microservices.
 
 ## Development
 
@@ -42,4 +42,4 @@ Open `http://localhost:8082`. PostgreSQL and Keycloak data persist in named volu
 
 ## Documentation
 
-Start at [`docs/README.md`](docs/README.md).
+Start at [`Architecture/README.md`](Architecture/README.md). Global operational/product contracts remain indexed by [`docs/README.md`](docs/README.md).

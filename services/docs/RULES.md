@@ -1,4 +1,4 @@
-# Backend Service Rules
+# Backend Modular Monolith Rules
 
 Read `../../docs/RULES.md` first. Current service manifests, source, schemas, migrations, and tests are capability truth; target-state docs never authorize inventing missing tools or infrastructure.
 
@@ -14,8 +14,9 @@ Read `../../docs/RULES.md` first. Current service manifests, source, schemas, mi
 - Application service/use case owns orchestration, authorization/resource checks, and transaction decisions.
 - Domain owns business rules; it imports no framework or infrastructure.
 - Infrastructure implements inward-facing ports for persistence/providers.
-- A service owns its database. Never import another service's repository/entity/internal module or query its database.
-- Cross-service integration uses an explicit current HTTP contract or versioned event. Do not invent distributed transactions.
+- One backend application owns one PostgreSQL database.
+- Each domain module owns its tables, repositories and business mutations. Other modules use its typed application contract; never import its repository/entity internals or query its tables directly.
+- Cross-module calls are in-process. Do not add internal HTTP, brokers, versioned events, distributed transactions or module-specific databases.
 
 ## Trust boundaries
 

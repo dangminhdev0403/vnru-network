@@ -36,6 +36,9 @@ export interface MappedRole {
   permissions: string[];
 }
 
+const isSuperAdminRole = (name?: string): boolean =>
+  name?.replace(/[\s_-]/g, '').toUpperCase() === 'SUPERADMIN';
+
 export interface IamAdminPrismaClient {
   $transaction<T>(
     fn: (tx: Omit<IamAdminPrismaClient, '$transaction'>) => Promise<T>,
@@ -178,8 +181,7 @@ export class IamAdminService {
         user.id !== actorId &&
         !assignments.some(
           ({ userId, role }) =>
-            userId === user.id &&
-            role?.name.replace(/[\s_-]/g, '').toUpperCase() === 'SUPERADMIN',
+            userId === user.id && isSuperAdminRole(role?.name),
         ) &&
         !assignments.some(
           ({ userId, roleId }) =>
@@ -220,12 +222,7 @@ export class IamAdminService {
           select: { roleId: true, role: { select: { name: true } } },
         }),
       ]);
-      if (
-        targetRoles.some(
-          ({ role }) =>
-            role?.name.replace(/[\s_-]/g, '').toUpperCase() === 'SUPERADMIN',
-        )
-      ) {
+      if (targetRoles.some(({ role }) => isSuperAdminRole(role?.name))) {
         throw new ForbiddenException('SUPER_ADMIN status cannot be changed');
       }
       const actorRoleIds = new Set(actorRoles.map(({ roleId }) => roleId));
@@ -305,7 +302,7 @@ export class IamAdminService {
   ): Promise<MappedRole> {
     const role = await this.prisma.role.findUnique({ where: { id: roleId } });
     if (!role) throw new NotFoundException('Role not found');
-    if (role.name.replace(/[\s_-]/g, '').toUpperCase() === 'SUPERADMIN') {
+    if (isSuperAdminRole(role.name)) {
       throw new ForbiddenException('SUPER_ADMIN permissions cannot be changed');
     }
     if (activeContext) {
@@ -388,7 +385,7 @@ export class IamAdminService {
       throw new NotFoundException('Role not found');
     }
 
-    if (role.name.replace(/[\s_-]/g, '').toUpperCase() === 'SUPERADMIN') {
+    if (isSuperAdminRole(role.name)) {
       throw new ForbiddenException('SUPER_ADMIN role cannot be assigned');
     }
 

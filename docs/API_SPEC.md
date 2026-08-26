@@ -10,6 +10,21 @@ Implemented API families:
 - `/api/v1/admin/users/*`: identity administration.
 - `/api/v1/admin/roles/*`: role and permission administration.
 - `/api/v1/admin/role-assignments/*`: assignment administration.
+- `POST /api/v1/membership-applications`: public membership application intake. Stores a normalized `PENDING` application; never creates a user or role assignment.
+
+Membership application body:
+
+```json
+{
+  "fullName": "Nguyễn Văn An",
+  "email": "member@example.org",
+  "organization": "VAST",
+  "professionalRole": "Nhà nghiên cứu",
+  "interest": "Vật liệu mới và hợp tác khoa học"
+}
+```
+
+Responses: `201` accepted, `400` invalid body, `409` pending application already exists for the normalized email.
 
 Rules:
 

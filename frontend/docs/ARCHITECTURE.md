@@ -2,20 +2,18 @@
 
 The frontend currently contains:
 
-- public landing page `/`, news stream `/news` (with legacy `/explore` redirect), and synthetic discovery previews under `/knowledge`, `/experts` and `/opportunities`;
+- public landing page `/` and news stream `/news` (with legacy `/explore` redirect);
+- authenticated member information under `/knowledge`, `/experts` and `/opportunities`;
 - Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`, plus a localized `/register` request preview that does not create identities;
 - member account `/account`;
 - MFA and sessions `/security`;
 - IAM governance `/admin/access/*`;
 - Module 1 security audit `/admin/audit`;
-- one unified member overview at `/workspace` plus capability-gated Researcher, Reviewer, Organization Representative, Collaboration Manager and Decision task modules under `/workspace/*`;
-- authenticated Enterprise and Leadership UI previews that are not live persona destinations;
+- one member information hub at `/workspace`; specialist persona/workflow routes have been removed;
 - capability-aware `/workspace` navigation and compatibility redirects under `/workspace/iam*`.
 
 Routes remain thin. `features/auth` owns authentication, account and security behavior; `features/iam` and `features/admin/access` own access governance; shared shells own presentation only. Backend authorization is authoritative.
 
-Task-module routes may use URL `view` state to expose separate navigation destinations inside one route family. They share one member persona and one workspace shell; backend roles remain distinct authorization/audit inputs. Demo mutations write only local preview activity/state and must remain clearly labeled.
+Public visitors read approved news and events. Registered members and experts also access approved knowledge, topic calls and scientific publications. Portal managers additionally receive content-management and aggregate-statistics capabilities. Backend authorization remains authoritative; none of these labels grants unrestricted access.
 
-`KNOWLEDGE_CURATOR` is removed from the current active synthetic role set. Knowledge discovery remains available publicly and inside the Researcher preview.
-
-There are no Knowledge, Expert, Publication, Collaboration, Review or Project business backends. Their current frontend surfaces use synthetic preview data and must remain labeled accordingly.
+There are no Knowledge, Expert, Publication, Collaboration, Review or Project business backends. Member information surfaces are read-only and use synthetic display data until content APIs exist. No frontend workflow state or fake mutation is retained.

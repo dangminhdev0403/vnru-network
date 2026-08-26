@@ -1,4 +1,11 @@
-import type { Opportunity } from "../demo-v2/types";
+type Opportunity = {
+  id: string;
+  code: string;
+  title: string;
+  field: string;
+  closes: string;
+  state: "DRAFT" | "PUBLISHED" | "CLOSED";
+};
 
 export type DetailedOpportunity = Opportunity & {
   summary?: string;

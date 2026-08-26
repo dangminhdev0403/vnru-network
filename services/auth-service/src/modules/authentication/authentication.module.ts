@@ -5,11 +5,10 @@ import { SessionModule } from '../session/session.module';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticatedRequestGuard } from './authenticated-request-context';
-import { IamAdminController } from '../access-control/iam-admin.controller';
 
 @Module({
   imports: [IdentityModule, SessionModule, AccessControlModule],
-  controllers: [AuthenticationController, IamAdminController],
+  controllers: [AuthenticationController],
   providers: [AuthenticationService, AuthenticatedRequestGuard],
   exports: [AuthenticationService, AuthenticatedRequestGuard],
 })

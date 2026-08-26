@@ -1,6 +1,6 @@
 # Deployment and Local Operation
 
-The containerized stack contains PostgreSQL, auth-service, frontend and Nginx.
+The containerized stack contains one PostgreSQL database, one backend monolith (currently named `auth-service`), frontend and Nginx.
 
 ```powershell
 Copy-Item .env.docker.example .env
@@ -18,4 +18,4 @@ pnpm --dir services/auth-service start:dev
 pnpm --dir frontend dev
 ```
 
-The auth-service container runs Prisma migrations against `auth_db` before startup. No Module 2–6 database or service is created.
+The backend container runs Prisma migrations against shared `auth_db` before startup. No Module 2–6 module or separate database is created.

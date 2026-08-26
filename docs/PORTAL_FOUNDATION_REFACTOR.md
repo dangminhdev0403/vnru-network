@@ -2,28 +2,34 @@
 
 ## Current product boundary
 
-Only Module 1 has an implemented backend runtime. Public discovery and role pages are synthetic UI previews.
+Only Identity/IAM and membership-application backend flows are implemented. Member discovery pages currently use synthetic display data; specialist workflow/persona pages are absent.
 
 | Concern | Canonical route |
 | --- | --- |
 | Landing page | `/` |
 | Public news stream | `/news` (`/explore` redirects here) |
-| Public discovery previews | `/knowledge`, `/experts`, `/opportunities` |
+| Member discovery | `/knowledge`, `/experts`, `/opportunities` |
 | Login | `/login` |
-| Registration request preview | `/register` |
+| Membership application | `/register` |
 | Member profile | `/account` |
 | MFA and sessions | `/security` |
 | Access administration | `/admin/access/*` |
 | Security audit | `/admin/audit` |
 
-`/workspace` is the single landing and overview for every non-administrator business persona. Its navigation is composed from the authenticated capability set. Researcher, Reviewer, Organization Representative, Collaboration Manager and Foundation Decision Maker remain backend authorization roles, while their existing `/workspace/*` routes act as capability-gated task modules inside one product shell. Users with several roles see the union of their allowed modules without switching dashboard personas.
+## Access model
 
-IAM administrators go to `/admin/access` and do not receive member-workspace navigation, even when their session also contains business capabilities.
+The product uses three understandable access classes, not a dashboard persona for each workflow role:
 
-`KNOWLEDGE_CURATOR` is not part of the current active role fixture set. Its former view-only permission set did not own a distinct workflow step.
+| Access class | Allowed product scope |
+| --- | --- |
+| Public visitor | News, events and approved public information |
+| Registered member / expert | Public scope plus approved member knowledge, topic calls and scientific publications |
+| Portal manager | Member scope plus portal-content management and aggregate site statistics |
 
-Enterprise and Leadership pages remain authenticated UI previews only and are not live persona destinations.
+`/workspace` is the single member area. Specialist persona/workflow routes are intentionally absent.
 
-Public pages may communicate and demonstrate the broader VN–RU network vision with synthetic data. They must not present Module 2–6 business backends as available. Role preview actions must remain clearly labeled as demo/local state and must not claim backend persistence.
+Portal manager and `SUPER_ADMIN` are different. Portal manager is a product responsibility. `SUPER_ADMIN` stays isolated in `/admin/access` and `/admin/audit` for IAM, security and audit only.
+
+Synthetic display data may communicate the broader VN–RU network vision. It must not present absent business modules or persistence as available.
 
 Backend authorization remains authoritative.

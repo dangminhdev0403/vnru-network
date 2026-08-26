@@ -2,15 +2,15 @@
 
 ## Purpose
 
-`auth-service` implements Module 1: unified administration, identity and authentication for Russia-Vietnam Science-Technology Intelligence Network.
+`auth-service` is the legacy package name of the single backend modular monolith. It currently implements Module 1: unified administration, identity and authentication for Russia-Vietnam Science-Technology Intelligence Network.
 
-This service owns the IAM boundary only. It must not absorb business ownership from organization, grant, review, project, academic, technology, knowledge, or analytics domains.
+IAM modules own IAM state only. Future organization, content, knowledge and management capabilities belong in the same application as separate domain modules with their own tables, repositories and application contracts.
 
 Detailed service contract and Module 1 ownership rules: [`SERVICE_SPEC.md`](./SERVICE_SPEC.md).
 
 ## Current Base
 
-The current base intentionally separates Module 1 into five internal modules from the start:
+The current backend separates Module 1 into four modules with implemented behavior:
 
 ```txt
 src/modules/
@@ -18,10 +18,9 @@ src/modules/
   authentication/
   session/
   access-control/
-  security/
 ```
 
-At this stage these are structural module boundaries only. There are no domain entities, persistence adapters, SSO/JWT providers, migrations, or 2FA implementations yet.
+`src/database/DatabaseModule` owns one shared Prisma client and PostgreSQL pool. The modules above own identity, opaque sessions, authentication orchestration and dynamic RBAC. There is no standalone security module until a separate security policy lifecycle exists.
 
 ## Internal Module Responsibilities
 
@@ -76,19 +75,7 @@ Owns IAM authorization context and baseline access policy:
 
 Primary question: **In the active context, what platform capabilities may this identity use?**
 
-Business services remain responsible for resource ownership, workflow state, and domain-specific authorization rules.
-
-### `security`
-
-Owns authentication security policy:
-
-- 2FA policy;
-- failed authentication policy;
-- account lock/disable security rules;
-- suspicious authentication policy;
-- security events required by Module 1.
-
-Primary question: **What additional security controls must be satisfied before access is trusted?**
+Owning domain modules remain responsible for resource ownership, workflow state, and domain-specific authorization rules.
 
 ## Responsibility Flow
 
@@ -99,7 +86,7 @@ Client
   -> authentication
   -> external IdP / authentication provider
   -> identity
-  -> security policy / 2FA when required
+  -> authentication-level policy when required
   -> access-control context resolution
   -> session creation
   -> authenticated result
@@ -112,8 +99,8 @@ Request
   -> session validation
   -> identity/account status validation
   -> access-control context + permission resolution
-  -> target business service
-  -> business service validates resource scope and workflow state
+  -> target domain module
+  -> domain module validates resource scope and workflow state
 ```
 
 ### Logout
@@ -122,7 +109,7 @@ Request
 Client
   -> authentication logout orchestration
   -> session revoke
-  -> security/audit hook when required
+  -> audit hook when required
   -> completed
 ```
 
@@ -131,10 +118,10 @@ Client
 - `identity` owns identity state; other internal modules must not duplicate user records.
 - `session` owns session lifecycle; authentication only orchestrates it.
 - `access-control` owns roles, permissions, assignments, and active authorization context.
-- `security` owns security policy; it must not become a second user/session store.
-- Business-domain authorization stays in the owning business service.
+- Security checks remain in the flow that enforces them until a distinct policy lifecycle justifies its own module.
+- Business-domain authorization stays in the owning domain module.
 - Organization/researcher/expert data is not owned by `auth-service`; only stable references may appear in authorization context when required.
-- Do not import repositories or persistence internals across service boundaries.
+- Do not import repositories or persistence internals across module boundaries; call the owning module's typed application contract.
 
 ## Module Growth Pattern
 
@@ -170,6 +157,6 @@ The current slice does not introduce:
 
 - Application-level JWT or Passport;
 - In-app TOTP secret generation;
-- Cross-service Redis cache or Kafka outbox (deferred until required by multi-service integration);
+- Redis, Kafka, brokers or internal HTTP between modules;
 - Public authentication endpoints before approved slice implementation;
 - Concurrent multi-context sessions.

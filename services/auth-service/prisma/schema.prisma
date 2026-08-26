@@ -21,6 +21,12 @@ enum AuthenticationLevel {
   MFA
 }
 
+enum MembershipApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model User {
   id                 String             @id @default(uuid())
   email              String?
@@ -102,4 +108,18 @@ model SecurityAuditEvent {
   targetId  String
   context   Json
   createdAt DateTime @default(now())
+}
+
+model MembershipApplication {
+  id               String                      @id @default(uuid())
+  fullName         String
+  email            String
+  organization     String
+  professionalRole String
+  interest         String
+  status           MembershipApplicationStatus @default(PENDING)
+  submittedAt      DateTime                    @default(now())
+  updatedAt        DateTime                    @updatedAt
+
+  @@index([email, status])
 }

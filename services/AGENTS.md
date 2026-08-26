@@ -2,9 +2,9 @@
 
 Before changing anything under `services/`:
 
-1. Read `../docs/RULES.md` and `../docs/ARCHITECTURE.md`.
+1. Read `../Architecture/README.md`, `../Architecture/ARCHITECTURE.md`, `../Architecture/MODULE_MAP.md`, and `../Architecture/RULES.md`.
 2. Read `docs/ARCHITECTURE.md` and `docs/RULES.md`.
-3. Read only the matching guide: `docs/SERVICE_GUIDE.md`, `docs/MIGRATION_GUIDE.md`, or `docs/MULTILINGUAL_BACKEND_PLAN.md`.
+3. Read only the matching guide routed by `../Architecture/GUIDES.md`: `docs/SERVICE_GUIDE.md`, `docs/MIGRATION_GUIDE.md`, or `docs/MULTILINGUAL_BACKEND_PLAN.md`.
 4. Read the affected service's `package.json`, nearest README/instructions, current code, and tests. Current files override target-state prose.
 
-No cross-service DB/repository imports. No package/lockfile edits without approval. Final report must list exact docs read.
+The backend is a modular monolith. Add capabilities as internal modules; do not create standalone services, internal HTTP calls, brokers, or module-specific databases. Modules access another module only through its application contract, never its repository or tables. No package/lockfile edits without approval. Final report must list exact docs read.

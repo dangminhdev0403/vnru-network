@@ -1,20 +1,14 @@
 import { Module } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { validateConfig } from '../../config';
+import { DatabaseClient, DatabaseModule } from '../../database/database.module';
 import { SESSION_PRISMA, SessionService } from './session.service';
 import { AccessControlModule } from '../access-control/access-control.module';
 
 @Module({
-  imports: [AccessControlModule],
+  imports: [DatabaseModule, AccessControlModule],
   providers: [
     {
       provide: SESSION_PRISMA,
-      useFactory: () => {
-        const config = validateConfig();
-        const adapter = new PrismaPg({ connectionString: config.DATABASE_URL });
-        return new PrismaClient({ adapter });
-      },
+      useExisting: DatabaseClient,
     },
     SessionService,
   ],

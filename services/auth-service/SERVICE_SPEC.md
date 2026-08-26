@@ -2,15 +2,15 @@
 
 ## 1. Purpose
 
-`auth-service` implements Module 1: **Unified Administration, Identity & Authentication** for Russia-Vietnam Science-Technology Intelligence Network.
+`auth-service` is the legacy package name of the single backend modular monolith. It currently implements Module 1: **Unified Administration, Identity & Authentication** for Russia-Vietnam Science-Technology Intelligence Network.
 
 This service is the platform-level source of truth for IAM: internal identities, authentication, login sessions, access context, roles/permissions, and authentication-related security policies.
 
-The service does not own business capabilities from organization, expert, grant, review, project, academic, technology, knowledge, or analytics domains.
+IAM modules do not own organization, expert, content, knowledge or portal-management state. Those capabilities belong in sibling domain modules inside the same application.
 
 ## 2. Current State
 
-The current base only locks the internal module boundaries:
+The current runtime implements four internal module boundaries:
 
 ```txt
 src/modules/
@@ -18,10 +18,9 @@ src/modules/
   authentication/
   session/
   access-control/
-  security/
 ```
 
-These modules are registered in `AppModule`, but no domain entities, controllers, persistence, JWT, SSO/IdP, 2FA implementation, or migrations have been added yet.
+These modules use one shared `DatabaseModule`/Prisma pool. Identity, opaque sessions, Auth.js assertion exchange, dynamic RBAC, IAM administration and migrations are implemented. Application JWT and 2FA are not implemented.
 
 ## 3. Responsibility Boundaries
 
@@ -103,25 +102,9 @@ Identity
 = baseline access decision
 ```
 
-`access-control` does not decide business state for domain resources. Grant, Review, Project, and other business services must still validate ownership, assignment, workflow state, and their own domain rules.
+`access-control` does not decide business state for domain resources. The owning domain module must still validate ownership, assignment, workflow state and its own rules.
 
 Primary question: **In the active context, which platform capabilities may this identity use?**
-
-### 3.5 `security`
-
-Owns authentication-related security policies.
-
-Responsibilities:
-
-- 2FA policy;
-- failed authentication policy;
-- account lock/disable security rules;
-- suspicious authentication policy;
-- security events required by Module 1.
-
-It must not become a second user store or session store.
-
-Primary question: **Which additional security controls must be satisfied before access is trusted?**
 
 ## 4. Core Flows
 
@@ -133,7 +116,7 @@ Client
   -> external IdP / authentication provider
   -> identity resolve/link
   -> identity account-status check
-  -> security policy / 2FA when required
+  -> authentication-level policy when required
   -> access-control context resolution
   -> session creation
   -> authenticated result
@@ -148,11 +131,11 @@ Request
   -> session validation
   -> identity/account status validation
   -> access-control resolves active context + permissions
-  -> target business service
-  -> business service validates resource scope + workflow state
+  -> target domain module
+  -> domain module validates resource scope + workflow state
 ```
 
-IAM provides baseline access only. The owning business service remains the source of truth for authorization that depends on resource scope and business workflow state.
+IAM provides baseline access only. The owning domain module remains the source of truth for authorization that depends on resource scope and workflow state.
 
 ### 4.3 Logout
 
@@ -160,7 +143,7 @@ IAM provides baseline access only. The owning business service remains the sourc
 Client
   -> authentication logout orchestration
   -> session revoke
-  -> security/audit hook when required
+  -> audit hook when required
   -> completed
 ```
 
@@ -245,13 +228,13 @@ Modules should use public contracts once a boundary is complex enough to justify
 - Endpoints are private by default; public endpoints must be explicitly declared and tested.
 - Access decisions must fail closed when required identity/session/context data is missing.
 - Disabled or suspended users must not continue using sessions indefinitely.
-- Business permissions do not replace resource ownership or workflow validation in the owning business service.
+- Business permissions do not replace resource ownership or workflow validation in the owning domain module.
 - Do not audit every UI interaction; audit only IAM/security actions that have traceability value.
 - Do not lock the IdP, token model, or multi-context behavior before the corresponding decision is resolved.
 
 ## 8. Auth Service Output Contract
 
-The long-term goal is to provide a stable authenticated request context to other services. At a logical level it contains:
+The backend provides a stable authenticated request context to sibling domain modules. At a logical level it contains:
 
 ```txt
 userId
@@ -279,9 +262,9 @@ The approved implementation baseline for Module 1 specifies:
 - Zod validation at trust boundaries;
 - Append-only PostgreSQL security audit logging.
 
-Deferred until later slices / multi-service integration:
+Not part of the modular-monolith direction:
 - Application-level JWTs / Passport;
-- Cross-service Redis caching and Kafka outbox;
+- internal HTTP, Redis coordination, Kafka or an outbox between modules;
 - Public authentication endpoints before approved slice implementation.
 
 
@@ -311,7 +294,7 @@ Module 1 is capability-complete when the system can:
 - enforce the approved 2FA/security policy;
 - resolve the active authorization context;
 - resolve roles/permissions within that context;
-- provide a consistent authenticated context to other services;
+- provide a consistent authenticated context to sibling domain modules;
 - administer users/roles/access according to IAM policy;
 - record IAM/security events that require traceability;
 - deny access safely when identity/session/context is invalid.

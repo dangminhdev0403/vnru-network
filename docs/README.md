@@ -1,16 +1,12 @@
 # Documentation Index
 
-The current repository implements Module 1, public discovery UI previews, and authenticated role UI previews. Only Module 1 has a business backend runtime.
+The repository is a product workspace with a Next.js deployable and one NestJS API modular monolith.
 
 Read in this order:
 
 1. [`../AGENTS.md`](../AGENTS.md)
-2. [`ARCHITECTURE.md`](ARCHITECTURE.md)
-3. [`RBAC_ARCHITECTURE.md`](RBAC_ARCHITECTURE.md)
-4. [`RULES.md`](RULES.md)
-5. [`API_SPEC.md`](API_SPEC.md)
-6. [`PORTAL_FOUNDATION_REFACTOR.md`](PORTAL_FOUNDATION_REFACTOR.md)
-7. Frontend: [`../frontend/docs/ARCHITECTURE.md`](../frontend/docs/ARCHITECTURE.md), [`../frontend/docs/RULES.md`](../frontend/docs/RULES.md), [`../frontend/docs/RUNTIME_UI_GUIDE.md`](../frontend/docs/RUNTIME_UI_GUIDE.md)
-8. Backend: [`../services/docs/ARCHITECTURE.md`](../services/docs/ARCHITECTURE.md), [`../services/docs/RULES.md`](../services/docs/RULES.md), [`../services/docs/SERVICE_GUIDE.md`](../services/docs/SERVICE_GUIDE.md)
+2. Architecture hub: [`../Architecture/README.md`](../Architecture/README.md)
+3. This global operational/product documentation
+4. One frontend/backend task guide selected through [`../Architecture/GUIDES.md`](../Architecture/GUIDES.md)
 
-Module 2–6 business services remain absent. Synthetic public and role-preview routes may demonstrate future network concepts, but they are not implemented backend capabilities.
+Future backend modules must be added inside the existing modular monolith, not as microservices. Retained templates or synthetic display data are not implemented backend capabilities.

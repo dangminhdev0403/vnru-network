@@ -2,12 +2,7 @@ import "server-only";
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import {
-  getCurrentSession,
-  isSystemAdministrator,
-  resolveLandingPath,
-  SESSION_COOKIE_NAME,
-} from "./server";
+import { getCurrentSession, isSystemAdministrator, resolveLandingPath, SESSION_COOKIE_NAME } from "./server";
 
 type WorkspaceSession = {
   capabilities?: unknown;
@@ -28,15 +23,9 @@ export async function requireWorkspaceSession(returnTo: string): Promise<string[
   return readCapabilities(session);
 }
 
-export async function requireWorkspaceCapability(
-  returnTo: string,
-  requiredCapabilities: string[],
-): Promise<void> {
+export async function requireMemberSession(returnTo: string): Promise<string[]> {
   const capabilities = await requireWorkspaceSession(returnTo);
-  if (isSystemAdministrator(capabilities)) {
-    redirect("/admin/access");
-  }
-  if (!requiredCapabilities.some((capability) => capabilities.includes(capability))) {
-    redirect(resolveLandingPath(capabilities));
-  }
+  if (isSystemAdministrator(capabilities)) redirect("/admin/access");
+  if (resolveLandingPath(capabilities) !== "/workspace") redirect("/account");
+  return capabilities;
 }

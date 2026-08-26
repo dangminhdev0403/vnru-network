@@ -15,18 +15,7 @@ export default auth(async function proxy(request) {
     return NextResponse.next();
   }
 
-  const legacyRoutes: Record<string, string> = {
-    "/admin/iam": "/admin/access",
-    "/workspace/collaboration/reviews": "/workspace/collaboration?view=assignments",
-    "/workspace/collaboration/opportunities": "/workspace/collaboration?view=opportunities",
-    "/workspace/collaboration/proposals": "/workspace/collaboration?view=screening",
-    "/workspace/collaboration/projects": "/workspace/collaboration?view=projects",
-    "/workspace/collaboration/reports": "/workspace/collaboration?view=reports",
-    "/workspace/reviewer/assignments": "/workspace/reviewer?view=assignments",
-    "/workspace/reviewer/reviews": "/workspace/reviewer?view=assignments",
-    "/workspace/reviewer/evaluation": "/workspace/reviewer?view=evaluation",
-    "/workspace/reviewer/history": "/workspace/reviewer?view=history",
-  };
+  const legacyRoutes: Record<string, string> = { "/admin/iam": "/admin/access" };
   const canonicalTarget = legacyRoutes[request.nextUrl.pathname];
   if (canonicalTarget) {
     const target = new URL(canonicalTarget, request.nextUrl.origin);
@@ -76,5 +65,5 @@ export default auth(async function proxy(request) {
 });
 
 export const config = {
-  matcher: ["/workspace/:path*", "/admin/:path*", "/admin/iam", "/account", "/security"],
+  matcher: ["/workspace/:path*", "/knowledge", "/experts", "/opportunities", "/admin/:path*", "/admin/iam", "/account", "/security"],
 };

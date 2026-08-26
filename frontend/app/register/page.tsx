@@ -25,7 +25,9 @@ const copy: Record<Locale, {
   note: string;
   notePlaceholder: string;
   submit: string;
-  preview: string;
+  submitting: string;
+  success: string;
+  error: string;
   privacy: string;
   hasAccount: string;
   login: string;
@@ -48,7 +50,9 @@ const copy: Record<Locale, {
     note: "Lĩnh vực quan tâm",
     notePlaceholder: "Mô tả ngắn lĩnh vực hợp tác bạn quan tâm",
     submit: "Gửi yêu cầu đăng ký",
-    preview: "Đây là bản xem trước giao diện. Yêu cầu chưa được gửi vì hệ thống chưa mở API tự đăng ký.",
+    submitting: "Đang gửi…",
+    success: "Yêu cầu đã được gửi. Quản trị viên sẽ xác minh trước khi cấp tài khoản.",
+    error: "Không thể gửi yêu cầu. Vui lòng kiểm tra thông tin hoặc thử lại sau.",
     privacy: "Thông tin của bạn chỉ được dùng để xác minh tư cách thành viên, hỗ trợ kết nối và hợp tác trong mạng lưới.",
     hasAccount: "Đã có tài khoản?",
     login: "Trở về đăng nhập",
@@ -71,7 +75,9 @@ const copy: Record<Locale, {
     note: "Область интересов",
     notePlaceholder: "Кратко опишите интересующее направление сотрудничества",
     submit: "Отправить заявку",
-    preview: "Это предварительный интерфейс. Заявка не отправлена, так как API самостоятельной регистрации ещё не открыт.",
+    submitting: "Отправка…",
+    success: "Заявка отправлена. Администратор проверит её перед созданием учётной записи.",
+    error: "Не удалось отправить заявку. Проверьте данные или повторите попытку позже.",
     privacy: "Ваши данные используются только для проверки статуса участника, поддержки связей и сотрудничества внутри сети.",
     hasAccount: "Уже есть учётная запись?",
     login: "Вернуться ко входу",
@@ -94,7 +100,9 @@ const copy: Record<Locale, {
     note: "Area of interest",
     notePlaceholder: "Briefly describe the collaboration area you are interested in",
     submit: "Submit registration request",
-    preview: "This is a UI preview. The request was not sent because self-registration API access is not yet available.",
+    submitting: "Submitting…",
+    success: "Your request was submitted. An administrator will verify it before issuing an account.",
+    error: "Unable to submit the request. Check your details or try again later.",
     privacy: "Your information is used only to verify membership eligibility and support connections and collaboration within the network.",
     hasAccount: "Already have an account?",
     login: "Return to sign in",
@@ -103,12 +111,21 @@ const copy: Record<Locale, {
 
 export default function RegisterPage() {
   const { locale } = useLocale();
-  const [showPreviewNotice, setShowPreviewNotice] = useState(false);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const t = copy[locale] ?? copy.vi;
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setShowPreviewNotice(true);
+    setStatus("submitting");
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
+    const response = await fetch("/api/membership-applications", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(Object.fromEntries(form)),
+    }).catch(() => null);
+    setStatus(response?.ok ? "success" : "error");
+    if (response?.ok) formElement.reset();
   }
 
   return (
@@ -139,7 +156,7 @@ export default function RegisterPage() {
           <h1 id="register-title" className="mt-2 text-3xl font-black tracking-tight sm:text-4xl">{t.title}</h1>
           <p className="mt-3 max-w-[58ch] text-base leading-6 text-slate-600">{t.description}</p>
 
-          {showPreviewNotice ? <p role="status" className="mt-5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-base font-semibold leading-6 text-amber-900">{t.preview}</p> : null}
+          {status === "success" || status === "error" ? <p role={status === "error" ? "alert" : "status"} className={`mt-5 rounded-xl border px-4 py-3 text-base font-semibold leading-6 ${status === "error" ? "border-red-200 bg-red-50 text-red-900" : "border-emerald-200 bg-emerald-50 text-emerald-900"}`}>{status === "error" ? t.error : t.success}</p> : null}
 
           <form onSubmit={handleSubmit} className="mt-5 grid gap-4 sm:grid-cols-2">
             <label className="block text-base font-bold text-slate-800">{t.fullName} <span className="text-red-600" aria-hidden="true">*</span>
@@ -158,7 +175,7 @@ export default function RegisterPage() {
               <textarea name="interest" rows={3} required placeholder={t.notePlaceholder} className="mt-2 w-full resize-y rounded-xl border border-slate-300 bg-white px-4 py-3 text-base leading-6 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-100" />
             </label>
             <p className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-medium leading-6 text-blue-950 sm:col-span-2">{t.privacy}</p>
-            <button type="submit" className="min-h-12 w-full rounded-xl bg-blue-700 px-5 text-base font-bold text-white shadow-[0_16px_34px_-16px_rgba(37,99,235,.9)] transition hover:bg-blue-800 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:col-span-2">{t.submit}</button>
+            <button type="submit" disabled={status === "submitting"} className="min-h-12 w-full rounded-xl bg-blue-700 px-5 text-base font-bold text-white shadow-[0_16px_34px_-16px_rgba(37,99,235,.9)] transition hover:bg-blue-800 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-wait disabled:opacity-60 sm:col-span-2">{status === "submitting" ? t.submitting : t.submit}</button>
           </form>
 
           <p className="mt-5 text-center text-sm leading-6 text-slate-600">{t.hasAccount}{" "}<Link href="/login" className="font-bold text-blue-700 underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">{t.login}</Link></p>

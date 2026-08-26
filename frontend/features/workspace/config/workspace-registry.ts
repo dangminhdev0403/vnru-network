@@ -4,7 +4,7 @@ export interface WorkspaceNavEntry {
   labelKey: string;
   icon: string;
   requiredCapabilities?: string[];
-  matchContexts?: string[];
+
 }
 
 export interface WorkspaceNavSection {
@@ -14,12 +14,6 @@ export interface WorkspaceNavSection {
   requiredCapabilities?: string[];
 }
 
-export interface WorkspaceWidget {
-  key: string;
-  labelKey: string;
-  icon: string;
-  requiredCapabilities?: string[];
-}
 
 export interface WorkspacePersona {
   key: string;
@@ -59,54 +53,7 @@ export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
       { key: "workspace_overview", href: "/workspace", labelKey: "overview", icon: "home", requiredCapabilities: [...WORKSPACE_MEMBER_CAPABILITIES] },
     ],
   },
-  {
-    key: "research",
-    labelKey: "research",
-    items: [
-      { key: "researcher_knowledge", href: "/workspace/researcher?view=knowledge", labelKey: "myKnowledge", icon: "library_books", requiredCapabilities: ["collab.proposals.create"] },
-      { key: "researcher_collaboration", href: "/workspace/researcher?view=collaboration", labelKey: "researchCollaboration", icon: "sync_alt", requiredCapabilities: ["collab.proposals.create"] },
-      { key: "researcher_projects", href: "/workspace/researcher?view=projects", labelKey: "myProjects", icon: "view_in_ar", requiredCapabilities: ["collab.proposals.create"] },
-      { key: "researcher_academic", href: "/workspace/researcher?view=academic", labelKey: "academicExchange", icon: "menu_book", requiredCapabilities: ["collab.proposals.create"] },
-    ],
-  },
-  {
-    key: "review",
-    labelKey: "review",
-    items: [
-      { key: "reviewer_assignments", href: "/workspace/reviewer?view=assignments", labelKey: "assignedDossiers", icon: "assignment", requiredCapabilities: ["reviews.assignments.view_assigned"] },
-      { key: "reviewer_evaluation", href: "/workspace/reviewer?view=evaluation", labelKey: "evaluationWorkspace", icon: "rate_review", requiredCapabilities: ["reviews.assignments.view_assigned"] },
-      { key: "reviewer_history", href: "/workspace/reviewer?view=history", labelKey: "reviewHistory", icon: "history", requiredCapabilities: ["reviews.assignments.view_assigned"] },
-    ],
-  },
-  {
-    key: "organization",
-    labelKey: "organizationSection",
-    items: [
-      { key: "organization_endorsements", href: "/workspace/organization?view=endorsements", labelKey: "endorsementQueue", icon: "fact_check", requiredCapabilities: ["collab.proposals.endorse"] },
-      { key: "organization_projects", href: "/workspace/organization?view=projects", labelKey: "relatedProjects", icon: "account_tree", requiredCapabilities: ["collab.proposals.endorse"] },
-      { key: "organization_activity", href: "/workspace/organization?view=activity", labelKey: "organizationActivity", icon: "monitoring", requiredCapabilities: ["collab.proposals.endorse"] },
-    ],
-  },
-  {
-    key: "coordination",
-    labelKey: "coordination",
-    items: [
-      { key: "manager_opportunities", href: "/workspace/collaboration?view=opportunities", labelKey: "opportunityManagement", icon: "campaign", requiredCapabilities: ["collab.opportunities.create", "collab.opportunities.publish"] },
-      { key: "manager_screening", href: "/workspace/collaboration?view=screening", labelKey: "proposalScreening", icon: "rule", requiredCapabilities: ["collab.proposals.screen"] },
-      { key: "manager_assignments", href: "/workspace/collaboration?view=assignments", labelKey: "reviewAssignments", icon: "assignment_ind", requiredCapabilities: ["reviews.assignments.manage"] },
-      { key: "manager_projects", href: "/workspace/collaboration?view=projects", labelKey: "programProjects", icon: "account_tree", requiredCapabilities: ["collab.opportunities.create"] },
-      { key: "manager_reports", href: "/workspace/collaboration?view=reports", labelKey: "reportApprovals", icon: "task", requiredCapabilities: ["projects.reports.approve"] },
-    ],
-  },
-  {
-    key: "decision",
-    labelKey: "decisionSection",
-    items: [
-      { key: "decision_queue", href: "/workspace/decisions?view=queue", labelKey: "decisionQueue", icon: "pending_actions", requiredCapabilities: ["collab.decisions.issue_foundation"] },
-      { key: "decision_history", href: "/workspace/decisions?view=history", labelKey: "decisionHistory", icon: "history", requiredCapabilities: ["collab.decisions.issue_foundation"] },
-      { key: "decision_projects", href: "/workspace/decisions?view=projects", labelKey: "decisionProjects", icon: "view_in_ar", requiredCapabilities: ["collab.decisions.issue_foundation"] },
-    ],
-  },
+
   {
     key: "administration",
     labelKey: "administration",
@@ -134,7 +81,7 @@ export function hasCapability(userCapabilities: string[], required?: string | st
 
 export function filterNavSections(userCapabilities: string[] = []): WorkspaceNavSection[] {
   const allowedSections = hasCapability(userCapabilities, ["iam.roles.manage", "iam.users.manage"])
-    ? WORKSPACE_NAV_REGISTRY.filter((section) => !["workspace_overview", "research", "review", "organization", "coordination", "decision"].includes(section.key))
+    ? WORKSPACE_NAV_REGISTRY.filter((section) => section.key !== "workspace_overview")
     : WORKSPACE_NAV_REGISTRY;
 
   return allowedSections.filter((section) =>
