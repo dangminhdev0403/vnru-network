@@ -8,6 +8,7 @@ import { z } from "zod";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
+import { ThreeHeroBackground } from "./ThreeHeroBackground";
 
 const HERO_BANNERS = [
   {
@@ -107,7 +108,7 @@ export const HOME_COPY: Record<
       }[];
     };
     stats: {
-      val: string;
+      val: string | number;
       lbl: string;
       icon: string;
       tone: "blue" | "cyan" | "emerald" | "purple" | "amber";
@@ -1107,87 +1108,227 @@ type NetworkStat = (typeof HOME_COPY)[Locale]["stats"][number];
 
 const NETWORK_TONE_STYLES = {
   blue: {
-    shell: "from-blue-400 via-blue-500 to-blue-700",
-    face: "from-blue-50 to-white",
-    icon: "text-blue-600",
-    value: "text-blue-700",
-    glow: "shadow-[0_14px_34px_-18px_rgba(37,99,235,0.8)]",
+    glow: "drop-shadow-[0_16px_22px_rgba(30,100,235,0.3)]",
+    accent: "#2d8cff",
+    faceStart: "#3db6ff",
+    faceEnd: "#1554db",
   },
   cyan: {
-    shell: "from-cyan-400 via-cyan-500 to-blue-600",
-    face: "from-cyan-50 to-white",
-    icon: "text-cyan-700",
-    value: "text-cyan-800",
-    glow: "shadow-[0_14px_34px_-18px_rgba(6,182,212,0.8)]",
+    glow: "drop-shadow-[0_16px_22px_rgba(8,168,198,0.3)]",
+    accent: "#17c5dd",
+    faceStart: "#31dce8",
+    faceEnd: "#0794b6",
   },
   emerald: {
-    shell: "from-emerald-400 via-emerald-500 to-emerald-700",
-    face: "from-emerald-50 to-white",
-    icon: "text-emerald-600",
-    value: "text-emerald-700",
-    glow: "shadow-[0_14px_34px_-18px_rgba(16,185,129,0.8)]",
+    glow: "drop-shadow-[0_16px_22px_rgba(18,174,98,0.3)]",
+    accent: "#32d486",
+    faceStart: "#5ce49a",
+    faceEnd: "#159f5b",
   },
   purple: {
-    shell: "from-violet-400 via-violet-500 to-indigo-700",
-    face: "from-violet-50 to-white",
-    icon: "text-violet-600",
-    value: "text-violet-700",
-    glow: "shadow-[0_14px_34px_-18px_rgba(124,58,237,0.8)]",
+    glow: "drop-shadow-[0_16px_22px_rgba(112,66,218,0.3)]",
+    accent: "#8c62f5",
+    faceStart: "#a97bff",
+    faceEnd: "#6438d0",
   },
   amber: {
-    shell: "from-amber-300 via-amber-500 to-orange-600",
-    face: "from-amber-50 to-white",
-    icon: "text-amber-700",
-    value: "text-amber-800",
-    glow: "shadow-[0_14px_34px_-18px_rgba(245,158,11,0.8)]",
+    glow: "drop-shadow-[0_16px_22px_rgba(238,139,19,0.3)]",
+    accent: "#ffae2d",
+    faceStart: "#ffc64d",
+    faceEnd: "#ec7f16",
   },
 } as const;
 
-const NETWORK_STAT_POSITIONS = [
-  "left-1/2 top-0 -translate-x-1/2",
-  "left-[2%] top-[31%]",
-  "right-[2%] top-[31%]",
-  "left-[17%] bottom-0",
-  "right-[17%] bottom-0",
+const NETWORK_ROUNDED_PENTAGON_PATH =
+  "M 8 -80 L 72 -34 Q 82 -27 79 -16 L 55 61 Q 52 72 41 72 L -41 72 Q -52 72 -55 61 L -79 -16 Q -82 -27 -72 -34 L -8 -80 Q 0 -86 8 -80 Z";
+
+const NETWORK_DESKTOP_NODES = [
+  {
+    connector: [600, 175, 600, 237],
+    center: [600, 100],
+    rotation: 180,
+    scale: 0.9,
+    content: [535, 40, 130, 122],
+  },
+  {
+    connector: [431, 316, 493, 316],
+    center: [346, 316],
+    rotation: 90,
+    scale: 1.02,
+    content: [269, 242, 154, 148],
+  },
+  {
+    connector: [769, 316, 707, 316],
+    center: [854, 316],
+    rotation: -90,
+    scale: 1.02,
+    content: [777, 242, 154, 148],
+  },
+  {
+    connector: [478.3, 475, 532, 444],
+    center: [405, 517],
+    rotation: 60,
+    scale: 1.02,
+    content: [328, 442, 154, 148],
+  },
+  {
+    connector: [721.7, 475, 668, 444],
+    center: [795, 517],
+    rotation: -60,
+    scale: 1.02,
+    content: [718, 442, 154, 148],
+  },
 ] as const;
+
+function NetworkIconGlyph({
+  icon,
+  className = "size-7",
+}: Readonly<{ icon: string; className?: string }>) {
+  const shared = {
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+
+  if (icon === "public") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <circle cx="12" cy="12" r="8.25" {...shared} />
+        <path
+          d="M3.9 9.25h16.2M3.9 14.75h16.2M12 3.75c2.1 2.3 3.15 5.05 3.15 8.25S14.1 17.95 12 20.25C9.9 17.95 8.85 15.2 8.85 12S9.9 6.05 12 3.75Z"
+          {...shared}
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "groups") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <circle cx="8" cy="8" r="2.4" {...shared} />
+        <circle cx="16" cy="8.5" r="2.1" {...shared} />
+        <path
+          d="M3.5 19c.35-3.3 1.95-5.1 4.5-5.1s4.15 1.8 4.5 5.1M13.15 14.2c.75-.45 1.7-.65 2.85-.65 2.35 0 3.85 1.55 4.2 4.45"
+          {...shared}
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "hub") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <circle cx="12" cy="12" r="2.2" {...shared} />
+        <circle cx="12" cy="4" r="1.75" {...shared} />
+        <circle cx="20" cy="12" r="1.75" {...shared} />
+        <circle cx="12" cy="20" r="1.75" {...shared} />
+        <circle cx="4" cy="12" r="1.75" {...shared} />
+        <path
+          d="M12 5.75v4.05M18.25 12H14.2M12 14.2v4.05M9.8 12H5.75"
+          {...shared}
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "science") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <path
+          d="M9 3.75h6M10 3.75v5.1l-5.2 8.7a1.8 1.8 0 0 0 1.55 2.7h11.3a1.8 1.8 0 0 0 1.55-2.7L14 8.85v-5.1M7.75 14.6h8.5"
+          {...shared}
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "account_balance") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <path
+          d="m3.5 9 8.5-4.5L20.5 9H3.5ZM5.25 19.5h13.5M6.5 10.5V17M10.2 10.5V17M13.8 10.5V17M17.5 10.5V17"
+          {...shared}
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "network") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <path
+          d="m12 3.25 7 4.1v9.3l-7 4.1-7-4.1v-9.3l7-4.1Zm0 0v17.5M5 7.35l14 9.3M19 7.35 5 16.65"
+          {...shared}
+        />
+        <circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path
+        d="m3.5 9 8.5-4.5L20.5 9 12 13.5 3.5 9ZM7 11.25v4.5c2.8 2 7.2 2 10 0v-4.5M20.5 9v5"
+        {...shared}
+      />
+    </svg>
+  );
+}
 
 function NetworkStatNode({
   stat,
-  compact = false,
   className = "",
 }: Readonly<{
   stat: NetworkStat;
-  compact?: boolean;
   className?: string;
 }>) {
   const styles = NETWORK_TONE_STYLES[stat.tone];
 
   return (
-    <div
-      className={`flex w-full flex-col items-center text-center lg:w-[190px] ${className}`}
-    >
+    <div className={`flex w-full justify-center ${className}`}>
       <div
-        className={`relative grid place-items-center bg-gradient-to-br [clip-path:polygon(25%_0%,75%_0%,100%_50%,75%_100%,25%_100%,0%_50%)] ${
-          compact ? "h-20 w-24" : "h-24 w-28"
-        } ${styles.shell} ${styles.glow}`}
+        className={`relative h-[156px] w-[164px] max-w-full ${styles.glow}`}
       >
-        <span
-          className={`absolute inset-[3px] bg-gradient-to-br [clip-path:polygon(25%_0%,75%_0%,100%_50%,75%_100%,25%_100%,0%_50%)] ${styles.face}`}
-          aria-hidden="true"
-        />
-        <span
-          className={`material-symbols-outlined relative text-3xl ${styles.icon}`}
+        <svg
+          viewBox="-90 -90 180 180"
+          className="absolute inset-0 size-full overflow-visible"
           aria-hidden="true"
         >
-          {stat.icon}
-        </span>
+          <defs>
+            <linearGradient
+              id={`network-mobile-face-${stat.tone}`}
+              x1="-70"
+              y1="-70"
+              x2="65"
+              y2="70"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0" stopColor={styles.faceStart} />
+              <stop offset="1" stopColor={styles.faceEnd} />
+            </linearGradient>
+          </defs>
+          <path
+            d={NETWORK_ROUNDED_PENTAGON_PATH}
+            fill={`url(#network-mobile-face-${stat.tone})`}
+            stroke="#ffffff"
+            strokeWidth="6"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center px-4 pb-1 text-center text-white">
+          <div className="flex max-h-[124px] flex-col items-center justify-center">
+            <NetworkIconGlyph icon={stat.icon} className="size-6" />
+            <strong className="mt-1 text-[26px] font-black leading-none tracking-[-0.03em]">
+              {stat.val}
+            </strong>
+            <span className="mt-1 max-w-[128px] text-[14px] font-bold leading-[1.18] text-white/95">
+              {stat.lbl}
+            </span>
+          </div>
+        </div>
       </div>
-      <strong className={`mt-2 font-black ${compact ? "text-xl" : "text-2xl"} ${styles.value}`}>
-        {stat.val}
-      </strong>
-      <span className="mt-0.5 max-w-[190px] text-sm font-semibold leading-snug text-slate-600">
-        {stat.lbl}
-      </span>
     </div>
   );
 }
@@ -1197,37 +1338,46 @@ function NetworkCore({
   country1,
   hyphen,
   country2,
-  compact = false,
 }: Readonly<{
   titleMain: string;
   country1: string;
   hyphen: string;
   country2: string;
-  compact?: boolean;
 }>) {
   return (
-    <div
-      className={`relative grid place-items-center bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 p-1 [clip-path:polygon(25%_0%,75%_0%,100%_50%,75%_100%,25%_100%,0%_50%)] shadow-[0_24px_55px_-25px_rgba(37,99,235,0.85)] ${
-        compact ? "h-40 w-48" : "h-52 w-60"
-      }`}
-    >
-      <div className="grid size-full place-items-center bg-gradient-to-br from-white via-blue-50 to-blue-100 px-8 text-center [clip-path:polygon(25%_0%,75%_0%,100%_50%,75%_100%,25%_100%,0%_50%)]">
+    <div className="relative h-[184px] w-[200px] drop-shadow-[0_18px_25px_rgba(31,99,233,0.24)]">
+      <svg
+        viewBox="-100 -95 200 190"
+        className="absolute inset-0 size-full overflow-visible"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="network-mobile-core" x1="0" y1="-90" x2="0" y2="80" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#ffffff" />
+            <stop offset="1" stopColor="#e8eef8" />
+          </linearGradient>
+        </defs>
+        <g transform="scale(1.02)">
+          <path
+            d={NETWORK_ROUNDED_PENTAGON_PATH}
+            fill="url(#network-mobile-core)"
+            stroke="#4f91f5"
+            strokeWidth="4"
+            strokeLinejoin="round"
+          />
+        </g>
+      </svg>
+      <div className="absolute inset-0 grid place-items-center px-7 pb-1 text-center">
         <div>
-          <span
-            className="material-symbols-outlined text-4xl text-blue-600"
-            aria-hidden="true"
-          >
-            school
-          </span>
-          <h2
-            className={`mt-1 font-black leading-tight text-blue-950 ${
-              compact ? "text-base" : "text-xl"
-            }`}
-          >
+          <NetworkIconGlyph
+            icon="network"
+            className="mx-auto size-7 text-blue-600"
+          />
+          <h2 className="mt-2 font-serif text-base font-bold leading-tight text-[#0a2450]">
             {titleMain}
           </h2>
-          <p className="mt-1 text-base font-extrabold text-blue-700">
-            {country1} {hyphen} {country2}
+          <p className="mt-1 text-lg font-black leading-tight text-[#071a33]">
+            {country1} <span className="text-blue-500">{hyphen}</span> {country2}
           </p>
         </div>
       </div>
@@ -1242,7 +1392,7 @@ function NetworkStatsInfographic({
   hyphen,
   country2,
 }: Readonly<{
-  stats: NetworkStat[];
+  stats: readonly NetworkStat[];
   titleMain: string;
   country1: string;
   hyphen: string;
@@ -1253,30 +1403,47 @@ function NetworkStatsInfographic({
   return (
     <section
       className="px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8"
-      aria-label={accessibleLabel}
+      aria-labelledby="network-stats-heading"
     >
-      <div className="relative mx-auto max-w-[1460px] overflow-hidden rounded-[28px] border border-blue-100 bg-gradient-to-b from-white via-blue-50/70 to-slate-50 px-5 py-10 shadow-[0_24px_65px_-45px_rgba(30,64,175,0.55)] sm:px-8">
+      <h2 id="network-stats-heading" className="sr-only">
+        {accessibleLabel}
+      </h2>
+      <ul className="sr-only">
+        {stats.map((stat) => (
+          <li key={stat.lbl}>
+            {stat.val} {stat.lbl}
+          </li>
+        ))}
+      </ul>
+
+      <div className="relative mx-auto max-w-[1460px] overflow-hidden rounded-[30px] border border-blue-100/80 bg-[#eff6ff] shadow-[0_30px_80px_-48px_rgba(31,99,233,0.5)]">
+        <Image
+          src="/images/network-stats-bg.png"
+          alt=""
+          fill
+          sizes="(min-width: 1536px) 1460px, 100vw"
+          className="object-cover"
+          aria-hidden="true"
+        />
         <div
-          className="pointer-events-none absolute inset-x-[12%] top-[18%] h-[52%] rounded-full bg-blue-300/15 blur-3xl"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.04)_0%,rgba(239,246,255,0.12)_46%,rgba(224,236,255,0.42)_100%)]"
           aria-hidden="true"
         />
 
-        <div className="relative lg:hidden">
+        <div className="relative px-3 py-10 sm:px-8 xl:hidden" aria-hidden="true">
           <div className="flex justify-center">
             <NetworkCore
               titleMain={titleMain}
               country1={country1}
               hyphen={hyphen}
               country2={country2}
-              compact
             />
           </div>
-          <div className="mt-9 grid grid-cols-2 gap-x-4 gap-y-8">
+          <div className="mx-auto mt-8 grid max-w-md grid-cols-2 gap-x-2 gap-y-5 sm:gap-x-5">
             {stats.map((stat, index) => (
               <NetworkStatNode
                 key={stat.lbl}
                 stat={stat}
-                compact
                 className={
                   index === stats.length - 1 ? "col-span-2 mx-auto" : ""
                 }
@@ -1285,65 +1452,225 @@ function NetworkStatsInfographic({
           </div>
         </div>
 
-        <div className="relative mx-auto hidden min-h-[550px] max-w-[1120px] lg:block">
-          <svg
-            viewBox="0 0 1000 550"
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-0 size-full"
-            aria-hidden="true"
-          >
-            <ellipse
-              cx="500"
-              cy="295"
-              rx="350"
-              ry="215"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeDasharray="5 9"
-              className="text-blue-300/80"
-            />
-            <path
-              d="M500 285 L500 72 M500 285 L122 224 M500 285 L878 224 M500 285 L265 460 M500 285 L735 460"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="text-blue-300"
-            />
-            <path
-              d="M126 224 Q500 18 874 224 M265 460 Q500 535 735 460"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              className="text-blue-200"
-            />
-            {[72, 224, 224, 460, 460].map((cy, index) => (
-              <circle
-                key={`${cy}-${index}`}
-                cx={[500, 122, 878, 265, 735][index]}
-                cy={cy}
-                r="5"
-                className="fill-blue-500"
+        <div
+          className="relative hidden aspect-[1200/675] xl:block"
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 1200 675" className="block size-full">
+            <defs>
+              <path
+                id="network-rounded-pentagon"
+                d={NETWORK_ROUNDED_PENTAGON_PATH}
               />
-            ))}
+              <linearGradient id="network-face-blue" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#3db6ff" />
+                <stop offset="0.55" stopColor="#2379f2" />
+                <stop offset="1" stopColor="#1554db" />
+              </linearGradient>
+              <linearGradient id="network-face-cyan" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#31dce8" />
+                <stop offset="0.55" stopColor="#15b9d0" />
+                <stop offset="1" stopColor="#0794b6" />
+              </linearGradient>
+              <linearGradient id="network-face-emerald" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#5ce49a" />
+                <stop offset="0.55" stopColor="#2bc778" />
+                <stop offset="1" stopColor="#159f5b" />
+              </linearGradient>
+              <linearGradient id="network-face-purple" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#a97bff" />
+                <stop offset="0.55" stopColor="#8154ed" />
+                <stop offset="1" stopColor="#6438d0" />
+              </linearGradient>
+              <linearGradient id="network-face-amber" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#ffc64d" />
+                <stop offset="0.55" stopColor="#f5a225" />
+                <stop offset="1" stopColor="#ec7f16" />
+              </linearGradient>
+              <linearGradient id="network-core-face" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#ffffff" />
+                <stop offset="0.62" stopColor="#f8fbff" />
+                <stop offset="1" stopColor="#e8eef8" />
+              </linearGradient>
+              <filter id="network-node-shadow" x="-35%" y="-35%" width="170%" height="190%">
+                <feDropShadow
+                  dx="0"
+                  dy="10"
+                  stdDeviation="11"
+                  floodColor="#1f63e9"
+                  floodOpacity="0.24"
+                />
+                <feDropShadow
+                  dx="0"
+                  dy="0"
+                  stdDeviation="5"
+                  floodColor="#ffffff"
+                  floodOpacity="0.9"
+                />
+              </filter>
+              <filter id="network-core-shadow" x="-35%" y="-35%" width="170%" height="190%">
+                <feDropShadow
+                  dx="0"
+                  dy="18"
+                  stdDeviation="18"
+                  floodColor="#1f63e9"
+                  floodOpacity="0.28"
+                />
+              </filter>
+              <filter id="network-connector-glow" x="-40%" y="-80%" width="180%" height="260%">
+                <feGaussianBlur stdDeviation="4" />
+              </filter>
+            </defs>
+
+            <g fill="none" stroke="#ffffff" strokeLinecap="round">
+              <ellipse cx="600" cy="346" rx="236" ry="224" strokeOpacity="0.72" strokeWidth="1.6" />
+              <ellipse cx="600" cy="346" rx="274" ry="258" strokeOpacity="0.42" strokeWidth="1.2" />
+              <ellipse
+                cx="600"
+                cy="346"
+                rx="206"
+                ry="195"
+                stroke="#67e8f9"
+                strokeDasharray="2 8"
+                strokeOpacity="0.7"
+                strokeWidth="2"
+              />
+            </g>
+
+            {NETWORK_DESKTOP_NODES.map((node, index) => {
+              const stat = stats[index];
+              if (!stat) return null;
+              const styles = NETWORK_TONE_STYLES[stat.tone];
+
+              return (
+                <g key={`connector-${stat.lbl}`}>
+                  <line
+                    x1={node.connector[0]}
+                    y1={node.connector[1]}
+                    x2={node.connector[2]}
+                    y2={node.connector[3]}
+                    stroke="#bff7ff"
+                    strokeOpacity="0.94"
+                    strokeWidth="20"
+                    strokeLinecap="round"
+                    filter="url(#network-connector-glow)"
+                  />
+                  <line
+                    x1={node.connector[0]}
+                    y1={node.connector[1]}
+                    x2={node.connector[2]}
+                    y2={node.connector[3]}
+                    stroke="#ffffff"
+                    strokeOpacity="0.96"
+                    strokeWidth="10"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1={node.connector[0]}
+                    y1={node.connector[1]}
+                    x2={node.connector[2]}
+                    y2={node.connector[3]}
+                    stroke={styles.accent}
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                  />
+                </g>
+              );
+            })}
+
+            {stats.map((stat, index) => {
+              const node = NETWORK_DESKTOP_NODES[index];
+              if (!node) return null;
+
+              return (
+                <g key={stat.lbl}>
+                  <g
+                    transform={`translate(${node.center[0]} ${node.center[1]}) rotate(${node.rotation}) scale(${node.scale})`}
+                  >
+                    <use
+                      href="#network-rounded-pentagon"
+                      fill={`url(#network-face-${stat.tone})`}
+                      stroke="#ffffff"
+                      strokeWidth="6"
+                      strokeLinejoin="round"
+                      vectorEffect="non-scaling-stroke"
+                      filter="url(#network-node-shadow)"
+                    />
+                  </g>
+                  <foreignObject
+                    x={node.content[0]}
+                    y={node.content[1]}
+                    width={node.content[2]}
+                    height={node.content[3]}
+                  >
+                    <div className="flex size-full flex-col items-center justify-center px-2 text-center text-white drop-shadow-sm">
+                      <NetworkIconGlyph icon={stat.icon} className="size-6" />
+                      <strong className="mt-1 text-[30px] font-black leading-none tracking-[-0.04em]">
+                        {stat.val}
+                      </strong>
+                      <span className="mt-1.5 max-w-[126px] text-[14px] font-bold leading-[1.16] text-white/95">
+                        {stat.lbl}
+                      </span>
+                    </div>
+                  </foreignObject>
+                </g>
+              );
+            })}
+
+            {NETWORK_DESKTOP_NODES.map((node, index) => {
+              const stat = stats[index];
+              if (!stat) return null;
+              const styles = NETWORK_TONE_STYLES[stat.tone];
+
+              return (
+                <g key={`${stat.lbl}-endpoint`}>
+                  <circle
+                    cx={node.connector[0]}
+                    cy={node.connector[1]}
+                    r="9"
+                    fill="#ffffff"
+                    fillOpacity="0.96"
+                    stroke="#bff7ff"
+                    strokeWidth="3"
+                  />
+                  <circle
+                    cx={node.connector[0]}
+                    cy={node.connector[1]}
+                    r="3.5"
+                    fill={styles.accent}
+                  />
+                </g>
+              );
+            })}
+            <g transform="translate(600 350)">
+              <use
+                href="#network-rounded-pentagon"
+                fill="url(#network-core-face)"
+                stroke="#4f91f5"
+                strokeWidth="6"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+                transform="scale(1.36)"
+                filter="url(#network-core-shadow)"
+              />
+            </g>
+            <foreignObject x="505" y="276" width="190" height="150">
+              <div className="flex size-full flex-col items-center justify-center px-4 text-center">
+                <NetworkIconGlyph
+                  icon="network"
+                  className="size-8 text-[#2676ee]"
+                />
+                <h2 className="mt-2 font-serif text-[19px] font-bold leading-tight text-[#0a2450]">
+                  {titleMain}
+                </h2>
+                <p className="mt-1 text-[27px] font-black leading-none tracking-[-0.035em] text-[#071a33]">
+                  {country1}{" "}
+                  <span className="text-[#2d7ef1]">{hyphen}</span>{" "}
+                  {country2}
+                </p>
+              </div>
+            </foreignObject>
           </svg>
-
-          {stats.map((stat, index) => (
-            <NetworkStatNode
-              key={stat.lbl}
-              stat={stat}
-              className={`absolute ${NETWORK_STAT_POSITIONS[index]}`}
-            />
-          ))}
-
-          <div className="absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2">
-            <NetworkCore
-              titleMain={titleMain}
-              country1={country1}
-              hyphen={hyphen}
-              country2={country2}
-            />
-          </div>
         </div>
       </div>
     </section>
@@ -1782,6 +2109,12 @@ export function GuestHomeV2({
             className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-full bg-[linear-gradient(90deg,rgba(3,10,24,0.66)_0%,rgba(3,10,24,0.50)_48%,rgba(3,10,24,0.16)_76%,transparent_100%)] sm:w-[78%] lg:w-[68%]"
             aria-hidden="true"
           />
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 hidden opacity-70 md:block"
+            aria-hidden="true"
+          >
+            <ThreeHeroBackground />
+          </div>
 
           <div className="mx-auto flex min-h-[560px] max-w-[1460px] items-center px-4 py-12 sm:min-h-[620px] sm:px-6 sm:py-16 lg:px-8">
             <div className="mr-auto w-full max-w-[760px] text-left">

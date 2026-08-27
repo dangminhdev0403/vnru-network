@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@dangminhdev04032005/query-resource": "0.1.1",
+    "@designcodeio/threeui": "1.1.0",
     "@tanstack/react-query": "5.101.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -24,6 +25,7 @@
     "react-i18next": "^17.0.11",
     "sweetalert2": "^11.26.25",
     "tailwind-merge": "^3.6.0",
+    "three": "0.183.2",
     "zod": "^4.4.3",
     "zustand": "^5.0.15"
   },

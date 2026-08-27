@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Noto_Sans, Noto_Serif } from "next/font/google";
 import QueryProvider from "../components/providers/QueryProvider";
+import "@designcodeio/threeui/style.css";
 import "./globals.css";
 
 const beVietnamPro = Be_Vietnam_Pro({
