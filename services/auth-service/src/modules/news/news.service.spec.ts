@@ -27,7 +27,19 @@ describe('NewsService', () => {
     });
   });
 
+  it('rejects publishing while the cover upload is unfinished', async () => {
+    prisma.newsArticle.findFirst.mockResolvedValue({ coverImageUrl: null });
+
+    await expect(service.publish('article-1', true)).rejects.toThrow(
+      'Cover image upload must finish before publishing',
+    );
+    expect(prisma.newsArticle.update).not.toHaveBeenCalled();
+  });
+
   it('publishes featured news with a server timestamp', async () => {
+    prisma.newsArticle.findFirst.mockResolvedValue({
+      coverImageUrl: 'https://cdn/banner.webp',
+    });
     prisma.newsArticle.update.mockResolvedValue({ id: 'article-1' });
 
     await service.publish('article-1', true);

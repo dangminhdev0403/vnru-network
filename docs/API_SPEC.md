@@ -18,6 +18,8 @@ Implemented API families:
 
 News media is uploaded only through the backend. Frontend code must not sign Cloudinary requests, hold Cloudinary secrets, transform image binaries, or implement a parallel storage path.
 
+Create/update is authoritative and returns without waiting for media. The client uploads media independently, then patches the returned Cloudinary URL onto that article. Upload failure leaves the article as a retryable draft; publishing is rejected until `coverImageUrl` exists. This temporary client-managed task does not survive tab close/reload; add a durable backend queue only when that behavior is required.
+
 Required backend runtime secrets: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`. Keep values only in ignored/runtime environment files; never commit or expose them to the browser.
 
 Membership application body:

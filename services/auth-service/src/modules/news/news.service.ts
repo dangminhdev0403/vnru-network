@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 export const NEWS_PRISMA = 'NEWS_PRISMA';
 export type NewsLocale = 'VI' | 'EN' | 'RU';
@@ -136,7 +141,16 @@ export class NewsService {
     });
   }
 
-  publish(id: string, isFeatured: boolean) {
+  async publish(id: string, isFeatured: boolean) {
+    const article = await this.prisma.newsArticle.findFirst({
+      where: { id },
+      select: { coverImageUrl: true },
+    });
+    if (!article) throw new NotFoundException('News article not found');
+    if (!article.coverImageUrl)
+      throw new BadRequestException(
+        'Cover image upload must finish before publishing',
+      );
     return this.prisma.newsArticle.update({
       where: { id },
       data: { status: 'PUBLISHED', publishedAt: new Date(), isFeatured },
