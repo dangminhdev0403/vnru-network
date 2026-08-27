@@ -8,7 +8,7 @@ import { z } from "zod";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
-import { ThreeHeroBackground } from "./ThreeHeroBackground";
+import { ThreeContentBackground } from "./ThreeHeroBackground";
 
 const HERO_BANNERS = [
   {
@@ -1288,9 +1288,7 @@ function NetworkStatNode({
 
   return (
     <div className={`flex w-full justify-center ${className}`}>
-      <div
-        className={`relative h-[156px] w-[164px] max-w-full ${styles.glow}`}
-      >
+      <div className={`relative h-[156px] w-[164px] max-w-full ${styles.glow}`}>
         <svg
           viewBox="-90 -90 180 180"
           className="absolute inset-0 size-full overflow-visible"
@@ -1352,7 +1350,14 @@ function NetworkCore({
         aria-hidden="true"
       >
         <defs>
-          <linearGradient id="network-mobile-core" x1="0" y1="-90" x2="0" y2="80" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id="network-mobile-core"
+            x1="0"
+            y1="-90"
+            x2="0"
+            y2="80"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop offset="0" stopColor="#ffffff" />
             <stop offset="1" stopColor="#e8eef8" />
           </linearGradient>
@@ -1361,8 +1366,15 @@ function NetworkCore({
           <path
             d={NETWORK_ROUNDED_PENTAGON_PATH}
             fill="url(#network-mobile-core)"
+            stroke="#ffffff"
+            strokeWidth="10"
+            strokeLinejoin="round"
+          />
+          <path
+            d={NETWORK_ROUNDED_PENTAGON_PATH}
+            fill="url(#network-mobile-core)"
             stroke="#4f91f5"
-            strokeWidth="4"
+            strokeWidth="3"
             strokeLinejoin="round"
           />
         </g>
@@ -1377,7 +1389,8 @@ function NetworkCore({
             {titleMain}
           </h2>
           <p className="mt-1 text-lg font-black leading-tight text-[#071a33]">
-            {country1} <span className="text-blue-500">{hyphen}</span> {country2}
+            {country1} <span className="text-blue-500">{hyphen}</span>{" "}
+            {country2}
           </p>
         </div>
       </div>
@@ -1426,11 +1439,14 @@ function NetworkStatsInfographic({
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.04)_0%,rgba(239,246,255,0.12)_46%,rgba(224,236,255,0.42)_100%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.04)_0%,rgba(239,246,255,0.12)_46%,rgba(224,236,255,0.42)_100%)] xl:bg-[radial-gradient(circle_at_50%_46%,rgba(37,99,235,0.18)_0%,rgba(20,74,157,0.28)_54%,rgba(7,26,51,0.46)_100%)]"
           aria-hidden="true"
         />
 
-        <div className="relative px-3 py-10 sm:px-8 xl:hidden" aria-hidden="true">
+        <div
+          className="relative px-3 py-10 sm:px-8 xl:hidden"
+          aria-hidden="true"
+        >
           <div className="flex justify-center">
             <NetworkCore
               titleMain={titleMain}
@@ -1462,37 +1478,79 @@ function NetworkStatsInfographic({
                 id="network-rounded-pentagon"
                 d={NETWORK_ROUNDED_PENTAGON_PATH}
               />
-              <linearGradient id="network-face-blue" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient
+                id="network-face-blue"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
                 <stop offset="0" stopColor="#3db6ff" />
                 <stop offset="0.55" stopColor="#2379f2" />
                 <stop offset="1" stopColor="#1554db" />
               </linearGradient>
-              <linearGradient id="network-face-cyan" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient
+                id="network-face-cyan"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
                 <stop offset="0" stopColor="#31dce8" />
                 <stop offset="0.55" stopColor="#15b9d0" />
                 <stop offset="1" stopColor="#0794b6" />
               </linearGradient>
-              <linearGradient id="network-face-emerald" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient
+                id="network-face-emerald"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
                 <stop offset="0" stopColor="#5ce49a" />
                 <stop offset="0.55" stopColor="#2bc778" />
                 <stop offset="1" stopColor="#159f5b" />
               </linearGradient>
-              <linearGradient id="network-face-purple" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient
+                id="network-face-purple"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
                 <stop offset="0" stopColor="#a97bff" />
                 <stop offset="0.55" stopColor="#8154ed" />
                 <stop offset="1" stopColor="#6438d0" />
               </linearGradient>
-              <linearGradient id="network-face-amber" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient
+                id="network-face-amber"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
                 <stop offset="0" stopColor="#ffc64d" />
                 <stop offset="0.55" stopColor="#f5a225" />
                 <stop offset="1" stopColor="#ec7f16" />
               </linearGradient>
-              <linearGradient id="network-core-face" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient
+                id="network-core-face"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
                 <stop offset="0" stopColor="#ffffff" />
                 <stop offset="0.62" stopColor="#f8fbff" />
                 <stop offset="1" stopColor="#e8eef8" />
               </linearGradient>
-              <filter id="network-node-shadow" x="-35%" y="-35%" width="170%" height="190%">
+              <filter
+                id="network-node-shadow"
+                x="-35%"
+                y="-35%"
+                width="170%"
+                height="190%"
+              >
                 <feDropShadow
                   dx="0"
                   dy="10"
@@ -1508,7 +1566,13 @@ function NetworkStatsInfographic({
                   floodOpacity="0.9"
                 />
               </filter>
-              <filter id="network-core-shadow" x="-35%" y="-35%" width="170%" height="190%">
+              <filter
+                id="network-core-shadow"
+                x="-35%"
+                y="-35%"
+                width="170%"
+                height="190%"
+              >
                 <feDropShadow
                   dx="0"
                   dy="18"
@@ -1517,14 +1581,34 @@ function NetworkStatsInfographic({
                   floodOpacity="0.28"
                 />
               </filter>
-              <filter id="network-connector-glow" x="-40%" y="-80%" width="180%" height="260%">
+              <filter
+                id="network-connector-glow"
+                x="-40%"
+                y="-80%"
+                width="180%"
+                height="260%"
+              >
                 <feGaussianBlur stdDeviation="4" />
               </filter>
             </defs>
 
             <g fill="none" stroke="#ffffff" strokeLinecap="round">
-              <ellipse cx="600" cy="346" rx="236" ry="224" strokeOpacity="0.72" strokeWidth="1.6" />
-              <ellipse cx="600" cy="346" rx="274" ry="258" strokeOpacity="0.42" strokeWidth="1.2" />
+              <ellipse
+                cx="600"
+                cy="346"
+                rx="236"
+                ry="224"
+                strokeOpacity="0.72"
+                strokeWidth="1.6"
+              />
+              <ellipse
+                cx="600"
+                cy="346"
+                rx="274"
+                ry="258"
+                strokeOpacity="0.42"
+                strokeWidth="1.2"
+              />
               <ellipse
                 cx="600"
                 cy="346"
@@ -1540,7 +1624,6 @@ function NetworkStatsInfographic({
             {NETWORK_DESKTOP_NODES.map((node, index) => {
               const stat = stats[index];
               if (!stat) return null;
-              const styles = NETWORK_TONE_STYLES[stat.tone];
 
               return (
                 <g key={`connector-${stat.lbl}`}>
@@ -1549,9 +1632,9 @@ function NetworkStatsInfographic({
                     y1={node.connector[1]}
                     x2={node.connector[2]}
                     y2={node.connector[3]}
-                    stroke="#bff7ff"
-                    strokeOpacity="0.94"
-                    strokeWidth="20"
+                    stroke="#ffffff"
+                    strokeOpacity="0.44"
+                    strokeWidth="24"
                     strokeLinecap="round"
                     filter="url(#network-connector-glow)"
                   />
@@ -1561,17 +1644,7 @@ function NetworkStatsInfographic({
                     x2={node.connector[2]}
                     y2={node.connector[3]}
                     stroke="#ffffff"
-                    strokeOpacity="0.96"
-                    strokeWidth="10"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1={node.connector[0]}
-                    y1={node.connector[1]}
-                    x2={node.connector[2]}
-                    y2={node.connector[3]}
-                    stroke={styles.accent}
-                    strokeWidth="5"
+                    strokeWidth="14"
                     strokeLinecap="round"
                   />
                 </g>
@@ -1630,7 +1703,7 @@ function NetworkStatsInfographic({
                     r="9"
                     fill="#ffffff"
                     fillOpacity="0.96"
-                    stroke="#bff7ff"
+                    stroke="#ffffff"
                     strokeWidth="3"
                   />
                   <circle
@@ -1646,12 +1719,21 @@ function NetworkStatsInfographic({
               <use
                 href="#network-rounded-pentagon"
                 fill="url(#network-core-face)"
-                stroke="#4f91f5"
-                strokeWidth="6"
+                stroke="#ffffff"
+                strokeWidth="14"
                 strokeLinejoin="round"
                 vectorEffect="non-scaling-stroke"
                 transform="scale(1.36)"
                 filter="url(#network-core-shadow)"
+              />
+              <use
+                href="#network-rounded-pentagon"
+                fill="url(#network-core-face)"
+                stroke="#4f91f5"
+                strokeWidth="4"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+                transform="scale(1.36)"
               />
             </g>
             <foreignObject x="505" y="276" width="190" height="150">
@@ -1664,8 +1746,7 @@ function NetworkStatsInfographic({
                   {titleMain}
                 </h2>
                 <p className="mt-1 text-[27px] font-black leading-none tracking-[-0.035em] text-[#071a33]">
-                  {country1}{" "}
-                  <span className="text-[#2d7ef1]">{hyphen}</span>{" "}
+                  {country1} <span className="text-[#2d7ef1]">{hyphen}</span>{" "}
                   {country2}
                 </p>
               </div>
@@ -1855,18 +1936,11 @@ function GuestContactSection({
           <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
             <div>
               {/* Card Header */}
-              <div className="flex items-center gap-3">
-                <span className="grid size-11 place-items-center rounded-xl bg-blue-600 text-white shadow-xs sm:size-12">
-                  <span className="material-symbols-outlined text-2xl sm:text-[26px]">
-                    apartment
-                  </span>
-                </span>
-                <div>
-                  <h3 className="text-xl font-black text-slate-900 sm:text-2xl">
-                    {copy.infoTitle}
-                  </h3>
-                  <div className="mt-1 h-0.5 w-8 rounded-full bg-blue-600" />
-                </div>
+              <div>
+                <h3 className="text-xl font-black text-slate-900 sm:text-2xl">
+                  {copy.infoTitle}
+                </h3>
+                <div className="mt-1.5 h-0.5 w-8 rounded-full bg-blue-600" />
               </div>
 
               {/* Info Items List - Distributed to balance height */}
@@ -1929,18 +2003,11 @@ function GuestContactSection({
           <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
             <div>
               {/* Card Header */}
-              <div className="flex items-center gap-3">
-                <span className="grid size-11 place-items-center rounded-xl bg-blue-600 text-white shadow-xs sm:size-12">
-                  <span className="material-symbols-outlined text-2xl sm:text-[26px]">
-                    send
-                  </span>
-                </span>
-                <div>
-                  <h3 className="text-xl font-black text-slate-900 sm:text-2xl">
-                    {copy.formTitle}
-                  </h3>
-                  <div className="mt-1 h-0.5 w-8 rounded-full bg-blue-600" />
-                </div>
+              <div>
+                <h3 className="text-xl font-black text-slate-900 sm:text-2xl">
+                  {copy.formTitle}
+                </h3>
+                <div className="mt-1.5 h-0.5 w-8 rounded-full bg-blue-600" />
               </div>
 
               {/* Form without default HTML5 validation */}
@@ -2109,13 +2176,6 @@ export function GuestHomeV2({
             className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-full bg-[linear-gradient(90deg,rgba(3,10,24,0.66)_0%,rgba(3,10,24,0.50)_48%,rgba(3,10,24,0.16)_76%,transparent_100%)] sm:w-[78%] lg:w-[68%]"
             aria-hidden="true"
           />
-          <div
-            className="pointer-events-none absolute inset-0 -z-10 hidden opacity-70 md:block"
-            aria-hidden="true"
-          >
-            <ThreeHeroBackground />
-          </div>
-
           <div className="mx-auto flex min-h-[560px] max-w-[1460px] items-center px-4 py-12 sm:min-h-[620px] sm:px-6 sm:py-16 lg:px-8">
             <div className="mr-auto w-full max-w-[760px] text-left">
               <div className="mb-5 inline-flex max-w-full items-center gap-2.5 rounded-full border-[2.5px] border-amber-400/90 bg-black/20 px-4 py-2 text-[15px] font-black text-amber-300 sm:mb-6 sm:px-5 sm:text-[17px]">
@@ -2214,9 +2274,15 @@ export function GuestHomeV2({
         {/* ═══════════ SECTION 2: HỆ SINH THÁI VN-RU NETWORK (ECOSYSTEM) ═══════════ */}
         <section
           id="ecosystem"
-          className="scroll-mt-28 px-4 py-10 sm:px-6 lg:px-8"
+          className="relative isolate scroll-mt-28 overflow-hidden px-4 py-10 sm:px-6 lg:px-8"
         >
-          <div className="mx-auto max-w-[1460px]">
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 hidden md:block"
+            aria-hidden="true"
+          >
+            <ThreeContentBackground />
+          </div>
+          <div className="relative mx-auto max-w-[1460px]">
             <div className="mb-8 flex flex-col items-center justify-center text-center sm:mb-10">
               <div className="inline-flex items-center gap-2">
                 <span className="h-1 w-8 rounded-full bg-blue-600" />

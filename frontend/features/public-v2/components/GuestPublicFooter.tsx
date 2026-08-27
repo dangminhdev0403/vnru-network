@@ -143,12 +143,6 @@ export function GuestPublicFooter({
             <div className="mt-4 space-y-4 text-xs sm:text-sm text-slate-600">
               <div>
                 <strong className="block font-bold text-slate-900">
-                  {t.footer.hanoiOffice}
-                </strong>
-                <span className="leading-relaxed">{t.footer.hanoiAddress}</span>
-              </div>
-              <div>
-                <strong className="block font-bold text-slate-900">
                   {t.footer.moscowOffice}
                 </strong>
                 <span className="leading-relaxed">

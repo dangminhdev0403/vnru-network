@@ -11,7 +11,7 @@ const ConstellationField = dynamic(
   { ssr: false },
 );
 
-export function ThreeHeroBackground() {
+export function ThreeContentBackground() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
@@ -32,16 +32,16 @@ export function ThreeHeroBackground() {
 
   return (
     <ConstellationField
-      variant="constellation-field"
-      mode="dark"
-      speed={0.35}
+      variant="connectivity-graph"
+      mode="light"
+      speed={0.45}
       size={0.7}
       density={0.55}
       strokeWidth={0.65}
-      opacity={0.32}
-      hue={18}
+      opacity={0.5}
+      hue={8}
       saturation={0.8}
-      brightness={0.8}
+      brightness={0.95}
       className="size-full"
     />
   );
