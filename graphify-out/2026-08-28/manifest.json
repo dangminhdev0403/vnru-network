@@ -1415,8 +1415,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestExpertsV2.tsx": {
-    "mtime": 1787857230.4221363,
-    "ast_hash": "a90775e00b496d11b678f0ad30c96a07",
+    "mtime": 1787766469.520877,
+    "ast_hash": "a34553a7017c2ef6390d90afba1f7e91",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestExploreMedia.tsx": {
@@ -1425,8 +1425,8 @@
     "semantic_hash": "11001fad5db2b4a2af6f6d5fa2c60186"
   },
   "frontend/features/public-v2/components/GuestHomeV2.tsx": {
-    "mtime": 1787857219.3486464,
-    "ast_hash": "9d98b6ec68b7be8c2b8f0802c6372778",
+    "mtime": 1787856997.1143486,
+    "ast_hash": "a7ce51a1b8688ca0a81cc3a8a81387c2",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicNav.tsx": {
@@ -1435,8 +1435,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestKnowledgeV2.tsx": {
-    "mtime": 1787857227.63966,
-    "ast_hash": "00c8d37866f45002d80f168346747f1d",
+    "mtime": 1787766469.9745922,
+    "ast_hash": "08c15e12703a35a311e1c70f85e26813",
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/UnifiedWorkspaceDashboard.tsx": {
@@ -1450,8 +1450,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestOpportunitiesV2.tsx": {
-    "mtime": 1787857224.5805795,
-    "ast_hash": "5915b1003b3148d34ea30eebeaf6c92e",
+    "mtime": 1787766469.7170734,
+    "ast_hash": "12f881f3fe67be0a78532a8e76b2c194",
     "semantic_hash": ""
   },
   "frontend/app/register/page.tsx": {
@@ -1870,8 +1870,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestAboutV2.tsx": {
-    "mtime": 1787857340.544467,
-    "ast_hash": "bb834c4f70dc68fb3d6aeb90139dbd28",
+    "mtime": 1787856998.2882717,
+    "ast_hash": "ebb14c50e64c271dcdb40a696aaa0942",
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/ContentPublishStudio.tsx": {

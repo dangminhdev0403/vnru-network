@@ -554,8 +554,8 @@ export function GuestOpportunitiesV2() {
         className="scroll-mt-24 border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700"
       >
         <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
-            <div className="lg:col-span-4">
+          <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-12">
+            <div className="xl:col-span-4">
               <Link
                 href="/"
                 className="inline-flex items-center gap-3.5"
@@ -584,7 +584,7 @@ export function GuestOpportunitiesV2() {
               </div>
             </div>
 
-            <div className="lg:col-span-3">
+            <div className="xl:col-span-3">
               <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">
                 Khám phá hệ sinh thái
               </h4>
@@ -632,7 +632,7 @@ export function GuestOpportunitiesV2() {
               </ul>
             </div>
 
-            <div className="lg:col-span-2">
+            <div className="xl:col-span-2">
               <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">
                 Hướng trọng điểm
               </h4>
@@ -663,7 +663,7 @@ export function GuestOpportunitiesV2() {
               </ul>
             </div>
 
-            <div className="lg:col-span-3">
+            <div className="xl:col-span-3">
               <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">
                 Điều phối & Liên hệ
               </h4>
@@ -678,9 +678,7 @@ export function GuestOpportunitiesV2() {
                   </span>
                 </div>
                 <div className="pt-1">
-                  <span className="block font-medium">
-                    Hỗ trợ kỹ thuật & kết nối đề tài:
-                  </span>
+                  <span className="block font-medium">Email:</span>
                   <a
                     href="mailto:info@fonddruzhba.ru"
                     className="font-bold text-blue-700 transition hover:underline"

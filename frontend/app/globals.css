@@ -714,6 +714,50 @@ textarea {
   font-weight: 600 !important;
 }
 
+/* SweetAlert2 Modal Layout Harmonization */
+div:where(.swal2-container) .swal2-popup {
+  border-radius: 20px !important;
+  padding: 2rem 1.75rem 1.75rem 1.75rem !important;
+  box-sizing: border-box !important;
+}
+
+div:where(.swal2-container) .swal2-icon {
+  margin: 0 auto 1.25rem auto !important;
+  box-sizing: content-box !important;
+}
+
+div:where(.swal2-container) .swal2-title {
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  padding: 0 !important;
+  line-height: 1.3 !important;
+}
+
+div:where(.swal2-container) .swal2-html-container {
+  font-size: 0.95rem !important;
+  color: #475569 !important;
+  margin: 0.625rem 0 0 0 !important;
+  line-height: 1.5 !important;
+}
+
+div:where(.swal2-container) .swal2-actions {
+  margin-top: 1.5rem !important;
+  gap: 0.625rem !important;
+  width: 100% !important;
+  justify-content: center !important;
+}
+
+div:where(.swal2-container) .swal2-confirm,
+div:where(.swal2-container) .swal2-cancel {
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  padding: 0.625rem 1.5rem !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .vnru-brand-mark {
   box-shadow: 0 10px 28px -18px rgba(15, 56, 125, 0.65);
   transition:

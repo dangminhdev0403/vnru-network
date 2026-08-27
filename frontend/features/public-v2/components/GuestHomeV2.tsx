@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { z } from "zod";
 import { useLocale, type Locale } from "@/core/i18n/locale";
-import { GuestExploreMedia } from "./GuestExploreMedia";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
 
@@ -61,41 +62,79 @@ export const HOME_COPY: Record<
       }[];
       cta: string;
     };
+    news: {
+      title: string;
+      viewAll: string;
+      items: {
+        id: number;
+        category: string;
+        categoryTone: string;
+        title: string;
+        date: string;
+        image: string;
+      }[];
+    };
     ecosystem: {
       eyebrow: string;
       title: string;
-      desc: string;
       cardCta: string;
       cards: {
         icon: string;
         title: string;
         desc: string;
         href: string;
-        accent: string;
-        badge: string;
-        tone: string;
+        tone: "blue" | "emerald" | "purple" | "amber";
       }[];
     };
     events: {
       eyebrow: string;
       title: string;
-      desc: string;
       viewAll: string;
+      tabUpcoming: string;
+      tabPast: string;
+      registerBtn: string;
       items: {
+        id: number;
         date: string;
         month: string;
+        year: string;
         kind: string;
         title: string;
         place: string;
-        year: string;
-        tone: string;
+        time: string;
+        image: string;
+        isPast?: boolean;
       }[];
     };
     stats: {
       val: string;
       lbl: string;
-      col: string;
+      icon: string;
+      tone: "blue" | "cyan" | "emerald" | "purple" | "amber";
     }[];
+    contactSection: {
+      title: string;
+      subtitle: string;
+      infoTitle: string;
+      infoDesc: string;
+      coordinatorLabel: string;
+      coordinatorValue: string;
+      addressLabel: string;
+      addressValue: string;
+      supportLabel: string;
+      supportValue: string;
+      responseCommitment: string;
+      formTitle: string;
+      nameLabel: string;
+      namePlaceholder: string;
+      emailLabel: string;
+      emailPlaceholder: string;
+      messageLabel: string;
+      messagePlaceholder: string;
+      sendBtn: string;
+      privacyNote: string;
+      sentSuccess: string;
+    };
     footer: {
       brandTitle: string;
       subtitle: string;
@@ -109,6 +148,12 @@ export const HOME_COPY: Record<
       moscowOffice: string;
       moscowAddress: string;
       supportLabel: string;
+      nameLabel: string;
+      emailLabel: string;
+      messageLabel: string;
+      sendLabel: string;
+      mailClientHint: string;
+      emailSubject: string;
       copyright: string;
       terms: string;
       privacy: string;
@@ -180,103 +225,192 @@ export const HOME_COPY: Record<
       ],
       cta: "Khám phá cơ hội hợp tác ngay →",
     },
+    news: {
+      title: "TIN TỨC MỚI NHẤT",
+      viewAll: "Xem tất cả tin tức →",
+      items: [
+        {
+          id: 1,
+          category: "HỢP TÁC",
+          categoryTone: "bg-blue-600/90 text-white",
+          title:
+            "Diễn đàn hợp tác giáo dục Việt – Nga 2026: Mở rộng cơ hội kết nối",
+          date: "12/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          id: 2,
+          category: "GIÁO DỤC",
+          categoryTone: "bg-emerald-600/90 text-white",
+          title: "Ký kết thỏa thuận hợp tác giữa các trường đại học hàng đầu",
+          date: "09/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          id: 3,
+          category: "KHOA HỌC",
+          categoryTone: "bg-purple-600/90 text-white",
+          title:
+            "Dự án nghiên cứu chung về công nghệ vật liệu mới giữa VN và RU",
+          date: "06/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          id: 4,
+          category: "VĂN HÓA",
+          categoryTone: "bg-amber-600/90 text-white",
+          title:
+            "Ngày văn hóa Nga tại Việt Nam 2026: Kết nối di sản, lan tỏa hữu nghị",
+          date: "02/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
+        },
+      ],
+    },
     ecosystem: {
-      eyebrow: "Hệ sinh thái mạng lưới",
-      title: "Khám phá hệ sinh thái của chúng tôi",
-      desc: "Không gian tích hợp toàn diện các trụ cột tri thức, mạng lưới chuyên gia, chương trình đề tài và dữ liệu mở song phương.",
+      eyebrow: "HỆ SINH THÁI",
+      title: "HỆ SINH THÁI VN-RU NETWORK",
       cardCta: "Khám phá →",
       cards: [
         {
-          icon: "↔",
-          title: "Cơ hội hợp tác",
-          desc: "Tìm kiếm và đề xuất các cơ hội hợp tác nghiên cứu, chuyển giao và đồng phát triển.",
+          icon: "handshake",
+          title: "CƠ HỘI HỢP TÁC",
+          desc: "Kết nối doanh nghiệp, tổ chức và cá nhân tìm kiếm cơ hội hợp tác bền vững.",
           href: "/opportunities",
-          accent: "bg-blue-600 text-white shadow-blue-500/20",
-          badge: "Bilateral Calls",
-          tone: "border-blue-200/90 hover:border-blue-400",
+          tone: "blue",
         },
         {
-          icon: "◎",
-          title: "Chuyên gia & Tổ chức",
-          desc: "Kết nối với chuyên gia và tổ chức khoa học phù hợp theo lĩnh vực và năng lực.",
+          icon: "groups",
+          title: "THÀNH VIÊN",
+          desc: "Mạng lưới thành viên rộng khắp Việt Nam và Liên bang Nga, cùng chung tầm nhìn.",
           href: "/experts",
-          accent: "bg-indigo-600 text-white shadow-indigo-500/20",
-          badge: "Verified Experts",
-          tone: "border-indigo-200/90 hover:border-indigo-400",
+          tone: "emerald",
         },
         {
-          icon: "◈",
-          title: "Dự án & Kết quả",
-          desc: "Theo dõi các hướng nghiên cứu song phương, kết quả và mốc triển khai nổi bật.",
+          icon: "insights",
+          title: "DỰ ÁN & KẾT QUẢ",
+          desc: "Các dự án nổi bật và những kết quả hợp tác đã đạt được giữa hai quốc gia.",
           href: "/opportunities",
-          accent: "bg-emerald-600 text-white shadow-emerald-500/20",
-          badge: "Joint Projects",
-          tone: "border-emerald-200/90 hover:border-emerald-400",
+          tone: "purple",
         },
         {
-          icon: "□",
-          title: "Tri thức & Tài liệu",
-          desc: "Khám phá kho tri thức, công bố và tài liệu nghiên cứu dùng chung trong mạng lưới.",
+          icon: "menu_book",
+          title: "THƯ VIỆN TRI THỨC",
+          desc: "Kho tri thức phong phú về nghiên cứu, báo cáo và tài liệu chuyên ngành.",
           href: "/knowledge",
-          accent: "bg-amber-600 text-white shadow-amber-500/20",
-          badge: "Open Science",
-          tone: "border-amber-200/90 hover:border-amber-400",
+          tone: "amber",
         },
       ],
     },
     events: {
-      eyebrow: "Sự kiện & Hội thảo",
-      title: "Sự kiện nổi bật",
-      desc: "Các diễn đàn học thuật, hội nghị khoa học và chương trình đào tạo phối hợp giữa hai nước.",
+      eyebrow: "SỰ KIỆN",
+      title: "SỰ KIỆN NỔI BẬT",
       viewAll: "Xem tất cả sự kiện →",
+      tabUpcoming: "Sắp diễn ra",
+      tabPast: "Đã tổ chức",
+      registerBtn: "Đăng ký tham gia",
       items: [
         {
+          id: 1,
           date: "25",
-          month: "THG 8",
+          month: "THÁNG 8",
+          year: "2026",
           kind: "HỘI THẢO",
-          title: "Hội thảo Khoa học & Công nghệ Nga – Việt 2026",
+          title: "Hội thảo hợp tác khoa học & công nghệ Việt – Nga 2026",
           place: "Hà Nội, Việt Nam",
-          year: "Năm 2026",
-          tone: "from-blue-700 via-blue-500 to-cyan-300",
+          time: "08:30 - 17:00",
+          image:
+            "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80",
         },
         {
+          id: 2,
           date: "10",
-          month: "THG 9",
-          kind: "HỘI NGHỊ",
-          title: "Diễn đàn Hợp tác Đổi mới sáng tạo Việt Nam – Liên bang Nga",
-          place: "TP. Hồ Chí Minh, Việt Nam",
-          year: "Năm 2026",
-          tone: "from-sky-700 via-blue-500 to-indigo-300",
+          month: "THÁNG 9",
+          year: "2026",
+          kind: "DIỄN ĐÀN",
+          title: "Diễn đàn Doanh nghiệp Việt – Nga: Kết nối & Phát triển",
+          place: "Moskva, Nga",
+          time: "10:00 - 18:00",
+          image:
+            "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=800&q=80",
         },
         {
-          date: "18",
-          month: "THG 9",
-          kind: "ĐÀO TẠO",
-          title: "Khóa đào tạo AI & Robotics ứng dụng trong nghiên cứu",
-          place: "Online",
-          year: "Năm 2026",
-          tone: "from-indigo-700 via-blue-600 to-sky-300",
+          id: 3,
+          date: "20",
+          month: "THÁNG 9",
+          year: "2026",
+          kind: "HỘI THẢO",
+          title: "Trí tuệ nhân tạo và chuyển đổi số trong hợp tác VN – RU",
+          place: "TP. Hồ Chí Minh, Việt Nam",
+          time: "09:00 - 16:30",
+          image:
+            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
     stats: [
-      { val: "500+", lbl: "Chuyên gia", col: "from-blue-600 to-indigo-600" },
+      {
+        val: "2",
+        lbl: "Quốc gia",
+        icon: "public",
+        tone: "blue",
+      },
+      {
+        val: "500+",
+        lbl: "Chuyên gia & Nhà khoa học",
+        icon: "groups",
+        tone: "cyan",
+      },
       {
         val: "300+",
-        lbl: "Dự án hợp tác",
-        col: "from-emerald-600 to-teal-600",
+        lbl: "Dự án hợp tác song phương",
+        icon: "hub",
+        tone: "emerald",
       },
       {
         val: "20+",
-        lbl: "Lĩnh vực trọng điểm",
-        col: "from-purple-600 to-pink-600",
+        lbl: "Lĩnh vực nghiên cứu trọng điểm",
+        icon: "science",
+        tone: "purple",
       },
       {
         val: "50+",
-        lbl: "Tổ chức đối tác",
-        col: "from-amber-600 to-orange-600",
+        lbl: "Viện nghiên cứu & Trường đại học",
+        icon: "account_balance",
+        tone: "amber",
       },
     ],
+    contactSection: {
+      title: "Kết nối & Liên hệ",
+      subtitle:
+        "Chúng tôi luôn sẵn sàng kết nối, hợp tác và đồng hành cùng cộng đồng khoa học Nga – Việt.",
+      infoTitle: "Về chúng tôi",
+      infoDesc:
+        "Mạng lưới tri thức Nga – Việt được điều phối bởi Quỹ Truyền thống và Hữu nghị, kết nối các viện nghiên cứu, trường đại học và chuyên gia để thúc đẩy hợp tác khoa học – công nghệ, đổi mới sáng tạo và chuyển giao tri thức.",
+      coordinatorLabel: "Đơn vị điều phối",
+      coordinatorValue: "Quỹ Truyền thống và Hữu nghị",
+      addressLabel: "Địa chỉ",
+      addressValue:
+        "125047, Moskva, Đường Tverskaya-Yamskaya số 1, Tòa nhà 30, Văn phòng 01B, Liên bang Nga",
+      supportLabel: "Email",
+      supportValue: "info@fonddruzhba.ru",
+      responseCommitment:
+        "Chúng tôi cam kết phản hồi trong vòng 01-02 ngày làm việc.",
+      formTitle: "Gửi liên hệ",
+      nameLabel: "Họ và tên *",
+      namePlaceholder: "Nhập họ và tên của bạn",
+      emailLabel: "Email *",
+      emailPlaceholder: "Nhập email của bạn",
+      messageLabel: "Nội dung liên hệ *",
+      messagePlaceholder: "Nhập nội dung bạn muốn liên hệ...",
+      sendBtn: "Gửi liên hệ",
+      privacyNote:
+        "Thông tin của bạn được bảo mật và chỉ sử dụng cho mục đích liên hệ.",
+      sentSuccess: "Đã gửi thông tin liên hệ thành công!",
+    },
     footer: {
       brandTitle: "Mạng lưới tri thức Nga - Việt",
       subtitle: "",
@@ -291,7 +425,13 @@ export const HOME_COPY: Record<
       moscowOffice: "Quỹ Truyền thống và Hữu nghị:",
       moscowAddress:
         "125047, Moskva, Đường Tverskaya-Yamskaya số 1, Tòa nhà 30, Văn phòng 01B, Liên bang Nga",
-      supportLabel: "Hỗ trợ kỹ thuật & kết nối đề tài:",
+      supportLabel: "Email:",
+      nameLabel: "Họ và tên",
+      emailLabel: "Email",
+      messageLabel: "Nội dung liên hệ",
+      sendLabel: "Gửi liên hệ",
+      mailClientHint: "Nút gửi sẽ mở ứng dụng email trên thiết bị của bạn.",
+      emailSubject: "Liên hệ từ cổng VN-RU",
       copyright: "© 2026 Mạng lưới tri thức Nga - Việt. Bảo lưu mọi quyền.",
       terms: "Điều khoản hợp tác",
       privacy: "Chính sách bảo mật",
@@ -361,102 +501,202 @@ export const HOME_COPY: Record<
         },
         {
           num: "14",
-          title: "Приоритетные направления 2026",
-          tag: "Исследования",
-          desc: "Фокус на ИИ, морских науках, наноматериалах, чистой энергетике и трансфере технологий.",
+          title: "Направления исследований 2026",
+          tag: "Наука",
+          desc: "Приоритет ИИ, морские науки, наноматериалы, чистая энергетика и трансфер технологий.",
         },
       ],
-      cta: "Узнать о возможностях сотрудничества →",
+      cta: "Смотреть возможности сотрудничества →",
+    },
+    news: {
+      title: "ПОСЛЕДНИЕ НОВОСТИ",
+      viewAll: "Все новости →",
+      items: [
+        {
+          id: 1,
+          category: "СОТРУДНИЧЕСТВО",
+          categoryTone: "bg-blue-600/90 text-white",
+          title:
+            "Форум образовательного сотрудничества Россия – Вьетнам 2026: Расширение связей",
+          date: "12/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          id: 2,
+          category: "ОБРАЗОВАНИЕ",
+          categoryTone: "bg-emerald-600/90 text-white",
+          title:
+            "Подписание соглашений о сотрудничестве между ведущими университетами",
+          date: "09/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          id: 3,
+          category: "НАУКА",
+          categoryTone: "bg-purple-600/90 text-white",
+          title:
+            "Совместный исследовательский проект по новым материалам РФ и ВР",
+          date: "06/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          id: 4,
+          category: "КУЛЬТУРА",
+          categoryTone: "bg-amber-600/90 text-white",
+          title:
+            "Дни российской культуры во Вьетнаме 2026: Диалог наследия и дружбы",
+          date: "02/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
+        },
+      ],
     },
     ecosystem: {
-      eyebrow: "Экосистема сети",
-      title: "Изучите нашу экосистему",
-      desc: "Единое пространство академических знаний, экспертной сети, целевых программ и открытых научных данных.",
-      cardCta: "Подробнее →",
+      eyebrow: "ЭКОСИСТЕМА",
+      title: "ЭКОСИСТЕМА VN-RU NETWORK",
+      cardCta: "Исследовать →",
       cards: [
         {
-          icon: "↔",
-          title: "Сотрудничество",
-          desc: "Поиск и подача совместных заявок на гранты, исследования и трансфер технологий.",
+          icon: "handshake",
+          title: "ВОЗМОЖНОСТИ СОТРУДНИЧЕСТВА",
+          desc: "Связь предприятий, организаций и ученых для долгосрочного партнерства.",
           href: "/opportunities",
-          accent: "bg-blue-600 text-white shadow-blue-500/20",
-          badge: "Bilateral Calls",
-          tone: "border-blue-200/90 hover:border-blue-400",
+          tone: "blue",
         },
         {
-          icon: "◎",
-          title: "Эксперты и организации",
-          desc: "Прямой контакт с учеными, лабораториями и исследовательскими центрами по компетенциям.",
+          icon: "groups",
+          title: "УЧАСТНИКИ",
+          desc: "Широкая сеть участников по всему Вьетнаму и России с единым видением.",
           href: "/experts",
-          accent: "bg-indigo-600 text-white shadow-indigo-500/20",
-          badge: "Verified Experts",
-          tone: "border-indigo-200/90 hover:border-indigo-400",
+          tone: "emerald",
         },
         {
-          icon: "◈",
-          title: "Проекты и результаты",
-          desc: "Мониторинг совместных проектов, публикаций и результатов внедрения.",
+          icon: "insights",
+          title: "ПРОЕКТЫ И РЕЗУЛЬТАТЫ",
+          desc: "Ключевые проекты и достигнутые результаты совместной работы.",
           href: "/opportunities",
-          accent: "bg-emerald-600 text-white shadow-emerald-500/20",
-          badge: "Joint Projects",
-          tone: "border-emerald-200/90 hover:border-emerald-400",
+          tone: "purple",
         },
         {
-          icon: "□",
-          title: "База знаний и публикации",
-          desc: "Открытый доступ к публикациям, отчетам и совместным научным ресурсам сети.",
+          icon: "menu_book",
+          title: "БИБЛИОТЕКА ЗНАНИЙ",
+          desc: "Богатая база знаний: исследования, отчеты и профильные материалы.",
           href: "/knowledge",
-          accent: "bg-amber-600 text-white shadow-amber-500/20",
-          badge: "Open Science",
-          tone: "border-amber-200/90 hover:border-amber-400",
+          tone: "amber",
         },
       ],
     },
     events: {
-      eyebrow: "События и семинары",
-      title: "Ключевые события",
-      desc: "Академические форумы, научные конференции и программы стажировок Россия – Вьетнам.",
+      eyebrow: "СОБЫТИЯ",
+      title: "ГЛАВНЫЕ СОБЫТИЯ",
       viewAll: "Все события →",
+      tabUpcoming: "Предстоящие",
+      tabPast: "Прошедшие",
+      registerBtn: "Зарегистрироваться",
       items: [
         {
+          id: 1,
           date: "25",
-          month: "АВГ",
-          kind: "СЕМИНАР",
-          title: "Научно-технологический семинар Россия – Вьетнам 2026",
+          month: "АВГУСТА",
+          year: "2026",
+          kind: "СИМПОЗИУМ",
+          title:
+            "Симпозиум по научно-технологическому сотрудничеству Вьетнам – Россия 2026",
           place: "Ханой, Вьетнам",
-          year: "2026 год",
-          tone: "from-blue-700 via-blue-500 to-cyan-300",
+          time: "08:30 - 17:00",
+          image:
+            "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80",
         },
         {
+          id: 2,
           date: "10",
-          month: "СЕН",
+          month: "СЕНТЯБРЯ",
+          year: "2026",
           kind: "ФОРУМ",
-          title: "Форум инновационного сотрудничества Вьетнам – Россия",
-          place: "Хошимин, Вьетнам",
-          year: "2026 год",
-          tone: "from-sky-700 via-blue-500 to-indigo-300",
+          title: "Бизнес-форум Вьетнам – Россия: Партнерство и развитие",
+          place: "Москва, Россия",
+          time: "10:00 - 18:00",
+          image:
+            "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=800&q=80",
         },
         {
-          date: "18",
-          month: "СЕН",
-          kind: "КУРС",
-          title: "Курс по применению ИИ и робототехники в исследованиях",
-          place: "Онлайн",
-          year: "2026 год",
-          tone: "from-indigo-700 via-blue-600 to-sky-300",
+          id: 3,
+          date: "20",
+          month: "СЕНТЯБРЯ",
+          year: "2026",
+          kind: "СИМПОЗИУМ",
+          title:
+            "Искусственный интеллект и цифровая трансформация в сотрудничестве VN – RU",
+          place: "Хошимин, Вьетнам",
+          time: "09:00 - 16:30",
+          image:
+            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
     stats: [
-      { val: "500+", lbl: "Экспертов", col: "from-blue-600 to-indigo-600" },
+      {
+        val: "2",
+        lbl: "Страны",
+        icon: "public",
+        tone: "blue",
+      },
+      {
+        val: "500+",
+        lbl: "Ученых и экспертов",
+        icon: "groups",
+        tone: "cyan",
+      },
       {
         val: "300+",
         lbl: "Совместных проектов",
-        col: "from-emerald-600 to-teal-600",
+        icon: "hub",
+        tone: "emerald",
       },
-      { val: "20+", lbl: "Направлений", col: "from-purple-600 to-pink-600" },
-      { val: "50+", lbl: "Организаций", col: "from-amber-600 to-orange-600" },
+      {
+        val: "20+",
+        lbl: "Приоритетных направлений",
+        icon: "science",
+        tone: "purple",
+      },
+      {
+        val: "50+",
+        lbl: "Институтов и университетов",
+        icon: "account_balance",
+        tone: "amber",
+      },
     ],
+    contactSection: {
+      title: "Связь и контакты",
+      subtitle:
+        "Мы всегда готовы к диалогу, партнерству и поддержке научно-технологического сообщества России и Вьетнама.",
+      infoTitle: "О нас",
+      infoDesc:
+        "Сеть знаний Россия – Вьетнам координируется Фондом «Традиции и дружба», объединяя институты, университеты и ученых для развития науки, инноваций и трансфера знаний.",
+      coordinatorLabel: "Координатор",
+      coordinatorValue: "Фонд «Традиции и дружба»",
+      addressLabel: "Адрес",
+      addressValue:
+        "125047, Москва, 1-я Тверская-Ямская улица, д.30, к. 01Б, Российская Федерация",
+      supportLabel: "Email",
+      supportValue: "info@fonddruzhba.ru",
+      responseCommitment:
+        "Мы ответим на ваше обращение в течение 1–2 рабочих дней.",
+      formTitle: "Отправить запрос",
+      nameLabel: "ФИО *",
+      namePlaceholder: "Введите ваше имя",
+      emailLabel: "Email *",
+      emailPlaceholder: "Введите ваш email",
+      messageLabel: "Сообщение *",
+      messagePlaceholder: "Введите текст вашего обращения...",
+      sendBtn: "Отправить сообщение",
+      privacyNote:
+        "Ваши данные защищены и используются исключительно для связи.",
+      sentSuccess: "Ваше сообщение успешно отправлено!",
+    },
     footer: {
       brandTitle: "Сеть знаний Россия – Вьетнам",
       subtitle: "",
@@ -471,7 +711,13 @@ export const HOME_COPY: Record<
       moscowOffice: "Фонд «Традиции и дружба»:",
       moscowAddress:
         "125047, Москва, 1-я Тверская-Ямская улица, д.30, к. 01Б, Российская Федерация",
-      supportLabel: "Техническая поддержка и сотрудничество:",
+      supportLabel: "Email:",
+      nameLabel: "Имя и фамилия",
+      emailLabel: "Электронная почта",
+      messageLabel: "Сообщение",
+      sendLabel: "Отправить",
+      mailClientHint: "Кнопка откроет почтовое приложение на вашем устройстве.",
+      emailSubject: "Обращение с портала VN-RU",
       copyright: "© 2026 Сеть знаний Россия – Вьетнам. Все права защищены.",
       terms: "Условия сотрудничества",
       privacy: "Политика конфиденциальности",
@@ -548,107 +794,192 @@ export const HOME_COPY: Record<
       ],
       cta: "Explore Opportunities Now →",
     },
+    news: {
+      title: "LATEST NEWS",
+      viewAll: "View all news →",
+      items: [
+        {
+          id: 1,
+          category: "COLLABORATION",
+          categoryTone: "bg-blue-600/90 text-white",
+          title:
+            "Vietnam – Russia Education Forum 2026: Expanding Partnerships",
+          date: "12/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          id: 2,
+          category: "EDUCATION",
+          categoryTone: "bg-emerald-600/90 text-white",
+          title: "Cooperation Agreements Signed Between Leading Universities",
+          date: "09/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          id: 3,
+          category: "SCIENCE",
+          categoryTone: "bg-purple-600/90 text-white",
+          title:
+            "Joint Research Project on Advanced Materials Between VN and RU",
+          date: "06/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          id: 4,
+          category: "CULTURE",
+          categoryTone: "bg-amber-600/90 text-white",
+          title:
+            "Russian Culture Day in Vietnam 2026: Heritage & Enduring Friendship",
+          date: "02/05/2026",
+          image:
+            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
+        },
+      ],
+    },
     ecosystem: {
-      eyebrow: "Network Ecosystem",
-      title: "Explore Our Ecosystem",
-      desc: "Comprehensive platform integrating knowledge assets, expert networks, joint research calls, and open bilateral data.",
+      eyebrow: "ECOSYSTEM",
+      title: "VN-RU NETWORK ECOSYSTEM",
       cardCta: "Explore →",
       cards: [
         {
-          icon: "↔",
-          title: "Collaboration",
-          desc: "Discover and propose joint research, commercialization, and bilateral R&D projects.",
+          icon: "handshake",
+          title: "COLLABORATION OPPORTUNITIES",
+          desc: "Connecting businesses, institutions, and researchers for sustainable partnership.",
           href: "/opportunities",
-          accent: "bg-blue-600 text-white shadow-blue-500/20",
-          badge: "Bilateral Calls",
-          tone: "border-blue-200/90 hover:border-blue-400",
+          tone: "blue",
         },
         {
-          icon: "◎",
-          title: "Experts & Organizations",
-          desc: "Connect directly with qualified researchers and institutes matching your domain and competencies.",
+          icon: "groups",
+          title: "MEMBERS",
+          desc: "Broad network of verified members across Vietnam and the Russian Federation.",
           href: "/experts",
-          accent: "bg-indigo-600 text-white shadow-indigo-500/20",
-          badge: "Verified Experts",
-          tone: "border-indigo-200/90 hover:border-indigo-400",
+          tone: "emerald",
         },
         {
-          icon: "◈",
-          title: "Projects & Outcomes",
-          desc: "Track active bilateral research, milestones, publications, and commercial outcomes.",
+          icon: "insights",
+          title: "PROJECTS & OUTCOMES",
+          desc: "Featured research projects and high-impact bilateral milestones.",
           href: "/opportunities",
-          accent: "bg-emerald-600 text-white shadow-emerald-500/20",
-          badge: "Joint Projects",
-          tone: "border-emerald-200/90 hover:border-emerald-400",
+          tone: "purple",
         },
         {
-          icon: "□",
-          title: "Knowledge & Papers",
-          desc: "Access shared scientific publications, technical reports, and open bilateral repositories.",
+          icon: "menu_book",
+          title: "KNOWLEDGE LIBRARY",
+          desc: "Rich repository of research publications, technical reports, and datasets.",
           href: "/knowledge",
-          accent: "bg-amber-600 text-white shadow-amber-500/20",
-          badge: "Open Science",
-          tone: "border-amber-200/90 hover:border-amber-400",
+          tone: "amber",
         },
       ],
     },
     events: {
-      eyebrow: "Events & Conferences",
-      title: "Featured Events",
-      desc: "Academic forums, science congresses, and joint training programs between the two countries.",
-      viewAll: "View All Events →",
+      eyebrow: "EVENTS",
+      title: "FEATURED EVENTS",
+      viewAll: "View all events →",
+      tabUpcoming: "Upcoming",
+      tabPast: "Past Events",
+      registerBtn: "Register now",
       items: [
         {
+          id: 1,
           date: "25",
           month: "AUG",
+          year: "2026",
           kind: "SYMPOSIUM",
           title: "Vietnam – Russia Science & Technology Symposium 2026",
           place: "Hanoi, Vietnam",
-          year: "Year 2026",
-          tone: "from-blue-700 via-blue-500 to-cyan-300",
+          time: "08:30 - 17:00",
+          image:
+            "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80",
         },
         {
+          id: 2,
           date: "10",
           month: "SEP",
-          kind: "CONGRESS",
-          title: "Vietnam – Russian Federation Innovation Forum",
-          place: "Ho Chi Minh City, Vietnam",
-          year: "Year 2026",
-          tone: "from-sky-700 via-blue-500 to-indigo-300",
+          year: "2026",
+          kind: "FORUM",
+          title: "Vietnam – Russia Business Forum: Connection & Growth",
+          place: "Moscow, Russia",
+          time: "10:00 - 18:00",
+          image:
+            "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=800&q=80",
         },
         {
-          date: "18",
+          id: 3,
+          date: "20",
           month: "SEP",
-          kind: "WORKSHOP",
-          title: "Applied AI & Robotics in Research Training Workshop",
-          place: "Online",
-          year: "Year 2026",
-          tone: "from-indigo-700 via-blue-600 to-sky-300",
+          year: "2026",
+          kind: "SYMPOSIUM",
+          title:
+            "Artificial Intelligence and Digital Transformation in VN – RU",
+          place: "Ho Chi Minh City, Vietnam",
+          time: "09:00 - 16:30",
+          image:
+            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
     stats: [
       {
+        val: "2",
+        lbl: "Countries",
+        icon: "public",
+        tone: "blue",
+      },
+      {
         val: "500+",
         lbl: "Scientists & Experts",
-        col: "from-blue-600 to-indigo-600",
+        icon: "groups",
+        tone: "cyan",
       },
       {
         val: "300+",
-        lbl: "Joint Projects",
-        col: "from-emerald-600 to-teal-600",
+        lbl: "Joint Research Projects",
+        icon: "hub",
+        tone: "emerald",
       },
       {
         val: "20+",
-        lbl: "Strategic Pillars",
-        col: "from-purple-600 to-pink-600",
+        lbl: "Strategic Research Pillars",
+        icon: "science",
+        tone: "purple",
       },
       {
         val: "50+",
-        lbl: "Partner Institutions",
-        col: "from-amber-600 to-orange-600",
+        lbl: "Partner Institutes & Universities",
+        icon: "account_balance",
+        tone: "amber",
       },
     ],
+    contactSection: {
+      title: "Connect & Inquiries",
+      subtitle:
+        "We are always open to collaboration, partnership, and joint scientific initiatives between Russia and Vietnam.",
+      infoTitle: "About Us",
+      infoDesc:
+        "The Russia – Vietnam Knowledge Network is coordinated by the Traditions & Friendship Foundation, connecting institutes, universities, and researchers to foster bilateral R&D, innovation, and knowledge transfer.",
+      coordinatorLabel: "Coordinating Body",
+      coordinatorValue: "Traditions & Friendship Foundation",
+      addressLabel: "Address",
+      addressValue:
+        "125047, Moscow, 1st Tverskaya-Yamskaya St., Bldg 30, Office 01B, Russian Federation",
+      supportLabel: "Email",
+      supportValue: "info@fonddruzhba.ru",
+      responseCommitment: "We commit to responding within 1–2 business days.",
+      formTitle: "Send Inquiry",
+      nameLabel: "Full Name *",
+      namePlaceholder: "Enter your full name",
+      emailLabel: "Email *",
+      emailPlaceholder: "Enter your email address",
+      messageLabel: "Message *",
+      messagePlaceholder: "Enter your message or inquiry...",
+      sendBtn: "Send Message",
+      privacyNote:
+        "Your information is secure and strictly used for communication purposes.",
+      sentSuccess: "Your inquiry has been sent successfully!",
+    },
     footer: {
       brandTitle: "Russia - Vietnam Knowledge Network",
       subtitle: "",
@@ -663,7 +994,13 @@ export const HOME_COPY: Record<
       moscowOffice: "Traditions & Friendship Foundation:",
       moscowAddress:
         "125047, Moscow, 1st Tverskaya-Yamskaya St., Bldg 30, Office 01B, Russian Federation",
-      supportLabel: "Technical Support & Inquiries:",
+      supportLabel: "Email:",
+      nameLabel: "Full name",
+      emailLabel: "Email",
+      messageLabel: "Message",
+      sendLabel: "Send inquiry",
+      mailClientHint: "The send button opens your device's email app.",
+      emailSubject: "VN-RU portal inquiry",
       copyright:
         "© 2026 Russia - Vietnam Knowledge Network. All rights reserved.",
       terms: "Terms of Collaboration",
@@ -681,6 +1018,719 @@ export const HOME_COPY: Record<
   },
 };
 
+function HexagonNetworkIcon({
+  icon,
+  tone,
+}: Readonly<{
+  icon: string;
+  tone: "blue" | "emerald" | "purple" | "amber";
+}>) {
+  const styles = {
+    blue: {
+      fill: "fill-blue-500/10 dark:fill-blue-950/40",
+      stroke: "stroke-blue-500",
+      ring: "stroke-blue-400/50",
+      iconColor: "text-blue-600 dark:text-blue-400",
+      dotFill: "fill-blue-500",
+      glow: "drop-shadow-[0_6px_22px_rgba(37,99,235,0.25)]",
+    },
+    emerald: {
+      fill: "fill-emerald-500/10 dark:fill-emerald-950/40",
+      stroke: "stroke-emerald-500",
+      ring: "stroke-emerald-400/50",
+      iconColor: "text-emerald-600 dark:text-emerald-400",
+      dotFill: "fill-emerald-500",
+      glow: "drop-shadow-[0_6px_22px_rgba(16,185,129,0.25)]",
+    },
+    purple: {
+      fill: "fill-purple-500/10 dark:fill-purple-950/40",
+      stroke: "stroke-purple-500",
+      ring: "stroke-purple-400/50",
+      iconColor: "text-purple-600 dark:text-purple-400",
+      dotFill: "fill-purple-500",
+      glow: "drop-shadow-[0_6px_22px_rgba(147,51,234,0.25)]",
+    },
+    amber: {
+      fill: "fill-amber-500/10 dark:fill-amber-950/40",
+      stroke: "stroke-amber-500",
+      ring: "stroke-amber-400/50",
+      iconColor: "text-amber-600 dark:text-amber-400",
+      dotFill: "fill-amber-500",
+      glow: "drop-shadow-[0_6px_22px_rgba(245,158,11,0.25)]",
+    },
+  }[tone];
+
+  return (
+    <div
+      className={`relative grid size-20 shrink-0 place-items-center sm:size-22 xl:size-24 ${styles.glow}`}
+    >
+      <svg
+        viewBox="0 0 80 80"
+        className="absolute inset-0 size-full overflow-visible"
+        aria-hidden="true"
+      >
+        {/* Outer network boundary chamfered octagon */}
+        <polygon
+          points="24,4 56,4 76,24 76,56 56,76 24,76 4,56 4,24"
+          className={`${styles.fill} ${styles.stroke}`}
+          strokeWidth="2.2"
+          strokeLinejoin="round"
+        />
+        {/* Inner network circuit line */}
+        <polygon
+          points="27,11 53,11 69,27 69,53 53,69 27,69 11,53 11,27"
+          className={`${styles.ring} fill-transparent`}
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        {/* 8 Network Vertex Nodes */}
+        <circle cx="24" cy="4" r="2.8" className={styles.dotFill} />
+        <circle cx="56" cy="4" r="2.8" className={styles.dotFill} />
+        <circle cx="76" cy="24" r="2.8" className={styles.dotFill} />
+        <circle cx="76" cy="56" r="2.8" className={styles.dotFill} />
+        <circle cx="56" cy="76" r="2.8" className={styles.dotFill} />
+        <circle cx="24" cy="76" r="2.8" className={styles.dotFill} />
+        <circle cx="4" cy="56" r="2.8" className={styles.dotFill} />
+        <circle cx="4" cy="24" r="2.8" className={styles.dotFill} />
+      </svg>
+      <span
+        className={`material-symbols-outlined relative z-10 text-3xl sm:text-4xl ${styles.iconColor}`}
+        aria-hidden="true"
+      >
+        {icon}
+      </span>
+    </div>
+  );
+}
+
+type NetworkStat = (typeof HOME_COPY)[Locale]["stats"][number];
+
+const NETWORK_TONE_STYLES = {
+  blue: {
+    shell: "from-blue-400 via-blue-500 to-blue-700",
+    face: "from-blue-50 to-white",
+    icon: "text-blue-600",
+    value: "text-blue-700",
+    glow: "shadow-[0_14px_34px_-18px_rgba(37,99,235,0.8)]",
+  },
+  cyan: {
+    shell: "from-cyan-400 via-cyan-500 to-blue-600",
+    face: "from-cyan-50 to-white",
+    icon: "text-cyan-700",
+    value: "text-cyan-800",
+    glow: "shadow-[0_14px_34px_-18px_rgba(6,182,212,0.8)]",
+  },
+  emerald: {
+    shell: "from-emerald-400 via-emerald-500 to-emerald-700",
+    face: "from-emerald-50 to-white",
+    icon: "text-emerald-600",
+    value: "text-emerald-700",
+    glow: "shadow-[0_14px_34px_-18px_rgba(16,185,129,0.8)]",
+  },
+  purple: {
+    shell: "from-violet-400 via-violet-500 to-indigo-700",
+    face: "from-violet-50 to-white",
+    icon: "text-violet-600",
+    value: "text-violet-700",
+    glow: "shadow-[0_14px_34px_-18px_rgba(124,58,237,0.8)]",
+  },
+  amber: {
+    shell: "from-amber-300 via-amber-500 to-orange-600",
+    face: "from-amber-50 to-white",
+    icon: "text-amber-700",
+    value: "text-amber-800",
+    glow: "shadow-[0_14px_34px_-18px_rgba(245,158,11,0.8)]",
+  },
+} as const;
+
+const NETWORK_STAT_POSITIONS = [
+  "left-1/2 top-0 -translate-x-1/2",
+  "left-[2%] top-[31%]",
+  "right-[2%] top-[31%]",
+  "left-[17%] bottom-0",
+  "right-[17%] bottom-0",
+] as const;
+
+function NetworkStatNode({
+  stat,
+  compact = false,
+  className = "",
+}: Readonly<{
+  stat: NetworkStat;
+  compact?: boolean;
+  className?: string;
+}>) {
+  const styles = NETWORK_TONE_STYLES[stat.tone];
+
+  return (
+    <div
+      className={`flex w-full flex-col items-center text-center lg:w-[190px] ${className}`}
+    >
+      <div
+        className={`relative grid place-items-center bg-gradient-to-br [clip-path:polygon(25%_0%,75%_0%,100%_50%,75%_100%,25%_100%,0%_50%)] ${
+          compact ? "h-20 w-24" : "h-24 w-28"
+        } ${styles.shell} ${styles.glow}`}
+      >
+        <span
+          className={`absolute inset-[3px] bg-gradient-to-br [clip-path:polygon(25%_0%,75%_0%,100%_50%,75%_100%,25%_100%,0%_50%)] ${styles.face}`}
+          aria-hidden="true"
+        />
+        <span
+          className={`material-symbols-outlined relative text-3xl ${styles.icon}`}
+          aria-hidden="true"
+        >
+          {stat.icon}
+        </span>
+      </div>
+      <strong className={`mt-2 font-black ${compact ? "text-xl" : "text-2xl"} ${styles.value}`}>
+        {stat.val}
+      </strong>
+      <span className="mt-0.5 max-w-[190px] text-sm font-semibold leading-snug text-slate-600">
+        {stat.lbl}
+      </span>
+    </div>
+  );
+}
+
+function NetworkCore({
+  titleMain,
+  country1,
+  hyphen,
+  country2,
+  compact = false,
+}: Readonly<{
+  titleMain: string;
+  country1: string;
+  hyphen: string;
+  country2: string;
+  compact?: boolean;
+}>) {
+  return (
+    <div
+      className={`relative grid place-items-center bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 p-1 [clip-path:polygon(25%_0%,75%_0%,100%_50%,75%_100%,25%_100%,0%_50%)] shadow-[0_24px_55px_-25px_rgba(37,99,235,0.85)] ${
+        compact ? "h-40 w-48" : "h-52 w-60"
+      }`}
+    >
+      <div className="grid size-full place-items-center bg-gradient-to-br from-white via-blue-50 to-blue-100 px-8 text-center [clip-path:polygon(25%_0%,75%_0%,100%_50%,75%_100%,25%_100%,0%_50%)]">
+        <div>
+          <span
+            className="material-symbols-outlined text-4xl text-blue-600"
+            aria-hidden="true"
+          >
+            school
+          </span>
+          <h2
+            className={`mt-1 font-black leading-tight text-blue-950 ${
+              compact ? "text-base" : "text-xl"
+            }`}
+          >
+            {titleMain}
+          </h2>
+          <p className="mt-1 text-base font-extrabold text-blue-700">
+            {country1} {hyphen} {country2}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NetworkStatsInfographic({
+  stats,
+  titleMain,
+  country1,
+  hyphen,
+  country2,
+}: Readonly<{
+  stats: NetworkStat[];
+  titleMain: string;
+  country1: string;
+  hyphen: string;
+  country2: string;
+}>) {
+  const accessibleLabel = `${titleMain} ${country1} ${hyphen} ${country2}`;
+
+  return (
+    <section
+      className="px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8"
+      aria-label={accessibleLabel}
+    >
+      <div className="relative mx-auto max-w-[1460px] overflow-hidden rounded-[28px] border border-blue-100 bg-gradient-to-b from-white via-blue-50/70 to-slate-50 px-5 py-10 shadow-[0_24px_65px_-45px_rgba(30,64,175,0.55)] sm:px-8">
+        <div
+          className="pointer-events-none absolute inset-x-[12%] top-[18%] h-[52%] rounded-full bg-blue-300/15 blur-3xl"
+          aria-hidden="true"
+        />
+
+        <div className="relative lg:hidden">
+          <div className="flex justify-center">
+            <NetworkCore
+              titleMain={titleMain}
+              country1={country1}
+              hyphen={hyphen}
+              country2={country2}
+              compact
+            />
+          </div>
+          <div className="mt-9 grid grid-cols-2 gap-x-4 gap-y-8">
+            {stats.map((stat, index) => (
+              <NetworkStatNode
+                key={stat.lbl}
+                stat={stat}
+                compact
+                className={
+                  index === stats.length - 1 ? "col-span-2 mx-auto" : ""
+                }
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="relative mx-auto hidden min-h-[550px] max-w-[1120px] lg:block">
+          <svg
+            viewBox="0 0 1000 550"
+            preserveAspectRatio="none"
+            className="pointer-events-none absolute inset-0 size-full"
+            aria-hidden="true"
+          >
+            <ellipse
+              cx="500"
+              cy="295"
+              rx="350"
+              ry="215"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeDasharray="5 9"
+              className="text-blue-300/80"
+            />
+            <path
+              d="M500 285 L500 72 M500 285 L122 224 M500 285 L878 224 M500 285 L265 460 M500 285 L735 460"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="text-blue-300"
+            />
+            <path
+              d="M126 224 Q500 18 874 224 M265 460 Q500 535 735 460"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              className="text-blue-200"
+            />
+            {[72, 224, 224, 460, 460].map((cy, index) => (
+              <circle
+                key={`${cy}-${index}`}
+                cx={[500, 122, 878, 265, 735][index]}
+                cy={cy}
+                r="5"
+                className="fill-blue-500"
+              />
+            ))}
+          </svg>
+
+          {stats.map((stat, index) => (
+            <NetworkStatNode
+              key={stat.lbl}
+              stat={stat}
+              className={`absolute ${NETWORK_STAT_POSITIONS[index]}`}
+            />
+          ))}
+
+          <div className="absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2">
+            <NetworkCore
+              titleMain={titleMain}
+              country1={country1}
+              hyphen={hyphen}
+              country2={country2}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const getContactSchema = (locale: string) => {
+  if (locale === "ru") {
+    return z.object({
+      name: z.string().trim().min(2, "Минимум 2 символа"),
+      email: z.string().trim().email("Некорректный email"),
+      message: z
+        .string()
+        .trim()
+        .min(10, "Минимум 10 символов")
+        .max(1000, "Максимум 1000 символов"),
+    });
+  }
+  if (locale === "en") {
+    return z.object({
+      name: z.string().trim().min(2, "Min 2 characters"),
+      email: z.string().trim().email("Invalid email"),
+      message: z
+        .string()
+        .trim()
+        .min(10, "Min 10 characters")
+        .max(1000, "Max 1000 characters"),
+    });
+  }
+  return z.object({
+    name: z.string().trim().min(2, "Tối thiểu 2 ký tự"),
+    email: z.string().trim().email("Email không hợp lệ"),
+    message: z
+      .string()
+      .trim()
+      .min(10, "Tối thiểu 10 ký tự")
+      .max(1000, "Tối đa 1000 ký tự"),
+  });
+};
+
+function GuestContactSection({
+  copy,
+  locale,
+}: Readonly<{
+  copy: (typeof HOME_COPY)["vi"]["contactSection"];
+  locale: string;
+}>) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    message?: string;
+  }>({});
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const schema = getContactSchema(locale);
+    const result = schema.safeParse({ name, email, message });
+
+    if (!result.success) {
+      const fieldErrors: {
+        name?: string;
+        email?: string;
+        message?: string;
+      } = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path[0] as keyof typeof fieldErrors;
+        if (!fieldErrors[key]) {
+          fieldErrors[key] = issue.message;
+        }
+      }
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setErrors({});
+
+    // Step 1: Confirmation Modal
+    const confirmResult = await Swal.fire({
+      icon: "question",
+      title:
+        locale === "ru"
+          ? "Подтвердить отправку?"
+          : locale === "en"
+            ? "Confirm Submission?"
+            : "Xác nhận gửi liên hệ?",
+      text:
+        locale === "ru"
+          ? "Вы хотите отправить обращение в Бан координации?"
+          : locale === "en"
+            ? "Do you want to submit this inquiry to the Coordination Board?"
+            : "Bạn có chắc chắn muốn gửi thông tin liên hệ này?",
+      showCancelButton: true,
+      confirmButtonColor: "#2563eb",
+      cancelButtonColor: "#94a3b8",
+      confirmButtonText:
+        locale === "ru"
+          ? "Отправить"
+          : locale === "en"
+            ? "Send"
+            : "Xác nhận gửi",
+      cancelButtonText:
+        locale === "ru" ? "Отмена" : locale === "en" ? "Cancel" : "Hủy",
+      reverseButtons: true,
+    });
+
+    if (!confirmResult.isConfirmed) return;
+
+    // Step 2: SweetAlert2 Loading Modal
+    Swal.fire({
+      title:
+        locale === "ru"
+          ? "Отправка сообщения..."
+          : locale === "en"
+            ? "Sending inquiry..."
+            : "Đang gửi liên hệ...",
+      text:
+        locale === "ru"
+          ? "Пожалуйста, подождите..."
+          : locale === "en"
+            ? "Please wait a moment..."
+            : "Vui lòng chờ trong giây lát...",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    // Simulate sending delay
+    await new Promise((resolve) => setTimeout(resolve, 900));
+
+    // Step 3: SweetAlert2 Success Alert
+    await Swal.fire({
+      icon: "success",
+      title:
+        locale === "ru"
+          ? "Успешно отправлено!"
+          : locale === "en"
+            ? "Inquiry Sent Successfully!"
+            : "Gửi liên hệ thành công!",
+      text:
+        locale === "ru"
+          ? "Мы получили ваше обращение và ответим в течение 1–2 рабочих дней."
+          : locale === "en"
+            ? "We have received your message and will respond within 1–2 business days."
+            : "Chúng tôi đã tiếp nhận thông tin và sẽ phản hồi trong 01–02 ngày làm việc.",
+      confirmButtonColor: "#2563eb",
+      confirmButtonText:
+        locale === "ru" ? "Đóng / Закрыть" : locale === "en" ? "Close" : "Đóng",
+    });
+
+    // Reset Form
+    setName("");
+    setEmail("");
+    setMessage("");
+  }
+
+  return (
+    <section id="contact" className="scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1460px]">
+        {/* Section Header */}
+        <div className="mb-10 text-center sm:mb-12">
+          <div className="inline-flex items-center gap-2">
+            <span className="h-1 w-8 rounded-full bg-blue-600" />
+            <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+              {copy.title}
+            </h2>
+            <span className="h-1 w-8 rounded-full bg-blue-600" />
+          </div>
+          <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+            {copy.subtitle}
+          </p>
+        </div>
+
+        {/* 2-Column Grid */}
+        <div className="grid gap-8 lg:grid-cols-2">
+          {/* Left Column: Contact Information */}
+          <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
+            <div>
+              {/* Card Header */}
+              <div className="flex items-center gap-3">
+                <span className="grid size-11 place-items-center rounded-xl bg-blue-600 text-white shadow-xs sm:size-12">
+                  <span className="material-symbols-outlined text-2xl sm:text-[26px]">
+                    apartment
+                  </span>
+                </span>
+                <div>
+                  <h3 className="text-xl font-black text-slate-900 sm:text-2xl">
+                    {copy.infoTitle}
+                  </h3>
+                  <div className="mt-1 h-0.5 w-8 rounded-full bg-blue-600" />
+                </div>
+              </div>
+
+              {/* Info Items List - Distributed to balance height */}
+              <div className="mt-6 flex flex-col justify-between gap-4.5 sm:gap-5">
+                <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
+                    <span className="material-symbols-outlined text-2xl">
+                      groups
+                    </span>
+                  </span>
+                  <div>
+                    <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
+                      {copy.coordinatorLabel}
+                    </span>
+                    <strong className="mt-1 block text-base font-bold text-slate-900 sm:text-lg">
+                      {copy.coordinatorValue}
+                    </strong>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
+                    <span className="material-symbols-outlined text-2xl">
+                      pin_drop
+                    </span>
+                  </span>
+                  <div>
+                    <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
+                      {copy.addressLabel}
+                    </span>
+                    <span className="mt-1 block text-sm font-semibold leading-relaxed text-slate-800 sm:text-base">
+                      {copy.addressValue}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
+                    <span className="material-symbols-outlined text-2xl">
+                      mail
+                    </span>
+                  </span>
+                  <div>
+                    <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
+                      {copy.supportLabel}
+                    </span>
+                    <a
+                      href={`mailto:${copy.supportValue}`}
+                      className="mt-1 block text-base font-bold text-blue-600 transition hover:text-blue-700 hover:underline sm:text-lg"
+                    >
+                      {copy.supportValue}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Contact Form */}
+          <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
+            <div>
+              {/* Card Header */}
+              <div className="flex items-center gap-3">
+                <span className="grid size-11 place-items-center rounded-xl bg-blue-600 text-white shadow-xs sm:size-12">
+                  <span className="material-symbols-outlined text-2xl sm:text-[26px]">
+                    send
+                  </span>
+                </span>
+                <div>
+                  <h3 className="text-xl font-black text-slate-900 sm:text-2xl">
+                    {copy.formTitle}
+                  </h3>
+                  <div className="mt-1 h-0.5 w-8 rounded-full bg-blue-600" />
+                </div>
+              </div>
+
+              {/* Form without default HTML5 validation */}
+              <form
+                noValidate
+                onSubmit={handleSubmit}
+                className="mt-6 flex flex-col justify-between gap-4"
+              >
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className="block text-sm font-bold text-slate-800 sm:text-base">
+                      {copy.nameLabel}
+                    </label>
+                    <input
+                      type="text"
+                      value={name}
+                      style={{ outline: "none", boxShadow: "none" }}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                        if (errors.name) {
+                          setErrors((prev) => ({ ...prev, name: undefined }));
+                        }
+                      }}
+                      placeholder={copy.namePlaceholder}
+                      className={`mt-1.5 w-full rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 [outline:none] [box-shadow:none] focus:bg-white focus:[outline:none] focus:[box-shadow:none] focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 ${
+                        errors.name
+                          ? "border-red-500 bg-red-50/20 focus:border-red-600"
+                          : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
+                      }`}
+                    />
+                    {errors.name ? (
+                      <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
+                        {errors.name}
+                      </p>
+                    ) : null}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-800 sm:text-base">
+                      {copy.emailLabel}
+                    </label>
+                    <input
+                      type="email"
+                      value={email}
+                      style={{ outline: "none", boxShadow: "none" }}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (errors.email) {
+                          setErrors((prev) => ({ ...prev, email: undefined }));
+                        }
+                      }}
+                      placeholder={copy.emailPlaceholder}
+                      className={`mt-1.5 w-full rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 [outline:none] [box-shadow:none] focus:bg-white focus:[outline:none] focus:[box-shadow:none] focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 ${
+                        errors.email
+                          ? "border-red-500 bg-red-50/20 focus:border-red-600"
+                          : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
+                      }`}
+                    />
+                    {errors.email ? (
+                      <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
+                        {errors.email}
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label className="block text-sm font-bold text-slate-800 sm:text-base">
+                      {copy.messageLabel}
+                    </label>
+                    <span className="text-xs font-semibold text-slate-400">
+                      {message.length}/1000
+                    </span>
+                  </div>
+                  <textarea
+                    rows={6}
+                    maxLength={1000}
+                    value={message}
+                    style={{ outline: "none", boxShadow: "none" }}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                      if (errors.message) {
+                        setErrors((prev) => ({ ...prev, message: undefined }));
+                      }
+                    }}
+                    placeholder={copy.messagePlaceholder}
+                    className={`mt-1.5 min-h-[175px] w-full resize-y rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 [outline:none] [box-shadow:none] focus:bg-white focus:[outline:none] focus:[box-shadow:none] focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 ${
+                      errors.message
+                        ? "border-red-500 bg-red-50/20 focus:border-red-600"
+                        : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
+                    }`}
+                  />
+                  {errors.message ? (
+                    <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
+                      {errors.message}
+                    </p>
+                  ) : null}
+                </div>
+
+                <button
+                  type="submit"
+                  className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 text-base font-bold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.99] sm:py-4 sm:text-lg"
+                >
+                  <span className="material-symbols-outlined text-2xl">
+                    mail
+                  </span>
+                  <span>{copy.sendBtn}</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function GuestHomeV2({
   isAuthenticated,
   workspaceHref,
@@ -688,6 +1738,7 @@ export function GuestHomeV2({
   const { locale } = useLocale();
   const t = HOME_COPY[locale] ?? HOME_COPY.vi;
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [eventTab, setEventTab] = useState<"upcoming" | "past">("upcoming");
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -706,6 +1757,7 @@ export function GuestHomeV2({
       />
 
       <main>
+        {/* ═══════════ HERO BANNER SECTION ═══════════ */}
         <section className="relative isolate min-h-[560px] overflow-hidden border-b border-blue-100 bg-white sm:min-h-[620px]">
           {HERO_BANNERS.map((banner, index) => (
             <div
@@ -764,154 +1816,267 @@ export function GuestHomeV2({
           </div>
         </section>
 
-        <GuestExploreMedia />
-
-        <section id="about" className="px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1460px] rounded-[32px] border border-blue-200/90 bg-gradient-to-b from-blue-100/70 via-sky-50/80 to-blue-50/60 p-6 shadow-[0_22px_70px_-40px_rgba(37,99,235,.28)] sm:p-9">
-            <div className="flex items-end justify-between gap-4">
-              <div className="max-w-3xl">
-                <p className="text-xs sm:text-[13px] font-black uppercase tracking-[0.14em] text-blue-700">
-                  {t.ecosystem.eyebrow}
-                </p>
-                <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[#1A1C1CD9]">
-                  {t.ecosystem.title}
+        {/* ═══════════ SECTION 1: TIN TỨC MỚI NHẤT (LATEST NEWS) ═══════════ */}
+        <section id="news" className="px-4 pt-12 pb-8 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-[1460px]">
+            <div className="relative mb-8 flex flex-col items-center justify-center text-center sm:mb-10">
+              <div className="inline-flex items-center gap-2">
+                <span className="h-1 w-8 rounded-full bg-blue-600" />
+                <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+                  {t.news.title}
                 </h2>
-                <p className="mt-3 text-lg sm:text-xl md:text-[20px] font-normal leading-relaxed text-slate-700">
-                  {t.ecosystem.desc}
-                </p>
+                <span className="h-1 w-8 rounded-full bg-blue-600" />
               </div>
-              <div className="hidden gap-2.5 sm:flex">
-                <button
-                  type="button"
-                  className="grid size-9 place-items-center rounded-full border border-blue-200 bg-white/90 text-lg font-bold text-blue-700 shadow-xs transition hover:bg-white"
-                  aria-label="Trang trước"
-                >
-                  ‹
-                </button>
-                <button
-                  type="button"
-                  className="grid size-9 place-items-center rounded-full border border-blue-200 bg-white/90 text-lg font-bold text-blue-700 shadow-xs transition hover:bg-white"
-                  aria-label="Trang sau"
-                >
-                  ›
-                </button>
-              </div>
+              <Link
+                href="/news"
+                className="mt-3 text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:absolute sm:right-0 sm:top-1/2 sm:mt-0 sm:-translate-y-1/2 sm:text-base"
+              >
+                {t.news.viewAll}
+              </Link>
             </div>
 
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-              {t.ecosystem.cards.map((item) => (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {t.news.items.map((item) => (
                 <Link
-                  key={item.title}
-                  href={item.href}
-                  className={`group block h-full rounded-2xl border ${item.tone} bg-white/90 p-6 shadow-[0_14px_35px_-30px_rgba(37,99,235,.35)] transition duration-300 hover:-translate-y-1.5 hover:bg-white hover:shadow-[0_20px_45px_-28px_rgba(37,99,235,.5)]`}
+                  key={item.id}
+                  href={`/news/${item.id}`}
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md"
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="relative h-44 w-full overflow-hidden bg-slate-100">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <span
-                      className={`grid size-12 place-items-center rounded-xl ${item.accent} text-2xl font-black shadow-sm`}
+                      className={`absolute bottom-3 left-3 rounded-md px-2.5 py-1 text-[10px] font-black tracking-wider shadow-xs ${item.categoryTone}`}
                     >
-                      {item.icon}
-                    </span>
-                    <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">
-                      {item.badge}
+                      {item.category}
                     </span>
                   </div>
-                  <h3 className="mt-5 text-lg sm:text-xl font-bold text-[#1A1C1CD9]">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2.5 text-base sm:text-[17px] leading-relaxed text-slate-700 font-normal">
-                    {item.desc}
-                  </p>
-                  <span className="mt-5 inline-flex text-sm sm:text-base font-extrabold text-blue-600 transition group-hover:translate-x-1">
-                    {t.ecosystem.cardCta}
-                  </span>
+                  <div className="flex flex-1 flex-col justify-between p-5">
+                    <h3 className="line-clamp-2 text-base font-bold leading-snug text-slate-900 transition group-hover:text-blue-600">
+                      {item.title}
+                    </h3>
+                    <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-slate-500">
+                      <span
+                        className="material-symbols-outlined text-sm text-slate-400"
+                        aria-hidden="true"
+                      >
+                        calendar_today
+                      </span>
+                      <span>{item.date}</span>
+                    </div>
+                  </div>
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
 
-            <div
-              id="events"
-              className="scroll-mt-24 mt-12 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
-            >
+        {/* ═══════════ SECTION 2: HỆ SINH THÁI VN-RU NETWORK (ECOSYSTEM) ═══════════ */}
+        <section
+          id="ecosystem"
+          className="scroll-mt-28 px-4 py-10 sm:px-6 lg:px-8"
+        >
+          <div className="mx-auto max-w-[1460px]">
+            <div className="mb-8 flex flex-col items-center justify-center text-center sm:mb-10">
+              <div className="inline-flex items-center gap-2">
+                <span className="h-1 w-8 rounded-full bg-blue-600" />
+                <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+                  {t.ecosystem.title}
+                </h2>
+                <span className="h-1 w-8 rounded-full bg-blue-600" />
+              </div>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+              {t.ecosystem.cards.map((card) => {
+                const toneConfig = {
+                  blue: {
+                    border:
+                      "border-blue-200/90 hover:border-blue-500 hover:shadow-[0_12px_32px_-10px_rgba(37,99,235,0.25)]",
+                    cta: "text-blue-600 group-hover:text-blue-700",
+                  },
+                  emerald: {
+                    border:
+                      "border-emerald-200/90 hover:border-emerald-500 hover:shadow-[0_12px_32px_-10px_rgba(16,185,129,0.25)]",
+                    cta: "text-emerald-600 group-hover:text-emerald-700",
+                  },
+                  purple: {
+                    border:
+                      "border-purple-200/90 hover:border-purple-500 hover:shadow-[0_12px_32px_-10px_rgba(147,51,234,0.25)]",
+                    cta: "text-purple-600 group-hover:text-purple-700",
+                  },
+                  amber: {
+                    border:
+                      "border-amber-200/90 hover:border-amber-500 hover:shadow-[0_12px_32px_-10px_rgba(245,158,11,0.25)]",
+                    cta: "text-amber-600 group-hover:text-amber-700",
+                  },
+                }[card.tone];
+
+                return (
+                  <Link
+                    key={card.title}
+                    href={card.href}
+                    className={`group flex items-start gap-4 rounded-2xl border ${toneConfig.border} bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1 sm:gap-4.5 sm:p-6`}
+                  >
+                    <HexagonNetworkIcon icon={card.icon} tone={card.tone} />
+                    <div className="flex min-h-[110px] flex-1 flex-col justify-between">
+                      <div>
+                        <h3 className="text-base font-black uppercase leading-tight tracking-wide text-slate-900 sm:text-[17px]">
+                          {card.title}
+                        </h3>
+                        <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-[13px]">
+                          {card.desc}
+                        </p>
+                      </div>
+                      <span
+                        className={`mt-4 inline-flex items-center gap-1 text-xs font-black transition group-hover:translate-x-1.5 sm:text-sm ${toneConfig.cta}`}
+                      >
+                        {t.ecosystem.cardCta}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════ SECTION 3: SỰ KIỆN NỔI BẬT (FEATURED EVENTS) ═══════════ */}
+        <section id="events" className="px-4 pt-8 pb-14 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-[1460px]">
+            <div className="relative mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
               <div>
-                <p className="text-xs sm:text-[13px] font-black uppercase tracking-[0.14em] text-blue-700">
-                  {t.events.eyebrow}
-                </p>
-                <h2 className="mt-2 text-2xl sm:text-3xl font-black tracking-tight text-[#1A1C1CD9]">
+                <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
                   {t.events.title}
                 </h2>
-                <p className="mt-2 text-lg sm:text-xl font-normal leading-relaxed text-slate-700">
-                  {t.events.desc}
-                </p>
               </div>
               <Link
                 href="/#events"
-                className="text-sm sm:text-base font-bold text-blue-700 transition hover:text-blue-900"
+                className="text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:text-base"
               >
                 {t.events.viewAll}
               </Link>
             </div>
 
-            <div className="mt-6 grid gap-5 lg:grid-cols-3">
+            {/* Filter Tabs */}
+            <div className="mb-6 inline-flex items-center gap-2 rounded-xl border border-blue-200/80 bg-white/95 p-1.5 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => setEventTab("upcoming")}
+                className={`rounded-lg px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
+                  eventTab === "upcoming"
+                    ? "bg-blue-600 text-white shadow-xs"
+                    : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+                }`}
+              >
+                {t.events.tabUpcoming}
+              </button>
+              <button
+                type="button"
+                onClick={() => setEventTab("past")}
+                className={`rounded-lg px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
+                  eventTab === "past"
+                    ? "bg-blue-600 text-white shadow-xs"
+                    : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+                }`}
+              >
+                {t.events.tabPast}
+              </button>
+            </div>
+
+            <div className="grid gap-5 lg:grid-cols-3">
               {t.events.items.map((event) => (
                 <article
                   key={event.title}
-                  className="overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-[0_14px_38px_-30px_rgba(37,99,235,.35)] transition duration-300 hover:-translate-y-1 hover:shadow-md"
+                  className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md"
                 >
-                  <div
-                    className={`relative h-32 bg-gradient-to-br ${event.tone}`}
-                  >
-                    <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_20%_30%,white_0_2px,transparent_3px),radial-gradient(circle_at_70%_60%,white_0_1px,transparent_2px)] [background-size:34px_34px]" />
-                    <div className="absolute left-4 top-4 rounded-xl bg-white px-3 py-2 text-center shadow-xs">
-                      <strong className="block text-xl sm:text-2xl font-black leading-none text-blue-700">
-                        {event.date}
-                      </strong>
-                      <small className="mt-1 block text-[9px] sm:text-[10px] font-bold uppercase text-slate-500">
-                        {event.month}
-                      </small>
-                    </div>
-                    <span className="absolute bottom-3 left-4 rounded-full bg-blue-700/90 px-3 py-1 text-[9px] sm:text-[10px] font-black tracking-wider text-white">
-                      {event.kind}
-                    </span>
-                  </div>
-                  <div className="p-5 sm:p-6">
-                    <h3 className="text-lg sm:text-xl font-bold leading-snug text-[#1A1C1CD9]">
-                      {event.title}
-                    </h3>
-                    <p className="mt-3 text-base font-medium text-slate-700">
-                      ◎ {event.place}
-                    </p>
-                    <p className="mt-1.5 text-sm font-medium text-slate-500">
-                      ◷ {event.year}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
+                  <div>
+                    <div className="flex gap-4">
+                      {/* Left Date Box */}
+                      <div className="flex min-w-[72px] flex-col items-center justify-center rounded-xl border border-blue-200/90 bg-blue-50/90 px-2 py-3 text-center">
+                        <span className="text-2xl font-black leading-none text-blue-700 sm:text-3xl">
+                          {event.date}
+                        </span>
+                        <span className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
+                          {event.month}
+                        </span>
+                        <span className="text-[10px] font-medium text-slate-400">
+                          {event.year}
+                        </span>
+                      </div>
 
-            <div className="mt-8 grid gap-4 rounded-2xl border border-blue-200/90 bg-blue-100/70 p-5 sm:grid-cols-2 xl:grid-cols-4">
-              {t.stats.map(({ val, lbl, col }) => (
-                <div
-                  key={lbl}
-                  className="flex items-center gap-3.5 rounded-xl bg-white/95 p-4.5 shadow-xs transition hover:shadow-sm"
-                >
-                  <span
-                    className={`grid size-12 place-items-center rounded-xl bg-gradient-to-br ${col} text-xl font-black text-white shadow-xs`}
+                      {/* Event Image */}
+                      <div className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-slate-100 shadow-2xs">
+                        <Image
+                          src={event.image}
+                          alt={event.title}
+                          fill
+                          unoptimized
+                          sizes="80px"
+                          className="object-cover transition duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-4">
+                      <span className="inline-block text-[11px] font-extrabold uppercase tracking-wider text-blue-600">
+                        {event.kind}
+                      </span>
+                      <h3 className="mt-1 line-clamp-2 text-base font-bold leading-snug text-slate-900 transition group-hover:text-blue-600">
+                        {event.title}
+                      </h3>
+                      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold text-slate-600">
+                        <span className="flex items-center gap-1">
+                          <span
+                            className="material-symbols-outlined text-sm text-slate-400"
+                            aria-hidden="true"
+                          >
+                            pin_drop
+                          </span>
+                          {event.place}
+                        </span>
+                        <span className="flex items-center gap-1 text-slate-500">
+                          <span
+                            className="material-symbols-outlined text-sm text-slate-400"
+                            aria-hidden="true"
+                          >
+                            schedule
+                          </span>
+                          {event.time}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="mt-5 w-full rounded-xl bg-blue-600 py-2.5 text-center text-xs font-bold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.99] sm:text-sm"
                   >
-                    ✓
-                  </span>
-                  <span>
-                    <strong className="block text-2xl sm:text-3xl font-black text-[#1A1C1CD9]">
-                      {val}
-                    </strong>
-                    <small className="text-base font-semibold text-[#405a73]">
-                      {lbl}
-                    </small>
-                  </span>
-                </div>
+                    {t.events.registerBtn}
+                  </button>
+                </article>
               ))}
             </div>
           </div>
         </section>
+
+        <NetworkStatsInfographic
+          stats={t.stats}
+          titleMain={t.titleMain}
+          country1={t.country1}
+          hyphen={t.hyphen}
+          country2={t.country2}
+        />
+
+        {/* ═══════════ SECTION 4: KẾT NỐI & LIÊN HỆ (CONNECT & CONTACT) ═══════════ */}
+        <GuestContactSection copy={t.contactSection} locale={locale} />
       </main>
 
       <GuestPublicFooter copy={t} />

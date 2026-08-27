@@ -10,8 +10,7 @@ import { GuestPublicNav } from "./GuestPublicNav";
 type Category =
   | "all"
   | "science"
-  | "international"
-  | "innovation"
+  | "cooperation"
   | "education"
   | "society";
 type FeedCategory = Exclude<Category, "all">;
@@ -51,10 +50,9 @@ const TEXT = {
     categories: {
       all: "Tất cả",
       science: "Khoa học - Công nghệ",
-      international: "Hợp tác quốc tế",
-      innovation: "Đổi mới sáng tạo",
-      education: "Giáo dục - Nhân lực",
       society: "Kinh tế - Xã hội",
+      education: "Giáo dục đào tạo",
+      cooperation: "Hợp tác",
     },
   },
   en: {
@@ -84,10 +82,9 @@ const TEXT = {
     categories: {
       all: "All",
       science: "Science - Technology",
-      international: "International cooperation",
-      innovation: "Innovation",
-      education: "Education - Talent",
       society: "Economy - Society",
+      education: "Education and Training",
+      cooperation: "Cooperation",
     },
   },
   ru: {
@@ -117,16 +114,14 @@ const TEXT = {
     categories: {
       all: "Все",
       science: "Наука - Технологии",
-      international: "Международное сотрудничество",
-      innovation: "Инновации",
-      education: "Образование - Кадры",
       society: "Экономика - Общество",
+      education: "Образование и подготовка",
+      cooperation: "Сотрудничество",
     },
   },
 } as const;
 
-const ITEMS: Record<FeedCategory, NewsItem[]> = {
-  science: [
+const SCIENCE_ITEMS: NewsItem[] = [
     {
       title: "Nga phát triển chip lượng tử thế hệ mới mạnh gấp 100 lần",
       summary:
@@ -160,13 +155,15 @@ const ITEMS: Record<FeedCategory, NewsItem[]> = {
       time: "4 giờ trước",
       image: "https://picsum.photos/seed/sci4/800/500",
     },
-  ],
-  international: [
+];
+
+const ITEMS: Record<FeedCategory, NewsItem[]> = {
+  cooperation: [
     {
       title: "Diễn đàn Khoa học và Công nghệ Việt - Nga 2025 tại Hà Nội",
       summary:
         "Các chuyên gia hai nước trao đổi về xu hướng và cơ hội hợp tác công nghệ cao.",
-      category: "international",
+      category: "cooperation",
       time: "1 ngày trước",
       image: "https://picsum.photos/seed/intl1/800/500",
     },
@@ -175,7 +172,7 @@ const ITEMS: Record<FeedCategory, NewsItem[]> = {
         "Việt Nam và Nga ký kết 5 thỏa thuận hợp tác trong lĩnh vực công nghệ cao",
       summary:
         "Các thỏa thuận tập trung vào nghiên cứu chung, đào tạo và chuyển giao công nghệ.",
-      category: "international",
+      category: "cooperation",
       time: "2 giờ trước",
       image: "https://picsum.photos/seed/intl2/800/500",
     },
@@ -183,7 +180,7 @@ const ITEMS: Record<FeedCategory, NewsItem[]> = {
       title:
         "Tăng cường kết nối doanh nghiệp Việt - Nga trong lĩnh vực công nghệ",
       summary: "Các hoạt động kết nối tiếp tục được mở rộng giữa hai nước.",
-      category: "international",
+      category: "cooperation",
       time: "8 giờ trước",
       image: "https://picsum.photos/seed/intl3/800/500",
     },
@@ -192,16 +189,17 @@ const ITEMS: Record<FeedCategory, NewsItem[]> = {
         "Mạng lưới đối tác nghiên cứu song phương được mở rộng trong năm 2026",
       summary:
         "Viện nghiên cứu và trường đại học tăng cường kết nối chuyên môn.",
-      category: "international",
+      category: "cooperation",
       time: "1 ngày trước",
       image: "https://picsum.photos/seed/intl4/800/500",
     },
   ],
-  innovation: [
+  science: [
+    ...SCIENCE_ITEMS,
     {
       title: "AI giúp mô phỏng vật liệu mới chính xác hơn gấp 10 lần",
       summary: "Mô hình mới rút ngắn thời gian thử nghiệm vật liệu tiên tiến.",
-      category: "innovation",
+      category: "science",
       time: "2 ngày trước",
       image: "https://picsum.photos/seed/inno1/800/500",
     },
@@ -209,14 +207,14 @@ const ITEMS: Record<FeedCategory, NewsItem[]> = {
       title: "Trí tuệ nhân tạo: Cơ hội và thách thức trong kỷ nguyên mới",
       summary:
         "Các chuyên gia phân tích xu hướng AI và tác động đến nghiên cứu, giáo dục và sản xuất.",
-      category: "innovation",
+      category: "science",
       time: "7 giờ trước",
       image: "https://picsum.photos/seed/inno2/800/500",
     },
     {
       title: "Startup Việt góp mặt tại triển lãm công nghệ quốc tế ở Nga",
       summary: "Các dự án giới thiệu giải pháp AI, dữ liệu lớn và tự động hóa.",
-      category: "innovation",
+      category: "science",
       time: "9 giờ trước",
       image: "https://picsum.photos/seed/inno3/800/500",
     },
@@ -225,7 +223,7 @@ const ITEMS: Record<FeedCategory, NewsItem[]> = {
         "Mô hình chuyển giao công nghệ từ phòng thí nghiệm tới doanh nghiệp tăng tốc",
       summary:
         "Các trung tâm đổi mới rút ngắn khoảng cách từ nghiên cứu tới ứng dụng.",
-      category: "innovation",
+      category: "science",
       time: "2 ngày trước",
       image: "https://picsum.photos/seed/inno4/800/500",
     },
@@ -304,17 +302,17 @@ const ITEMS: Record<FeedCategory, NewsItem[]> = {
 
 const LATEST = [
   ITEMS.science[0],
-  ITEMS.international[1],
+  ITEMS.cooperation[1],
   ITEMS.education[0],
-  ITEMS.innovation[1],
+  ITEMS.science[5],
   ITEMS.society[0],
 ].slice(0, 5);
 
 const FEATURED = [
-  ITEMS.international[1],
+  ITEMS.cooperation[1],
   ITEMS.science[3],
   ITEMS.education[0],
-  ITEMS.innovation[1],
+  ITEMS.science[5],
 ];
 
 const STREAM: NewsItem[] = [
@@ -337,7 +335,7 @@ const STREAM: NewsItem[] = [
     title: "Hội thảo quốc tế về trí tuệ nhân tạo Việt - Nga diễn ra tại Hà Nội",
     summary:
       "Các chuyên gia hai nước trao đổi về xu hướng và cơ hội hợp tác trong lĩnh vực AI.",
-    category: "international",
+    category: "cooperation",
     time: "09:15",
     image: "https://picsum.photos/seed/str3/800/500",
   },
@@ -346,7 +344,7 @@ const STREAM: NewsItem[] = [
       "Tăng cường kết nối doanh nghiệp Việt - Nga trong lĩnh vực công nghệ",
     summary:
       "Nhiều thỏa thuận hợp tác được ký kết tại các chương trình kết nối chuyên môn.",
-    category: "international",
+    category: "cooperation",
     time: "08:55",
     image: "https://picsum.photos/seed/str4/800/500",
   },
@@ -361,7 +359,7 @@ const STREAM: NewsItem[] = [
     title: "Startup Việt góp mặt tại triển lãm công nghệ quốc tế ở Nga",
     summary:
       "Giới thiệu nhiều giải pháp sáng tạo trong lĩnh vực AI và dữ liệu lớn.",
-    category: "innovation",
+    category: "science",
     time: "07:30",
     image: "https://picsum.photos/seed/str6/800/500",
   },
@@ -409,7 +407,7 @@ const STREAM: NewsItem[] = [
     title: "Trung tâm đổi mới sáng tạo kết nối thêm mười nhóm nghiên cứu",
     summary:
       "Mạng lưới mới ưu tiên AI, robot, công nghệ sinh học và năng lượng sạch.",
-    category: "innovation",
+    category: "science",
     time: "04:40",
     image: "https://picsum.photos/seed/str12/800/500",
   },
@@ -417,7 +415,7 @@ const STREAM: NewsItem[] = [
     title: "Hai viện hàn lâm thống nhất lịch hội thảo khoa học thường niên",
     summary:
       "Chuỗi hội thảo tạo diễn đàn chia sẻ kết quả và hình thành đề tài liên ngành.",
-    category: "international",
+    category: "cooperation",
     time: "04:15",
     image: "https://picsum.photos/seed/str13/800/500",
   },
@@ -441,7 +439,7 @@ const STREAM: NewsItem[] = [
     title: "Nền tảng bản đồ chuyên gia bổ sung hồ sơ nghiên cứu liên ngành",
     summary:
       "Dữ liệu mới giúp tổ chức tìm đúng đối tác theo chuyên môn và địa bàn.",
-    category: "innovation",
+    category: "science",
     time: "02:55",
     image: "https://picsum.photos/seed/str16/800/500",
   },
@@ -473,11 +471,11 @@ const CATALOGS: Array<{
     ],
   },
   {
-    category: "international",
+    category: "cooperation",
     title: {
-      vi: "Hợp tác quốc tế",
-      en: "International cooperation",
-      ru: "Международное сотрудничество",
+      vi: "Hợp tác",
+      en: "Cooperation",
+      ru: "Сотрудничество",
     },
     children: [
       "Hợp tác Việt - Nga",
@@ -489,27 +487,11 @@ const CATALOGS: Array<{
     ],
   },
   {
-    category: "innovation",
-    title: {
-      vi: "Đổi mới sáng tạo",
-      en: "Innovation",
-      ru: "Инновации",
-    },
-    children: [
-      "Công nghệ mới",
-      "Khởi nghiệp sáng tạo",
-      "Chuyển giao công nghệ",
-      "Sở hữu trí tuệ",
-      "Vườn ươm công nghệ",
-      "Ứng dụng thực tiễn",
-    ],
-  },
-  {
     category: "education",
     title: {
-      vi: "Giáo dục - Nhân lực",
-      en: "Education - Talent",
-      ru: "Образование - Кадры",
+      vi: "Giáo dục đào tạo",
+      en: "Education and Training",
+      ru: "Образование и подготовка",
     },
     children: [
       "Học bổng toàn phần",
@@ -534,22 +516,6 @@ const CATALOGS: Array<{
       "Chính sách KH & CN",
       "Phát triển bền vững",
       "Đô thị thông minh",
-    ],
-  },
-  {
-    category: "all",
-    title: {
-      vi: "Khoa học Biển & Môi trường",
-      en: "Ocean & Environmental Science",
-      ru: "Морские науки и экология",
-    },
-    children: [
-      "Hải dương học",
-      "Biến đổi khí hậu",
-      "Viễn thám đại dương",
-      "Đa dạng sinh học",
-      "Tài nguyên khoáng sản",
-      "Bảo tồn sinh thái",
     ],
   },
 ];
@@ -624,10 +590,9 @@ export function GuestExploreV2() {
   const categories: Category[] = [
     "all",
     "science",
-    "international",
-    "innovation",
-    "education",
     "society",
+    "education",
+    "cooperation",
   ];
   const [activeCategory, setActiveCategory] = useState<Category>("all");
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
@@ -758,7 +723,7 @@ export function GuestExploreV2() {
           </div>
           <div className="flex overflow-hidden rounded-xl border border-blue-100 bg-white">
             {[
-              ["06", "Chuyên mục"],
+              ["04", "Chuyên mục"],
               ["24/7", "Cập nhật"],
               ["VN · RU", "Song phương"],
             ].map(([value, label], index) => (
@@ -777,7 +742,7 @@ export function GuestExploreV2() {
 
         <section className="relative z-30 mb-8 overflow-visible rounded-2xl border border-slate-200 bg-white shadow-sm has-[details[open]]:rounded-b-none">
           {/* Row 1: Unified Segmented Tabs Strip (Dính kịch với nhau) */}
-          <div className="grid w-full grid-cols-2 divide-x divide-slate-200 border-b border-slate-200 sm:grid-cols-3 xl:grid-cols-6">
+          <div className="grid w-full grid-cols-2 divide-x divide-slate-200 border-b border-slate-200 sm:grid-cols-3 xl:grid-cols-5">
             {categories.map((category, index) => (
               <button
                 key={category}

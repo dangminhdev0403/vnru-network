@@ -98,7 +98,11 @@ const switcherCopy: Record<Locale, { current: string; select: string }> = {
   en: { current: "Current language", select: "Select language" },
 };
 
-export type LanguageSwitcherVariant = "light" | "dark" | "workspace" | "transparent";
+export type LanguageSwitcherVariant =
+  | "light"
+  | "dark"
+  | "workspace"
+  | "transparent";
 
 export interface LanguageSwitcherProps {
   readonly variant?: LanguageSwitcherVariant;
@@ -233,7 +237,10 @@ export function LanguageSwitcher({
   };
 
   return (
-    <div ref={containerRef} className={`relative inline-block text-left ${className}`}>
+    <div
+      ref={containerRef}
+      className={`relative inline-block text-left ${className}`}
+    >
       {/* Trigger Button */}
       <button
         ref={buttonRef}
@@ -248,12 +255,20 @@ export function LanguageSwitcher({
         <div className="flex items-center gap-2">
           <CurrentFlag className="w-[19px] h-[13px]" />
           {!compact && (
-            <span className={showShortCodeMobile ? "hidden sm:inline" : "inline"}>
+            <span
+              className={`text-center leading-tight ${showShortCodeMobile ? "hidden sm:inline" : "inline"}`}
+            >
               {currentOption.label}
             </span>
           )}
           {(compact || showShortCodeMobile) && (
-            <span className={compact ? "uppercase tracking-wider font-extrabold" : "sm:hidden uppercase tracking-wider font-extrabold"}>
+            <span
+              className={
+                compact
+                  ? "uppercase tracking-wider font-extrabold"
+                  : "sm:hidden uppercase tracking-wider font-extrabold"
+              }
+            >
               {currentOption.shortCode}
             </span>
           )}
@@ -315,20 +330,6 @@ export function LanguageSwitcher({
                     >
                       {option.shortCode}
                     </span>
-                    {isSelected && (
-                      <svg
-                        className="w-4 h-4 shrink-0 text-current"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
-                      >
-                        <path d="M3.5 8.5l3 3 6-6" />
-                      </svg>
-                    )}
                   </div>
                 </button>
               );

@@ -747,8 +747,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_api_auth_context_route",
-      "community": 173,
-      "community_name": "context/route.ts",
+      "community": 0,
+      "community_name": "authServiceUrl",
       "norm_label": "context/route.ts"
     },
     {
@@ -759,8 +759,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "frontend_app_api_auth_context_route_post",
-      "community": 173,
-      "community_name": "context/route.ts",
+      "community": 0,
+      "community_name": "authServiceUrl",
       "norm_label": "post()"
     },
     {
@@ -863,8 +863,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_api_auth_mfa_route",
-      "community": 0,
-      "community_name": "authServiceUrl",
+      "community": 173,
+      "community_name": "mfa/route.ts",
       "norm_label": "mfa/route.ts"
     },
     {
@@ -875,8 +875,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "frontend_app_api_auth_mfa_route_proxy",
-      "community": 0,
-      "community_name": "authServiceUrl",
+      "community": 173,
+      "community_name": "mfa/route.ts",
       "norm_label": "proxy()"
     },
     {
@@ -887,8 +887,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "frontend_app_api_auth_mfa_route_get",
-      "community": 0,
-      "community_name": "authServiceUrl",
+      "community": 173,
+      "community_name": "mfa/route.ts",
       "norm_label": "get()"
     },
     {
@@ -899,8 +899,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "frontend_app_api_auth_mfa_route_delete",
-      "community": 0,
-      "community_name": "authServiceUrl",
+      "community": 173,
+      "community_name": "mfa/route.ts",
       "norm_label": "delete()"
     },
     {
@@ -980,8 +980,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_api_auth_sessions_id_route",
-      "community": 173,
-      "community_name": "context/route.ts",
+      "community": 0,
+      "community_name": "authServiceUrl",
       "norm_label": "[id]/route.ts"
     },
     {
@@ -992,8 +992,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "frontend_app_api_auth_sessions_id_route_delete",
-      "community": 173,
-      "community_name": "context/route.ts",
+      "community": 0,
+      "community_name": "authServiceUrl",
       "norm_label": "delete()"
     },
     {
@@ -4173,8 +4173,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "frontend_features_auth_server_forwardsessioncookie",
-      "community": 173,
-      "community_name": "context/route.ts",
+      "community": 0,
+      "community_name": "authServiceUrl",
       "norm_label": "forwardsessioncookie()"
     },
     {
@@ -4910,7 +4910,7 @@
       "label": "GuestAboutV2()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestAboutV2.tsx",
-      "source_location": "L140",
+      "source_location": "L120",
       "_callable": true,
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestaboutv2_guestaboutv2",
@@ -10398,8 +10398,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_constructor",
-      "community": 18,
-      "community_name": "AuthenticatedRequest",
+      "community": 17,
+      "community_name": "authentication.service.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -10722,8 +10722,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_authenticationservice_logout",
-      "community": 18,
-      "community_name": "AuthenticatedRequest",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": ".logout()"
     },
     {
@@ -10912,8 +10912,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_service_identityservice_findbyid",
-      "community": 18,
-      "community_name": "AuthenticatedRequest",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": ".findbyid()"
     },
     {
@@ -10936,8 +10936,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_service_identityservice_updateprofile",
-      "community": 18,
-      "community_name": "AuthenticatedRequest",
+      "community": 6,
+      "community_name": "identity.module.ts",
       "norm_label": ".updateprofile()"
     },
     {
@@ -11604,8 +11604,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_revokesession",
-      "community": 18,
-      "community_name": "AuthenticatedRequest",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": ".revokesession()"
     },
     {
@@ -11628,8 +11628,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_getactivesessionsforuser",
-      "community": 18,
-      "community_name": "AuthenticatedRequest",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": ".getactivesessionsforuser()"
     },
     {
@@ -11652,8 +11652,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_revokeothersessionsforuser",
-      "community": 18,
-      "community_name": "AuthenticatedRequest",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": ".revokeothersessionsforuser()"
     },
     {
@@ -32853,7 +32853,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestAboutV2.tsx",
-      "source_location": "L141",
+      "source_location": "L121",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestaboutv2_guestaboutv2",
@@ -36820,7 +36820,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestAboutV2.tsx",
-      "source_location": "L140",
+      "source_location": "L120",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestaboutv2",

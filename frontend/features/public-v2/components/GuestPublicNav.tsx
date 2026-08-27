@@ -10,6 +10,7 @@ import { BrandMark } from "@/components/shared/BrandMark";
 type GuestNavActive =
   | "home"
   | "about"
+  | "ecosystem"
   | "news"
   | "opportunities"
   | "experts"
@@ -28,8 +29,10 @@ const COPY: Record<
     brandTitle: string;
     home: string;
     about: string;
+    ecosystem: string;
     news: string;
     contact: string;
+    register: string;
     login: string;
     workspace: string;
   }
@@ -38,8 +41,10 @@ const COPY: Record<
     brandTitle: "Mạng lưới tri thức Nga - Việt",
     home: "Trang chủ",
     about: "Giới thiệu",
+    ecosystem: "Hệ sinh thái",
     news: "Tin tức",
     contact: "Liên hệ",
+    register: "Đăng ký",
     login: "Đăng nhập",
     workspace: "Không gian làm việc",
   },
@@ -47,8 +52,10 @@ const COPY: Record<
     brandTitle: "Russia - Vietnam Knowledge Network",
     home: "Home",
     about: "About",
+    ecosystem: "Ecosystem",
     news: "News",
     contact: "Contact",
+    register: "Register",
     login: "Sign in",
     workspace: "Workspace",
   },
@@ -56,8 +63,10 @@ const COPY: Record<
     brandTitle: "Сеть знаний Россия – Вьетнам",
     home: "Главная",
     about: "О сети",
+    ecosystem: "Экосистема",
     news: "Новости",
     contact: "Контакты",
+    register: "Регистрация",
     login: "Войти",
     workspace: "Рабочее пространство",
   },
@@ -86,8 +95,9 @@ export function GuestPublicNav({
   const resolveActive = (): string => {
     if (clickedKey) return clickedKey;
     if (pathname.startsWith("/news")) return "news";
+    if (pathname === "/about") return "about";
     if (pathname === "/") {
-      if (currentHash === "#about") return "about";
+      if (currentHash === "#ecosystem") return "ecosystem";
       if (currentHash === "#contact") return "contact";
       return "home";
     }
@@ -97,7 +107,8 @@ export function GuestPublicNav({
   const activeKey = resolveActive();
   const items = [
     { key: "home", label: t.home, href: "/" },
-    { key: "about", label: t.about, href: "/#about" },
+    { key: "about", label: t.about, href: "/about" },
+    { key: "ecosystem", label: t.ecosystem, href: "/#ecosystem" },
     { key: "news", label: t.news, href: "/news" },
     { key: "contact", label: t.contact, href: "/#contact" },
   ];
@@ -129,7 +140,7 @@ export function GuestPublicNav({
                 href={item.href}
                 onClick={() => setClickedKey(item.key)}
                 aria-current={selected ? "page" : undefined}
-                className={`rounded-lg px-3.5 py-1.5 text-base font-bold uppercase leading-[1.2] transition-all duration-150 ${selected ? "bg-white text-blue-700 shadow-2xs font-extrabold" : "text-slate-700 hover:bg-white/70 hover:text-blue-700"}`}
+                className={`inline-flex flex-col items-center justify-center rounded-lg px-3.5 py-1.5 text-center text-base font-bold uppercase leading-tight transition-all duration-150 ${selected ? "bg-white text-blue-700 shadow-2xs font-extrabold" : "text-slate-700 hover:bg-white/70 hover:text-blue-700"}`}
               >
                 {item.label}
               </Link>
@@ -138,11 +149,20 @@ export function GuestPublicNav({
         </nav>
 
         <div className="flex items-center gap-3">
-          <LanguageSwitcher variant="light" />
+          <LanguageSwitcher variant="light" compact />
+
+          {!isAuthenticated ? (
+            <Link
+              href="/register"
+              className="hidden h-11 items-center justify-center rounded-xl border border-blue-300 bg-white px-4 text-center text-base font-bold text-blue-700 transition hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:inline-flex"
+            >
+              {t.register}
+            </Link>
+          ) : null}
 
           <Link
             href={isAuthenticated ? workspaceHref : "/login"}
-            className="inline-flex h-10 items-center justify-center rounded-xl bg-blue-600 px-4.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700"
+            className="inline-flex h-11 items-center justify-center rounded-xl bg-blue-600 px-4 text-center text-base font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
           >
             {isAuthenticated ? t.workspace : t.login}
           </Link>
@@ -161,7 +181,7 @@ export function GuestPublicNav({
                 key={item.key}
                 href={item.href}
                 onClick={() => setClickedKey(item.key)}
-                className={`shrink-0 rounded-full px-3.5 py-1.5 text-base font-bold uppercase leading-[1.2] transition-all ${selected ? "bg-blue-600 text-white shadow-2xs" : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"}`}
+                className={`inline-flex flex-col items-center justify-center shrink-0 rounded-full px-3.5 py-1.5 text-center text-base font-bold uppercase leading-tight transition-all ${selected ? "bg-blue-600 text-white shadow-2xs" : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"}`}
               >
                 {item.label}
               </Link>

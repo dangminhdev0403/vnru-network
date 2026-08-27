@@ -25,6 +25,7 @@ Read `../../docs/RULES.md` first. Current service manifests, source, schemas, mi
 - Zod is preferred only after it exists in the service manifest and an approved slice wires a shared parser. Never reference an uninstalled validator.
 - Enforce resource ownership and permission scope in backend code. Frontend checks are not security.
 - Keep secrets in environment/runtime secret stores; never source/docs/log output.
+- News/banner media uses the backend `POST /api/v1/admin/news/media` endpoint backed by `nestjs-cloudinary@1.0.7`. Do not duplicate Cloudinary SDK/config/signing or image processing in frontend/shared code.
 
 ## Data
 

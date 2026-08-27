@@ -1,7 +1,7 @@
 # Graph Report - vnru-network  (2026-08-28)
 
 ## Corpus Check
-- 313 files · ~821,305 words
+- 313 files · ~821,126 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -177,7 +177,7 @@
 - services/AGENTS.md
 - VN-RU Architecture Hub
 - Loop Group Nodes
-- context/route.ts
+- mfa/route.ts
 - profile/route.ts
 - badge.tsx
 - class-variance-authority
@@ -227,7 +227,7 @@
 
 ### Community 0 - "authServiceUrl"
 Cohesion: 0.16
-Nodes (18): POST(), GET(), PATCH(), PATCH(), PATCH(), GET(), GET(), POST() (+10 more)
+Nodes (18): POST(), GET(), PATCH(), PATCH(), PATCH(), GET(), POST(), GET() (+10 more)
 
 ### Community 1 - "hooks.ts"
 Cohesion: 0.16
@@ -250,7 +250,7 @@ Cohesion: 0.07
 Nodes (28): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+20 more)
 
 ### Community 6 - "identity.module.ts"
-Cohesion: 0.11
+Cohesion: 0.10
 Nodes (20): IdentityModule, Module, ExternalIdentityRecord, IDENTITY_PRISMA, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput (+12 more)
 
 ### Community 7 - "UI Quality Pro-Max — VN-RU Portal"
@@ -290,15 +290,15 @@ Cohesion: 0.12
 Nodes (20): ExpertDetailPage(), ExpertsIndexPage(), OpportunitiesIndexPage(), OpportunityDetailPage(), UI, Expert, EXPERTS, getExpert() (+12 more)
 
 ### Community 17 - "authentication.service.ts"
-Cohesion: 0.15
+Cohesion: 0.14
 Nodes (17): AuthenticatedRequestGuard, extractSessionCookie(), isRecord(), REQUIRE_MFA_KEY, RequireMfa(), RequirePermission(), SESSION_COOKIE_NAME, context() (+9 more)
 
 ### Community 18 - "AuthenticatedRequest"
-Cohesion: 0.12
+Cohesion: 0.18
 Nodes (14): Delete, Res, AuthenticatedRequest, RequestWithCookies, AuthenticationController, Body, Controller, Get (+6 more)
 
 ### Community 19 - "SessionService"
-Cohesion: 0.13
+Cohesion: 0.10
 Nodes (7): Optional, AccessControlService, Inject, Injectable, SessionService, Inject, Injectable
 
 ### Community 20 - "Archon Setup Wizard"
@@ -813,9 +813,9 @@ Nodes (5): Canonical detailed docs, Read order, Runtime model, Task routing, VN-
 Cohesion: 0.50
 Nodes (4): Body Semantics, Configuration, Loop Group Nodes, When to use `loop:` vs `loop_group:`
 
-### Community 173 - "context/route.ts"
-Cohesion: 0.60
-Nodes (3): POST(), DELETE(), forwardSessionCookie()
+### Community 173 - "mfa/route.ts"
+Cohesion: 0.83
+Nodes (3): DELETE(), GET(), proxy()
 
 ### Community 174 - "profile/route.ts"
 Cohesion: 0.83

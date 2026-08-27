@@ -11,6 +11,7 @@ Operational ownership map. Current source is capability truth; absent modules ar
 | `session` | opaque session lifecycle, expiry, revoke, active-context rotation | `SessionService` |
 | `access-control` | roles, permissions, assignments, capability resolution, IAM audit mutations | `AccessControlService`, `IamAdminService`, `/api/v1/admin/*` |
 | `database` | one Prisma client/pool and shutdown lifecycle | `DatabaseClient`; infrastructure only, no business ownership |
+| `news` | public news articles, VI/EN/RU content, publication and featured-home state | `NewsService`, `/api/v1/news/*`, `/api/v1/admin/news/*` |
 
 ## Ownership rules
 

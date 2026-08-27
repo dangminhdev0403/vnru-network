@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { BrandMark } from "@/components/shared/BrandMark";
+
+const SUPPORT_EMAIL = "info@fonddruzhba.ru";
 
 type GuestPublicFooterCopy = {
   footer: {
@@ -15,6 +19,12 @@ type GuestPublicFooterCopy = {
     moscowOffice: string;
     moscowAddress: string;
     supportLabel: string;
+    nameLabel: string;
+    emailLabel: string;
+    messageLabel: string;
+    sendLabel: string;
+    mailClientHint: string;
+    emailSubject: string;
     copyright: string;
     terms: string;
     privacy: string;
@@ -35,8 +45,8 @@ export function GuestPublicFooter({
       className="scroll-mt-24 border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700"
     >
       <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
-          <div className="lg:col-span-4">
+        <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-12">
+          <div className="xl:col-span-4">
             <Link
               href="/"
               className="inline-flex items-center gap-3.5"
@@ -65,7 +75,7 @@ export function GuestPublicFooter({
             </div>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="xl:col-span-2">
             <h4 className="text-sm font-black uppercase tracking-wider text-[#1A1C1CD9]">
               {t.footer.navTitle}
             </h4>
@@ -96,7 +106,7 @@ export function GuestPublicFooter({
               </li>
               <li>
                 <Link
-                  href="/#about"
+                  href="/#ecosystem"
                   className="transition hover:text-blue-700 hover:underline"
                 >
                   {t.ecosystem.title}
@@ -113,7 +123,7 @@ export function GuestPublicFooter({
             </ul>
           </div>
 
-          <div className="lg:col-span-2">
+          <div className="xl:col-span-3">
             <h4 className="text-sm font-black uppercase tracking-wider text-[#1A1C1CD9]">
               {t.footer.pillarsTitle}
             </h4>
@@ -126,26 +136,34 @@ export function GuestPublicFooter({
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="sm:col-span-2 xl:col-span-3">
             <h4 className="text-sm font-black uppercase tracking-wider text-[#1A1C1CD9]">
               {t.footer.contactTitle}
             </h4>
-            <div className="mt-4 space-y-3 text-xs sm:text-sm text-slate-600">
+            <div className="mt-4 space-y-4 text-xs sm:text-sm text-slate-600">
+              <div>
+                <strong className="block font-bold text-slate-900">
+                  {t.footer.hanoiOffice}
+                </strong>
+                <span className="leading-relaxed">{t.footer.hanoiAddress}</span>
+              </div>
               <div>
                 <strong className="block font-bold text-slate-900">
                   {t.footer.moscowOffice}
                 </strong>
-                <span>{t.footer.moscowAddress}</span>
+                <span className="leading-relaxed">
+                  {t.footer.moscowAddress}
+                </span>
               </div>
               <div className="pt-1">
-                <span className="block font-medium">
+                <span className="block font-medium text-slate-700">
                   {t.footer.supportLabel}
                 </span>
                 <a
-                  href="mailto:info@fonddruzhba.ru"
-                  className="font-bold text-blue-700 transition hover:underline"
+                  href={`mailto:${SUPPORT_EMAIL}`}
+                  className="font-bold text-blue-700 transition hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
                 >
-                  info@fonddruzhba.ru
+                  {SUPPORT_EMAIL}
                 </a>
               </div>
             </div>
@@ -155,16 +173,16 @@ export function GuestPublicFooter({
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-blue-200/80 pt-8 text-xs sm:text-sm font-medium text-slate-600 md:flex-row">
           <p>{t.footer.copyright}</p>
           <div className="flex flex-wrap gap-5 font-semibold text-slate-600">
-            <Link href="/#about" className="hover:text-blue-700">
+            <Link href="/about" className="hover:text-blue-700">
               {t.footer.terms}
             </Link>
-            <Link href="/#about" className="hover:text-blue-700">
+            <Link href="/about" className="hover:text-blue-700">
               {t.footer.privacy}
             </Link>
-            <Link href="/#about" className="hover:text-blue-700">
+            <Link href="/about" className="hover:text-blue-700">
               {t.footer.ethics}
             </Link>
-            <Link href="/#about" className="hover:text-blue-700">
+            <Link href="/about" className="hover:text-blue-700">
               {t.footer.openData}
             </Link>
           </div>

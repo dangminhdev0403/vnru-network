@@ -15,6 +15,9 @@ const configSchema = z.object({
   AUTH_BRIDGE_SECRET: z
     .string()
     .min(32, 'AUTH_BRIDGE_SECRET must contain at least 32 characters'),
+  CLOUDINARY_CLOUD_NAME: z.string().min(1),
+  CLOUDINARY_API_KEY: z.string().min(1),
+  CLOUDINARY_API_SECRET: z.string().min(1),
   NODE_ENV: z.enum(['development', 'test', 'production']).optional(),
 });
 
