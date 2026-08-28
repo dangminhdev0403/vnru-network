@@ -468,8 +468,8 @@ export function GuestEcosystemV2({
                       </div>
                     </div>
 
-                    {/* Status Badge & Action Right */}
-                    <div className="flex shrink-0 items-center gap-3 sm:self-center">
+                    {/* Status Badge Right */}
+                    <div className="shrink-0 sm:self-center">
                       <span
                         className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-bold sm:text-sm ${item.badgeClass}`}
                       >
@@ -478,14 +478,6 @@ export function GuestEcosystemV2({
                         </span>
                         <span>{item.status}</span>
                       </span>
-
-                      <Link
-                        href="/opportunities"
-                        className="hidden items-center gap-1 rounded-xl bg-slate-100 px-4 py-2 text-xs font-bold text-slate-700 transition hover:bg-blue-600 hover:text-white md:inline-flex"
-                      >
-                        <span>{t.viewDetail}</span>
-                        <span aria-hidden="true">→</span>
-                      </Link>
                     </div>
                   </article>
                 ))}
