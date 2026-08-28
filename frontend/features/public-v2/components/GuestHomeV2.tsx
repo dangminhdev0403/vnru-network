@@ -1325,7 +1325,7 @@ function NetworkStatNode({
 
   return (
     <div className={`flex w-full justify-center ${className}`}>
-      <div className={`relative h-[156px] w-[164px] max-w-full ${styles.glow}`}>
+      <div className={`relative h-[172px] w-[180px] max-w-full ${styles.glow}`}>
         <svg
           viewBox="-90 -90 180 180"
           className="absolute inset-0 size-full overflow-visible"
@@ -1353,12 +1353,12 @@ function NetworkStatNode({
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center px-4 pb-1 text-center text-white">
-          <div className="flex max-h-[124px] flex-col items-center justify-center">
+          <div className="flex max-h-[136px] flex-col items-center justify-center">
             <NetworkIconGlyph icon={stat.icon} className="size-6" />
             <strong className="mt-1 text-[26px] font-black leading-none tracking-[-0.03em]">
               {stat.val}
             </strong>
-            <span className="mt-1 max-w-[128px] text-[14px] font-bold leading-[1.18] text-white/95">
+            <span className="mt-1 max-w-[144px] text-sm font-bold leading-tight text-white/95">
               {stat.lbl}
             </span>
           </div>
@@ -1455,7 +1455,7 @@ function NetworkStatsInfographic({
   return (
     <section
       id="ecosystem"
-      className="scroll-mt-28 px-4 pt-4 pb-12 sm:px-6 sm:pb-14 lg:px-8"
+      className="scroll-mt-36 px-4 pt-4 pb-12 sm:px-6 sm:pb-14 lg:px-8 xl:scroll-mt-28"
       aria-labelledby="network-stats-heading"
     >
       <div className="mx-auto max-w-[1460px]">
@@ -1511,13 +1511,13 @@ function NetworkStatsInfographic({
                 country2={country2}
               />
             </div>
-            <div className="mx-auto mt-8 grid max-w-md grid-cols-2 gap-x-2 gap-y-5 sm:gap-x-5">
+            <div className="mx-auto mt-8 grid max-w-md grid-cols-1 gap-5 sm:grid-cols-2">
               {stats.map((stat, index) => (
                 <NetworkStatNode
                   key={stat.lbl}
                   stat={stat}
                   className={
-                    index === stats.length - 1 ? "col-span-2 mx-auto" : ""
+                    index === stats.length - 1 ? "sm:col-span-2 sm:mx-auto" : ""
                   }
                 />
               ))}

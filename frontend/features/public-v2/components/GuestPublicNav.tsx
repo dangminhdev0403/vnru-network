@@ -124,13 +124,13 @@ export function GuestPublicNav({
           onClick={() => setClickedKey("home")}
         >
           <BrandMark className="size-[52px] shadow-xs" />
-          <strong className="hidden truncate text-base lg:text-lg font-black tracking-tight text-slate-950 sm:block">
+          <strong className="hidden truncate text-base font-black tracking-tight text-slate-950 sm:block xl:text-lg">
             {t.brandTitle}
           </strong>
         </Link>
 
         <nav
-          className="hidden items-center rounded-xl border border-blue-200/80 bg-blue-100/70 p-1 shadow-2xs lg:flex"
+          className="hidden items-center rounded-xl border border-blue-200/80 bg-blue-100/70 p-1 shadow-2xs xl:flex"
           aria-label="Điều hướng công khai"
         >
           {items.map((item) => {
@@ -141,7 +141,7 @@ export function GuestPublicNav({
                 href={item.href}
                 onClick={() => setClickedKey(item.key)}
                 aria-current={selected ? "page" : undefined}
-                className={`inline-flex flex-col items-center justify-center rounded-lg px-3.5 py-1.5 text-center text-base font-bold uppercase leading-tight transition-all duration-150 ${selected ? "bg-white text-blue-700 shadow-2xs font-extrabold" : "text-slate-700 hover:bg-white/70 hover:text-blue-700"}`}
+                className={`inline-flex items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-center text-base font-bold uppercase leading-tight transition-all duration-150 ${selected ? "bg-white text-blue-700 shadow-2xs font-extrabold" : "text-slate-700 hover:bg-white/70 hover:text-blue-700"}`}
               >
                 {item.label}
               </Link>
@@ -155,7 +155,7 @@ export function GuestPublicNav({
           {!isAuthenticated ? (
             <Link
               href="/register"
-              className="hidden h-11 items-center justify-center rounded-xl border border-blue-300 bg-white px-4 text-center text-base font-bold text-blue-700 transition hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:inline-flex"
+              className="hidden h-11 items-center justify-center whitespace-nowrap rounded-xl border border-blue-300 bg-white px-4 text-center text-base font-bold text-blue-700 transition hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:inline-flex"
             >
               {t.register}
             </Link>
@@ -163,7 +163,7 @@ export function GuestPublicNav({
 
           <Link
             href={isAuthenticated ? workspaceHref : "/login"}
-            className="inline-flex h-11 items-center justify-center rounded-xl bg-blue-600 px-4 text-center text-base font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+            className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-xl bg-blue-600 px-4 text-center text-base font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
           >
             {isAuthenticated ? t.workspace : t.login}
           </Link>
@@ -171,7 +171,7 @@ export function GuestPublicNav({
       </div>
 
       <nav
-        className="border-t border-blue-200/60 bg-[#edf5fe] lg:hidden"
+        className="border-t border-blue-200/60 bg-[#edf5fe] xl:hidden"
         aria-label="Điều hướng công khai trên di động"
       >
         <div className="mx-auto flex max-w-[1460px] gap-1.5 overflow-x-auto px-4 py-2.5 sm:px-6">

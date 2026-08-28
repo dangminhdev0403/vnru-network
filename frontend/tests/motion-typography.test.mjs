@@ -2,6 +2,17 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
+test("public navigation stays compact until the infographic desktop breakpoint", async () => {
+  const [nav, home] = await Promise.all([
+    readFile(new URL("../features/public-v2/components/GuestPublicNav.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../features/public-v2/components/GuestHomeV2.tsx", import.meta.url), "utf8"),
+  ]);
+  assert.match(nav, /shadow-2xs xl:flex/);
+  assert.match(nav, /bg-\[#edf5fe\] xl:hidden/);
+  assert.match(home, /relative hidden aspect-\[1200\/675\] xl:block/);
+  assert.match(home, /grid-cols-1 gap-5 sm:grid-cols-2/);
+});
+
 test("shared motion and readable copy respect reduced-motion preferences", async () => {
   const [layout, css] = await Promise.all([
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
