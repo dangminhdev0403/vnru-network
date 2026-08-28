@@ -37,6 +37,7 @@ fi
 "${COMPOSE[@]}" run --rm migrate
 "${COMPOSE[@]}" --profile seed run --rm -T demo-seed < "$ACCOUNT_FILE"
 "${COMPOSE[@]}" up -d --remove-orphans
+"${COMPOSE[@]}" restart nginx
 
 for _ in {1..60}; do
   if curl -fsS "${DEPLOY_HEALTH_URL:-http://127.0.0.1:8080/}" >/dev/null; then
