@@ -1,27 +1,27 @@
 # Graph Report - vnru-network  (2026-08-28)
 
 ## Corpus Check
-- 313 files · ~821,305 words
+- 333 files · ~996,274 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2268 nodes · 3070 edges · 211 communities (182 shown, 29 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.57)
+- 2395 nodes · 3311 edges · 219 communities (185 shown, 34 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.59)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9b054a75`
+- Built from commit: `87c1c758`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - authServiceUrl
-- hooks.ts
+- RolePermissionsPage.tsx
 - iam-admin.service.ts
 - dependencies
 - Auth Service Specification — Module 1
 - compilerOptions
-- identity.module.ts
+- MembershipApplicationService
 - UI Quality Pro-Max — VN-RU Portal
 - VN–RU Public Discovery UI Guide
 - High-Agency Frontend Skill
@@ -31,17 +31,17 @@
 - Hooks
 - MOCK_DATA_AGENT_GUIDE.md
 - Locale
-- PublicDiscoveryPages.tsx
-- authentication.service.ts
+- useLocale
+- news.controller.ts
 - AuthenticatedRequest
-- SessionService
+- access-control.service.ts
 - Archon Setup Wizard
 - Anti-Patterns
 - compilerOptions
 - Archon CLI Skill
 - Appendix B - Canonical Sources (read these before reinventing)
 - Motion Design Skill
-- access-control.service.ts
+- GuestEcosystemV2.tsx
 - State & Feedback Patterns
 - Design Audit
 - VN–RU Full Modules Prototype V3 — ROLE / FLOW UI GUIDE
@@ -59,14 +59,14 @@
 - devDependencies
 - dependencies
 - Choreography
-- opportunities.ts
+- SessionService
 - SidebarIcons.tsx
 - server.ts
 - Frontend API Contract Guide
 - Design System: Taste Standard
 - devDependencies
 - GuestNewsArticleV2.tsx
-- RoleDetailPage.tsx
+- AdminNewsStudio.tsx
 - Control
 - Disney's 12 Principles — UI Adapted
 - GUIDES.md
@@ -75,13 +75,13 @@
 - Ambient & Continuous Patterns
 - jest
 - scripts
-- authentication.module.ts
+- IamAdminController
 - Approval Nodes
 - 4. DESIGN ENGINEERING DIRECTIVES (Bias Correction)
 - 4-Level Decision Hierarchy
 - Four Archetypes
 - Timing & Easing Tables
-- table.tsx
+- SidebarFrame.tsx
 - Agent Instructions — Russia-Vietnam Science-Technology Intelligence Network
 - GitHub Webhook Setup Guide
 - Interactive Workflow Guide
@@ -96,21 +96,21 @@
 - 10. REFERENCE VOCABULARY (Pattern Names the Agent Should Know)
 - tasteskill: Anti-Slop Frontend Skill
 - Frontend Runtime and UI Guide
-- useLocale
+- GuestKnowledgeV2.tsx
 - style.md
 - Command Name
 - Parameter Matrix (Quick Reference)
 - Variable Substitution Reference
 - Core Philosophy
 - Russia-Vietnam Science-Technology Intelligence Network Global Rules (Authoritative)
-- cn.ts
-- collapsible.tsx
+- Header.tsx
+- table.tsx
 - Product
 - Ponytail
 - Primitives
 - 9. AI TELLS (Forbidden Patterns)
 - Emotion-to-Motion Mapping
-- Property Selection
+- motion-design/SKILL.md
 - app/layout.tsx
 - frontend/DESIGN.md
 - Frontend Rules
@@ -125,7 +125,8 @@
 - 11. REDESIGN PROTOCOL
 - 3. DEFAULT ARCHITECTURE & CONVENTIONS
 - 6. PERFORMANCE & ACCESSIBILITY GUARDRAILS
-- locale.ts
+- authentication.service.ts
+- GuestHomeV2.tsx
 - auth-service/package.json
 - Workflow-Level Fields
 - Behaviors
@@ -143,24 +144,23 @@
 - 8. DARK MODE PROTOCOL
 - React Aria Components & TailGrids Primitives in VN-RU Portal
 - System Architecture
-- SidebarFrame.tsx
+- GuestAboutV2.tsx
 - docs/README.md
-- 7. DIAL DEFINITIONS (Technical Reference)
+- register/page.tsx
 - RoleListPage.tsx
 - Portal Foundation Decisions
-- LocalCredentialService
 - Synthetic IAM Workflow Fixtures
 - deploy.sh
 - This is NOT the Next.js you know
-- UserAdministration.tsx
+- authenticated-request-context.ts
 - rules/graphify.md
 - impeccable.md
 - principles.md
 - workflows/graphify.md
-- register/page.tsx
+- app/news/page.tsx
 - frontend/package.json
+- UserAdministration.tsx
 - ProfileDialog.tsx
-- auth.ts
 - exclude
 - frontend/eslint.config.mjs
 - home-i18n.test.mjs
@@ -171,75 +171,82 @@
 - VN-RU Monorepo Rules
 - import-fixture.ts
 - VN-RU Monorepo Architecture
-- AccessLogsPage.tsx
+- auth.ts
 - Cancel Nodes
 - VN-RU Module Map
 - services/AGENTS.md
 - VN-RU Architecture Hub
 - Loop Group Nodes
-- context/route.ts
-- profile/route.ts
-- badge.tsx
-- class-variance-authority
-- @dangminhdev04032005/query-resource
+- NotFoundClient.tsx
+- iam-admin.controller.ts
+- identity.module.ts
+- AccessLogsPage.tsx
+- .getCurrentUser
 - vnru-full-modules-prototype-v3/README.md
 - SCREEN_OWNERSHIP_MATRIX.md
 - deploy-script.test.sh
 - { GET, POST }
-- RolePermissionsPage.tsx
+- 1. THE THREE DIALS (Core Configuration)
 - i18next
-- next
+- mfa/route.ts
 - next-auth
 - react-aria-components
 - react-dom
 - react-i18next
-- sweetalert2
+- @designcodeio/threeui
 - workflow-fixture.spec.ts
+- react
+- tailwind-merge
+- three
+- zustand
+- profile/route.ts
+- badge.tsx
+- motion
 
 ## God Nodes (most connected - your core abstractions)
-1. `useLocale` - 74 edges
+1. `useLocale` - 80 edges
 2. `cn()` - 47 edges
-3. `Locale` - 35 edges
-4. `authServiceUrl()` - 34 edges
-5. `backendHeaders()` - 29 edges
+3. `Locale` - 36 edges
+4. `authServiceUrl()` - 36 edges
+5. `backendHeaders()` - 31 edges
 6. `UI Quality Pro-Max — VN-RU Portal` - 27 edges
 7. `compilerOptions` - 22 edges
-8. `SessionService` - 19 edges
-9. `Workflow Authoring` - 19 edges
-10. `confirmAction()` - 18 edges
+8. `AuthenticatedRequest` - 20 edges
+9. `SessionService` - 19 edges
+10. `Workflow Authoring` - 19 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `RegisterPage()` --calls--> `useLocale`  [EXTRACTED]
   frontend/app/register/page.tsx → frontend/core/i18n/locale.ts
-- `Collapsible()` --calls--> `cn()`  [EXTRACTED]
-  frontend/components/tailgrids/core/collapsible.tsx → frontend/lib/cn.ts
-- `CollapsibleTrigger()` --calls--> `cn()`  [EXTRACTED]
-  frontend/components/tailgrids/core/collapsible.tsx → frontend/lib/cn.ts
-- `CollapsibleContent()` --calls--> `cn()`  [EXTRACTED]
-  frontend/components/tailgrids/core/collapsible.tsx → frontend/lib/cn.ts
-- `TableBody()` --calls--> `cn()`  [EXTRACTED]
-  frontend/components/tailgrids/core/table.tsx → frontend/lib/cn.ts
+- `PermissionCatalogPage()` --calls--> `useLocale`  [EXTRACTED]
+  frontend/features/admin/access/components/PermissionCatalogPage.tsx → frontend/core/i18n/locale.ts
+- `ExpertsIndexPage()` --calls--> `useLocale`  [EXTRACTED]
+  frontend/features/public-discovery/components/PublicDiscoveryPages.tsx → frontend/core/i18n/locale.ts
+- `json()` --calls--> `httpClient()`  [EXTRACTED]
+  frontend/features/iam/repository.ts → frontend/lib/httpClient.ts
+- `bootstrap()` --indirect_call--> `AppModule`  [INFERRED]
+  services/auth-service/src/main.ts → services/auth-service/src/app.module.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (211 total, 29 thin omitted)
+## Communities (219 total, 34 thin omitted)
 
 ### Community 0 - "authServiceUrl"
-Cohesion: 0.16
-Nodes (18): POST(), GET(), PATCH(), PATCH(), PATCH(), GET(), GET(), POST() (+10 more)
+Cohesion: 0.15
+Nodes (19): proxy(), POST(), GET(), PATCH(), PATCH(), PATCH(), GET(), POST() (+11 more)
 
-### Community 1 - "hooks.ts"
-Cohesion: 0.16
-Nodes (13): copy, MfaControl(), SecurityClientPage(), securityCopy, iam, security, useSessions(), iamRepository (+5 more)
+### Community 1 - "RolePermissionsPage.tsx"
+Cohesion: 0.13
+Nodes (20): PageProps, copy, GrantFilter, isSystemRole(), RoleDetailPage(), RoleDetailPageProps, AttachmentFile, ContentPublishStudio() (+12 more)
 
 ### Community 2 - "iam-admin.service.ts"
 Cohesion: 0.09
-Nodes (32): Query, IamAdminController, paginationSchema, passwordResetSchema, roleAssignmentSchema, rolePermissionsSchema, Body, Controller (+24 more)
+Nodes (32): IamAdminController, paginationSchema, passwordResetSchema, roleAssignmentSchema, rolePermissionsSchema, Body, Controller, Get (+24 more)
 
 ### Community 3 - "dependencies"
 Cohesion: 0.12
-Nodes (17): clsx, dependencies, clsx, motion, next-themes, react, tailwind-merge, @tanstack/react-query (+9 more)
+Nodes (17): class-variance-authority, clsx, @dangminhdev04032005/query-resource, dependencies, class-variance-authority, clsx, @dangminhdev04032005/query-resource, next (+9 more)
 
 ### Community 4 - "Auth Service Specification — Module 1"
 Cohesion: 0.05
@@ -249,9 +256,9 @@ Nodes (37): `access-control`, Auth Service — Module 1 Base, Authenticated requ
 Cohesion: 0.07
 Nodes (28): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+20 more)
 
-### Community 6 - "identity.module.ts"
-Cohesion: 0.11
-Nodes (20): IdentityModule, Module, ExternalIdentityRecord, IDENTITY_PRISMA, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput (+12 more)
+### Community 6 - "MembershipApplicationService"
+Cohesion: 0.17
+Nodes (10): MembershipApplicationController, membershipApplicationSchema, Body, Controller, Post, Req, MembershipApplicationPrismaClient, MembershipApplicationService (+2 more)
 
 ### Community 7 - "UI Quality Pro-Max — VN-RU Portal"
 Cohesion: 0.06
@@ -266,8 +273,8 @@ Cohesion: 0.06
 Nodes (30): 10. FINAL PRE-FLIGHT CHECK, 1. ACTIVE BASELINE CONFIGURATION, 2. DEFAULT ARCHITECTURE & CONVENTIONS, 3. DESIGN ENGINEERING DIRECTIVES (Bias Correction), 4. CREATIVE PROACTIVITY (Anti-Slop Implementation), 5. PERFORMANCE GUARDRAILS, 6. TECHNICAL REFERENCE (Dial Definitions), 7. AI TELLS (Forbidden Patterns) (+22 more)
 
 ### Community 10 - "GuestExploreV2.tsx"
-Cohesion: 0.07
-Nodes (24): metadata, metadata, COPY, GuestAboutV2(), LEADERS, MEMBER_ORGANIZATIONS, articleId(), CATALOGS (+16 more)
+Cohesion: 0.18
+Nodes (12): articleId(), CATALOGS, FEATURED, FeedCategory, GuestExploreV2(), ITEMS, LATEST, NewsItem (+4 more)
 
 ### Community 11 - "Discord Bot Setup Guide"
 Cohesion: 0.07
@@ -282,24 +289,24 @@ Cohesion: 0.07
 Nodes (29): Advanced Features: Hooks, MCP, Skills, Retry, Sessions, Typed Artifacts, Automatic Tool Wildcards, Claude vs Codex: How Each Gets MCP and Skills, Combining Skills with MCP, Common Patterns, Config File Format, Environment Variable Expansion, Error Classification (+21 more)
 
 ### Community 15 - "Locale"
-Cohesion: 0.14
-Nodes (14): FlagProps, LANGUAGE_OPTIONS, LanguageOption, LanguageSwitcher(), LanguageSwitcherProps, LanguageSwitcherVariant, switcherCopy, Locale (+6 more)
+Cohesion: 0.13
+Nodes (13): FlagProps, LANGUAGE_OPTIONS, LanguageOption, LanguageSwitcher(), LanguageSwitcherProps, LanguageSwitcherVariant, switcherCopy, COPY (+5 more)
 
-### Community 16 - "PublicDiscoveryPages.tsx"
-Cohesion: 0.12
-Nodes (20): ExpertDetailPage(), ExpertsIndexPage(), OpportunitiesIndexPage(), OpportunityDetailPage(), UI, Expert, EXPERTS, getExpert() (+12 more)
+### Community 16 - "useLocale"
+Cohesion: 0.13
+Nodes (17): ExpertDetailPage(), ExpertsIndexPage(), OpportunitiesIndexPage(), OpportunityDetailPage(), UI, EXPERTS, getExpert(), getOpportunity() (+9 more)
 
-### Community 17 - "authentication.service.ts"
-Cohesion: 0.15
-Nodes (17): AuthenticatedRequestGuard, extractSessionCookie(), isRecord(), REQUIRE_MFA_KEY, RequireMfa(), RequirePermission(), SESSION_COOKIE_NAME, context() (+9 more)
+### Community 17 - "news.controller.ts"
+Cohesion: 0.05
+Nodes (43): RequireAnyPermission(), RequireMfa(), RequirePermission(), context(), AdminNewsController, adminQuerySchema, articleFields, createSchema (+35 more)
 
 ### Community 18 - "AuthenticatedRequest"
-Cohesion: 0.12
-Nodes (14): Delete, Res, AuthenticatedRequest, RequestWithCookies, AuthenticationController, Body, Controller, Get (+6 more)
+Cohesion: 0.17
+Nodes (18): Delete, Res, AuthenticatedRequest, extractSessionCookie(), isRecord(), RequestWithCookies, AuthenticationController, SESSION_COOKIE_OPTIONS (+10 more)
 
-### Community 19 - "SessionService"
+### Community 19 - "access-control.service.ts"
 Cohesion: 0.13
-Nodes (7): Optional, AccessControlService, Inject, Injectable, SessionService, Inject, Injectable
+Nodes (16): Optional, AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord (+8 more)
 
 ### Community 20 - "Archon Setup Wizard"
 Cohesion: 0.09
@@ -325,9 +332,9 @@ Nodes (21): APPENDICES - Real Source-Backed Reference Material, Appendix A - Ins
 Cohesion: 0.10
 Nodes (21): Button Press (Playful), Card Entrance (Premium), Choreography Essentials, Common Patterns, CRITICAL — never break, Duration Table, Easing Selection, Emotion-to-Motion Map (+13 more)
 
-### Community 26 - "access-control.service.ts"
-Cohesion: 0.19
-Nodes (14): ACCESS_CONTROL_PRISMA, AccessControlPrismaClient, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord, CreateSessionInput (+6 more)
+### Community 26 - "GuestEcosystemV2.tsx"
+Cohesion: 0.18
+Nodes (9): CALLS_DATA, COPY, EXPERTS, GuestEcosystemV2(), PROJECTS, PUBLICATIONS, HOME_COPY, GuestPublicFooter() (+1 more)
 
 ### Community 27 - "State & Feedback Patterns"
 Cohesion: 0.08
@@ -346,12 +353,12 @@ Cohesion: 0.11
 Nodes (18): 1. Define the Atmosphere, 2. Map the Color Palette, 3. Establish Typography Rules, 4. Define the Hero Section, 5. Describe Component Stylings, 6. Define Layout Principles, 7. Define Responsive Rules, 8. Encode Motion Philosophy (+10 more)
 
 ### Community 31 - "WorkspaceSidebar.tsx"
-Cohesion: 0.16
-Nodes (15): SidebarProps, NavSection, SidebarFrame(), labels, WorkspaceSidebar(), WorkspaceSidebarProps, filterNavSections(), hasCapability() (+7 more)
+Cohesion: 0.27
+Nodes (9): filterNavSections(), hasCapability(), resolveUserPersonas(), WORKSPACE_MEMBER_CAPABILITIES, WORKSPACE_NAV_REGISTRY, WORKSPACE_PERSONAS, WorkspaceNavEntry, WorkspaceNavSection (+1 more)
 
 ### Community 32 - "cn"
-Cohesion: 0.18
-Nodes (16): Card(), CardAction(), CardContent(), CardDescription(), CardFooter(), CardHeader(), CardTitle(), DropdownContentProps (+8 more)
+Cohesion: 0.07
+Nodes (40): Badge(), BadgeProps, badgeStyles, Button(), ButtonProps, buttonStyles, Card(), CardAction() (+32 more)
 
 ### Community 33 - "Common Failure Modes"
 Cohesion: 0.11
@@ -374,8 +381,8 @@ Cohesion: 0.11
 Nodes (17): 1. Command dispatch, 2. Common verification rules, 3.1 Quick, 3.2 Integration, 3.3 Browser UI, 3.4 Full, 3. Profile definitions, 4. Module-aware test selection (+9 more)
 
 ### Community 38 - "WorkspaceShell.tsx"
-Cohesion: 0.08
-Nodes (29): Header(), headerCopy, HeaderProps, shellCopy, WorkspaceShell(), SheetContent(), SheetContentProps, SheetOverlay() (+21 more)
+Cohesion: 0.10
+Nodes (19): NavSection, shellCopy, WorkspaceShell(), SheetContent(), SheetContentProps, SheetOverlay(), SheetOverlayProps, SheetProps (+11 more)
 
 ### Community 39 - "seed-demo.ts"
 Cohesion: 0.24
@@ -390,20 +397,20 @@ Cohesion: 0.12
 Nodes (17): eslint-config-next, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node, @types/react (+9 more)
 
 ### Community 42 - "dependencies"
-Cohesion: 0.12
-Nodes (17): @nestjs/common, @nestjs/core, @nestjs/platform-express, pg, @prisma/adapter-pg, reflect-metadata, rxjs, dependencies (+9 more)
+Cohesion: 0.11
+Nodes (19): nestjs-cloudinary, @nestjs/common, @nestjs/core, @nestjs/platform-express, pg, @prisma/adapter-pg, reflect-metadata, rxjs (+11 more)
 
 ### Community 43 - "Choreography"
 Cohesion: 0.12
 Nodes (15): 1. Lead with the Hero, 2. Spatial Origin Consistency, 3. Counter-Motion, Attention Direction, Choreography, Common Recipes, Coordinated Entry Rules, Dashboard Load (+7 more)
 
-### Community 44 - "opportunities.ts"
-Cohesion: 0.40
-Nodes (4): DEMO_OPPORTUNITIES, DetailedOpportunity, getOpportunityById(), Opportunity
+### Community 44 - "SessionService"
+Cohesion: 0.09
+Nodes (6): AuthenticatedRequestGuard, Injectable, AuthenticationService, Injectable, SessionService, Injectable
 
 ### Community 46 - "server.ts"
-Cohesion: 0.15
-Nodes (17): GET(), POST(), copy, LoginPage(), PasswordField(), PasswordFieldProps, Home(), HomeSession (+9 more)
+Cohesion: 0.19
+Nodes (11): GET(), POST(), copy, LoginPage(), PasswordField(), PasswordFieldProps, isSameOriginRequest(), isSystemAdministrator() (+3 more)
 
 ### Community 47 - "Frontend API Contract Guide"
 Cohesion: 0.13
@@ -418,12 +425,12 @@ Cohesion: 0.04
 Nodes (49): eslint-config-prettier, @eslint/eslintrc, @eslint/js, eslint-plugin-prettier, globals, jest, @nestjs/cli, @nestjs/schematics (+41 more)
 
 ### Community 50 - "GuestNewsArticleV2.tsx"
-Cohesion: 0.15
-Nodes (9): Page(), PageProps, VALID_IDS, ArticleRecord, articles, Category, categoryLabels, GuestNewsArticleV2() (+1 more)
+Cohesion: 0.14
+Nodes (11): Page(), PageProps, VALID_IDS, ArticleRecord, articles, Category, categoryLabels, filterCopy (+3 more)
 
-### Community 51 - "RoleDetailPage.tsx"
-Cohesion: 0.13
-Nodes (20): PageProps, copy, GrantFilter, isSystemRole(), RoleDetailPage(), RoleDetailPageProps, AttachmentFile, ContentPublishStudio() (+12 more)
+### Community 51 - "AdminNewsStudio.tsx"
+Cohesion: 0.22
+Nodes (12): AdminNewsStudio(), empty(), initial, locales, news, NewsArticle, NewsInput, NewsLocale (+4 more)
 
 ### Community 52 - "Control"
 Cohesion: 0.14
@@ -457,9 +464,9 @@ Nodes (13): js, json, **/*.(t|j)s, jest, collectCoverageFrom, coverageDirectory,
 Cohesion: 0.15
 Nodes (13): scripts, build, format, lint, start, start:debug, start:dev, start:prod (+5 more)
 
-### Community 60 - "authentication.module.ts"
-Cohesion: 0.18
-Nodes (10): configSchema, validateConfig(), DatabaseClient, DatabaseModule, Injectable, Module, AccessControlModule, Module (+2 more)
+### Community 60 - "IamAdminController"
+Cohesion: 0.15
+Nodes (13): AccessOverviewDashboard(), copy, quickActions, copy, groupLabels, isSystemRole(), permissionLabels, RolePermissionsPage() (+5 more)
 
 ### Community 61 - "Approval Nodes"
 Cohesion: 0.33
@@ -478,12 +485,12 @@ Cohesion: 0.17
 Nodes (12): 1. Signature Easing (80% of animations), 2. Duration Palette, 3. Entrance Pattern, Brand Motion Identity, Corporate / Professional, Energetic / Dynamic, Four Archetypes, Keyword Matching (+4 more)
 
 ### Community 65 - "Timing & Easing Tables"
-Cohesion: 0.15
+Cohesion: 0.17
 Nodes (12): Distance-Duration Scaling, Duration by Element Type, Duration by Personality, Easing: Directional Rules, Easing: Industry Standards, Enter vs. Exit, Interactive Feedback, Material-Based Easing (+4 more)
 
-### Community 66 - "table.tsx"
-Cohesion: 0.23
-Nodes (11): TableBody(), TableCell(), tableCellStyles, TableHead(), TableHeader(), tableHeaderStyles, tableHeadStyles, TableRoot() (+3 more)
+### Community 66 - "SidebarFrame.tsx"
+Cohesion: 0.12
+Nodes (16): copy, RegisterPage(), createRegistrationSchema(), isRegistrationField(), RegistrationField, RegistrationValidationCopy, BrandMark(), BrandMarkProps (+8 more)
 
 ### Community 67 - "Agent Instructions — Russia-Vietnam Science-Technology Intelligence Network"
 Cohesion: 0.20
@@ -514,16 +521,16 @@ Cohesion: 0.18
 Nodes (10): Accessibility Quality, CRITICAL, Emotional Quality, HIGH, MEDIUM, Performance Quality, Quality Checklist, Severity Tiers (+2 more)
 
 ### Community 74 - "Troubleshooting"
-Cohesion: 0.17
+Cohesion: 0.18
 Nodes (11): Feels Cheap / Flat, Feels Too Fast / Jarring, Feels Too Slow, Inconsistent Feel, Looks Robotic, No Personality, Performance (Dropped Frames), Personality Mistakes (+3 more)
 
 ### Community 75 - "app.module.ts"
-Cohesion: 0.17
-Nodes (9): AppController, Controller, Get, AppModule, Module, AppService, Injectable, AuthenticationModule (+1 more)
+Cohesion: 0.18
+Nodes (10): AppController, Controller, Get, AppModule, Module, AppService, Injectable, bootstrap() (+2 more)
 
 ### Community 76 - "workspace-server.ts"
-Cohesion: 0.15
-Nodes (15): metadata, Page(), metadata, Page(), metadata, Page(), metadata, Page() (+7 more)
+Cohesion: 0.12
+Nodes (18): metadata, Page(), metadata, Page(), metadata, Page(), metadata, Page() (+10 more)
 
 ### Community 77 - "Initializing Archon in a Repository"
 Cohesion: 0.20
@@ -541,9 +548,9 @@ Nodes (10): 13. OUT OF SCOPE, 14. FINAL PRE-FLIGHT CHECK, 1.A Dial Inference (de
 Cohesion: 0.20
 Nodes (10): Component Ownership, Frontend Runtime and UI Guide, Loading, Error, and Standard UI States `[DESIGN]`, Multilingual Support & AI Translation `[SOURCE]`, Purpose, Realtime, Server and Client Components, State Ownership (+2 more)
 
-### Community 81 - "useLocale"
-Cohesion: 0.13
-Nodes (16): useLocale, GuestExploreMedia(), MEDIA_COPY, COPY, GuestKnowledgeV2(), TYPE_LABELS, COPY, GuestOpportunitiesV2() (+8 more)
+### Community 81 - "GuestKnowledgeV2.tsx"
+Cohesion: 0.08
+Nodes (29): metadata, Copy, NotFoundClient(), BreadcrumbItem, Breadcrumbs(), BreadcrumbsProps, Locale, useLocale (+21 more)
 
 ### Community 82 - "style.md"
 Cohesion: 0.20
@@ -569,13 +576,13 @@ Nodes (8): Core Philosophy, Pillar 1: Emotional Intent, Pillar 2: Visual Narrati
 Cohesion: 0.22
 Nodes (8): 1. Security & Authentication Boundaries, 2. Data Ownership & Module Boundaries, 3. Package & Dependency Governance, 4. API & Resource Design, 5. Working Tree & Scope Constraints, 6. Verification Request Dispatch & Browser Testing Policy, 7. UI Quality & Impeccable Gate, Russia-Vietnam Science-Technology Intelligence Network Global Rules (Authoritative)
 
-### Community 88 - "cn.ts"
-Cohesion: 0.25
-Nodes (6): BreadcrumbItem, Breadcrumbs(), BreadcrumbsProps, Button(), ButtonProps, buttonStyles
+### Community 88 - "Header.tsx"
+Cohesion: 0.13
+Nodes (17): Header(), headerCopy, HeaderProps, SidebarProps, auth, authResource, CurrentUser, json() (+9 more)
 
-### Community 89 - "collapsible.tsx"
+### Community 89 - "table.tsx"
 Cohesion: 0.22
-Nodes (7): Collapsible(), CollapsibleContent(), CollapsibleContentProps, CollapsibleGroupProps, CollapsibleProps, CollapsibleTrigger(), CollapsibleTriggerProps
+Nodes (8): groupLabels, groupPermissions(), iamAdminCopy, permissionLabels, roleLabels, subscribeToClient(), UserAdministration(), View
 
 ### Community 90 - "Product"
 Cohesion: 0.22
@@ -597,7 +604,7 @@ Nodes (8): 9.A Visual & CSS, 9. AI TELLS (Forbidden Patterns), 9.B Typography, 9
 Cohesion: 0.25
 Nodes (7): Color Psychology, Color Transition Rules, Context-Based Emotion Defaults, Core Table, Emotion-to-Motion Mapping, Emotional Intensity, Path as Emotional Language
 
-### Community 95 - "Property Selection"
+### Community 95 - "motion-design/SKILL.md"
 Cohesion: 0.22
 Nodes (9): Color, Combined Properties, Opacity, Performance, Position, Property Selection, Property Selection by Goal, Rotation (+1 more)
 
@@ -657,9 +664,13 @@ Nodes (7): 3.A Stack, 3.B State, 3.C Icons, 3.D Emoji Policy, 3. DEFAULT ARCHITE
 Cohesion: 0.29
 Nodes (7): 6.A Hardware Acceleration, 6.B Reduced Motion (mandatory), 6.C Dark Mode (mandatory for any consumer-facing page), 6.D Core Web Vitals Targets, 6.E DOM Cost, 6.F Z-Index Restraint, 6. PERFORMANCE & ACCESSIBILITY GUARDRAILS
 
-### Community 111 - "locale.ts"
-Cohesion: 0.18
-Nodes (6): metadata, Copy, NotFoundClient(), copy, SurfaceKey, surfaces
+### Community 110 - "authentication.service.ts"
+Cohesion: 0.20
+Nodes (10): AuthJsExchangeInput, CallbackResult, ExchangeResult, ExternalIdentityRecord, IdentityPrismaClient, IdentityService, IdentityUser, ResolveExternalIdentityInput (+2 more)
+
+### Community 111 - "GuestHomeV2.tsx"
+Cohesion: 0.15
+Nodes (7): GuestHomeV2(), HERO_BANNERS, NETWORK_DESKTOP_NODES, NETWORK_TONE_STYLES, NetworkStat, ConstellationField, ThreeContentBackground()
 
 ### Community 112 - "auth-service/package.json"
 Cohesion: 0.29
@@ -729,53 +740,49 @@ Nodes (4): Available Primitives, Overview, React Aria Components & TailGrids Pri
 Cohesion: 0.40
 Nodes (4): Canonical routes, Current scope, Runtime ownership, System Architecture
 
-### Community 130 - "SidebarFrame.tsx"
-Cohesion: 0.21
-Nodes (8): BrandMark(), BrandMarkProps, copy, NavItem, SidebarFrameProps, Tooltip(), TooltipProps, TooltipTrigger()
+### Community 130 - "GuestAboutV2.tsx"
+Cohesion: 0.20
+Nodes (6): metadata, COPY, GuestAboutV2(), LEADERS, MEMBER_ORGANIZATIONS, NetworkIconGlyph()
 
 ### Community 131 - "docs/README.md"
 Cohesion: 0.25
 Nodes (5): Documentation Index, Development, Documentation, Kept runtime, VN–RU Network Portal
 
-### Community 132 - "7. DIAL DEFINITIONS (Technical Reference)"
-Cohesion: 0.50
-Nodes (4): 7. DIAL DEFINITIONS (Technical Reference), DESIGN_VARIANCE (Level 1-10), MOTION_INTENSITY (Level 1-10), VISUAL_DENSITY (Level 1-10)
+### Community 132 - "register/page.tsx"
+Cohesion: 0.43
+Nodes (6): metadata, Page(), Home(), HomeSession, getCurrentSession(), resolveLandingPath()
 
 ### Community 133 - "RoleListPage.tsx"
-Cohesion: 0.18
+Cohesion: 0.17
 Nodes (11): copy, PermissionCatalogPage(), copy, isSystemRole(), resolveScopeForRole(), RoleListPage(), subscribeToClient(), AccessScope (+3 more)
 
 ### Community 134 - "Portal Foundation Decisions"
 Cohesion: 0.50
 Nodes (3): Access model, Current product boundary, Portal Foundation Decisions
 
-### Community 135 - "LocalCredentialService"
-Cohesion: 0.19
-Nodes (9): LocalCredentialController, password, Body, Controller, Post, createLocalPasswordDigest(), LocalCredentialService, scrypt (+1 more)
-
 ### Community 136 - "Synthetic IAM Workflow Fixtures"
 Cohesion: 0.50
 Nodes (3): Critical notice, Synthetic IAM Workflow Fixtures, Usage
 
-### Community 139 - "UserAdministration.tsx"
-Cohesion: 0.24
-Nodes (8): groupLabels, groupPermissions(), iamAdminCopy, permissionLabels, roleLabels, subscribeToClient(), UserAdministration(), View
+### Community 139 - "authenticated-request-context.ts"
+Cohesion: 0.38
+Nodes (5): copy, MfaControl(), SecurityClientPage(), securityCopy, useSessions()
 
-### Community 144 - "register/page.tsx"
-Cohesion: 0.29
-Nodes (7): copy, RegisterPage(), createRegistrationSchema(), isRegistrationField(), RegistrationField, RegistrationValidationCopy, schema
+### Community 144 - "app/news/page.tsx"
+Cohesion: 0.33
+Nodes (7): isNewsCategory(), metadata, Page(), GuestNewsFilterNav(), GuestNewsFilterNavProps, NEWS_CATEGORIES, NewsCategory
 
 ### Community 145 - "frontend/package.json"
 Cohesion: 0.20
 Nodes (9): name, packageManager, private, scripts, build, dev, lint, start (+1 more)
 
-### Community 146 - "ProfileDialog.tsx"
-Cohesion: 0.36
-Nodes (6): AccountClientPage(), copy, ProfileDialog(), schema, useProfile(), getFieldErrors()
+### Community 146 - "UserAdministration.tsx"
+Cohesion: 0.19
+Nodes (10): iam, security, iamRepository, IamRole, IamSession, IamUser, json(), Profile (+2 more)
 
-### Community 153 - "auth.ts"
-Cohesion: 0.32
-Nodes (5): accountConfigSchema, backendUrl(), createBackendSession(), { handlers, auth, signIn, signOut }, verifyRegisteredAccount()
+### Community 153 - "ProfileDialog.tsx"
+Cohesion: 0.47
+Nodes (4): ProfileDialog(), schema, useProfile(), getFieldErrors()
 
 ### Community 154 - "exclude"
 Cohesion: 0.25
@@ -793,9 +800,9 @@ Nodes (6): ALLOWED_CAPABILITIES, ALLOWED_CONTEXT_TYPES, ALLOWED_ROLES, fixturesD
 Cohesion: 0.33
 Nodes (5): Decision, Dependency direction, Extraction policy, Repository shape, VN-RU Monorepo Architecture
 
-### Community 167 - "AccessLogsPage.tsx"
-Cohesion: 0.40
-Nodes (3): AccessLogsPage(), copy, SAMPLE_LOGS
+### Community 167 - "auth.ts"
+Cohesion: 0.32
+Nodes (5): accountConfigSchema, backendUrl(), createBackendSession(), { handlers, auth, signIn, signOut }, verifyRegisteredAccount()
 
 ### Community 168 - "Cancel Nodes"
 Cohesion: 0.40
@@ -813,41 +820,49 @@ Nodes (5): Canonical detailed docs, Read order, Runtime model, Task routing, VN-
 Cohesion: 0.50
 Nodes (4): Body Semantics, Configuration, Loop Group Nodes, When to use `loop:` vs `loop_group:`
 
-### Community 173 - "context/route.ts"
-Cohesion: 0.60
-Nodes (3): POST(), DELETE(), forwardSessionCookie()
+### Community 173 - "NotFoundClient.tsx"
+Cohesion: 0.40
+Nodes (4): DEMO_KNOWLEDGE_RESOURCES, getKnowledgeResourceById(), KnowledgeResource, KnowledgeType
 
-### Community 174 - "profile/route.ts"
+### Community 174 - "iam-admin.controller.ts"
+Cohesion: 0.40
+Nodes (4): DEMO_OPPORTUNITIES, DetailedOpportunity, getOpportunityById(), Opportunity
+
+### Community 175 - "identity.module.ts"
+Cohesion: 0.09
+Nodes (23): configSchema, validateConfig(), DatabaseClient, DatabaseModule, Injectable, Module, AccessControlModule, Module (+15 more)
+
+### Community 176 - "AccessLogsPage.tsx"
+Cohesion: 0.50
+Nodes (4): 7. DIAL DEFINITIONS (Technical Reference), DESIGN_VARIANCE (Level 1-10), MOTION_INTENSITY (Level 1-10), VISUAL_DENSITY (Level 1-10)
+
+### Community 203 - "mfa/route.ts"
+Cohesion: 0.83
+Nodes (3): DELETE(), GET(), proxy()
+
+### Community 215 - "profile/route.ts"
 Cohesion: 0.83
 Nodes (3): GET(), PATCH(), proxy()
 
-### Community 175 - "badge.tsx"
-Cohesion: 0.67
-Nodes (3): Badge(), BadgeProps, badgeStyles
-
-### Community 188 - "RolePermissionsPage.tsx"
-Cohesion: 0.15
-Nodes (14): AccessOverviewDashboard(), copy, quickActions, copy, groupLabels, isSystemRole(), permissionLabels, RolePermissionsPage() (+6 more)
-
 ## Knowledge Gaps
-- **1250 isolated node(s):** `PageProps`, `metadata`, `metadata`, `Copy`, `metadata` (+1245 more)
+- **1287 isolated node(s):** `PageProps`, `metadata`, `metadata`, `Copy`, `metadata` (+1282 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **29 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **34 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useLocale` connect `useLocale` to `hooks.ts`, `SidebarFrame.tsx`, `RoleListPage.tsx`, `WorkspaceShell.tsx`, `AccessLogsPage.tsx`, `GuestExploreV2.tsx`, `UserAdministration.tsx`, `workspace-server.ts`, `Locale`, `register/page.tsx`, `locale.ts`, `ProfileDialog.tsx`, `RoleDetailPage.tsx`, `PublicDiscoveryPages.tsx`, `GuestNewsArticleV2.tsx`, `cn.ts`, `RolePermissionsPage.tsx`, `WorkspaceSidebar.tsx`?**
-  _High betweenness centrality (0.017) - this node is a cross-community bridge._
-- **Why does `Locale` connect `Locale` to `hooks.ts`, `SidebarFrame.tsx`, `RoleListPage.tsx`, `WorkspaceShell.tsx`, `AccessLogsPage.tsx`, `GuestExploreV2.tsx`, `UserAdministration.tsx`, `locale.ts`, `register/page.tsx`, `PublicDiscoveryPages.tsx`, `ProfileDialog.tsx`, `RoleDetailPage.tsx`, `useLocale`, `RolePermissionsPage.tsx`, `WorkspaceSidebar.tsx`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `cn()` connect `cn` to `SidebarFrame.tsx`, `table.tsx`, `WorkspaceShell.tsx`, `badge.tsx`, `cn.ts`, `collapsible.tsx`, `WorkspaceSidebar.tsx`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **Why does `useLocale` connect `GuestKnowledgeV2.tsx` to `RolePermissionsPage.tsx`, `SidebarFrame.tsx`, `GuestAboutV2.tsx`, `RoleListPage.tsx`, `WorkspaceShell.tsx`, `GuestExploreV2.tsx`, `authenticated-request-context.ts`, `workspace-server.ts`, `Locale`, `useLocale`, `GuestHomeV2.tsx`, `GuestNewsArticleV2.tsx`, `Header.tsx`, `table.tsx`, `GuestEcosystemV2.tsx`, `IamAdminController`?**
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
+- **Why does `cn()` connect `cn` to `GuestKnowledgeV2.tsx`, `SidebarFrame.tsx`, `WorkspaceShell.tsx`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `Locale` connect `GuestKnowledgeV2.tsx` to `RolePermissionsPage.tsx`, `SidebarFrame.tsx`, `GuestAboutV2.tsx`, `RoleListPage.tsx`, `WorkspaceShell.tsx`, `authenticated-request-context.ts`, `workspace-server.ts`, `Locale`, `useLocale`, `GuestHomeV2.tsx`, `Header.tsx`, `table.tsx`, `GuestEcosystemV2.tsx`, `IamAdminController`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **What connects `PageProps`, `metadata`, `metadata` to the rest of the system?**
-  _1250 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1287 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `authServiceUrl` be split into smaller, more focused modules?**
+  _Cohesion score 0.14919354838709678 - nodes in this community are weakly interconnected._
+- **Should `RolePermissionsPage.tsx` be split into smaller, more focused modules?**
+  _Cohesion score 0.13 - nodes in this community are weakly interconnected._
 - **Should `iam-admin.service.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.08549019607843138 - nodes in this community are weakly interconnected._
-- **Should `dependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._
-- **Should `Auth Service Specification — Module 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.05128205128205128 - nodes in this community are weakly interconnected._

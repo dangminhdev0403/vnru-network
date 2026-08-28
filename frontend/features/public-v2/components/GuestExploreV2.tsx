@@ -5,15 +5,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { HOME_COPY } from "./GuestHomeV2";
+import {
+  GuestNewsFilterNav,
+  newsFilterHref,
+  type NewsCategory,
+} from "./GuestNewsFilterNav";
+import { GuestNewsMasthead } from "./GuestNewsMasthead";
 import { GuestPublicNav } from "./GuestPublicNav";
 
-type Category =
-  | "all"
-  | "science"
-  | "cooperation"
-  | "education"
-  | "society";
-type FeedCategory = Exclude<Category, "all">;
+type FeedCategory = Exclude<NewsCategory, "all">;
 type NewsItem = {
   title: string;
   summary: string;
@@ -29,9 +29,6 @@ const TEXT = {
     about: "Giới thiệu",
     explore: "Khám phá",
     login: "Đăng nhập",
-    news: "Tin tức",
-    lead: "Theo dõi những chuyển động mới nhất về khoa học, công nghệ, đổi mới sáng tạo và hợp tác tri thức Nga - Việt.",
-    live: "Cập nhật liên tục",
     latest: "Tin mới nhất",
     featured: "Tin tức nổi bật",
     stream: "Dòng tin liên tục",
@@ -61,9 +58,6 @@ const TEXT = {
     about: "About",
     explore: "Explore",
     login: "Sign in",
-    news: "News",
-    lead: "Follow the latest developments in science, technology, innovation and Vietnam - Russia knowledge cooperation.",
-    live: "Continuous updates",
     latest: "Latest news",
     featured: "Featured news",
     stream: "Continuous news",
@@ -93,9 +87,6 @@ const TEXT = {
     about: "О сети",
     explore: "Обзор",
     login: "Войти",
-    news: "Новости",
-    lead: "Следите за последними новостями науки, технологий, инноваций и российско-вьетнамского сотрудничества.",
-    live: "Постоянное обновление",
     latest: "Последние новости",
     featured: "Главные материалы",
     stream: "Лента новостей",
@@ -122,39 +113,38 @@ const TEXT = {
 } as const;
 
 const SCIENCE_ITEMS: NewsItem[] = [
-    {
-      title: "Nga phát triển chip lượng tử thế hệ mới mạnh gấp 100 lần",
-      summary:
-        "Công nghệ mới mở rộng khả năng xử lý trong các hệ thống tính toán hiệu năng cao.",
-      category: "science",
-      time: "3 giờ trước",
-      image: "https://picsum.photos/seed/sci1/800/500",
-    },
-    {
-      title: "Các nhà khoa học Việt Nam giải mã thành công gen lúa chịu hạn",
-      summary:
-        "Kết quả nghiên cứu góp phần tạo giống cây trồng thích ứng tốt hơn với biến đổi khí hậu.",
-      category: "science",
-      time: "5 giờ trước",
-      image: "https://picsum.photos/seed/sci2/800/500",
-    },
-    {
-      title:
-        "Nga phóng vệ tinh viễn thám mới hỗ trợ nghiên cứu khí hậu Trái Đất",
-      summary:
-        "Dữ liệu vệ tinh phục vụ giám sát môi trường và nghiên cứu khí hậu.",
-      category: "science",
-      time: "1 ngày trước",
-      image: "https://picsum.photos/seed/sci3/800/500",
-    },
-    {
-      title: "Nghiên cứu chung về vật liệu mới cho năng lượng sạch",
-      summary:
-        "Các nhóm nghiên cứu hai nước phát triển vật liệu tiên tiến cho pin thế hệ mới.",
-      category: "science",
-      time: "4 giờ trước",
-      image: "https://picsum.photos/seed/sci4/800/500",
-    },
+  {
+    title: "Nga phát triển chip lượng tử thế hệ mới mạnh gấp 100 lần",
+    summary:
+      "Công nghệ mới mở rộng khả năng xử lý trong các hệ thống tính toán hiệu năng cao.",
+    category: "science",
+    time: "3 giờ trước",
+    image: "https://picsum.photos/seed/sci1/800/500",
+  },
+  {
+    title: "Các nhà khoa học Việt Nam giải mã thành công gen lúa chịu hạn",
+    summary:
+      "Kết quả nghiên cứu góp phần tạo giống cây trồng thích ứng tốt hơn với biến đổi khí hậu.",
+    category: "science",
+    time: "5 giờ trước",
+    image: "https://picsum.photos/seed/sci2/800/500",
+  },
+  {
+    title: "Nga phóng vệ tinh viễn thám mới hỗ trợ nghiên cứu khí hậu Trái Đất",
+    summary:
+      "Dữ liệu vệ tinh phục vụ giám sát môi trường và nghiên cứu khí hậu.",
+    category: "science",
+    time: "1 ngày trước",
+    image: "https://picsum.photos/seed/sci3/800/500",
+  },
+  {
+    title: "Nghiên cứu chung về vật liệu mới cho năng lượng sạch",
+    summary:
+      "Các nhóm nghiên cứu hai nước phát triển vật liệu tiên tiến cho pin thế hệ mới.",
+    category: "science",
+    time: "4 giờ trước",
+    image: "https://picsum.photos/seed/sci4/800/500",
+  },
 ];
 
 const ITEMS: Record<FeedCategory, NewsItem[]> = {
@@ -450,7 +440,7 @@ const STREAM_INITIAL_COUNT = 8;
 const SPOTLIGHT_INTERVAL_MS = 5_000;
 
 const CATALOGS: Array<{
-  category: Category;
+  category: NewsCategory;
   title: { vi: string; en: string; ru: string };
   children: string[];
 }> = [
@@ -584,17 +574,17 @@ function articleId(item: NewsItem) {
   );
 }
 
-export function GuestExploreV2() {
+export function GuestExploreV2({
+  initialCategory = "all",
+  initialQuery = "",
+}: {
+  initialCategory?: NewsCategory;
+  initialQuery?: string;
+}) {
   const { locale } = useLocale();
   const t = TEXT[locale] ?? TEXT.vi;
-  const categories: Category[] = [
-    "all",
-    "science",
-    "society",
-    "education",
-    "cooperation",
-  ];
-  const [activeCategory, setActiveCategory] = useState<Category>("all");
+  const [activeCategory, setActiveCategory] =
+    useState<NewsCategory>(initialCategory);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [selectedScope, setSelectedScope] = useState("all");
   const [selectedContentTypes, setSelectedContentTypes] = useState<string[]>(
@@ -602,11 +592,22 @@ export function GuestExploreV2() {
   );
   const [selectedPeriod, setSelectedPeriod] = useState("newest");
   const [showAllTopics, setShowAllTopics] = useState(false);
-  const [streamCategory, setStreamCategory] = useState<Category>("all");
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
   const [spotlightIndex, setSpotlightIndex] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
   const slidingTimerRef = useRef<number | null>(null);
+  const selectCategory = (category: NewsCategory) => {
+    setActiveCategory(category);
+    window.history.replaceState(null, "", newsFilterHref(category, query));
+  };
+  const updateQuery = (nextQuery: string) => {
+    setQuery(nextQuery);
+    window.history.replaceState(
+      null,
+      "",
+      newsFilterHref(activeCategory, nextQuery),
+    );
+  };
 
   const changeSpotlight = (nextIndex: number | ((curr: number) => number)) => {
     setIsSliding(true);
@@ -619,10 +620,6 @@ export function GuestExploreV2() {
     }, 1200);
   };
 
-  const [visibleStreamCount, setVisibleStreamCount] =
-    useState(STREAM_INITIAL_COUNT);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const streamLoadMoreRef = useRef<HTMLDivElement | null>(null);
   const filterDetailsRef = useRef<HTMLDetailsElement | null>(null);
 
   const filtered = useMemo(() => {
@@ -645,23 +642,8 @@ export function GuestExploreV2() {
       ? ITEMS[previewCategory].length
       : Object.values(ITEMS).flat().length;
 
-  const stream = useMemo(
-    () =>
-      streamCategory === "all"
-        ? STREAM
-        : STREAM.filter((item) => item.category === streamCategory),
-    [streamCategory],
-  );
-  const visibleStream = stream.slice(0, visibleStreamCount);
   const categoryMode = activeCategory !== "all" || query.trim().length > 0;
   const filteredHalf = Math.ceil(filtered.length / 2);
-  const streamHalf = Math.ceil(visibleStream.length / 2);
-
-  const selectStreamCategory = (nextCategory: Category) => {
-    setStreamCategory(nextCategory);
-    setVisibleStreamCount(STREAM_INITIAL_COUNT);
-    setIsLoadingMore(false);
-  };
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -675,94 +657,22 @@ export function GuestExploreV2() {
     };
   }, []);
 
-  useEffect(() => {
-    const target = streamLoadMoreRef.current;
-    if (!target || visibleStreamCount >= stream.length) return;
-    let timer = 0;
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0]?.isIntersecting) {
-        observer.disconnect();
-        setIsLoadingMore(true);
-        timer = window.setTimeout(() => {
-          setVisibleStreamCount((current) =>
-            Math.min(current + STREAM_BATCH_SIZE, stream.length),
-          );
-          setIsLoadingMore(false);
-        }, 700);
-      }
-    });
-    observer.observe(target);
-    return () => {
-      observer.disconnect();
-      window.clearTimeout(timer);
-    };
-  }, [stream.length, visibleStreamCount]);
-
   return (
     <div className="min-h-screen bg-white text-slate-950">
       <GuestPublicNav active="news" />
 
-      <main className="mx-auto max-w-[1480px] px-4 py-9 sm:px-6 lg:px-8">
-        <section className="mb-6 flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
-          <div className="max-w-3xl">
-            <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-2xl font-black uppercase tracking-[-0.03em] text-blue-600 sm:text-3xl">
-                {t.news}
-              </h1>
-              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[11px] font-extrabold uppercase text-emerald-700">
-                <span className="relative flex size-2">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none" />
-                  <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-                </span>
-                {t.live}
-              </span>
-            </div>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-              {t.lead}
-            </p>
-          </div>
-          <div className="flex overflow-hidden rounded-xl border border-blue-100 bg-white">
-            {[
-              ["04", "Chuyên mục"],
-              ["24/7", "Cập nhật"],
-              ["VN · RU", "Song phương"],
-            ].map(([value, label], index) => (
-              <div
-                key={value}
-                className={`min-w-[112px] px-4 py-2.5 text-center ${index ? "border-l border-blue-100" : ""}`}
-              >
-                <strong className="block text-sm font-black">{value}</strong>
-                <span className="block text-[10px] font-bold uppercase text-slate-400">
-                  {label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
+      <main className="mx-auto max-w-[1460px] px-4 py-9 sm:px-6 lg:px-8">
+        <GuestNewsMasthead />
 
-        <section className="relative z-30 mb-8 overflow-visible rounded-2xl border border-slate-200 bg-white shadow-sm has-[details[open]]:rounded-b-none">
-          {/* Row 1: Unified Segmented Tabs Strip (Dính kịch với nhau) */}
-          <div className="grid w-full grid-cols-2 divide-x divide-slate-200 border-b border-slate-200 sm:grid-cols-3 xl:grid-cols-5">
-            {categories.map((category, index) => (
-              <button
-                key={category}
-                type="button"
-                onClick={() => setActiveCategory(category)}
-                className={`flex min-h-11 w-full items-center justify-center px-3 text-center text-sm font-bold transition-colors ${
-                  index === 0 ? "rounded-tl-2xl" : ""
-                } ${index === categories.length - 1 ? "rounded-tr-2xl" : ""} ${
-                  activeCategory === category
-                    ? "bg-blue-600 text-white font-black"
-                    : "bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-blue-600"
-                }`}
-              >
-                {t.categories[category]}
-              </button>
-            ))}
-          </div>
-
-          {/* Row 2: Category Catalog Button + Full Width Search Input */}
-          <div className="flex w-full items-center gap-2 p-2.5 sm:p-3">
+        <GuestNewsFilterNav
+          activeCategory={activeCategory}
+          categoryLabels={t.categories}
+          clearSearchLabel="Xóa tìm kiếm"
+          query={query}
+          searchPlaceholder={t.search}
+          onCategoryChange={selectCategory}
+          onQueryChange={updateQuery}
+          filterControl={
             <details ref={filterDetailsRef} className="group">
               <summary
                 title={t.allCategories}
@@ -963,7 +873,7 @@ export function GuestExploreV2() {
                             selectedTopics.includes(topic),
                           ),
                         );
-                        setActiveCategory(selectedGroup?.category ?? "all");
+                        selectCategory(selectedGroup?.category ?? "all");
                         if (filterDetailsRef.current)
                           filterDetailsRef.current.open = false;
                       }}
@@ -975,48 +885,8 @@ export function GuestExploreV2() {
                 </div>
               </div>
             </details>
-
-            <label className="flex h-11 min-w-0 flex-1 items-center rounded-xl border border-slate-200 bg-slate-50/80 px-4 transition-all focus-within:border-blue-600 focus-within:bg-white focus-within:shadow-[0_0_0_3px_rgba(37,99,235,0.1)]">
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                type="search"
-                placeholder={t.search}
-                style={{ outline: "none" }}
-                className="min-w-0 flex-1 bg-transparent text-sm font-medium text-slate-900 placeholder:text-slate-400 sm:text-base"
-              />
-              {query ? (
-                <button
-                  type="button"
-                  onClick={() => setQuery("")}
-                  className="mr-2 text-xs font-bold text-slate-400 hover:text-slate-600"
-                  aria-label="Xóa tìm kiếm"
-                >
-                  ✕
-                </button>
-              ) : null}
-              <svg
-                viewBox="0 0 24 24"
-                className="size-5 shrink-0 text-slate-400"
-              >
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="6.7"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                />
-                <path
-                  d="m16 16 4 4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                />
-              </svg>
-            </label>
-          </div>
-        </section>
+          }
+        />
 
         {!categoryMode ? (
           <>
@@ -1131,105 +1001,6 @@ export function GuestExploreV2() {
                     </div>
                   </Link>
                 ))}
-              </div>
-            </section>
-
-            <section className="mt-12">
-              <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <h2 className="text-lg font-black uppercase text-blue-600 sm:text-xl">
-                    {t.stream}
-                  </h2>
-                  <p className="mt-2 text-sm text-slate-500">{t.streamLead}</p>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <select
-                    value={streamCategory}
-                    onChange={(e) =>
-                      selectStreamCategory(e.target.value as Category)
-                    }
-                    className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 outline-none"
-                  >
-                    <option value="all">{t.allCategories}</option>
-                    {categories.slice(1).map((category) => (
-                      <option key={category} value={category}>
-                        {t.categories[category]}
-                      </option>
-                    ))}
-                  </select>
-                  <button
-                    type="button"
-                    className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700"
-                  >
-                    {t.newest}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      window.scrollTo({ top: 0, behavior: "smooth" })
-                    }
-                    className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700"
-                  >
-                    ↑ {t.top}
-                  </button>
-                </div>
-              </div>
-              <div className="grid gap-x-10 lg:grid-cols-2">
-                {[
-                  visibleStream.slice(0, streamHalf),
-                  visibleStream.slice(streamHalf),
-                ].map((column, columnIndex) => (
-                  <div key={columnIndex}>
-                    {column.map((item) => (
-                      <Link
-                        key={`${item.time}-${item.title}`}
-                        href={`/news/${articleId(item)}`}
-                        className="grid grid-cols-[128px_minmax(0,1fr)] gap-4 border-b border-slate-100 py-5 first:pt-0 sm:grid-cols-[170px_minmax(0,1fr)]"
-                      >
-                        <NewsImage
-                          src={item.image}
-                          className="h-[86px] w-full rounded-xl sm:h-[105px]"
-                        />
-                        <div className="min-w-0">
-                          <h3 className="text-base font-extrabold leading-[1.4] transition-colors hover:text-blue-700 sm:text-lg">
-                            {item.title}
-                          </h3>
-                          <p className="mt-2.5 line-clamp-2 text-sm leading-6 text-slate-600 sm:text-base">
-                            {item.summary}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                ))}
-              </div>
-              <div
-                ref={streamLoadMoreRef}
-                className="mt-6 flex min-h-16 items-center justify-center gap-3 border-t border-slate-100 pt-5"
-                aria-live="polite"
-              >
-                {visibleStreamCount < stream.length ? (
-                  isLoadingMore ? (
-                    <>
-                      <span
-                        className="size-5 animate-spin rounded-full border-2 border-blue-200 border-t-blue-600 motion-reduce:animate-none"
-                        aria-hidden="true"
-                      />
-                      <span className="text-base font-semibold text-slate-600">
-                        {t.loadingMore}
-                      </span>
-                    </>
-                  ) : (
-                    <span className="text-base font-semibold text-slate-500">
-                      ↓ {t.scrollMore}
-                    </span>
-                  )
-                ) : (
-                  <span className="text-base font-semibold text-slate-500">
-                    {t.showing} {Math.min(visibleStreamCount, stream.length)} /{" "}
-                    {stream.length} {t.articles}
-                  </span>
-                )}
               </div>
             </section>
           </>

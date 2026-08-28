@@ -26,6 +26,6 @@ export async function requireWorkspaceSession(returnTo: string): Promise<string[
 export async function requireMemberSession(returnTo: string): Promise<string[]> {
   const capabilities = await requireWorkspaceSession(returnTo);
   if (isSystemAdministrator(capabilities)) redirect("/admin/access");
-  if (resolveLandingPath(capabilities) !== "/workspace") redirect("/account");
+  if (resolveLandingPath(capabilities) !== "/workspace") redirect(resolveLandingPath(capabilities));
   return capabilities;
 }

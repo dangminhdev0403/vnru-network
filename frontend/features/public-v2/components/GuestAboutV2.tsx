@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
-import { HOME_COPY } from "./GuestHomeV2";
+import { HOME_COPY, NetworkIconGlyph } from "./GuestHomeV2";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
 
@@ -52,10 +52,10 @@ const COPY: Record<Locale, {
     missionTitle: "Về chúng tôi",
     mission: "Mạng lưới thúc đẩy chia sẻ tri thức, hình thành hợp tác nghiên cứu và đưa kết quả khoa học vào thực tiễn. Chúng tôi tạo một không gian chung để các thành viên tìm đúng đối tác, tiếp cận nguồn lực và cùng phát triển sáng kiến song phương.",
     values: [
-      { icon: "◎", title: "Kết nối tri thức", description: "Liên kết chuyên gia, viện nghiên cứu, trường đại học và doanh nghiệp." },
-      { icon: "◇", title: "Hợp tác bền vững", description: "Phát triển quan hệ dài hạn dựa trên nhu cầu và năng lực thực tế." },
-      { icon: "▤", title: "Đào tạo & Phát triển", description: "Chia sẻ học thuật, phương pháp và cơ hội phát triển nguồn nhân lực." },
-      { icon: "✦", title: "Kiến tạo tương lai", description: "Đồng hành cùng các sáng kiến khoa học, công nghệ và đổi mới." },
+      { icon: "hub", title: "Kết nối tri thức", description: "Liên kết chuyên gia, viện nghiên cứu, trường đại học và doanh nghiệp." },
+      { icon: "groups", title: "Hợp tác bền vững", description: "Phát triển quan hệ dài hạn dựa trên nhu cầu và năng lực thực tế." },
+      { icon: "education", title: "Đào tạo & Phát triển", description: "Chia sẻ học thuật, phương pháp và cơ hội phát triển nguồn nhân lực." },
+      { icon: "network", title: "Kiến tạo tương lai", description: "Đồng hành cùng các sáng kiến khoa học, công nghệ và đổi mới." },
     ],
     membersEyebrow: "Các tổ chức thành viên",
     membersTitle: "Cùng kiến tạo hệ sinh thái tri thức",
@@ -76,10 +76,10 @@ const COPY: Record<Locale, {
     missionTitle: "Who we are",
     mission: "The Network advances knowledge exchange, research partnerships and the practical application of scientific results. It helps members find the right partners, access resources and develop bilateral initiatives together.",
     values: [
-      { icon: "◎", title: "Knowledge connection", description: "Connect experts, research institutes, universities and businesses." },
-      { icon: "◇", title: "Sustainable partnership", description: "Build lasting relationships grounded in real needs and capabilities." },
-      { icon: "▤", title: "Education & growth", description: "Share scholarship, methods and human-development opportunities." },
-      { icon: "✦", title: "Shape the future", description: "Support science, technology and innovation initiatives." },
+      { icon: "hub", title: "Knowledge connection", description: "Connect experts, research institutes, universities and businesses." },
+      { icon: "groups", title: "Sustainable partnership", description: "Build lasting relationships grounded in real needs and capabilities." },
+      { icon: "education", title: "Education & growth", description: "Share scholarship, methods and human-development opportunities." },
+      { icon: "network", title: "Shape the future", description: "Support science, technology and innovation initiatives." },
     ],
     membersEyebrow: "Member organizations",
     membersTitle: "Building a knowledge ecosystem together",
@@ -100,10 +100,10 @@ const COPY: Record<Locale, {
     missionTitle: "О нас",
     mission: "Сеть содействует обмену знаниями, исследовательскому партнёрству и практическому применению научных результатов. Участники находят партнёров, ресурсы и совместно развивают двусторонние инициативы.",
     values: [
-      { icon: "◎", title: "Обмен знаниями", description: "Связь экспертов, институтов, университетов и предприятий." },
-      { icon: "◇", title: "Устойчивое партнёрство", description: "Долгосрочные отношения на основе реальных потребностей и компетенций." },
-      { icon: "▤", title: "Образование и развитие", description: "Обмен научными методами и возможностями развития кадров." },
-      { icon: "✦", title: "Создание будущего", description: "Поддержка научных, технологических и инновационных инициатив." },
+      { icon: "hub", title: "Обмен знаниями", description: "Связь экспертов, институтов, университетов и предприятий." },
+      { icon: "groups", title: "Устойчивое партнёрство", description: "Долгосрочные отношения на основе реальных потребностей и компетенций." },
+      { icon: "education", title: "Образование и развитие", description: "Обмен научными методами и возможностями развития кадров." },
+      { icon: "network", title: "Создание будущего", description: "Поддержка научных, технологических и инновационных инициатив." },
     ],
     membersEyebrow: "Организации-участники",
     membersTitle: "Вместе создаём экосистему знаний",
@@ -181,6 +181,35 @@ function TypingHeadline({
   );
 }
 
+function NetworkMesh({ className }: Readonly<{ className: string }>) {
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className={className}
+      fill="none"
+      aria-hidden="true"
+    >
+      <g stroke="currentColor" strokeWidth="0.8">
+        <path d="M8 52 66 18l56 42 62-30 56 54 72-46" />
+        <path d="m8 52 38 70 76-62 44 82 74-58 72 52" />
+        <path d="M46 122 66 18l100 124 18-112 128 106" />
+        <path d="m8 52 114 8 118 24 72-46" />
+      </g>
+      <g fill="currentColor">
+        <circle cx="8" cy="52" r="3" />
+        <circle cx="46" cy="122" r="2.5" />
+        <circle cx="66" cy="18" r="4" />
+        <circle cx="122" cy="60" r="3" />
+        <circle cx="166" cy="142" r="3.5" />
+        <circle cx="184" cy="30" r="2.5" />
+        <circle cx="240" cy="84" r="4" />
+        <circle cx="312" cy="38" r="3" />
+        <circle cx="312" cy="136" r="2.5" />
+      </g>
+    </svg>
+  );
+}
+
 export function GuestAboutV2() {
   const { locale } = useLocale();
   const t = COPY[locale] ?? COPY.vi;
@@ -236,14 +265,48 @@ export function GuestAboutV2() {
               <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{homeCopy.footer.brandTitle}</h2>
               <p className="mt-5 text-lg leading-8 text-slate-700">{t.mission}</p>
             </div>
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-              {t.values.map((item) => (
-                <article key={item.title} className="rounded-2xl border border-blue-100 bg-white p-6 shadow-[0_16px_40px_-32px_rgba(15,56,110,.35)]">
-                  <span className="grid size-12 place-items-center rounded-xl bg-blue-50 text-2xl font-black text-blue-700" aria-hidden="true">{item.icon}</span>
-                  <h3 className="mt-5 text-xl font-black text-slate-950">{item.title}</h3>
-                  <p className="mt-3 text-base leading-7 text-slate-600">{item.description}</p>
-                </article>
-              ))}
+            <div className="relative mt-10 overflow-hidden rounded-2xl border border-blue-100 bg-[#f3f8ff] p-3 shadow-[0_24px_54px_-38px_rgba(38,97,177,.5)] sm:p-4 lg:rounded-[2rem] lg:p-5">
+              <NetworkMesh className="pointer-events-none absolute -left-16 -top-12 h-48 w-80 text-blue-400/25" />
+              <NetworkMesh className="pointer-events-none absolute -bottom-16 -right-20 h-56 w-96 rotate-180 text-blue-400/25" />
+              <ul className="relative grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                {t.values.map((item, index) => (
+                  <li
+                    key={item.title}
+                    className="relative min-h-[300px] rounded-2xl border border-blue-100/90 bg-white/85 p-6 backdrop-blur-[2px] sm:min-h-[320px] sm:p-7 lg:p-8"
+                  >
+                    <span className="relative grid size-16 place-items-center overflow-hidden rounded-xl border border-blue-200/90 bg-white/80 text-blue-600 shadow-[0_12px_26px_-14px_rgba(37,99,235,.55)]">
+                      <span
+                        className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,.9),rgba(219,234,254,.45)_52%,rgba(255,255,255,.75))]"
+                        aria-hidden="true"
+                      />
+                      <span
+                        className="absolute -right-5 -top-5 size-12 rotate-45 border border-blue-200/60 bg-blue-50/60"
+                        aria-hidden="true"
+                      />
+                      <span className="relative">
+                        <NetworkIconGlyph icon={item.icon} className="size-8" />
+                      </span>
+                    </span>
+                    <h3 className="mt-7 text-balance font-serif text-2xl font-semibold leading-tight tracking-[-0.02em] text-[#0b2452] xl:min-h-16">
+                      {item.title}
+                    </h3>
+                    <span className="mt-5 block h-0.5 w-10 bg-blue-600" aria-hidden="true" />
+                    <p className="mt-4 max-w-[31ch] text-lg leading-8 text-slate-600">
+                      {item.description}
+                    </p>
+                    {index < t.values.length - 1 ? (
+                      <span
+                        className="pointer-events-none absolute -right-[15px] top-40 z-20 hidden w-[18px] items-center xl:flex"
+                        aria-hidden="true"
+                      >
+                        <span className="size-1.5 shrink-0 rounded-full border border-blue-400 bg-[#f3f8ff] shadow-[0_0_0_2px_rgba(219,234,254,.8)]" />
+                        <span className="h-px flex-1 bg-blue-300" />
+                        <span className="size-1.5 shrink-0 rounded-full border border-blue-400 bg-[#f3f8ff] shadow-[0_0_0_2px_rgba(219,234,254,.8)]" />
+                      </span>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
             </div>
               </section>
 

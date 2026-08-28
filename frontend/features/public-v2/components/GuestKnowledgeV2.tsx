@@ -612,12 +612,6 @@ export function GuestKnowledgeV2() {
                 giữa các viện nghiên cứu, trường đại học trọng điểm của Việt Nam
                 và Liên bang Nga.
               </p>
-              <div className="mt-5 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-white/90 px-3 py-1 text-xs font-bold text-blue-800 shadow-xs">
-                  <span className="size-2 rounded-full bg-emerald-500" />
-                  Cổng dữ liệu mở KH & CN 2026
-                </span>
-              </div>
             </div>
 
             <div className="xl:col-span-3">

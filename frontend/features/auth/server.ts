@@ -9,7 +9,21 @@ export function sanitizeLocale(
 }
 
 export function sanitizeReturnTo(value: string | null | undefined): string {
-  return value?.startsWith("/") && !value.startsWith("//") ? value : "/security";
+  return value?.startsWith("/") && !value.startsWith("//") ? value : "/";
+}
+
+export function isSameOriginRequest(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  if (!origin || !URL.canParse(origin)) return false;
+  const source = new URL(origin);
+  const requestUrl = new URL(request.url);
+  const host = request.headers.get("x-forwarded-host")?.split(",", 1)[0]?.trim()
+    || requestUrl.host;
+  const protocol = request.headers.get("x-forwarded-proto")?.split(",", 1)[0]?.trim()
+    || requestUrl.protocol.slice(0, -1);
+  const target = new URL(`${protocol}://${host}`);
+  return source.origin === target.origin
+    || request.headers.get("sec-fetch-site") === "same-origin";
 }
 
 export function isSystemAdministrator(capabilities: string[] = []): boolean {
@@ -23,10 +37,13 @@ export function resolveLandingPath(capabilities: string[] = []): string {
   if (isSystemAdministrator(capabilities)) {
     return "/admin/access";
   }
+  if (capabilities.some((item) => item.startsWith("content.article."))) {
+    return "/workspace/news";
+  }
   if (capabilities.includes("portal.member.access")) {
     return "/workspace";
   }
-  return "/security";
+  return "/";
 }
 
 export function authServiceUrl(path: string): URL {

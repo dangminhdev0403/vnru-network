@@ -1,7 +1,7 @@
 import { AuthError } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { signIn } from "../../../../auth";
-import { sanitizeReturnTo } from "../../../../features/auth/server";
+import { isSameOriginRequest, sanitizeReturnTo } from "../../../../features/auth/server";
 
 export function GET(request: NextRequest) {
   const login = new URL("/login", request.url);
@@ -10,8 +10,7 @@ export function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const origin = request.headers.get("origin");
-  if (!origin || !URL.canParse(origin) || new URL(origin).origin !== request.nextUrl.origin) {
+  if (!isSameOriginRequest(request)) {
     return NextResponse.json({ error: "Invalid login origin" }, { status: 403 });
   }
   const form = await request.formData();

@@ -9,6 +9,7 @@ import {
 import { cn } from "@/lib/cn";
 import Header from "@/components/shared/Header";
 import AdminSidebar from "./AdminSidebar";
+import ContentAdminSidebar from "@/features/news/ContentAdminSidebar";
 import React, { Suspense, useState } from "react";
 
 const shellCopy: Record<Locale, Record<string, string>> = {
@@ -19,12 +20,14 @@ const shellCopy: Record<Locale, Record<string, string>> = {
 
 export default function AdminShell({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  area = "iam",
+}: Readonly<{ children: React.ReactNode; area?: "iam" | "content" }>) {
   const { locale } = useLocale();
   const brand = shellCopy[locale] || shellCopy.vi;
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
+  const Sidebar = area === "content" ? ContentAdminSidebar : AdminSidebar;
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
@@ -39,7 +42,7 @@ export default function AdminShell({
         className="fixed inset-y-0 left-0 z-40 hidden shrink-0 overflow-hidden transition-[width,min-width] duration-500 ease-out motion-reduce:transition-none xl:block"
       >
         <Suspense fallback={null}>
-          <AdminSidebar
+          <Sidebar
             isSidebarOpen={isSidebarOpen}
             toggleSidebar={toggleSidebar}
           />
@@ -58,7 +61,7 @@ export default function AdminShell({
         >
           <SheetTitle className="sr-only">{brand.brand}</SheetTitle>
           <Suspense fallback={null}>
-            <AdminSidebar
+            <Sidebar
               isSidebarOpen={true}
               toggleSidebar={() => setIsMobileSheetOpen(false)}
               onItemClick={() => setIsMobileSheetOpen(false)}

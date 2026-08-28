@@ -14,11 +14,9 @@ export default async function Home() {
   const session = (await getCurrentSession(
     (await cookies()).get(SESSION_COOKIE_NAME)?.value,
   )) as HomeSession | null;
-  const workspaceHref = session
-    ? resolveLandingPath(
-        Array.isArray(session.capabilities) ? session.capabilities : [],
-      )
-    : "/account";
+  const capabilities = Array.isArray(session?.capabilities) ? session.capabilities : [];
+  const landingPath = resolveLandingPath(capabilities);
+  const workspaceHref = session && landingPath === "/" ? "/account" : landingPath;
 
   return (
     <GuestHomeV2

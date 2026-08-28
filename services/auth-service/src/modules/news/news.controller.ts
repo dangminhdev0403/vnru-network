@@ -18,6 +18,7 @@ import { NewsMediaService, type NewsImageFile } from './news-media.service';
 import { z } from 'zod';
 import {
   AuthenticatedRequestGuard,
+  RequireAnyPermission,
   RequirePermission,
   type AuthenticatedRequest,
 } from '../authentication/authenticated-request-context';
@@ -34,6 +35,9 @@ const publicQuerySchema = paginationSchema.extend({
     .transform((value) => value === 'true')
     .optional(),
   locale: localeSchema,
+});
+const adminQuerySchema = paginationSchema.extend({
+  status: z.enum(['DRAFT', 'PUBLISHED']).optional(),
 });
 const translationSchema = z
   .object({
@@ -135,7 +139,7 @@ export class AdminNewsController {
   ) {}
 
   @Post('media')
-  @RequirePermission('content.article.create')
+  @RequireAnyPermission('content.article.create', 'content.article.update')
   @UseInterceptors(
     FileInterceptor('file', { limits: { fileSize: 5 * 1024 * 1024 } }),
   )
@@ -146,8 +150,14 @@ export class AdminNewsController {
   @Get()
   @RequirePermission('content.article.update')
   list(@Query() query: Record<string, unknown>) {
-    const input = parse(paginationSchema, query);
-    return this.service.listAdmin(input.limit, input.offset);
+    const input = parse(adminQuerySchema, query);
+    return this.service.listAdmin(input.limit, input.offset, input.status);
+  }
+
+  @Get(':id')
+  @RequirePermission('content.article.update')
+  get(@Param('id') id: string) {
+    return this.service.getAdmin(parse(uuidSchema, id));
   }
 
   @Post()

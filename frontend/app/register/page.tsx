@@ -26,6 +26,8 @@ const copy: Record<
     fullName: string;
     fullNamePlaceholder: string;
     email: string;
+    password: string;
+    confirmPassword: string;
     organization: string;
     organizationPlaceholder: string;
     role: string;
@@ -59,6 +61,8 @@ const copy: Record<
     fullName: "Họ và tên",
     fullNamePlaceholder: "Nguyễn Văn An",
     email: "Email công việc",
+    password: "Mật khẩu",
+    confirmPassword: "Xác nhận mật khẩu",
     organization: "Cơ quan / tổ chức",
     organizationPlaceholder: "Tên viện, trường hoặc doanh nghiệp",
     role: "Vai trò chuyên môn",
@@ -94,6 +98,8 @@ const copy: Record<
     fullName: "Имя и фамилия",
     fullNamePlaceholder: "Иван Иванов",
     email: "Рабочая почта",
+    password: "Пароль",
+    confirmPassword: "Подтвердите пароль",
     organization: "Организация",
     organizationPlaceholder: "Институт, университет или компания",
     role: "Профессиональная роль",
@@ -129,6 +135,8 @@ const copy: Record<
     fullName: "Full name",
     fullNamePlaceholder: "Alex Nguyen",
     email: "Work email",
+    password: "Password",
+    confirmPassword: "Confirm password",
     organization: "Organization",
     organizationPlaceholder: "Institute, university, or company",
     role: "Professional role",
@@ -349,6 +357,42 @@ export default function RegisterPage() {
                   className="mt-2 block text-sm font-semibold text-red-700"
                 >
                   {fieldErrors.email}
+                </span>
+              ) : null}
+            </label>
+            <label className="block text-base font-bold text-slate-800">
+              {t.password}{" "}
+              <span className="text-red-600" aria-hidden="true">*</span>
+              <input
+                name="password"
+                type="password"
+                autoComplete="new-password"
+                aria-required="true"
+                aria-invalid={Boolean(fieldErrors.password)}
+                aria-describedby={fieldErrors.password ? "password-error" : undefined}
+                className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none ${fieldErrors.password ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
+              />
+              {fieldErrors.password ? (
+                <span id="password-error" className="mt-2 block text-sm font-semibold text-red-700">
+                  {fieldErrors.password}
+                </span>
+              ) : null}
+            </label>
+            <label className="block text-base font-bold text-slate-800">
+              {t.confirmPassword}{" "}
+              <span className="text-red-600" aria-hidden="true">*</span>
+              <input
+                name="confirmPassword"
+                type="password"
+                autoComplete="new-password"
+                aria-required="true"
+                aria-invalid={Boolean(fieldErrors.confirmPassword)}
+                aria-describedby={fieldErrors.confirmPassword ? "confirmPassword-error" : undefined}
+                className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none ${fieldErrors.confirmPassword ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
+              />
+              {fieldErrors.confirmPassword ? (
+                <span id="confirmPassword-error" className="mt-2 block text-sm font-semibold text-red-700">
+                  {fieldErrors.confirmPassword}
                 </span>
               ) : null}
             </label>

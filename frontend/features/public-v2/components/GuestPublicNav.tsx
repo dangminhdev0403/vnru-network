@@ -46,7 +46,7 @@ const COPY: Record<
     contact: "Liên hệ",
     register: "Đăng ký",
     login: "Đăng nhập",
-    workspace: "Không gian làm việc",
+    workspace: "Tài khoản",
   },
   en: {
     brandTitle: "Russia - Vietnam Knowledge Network",
@@ -57,7 +57,7 @@ const COPY: Record<
     contact: "Contact",
     register: "Register",
     login: "Sign in",
-    workspace: "Workspace",
+    workspace: "Account",
   },
   ru: {
     brandTitle: "Сеть знаний Россия – Вьетнам",
@@ -68,7 +68,7 @@ const COPY: Record<
     contact: "Контакты",
     register: "Регистрация",
     login: "Войти",
-    workspace: "Рабочее пространство",
+    workspace: "Аккаунт",
   },
 };
 
@@ -95,6 +95,7 @@ export function GuestPublicNav({
   const resolveActive = (): string => {
     if (clickedKey) return clickedKey;
     if (pathname.startsWith("/news")) return "news";
+    if (pathname === "/ecosystem") return "ecosystem";
     if (pathname === "/about") return "about";
     if (pathname === "/") {
       if (currentHash === "#ecosystem") return "ecosystem";
@@ -108,7 +109,7 @@ export function GuestPublicNav({
   const items = [
     { key: "home", label: t.home, href: "/" },
     { key: "about", label: t.about, href: "/about" },
-    { key: "ecosystem", label: t.ecosystem, href: "/#ecosystem" },
+    { key: "ecosystem", label: t.ecosystem, href: "/ecosystem" },
     { key: "news", label: t.news, href: "/news" },
     { key: "contact", label: t.contact, href: "/#contact" },
   ];
@@ -181,7 +182,7 @@ export function GuestPublicNav({
                 key={item.key}
                 href={item.href}
                 onClick={() => setClickedKey(item.key)}
-                className={`inline-flex flex-col items-center justify-center shrink-0 rounded-full px-3.5 py-1.5 text-center text-base font-bold uppercase leading-tight transition-all ${selected ? "bg-blue-600 text-white shadow-2xs" : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"}`}
+                className={`inline-flex shrink-0 flex-col items-center justify-center rounded-full px-3.5 py-1.5 text-center text-base font-bold uppercase leading-tight transition-all ${selected ? "bg-blue-600 text-white shadow-2xs" : "text-blue-950 hover:bg-blue-50 hover:text-blue-700"}`}
               >
                 {item.label}
               </Link>

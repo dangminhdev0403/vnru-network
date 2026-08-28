@@ -12,6 +12,9 @@ test("registration form posts to the same-origin account API with feedback", asy
 
   assert.match(page, /fetch\("\/api\/auth\/register"/);
   assert.match(page, /JSON\.stringify/);
+  assert.match(page, /name="password"/);
+  assert.match(page, /name="confirmPassword"/);
+  assert.match(page, /autoComplete="new-password"/);
   assert.match(page, /disabled=\{status === "submitting"\}/);
   assert.doesNotMatch(page, /UI preview|bản xem trước giao diện|предварительный интерфейс/);
   assert.match(route, /new URL\(origin\)\.origin !== request\.nextUrl\.origin/);

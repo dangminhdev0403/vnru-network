@@ -14,6 +14,7 @@ import {
 
 export const SESSION_COOKIE_NAME = 'vnru_session';
 const REQUIRED_PERMISSION = 'requiredPermission';
+const REQUIRED_ANY_PERMISSION = 'requiredAnyPermission';
 
 export interface RequestWithCookies {
   cookies?: unknown;
@@ -31,6 +32,8 @@ export interface AuthenticatedRequest extends RequestWithCookies {
 
 export const RequirePermission = (permission: string) =>
   SetMetadata(REQUIRED_PERMISSION, permission);
+export const RequireAnyPermission = (...permissions: string[]) =>
+  SetMetadata(REQUIRED_ANY_PERMISSION, permissions);
 
 export const REQUIRE_MFA_KEY = 'requireMfa';
 export const RequireMfa = () => SetMetadata(REQUIRE_MFA_KEY, true);
@@ -97,6 +100,20 @@ export class AuthenticatedRequestGuard implements CanActivate {
       permission &&
       (!authContext.activeContext ||
         !authContext.capabilities.includes(permission))
+    ) {
+      throw new ForbiddenException('Permission denied for active context');
+    }
+
+    const anyPermissions = this.reflector.getAllAndOverride<string[]>(
+      REQUIRED_ANY_PERMISSION,
+      [context.getHandler(), context.getClass()],
+    );
+    if (
+      anyPermissions?.length &&
+      (!authContext.activeContext ||
+        !anyPermissions.some((item) =>
+          authContext.capabilities.includes(item),
+        ))
     ) {
       throw new ForbiddenException('Permission denied for active context');
     }

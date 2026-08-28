@@ -21,8 +21,21 @@ test("workspace navigation exposes only destinations allowed by capability", () 
     const hrefs = filterNavSections(capabilities).flatMap((section) =>
       section.items.map((item) => item.href),
     );
-    assert.deepEqual(hrefs, ["/workspace", "/workspace/publish", "/security"]);
+    assert.deepEqual(hrefs, ["/workspace", "/security"]);
   }
+
+  const editorCapabilities = [
+    "content.article.create",
+    "content.article.update",
+    "content.article.publish",
+  ];
+  assert.deepEqual(
+    filterNavSections(editorCapabilities).flatMap((section) =>
+      section.items.map((item) => item.href),
+    ),
+    ["/security"],
+  );
+  assert.equal(resolveLandingPath(editorCapabilities), "/workspace/news");
 
   const adminItems = filterNavSections(["iam.roles.manage"]).flatMap(
     (section) => section.items,
@@ -64,7 +77,7 @@ test("persona resolution uses one member workspace while IAM stays independent",
   );
 });
 
-test("workspace landing resolves every business role to the unified workspace", () => {
+test("landing keeps readers public while routing privileged roles to their work area", () => {
   const roleCases = [
     ["portal.member.access", "/workspace"],
     ["iam.roles.manage", "/admin/access"],
@@ -72,7 +85,7 @@ test("workspace landing resolves every business role to the unified workspace", 
   for (const [capability, expectedPath] of roleCases) {
     assert.equal(resolveLandingPath([capability]), expectedPath);
   }
-  assert.equal(resolveLandingPath([]), "/security");
+  assert.equal(resolveLandingPath([]), "/");
 });
 
 test("admin navigation contains access governance only", async () => {

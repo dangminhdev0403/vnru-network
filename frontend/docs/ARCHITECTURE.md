@@ -2,7 +2,7 @@
 
 The frontend currently contains:
 
-- public landing page `/` and news stream `/news` (with legacy `/explore` redirect);
+- public landing page `/`, ecosystem overview `/ecosystem`, and news stream `/news` (with legacy `/explore` redirect);
 - authenticated member information under `/knowledge`, `/experts` and `/opportunities`;
 - Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`, plus a localized `/register` request preview that does not create identities;
 - member account `/account`;
@@ -11,6 +11,7 @@ The frontend currently contains:
 - Module 1 security audit `/admin/audit`;
 - one member information hub at `/workspace`; specialist persona/workflow routes have been removed;
 - capability-aware `/workspace` navigation and compatibility redirects under `/workspace/iam*`.
+- capability-gated News management at `/workspace/news`; public News rendering remains independent.
 
 Routes remain thin. `features/auth` owns authentication, account and security behavior; `features/iam` and `features/admin/access` own access governance; shared shells own presentation only. Backend authorization is authoritative.
 

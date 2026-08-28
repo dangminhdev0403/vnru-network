@@ -47,13 +47,6 @@ export const WORKSPACE_NAV_REGISTRY: WorkspaceNavSection[] = [
         icon: "home",
         requiredCapabilities: [...WORKSPACE_MEMBER_CAPABILITIES],
       },
-      {
-        key: "workspace_publish",
-        href: "/workspace/publish",
-        labelKey: "publish",
-        icon: "post_add",
-        requiredCapabilities: [...WORKSPACE_MEMBER_CAPABILITIES],
-      },
     ],
   },
   {

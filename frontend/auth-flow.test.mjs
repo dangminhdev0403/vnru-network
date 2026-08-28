@@ -1,17 +1,40 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { isSameOriginRequest, resolveLandingPath, sanitizeLocale, sanitizeReturnTo } from "./features/auth/server.ts";
 
-import { sanitizeLocale, sanitizeReturnTo } from "./features/auth/server.ts";
+test("login origin uses the public forwarded origin behind a tunnel", () => {
+  const request = new Request("https://public.example:3000/api/auth/login", {
+    headers: {
+      origin: "https://public.example",
+      host: "public.example:3000",
+      referer: "https://public.example/login",
+      "sec-fetch-site": "same-origin",
+    },
+  });
+  assert.equal(isSameOriginRequest(request), true);
+  const badHeaders = Object.fromEntries(request.headers);
+  badHeaders.origin = "https://evil.example";
+  badHeaders["sec-fetch-site"] = "cross-site";
+  assert.equal(
+    isSameOriginRequest(new Request(request, { headers: badHeaders })),
+    false,
+  );
+});
+
+test("reader login defaults to public home", () => {
+  assert.equal(sanitizeReturnTo(undefined), "/");
+  assert.equal(resolveLandingPath([]), "/");
+});
 
 test("return URL accepts only same-origin paths", () => {
   assert.equal(
     sanitizeReturnTo("/account?tab=profile"),
     "/account?tab=profile",
   );
-  assert.equal(sanitizeReturnTo("https://evil.example/steal"), "/account");
-  assert.equal(sanitizeReturnTo("//evil.example/steal"), "/account");
-  assert.equal(sanitizeReturnTo("javascript:alert(1)"), "/account");
-  assert.equal(sanitizeReturnTo(undefined), "/account");
+  assert.equal(sanitizeReturnTo("https://evil.example/steal"), "/");
+  assert.equal(sanitizeReturnTo("//evil.example/steal"), "/");
+  assert.equal(sanitizeReturnTo("javascript:alert(1)"), "/");
+  assert.equal(sanitizeReturnTo(undefined), "/");
 });
 
 test("login locale accepts only supported UI locales", () => {
@@ -170,7 +193,7 @@ test("workspace and landing brands follow the persisted VI EN RU locale", async 
   ]);
   assert.match(shell, /const \{ locale \} = useLocale\(\)/);
   for (const locale of ["vi", "en", "ru"]) assert.match(shell, new RegExp(`${locale}: \\{ brand:`));
-  assert.match(landing, /t\("VN–RU Network"\)/);
+  assert.match(landing, /t\("RU-VN Network"\)/);
 });
 
 test("collaboration cards tolerate long translated words", async () => {

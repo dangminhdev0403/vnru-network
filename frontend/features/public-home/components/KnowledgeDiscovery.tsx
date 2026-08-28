@@ -18,6 +18,7 @@ type Resource = {
   tags: string[];
 };
 type Copy = {
+  brand: string;
   repo: string;
   topics: string;
   resourcesLabel: string;
@@ -46,6 +47,7 @@ type Copy = {
 
 const COPY: Record<Locale, Copy> = {
   vi: {
+    brand: "Mạng lưới RU-VN",
     repo: "Kho tri thức công cộng",
     topics: "Chủ đề",
     resourcesLabel: "Tư liệu",
@@ -103,6 +105,7 @@ const COPY: Record<Locale, Copy> = {
     ],
   },
   en: {
+    brand: "RU-VN Network",
     repo: "Public knowledge repository",
     topics: "Topics",
     resourcesLabel: "Resources",
@@ -159,6 +162,7 @@ const COPY: Record<Locale, Copy> = {
     ],
   },
   ru: {
+    brand: "Сеть RU-VN",
     repo: "Открытое хранилище знаний",
     topics: "Темы",
     resourcesLabel: "Материалы",
@@ -374,7 +378,7 @@ export function KnowledgeDiscovery() {
           <Link
             href="/"
             className="flex min-w-0 items-center gap-3"
-            aria-label="VN–RU Network"
+            aria-label={t.brand}
           >
             <span className="relative grid h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-white">
               <span className="absolute inset-y-0 left-0 w-[64%] -skew-x-12 bg-[#1d4ed8]" />
@@ -382,7 +386,7 @@ export function KnowledgeDiscovery() {
             </span>
             <span className="min-w-0">
               <strong className="block truncate text-sm sm:text-base">
-                VN–RU Network
+                {t.brand}
               </strong>
               <small className="hidden text-xs font-bold uppercase tracking-[0.16em] text-blue-100 sm:block">
                 {t.repo}

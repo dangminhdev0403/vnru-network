@@ -140,7 +140,7 @@ export function PublicHome({
             </span>
             <span className="hidden leading-tight sm:block">
               <strong className="block whitespace-nowrap text-base font-bold tracking-tight text-white">
-                {t("VN–RU Network")}
+                {t("RU-VN Network")}
               </strong>
             </span>
           </Link>

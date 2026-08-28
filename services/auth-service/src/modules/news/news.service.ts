@@ -80,13 +80,23 @@ export class NewsService {
     return localize(article, locale);
   }
 
-  listAdmin(limit: number, offset: number) {
+  listAdmin(limit: number, offset: number, status?: NewsStatus) {
     return this.prisma.newsArticle.findMany({
+      ...(status ? { where: { status } } : {}),
       orderBy: { updatedAt: 'desc' },
       take: limit,
       skip: offset,
       select: articleSelect,
     });
+  }
+
+  async getAdmin(id: string) {
+    const article = await this.prisma.newsArticle.findFirst({
+      where: { id },
+      select: articleSelect,
+    });
+    if (!article) throw new NotFoundException('News article not found');
+    return article;
   }
 
   create(input: {

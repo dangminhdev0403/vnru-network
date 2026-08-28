@@ -1,9 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { BrandMark } from "@/components/shared/BrandMark";
-import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
+import { GuestPublicFooter } from "./GuestPublicFooter";
+import { HOME_COPY } from "./GuestHomeV2";
+import {
+  GuestNewsFilterNav,
+  newsFilterHref,
+  type NewsCategory,
+} from "./GuestNewsFilterNav";
+import { GuestNewsMasthead } from "./GuestNewsMasthead";
+import { GuestPublicNav } from "./GuestPublicNav";
 
 type Category = "science" | "cooperation" | "education" | "society";
 
@@ -21,6 +30,39 @@ const categoryLabels: Record<Category, string> = {
   education: "Giáo dục đào tạo",
   cooperation: "Hợp tác",
 };
+
+const filterCopy = {
+  vi: {
+    search: "Tìm kiếm tin tức...",
+    clear: "Xóa tìm kiếm",
+    open: "Mở bộ lọc tin tức",
+    categories: { all: "Tất cả", ...categoryLabels },
+  },
+  en: {
+    search: "Search news...",
+    clear: "Clear search",
+    open: "Open news filters",
+    categories: {
+      all: "All",
+      science: "Science - Technology",
+      society: "Economy - Society",
+      education: "Education and Training",
+      cooperation: "Cooperation",
+    },
+  },
+  ru: {
+    search: "Поиск новостей...",
+    clear: "Очистить поиск",
+    open: "Открыть фильтры новостей",
+    categories: {
+      all: "Все",
+      science: "Наука - Технологии",
+      society: "Экономика - Общество",
+      education: "Образование и подготовка",
+      cooperation: "Сотрудничество",
+    },
+  },
+} as const;
 
 const articles: ArticleRecord[] = [
   {
@@ -331,8 +373,11 @@ function ShareButton({ label }: { label: string }) {
 }
 
 export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
+  const router = useRouter();
   const { locale } = useLocale();
   const t = ui[locale] ?? ui.vi;
+  const filters = filterCopy[locale] ?? filterCopy.vi;
+  const [filterQuery, setFilterQuery] = useState("");
   const article = articles.find((item) => item.id === articleId) ?? articles[0];
   const related = articles
     .filter(
@@ -346,99 +391,63 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
     .filter((item) => item.id !== article.id)
     .slice(5, 9);
 
+  const openNews = (category: NewsCategory, query = filterQuery) => {
+    router.push(newsFilterHref(category, query));
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-950">
-      <header className="sticky top-0 z-50 border-b border-blue-100 bg-white/95 backdrop-blur-xl">
-        <div className="mx-auto flex h-[74px] max-w-[1460px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="flex min-w-0 items-center gap-3.5">
-            <BrandMark className="size-[52px] shrink-0 shadow-xs" />
-            <strong className="hidden truncate text-base lg:text-lg font-black tracking-tight text-slate-950 sm:block">
-              Mạng lưới tri thức Nga - Việt
-            </strong>
-          </Link>
+      <GuestPublicNav active="news" />
 
-          <nav className="hidden items-center gap-8 xl:flex">
-            <Link
-              href="/"
-              className="text-sm font-extrabold uppercase text-slate-700 hover:text-blue-700"
-            >
-              {t.home}
-            </Link>
-            <Link
-              href="/#about"
-              className="text-sm font-extrabold uppercase text-slate-700 hover:text-blue-700"
-            >
-              {t.about}
-            </Link>
-            <Link
-              href="/news"
-              className="relative py-6 text-sm font-extrabold uppercase text-blue-700"
-            >
-              {t.news}
-              <span className="absolute inset-x-0 bottom-4 h-0.5 rounded-full bg-blue-600" />
-            </Link>
-          </nav>
+      <main className="mx-auto max-w-[1460px] px-4 py-9 sm:px-6 lg:px-8">
+        <GuestNewsMasthead />
 
-          <div className="flex items-center gap-3">
-            <LanguageSwitcher variant="light" compact />
+        <GuestNewsFilterNav
+          activeCategory={article.category}
+          categoryLabels={filters.categories}
+          clearSearchLabel={filters.clear}
+          query={filterQuery}
+          searchPlaceholder={filters.search}
+          onCategoryChange={openNews}
+          onQueryChange={setFilterQuery}
+          onSearchSubmit={(query) => openNews(article.category, query)}
+          filterControl={
             <Link
-              href="/login"
-              className="inline-flex h-10 items-center rounded-xl bg-blue-600 px-4 text-sm font-bold text-white transition hover:bg-blue-700"
+              href={`${newsFilterHref(article.category)}#news-filters`}
+              title={filters.open}
+              aria-label={filters.open}
+              className="grid size-11 shrink-0 place-items-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
             >
-              {t.login}
+              <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+                <path
+                  d="M4 7h3M11 7h9M4 17h9M17 17h3"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                />
+                <circle
+                  cx="9"
+                  cy="7"
+                  r="2"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                />
+                <circle
+                  cx="15"
+                  cy="17"
+                  r="2"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                />
+              </svg>
             </Link>
-          </div>
-        </div>
-      </header>
+          }
+        />
 
-      <main className="mx-auto max-w-[1460px] px-4 py-8 sm:px-6 lg:px-8">
-        <section className="mb-7 flex flex-col gap-5 border-b border-blue-100 pb-6 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <h1 className="text-2xl font-black uppercase tracking-[-0.02em] text-blue-600">
-              {t.news}
-            </h1>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
-              Cập nhật tin Khoa học - Công nghệ, Kinh tế - Xã hội, Giáo dục đào
-              tạo và Hợp tác giữa Việt Nam và Nga.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-6 text-sm text-slate-600">
-            <span>
-              <strong className="mr-2 text-lg text-blue-600">04</strong>Chuyên
-              mục
-            </span>
-            <span>
-              <strong className="mr-2 text-lg text-blue-600">24/7</strong>Cập
-              nhật
-            </span>
-            <span>
-              <strong className="mr-2 text-lg text-blue-600">VN · RU</strong>
-              Song phương
-            </span>
-          </div>
-        </section>
-
-        <nav className="mb-7 flex flex-wrap items-center gap-2 rounded-2xl border border-blue-100 bg-slate-50 p-3">
-          <Link
-            href="/news"
-            className="rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white"
-          >
-            Tất cả
-          </Link>
-          {(
-            ["science", "society", "education", "cooperation"] as Category[]
-          ).map((category) => (
-            <Link
-              key={category}
-              href="/news"
-              className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 hover:border-blue-200 hover:text-blue-700"
-            >
-              {categoryLabels[category]}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="mb-5 flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500">
+        <div className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500">
           <Link href="/" className="hover:text-blue-600">
             {t.home}
           </Link>
@@ -578,16 +587,13 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
                     key={item.id}
                     href={`/news/${item.id}`}
                     className="flex gap-3 border-b border-blue-50 pb-4 last:border-0 last:pb-0"
-                  >
-                    <Thumb category={item.category} />
-                    <div className="min-w-0">
-                      <h3 className="text-sm font-extrabold leading-5 text-slate-900">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-[11px] font-black uppercase text-blue-600">
-                        {categoryLabels[item.category]}
-                      </p>
-                    </div>
+                    >
+                      <Thumb category={item.category} />
+                      <div className="min-w-0">
+                        <h3 className="text-base font-extrabold leading-6 text-slate-900">
+                          {item.title}
+                        </h3>
+                      </div>
                   </Link>
                 ))}
               </div>
@@ -597,17 +603,14 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
               <h2 className="mb-4 text-lg font-black uppercase text-blue-600">
                 {t.popular}
               </h2>
-              <div className="grid gap-3">
-                {popular.map((item, index) => (
+              <div className="divide-y divide-blue-100">
+                {popular.map((item) => (
                   <Link
                     key={item.id}
                     href={`/news/${item.id}`}
-                    className="flex gap-3 rounded-xl border border-blue-50 p-3 transition hover:border-blue-200 hover:bg-blue-50/40"
+                    className="group block py-4 first:pt-0 last:pb-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                   >
-                    <span className="grid size-7 shrink-0 place-items-center rounded-full bg-blue-600 text-xs font-black text-white">
-                      {index + 1}
-                    </span>
-                    <span className="text-sm font-bold leading-5 text-slate-800">
+                    <span className="block text-base font-bold leading-6 text-slate-800 transition-colors group-hover:text-blue-700">
                       {item.title}
                     </span>
                   </Link>
@@ -636,13 +639,6 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
                   <h3 className="text-base font-extrabold leading-6">
                     {item.title}
                   </h3>
-                  <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
-                    <span className="font-black uppercase text-blue-600">
-                      {categoryLabels[item.category]}
-                    </span>
-                    <span>•</span>
-                    <span>{item.time}</span>
-                  </div>
                 </div>
               </Link>
             ))}
@@ -650,63 +646,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
         </section>
       </main>
 
-      <footer className="mt-12 border-t border-blue-100 bg-slate-50">
-        <div className="mx-auto grid max-w-[1460px] gap-8 px-4 py-9 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
-          <div>
-            <div className="flex items-center gap-3.5">
-              <BrandMark className="size-14 shadow-xs" />
-              <strong className="text-base font-black text-slate-900">
-                Mạng lưới tri thức Nga - Việt
-              </strong>
-            </div>
-            <p className="mt-4 max-w-sm text-sm leading-6 text-slate-600">
-              Kết nối tri thức - Hợp tác bền vững - Kiến tạo tương lai.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-xs font-black uppercase text-blue-600">
-              Liên kết nhanh
-            </h3>
-            <div className="mt-4 grid gap-2 text-sm text-slate-600">
-              <Link href="/">Trang chủ</Link>
-              <Link href="/#about">Giới thiệu</Link>
-              <Link href="/news">Tin tức</Link>
-            </div>
-          </div>
-          <div>
-            <h3 className="text-xs font-black uppercase text-blue-600">
-              Chuyên mục
-            </h3>
-            <div className="mt-4 grid gap-2 text-sm text-slate-600">
-              <span>Khoa học - Công nghệ</span>
-              <span>Kinh tế - Xã hội</span>
-              <span>Giáo dục đào tạo</span>
-              <span>Hợp tác</span>
-            </div>
-          </div>
-          <div>
-            <h3 className="text-xs font-black uppercase text-blue-600">
-              Liên hệ
-            </h3>
-            <div className="mt-4 grid gap-2 text-sm text-slate-600">
-              <span>Hà Nội, Việt Nam</span>
-              <a href="mailto:info@rvstin.com">info@rvstin.com</a>
-              <span>+84 24 3791 1234</span>
-            </div>
-          </div>
-        </div>
-        <div className="border-t border-blue-100">
-          <div className="mx-auto flex max-w-[1460px] flex-col gap-3 px-4 py-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-            <span>
-              © 2026 Mạng lưới tri thức Nga - Việt. All rights reserved.
-            </span>
-            <div className="flex gap-5">
-              <span>Chính sách bảo mật</span>
-              <span>Điều khoản sử dụng</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <GuestPublicFooter copy={HOME_COPY[locale]} />
     </div>
   );
 }

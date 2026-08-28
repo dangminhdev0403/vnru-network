@@ -20,6 +20,20 @@ test("workspace root renders the unified member dashboard while legacy IAM route
   assert.match(iamSecurity, /redirect\("\/security"\)/);
 });
 
+test("content administration reuses admin chrome with its own navigation", async () => {
+  const [contentLayout, contentSidebar, iamLayout, iamSidebar] = await Promise.all([
+    read("app/(content-admin)/layout.tsx"),
+    read("features/news/ContentAdminSidebar.tsx"),
+    read("app/(admin)/layout.tsx"),
+    read("features/admin/components/AdminSidebar.tsx"),
+  ]);
+  assert.match(contentLayout, /AdminShell area="content"/);
+  assert.match(contentSidebar, /href: "\/workspace\/news"/);
+  assert.doesNotMatch(contentSidebar, /\/admin\/access/);
+  assert.doesNotMatch(iamLayout, /area="content"/);
+  assert.doesNotMatch(iamSidebar, /\/workspace\/news/);
+});
+
 test("authenticated shell contains one member workspace and canonical IAM bridge", async () => {
   const [registry, proxy, header, layout] = await Promise.all([
     read("features/workspace/config/workspace-registry.ts"),

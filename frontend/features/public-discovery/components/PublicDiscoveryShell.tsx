@@ -15,6 +15,7 @@ const COPY: Record<
     joinShort: string;
     repo: string;
     mock: string;
+    brand: string;
   }
 > = {
   vi: {
@@ -25,6 +26,7 @@ const COPY: Record<
     joinShort: "Gia nhập",
     repo: "Kho tri thức công cộng",
     mock: "Public preview · Dữ liệu minh hoạ, không phải số liệu vận hành chính thức.",
+    brand: "Mạng lưới RU-VN",
   },
   en: {
     knowledge: "Knowledge",
@@ -34,6 +36,7 @@ const COPY: Record<
     joinShort: "Join",
     repo: "Public knowledge repository",
     mock: "Public preview · Illustrative data, not official operational records.",
+    brand: "RU-VN Network",
   },
   ru: {
     knowledge: "Знания",
@@ -43,6 +46,7 @@ const COPY: Record<
     joinShort: "Вступить",
     repo: "Открытое хранилище знаний",
     mock: "Публичный прототип · Демонстрационные, не официальные операционные данные.",
+    brand: "Сеть RU-VN",
   },
 };
 
@@ -76,7 +80,7 @@ export function PublicDiscoveryShell({
           <Link
             href="/knowledge"
             className="flex min-w-0 items-center gap-3"
-            aria-label="VN–RU Network"
+            aria-label={t.brand}
           >
             <span className="relative grid h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-white">
               <span className="absolute inset-y-0 left-0 w-[64%] -skew-x-12 bg-[#1d4ed8]" />
@@ -84,7 +88,7 @@ export function PublicDiscoveryShell({
             </span>
             <span className="min-w-0">
               <strong className="block truncate text-sm sm:text-base">
-                VN–RU Network
+                {t.brand}
               </strong>
               <small className="hidden text-xs font-bold uppercase tracking-[0.16em] text-blue-100 sm:block">
                 {t.repo}
@@ -137,7 +141,7 @@ export function PublicDiscoveryShell({
       <footer className="bg-[#06152f] px-4 py-10 text-white sm:px-6">
         <div className="mx-auto flex max-w-[1380px] flex-col gap-5 border-t border-white/10 pt-8 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <strong className="font-serif text-xl">VN–RU Network</strong>
+            <strong className="font-serif text-xl">{t.brand}</strong>
             <p className="mt-2 max-w-xl text-sm leading-6 text-blue-100">
               {t.mock}
             </p>

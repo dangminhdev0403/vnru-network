@@ -140,7 +140,6 @@ export const HOME_COPY: Record<
       brandTitle: string;
       subtitle: string;
       desc: string;
-      openDataBadge: string;
       navTitle: string;
       pillarsTitle: string;
       contactTitle: string;
@@ -227,7 +226,7 @@ export const HOME_COPY: Record<
       cta: "Khám phá cơ hội hợp tác ngay →",
     },
     news: {
-      title: "TIN TỨC MỚI NHẤT",
+      title: "TIN TỨC",
       viewAll: "Xem tất cả tin tức →",
       items: [
         {
@@ -273,7 +272,7 @@ export const HOME_COPY: Record<
     },
     ecosystem: {
       eyebrow: "HỆ SINH THÁI",
-      title: "HỆ SINH THÁI VN-RU NETWORK",
+      title: "HỆ SINH THÁI MẠNG LƯỚI RU-VN",
       cardCta: "Khám phá →",
       cards: [
         {
@@ -308,7 +307,7 @@ export const HOME_COPY: Record<
     },
     events: {
       eyebrow: "SỰ KIỆN",
-      title: "SỰ KIỆN NỔI BẬT",
+      title: "SỰ KIỆN",
       viewAll: "Xem tất cả sự kiện →",
       tabUpcoming: "Sắp diễn ra",
       tabPast: "Đã tổ chức",
@@ -325,6 +324,7 @@ export const HOME_COPY: Record<
           time: "08:30 - 17:00",
           image:
             "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80",
+          isPast: false,
         },
         {
           id: 2,
@@ -337,6 +337,7 @@ export const HOME_COPY: Record<
           time: "10:00 - 18:00",
           image:
             "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=800&q=80",
+          isPast: false,
         },
         {
           id: 3,
@@ -349,6 +350,46 @@ export const HOME_COPY: Record<
           time: "09:00 - 16:30",
           image:
             "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+          isPast: false,
+        },
+        {
+          id: 4,
+          date: "15",
+          month: "THÁNG 5",
+          year: "2026",
+          kind: "TỌA ĐÀM",
+          title: "Tọa đàm Chuyển giao công nghệ sinh học và vật liệu mới",
+          place: "Hà Nội, Việt Nam",
+          time: "14:00 - 17:30",
+          image:
+            "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+          isPast: true,
+        },
+        {
+          id: 5,
+          date: "20",
+          month: "THÁNG 4",
+          year: "2026",
+          kind: "DIỄN ĐÀN",
+          title: "Diễn đàn Nhà khoa học trẻ Việt – Nga lần thứ IV",
+          place: "Moskva, Nga",
+          time: "09:00 - 17:00",
+          image:
+            "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80",
+          isPast: true,
+        },
+        {
+          id: 6,
+          date: "10",
+          month: "THÁNG 3",
+          year: "2026",
+          kind: "HỘI NGHỊ",
+          title: "Hội nghị Năng lượng sạch và Vật liệu tiên tiến song phương",
+          place: "Đà Nẵng, Việt Nam",
+          time: "08:30 - 16:00",
+          image:
+            "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80",
+          isPast: true,
         },
       ],
     },
@@ -416,7 +457,6 @@ export const HOME_COPY: Record<
       brandTitle: "Mạng lưới tri thức Nga - Việt",
       subtitle: "",
       desc: "Cổng thông tin & điều phối hợp tác khoa học công nghệ độc lập giữa các viện nghiên cứu, trường đại học trọng điểm của Việt Nam và Liên bang Nga.",
-      openDataBadge: "Cổng dữ liệu mở KH & CN 2026",
       navTitle: "Khám phá hệ sinh thái",
       pillarsTitle: "Hướng trọng điểm",
       contactTitle: "Điều phối & Liên hệ",
@@ -432,7 +472,7 @@ export const HOME_COPY: Record<
       messageLabel: "Nội dung liên hệ",
       sendLabel: "Gửi liên hệ",
       mailClientHint: "Nút gửi sẽ mở ứng dụng email trên thiết bị của bạn.",
-      emailSubject: "Liên hệ từ cổng VN-RU",
+      emailSubject: "Liên hệ từ Mạng lưới RU-VN",
       copyright: "© 2026 Mạng lưới tri thức Nga - Việt. Bảo lưu mọi quyền.",
       terms: "Điều khoản hợp tác",
       privacy: "Chính sách bảo mật",
@@ -510,7 +550,7 @@ export const HOME_COPY: Record<
       cta: "Смотреть возможности сотрудничества →",
     },
     news: {
-      title: "ПОСЛЕДНИЕ НОВОСТИ",
+      title: "НОВОСТИ",
       viewAll: "Все новости →",
       items: [
         {
@@ -557,7 +597,7 @@ export const HOME_COPY: Record<
     },
     ecosystem: {
       eyebrow: "ЭКОСИСТЕМА",
-      title: "ЭКОСИСТЕМА VN-RU NETWORK",
+      title: "ЭКОСИСТЕМА СЕТИ RU-VN",
       cardCta: "Исследовать →",
       cards: [
         {
@@ -592,7 +632,7 @@ export const HOME_COPY: Record<
     },
     events: {
       eyebrow: "СОБЫТИЯ",
-      title: "ГЛАВНЫЕ СОБЫТИЯ",
+      title: "СОБЫТИЯ",
       viewAll: "Все события →",
       tabUpcoming: "Предстоящие",
       tabPast: "Прошедшие",
@@ -610,6 +650,7 @@ export const HOME_COPY: Record<
           time: "08:30 - 17:00",
           image:
             "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80",
+          isPast: false,
         },
         {
           id: 2,
@@ -622,6 +663,7 @@ export const HOME_COPY: Record<
           time: "10:00 - 18:00",
           image:
             "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=800&q=80",
+          isPast: false,
         },
         {
           id: 3,
@@ -635,6 +677,46 @@ export const HOME_COPY: Record<
           time: "09:00 - 16:30",
           image:
             "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+          isPast: false,
+        },
+        {
+          id: 4,
+          date: "15",
+          month: "МАЯ",
+          year: "2026",
+          kind: "КРУГЛЫЙ СТОЛ",
+          title: "Круглый стол по трансферу биотехнологий и новых материалов",
+          place: "Ханой, Вьетнам",
+          time: "14:00 - 17:30",
+          image:
+            "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+          isPast: true,
+        },
+        {
+          id: 5,
+          date: "20",
+          month: "АПРЕЛЯ",
+          year: "2026",
+          kind: "ФОРУМ",
+          title: "IV Форум молодых ученых Россия – Вьетнам",
+          place: "Москва, Россия",
+          time: "09:00 - 17:00",
+          image:
+            "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80",
+          isPast: true,
+        },
+        {
+          id: 6,
+          date: "10",
+          month: "МАРТА",
+          year: "2026",
+          kind: "КОНФЕРЕНЦИЯ",
+          title: "Двусторонняя конференция по чистой энергетике и материалам",
+          place: "Дананг, Вьетнам",
+          time: "08:30 - 16:00",
+          image:
+            "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80",
+          isPast: true,
         },
       ],
     },
@@ -702,7 +784,6 @@ export const HOME_COPY: Record<
       brandTitle: "Сеть знаний Россия – Вьетнам",
       subtitle: "",
       desc: "Независимый портал координации научно-технологического сотрудничества между ведущими институтами и университетами Вьетнама и Российской Федерации.",
-      openDataBadge: "Портал открытых данных НТИ 2026",
       navTitle: "Экосистема сети",
       pillarsTitle: "Ключевые направления",
       contactTitle: "Координация и контакты",
@@ -718,7 +799,7 @@ export const HOME_COPY: Record<
       messageLabel: "Сообщение",
       sendLabel: "Отправить",
       mailClientHint: "Кнопка откроет почтовое приложение на вашем устройстве.",
-      emailSubject: "Обращение с портала VN-RU",
+      emailSubject: "Обращение из сети RU-VN",
       copyright: "© 2026 Сеть знаний Россия – Вьетнам. Все права защищены.",
       terms: "Условия сотрудничества",
       privacy: "Политика конфиденциальности",
@@ -796,7 +877,7 @@ export const HOME_COPY: Record<
       cta: "Explore Opportunities Now →",
     },
     news: {
-      title: "LATEST NEWS",
+      title: "NEWS",
       viewAll: "View all news →",
       items: [
         {
@@ -842,7 +923,7 @@ export const HOME_COPY: Record<
     },
     ecosystem: {
       eyebrow: "ECOSYSTEM",
-      title: "VN-RU NETWORK ECOSYSTEM",
+      title: "RU-VN NETWORK ECOSYSTEM",
       cardCta: "Explore →",
       cards: [
         {
@@ -877,7 +958,7 @@ export const HOME_COPY: Record<
     },
     events: {
       eyebrow: "EVENTS",
-      title: "FEATURED EVENTS",
+      title: "EVENTS",
       viewAll: "View all events →",
       tabUpcoming: "Upcoming",
       tabPast: "Past Events",
@@ -894,6 +975,7 @@ export const HOME_COPY: Record<
           time: "08:30 - 17:00",
           image:
             "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80",
+          isPast: false,
         },
         {
           id: 2,
@@ -906,6 +988,7 @@ export const HOME_COPY: Record<
           time: "10:00 - 18:00",
           image:
             "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=800&q=80",
+          isPast: false,
         },
         {
           id: 3,
@@ -919,6 +1002,46 @@ export const HOME_COPY: Record<
           time: "09:00 - 16:30",
           image:
             "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+          isPast: false,
+        },
+        {
+          id: 4,
+          date: "15",
+          month: "MAY",
+          year: "2026",
+          kind: "ROUNDTABLE",
+          title: "Roundtable on Biotechnology and Advanced Materials Transfer",
+          place: "Hanoi, Vietnam",
+          time: "14:00 - 17:30",
+          image:
+            "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+          isPast: true,
+        },
+        {
+          id: 5,
+          date: "20",
+          month: "APR",
+          year: "2026",
+          kind: "FORUM",
+          title: "4th Vietnam – Russia Young Scientists Forum",
+          place: "Moscow, Russia",
+          time: "09:00 - 17:00",
+          image:
+            "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80",
+          isPast: true,
+        },
+        {
+          id: 6,
+          date: "10",
+          month: "MAR",
+          year: "2026",
+          kind: "CONFERENCE",
+          title: "Bilateral Conference on Clean Energy and Advanced Materials",
+          place: "Da Nang, Vietnam",
+          time: "08:30 - 16:00",
+          image:
+            "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80",
+          isPast: true,
         },
       ],
     },
@@ -985,7 +1108,6 @@ export const HOME_COPY: Record<
       brandTitle: "Russia - Vietnam Knowledge Network",
       subtitle: "",
       desc: "Independent portal for coordinating science and technology cooperation between leading institutes and universities of Vietnam and the Russian Federation.",
-      openDataBadge: "Open S & T Data Portal 2026",
       navTitle: "Explore Ecosystem",
       pillarsTitle: "Strategic Focus",
       contactTitle: "Coordination & Contacts",
@@ -1001,7 +1123,7 @@ export const HOME_COPY: Record<
       messageLabel: "Message",
       sendLabel: "Send inquiry",
       mailClientHint: "The send button opens your device's email app.",
-      emailSubject: "VN-RU portal inquiry",
+      emailSubject: "RU-VN Network inquiry",
       copyright:
         "© 2026 Russia - Vietnam Knowledge Network. All rights reserved.",
       terms: "Terms of Collaboration",
@@ -1018,91 +1140,6 @@ export const HOME_COPY: Record<
     },
   },
 };
-
-function HexagonNetworkIcon({
-  icon,
-  tone,
-}: Readonly<{
-  icon: string;
-  tone: "blue" | "emerald" | "purple" | "amber";
-}>) {
-  const styles = {
-    blue: {
-      fill: "fill-blue-500/10 dark:fill-blue-950/40",
-      stroke: "stroke-blue-500",
-      ring: "stroke-blue-400/50",
-      iconColor: "text-blue-600 dark:text-blue-400",
-      dotFill: "fill-blue-500",
-      glow: "drop-shadow-[0_6px_22px_rgba(37,99,235,0.25)]",
-    },
-    emerald: {
-      fill: "fill-emerald-500/10 dark:fill-emerald-950/40",
-      stroke: "stroke-emerald-500",
-      ring: "stroke-emerald-400/50",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
-      dotFill: "fill-emerald-500",
-      glow: "drop-shadow-[0_6px_22px_rgba(16,185,129,0.25)]",
-    },
-    purple: {
-      fill: "fill-purple-500/10 dark:fill-purple-950/40",
-      stroke: "stroke-purple-500",
-      ring: "stroke-purple-400/50",
-      iconColor: "text-purple-600 dark:text-purple-400",
-      dotFill: "fill-purple-500",
-      glow: "drop-shadow-[0_6px_22px_rgba(147,51,234,0.25)]",
-    },
-    amber: {
-      fill: "fill-amber-500/10 dark:fill-amber-950/40",
-      stroke: "stroke-amber-500",
-      ring: "stroke-amber-400/50",
-      iconColor: "text-amber-600 dark:text-amber-400",
-      dotFill: "fill-amber-500",
-      glow: "drop-shadow-[0_6px_22px_rgba(245,158,11,0.25)]",
-    },
-  }[tone];
-
-  return (
-    <div
-      className={`relative grid size-20 shrink-0 place-items-center sm:size-22 xl:size-24 ${styles.glow}`}
-    >
-      <svg
-        viewBox="0 0 80 80"
-        className="absolute inset-0 size-full overflow-visible"
-        aria-hidden="true"
-      >
-        {/* Outer network boundary chamfered octagon */}
-        <polygon
-          points="24,4 56,4 76,24 76,56 56,76 24,76 4,56 4,24"
-          className={`${styles.fill} ${styles.stroke}`}
-          strokeWidth="2.2"
-          strokeLinejoin="round"
-        />
-        {/* Inner network circuit line */}
-        <polygon
-          points="27,11 53,11 69,27 69,53 53,69 27,69 11,53 11,27"
-          className={`${styles.ring} fill-transparent`}
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        {/* 8 Network Vertex Nodes */}
-        <circle cx="24" cy="4" r="2.8" className={styles.dotFill} />
-        <circle cx="56" cy="4" r="2.8" className={styles.dotFill} />
-        <circle cx="76" cy="24" r="2.8" className={styles.dotFill} />
-        <circle cx="76" cy="56" r="2.8" className={styles.dotFill} />
-        <circle cx="56" cy="76" r="2.8" className={styles.dotFill} />
-        <circle cx="24" cy="76" r="2.8" className={styles.dotFill} />
-        <circle cx="4" cy="56" r="2.8" className={styles.dotFill} />
-        <circle cx="4" cy="24" r="2.8" className={styles.dotFill} />
-      </svg>
-      <span
-        className={`material-symbols-outlined relative z-10 text-3xl sm:text-4xl ${styles.iconColor}`}
-        aria-hidden="true"
-      >
-        {icon}
-      </span>
-    </div>
-  );
-}
 
 type NetworkStat = (typeof HOME_COPY)[Locale]["stats"][number];
 
@@ -1180,7 +1217,7 @@ const NETWORK_DESKTOP_NODES = [
   },
 ] as const;
 
-function NetworkIconGlyph({
+export function NetworkIconGlyph({
   icon,
   className = "size-7",
 }: Readonly<{ icon: string; className?: string }>) {
@@ -1404,354 +1441,374 @@ function NetworkStatsInfographic({
   country1,
   hyphen,
   country2,
+  sectionTitle,
 }: Readonly<{
   stats: readonly NetworkStat[];
   titleMain: string;
   country1: string;
   hyphen: string;
   country2: string;
+  sectionTitle?: string;
 }>) {
   const accessibleLabel = `${titleMain} ${country1} ${hyphen} ${country2}`;
 
   return (
     <section
-      className="px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8"
+      id="ecosystem"
+      className="scroll-mt-28 px-4 pt-4 pb-12 sm:px-6 sm:pb-14 lg:px-8"
       aria-labelledby="network-stats-heading"
     >
-      <h2 id="network-stats-heading" className="sr-only">
-        {accessibleLabel}
-      </h2>
-      <ul className="sr-only">
-        {stats.map((stat) => (
-          <li key={stat.lbl}>
-            {stat.val} {stat.lbl}
-          </li>
-        ))}
-      </ul>
-
-      <div className="relative mx-auto max-w-[1460px] overflow-hidden rounded-[30px] border border-blue-100/80 bg-[#eff6ff] shadow-[0_30px_80px_-48px_rgba(31,99,233,0.5)]">
-        <Image
-          src="/images/network-stats-bg.png"
-          alt=""
-          fill
-          sizes="(min-width: 1536px) 1460px, 100vw"
-          className="object-cover"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.04)_0%,rgba(239,246,255,0.12)_46%,rgba(224,236,255,0.42)_100%)] xl:bg-[radial-gradient(circle_at_50%_46%,rgba(37,99,235,0.18)_0%,rgba(20,74,157,0.28)_54%,rgba(7,26,51,0.46)_100%)]"
-          aria-hidden="true"
-        />
-
-        <div
-          className="relative px-3 py-10 sm:px-8 xl:hidden"
-          aria-hidden="true"
-        >
-          <div className="flex justify-center">
-            <NetworkCore
-              titleMain={titleMain}
-              country1={country1}
-              hyphen={hyphen}
-              country2={country2}
-            />
+      <div className="mx-auto max-w-[1460px]">
+        {sectionTitle ? (
+          <div className="mb-8 flex flex-col items-center justify-center text-center sm:mb-10">
+            <div className="inline-flex items-center gap-2">
+              <span className="h-1 w-8 rounded-full bg-blue-600" />
+              <h2
+                id="network-stats-heading"
+                className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl"
+              >
+                {sectionTitle}
+              </h2>
+              <span className="h-1 w-8 rounded-full bg-blue-600" />
+            </div>
           </div>
-          <div className="mx-auto mt-8 grid max-w-md grid-cols-2 gap-x-2 gap-y-5 sm:gap-x-5">
-            {stats.map((stat, index) => (
-              <NetworkStatNode
-                key={stat.lbl}
-                stat={stat}
-                className={
-                  index === stats.length - 1 ? "col-span-2 mx-auto" : ""
-                }
+        ) : (
+          <h2 id="network-stats-heading" className="sr-only">
+            {accessibleLabel}
+          </h2>
+        )}
+        <ul className="sr-only">
+          {stats.map((stat) => (
+            <li key={stat.lbl}>
+              {stat.val} {stat.lbl}
+            </li>
+          ))}
+        </ul>
+
+        <div className="relative overflow-hidden rounded-[30px] border border-blue-100/80 bg-[#eff6ff] shadow-[0_30px_80px_-48px_rgba(31,99,233,0.5)]">
+          <Image
+            src="/images/network-stats-bg.png"
+            alt=""
+            fill
+            sizes="(min-width: 1536px) 1460px, 100vw"
+            className="object-cover"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.04)_0%,rgba(239,246,255,0.12)_46%,rgba(224,236,255,0.42)_100%)] xl:bg-[radial-gradient(circle_at_50%_46%,rgba(37,99,235,0.18)_0%,rgba(20,74,157,0.28)_54%,rgba(7,26,51,0.46)_100%)]"
+            aria-hidden="true"
+          />
+
+          <div
+            className="relative px-3 py-10 sm:px-8 xl:hidden"
+            aria-hidden="true"
+          >
+            <div className="flex justify-center">
+              <NetworkCore
+                titleMain={titleMain}
+                country1={country1}
+                hyphen={hyphen}
+                country2={country2}
               />
-            ))}
+            </div>
+            <div className="mx-auto mt-8 grid max-w-md grid-cols-2 gap-x-2 gap-y-5 sm:gap-x-5">
+              {stats.map((stat, index) => (
+                <NetworkStatNode
+                  key={stat.lbl}
+                  stat={stat}
+                  className={
+                    index === stats.length - 1 ? "col-span-2 mx-auto" : ""
+                  }
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div
-          className="relative hidden aspect-[1200/675] xl:block"
-          aria-hidden="true"
-        >
-          <svg viewBox="0 0 1200 675" className="block size-full">
-            <defs>
-              <path
-                id="network-rounded-pentagon"
-                d={NETWORK_ROUNDED_PENTAGON_PATH}
-              />
-              <linearGradient
-                id="network-face-blue"
-                x1="0"
-                y1="0"
-                x2="1"
-                y2="1"
-              >
-                <stop offset="0" stopColor="#3db6ff" />
-                <stop offset="0.55" stopColor="#2379f2" />
-                <stop offset="1" stopColor="#1554db" />
-              </linearGradient>
-              <linearGradient
-                id="network-face-cyan"
-                x1="0"
-                y1="0"
-                x2="1"
-                y2="1"
-              >
-                <stop offset="0" stopColor="#31dce8" />
-                <stop offset="0.55" stopColor="#15b9d0" />
-                <stop offset="1" stopColor="#0794b6" />
-              </linearGradient>
-              <linearGradient
-                id="network-face-emerald"
-                x1="0"
-                y1="0"
-                x2="1"
-                y2="1"
-              >
-                <stop offset="0" stopColor="#5ce49a" />
-                <stop offset="0.55" stopColor="#2bc778" />
-                <stop offset="1" stopColor="#159f5b" />
-              </linearGradient>
-              <linearGradient
-                id="network-face-purple"
-                x1="0"
-                y1="0"
-                x2="1"
-                y2="1"
-              >
-                <stop offset="0" stopColor="#a97bff" />
-                <stop offset="0.55" stopColor="#8154ed" />
-                <stop offset="1" stopColor="#6438d0" />
-              </linearGradient>
-              <linearGradient
-                id="network-face-amber"
-                x1="0"
-                y1="0"
-                x2="1"
-                y2="1"
-              >
-                <stop offset="0" stopColor="#ffc64d" />
-                <stop offset="0.55" stopColor="#f5a225" />
-                <stop offset="1" stopColor="#ec7f16" />
-              </linearGradient>
-              <linearGradient
-                id="network-core-face"
-                x1="0"
-                y1="0"
-                x2="1"
-                y2="1"
-              >
-                <stop offset="0" stopColor="#ffffff" />
-                <stop offset="0.62" stopColor="#f8fbff" />
-                <stop offset="1" stopColor="#e8eef8" />
-              </linearGradient>
-              <filter
-                id="network-node-shadow"
-                x="-35%"
-                y="-35%"
-                width="170%"
-                height="190%"
-              >
-                <feDropShadow
-                  dx="0"
-                  dy="10"
-                  stdDeviation="11"
-                  floodColor="#1f63e9"
-                  floodOpacity="0.24"
+          <div
+            className="relative hidden aspect-[1200/675] xl:block"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 1200 675" className="block size-full">
+              <defs>
+                <path
+                  id="network-rounded-pentagon"
+                  d={NETWORK_ROUNDED_PENTAGON_PATH}
                 />
-                <feDropShadow
-                  dx="0"
-                  dy="0"
-                  stdDeviation="5"
-                  floodColor="#ffffff"
-                  floodOpacity="0.9"
-                />
-              </filter>
-              <filter
-                id="network-core-shadow"
-                x="-35%"
-                y="-35%"
-                width="170%"
-                height="190%"
-              >
-                <feDropShadow
-                  dx="0"
-                  dy="18"
-                  stdDeviation="18"
-                  floodColor="#1f63e9"
-                  floodOpacity="0.28"
-                />
-              </filter>
-              <filter
-                id="network-connector-glow"
-                x="-40%"
-                y="-80%"
-                width="180%"
-                height="260%"
-              >
-                <feGaussianBlur stdDeviation="4" />
-              </filter>
-            </defs>
-
-            <g fill="none" stroke="#ffffff" strokeLinecap="round">
-              <ellipse
-                cx="600"
-                cy="346"
-                rx="236"
-                ry="224"
-                strokeOpacity="0.72"
-                strokeWidth="1.6"
-              />
-              <ellipse
-                cx="600"
-                cy="346"
-                rx="274"
-                ry="258"
-                strokeOpacity="0.42"
-                strokeWidth="1.2"
-              />
-              <ellipse
-                cx="600"
-                cy="346"
-                rx="206"
-                ry="195"
-                stroke="#67e8f9"
-                strokeDasharray="2 8"
-                strokeOpacity="0.7"
-                strokeWidth="2"
-              />
-            </g>
-
-            {NETWORK_DESKTOP_NODES.map((node, index) => {
-              const stat = stats[index];
-              if (!stat) return null;
-
-              return (
-                <g key={`connector-${stat.lbl}`}>
-                  <line
-                    x1={node.connector[0]}
-                    y1={node.connector[1]}
-                    x2={node.connector[2]}
-                    y2={node.connector[3]}
-                    stroke="#ffffff"
-                    strokeOpacity="0.44"
-                    strokeWidth="24"
-                    strokeLinecap="round"
-                    filter="url(#network-connector-glow)"
+                <linearGradient
+                  id="network-face-blue"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#3db6ff" />
+                  <stop offset="0.55" stopColor="#2379f2" />
+                  <stop offset="1" stopColor="#1554db" />
+                </linearGradient>
+                <linearGradient
+                  id="network-face-cyan"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#31dce8" />
+                  <stop offset="0.55" stopColor="#15b9d0" />
+                  <stop offset="1" stopColor="#0794b6" />
+                </linearGradient>
+                <linearGradient
+                  id="network-face-emerald"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#5ce49a" />
+                  <stop offset="0.55" stopColor="#2bc778" />
+                  <stop offset="1" stopColor="#159f5b" />
+                </linearGradient>
+                <linearGradient
+                  id="network-face-purple"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#a97bff" />
+                  <stop offset="0.55" stopColor="#8154ed" />
+                  <stop offset="1" stopColor="#6438d0" />
+                </linearGradient>
+                <linearGradient
+                  id="network-face-amber"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#ffc64d" />
+                  <stop offset="0.55" stopColor="#f5a225" />
+                  <stop offset="1" stopColor="#ec7f16" />
+                </linearGradient>
+                <linearGradient
+                  id="network-core-face"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#ffffff" />
+                  <stop offset="0.62" stopColor="#f8fbff" />
+                  <stop offset="1" stopColor="#e8eef8" />
+                </linearGradient>
+                <filter
+                  id="network-node-shadow"
+                  x="-35%"
+                  y="-35%"
+                  width="170%"
+                  height="190%"
+                >
+                  <feDropShadow
+                    dx="0"
+                    dy="10"
+                    stdDeviation="11"
+                    floodColor="#1f63e9"
+                    floodOpacity="0.24"
                   />
-                  <line
-                    x1={node.connector[0]}
-                    y1={node.connector[1]}
-                    x2={node.connector[2]}
-                    y2={node.connector[3]}
-                    stroke="#ffffff"
-                    strokeWidth="14"
-                    strokeLinecap="round"
+                  <feDropShadow
+                    dx="0"
+                    dy="0"
+                    stdDeviation="5"
+                    floodColor="#ffffff"
+                    floodOpacity="0.9"
                   />
-                </g>
-              );
-            })}
+                </filter>
+                <filter
+                  id="network-core-shadow"
+                  x="-35%"
+                  y="-35%"
+                  width="170%"
+                  height="190%"
+                >
+                  <feDropShadow
+                    dx="0"
+                    dy="18"
+                    stdDeviation="18"
+                    floodColor="#1f63e9"
+                    floodOpacity="0.28"
+                  />
+                </filter>
+                <filter
+                  id="network-connector-glow"
+                  x="-40%"
+                  y="-80%"
+                  width="180%"
+                  height="260%"
+                >
+                  <feGaussianBlur stdDeviation="4" />
+                </filter>
+              </defs>
 
-            {stats.map((stat, index) => {
-              const node = NETWORK_DESKTOP_NODES[index];
-              if (!node) return null;
+              <g fill="none" stroke="#ffffff" strokeLinecap="round">
+                <ellipse
+                  cx="600"
+                  cy="346"
+                  rx="236"
+                  ry="224"
+                  strokeOpacity="0.72"
+                  strokeWidth="1.6"
+                />
+                <ellipse
+                  cx="600"
+                  cy="346"
+                  rx="274"
+                  ry="258"
+                  strokeOpacity="0.42"
+                  strokeWidth="1.2"
+                />
+                <ellipse
+                  cx="600"
+                  cy="346"
+                  rx="206"
+                  ry="195"
+                  stroke="#67e8f9"
+                  strokeDasharray="2 8"
+                  strokeOpacity="0.7"
+                  strokeWidth="2"
+                />
+              </g>
 
-              return (
-                <g key={stat.lbl}>
-                  <g
-                    transform={`translate(${node.center[0]} ${node.center[1]}) rotate(${node.rotation}) scale(${node.scale})`}
-                  >
-                    <use
-                      href="#network-rounded-pentagon"
-                      fill={`url(#network-face-${stat.tone})`}
+              {NETWORK_DESKTOP_NODES.map((node, index) => {
+                const stat = stats[index];
+                if (!stat) return null;
+
+                return (
+                  <g key={`connector-${stat.lbl}`}>
+                    <line
+                      x1={node.connector[0]}
+                      y1={node.connector[1]}
+                      x2={node.connector[2]}
+                      y2={node.connector[3]}
                       stroke="#ffffff"
-                      strokeWidth="6"
-                      strokeLinejoin="round"
-                      vectorEffect="non-scaling-stroke"
-                      filter="url(#network-node-shadow)"
+                      strokeOpacity="0.44"
+                      strokeWidth="24"
+                      strokeLinecap="round"
+                      filter="url(#network-connector-glow)"
+                    />
+                    <line
+                      x1={node.connector[0]}
+                      y1={node.connector[1]}
+                      x2={node.connector[2]}
+                      y2={node.connector[3]}
+                      stroke="#ffffff"
+                      strokeWidth="14"
+                      strokeLinecap="round"
                     />
                   </g>
-                  <foreignObject
-                    x={node.content[0]}
-                    y={node.content[1]}
-                    width={node.content[2]}
-                    height={node.content[3]}
-                  >
-                    <div className="flex size-full flex-col items-center justify-center px-2 text-center text-white drop-shadow-sm">
-                      <NetworkIconGlyph icon={stat.icon} className="size-6" />
-                      <strong className="mt-1 text-[30px] font-black leading-none tracking-[-0.04em]">
-                        {stat.val}
-                      </strong>
-                      <span className="mt-1.5 max-w-[126px] text-[14px] font-bold leading-[1.16] text-white/95">
-                        {stat.lbl}
-                      </span>
-                    </div>
-                  </foreignObject>
-                </g>
-              );
-            })}
+                );
+              })}
 
-            {NETWORK_DESKTOP_NODES.map((node, index) => {
-              const stat = stats[index];
-              if (!stat) return null;
-              const styles = NETWORK_TONE_STYLES[stat.tone];
+              {stats.map((stat, index) => {
+                const node = NETWORK_DESKTOP_NODES[index];
+                if (!node) return null;
 
-              return (
-                <g key={`${stat.lbl}-endpoint`}>
-                  <circle
-                    cx={node.connector[0]}
-                    cy={node.connector[1]}
-                    r="9"
-                    fill="#ffffff"
-                    fillOpacity="0.96"
-                    stroke="#ffffff"
-                    strokeWidth="3"
-                  />
-                  <circle
-                    cx={node.connector[0]}
-                    cy={node.connector[1]}
-                    r="3.5"
-                    fill={styles.accent}
-                  />
-                </g>
-              );
-            })}
-            <g transform="translate(600 350)">
-              <use
-                href="#network-rounded-pentagon"
-                fill="url(#network-core-face)"
-                stroke="#ffffff"
-                strokeWidth="14"
-                strokeLinejoin="round"
-                vectorEffect="non-scaling-stroke"
-                transform="scale(1.36)"
-                filter="url(#network-core-shadow)"
-              />
-              <use
-                href="#network-rounded-pentagon"
-                fill="url(#network-core-face)"
-                stroke="#4f91f5"
-                strokeWidth="4"
-                strokeLinejoin="round"
-                vectorEffect="non-scaling-stroke"
-                transform="scale(1.36)"
-              />
-            </g>
-            <foreignObject x="505" y="276" width="190" height="150">
-              <div className="flex size-full flex-col items-center justify-center px-4 text-center">
-                <NetworkIconGlyph
-                  icon="network"
-                  className="size-8 text-[#2676ee]"
+                return (
+                  <g key={stat.lbl}>
+                    <g
+                      transform={`translate(${node.center[0]} ${node.center[1]}) rotate(${node.rotation}) scale(${node.scale})`}
+                    >
+                      <use
+                        href="#network-rounded-pentagon"
+                        fill={`url(#network-face-${stat.tone})`}
+                        stroke="#ffffff"
+                        strokeWidth="6"
+                        strokeLinejoin="round"
+                        vectorEffect="non-scaling-stroke"
+                        filter="url(#network-node-shadow)"
+                      />
+                    </g>
+                    <foreignObject
+                      x={node.content[0]}
+                      y={node.content[1]}
+                      width={node.content[2]}
+                      height={node.content[3]}
+                    >
+                      <div className="flex size-full flex-col items-center justify-center px-2 text-center text-white drop-shadow-sm">
+                        <NetworkIconGlyph icon={stat.icon} className="size-6" />
+                        <strong className="mt-1 text-[30px] font-black leading-none tracking-[-0.04em]">
+                          {stat.val}
+                        </strong>
+                        <span className="mt-1.5 max-w-[126px] text-[14px] font-bold leading-[1.16] text-white/95">
+                          {stat.lbl}
+                        </span>
+                      </div>
+                    </foreignObject>
+                  </g>
+                );
+              })}
+
+              {NETWORK_DESKTOP_NODES.map((node, index) => {
+                const stat = stats[index];
+                if (!stat) return null;
+                const styles = NETWORK_TONE_STYLES[stat.tone];
+
+                return (
+                  <g key={`${stat.lbl}-endpoint`}>
+                    <circle
+                      cx={node.connector[0]}
+                      cy={node.connector[1]}
+                      r="9"
+                      fill="#ffffff"
+                      fillOpacity="0.96"
+                      stroke="#ffffff"
+                      strokeWidth="3"
+                    />
+                    <circle
+                      cx={node.connector[0]}
+                      cy={node.connector[1]}
+                      r="3.5"
+                      fill={styles.accent}
+                    />
+                  </g>
+                );
+              })}
+              <g transform="translate(600 350)">
+                <use
+                  href="#network-rounded-pentagon"
+                  fill="url(#network-core-face)"
+                  stroke="#ffffff"
+                  strokeWidth="14"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                  transform="scale(1.36)"
+                  filter="url(#network-core-shadow)"
                 />
-                <h2 className="mt-2 font-serif text-[19px] font-bold leading-tight text-[#0a2450]">
-                  {titleMain}
-                </h2>
-                <p className="mt-1 text-[27px] font-black leading-none tracking-[-0.035em] text-[#071a33]">
-                  {country1} <span className="text-[#2d7ef1]">{hyphen}</span>{" "}
-                  {country2}
-                </p>
-              </div>
-            </foreignObject>
-          </svg>
+                <use
+                  href="#network-rounded-pentagon"
+                  fill="url(#network-core-face)"
+                  stroke="#4f91f5"
+                  strokeWidth="4"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                  transform="scale(1.36)"
+                />
+              </g>
+              <foreignObject x="505" y="276" width="190" height="150">
+                <div className="flex size-full flex-col items-center justify-center px-4 text-center">
+                  <NetworkIconGlyph
+                    icon="network"
+                    className="size-8 text-[#2676ee]"
+                  />
+                  <h2 className="mt-2 font-serif text-[19px] font-bold leading-tight text-[#0a2450]">
+                    {titleMain}
+                  </h2>
+                  <p className="mt-1 text-[27px] font-black leading-none tracking-[-0.035em] text-[#071a33]">
+                    {country1} <span className="text-[#2d7ef1]">{hyphen}</span>{" "}
+                    {country2}
+                  </p>
+                </div>
+              </foreignObject>
+            </svg>
+          </div>
         </div>
       </div>
     </section>
@@ -2134,6 +2191,12 @@ export function GuestHomeV2({
   const [currentSlide, setCurrentSlide] = useState(0);
   const [eventTab, setEventTab] = useState<"upcoming" | "past">("upcoming");
 
+  const filteredEvents = t.events.items.filter((event) =>
+    eventTab === "past" ? Boolean(event.isPast) : !event.isPast,
+  );
+  const displayedEvents =
+    filteredEvents.length > 0 ? filteredEvents : t.events.items;
+
   useEffect(() => {
     const timer = window.setInterval(() => {
       setCurrentSlide((previous) => (previous + 1) % HERO_BANNERS.length);
@@ -2209,50 +2272,45 @@ export function GuestHomeV2({
           </div>
         </section>
 
-        {/* ═══════════ SECTION 1: TIN TỨC MỚI NHẤT (LATEST NEWS) ═══════════ */}
-        <section id="news" className="px-4 pt-12 pb-8 sm:px-6 lg:px-8">
+        {/* ═══════════ SECTION 1: TIN TỨC (NEWS) ═══════════ */}
+        <section id="news" className="px-4 pt-14 pb-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
-            <div className="relative mb-8 flex flex-col items-center justify-center text-center sm:mb-10">
-              <div className="inline-flex items-center gap-2">
+            {/* Section Header */}
+            <div className="relative mb-8 flex flex-col items-center justify-between gap-4 sm:mb-10 sm:flex-row">
+              <div className="inline-flex items-center gap-2.5">
                 <span className="h-1 w-8 rounded-full bg-blue-600" />
                 <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
                   {t.news.title}
                 </h2>
-                <span className="h-1 w-8 rounded-full bg-blue-600" />
               </div>
               <Link
                 href="/news"
-                className="mt-3 text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:absolute sm:right-0 sm:top-1/2 sm:mt-0 sm:-translate-y-1/2 sm:text-base"
+                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:text-base"
               >
-                {t.news.viewAll}
+                <span>{t.news.viewAll}</span>
               </Link>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {/* News Cards Grid */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {t.news.items.map((item) => (
                 <Link
                   key={item.id}
                   href={`/news/${item.id}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
                 >
-                  <div className="relative h-44 w-full overflow-hidden bg-slate-100">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
                       unoptimized
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                      className="object-cover transition duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <span
-                      className={`absolute bottom-3 left-3 rounded-md px-2.5 py-1 text-[10px] font-black tracking-wider shadow-xs ${item.categoryTone}`}
-                    >
-                      {item.category}
-                    </span>
                   </div>
-                  <div className="flex flex-1 flex-col justify-between p-5">
-                    <h3 className="line-clamp-2 text-base font-bold leading-snug text-slate-900 transition group-hover:text-blue-600">
+                  <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
+                    <h3 className="line-clamp-2 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-lg">
                       {item.title}
                     </h3>
                     <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-slate-500">
@@ -2271,207 +2329,157 @@ export function GuestHomeV2({
           </div>
         </section>
 
-        {/* ═══════════ SECTION 2: HỆ SINH THÁI VN-RU NETWORK (ECOSYSTEM) ═══════════ */}
-        <section
-          id="ecosystem"
-          className="relative isolate scroll-mt-28 overflow-hidden px-4 py-10 sm:px-6 lg:px-8"
-        >
-          <div
-            className="pointer-events-none absolute inset-0 -z-10 hidden md:block"
-            aria-hidden="true"
-          >
-            <ThreeContentBackground />
-          </div>
-          <div className="relative mx-auto max-w-[1460px]">
-            <div className="mb-8 flex flex-col items-center justify-center text-center sm:mb-10">
-              <div className="inline-flex items-center gap-2">
-                <span className="h-1 w-8 rounded-full bg-blue-600" />
-                <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
-                  {t.ecosystem.title}
-                </h2>
-                <span className="h-1 w-8 rounded-full bg-blue-600" />
-              </div>
-            </div>
-
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-              {t.ecosystem.cards.map((card) => {
-                const toneConfig = {
-                  blue: {
-                    border:
-                      "border-blue-200/90 hover:border-blue-500 hover:shadow-[0_12px_32px_-10px_rgba(37,99,235,0.25)]",
-                    cta: "text-blue-600 group-hover:text-blue-700",
-                  },
-                  emerald: {
-                    border:
-                      "border-emerald-200/90 hover:border-emerald-500 hover:shadow-[0_12px_32px_-10px_rgba(16,185,129,0.25)]",
-                    cta: "text-emerald-600 group-hover:text-emerald-700",
-                  },
-                  purple: {
-                    border:
-                      "border-purple-200/90 hover:border-purple-500 hover:shadow-[0_12px_32px_-10px_rgba(147,51,234,0.25)]",
-                    cta: "text-purple-600 group-hover:text-purple-700",
-                  },
-                  amber: {
-                    border:
-                      "border-amber-200/90 hover:border-amber-500 hover:shadow-[0_12px_32px_-10px_rgba(245,158,11,0.25)]",
-                    cta: "text-amber-600 group-hover:text-amber-700",
-                  },
-                }[card.tone];
-
-                return (
-                  <Link
-                    key={card.title}
-                    href={card.href}
-                    className={`group flex items-start gap-4 rounded-2xl border ${toneConfig.border} bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1 sm:gap-4.5 sm:p-6`}
-                  >
-                    <HexagonNetworkIcon icon={card.icon} tone={card.tone} />
-                    <div className="flex min-h-[110px] flex-1 flex-col justify-between">
-                      <div>
-                        <h3 className="text-base font-black uppercase leading-tight tracking-wide text-slate-900 sm:text-[17px]">
-                          {card.title}
-                        </h3>
-                        <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-[13px]">
-                          {card.desc}
-                        </p>
-                      </div>
-                      <span
-                        className={`mt-4 inline-flex items-center gap-1 text-xs font-black transition group-hover:translate-x-1.5 sm:text-sm ${toneConfig.cta}`}
-                      >
-                        {t.ecosystem.cardCta}
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════ SECTION 3: SỰ KIỆN NỔI BẬT (FEATURED EVENTS) ═══════════ */}
+        {/* ═══════════ SECTION 2: SỰ KIỆN (EVENTS) ═══════════ */}
         <section id="events" className="px-4 pt-8 pb-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
+            {/* Section Header */}
             <div className="relative mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
-              <div>
+              <div className="inline-flex items-center gap-2.5">
+                <span className="h-1 w-8 rounded-full bg-blue-600" />
                 <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
                   {t.events.title}
                 </h2>
               </div>
               <Link
-                href="/#events"
-                className="text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:text-base"
+                href="/opportunities"
+                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:text-base"
               >
-                {t.events.viewAll}
+                <span>{t.events.viewAll}</span>
               </Link>
             </div>
 
             {/* Filter Tabs */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-xl border border-blue-200/80 bg-white/95 p-1.5 shadow-2xs">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-2xl border border-blue-200/80 bg-white/95 p-1.5 shadow-2xs">
               <button
                 type="button"
                 onClick={() => setEventTab("upcoming")}
-                className={`rounded-lg px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
+                className={`inline-flex items-center gap-2 rounded-xl px-4.5 py-2.5 text-xs sm:text-sm font-bold transition-all duration-150 ${
                   eventTab === "upcoming"
                     ? "bg-blue-600 text-white shadow-xs"
                     : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
                 }`}
               >
-                {t.events.tabUpcoming}
+                <span
+                  className="material-symbols-outlined text-lg"
+                  aria-hidden="true"
+                >
+                  event
+                </span>
+                <span>{t.events.tabUpcoming}</span>
               </button>
               <button
                 type="button"
                 onClick={() => setEventTab("past")}
-                className={`rounded-lg px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
+                className={`inline-flex items-center gap-2 rounded-xl px-4.5 py-2.5 text-xs sm:text-sm font-bold transition-all duration-150 ${
                   eventTab === "past"
                     ? "bg-blue-600 text-white shadow-xs"
                     : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
                 }`}
               >
-                {t.events.tabPast}
+                <span
+                  className="material-symbols-outlined text-lg"
+                  aria-hidden="true"
+                >
+                  event_available
+                </span>
+                <span>{t.events.tabPast}</span>
               </button>
             </div>
 
-            <div className="grid gap-5 lg:grid-cols-3">
-              {t.events.items.map((event) => (
+            {/* Events Cards Grid (Redesigned matching mockups) */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {displayedEvents.map((event) => (
                 <article
-                  key={event.title}
-                  className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md"
+                  key={event.id}
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
                 >
-                  <div>
-                    <div className="flex gap-4">
-                      {/* Left Date Box */}
-                      <div className="flex min-w-[72px] flex-col items-center justify-center rounded-xl border border-blue-200/90 bg-blue-50/90 px-2 py-3 text-center">
-                        <span className="text-2xl font-black leading-none text-blue-700 sm:text-3xl">
-                          {event.date}
-                        </span>
-                        <span className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
-                          {event.month}
-                        </span>
-                        <span className="text-[10px] font-medium text-slate-400">
-                          {event.year}
-                        </span>
+                  {/* Top Featured Image Banner */}
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                    <Image
+                      src={event.image}
+                      alt={event.title}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-60" />
+                  </div>
+
+                  {/* Card Content Body */}
+                  <div className="flex flex-1 flex-col justify-between p-6">
+                    <div>
+                      {/* Date Headline */}
+                      <div className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-blue-600">
+                        {event.date} {event.month} · {event.year}
                       </div>
 
-                      {/* Event Image */}
-                      <div className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-slate-100 shadow-2xs">
-                        <Image
-                          src={event.image}
-                          alt={event.title}
-                          fill
-                          unoptimized
-                          sizes="80px"
-                          className="object-cover transition duration-300 group-hover:scale-105"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="mt-4">
-                      <span className="inline-block text-[11px] font-extrabold uppercase tracking-wider text-blue-600">
-                        {event.kind}
-                      </span>
-                      <h3 className="mt-1 line-clamp-2 text-base font-bold leading-snug text-slate-900 transition group-hover:text-blue-600">
+                      {/* Title */}
+                      <h3 className="mt-2.5 line-clamp-2 min-h-14 text-lg font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:min-h-16 sm:text-xl">
                         {event.title}
                       </h3>
-                      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold text-slate-600">
-                        <span className="flex items-center gap-1">
+
+                      {/* Location & Time */}
+                      <div className="mt-4 grid min-h-14 content-start gap-2 text-xs font-medium text-slate-600 sm:text-sm">
+                        <span className="inline-flex items-center gap-1.5">
                           <span
-                            className="material-symbols-outlined text-sm text-slate-400"
+                            className="material-symbols-outlined text-base text-slate-400"
                             aria-hidden="true"
                           >
-                            pin_drop
+                            location_on
                           </span>
-                          {event.place}
+                          <span>{event.place}</span>
                         </span>
-                        <span className="flex items-center gap-1 text-slate-500">
+                        <span className="inline-flex items-center gap-1.5 text-slate-500">
                           <span
-                            className="material-symbols-outlined text-sm text-slate-400"
+                            className="material-symbols-outlined text-base text-slate-400"
                             aria-hidden="true"
                           >
                             schedule
                           </span>
-                          {event.time}
+                          <span>{event.time}</span>
                         </span>
                       </div>
                     </div>
-                  </div>
 
-                  <button
-                    type="button"
-                    className="mt-5 w-full rounded-xl bg-blue-600 py-2.5 text-center text-xs font-bold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.99] sm:text-sm"
-                  >
-                    {t.events.registerBtn}
-                  </button>
+                    {/* Bottom Action Link */}
+                    <div className="mt-6 border-t border-slate-100 pt-4">
+                      <Link
+                        href={`/opportunities?event=${event.id}`}
+                        className="group/link inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 decoration-2 underline-offset-4 transition-colors duration-150 hover:text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:text-sm"
+                      >
+                        <span>
+                          {event.isPast
+                            ? locale === "ru"
+                              ? "Смотреть итоги"
+                              : locale === "en"
+                                ? "View summary"
+                                : "Xem tổng kết"
+                            : t.events.registerBtn}
+                        </span>
+                        <span
+                          className="transition-transform duration-200 group-hover/link:translate-x-1"
+                          aria-hidden="true"
+                        >
+                          →
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
+        {/* ═══════════ SECTION 3: SƠ ĐỒ NGŨ GIÁC HỆ SINH THÁI ═══════════ */}
         <NetworkStatsInfographic
           stats={t.stats}
           titleMain={t.titleMain}
           country1={t.country1}
           hyphen={t.hyphen}
           country2={t.country2}
+          sectionTitle={t.ecosystem.title}
         />
 
         {/* ═══════════ SECTION 4: KẾT NỐI & LIÊN HỆ (CONNECT & CONTACT) ═══════════ */}

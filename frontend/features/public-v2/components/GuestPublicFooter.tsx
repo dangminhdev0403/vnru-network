@@ -10,7 +10,6 @@ type GuestPublicFooterCopy = {
     brandTitle: string;
     subtitle: string;
     desc: string;
-    openDataBadge: string;
     navTitle: string;
     pillarsTitle: string;
     contactTitle: string;
@@ -67,12 +66,6 @@ export function GuestPublicFooter({
             <p className="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-slate-600">
               {t.footer.desc}
             </p>
-            <div className="mt-5 flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-white/90 px-3 py-1 text-xs font-bold text-blue-800 shadow-xs">
-                <span className="size-2 rounded-full bg-emerald-500" />
-                {t.footer.openDataBadge}
-              </span>
-            </div>
           </div>
 
           <div className="xl:col-span-2">
@@ -106,7 +99,7 @@ export function GuestPublicFooter({
               </li>
               <li>
                 <Link
-                  href="/#ecosystem"
+                  href="/ecosystem"
                   className="transition hover:text-blue-700 hover:underline"
                 >
                   {t.ecosystem.title}

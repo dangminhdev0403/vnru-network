@@ -27,6 +27,23 @@ describe('NewsService', () => {
     });
   });
 
+  it('filters admin drafts and returns all translations for editing', async () => {
+    prisma.newsArticle.findMany.mockResolvedValue([]);
+    prisma.newsArticle.findFirst.mockResolvedValue({
+      id: 'article-1',
+      translations: [{ locale: 'VI', title: 'Tin thử' }],
+    });
+
+    await service.listAdmin(20, 0, 'DRAFT');
+    await expect(service.getAdmin('article-1')).resolves.toMatchObject({
+      id: 'article-1',
+      translations: [{ locale: 'VI', title: 'Tin thử' }],
+    });
+    expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { status: 'DRAFT' } }),
+    );
+  });
+
   it('rejects publishing while the cover upload is unfinished', async () => {
     prisma.newsArticle.findFirst.mockResolvedValue({ coverImageUrl: null });
 
