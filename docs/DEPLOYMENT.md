@@ -32,6 +32,8 @@ git pull --ff-only origin master
 set -a
 . secrets/demo.env
 set +a
+chown 1001:1001 secrets/account.json
+chmod 600 secrets/account.json
 install -d -m 700 /var/backups/vnru-network
 umask 077
 backup="/var/backups/vnru-network/auth_db_$(date -u +%Y%m%dT%H%M%SZ).dump"
