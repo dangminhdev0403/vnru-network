@@ -10,7 +10,7 @@ import {
 import { LOCALE_COOKIE_NAME, sanitizeLocale } from "../../features/auth/server";
 import { BrandMark } from "@/components/shared/BrandMark";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
-import { PasswordField } from "./PasswordField";
+import { LoginForm } from "./LoginForm";
 
 const copy = {
   vi: {
@@ -32,6 +32,7 @@ const copy = {
     showPassword: "Hiện mật khẩu",
     hidePassword: "Ẩn mật khẩu",
     submit: "Đăng nhập",
+    submitting: "Đang đăng nhập, xin chờ...",
     divider: "hoặc",
     home: "Trở về Trang chủ",
     accountNote: "Chưa có tài khoản?",
@@ -43,7 +44,7 @@ const copy = {
     storyTitle: "Объединяем знания",
     storyAccent: "Создаём будущее",
     storyBody:
-      "Пространство научно-технологического сотрудничества России и Вьетнама для обмена знаниями, инноваций и устойчивого развития.",
+      "Пространство научно-технологического сотрудничества России и Вьетнама для обмена знаниями, инноваций và устойчивого развития.",
     eyebrow: "Портал участника",
     title: "Вход",
     description:
@@ -56,6 +57,7 @@ const copy = {
     showPassword: "Показать пароль",
     hidePassword: "Скрыть пароль",
     submit: "Войти",
+    submitting: "Вход в систему, пожалуйста, подождите...",
     divider: "или",
     home: "Вернуться на главную",
     accountNote: "Нет учётной записи?",
@@ -79,6 +81,7 @@ const copy = {
     showPassword: "Show password",
     hidePassword: "Hide password",
     submit: "Sign in",
+    submitting: "Signing in, please wait...",
     divider: "or",
     home: "Return to Home",
     accountNote: "No account yet?",
@@ -160,66 +163,7 @@ export default async function LoginPage({
             {t.description}
           </p>
 
-          {error && (
-            <p
-              role="alert"
-              className="mt-5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-base font-semibold text-rose-800"
-            >
-              {t.error}
-            </p>
-          )}
-
-          <form
-            action="/api/auth/login"
-            method="post"
-            className="mt-7 space-y-5"
-          >
-            <input type="hidden" name="returnTo" value={destination} />
-            <label className="block text-base font-bold text-slate-800">
-              {t.account}
-              <span className="relative mt-2 block">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-500"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  aria-hidden="true"
-                >
-                  <circle cx="12" cy="8" r="4" />
-                  <path d="M4.5 21a7.5 7.5 0 0 1 15 0" />
-                </svg>
-                <input
-                  name="account"
-                  type="text"
-                  autoComplete="username"
-                  required
-                  autoFocus
-                  placeholder={t.accountPlaceholder}
-                  className="min-h-13 w-full rounded-xl border border-slate-300 bg-white py-3 pr-4 pl-12 text-base transition placeholder:text-slate-400 focus:border-blue-700 focus-visible:outline-none"
-                />
-              </span>
-            </label>
-            <div>
-              <label
-                htmlFor="login-password"
-                className="block text-base font-bold text-slate-800"
-              >
-                {t.password}
-              </label>
-              <PasswordField
-                placeholder={t.passwordPlaceholder}
-                showLabel={t.showPassword}
-                hideLabel={t.hidePassword}
-              />
-            </div>
-            <button
-              type="submit"
-              className="min-h-13 w-full rounded-xl bg-blue-700 px-5 text-base font-bold text-white shadow-[0_16px_34px_-16px_rgba(37,99,235,.9)] transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-            >
-              {t.submit} <span aria-hidden="true">→</span>
-            </button>
-          </form>
+          <LoginForm destination={destination} error={error} t={t} />
 
           <div
             className="my-6 flex items-center gap-4 text-sm text-slate-500"

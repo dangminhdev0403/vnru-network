@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { requireMemberSession } from "@/features/auth/workspace-server";
-import { GuestKnowledgeV2 } from "@/features/public-v2/components/GuestKnowledgeV2";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = { title: "Kho tri thức · RU-VN Network" };
+export const metadata: Metadata = { title: "Ấn phẩm · RU-VN Network" };
 
-export default async function Page() {
-  await requireMemberSession("/knowledge");
-  return <GuestKnowledgeV2 />;
+export default function Page() {
+  redirect("/news?type=PUBLICATION");
 }

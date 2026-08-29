@@ -78,8 +78,22 @@ const ui = {
     share: "Chia sẻ",
     tags: "Từ khóa",
     actionCloses: "Hạn đăng ký",
-    contentTypes: { ARTICLE: "Bài viết", EVENT: "Sự kiện", ANNOUNCEMENT: "Công bố", PROJECT: "Dự án", OPPORTUNITY: "Cơ hội", PUBLICATION: "Ấn phẩm" },
-    actions: { ARTICLE: "Xem thông tin", EVENT: "Đăng ký tham dự", ANNOUNCEMENT: "Xem công bố", PROJECT: "Xem dự án", OPPORTUNITY: "Đăng ký", PUBLICATION: "Đọc ấn phẩm" },
+    contentTypes: {
+      ARTICLE: "Bài viết",
+      EVENT: "Sự kiện",
+      ANNOUNCEMENT: "Công bố",
+      PROJECT: "Dự án",
+      OPPORTUNITY: "Cơ hội",
+      PUBLICATION: "Ấn phẩm",
+    },
+    actions: {
+      ARTICLE: "Xem thông tin",
+      EVENT: "Đăng ký tham dự",
+      ANNOUNCEMENT: "Xem công bố",
+      PROJECT: "Xem dự án",
+      OPPORTUNITY: "Đăng ký",
+      PUBLICATION: "Đọc ấn phẩm",
+    },
   },
   en: {
     home: "Home",
@@ -91,8 +105,22 @@ const ui = {
     share: "Share",
     tags: "Tags",
     actionCloses: "Registration closes",
-    contentTypes: { ARTICLE: "Article", EVENT: "Event", ANNOUNCEMENT: "Announcement", PROJECT: "Project", OPPORTUNITY: "Opportunity", PUBLICATION: "Publication" },
-    actions: { ARTICLE: "View details", EVENT: "Register", ANNOUNCEMENT: "View announcement", PROJECT: "View project", OPPORTUNITY: "Apply", PUBLICATION: "Read publication" },
+    contentTypes: {
+      ARTICLE: "Article",
+      EVENT: "Event",
+      ANNOUNCEMENT: "Announcement",
+      PROJECT: "Project",
+      OPPORTUNITY: "Opportunity",
+      PUBLICATION: "Publication",
+    },
+    actions: {
+      ARTICLE: "View details",
+      EVENT: "Register",
+      ANNOUNCEMENT: "View announcement",
+      PROJECT: "View project",
+      OPPORTUNITY: "Apply",
+      PUBLICATION: "Read publication",
+    },
   },
   ru: {
     home: "Главная",
@@ -104,39 +132,24 @@ const ui = {
     share: "Поделиться",
     tags: "Теги",
     actionCloses: "Регистрация до",
-    contentTypes: { ARTICLE: "Статья", EVENT: "Событие", ANNOUNCEMENT: "Объявление", PROJECT: "Проект", OPPORTUNITY: "Возможность", PUBLICATION: "Публикация" },
-    actions: { ARTICLE: "Подробнее", EVENT: "Регистрация", ANNOUNCEMENT: "Открыть объявление", PROJECT: "Открыть проект", OPPORTUNITY: "Подать заявку", PUBLICATION: "Читать публикацию" },
+    contentTypes: {
+      ARTICLE: "Статья",
+      EVENT: "Событие",
+      ANNOUNCEMENT: "Объявление",
+      PROJECT: "Проект",
+      OPPORTUNITY: "Возможность",
+      PUBLICATION: "Публикация",
+    },
+    actions: {
+      ARTICLE: "Подробнее",
+      EVENT: "Регистрация",
+      ANNOUNCEMENT: "Открыть объявление",
+      PROJECT: "Открыть проект",
+      OPPORTUNITY: "Подать заявку",
+      PUBLICATION: "Читать публикацию",
+    },
   },
 } as const;
-
-function ArticleVisual({ category }: { category: Category }) {
-  const initials: Record<Category, string> = {
-    science: "KHOA HỌC · CÔNG NGHỆ",
-    society: "KINH TẾ · XÃ HỘI",
-    education: "GIÁO DỤC ĐÀO TẠO",
-    cooperation: "HỢP TÁC",
-  };
-
-  return (
-    <div className="relative grid min-h-[360px] place-items-center overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_50%_35%,#2874d8_0%,#0b4a9d_35%,#062b65_75%,#041d47_100%)] text-white sm:min-h-[440px]">
-      <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(255,255,255,.14)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:56px_56px]" />
-      <div className="absolute left-[8%] top-[18%] h-28 w-44 rounded-lg bg-red-600/75 shadow-2xl">
-        <span className="grid h-full place-items-center text-4xl">★</span>
-      </div>
-      <div className="absolute right-[8%] top-[18%] h-28 w-44 overflow-hidden rounded-lg shadow-2xl">
-        <div className="h-1/3 bg-white" />
-        <div className="h-1/3 bg-blue-600" />
-        <div className="h-1/3 bg-red-600" />
-      </div>
-      <div className="absolute left-1/2 top-[42%] size-52 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/50 shadow-[0_0_70px_rgba(56,189,248,.38)]" />
-      <div className="absolute left-1/2 top-[42%] h-36 w-52 -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-[50%] border border-cyan-100/60" />
-      <div className="absolute left-1/2 top-[42%] h-36 w-52 -translate-x-1/2 -translate-y-1/2 -rotate-12 rounded-[50%] border border-cyan-100/60" />
-      <div className="relative z-10 mt-40 rounded-full border border-white/20 bg-slate-950/35 px-5 py-2 text-xs font-black uppercase tracking-[0.18em] backdrop-blur-sm">
-        {initials[category]}
-      </div>
-    </div>
-  );
-}
 
 function Thumb({ item }: { item: OfficialNewsArticle }) {
   if (item.image) {
@@ -172,7 +185,13 @@ function ShareButton({ label }: { label: string }) {
   );
 }
 
-export function GuestNewsArticleV2({ article, articles }: { article: OfficialNewsArticle; articles: OfficialNewsArticle[] }) {
+export function GuestNewsArticleV2({
+  article,
+  articles,
+}: {
+  article: OfficialNewsArticle;
+  articles: OfficialNewsArticle[];
+}) {
   const router = useRouter();
   const { locale } = useLocale();
   const t = ui[locale] ?? ui.vi;
@@ -186,18 +205,17 @@ export function GuestNewsArticleV2({ article, articles }: { article: OfficialNew
     }),
   );
 
-  const related = articles.filter(
-    (item) =>
-      item.id !== article.id &&
-      (item.category === article.category || item.category === "cooperation"),
-  ).slice(0, 4);
-  const popular = articles.filter((item) => item.id !== article.id).slice(
-    0,
-    5,
-  );
-  const bottomRelated = articles.filter(
-    (item) => item.id !== article.id,
-  ).slice(5, 9);
+  const related = articles
+    .filter(
+      (item) =>
+        item.id !== article.id &&
+        (item.category === article.category || item.category === "cooperation"),
+    )
+    .slice(0, 4);
+  const popular = articles.filter((item) => item.id !== article.id).slice(0, 5);
+  const bottomRelated = articles
+    .filter((item) => item.id !== article.id)
+    .slice(5, 9);
 
   const openNews = (category: NewsCategory, query = filterQuery) => {
     router.push(newsFilterHref(category, query, advancedFilters));
@@ -222,7 +240,6 @@ export function GuestNewsArticleV2({ article, articles }: { article: OfficialNew
           onSearchSubmit={(query) => openNews(article.category, query)}
           filterControl={
             <GuestNewsAdvancedFilters
-
               filters={advancedFilters}
               onApply={(nextFilters) =>
                 router.push(
@@ -252,9 +269,6 @@ export function GuestNewsArticleV2({ article, articles }: { article: OfficialNew
         <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_340px]">
           <article className="min-w-0">
             <header>
-              <span className="mb-4 inline-flex min-h-8 items-center rounded-full bg-blue-50 px-3 text-sm font-black text-blue-700">
-                {t.contentTypes[contentType]}
-              </span>
               <h2 className="max-w-5xl text-3xl font-black leading-[1.15] tracking-[-0.035em] text-slate-950 sm:text-4xl lg:text-5xl">
                 {article.title}
               </h2>
@@ -278,18 +292,16 @@ export function GuestNewsArticleV2({ article, articles }: { article: OfficialNew
               </div>
             </header>
 
-            <div className="mt-7">
-              {article.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
+            {article.image ? (
+              <div className="mt-7">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={article.image}
                   alt={article.title}
                   className="max-h-[640px] w-full rounded-2xl object-cover"
                 />
-              ) : (
-                <ArticleVisual category={article.category} />
-              )}
-            </div>
+              </div>
+            ) : null}
 
             <div className="mt-8 space-y-6 text-lg leading-8 text-slate-800">
               {article.body.map((paragraph, index) => (
@@ -297,11 +309,20 @@ export function GuestNewsArticleV2({ article, articles }: { article: OfficialNew
               ))}
               {article.actionClosesAt ? (
                 <p className="text-base font-semibold text-slate-600">
-                  {t.actionCloses}: {new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(new Date(article.actionClosesAt))}
+                  {t.actionCloses}:{" "}
+                  {new Intl.DateTimeFormat(locale, {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  }).format(new Date(article.actionClosesAt))}
                 </p>
               ) : null}
               {article.actionUrl ? (
-                <a href={article.actionUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center rounded-xl bg-blue-700 px-5 font-bold text-white hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">
+                <a
+                  href={article.actionUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center rounded-xl bg-blue-700 px-5 font-bold text-white hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                >
                   {article.actionLabel || t.actions[contentType]}
                 </a>
               ) : null}

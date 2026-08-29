@@ -39,10 +39,7 @@ export function GuestPublicFooter({
   copy: t,
 }: Readonly<{ copy: GuestPublicFooterCopy }>) {
   return (
-    <footer
-      id="contact"
-      className="scroll-mt-24 border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700"
-    >
+    <footer className="border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700">
       <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-12">
           <div className="xl:col-span-4">

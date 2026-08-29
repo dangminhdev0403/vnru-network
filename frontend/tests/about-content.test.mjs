@@ -22,6 +22,10 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /eyebrow: "Về chúng tôi"/);
   assert.match(about, /eyebrow: "About us"/);
   assert.match(about, /eyebrow: "О нас"/);
+  assert.doesNotMatch(about, /<nav aria-label=\{t\.eyebrow\}/);
+  assert.match(about, /id="about-overview"/);
+  assert.match(about, /id="operating-mechanism"/);
+  assert.doesNotMatch(about, /about-light-hero-v2|t\.heroMetadata\.map|<MissionAndCoreOperations|<OperatingMechanismDiagram/);
   assert.doesNotMatch(about, /Cơ cấu & Sứ mệnh|font-mono text-3xl|bg-gradient-to-r from-blue-700/);
   assert.match(about, /TS Nguyễn Quốc Hùng/);
   assert.match(about, /Trần Đức Tùng/);
@@ -39,7 +43,7 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /https:\/\/wa\.me\/79996676240/);
   assert.match(about, /overflow-hidden rounded-full/);
   assert.match(about, /\{t\.contactLabel\}:/);
-  assert.match(about, /<OperatingMechanismDiagram[\s\S]*id="participating-partners"/);
+  assert.match(about, /id="operating-mechanism"[\s\S]*id="board"/);
   assert.doesNotMatch(about, /t\.boardIntro|\{t\.eyebrow\}[\s\S]{0,200}\{t\.boardTitle\}|member\.phone|member\.channels|Đối tác mong muốn tham gia|Chọn logo để mở website chính thức trong tab mới\.|id="prospective-partners"/);
   assert.equal((about.match(/url: "https:\/\/www\.spbume\.ru\/"/g) ?? []).length, 1);
   assert.doesNotMatch(about, /GS\.TS\. Nguyễn Văn Kính|Alexander Petrov|MEMBER_ORGANIZATIONS|LEADERS/);

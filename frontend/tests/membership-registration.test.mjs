@@ -17,6 +17,6 @@ test("registration form posts to the same-origin account API with feedback", asy
   assert.match(page, /autoComplete="new-password"/);
   assert.match(page, /disabled=\{status === "submitting"\}/);
   assert.doesNotMatch(page, /UI preview|bản xem trước giao diện|предварительный интерфейс/);
-  assert.match(route, /new URL\(origin\)\.origin !== request\.nextUrl\.origin/);
+  assert.match(route, /isSameOriginRequest\(request\)/);
   assert.match(route, /api\/v1\/auth\/register/);
 });

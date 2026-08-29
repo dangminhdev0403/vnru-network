@@ -27,8 +27,7 @@ test("public navigation centers tablet rows and uses a full mobile menu", async 
   assert.match(nav, /<MenuIcon aria-hidden="true"/);
   assert.match(nav, /translate="no"/);
   assert.doesNotMatch(nav, /overflow-x-auto/);
-  assert.match(home, /relative hidden aspect-\[1200\/675\] xl:block/);
-  assert.match(home, /grid-cols-1 gap-5 sm:grid-cols-2/);
+  assert.match(home, /relative aspect-\[1200\/675\] w-full/);
 });
 
 test("locale and public symbol ligatures resist browser auto-translation", async () => {

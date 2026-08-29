@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Swal from "sweetalert2";
-import { z } from "zod";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { newsArticleHref, OFFICIAL_NEWS } from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
@@ -547,10 +545,10 @@ export const HOME_COPY: Record<
   },
   ru: {
     eyebrow: "Портал двустороннего сотрудничества",
-    titleMain: "Сеть знаний",
-    country1: "Россия",
-    hyphen: "–",
-    country2: "Вьетнам",
+    titleMain: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
+    country1: "",
+    hyphen: "",
+    country2: "",
     title1: "РОССИЙСКО-ВЬЕТНАМСКАЯ",
     title2: "ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
     title3: "",
@@ -817,7 +815,7 @@ export const HOME_COPY: Record<
       foundationBadge: "Учредитель и координатор",
       foundationName: "Фонд «Традиции и дружба»",
       foundationDesc:
-        "Некоммерческая организация, зарегистрированная в Минюсте РФ (ОГРН: 1207700294020), выступающая единственным учредителем и центральным координационным органом Сети знаний Россия – Вьетнам.",
+        "Некоммерческая организация, зарегистрированная в Минюсте РФ (ОГРН: 1207700294020), выступающая единственным учредителем и центральным координационным органом РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ.",
       foundationHighlights: [
         "Реализация курса на инновации и высокие технологии (Резолюция 57-NQ/TW)",
         "Поддержка ключевого события — Года науки и образования Россия — Вьетнам 2026",
@@ -858,7 +856,7 @@ export const HOME_COPY: Record<
         "Мы всегда готовы к диалогу, партнерству и поддержке научно-технологического сообщества России и Вьетнама.",
       infoTitle: "О сети",
       infoDesc:
-        "Сеть знаний Россия – Вьетнам координируется Фондом «Традиции и дружба», объединяя институты, университеты и ученых для развития науки, инноваций и трансфера знаний.",
+        "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ координируется Фондом «Традиции и дружба», объединяя институты, университеты и ученых для развития науки, инноваций и трансфера знаний.",
       coordinatorLabel: "Координатор",
       coordinatorValue: "Фонд «Традиции и дружба»",
       addressLabel: "Адрес",
@@ -881,7 +879,7 @@ export const HOME_COPY: Record<
       sentSuccess: "Ваше сообщение успешно отправлено!",
     },
     footer: {
-      brandTitle: "Сеть знаний Россия – Вьетнам",
+      brandTitle: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
       subtitle: "",
       desc: "Независимый портал координации научно-технологического сотрудничества между ведущими институтами и университетами Вьетнама и Российской Федерации.",
       navTitle: "Экосистема сети",
@@ -900,7 +898,7 @@ export const HOME_COPY: Record<
       sendLabel: "Отправить",
       mailClientHint: "Кнопка откроет почтовое приложение на вашем устройстве.",
       emailSubject: "Обращение из сети RU-VN",
-      copyright: "© 2026 Сеть знаний Россия – Вьетнам. Все права защищены.",
+      copyright: "© 2026 РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ. Все права защищены.",
       terms: "Условия сотрудничества",
       privacy: "Политика конфиденциальности",
       ethics: "Научная этика",
@@ -1456,127 +1454,6 @@ export function NetworkIconGlyph({
   );
 }
 
-function NetworkStatNode({
-  stat,
-  className = "",
-}: Readonly<{
-  stat: NetworkStat;
-  className?: string;
-}>) {
-  const styles = NETWORK_TONE_STYLES[stat.tone];
-
-  return (
-    <div className={`flex w-full justify-center ${className}`}>
-      <div className={`relative h-[172px] w-[180px] max-w-full ${styles.glow}`}>
-        <svg
-          viewBox="-90 -90 180 180"
-          className="absolute inset-0 size-full overflow-visible"
-          aria-hidden="true"
-        >
-          <defs>
-            <linearGradient
-              id={`network-mobile-face-${stat.tone}`}
-              x1="-70"
-              y1="-70"
-              x2="65"
-              y2="70"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0" stopColor={styles.faceStart} />
-              <stop offset="1" stopColor={styles.faceEnd} />
-            </linearGradient>
-          </defs>
-          <path
-            d={NETWORK_ROUNDED_PENTAGON_PATH}
-            fill={`url(#network-mobile-face-${stat.tone})`}
-            stroke="#ffffff"
-            strokeWidth="6"
-            strokeLinejoin="round"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center px-4 pb-1 text-center text-white">
-          <div className="flex max-h-[136px] flex-col items-center justify-center">
-            <NetworkIconGlyph icon={stat.icon} className="size-6" />
-            <strong className="mt-1 text-[26px] font-black leading-none tracking-[-0.03em]">
-              {stat.val}
-            </strong>
-            <span className="mt-1 max-w-[144px] text-sm font-bold leading-tight text-white/95">
-              {stat.lbl}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function NetworkCore({
-  titleMain,
-  country1,
-  hyphen,
-  country2,
-}: Readonly<{
-  titleMain: string;
-  country1: string;
-  hyphen: string;
-  country2: string;
-}>) {
-  return (
-    <div className="relative h-[184px] w-[200px] drop-shadow-[0_18px_25px_rgba(31,99,233,0.24)]">
-      <svg
-        viewBox="-100 -95 200 190"
-        className="absolute inset-0 size-full overflow-visible"
-        aria-hidden="true"
-      >
-        <defs>
-          <linearGradient
-            id="network-mobile-core"
-            x1="0"
-            y1="-90"
-            x2="0"
-            y2="80"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0" stopColor="#ffffff" />
-            <stop offset="1" stopColor="#e8eef8" />
-          </linearGradient>
-        </defs>
-        <g transform="scale(1.02)">
-          <path
-            d={NETWORK_ROUNDED_PENTAGON_PATH}
-            fill="url(#network-mobile-core)"
-            stroke="#ffffff"
-            strokeWidth="10"
-            strokeLinejoin="round"
-          />
-          <path
-            d={NETWORK_ROUNDED_PENTAGON_PATH}
-            fill="url(#network-mobile-core)"
-            stroke="#4f91f5"
-            strokeWidth="3"
-            strokeLinejoin="round"
-          />
-        </g>
-      </svg>
-      <div className="absolute inset-0 grid place-items-center px-7 pb-1 text-center">
-        <div>
-          <NetworkIconGlyph
-            icon="network"
-            className="mx-auto size-7 text-blue-600"
-          />
-          <h2 className="mt-2 font-serif text-base font-bold leading-tight text-[#0a2450]">
-            {titleMain}
-          </h2>
-          <p className="mt-1 text-lg font-black leading-tight text-[#071a33]">
-            {country1} <span className="text-blue-500">{hyphen}</span>{" "}
-            {country2}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function NetworkStatsInfographic({
   stats,
   titleMain,
@@ -1597,10 +1474,10 @@ function NetworkStatsInfographic({
   return (
     <section
       id="ecosystem"
-      className="scroll-mt-36 px-4 pt-4 pb-12 sm:px-6 sm:pb-14 lg:px-8 xl:scroll-mt-28"
+      className="scroll-mt-36 px-4 pt-2 pb-12 sm:px-6 sm:pb-16 lg:px-8 xl:scroll-mt-28"
       aria-labelledby="network-stats-heading"
     >
-      <div className="mx-auto max-w-[1460px]">
+      <div className="mx-auto max-w-5xl">
         {sectionTitle ? (
           <div className="mb-8 flex flex-col items-center justify-center text-center sm:mb-10">
             <div className="inline-flex items-center gap-2">
@@ -1627,52 +1504,12 @@ function NetworkStatsInfographic({
           ))}
         </ul>
 
-        <div className="relative overflow-hidden rounded-[30px] border border-blue-100/80 bg-[#eff6ff] shadow-[0_30px_80px_-48px_rgba(31,99,233,0.5)]">
-          <Image
-            src="/images/network-stats-bg.png"
-            alt=""
-            fill
-            sizes="(min-width: 1536px) 1460px, 100vw"
-            className="object-cover"
-            aria-hidden="true"
-          />
+        <div className="relative mx-auto w-full max-w-5xl overflow-x-auto sm:overflow-x-visible">
           <div
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.04)_0%,rgba(239,246,255,0.12)_46%,rgba(224,236,255,0.42)_100%)] xl:bg-[radial-gradient(circle_at_50%_46%,rgba(37,99,235,0.18)_0%,rgba(20,74,157,0.28)_54%,rgba(7,26,51,0.46)_100%)]"
-            aria-hidden="true"
-          />
-
-          <div
-            className="relative px-3 py-10 sm:px-8 xl:hidden"
+            className="relative aspect-[1200/675] w-full min-w-[580px] sm:min-w-0"
             aria-hidden="true"
           >
-            <div className="flex justify-center">
-              <NetworkCore
-                titleMain={titleMain}
-                country1={country1}
-                hyphen={hyphen}
-                country2={country2}
-              />
-            </div>
-            <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-5 sm:grid-cols-2 lg:max-w-4xl lg:grid-cols-3">
-              {stats.map((stat, index) => (
-                <NetworkStatNode
-                  key={stat.lbl}
-                  stat={stat}
-                  className={
-                    index === stats.length - 1
-                      ? "sm:col-span-2 sm:mx-auto lg:col-span-1"
-                      : ""
-                  }
-                />
-              ))}
-            </div>
-          </div>
-
-          <div
-            className="relative hidden aspect-[1200/675] xl:block"
-            aria-hidden="true"
-          >
-            <svg viewBox="0 0 1200 675" className="block size-full">
+            <svg viewBox="0 0 1200 675" className="block size-full select-none">
               <defs>
                 <path
                   id="network-rounded-pentagon"
@@ -1792,13 +1629,14 @@ function NetworkStatsInfographic({
                 </filter>
               </defs>
 
-              <g fill="none" stroke="#ffffff" strokeLinecap="round">
+              <g fill="none" strokeLinecap="round">
                 <ellipse
                   cx="600"
                   cy="346"
                   rx="236"
                   ry="224"
-                  strokeOpacity="0.72"
+                  stroke="#93c5fd"
+                  strokeOpacity="0.5"
                   strokeWidth="1.6"
                 />
                 <ellipse
@@ -1806,7 +1644,8 @@ function NetworkStatsInfographic({
                   cy="346"
                   rx="274"
                   ry="258"
-                  strokeOpacity="0.42"
+                  stroke="#bfdbfe"
+                  strokeOpacity="0.4"
                   strokeWidth="1.2"
                 />
                 <ellipse
@@ -1814,9 +1653,9 @@ function NetworkStatsInfographic({
                   cy="346"
                   rx="206"
                   ry="195"
-                  stroke="#67e8f9"
-                  strokeDasharray="2 8"
-                  strokeOpacity="0.7"
+                  stroke="#3b82f6"
+                  strokeDasharray="3 8"
+                  strokeOpacity="0.45"
                   strokeWidth="2"
                 />
               </g>
@@ -1959,502 +1798,6 @@ function NetworkStatsInfographic({
   );
 }
 
-const getContactSchema = (locale: string) => {
-  if (locale === "ru") {
-    return z.object({
-      name: z.string().trim().min(2, "Минимум 2 символа"),
-      email: z.string().trim().email("Некорректный email"),
-      message: z
-        .string()
-        .trim()
-        .min(10, "Минимум 10 символов")
-        .max(1000, "Максимум 1000 символов"),
-    });
-  }
-  if (locale === "en") {
-    return z.object({
-      name: z.string().trim().min(2, "Min 2 characters"),
-      email: z.string().trim().email("Invalid email"),
-      message: z
-        .string()
-        .trim()
-        .min(10, "Min 10 characters")
-        .max(1000, "Max 1000 characters"),
-    });
-  }
-  return z.object({
-    name: z.string().trim().min(2, "Tối thiểu 2 ký tự"),
-    email: z.string().trim().email("Email không hợp lệ"),
-    message: z
-      .string()
-      .trim()
-      .min(10, "Tối thiểu 10 ký tự")
-      .max(1000, "Tối đa 1000 ký tự"),
-  });
-};
-
-function GuestContactSection({
-  copy,
-  locale,
-}: Readonly<{
-  copy: (typeof HOME_COPY)["vi"]["contactSection"];
-  locale: string;
-}>) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [errors, setErrors] = useState<{
-    name?: string;
-    email?: string;
-    message?: string;
-  }>({});
-
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    const schema = getContactSchema(locale);
-    const result = schema.safeParse({ name, email, message });
-
-    if (!result.success) {
-      const fieldErrors: {
-        name?: string;
-        email?: string;
-        message?: string;
-      } = {};
-      for (const issue of result.error.issues) {
-        const key = issue.path[0] as keyof typeof fieldErrors;
-        if (!fieldErrors[key]) {
-          fieldErrors[key] = issue.message;
-        }
-      }
-      setErrors(fieldErrors);
-      return;
-    }
-
-    setErrors({});
-
-    // Step 1: Confirmation Modal
-    const confirmResult = await Swal.fire({
-      icon: "question",
-      title:
-        locale === "ru"
-          ? "Подтвердить отправку?"
-          : locale === "en"
-            ? "Confirm Submission?"
-            : "Xác nhận gửi liên hệ?",
-      text:
-        locale === "ru"
-          ? "Вы хотите отправить обращение в Бан координации?"
-          : locale === "en"
-            ? "Do you want to submit this inquiry to the Coordination Board?"
-            : "Bạn có chắc chắn muốn gửi thông tin liên hệ này?",
-      showCancelButton: true,
-      confirmButtonColor: "#2563eb",
-      cancelButtonColor: "#94a3b8",
-      confirmButtonText:
-        locale === "ru"
-          ? "Отправить"
-          : locale === "en"
-            ? "Send"
-            : "Xác nhận gửi",
-      cancelButtonText:
-        locale === "ru" ? "Отмена" : locale === "en" ? "Cancel" : "Hủy",
-      reverseButtons: true,
-    });
-
-    if (!confirmResult.isConfirmed) return;
-
-    // Step 2: SweetAlert2 Loading Modal
-    Swal.fire({
-      title:
-        locale === "ru"
-          ? "Отправка сообщения..."
-          : locale === "en"
-            ? "Sending inquiry..."
-            : "Đang gửi liên hệ...",
-      text:
-        locale === "ru"
-          ? "Пожалуйста, подождите..."
-          : locale === "en"
-            ? "Please wait a moment..."
-            : "Vui lòng chờ trong giây lát...",
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-
-    // Simulate sending delay
-    await new Promise((resolve) => setTimeout(resolve, 900));
-
-    // Step 3: SweetAlert2 Success Alert
-    await Swal.fire({
-      icon: "success",
-      title:
-        locale === "ru"
-          ? "Успешно отправлено!"
-          : locale === "en"
-            ? "Inquiry Sent Successfully!"
-            : "Gửi liên hệ thành công!",
-      text:
-        locale === "ru"
-          ? "Мы получили ваше обращение и ответим в течение 1–2 рабочих дней."
-          : locale === "en"
-            ? "We have received your message and will respond within 1–2 business days."
-            : "Chúng tôi đã tiếp nhận thông tin và sẽ phản hồi trong 01–02 ngày làm việc.",
-      confirmButtonColor: "#2563eb",
-      confirmButtonText:
-        locale === "ru" ? "Đóng / Закрыть" : locale === "en" ? "Close" : "Đóng",
-    });
-
-    // Reset Form
-    setName("");
-    setEmail("");
-    setMessage("");
-  }
-
-  return (
-    <section id="contact" className="scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-[1460px]">
-        {/* Section Header */}
-        <div className="mb-10 text-center sm:mb-12">
-          <div className="inline-flex items-center gap-2">
-            <span className="h-1 w-8 rounded-full bg-blue-600" />
-            <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
-              {copy.title}
-            </h2>
-            <span className="h-1 w-8 rounded-full bg-blue-600" />
-          </div>
-          <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-            {copy.subtitle}
-          </p>
-        </div>
-
-        {/* 2-Column Grid */}
-        <div className="grid gap-8 lg:grid-cols-2">
-          {/* Left Column: Contact Information */}
-          <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
-            <div>
-              {/* Card Header */}
-              <div>
-                <h3 className="text-xl font-black text-slate-900 sm:text-2xl">
-                  {copy.infoTitle}
-                </h3>
-                <div className="mt-1.5 h-0.5 w-8 rounded-full bg-blue-600" />
-              </div>
-
-              {/* Info Items List - Distributed to balance height */}
-              <div className="mt-6 flex flex-col justify-between gap-4.5 sm:gap-5">
-                <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
-                    <span className="material-symbols-outlined text-2xl">
-                      groups
-                    </span>
-                  </span>
-                  <div>
-                    <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
-                      {copy.coordinatorLabel}
-                    </span>
-                    <strong className="mt-1 block text-base font-bold text-slate-900 sm:text-lg">
-                      {copy.coordinatorValue}
-                    </strong>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
-                    <span className="material-symbols-outlined text-2xl">
-                      pin_drop
-                    </span>
-                  </span>
-                  <div>
-                    <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
-                      {copy.addressLabel}
-                    </span>
-                    <span className="mt-1 block text-sm font-semibold leading-relaxed text-slate-800 sm:text-base">
-                      {copy.addressValue}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
-                    <span className="material-symbols-outlined text-2xl">
-                      mail
-                    </span>
-                  </span>
-                  <div>
-                    <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
-                      {copy.supportLabel}
-                    </span>
-                    <a
-                      href={`mailto:${copy.supportValue}`}
-                      className="mt-1 block text-base font-bold text-blue-600 transition hover:text-blue-700 hover:underline sm:text-lg"
-                    >
-                      {copy.supportValue}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Contact Form */}
-          <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
-            <div>
-              {/* Card Header */}
-              <div>
-                <h3 className="text-xl font-black text-slate-900 sm:text-2xl">
-                  {copy.formTitle}
-                </h3>
-                <div className="mt-1.5 h-0.5 w-8 rounded-full bg-blue-600" />
-              </div>
-
-              {/* Form without default HTML5 validation */}
-              <form
-                noValidate
-                onSubmit={handleSubmit}
-                className="mt-6 flex flex-col justify-between gap-4"
-              >
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className="block text-sm font-bold text-slate-800 sm:text-base">
-                      {copy.nameLabel}
-                    </label>
-                    <input
-                      type="text"
-                      value={name}
-                      style={{ outline: "none", boxShadow: "none" }}
-                      onChange={(e) => {
-                        setName(e.target.value);
-                        if (errors.name) {
-                          setErrors((prev) => ({ ...prev, name: undefined }));
-                        }
-                      }}
-                      placeholder={copy.namePlaceholder}
-                      className={`mt-1.5 w-full rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 [outline:none] [box-shadow:none] focus:bg-white focus:[outline:none] focus:[box-shadow:none] focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 ${
-                        errors.name
-                          ? "border-red-500 bg-red-50/20 focus:border-red-600"
-                          : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
-                      }`}
-                    />
-                    {errors.name ? (
-                      <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
-                        {errors.name}
-                      </p>
-                    ) : null}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-800 sm:text-base">
-                      {copy.emailLabel}
-                    </label>
-                    <input
-                      type="email"
-                      value={email}
-                      style={{ outline: "none", boxShadow: "none" }}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                        if (errors.email) {
-                          setErrors((prev) => ({ ...prev, email: undefined }));
-                        }
-                      }}
-                      placeholder={copy.emailPlaceholder}
-                      className={`mt-1.5 w-full rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 [outline:none] [box-shadow:none] focus:bg-white focus:[outline:none] focus:[box-shadow:none] focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 ${
-                        errors.email
-                          ? "border-red-500 bg-red-50/20 focus:border-red-600"
-                          : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
-                      }`}
-                    />
-                    {errors.email ? (
-                      <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
-                        {errors.email}
-                      </p>
-                    ) : null}
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between">
-                    <label className="block text-sm font-bold text-slate-800 sm:text-base">
-                      {copy.messageLabel}
-                    </label>
-                    <span className="text-xs font-semibold text-slate-400">
-                      {message.length}/1000
-                    </span>
-                  </div>
-                  <textarea
-                    rows={6}
-                    maxLength={1000}
-                    value={message}
-                    style={{ outline: "none", boxShadow: "none" }}
-                    onChange={(e) => {
-                      setMessage(e.target.value);
-                      if (errors.message) {
-                        setErrors((prev) => ({ ...prev, message: undefined }));
-                      }
-                    }}
-                    placeholder={copy.messagePlaceholder}
-                    className={`mt-1.5 min-h-[175px] w-full resize-y rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 [outline:none] [box-shadow:none] focus:bg-white focus:[outline:none] focus:[box-shadow:none] focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 ${
-                      errors.message
-                        ? "border-red-500 bg-red-50/20 focus:border-red-600"
-                        : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
-                    }`}
-                  />
-                  {errors.message ? (
-                    <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
-                      {errors.message}
-                    </p>
-                  ) : null}
-                </div>
-
-                <button
-                  type="submit"
-                  className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 text-base font-bold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.99] sm:py-4 sm:text-lg"
-                >
-                  <span className="material-symbols-outlined text-2xl">
-                    mail
-                  </span>
-                  <span>{copy.sendBtn}</span>
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function BilateralGatewaySection({
-  copy,
-}: Readonly<{
-  copy: (typeof HOME_COPY)[Locale]["bilateralGateway"];
-}>) {
-  return (
-    <section
-      id="about-gateway"
-      className="relative isolate overflow-hidden bg-[#eef5fc] px-4 pt-16 pb-20 sm:px-6 sm:pt-20 sm:pb-24 lg:px-8 lg:pt-24 lg:pb-28"
-    >
-      {/* Background Banner Artwork */}
-      <Image
-        src="/images/home-bilateral-gateway.jpg"
-        alt=""
-        fill
-        sizes="100vw"
-        className="pointer-events-none select-none object-cover object-top"
-        aria-hidden="true"
-      />
-
-      {/* Gentle White-to-Blue Gradients ensuring maximum legibility while keeping visual depth */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(240,244,249,0.85)_0%,rgba(240,244,249,0.42)_35%,rgba(240,244,249,0.88)_78%,#f0f4f9_100%)]"
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 mx-auto max-w-[1460px]">
-        {/* Section Header */}
-        <div className="mx-auto mb-12 max-w-4xl text-center sm:mb-16">
-          <h2 className="font-serif text-3xl font-black tracking-tight text-[#071936] sm:text-4xl lg:text-5xl">
-            {copy.title}
-          </h2>
-
-          <p className="mx-auto mt-5 max-w-3xl text-lg font-medium leading-relaxed text-slate-700 sm:text-xl sm:leading-8">
-            {copy.subtitle}
-          </p>
-        </div>
-
-        {/* 2-Column Asymmetric Content Grid */}
-        <div className="grid gap-8 lg:grid-cols-12">
-          {/* Left Column: Legal Foundation & Coordination Anchor Card (5 cols) */}
-          <div className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-blue-200 bg-white/95 p-8 shadow-xl shadow-blue-900/10 backdrop-blur-md transition duration-200 hover:border-blue-300 lg:col-span-5 sm:p-10">
-            <div>
-              <div className="flex items-center justify-between gap-3">
-                <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-100/80 px-4 py-2 text-xs font-extrabold text-blue-800 sm:text-sm">
-                  <span
-                    className="size-2.5 rounded-full bg-blue-600"
-                    aria-hidden="true"
-                  />
-                  {copy.foundationBadge}
-                </span>
-                <span className="font-mono text-sm font-bold text-slate-400">
-                  EST. 2026
-                </span>
-              </div>
-
-              <h3 className="mt-7 font-serif text-3xl font-black leading-tight tracking-tight text-[#082352] sm:text-4xl lg:text-[2.5rem]">
-                {copy.foundationName}
-              </h3>
-
-              <div
-                className="my-6 h-px w-full bg-slate-200"
-                aria-hidden="true"
-              />
-
-              <p className="text-lg font-normal leading-relaxed text-slate-700 sm:text-xl">
-                {copy.foundationDesc}
-              </p>
-
-              {/* Key Institutional Highlights */}
-              <ul className="mt-8 space-y-4">
-                {copy.foundationHighlights.map((item, idx) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-4 rounded-2xl border border-blue-100 bg-blue-50/60 p-4 transition hover:bg-blue-50/90"
-                  >
-                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-blue-600 font-mono text-sm font-black text-white shadow-xs">
-                      {String(idx + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-base font-bold leading-snug text-slate-800 sm:text-lg">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Action Button at bottom of Left Card */}
-            <div className="mt-10 flex justify-center border-t border-slate-200 pt-6">
-              <Link
-                href="/about"
-                className="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-blue-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition duration-150 hover:-translate-y-0.5 hover:bg-blue-700 sm:w-auto sm:text-lg"
-              >
-                <span>{copy.learnMoreBtn}</span>
-                <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-          </div>
-
-          {/* Right Column: 4 Bilateral Gateway Pillars (7 cols, 2x2 Grid) */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:col-span-7">
-            {copy.pillars.map((pillar) => (
-              <div
-                key={pillar.num}
-                className="group relative flex flex-col justify-between rounded-3xl border border-blue-100 bg-white/95 p-8 shadow-lg shadow-blue-900/5 backdrop-blur-[2px] transition duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl sm:p-9"
-              >
-                <div>
-                  <h3 className="font-serif text-[1.7rem] font-black leading-tight tracking-tight text-[#082352] sm:text-3xl">
-                    {pillar.title}
-                  </h3>
-
-                  <div
-                    className="my-5 h-px w-full bg-slate-200/80"
-                    aria-hidden="true"
-                  />
-
-                  <p className="text-lg font-normal leading-relaxed text-slate-700 sm:text-xl sm:leading-9">
-                    {pillar.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function GuestHomeV2({
   isAuthenticated,
   workspaceHref,
@@ -2462,13 +1805,6 @@ export function GuestHomeV2({
   const { locale } = useLocale();
   const t = HOME_COPY[locale] ?? HOME_COPY.vi;
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [eventTab, setEventTab] = useState<"upcoming" | "past">("upcoming");
-
-  const filteredEvents = t.events.items.filter((event) =>
-    eventTab === "past" ? Boolean(event.isPast) : !event.isPast,
-  );
-  const displayedEvents =
-    filteredEvents.length > 0 ? filteredEvents : t.events.items;
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -2526,30 +1862,46 @@ export function GuestHomeV2({
                 aria-label={`${t.titleMain} ${t.country1} ${t.hyphen} ${t.country2}`}
                 className="overflow-visible font-sans font-black leading-[1.15] text-slate-300 drop-shadow-[0_3px_12px_rgba(0,0,0,0.38)]"
               >
-                <span className="block text-3xl sm:text-5xl lg:text-[62px]">
-                  {t.titleMain}
-                </span>
-                <span className="flex w-fit items-center justify-start gap-x-3 overflow-visible pb-2 pt-0 text-5xl leading-[1.15] sm:gap-x-6 sm:text-[80px] lg:text-[104px]">
-                  <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">
-                    {t.country1}
-                  </span>
-                  <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-medium text-transparent">
-                    {t.hyphen}
-                  </span>
-                  <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">
-                    {t.country2}
-                  </span>
-                </span>
+                {locale === "ru" ? (
+                  <>
+                    <span className="block bg-gradient-to-r from-white via-blue-300 to-red-500 bg-clip-text text-3xl text-transparent sm:text-5xl lg:text-[62px]">
+                      РОССИЙСКО-
+                    </span>
+                    <span className="block bg-gradient-to-r from-red-500 via-red-400 to-amber-300 bg-clip-text text-3xl text-transparent sm:text-5xl lg:text-[62px]">
+                      ВЬЕТНАМСКАЯ
+                    </span>
+                    <span className="block text-3xl sm:text-5xl lg:text-[62px]">
+                      ИНТЕЛЛЕКТУАЛЬНАЯ
+                    </span>
+                    <span className="block text-3xl sm:text-5xl lg:text-[62px]">
+                      СЕТЬ
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="block text-3xl sm:text-5xl lg:text-[62px]">
+                      {t.titleMain}
+                    </span>
+                    <span className="flex w-fit items-center justify-start gap-x-3 overflow-visible pb-2 pt-0 text-5xl leading-[1.15] sm:gap-x-6 sm:text-[80px] lg:text-[104px]">
+                      <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">
+                        {t.country1}
+                      </span>
+                      <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-medium text-transparent">
+                        {t.hyphen}
+                      </span>
+                      <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">
+                        {t.country2}
+                      </span>
+                    </span>
+                  </>
+                )}
               </h1>
             </div>
           </div>
         </section>
 
-        {/* ═══════════ SECTION 1: CỔNG KẾT NỐI HỢP TÁC SONG PHƯƠNG (VỀ CHÚNG TÔI) ═══════════ */}
-        <BilateralGatewaySection copy={t.bilateralGateway} />
-
         {/* ═══════════ SECTION 1: TIN TỨC (NEWS) ═══════════ */}
-        <section id="news" className="px-4 pt-14 pb-8 sm:px-6 lg:px-8">
+        <section id="news" className="px-4 pt-14 pb-6 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
             {/* Section Header */}
             <div className="relative mb-8 flex flex-col items-center justify-between gap-4 sm:mb-10 sm:flex-row">
@@ -2607,8 +1959,79 @@ export function GuestHomeV2({
           </div>
         </section>
 
-        {/* ═══════════ SECTION 2: SỰ KIỆN (EVENTS) ═══════════ */}
-        <section id="events" className="px-4 pt-8 pb-14 sm:px-6 lg:px-8">
+        {/* ═══════════ SECTION 2: HỆ SINH THÁI (ECOSYSTEM) ═══════════ */}
+        <section id="ecosystem" className="px-4 pt-6 pb-6 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-[1460px]">
+            {/* Section Header */}
+            <div className="relative mb-8 flex flex-col items-center justify-between gap-4 sm:mb-10 sm:flex-row">
+              <div className="inline-flex items-center gap-2.5">
+                <span className="h-1 w-8 rounded-full bg-blue-600" />
+                <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+                  {t.ecosystem.eyebrow}
+                </h2>
+              </div>
+              <Link
+                href="/ecosystem"
+                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:text-base"
+              >
+                <span>{t.ecosystem.cardCta}</span>
+              </Link>
+            </div>
+
+            {/* 4 Ecosystem Cards Grid */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {t.ecosystem.cards.map((card) => {
+                const toneBg =
+                  {
+                    blue: "bg-blue-50 text-blue-600",
+                    emerald: "bg-emerald-50 text-emerald-600",
+                    purple: "bg-purple-50 text-purple-600",
+                    amber: "bg-amber-50 text-amber-600",
+                  }[card.tone] ?? "bg-blue-50 text-blue-600";
+
+                return (
+                  <Link
+                    key={card.title}
+                    href={card.href}
+                    className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-6 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span
+                          className={`grid size-12 place-items-center rounded-xl ${toneBg} transition-transform duration-300 group-hover:scale-110`}
+                        >
+                          <span
+                            className="material-symbols-outlined text-2xl"
+                            aria-hidden="true"
+                          >
+                            {card.icon}
+                          </span>
+                        </span>
+                        <span className="text-xs font-bold text-slate-400 group-hover:text-blue-600 transition">
+                          →
+                        </span>
+                      </div>
+
+                      <h3 className="mt-5 text-lg font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600">
+                        {card.title}
+                      </h3>
+                      <p className="mt-2.5 line-clamp-3 text-sm leading-relaxed text-slate-600">
+                        {card.desc}
+                      </p>
+                    </div>
+
+                    <div className="mt-6 flex items-center gap-1.5 text-xs font-bold text-blue-600 transition group-hover:text-blue-800">
+                      <span>{t.ecosystem.cardCta}</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════ SECTION 3: SỰ KIỆN (EVENTS) ═══════════ */}
+        <section id="events" className="px-4 pt-6 pb-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
             {/* Section Header */}
             <div className="relative mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
@@ -2619,149 +2042,63 @@ export function GuestHomeV2({
                 </h2>
               </div>
               <Link
-                href="/opportunities"
+                href="/news?type=EVENT"
                 className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:text-base"
               >
                 <span>{t.events.viewAll}</span>
               </Link>
             </div>
 
-            {/* Filter Tabs */}
-            <div className="mb-8 inline-flex items-center gap-2 rounded-2xl border border-blue-200/80 bg-white/95 p-1.5 shadow-2xs">
-              <button
-                type="button"
-                onClick={() => setEventTab("upcoming")}
-                className={`inline-flex items-center gap-2 rounded-xl px-4.5 py-2.5 text-xs sm:text-sm font-bold transition-all duration-150 ${
-                  eventTab === "upcoming"
-                    ? "bg-blue-600 text-white shadow-xs"
-                    : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
-                }`}
-              >
-                <span
-                  className="material-symbols-outlined text-lg"
-                  aria-hidden="true"
-                >
-                  event
-                </span>
-                <span>{t.events.tabUpcoming}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setEventTab("past")}
-                className={`inline-flex items-center gap-2 rounded-xl px-4.5 py-2.5 text-xs sm:text-sm font-bold transition-all duration-150 ${
-                  eventTab === "past"
-                    ? "bg-blue-600 text-white shadow-xs"
-                    : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
-                }`}
-              >
-                <span
-                  className="material-symbols-outlined text-lg"
-                  aria-hidden="true"
-                >
-                  event_available
-                </span>
-                <span>{t.events.tabPast}</span>
-              </button>
-            </div>
-
-            {/* Events Cards Grid (Redesigned matching mockups) */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {displayedEvents.map((event) => (
-                <article
-                  key={event.id}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
-                >
-                  {/* Top Featured Image Banner */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                    <Image
-                      src={event.image}
-                      alt={event.title}
-                      fill
-                      unoptimized
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-60" />
-                  </div>
-
-                  {/* Card Content Body */}
-                  <div className="flex flex-1 flex-col justify-between p-6">
-                    <div>
-                      {/* Date Headline */}
-                      <div className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-blue-600">
-                        {event.date} {event.month} · {event.year}
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="mt-2.5 line-clamp-2 min-h-14 text-lg font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:min-h-16 sm:text-xl">
-                        {event.title}
-                      </h3>
-
-                      {/* Location & Time */}
-                      <div className="mt-4 grid min-h-14 content-start gap-2 text-xs font-medium text-slate-600 sm:text-sm">
-                        <span className="inline-flex items-center gap-1.5">
-                          <span
-                            className="material-symbols-outlined text-base text-slate-400"
-                            aria-hidden="true"
-                          >
-                            location_on
-                          </span>
-                          <span>{event.place}</span>
-                        </span>
-                        <span className="inline-flex items-center gap-1.5 text-slate-500">
-                          <span
-                            className="material-symbols-outlined text-base text-slate-400"
-                            aria-hidden="true"
-                          >
-                            schedule
-                          </span>
-                          <span>{event.time}</span>
-                        </span>
-                      </div>
+            {/* Event articles */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {OFFICIAL_NEWS.filter((item) => item.contentType === "EVENT").map(
+                (item) => (
+                  <Link
+                    key={item.id}
+                    href={newsArticleHref(item)}
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                  >
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          unoptimized
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : null}
                     </div>
-
-                    {/* Bottom Action Link */}
-                    <div className="mt-6 border-t border-slate-100 pt-4">
-                      <Link
-                        href={`/opportunities?event=${event.id}`}
-                        className="group/link inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 decoration-2 underline-offset-4 transition-colors duration-150 hover:text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:text-sm"
-                      >
-                        <span>
-                          {event.isPast
-                            ? locale === "ru"
-                              ? "Смотреть итоги"
-                              : locale === "en"
-                                ? "View summary"
-                                : "Xem tổng kết"
-                            : t.events.registerBtn}
-                        </span>
+                    <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
+                      <h3 className="line-clamp-2 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-lg">
+                        {item.title}
+                      </h3>
+                      <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-slate-500">
                         <span
-                          className="transition-transform duration-200 group-hover/link:translate-x-1"
+                          className="material-symbols-outlined text-sm text-slate-400"
                           aria-hidden="true"
                         >
-                          →
+                          calendar_today
                         </span>
-                      </Link>
+                        <span>{item.date}</span>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              ))}
+                  </Link>
+                ),
+              )}
             </div>
           </div>
         </section>
 
-        {/* ═══════════ SECTION 3: SƠ ĐỒ NGŨ GIÁC HỆ SINH THÁI ═══════════ */}
+        {/* ═══════════ SECTION 4: NHỮNG CON SỐ (SƠ ĐỒ NGŨ GIÁC) ═══════════ */}
         <NetworkStatsInfographic
           stats={t.stats}
           titleMain={t.titleMain}
           country1={t.country1}
           hyphen={t.hyphen}
           country2={t.country2}
-          sectionTitle={t.ecosystem.title}
         />
-
-        {/* ═══════════ SECTION 4: KẾT NỐI & LIÊN HỆ (CONNECT & CONTACT) ═══════════ */}
-        <GuestContactSection copy={t.contactSection} locale={locale} />
       </main>
 
       <GuestPublicFooter copy={t} />

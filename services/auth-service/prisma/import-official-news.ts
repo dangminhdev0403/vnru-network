@@ -12,6 +12,13 @@ type OfficialArticle = {
   image: string | null;
   body: string[];
   sources: string[];
+  contentType?:
+    | 'ARTICLE'
+    | 'EVENT'
+    | 'ANNOUNCEMENT'
+    | 'PROJECT'
+    | 'OPPORTUNITY'
+    | 'PUBLICATION';
 };
 
 const categories = {
@@ -48,6 +55,7 @@ async function main() {
         where: { id: existing?.id ?? articleId(item.id) },
         update: {
           category: categories[item.category],
+          contentType: item.contentType ?? 'ARTICLE',
           coverImageUrl: item.image,
           sourceUrls: item.sources,
           status: 'PUBLISHED',
@@ -55,7 +63,7 @@ async function main() {
         create: {
           id: articleId(item.id),
           category: categories[item.category],
-          contentType: 'ARTICLE',
+          contentType: item.contentType ?? 'ARTICLE',
           coverImageUrl: item.image,
           sourceUrls: item.sources,
           status: 'PUBLISHED',

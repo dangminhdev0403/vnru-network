@@ -82,7 +82,7 @@ const headerCopy: Record<
       "/admin/access/permissions": "Каталог прав",
       "/admin/access/logs": "Журнал доступа",
     },
-    defaultTitle: "Сеть знаний Россия – Вьетнам",
+    defaultTitle: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
   },
 };
 

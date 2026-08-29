@@ -97,7 +97,8 @@ export const OFFICIAL_NEWS = [
     ],
     "sources": [
       "https://events.rbc.ru/event/68dd0ebd9a79476d9da995ec#info"
-    ]
+    ],
+    "contentType": "EVENT"
   },
   {
     "id": 4,
@@ -118,7 +119,8 @@ export const OFFICIAL_NEWS = [
     ],
     "sources": [
       "https://intermol.su/news/prodolzhaetsya-nabor-uchastnikov-na-mezhdunarodnuyu-shkolu-studturizma-vo-vetname/"
-    ]
+    ],
+    "contentType": "OPPORTUNITY"
   },
   {
     "id": 5,
@@ -275,7 +277,8 @@ export const OFFICIAL_NEWS = [
     ],
     "sources": [
       "https://www.atomic-energy.ru/news/2026/08/27/168076"
-    ]
+    ],
+    "contentType": "ANNOUNCEMENT"
   },
   {
     "id": 12,
@@ -435,7 +438,8 @@ export const OFFICIAL_NEWS = [
       "“Do đó, lợi thế cạnh tranh của Viễn Đông và Bắc Cực không được xác định bởi mức độ số hóa hiện tại, mà bởi cơ hội trở thành nơi thử nghiệm cho việc phát triển và thử nghiệm các công nghệ trong nước tập trung vào làm việc trong điều kiện khắc nghiệt. Việc triển khai thành công mô hình này không chỉ thúc đẩy phát triển công nghệ của chính vùng vĩ mô mà còn tạo ra các giải pháp áp dụng cho các khu vực khó tiếp cận khác,” các tác giả của bản tóm tắt kết luận.",
       "Tin Giáo dục – Đào tạo"
     ],
-    "sources": []
+    "sources": [],
+    "contentType": "PUBLICATION"
   },
   {
     "id": 18,
@@ -585,7 +589,8 @@ export const OFFICIAL_NEWS = [
     ],
     "sources": [
       "https://science.mail.ru/articles/42707-kvantovyj-proekt-rosatoma/"
-    ]
+    ],
+    "contentType": "PROJECT"
   },
   {
     "id": 21,
@@ -609,7 +614,8 @@ export const OFFICIAL_NEWS = [
     ],
     "sources": [
       "https://t.me/minobrnaukiofficial/19274?single"
-    ]
+    ],
+    "contentType": "ANNOUNCEMENT"
   },
   {
     "id": 22,
@@ -730,7 +736,8 @@ export const OFFICIAL_NEWS = [
     ],
     "sources": [
       "https://m.vk.com/wall-46508610_35938"
-    ]
+    ],
+    "contentType": "EVENT"
   },
   {
     "id": 28,
@@ -998,7 +1005,8 @@ export const OFFICIAL_NEWS = [
     ],
     "sources": [
       "https://t.me/minobrnaukiofficial/20016"
-    ]
+    ],
+    "contentType": "OPPORTUNITY"
   }
 ] satisfies OfficialNewsArticle[];
 

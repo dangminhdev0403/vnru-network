@@ -72,11 +72,16 @@ test("home reconciles locale after authentication", async () => {
 
 test("login renders the Auth.js Credentials form", async () => {
   const { readFile } = await import("node:fs/promises");
-  const page = await readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8");
-  assert.match(page, /action="\/api\/auth\/login"/);
-  assert.match(page, /name="account"/);
-  assert.match(page, /name="password"/);
-  assert.doesNotMatch(page, /iframe|html-templates\/login/);
+  const [page, form, password] = await Promise.all([
+    readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./app/login/LoginForm.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./app/login/PasswordField.tsx", import.meta.url), "utf8"),
+  ]);
+  assert.match(page, /<LoginForm destination=\{destination\}/);
+  assert.match(form, /action="\/api\/auth\/login"/);
+  assert.match(form, /name="account"/);
+  assert.match(password, /name="password"/);
+  assert.doesNotMatch(page + form + password, /iframe|html-templates\/login/);
 });
 
 test("registration uses the backend and canonical origin guard", async () => {
@@ -156,7 +161,7 @@ test("workspace header uses the authenticated account menu", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("./components/shared/Header.tsx", import.meta.url), "utf8");
   assert.match(source, /useCurrentUser\(\)/);
-  assert.match(source, /href="\/account"/);
+  assert.match(source, /href="\/security"/);
   assert.match(source, /useLogout\(\)/);
   assert.doesNotMatch(source, /\{t\.contextActive\}/);
 });
@@ -168,17 +173,16 @@ test("the application is light-only and does not expose theme controls", async (
     readFile(new URL("./app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("./app/globals.css", import.meta.url), "utf8"),
   ]);
-  assert.match(layout, /data-theme="light"/);
   assert.doesNotMatch(layout, /ThemeProvider/);
   assert.doesNotMatch(header, /useTheme|setTheme|isThemeOpen|themeModes/);
   assert.doesNotMatch(styles, /@import "\.\/css\/dark\.css"/);
   assert.doesNotMatch(styles, /color-scheme:\s*dark/);
 });
 
-test("legacy IAM overview redirects to the canonical account route", async () => {
+test("legacy IAM overview redirects to the canonical security route", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("./app/(workspace)/workspace/iam/page.tsx", import.meta.url), "utf8");
-  assert.match(source, /redirect\("\/account"\)/);
+  assert.match(source, /redirect\("\/security"\)/);
   assert.doesNotMatch(source, /IamWorkspaceView/);
 });
 

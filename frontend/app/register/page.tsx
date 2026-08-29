@@ -70,7 +70,7 @@ const copy: Record<
     note: "Lĩnh vực quan tâm",
     notePlaceholder: "Mô tả ngắn lĩnh vực hợp tác bạn quan tâm",
     submit: "Tạo tài khoản",
-    submitting: "Đang gửi…",
+    submitting: "Đang tạo tài khoản, xin chờ...",
     success: "Tài khoản bạn đọc đã được tạo. Bạn có thể đăng nhập ngay.",
     error:
       "Không thể gửi yêu cầu. Vui lòng kiểm tra thông tin hoặc thử lại sau.",
@@ -86,7 +86,7 @@ const copy: Record<
     },
   },
   ru: {
-    brand: "Сеть знаний Россия – Вьетнам",
+    brand: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
     home: "Вернуться на главную",
     storyTitle: "Единая сеть знаний",
     storyAccent: "Больше",
@@ -107,7 +107,7 @@ const copy: Record<
     note: "Область интересов",
     notePlaceholder: "Кратко опишите интересующее направление сотрудничества",
     submit: "Создать аккаунт",
-    submitting: "Отправка…",
+    submitting: "Создание аккаунта, пожалуйста, подождите...",
     success: "Учётная запись читателя создана. Теперь вы можете войти.",
     error:
       "Не удалось отправить заявку. Проверьте данные или повторите попытку позже.",
@@ -145,7 +145,7 @@ const copy: Record<
     notePlaceholder:
       "Briefly describe the collaboration area you are interested in",
     submit: "Create account",
-    submitting: "Submitting…",
+    submitting: "Creating account, please wait...",
     success: "Your reader account was created. You can sign in now.",
     error:
       "Unable to submit the request. Check your details or try again later.",
@@ -319,13 +319,14 @@ export default function RegisterPage() {
                 name="fullName"
                 type="text"
                 autoComplete="name"
+                disabled={status === "submitting"}
                 aria-required="true"
                 aria-invalid={Boolean(fieldErrors.fullName)}
                 aria-describedby={
                   fieldErrors.fullName ? "fullName-error" : undefined
                 }
                 placeholder={t.fullNamePlaceholder}
-                className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none ${fieldErrors.fullName ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
+                className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none disabled:bg-slate-50 disabled:text-slate-500 ${fieldErrors.fullName ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
               />
               {fieldErrors.fullName ? (
                 <span
@@ -345,11 +346,12 @@ export default function RegisterPage() {
                 name="email"
                 type="email"
                 autoComplete="email"
+                disabled={status === "submitting"}
                 aria-required="true"
                 aria-invalid={Boolean(fieldErrors.email)}
                 aria-describedby={fieldErrors.email ? "email-error" : undefined}
                 placeholder="name@organization.org"
-                className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none ${fieldErrors.email ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
+                className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none disabled:bg-slate-50 disabled:text-slate-500 ${fieldErrors.email ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
               />
               {fieldErrors.email ? (
                 <span
@@ -367,10 +369,11 @@ export default function RegisterPage() {
                 name="password"
                 type="password"
                 autoComplete="new-password"
+                disabled={status === "submitting"}
                 aria-required="true"
                 aria-invalid={Boolean(fieldErrors.password)}
                 aria-describedby={fieldErrors.password ? "password-error" : undefined}
-                className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none ${fieldErrors.password ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
+                className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none disabled:bg-slate-50 disabled:text-slate-500 ${fieldErrors.password ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
               />
               {fieldErrors.password ? (
                 <span id="password-error" className="mt-2 block text-sm font-semibold text-red-700">
@@ -385,10 +388,11 @@ export default function RegisterPage() {
                 name="confirmPassword"
                 type="password"
                 autoComplete="new-password"
+                disabled={status === "submitting"}
                 aria-required="true"
                 aria-invalid={Boolean(fieldErrors.confirmPassword)}
                 aria-describedby={fieldErrors.confirmPassword ? "confirmPassword-error" : undefined}
-                className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none ${fieldErrors.confirmPassword ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
+                className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none disabled:bg-slate-50 disabled:text-slate-500 ${fieldErrors.confirmPassword ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
               />
               {fieldErrors.confirmPassword ? (
                 <span id="confirmPassword-error" className="mt-2 block text-sm font-semibold text-red-700">
@@ -399,9 +403,36 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="min-h-12 w-full rounded-xl bg-blue-700 px-5 text-base font-bold text-white shadow-[0_16px_34px_-16px_rgba(37,99,235,.9)] transition hover:bg-blue-800 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-wait disabled:opacity-60 sm:col-span-2"
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-xl bg-blue-700 px-5 text-base font-bold text-white shadow-[0_16px_34px_-16px_rgba(37,99,235,.9)] transition hover:bg-blue-800 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-wait disabled:opacity-75 sm:col-span-2"
             >
-              {status === "submitting" ? t.submitting : t.submit}
+              {status === "submitting" ? (
+                <>
+                  <svg
+                    className="size-5 animate-spin motion-reduce:animate-none text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  <span>{t.submitting}</span>
+                </>
+              ) : (
+                t.submit
+              )}
             </button>
           </form>
 

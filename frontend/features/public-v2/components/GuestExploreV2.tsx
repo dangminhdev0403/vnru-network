@@ -6,11 +6,9 @@ import { useLocale } from "@/core/i18n/locale";
 import { newsArticleHref, OFFICIAL_NEWS, type OfficialNewsArticle } from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { HOME_COPY } from "./GuestHomeV2";
-import { GuestNewsAdvancedFilters } from "./GuestNewsAdvancedFilters";
 import {
   DEFAULT_NEWS_ADVANCED_FILTERS,
-  GuestNewsFilterNav,
-  newsFilterHref,
+  NEWS_CATEGORIES,
   type NewsAdvancedFilters,
   type NewsCategory,
 } from "./GuestNewsFilterNav";
@@ -28,8 +26,7 @@ const TEXT = {
     login: "Đăng nhập",
     latest: "Tin mới nhất",
     featured: "Tin tức nổi bật",
-    stream: "Dòng tin liên tục",
-    streamLead: "Cập nhật liên tục những tin tức mới nhất từ các chuyên mục",
+    stream: "Tin tức",
     search: "Tìm kiếm tin tức...",
     searchSubmit: "Tìm kiếm",
     viewAll: "Xem tất cả",
@@ -58,8 +55,7 @@ const TEXT = {
     login: "Sign in",
     latest: "Latest news",
     featured: "Featured news",
-    stream: "Continuous news",
-    streamLead: "Continuously updated news from the network's key categories",
+    stream: "News",
     search: "Search news...",
     searchSubmit: "Search",
     viewAll: "View all",
@@ -88,8 +84,7 @@ const TEXT = {
     login: "Войти",
     latest: "Последние новости",
     featured: "Главные материалы",
-    stream: "Лента новостей",
-    streamLead: "Постоянно обновляемые новости по основным направлениям сети",
+    stream: "Новости",
     search: "Поиск новостей...",
     searchSubmit: "Найти",
     viewAll: "Все материалы",
@@ -163,6 +158,22 @@ function SmallRow({ item }: { item: NewsItem }) {
           {item.summary}
         </p>
       </div>
+    </Link>
+  );
+}
+
+function TextRow({ item }: { item: NewsItem }) {
+  return (
+    <Link
+      href={newsArticleHref(item)}
+      className="block border-b border-slate-200 py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+    >
+      <h3 className="line-clamp-2 text-lg font-bold leading-7 text-slate-900 hover:text-blue-700 sm:text-xl">
+        {item.title}
+      </h3>
+      <p className="mt-1.5 line-clamp-2 text-base leading-6 text-slate-500">
+        {item.summary}
+      </p>
     </Link>
   );
 }
@@ -244,36 +255,31 @@ export function GuestExploreV2({
 }) {
   const { locale } = useLocale();
   const t = TEXT[locale] ?? TEXT.vi;
-  const [activeCategory, setActiveCategory] =
-    useState<NewsCategory>(initialCategory);
-  const [advancedFilters, setAdvancedFilters] = useState<NewsAdvancedFilters>(
-    () => ({
-      ...initialAdvancedFilters,
-      contentTypes: [...initialAdvancedFilters.contentTypes],
-    }),
+  const activeCategory = initialCategory;
+  const advancedFilters = initialAdvancedFilters;
+  const query = initialQuery;
+  const latest = initialArticles.slice(0, 4);
+  const featured = initialArticles.slice(4, 8);
+  const spotlight = featured;
+  const availableCategories = NEWS_CATEGORIES.filter(
+    (category) =>
+      category === "all" ||
+      initialArticles.some((article) => article.category === category),
   );
-  const [query, setQuery] = useState(initialQuery);
-  const latest = initialArticles.slice(0, 5);
-  const featured = initialArticles.slice(5, 9);
+  const [streamCategory, setStreamCategory] = useState<NewsCategory>("all");
+  const [streamPage, setStreamPage] = useState(1);
+  const streamArticles =
+    streamCategory === "all"
+      ? initialArticles
+      : initialArticles.filter((article) => article.category === streamCategory);
+  const streamPageCount = Math.max(1, Math.ceil(streamArticles.length / 10));
+  const paginatedStreamArticles = streamArticles.slice(
+    (streamPage - 1) * 10,
+    streamPage * 10,
+  );
   const [spotlightIndex, setSpotlightIndex] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
   const slidingTimerRef = useRef<number | null>(null);
-  const selectCategory = (category: NewsCategory) => {
-    setActiveCategory(category);
-    window.history.replaceState(
-      null,
-      "",
-      newsFilterHref(category, query, advancedFilters),
-    );
-  };
-  const updateQuery = (nextQuery: string) => {
-    setQuery(nextQuery);
-    window.history.replaceState(
-      null,
-      "",
-      newsFilterHref(activeCategory, nextQuery, advancedFilters),
-    );
-  };
 
   const changeSpotlight = (nextIndex: number | ((curr: number) => number)) => {
     setIsSliding(true);
@@ -332,14 +338,14 @@ export function GuestExploreV2({
 
   useEffect(() => {
     const timer = window.setInterval(
-      () => changeSpotlight((current) => (current + 1) % latest.length),
+      () => changeSpotlight((current) => (current + 1) % spotlight.length),
       SPOTLIGHT_INTERVAL_MS,
     );
     return () => {
       window.clearInterval(timer);
       if (slidingTimerRef.current) window.clearTimeout(slidingTimerRef.current);
     };
-  }, [latest.length]);
+  }, [spotlight.length]);
 
   return (
     <div className="min-h-screen bg-white text-slate-950">
@@ -348,37 +354,12 @@ export function GuestExploreV2({
       <main className="mx-auto max-w-[1460px] px-4 py-9 sm:px-6 lg:px-8">
         <GuestNewsMasthead />
 
-        <GuestNewsFilterNav
-          activeCategory={activeCategory}
-          categoryLabels={t.categories}
-          clearSearchLabel="Xóa tìm kiếm"
-          query={query}
-          searchPlaceholder={t.search}
-          searchSubmitLabel={t.searchSubmit}
-          onCategoryChange={selectCategory}
-          onQueryChange={updateQuery}
-          filterControl={
-            <GuestNewsAdvancedFilters
-
-              filters={advancedFilters}
-              onApply={(filters) =>
-                window.history.replaceState(
-                  null,
-                  "",
-                  newsFilterHref(activeCategory, query, filters),
-                )
-              }
-              onFiltersChange={setAdvancedFilters}
-              triggerLabel={t.allCategories}
-            />
-          }
-        />
 
         {!categoryMode ? (
           <>
             <section className="grid gap-8 lg:grid-cols-[1.35fr_.92fr]">
               <article
-                className="relative min-h-[520px] overflow-hidden rounded-2xl bg-slate-950 text-white"
+                className="relative min-h-[360px] overflow-hidden rounded-2xl bg-slate-950 text-white lg:min-h-0"
                 aria-roledescription="carousel"
                 aria-label={t.spotlight}
               >
@@ -386,7 +367,7 @@ export function GuestExploreV2({
                   className="absolute inset-0 flex transition-transform duration-[1500ms] ease-in-out motion-reduce:transition-none"
                   style={{ transform: `translateX(-${spotlightIndex * 100}%)` }}
                 >
-                  {latest.map((item, index) => (
+                  {spotlight.map((item, index) => (
                     <Link
                       key={item.title}
                       href={newsArticleHref(item)}
@@ -401,33 +382,28 @@ export function GuestExploreV2({
                       />
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,18,45,.02)_12%,rgba(3,18,45,.18)_48%,rgba(2,14,35,.94)_100%)]" />
                       <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8">
-                        <span className="inline-flex min-h-8 items-center rounded-lg bg-blue-600 px-3 text-xs font-black uppercase">
+                        <span className="mb-3 inline-flex rounded-full bg-blue-600 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
                           {t.spotlight}
                         </span>
-                        <h2 className="mt-4 max-w-4xl text-3xl font-black leading-[1.15] tracking-[-0.04em] sm:text-4xl">
+                        <h2 className="max-w-4xl text-3xl font-black leading-[1.15] tracking-[-0.04em] sm:text-4xl">
                           {item.title}
                         </h2>
-                        <p className="mt-4 max-w-3xl text-base leading-7 text-white/90 sm:text-lg">
+                        <p className="mt-4 line-clamp-2 max-w-3xl text-base leading-7 text-white/90 sm:text-lg">
                           {item.summary}
                         </p>
-                        <div className="mt-5 flex items-center gap-2 text-xs font-semibold text-white/85">
-                          <span>{t.categories[item.category]}</span>
-                          <span>•</span>
-                          <span>{item.date}</span>
-                        </div>
                       </div>
                     </Link>
                   ))}
                 </div>
                 <div className="absolute bottom-6 right-6 z-20 flex items-center gap-1.5">
-                  {latest.map((item, index) => {
+                  {spotlight.map((item, index) => {
                     const isActive = index === spotlightIndex;
                     return (
                       <button
                         key={item.title}
                         type="button"
                         onClick={() => changeSpotlight(index)}
-                        aria-label={`${index + 1} / ${latest.length}`}
+                        aria-label={`${index + 1} / ${spotlight.length}`}
                         aria-current={isActive ? "true" : undefined}
                         className="group grid h-7 w-7 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                       >
@@ -488,6 +464,76 @@ export function GuestExploreV2({
                   </Link>
                 ))}
               </div>
+            </section>
+
+            <section id="news-stream" className="mt-14 scroll-mt-24">
+              <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h2 className="text-xl font-black uppercase text-blue-600 sm:text-2xl">
+                    {t.stream}
+                  </h2>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <label className="sr-only" htmlFor="news-stream-category">
+                    {t.allCategories}
+                  </label>
+                  <select
+                    id="news-stream-category"
+                    value={streamCategory}
+                    onChange={(event) => {
+                      setStreamCategory(event.target.value as NewsCategory);
+                      setStreamPage(1);
+                    }}
+                    className="h-11 rounded-xl border border-blue-200 bg-white px-4 text-sm font-bold text-slate-700 outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+                  >
+                    {availableCategories.map((category) => (
+                      <option key={category} value={category}>
+                        {t.categories[category]}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="inline-flex h-11 items-center rounded-xl bg-slate-100 px-4 text-sm font-bold text-slate-700">
+                    {t.newest}
+                  </span>
+                  <a
+                    href="#news-stream"
+                    className="inline-flex h-11 items-center rounded-xl bg-slate-100 px-4 text-sm font-bold text-slate-700 hover:bg-slate-200"
+                  >
+                    ↑ {t.top}
+                  </a>
+                </div>
+              </div>
+              <div className="grid gap-x-10 lg:grid-cols-2">
+                {paginatedStreamArticles.map((item) => (
+                  <TextRow key={item.id} item={item} />
+                ))}
+              </div>
+              {streamPageCount > 1 ? (
+                <nav
+                  aria-label="Phân trang tin tức"
+                  className="mt-8 flex items-center justify-center gap-3"
+                >
+                  <button
+                    type="button"
+                    disabled={streamPage === 1}
+                    onClick={() => setStreamPage((page) => page - 1)}
+                    className="rounded-lg border border-slate-200 px-4 py-2 text-base font-bold text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    ‹
+                  </button>
+                  <span className="text-base font-semibold text-slate-600">
+                    {streamPage} / {streamPageCount}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={streamPage === streamPageCount}
+                    onClick={() => setStreamPage((page) => page + 1)}
+                    className="rounded-lg border border-slate-200 px-4 py-2 text-base font-bold text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    ›
+                  </button>
+                </nav>
+              ) : null}
             </section>
           </>
         ) : (

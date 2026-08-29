@@ -14,6 +14,14 @@ test("news is canonical and legacy explore redirects", async () => {
   const legacyExplore = await readFile("app/explore/page.tsx", "utf8");
   assert.match(legacyExplore, /permanentRedirect\("\/news"\)/);
 
+  const [opportunities, knowledge] = await Promise.all([
+    readFile("app/opportunities/page.tsx", "utf8"),
+    readFile("app/knowledge/page.tsx", "utf8"),
+  ]);
+  assert.match(opportunities, /redirect\("\/news\?type=OPPORTUNITY"\)/);
+  assert.match(knowledge, /redirect\("\/news\?type=PUBLICATION"\)/);
+  assert.doesNotMatch(opportunities + knowledge, /requireMemberSession|Guest(?:Opportunities|Knowledge)V2/);
+
   const article = await readFile("features/public-v2/components/GuestNewsArticleV2.tsx", "utf8");
   assert.doesNotMatch(article, /href="\/explore"/);
   assert.match(article, /href="\/news"/);
@@ -22,7 +30,7 @@ test("news is canonical and legacy explore redirects", async () => {
   assert.match(article, /<GuestNewsAdvancedFilters/);
   assert.match(article, /newsFilterHref\(\s*article\.category,\s*filterQuery,\s*nextFilters/s);
   assert.match(article, /searchSubmitLabel=\{filters\.searchSubmit\}/);
-  assert.match(news, /searchSubmitLabel=\{t\.searchSubmit\}/);
+  assert.doesNotMatch(news, /searchSubmitLabel=\{t\.searchSubmit\}|<GuestNewsFilterNav/);
   assert.match(news, /contentTypes\.includes\(article\.contentType \?\? "ARTICLE"\)/);
   assert.doesNotMatch(news, /content\.includes\("sự kiện"\)/);
   const filter = await readFile("features/public-v2/components/GuestNewsFilterNav.tsx", "utf8");
@@ -62,7 +70,27 @@ test("public news uses the official DOCX-derived catalog", async () => {
   assert.match(data, /Mở rộng hợp tác khoa học, giáo dục vì phát triển Việt - Nga/);
   assert.match(data, /Generated from the official DOCX files in \/Tin tức/);
   assert.match(data, /return `\/news\/\$\{article\.id\}\/\$\{slug \|\| "tin-tuc"\}`/);
+  const catalog = JSON.parse(data.match(/export const OFFICIAL_NEWS = (\[[\s\S]*\]) satisfies OfficialNewsArticle\[\];/)?.[1] ?? "[]");
+  for (const [contentType, count] of [["EVENT", 2], ["OPPORTUNITY", 2], ["ANNOUNCEMENT", 2], ["PROJECT", 1], ["PUBLICATION", 1]]) {
+    assert.equal(catalog.filter((item) => item.contentType === contentType).length, count);
+  }
   assert.match(explore, /OFFICIAL_NEWS/);
+  assert.match(explore, /const latest = initialArticles\.slice\(0, 4\)/);
+  assert.match(explore, /const featured = initialArticles\.slice\(4, 8\);[\s\S]*const spotlight = featured/);
+  assert.match(explore, /\{t\.spotlight\}/);
+  assert.match(explore, /const availableCategories = NEWS_CATEGORIES\.filter/);
+  assert.match(explore, /id="news-stream"[\s\S]*paginatedStreamArticles\.map/);
+  assert.match(explore, /t\.categories\[category\]/);
+  assert.match(explore, /stream: "Tin tức"/);
+  assert.match(explore, /<TextRow key=\{item\.id\} item=\{item\}/);
+  assert.doesNotMatch(explore, /streamLead|<TextRow[\s\S]{0,300}<NewsImage/);
+  assert.match(explore, /Math\.ceil\(streamArticles\.length \/ 10\)/);
+  assert.match(explore, /aria-label="Phân trang tin tức"/);
+  assert.doesNotMatch(explore, /<GuestNewsFilterNav|<GuestNewsAdvancedFilters/);
+  assert.match(explore, /min-h-\[360px\][^"]*lg:min-h-0/);
+  assert.match(explore, /className="h-44 w-full"/);
+  assert.doesNotMatch(explore, /text-white\/85[\s\S]*?\{item\.date\}/);
+  assert.match(explore, /line-clamp-2 max-w-3xl[\s\S]*?\{item\.summary\}/);
   assert.match(article, /articles: OfficialNewsArticle\[\]/);
   assert.match(article, /article\.body\.map/);
   assert.match(article, /const contentType = article\.contentType \?\? "ARTICLE"/);

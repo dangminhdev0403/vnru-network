@@ -5,7 +5,10 @@ const keys = Object.keys(translations.vi);
 assert.deepEqual(Object.keys(translations.en), keys);
 assert.deepEqual(Object.keys(translations.ru), keys);
 assert.equal(translations.en["Mạng lưới tri thức"], "Knowledge network");
-assert.equal(translations.ru["Mạng lưới tri thức"], "Сеть знаний");
+assert.equal(
+  translations.ru["Mạng lưới tri thức"],
+  "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
+);
 assert.equal(translations.en["Đăng nhập →"], "Sign in →");
 assert.equal(translations.ru["Đăng nhập →"], "Войти →");
 assert.equal(translations.en["Vào không gian làm việc"], "Open workspace");

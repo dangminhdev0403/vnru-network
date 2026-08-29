@@ -30,6 +30,10 @@ test("content administration reuses admin chrome with its own navigation", async
   ]);
   assert.match(contentLayout, /AdminShell area="content"/);
   assert.match(contentSidebar, /href: "\/workspace\/news"/);
+  for (const view of ["all", "featured", "ANNOUNCEMENT", "EVENT", "PROJECT", "OPPORTUNITY", "new"]) {
+    assert.match(contentSidebar, new RegExp(`view=${view}`));
+  }
+  assert.match(studio, /searchParams\.get\("view"\)/);
   assert.doesNotMatch(contentSidebar, /\/admin\/access/);
   assert.match(studio, /Trung tâm nội dung/);
   assert.match(studio, /Danh sách bài viết/);
@@ -39,6 +43,10 @@ test("content administration reuses admin chrome with its own navigation", async
     assert.match(studio, new RegExp(field));
   }
   assert.match(studio, /type="datetime-local"/);
+  assert.match(studio, /Nhãn thao tác[\s\S]*Liên kết thao tác/);
+  assert.match(studio, /window\.Translator/);
+  assert.match(studio, /sourceLanguage: "vi", targetLanguage: "ru"/);
+  assert.match(studio, /Dịch từ tiếng Việt/);
   assert.doesNotMatch(studio, /localStorage|translate\.googleapis|mymemory/);
   assert.doesNotMatch(iamLayout, /area="content"/);
   assert.doesNotMatch(iamSidebar, /\/workspace\/news/);
@@ -72,7 +80,7 @@ test("authenticated shell contains one member workspace and canonical IAM bridge
   assert.doesNotMatch(proxy, /target\.pathname = resolveLandingPath/);
 });
 
-test("unified workspace presents member-only content access without fake workflow state", async () => {
+test("unified workspace links canonical public content without fake workflow state", async () => {
   const [dashboard, knowledge, experts, opportunities] = await Promise.all([
     read("features/workspace/components/UnifiedWorkspaceDashboard.tsx"),
     read("app/knowledge/page.tsx"),
@@ -86,14 +94,7 @@ test("unified workspace presents member-only content access without fake workflo
   for (const href of ["/news", "/knowledge", "/experts", "/opportunities"]) {
     assert.match(dashboard, new RegExp(`href: "${href}"`));
   }
-  for (const [source, returnTo] of [
-    [knowledge, "/knowledge"],
-    [experts, "/experts"],
-    [opportunities, "/opportunities"],
-  ]) {
-    assert.match(
-      source,
-      new RegExp(`requireMemberSession\\(\"${returnTo}\"\\)`),
-    );
-  }
+  assert.match(knowledge, /redirect\("\/news\?type=PUBLICATION"\)/);
+  assert.match(opportunities, /redirect\("\/news\?type=OPPORTUNITY"\)/);
+  assert.match(experts, /requireMemberSession\("\/experts"\)/);
 });

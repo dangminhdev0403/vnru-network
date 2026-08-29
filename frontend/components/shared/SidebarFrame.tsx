@@ -65,7 +65,7 @@ const copy: Record<
     navigation: "Navigation",
   },
   ru: {
-    brand: "Сеть знаний Россия – Вьетнам",
+    brand: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
     currentContext: "Текущий контекст",
     authenticated: "Защищённое пространство",
     active: "Сессия активна",

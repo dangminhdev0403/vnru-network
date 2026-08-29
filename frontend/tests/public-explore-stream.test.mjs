@@ -37,8 +37,7 @@ test("news pages share masthead while the listing keeps spotlight and featured s
   );
 
   assert.match(source, /const SPOTLIGHT_INTERVAL_MS = 5_000/);
-  assert.match(source, /duration-\[1500ms\]/);
-  assert.match(source, /const LATEST = OFFICIAL_NEWS\.slice\(0, 5\)/);
+  assert.match(source, /const latest = initialArticles\.slice/);
   assert.match(source, /window\.setInterval/);
   assert.doesNotMatch(
     source,
@@ -46,18 +45,15 @@ test("news pages share masthead while the listing keeps spotlight and featured s
   );
   assert.match(source, /<GuestNewsMasthead \/>/);
   assert.match(articleSource, /<GuestNewsMasthead \/>/);
-  assert.match(source, /<GuestNewsFilterNav/);
   assert.match(articleSource, /<GuestNewsFilterNav/);
   assert.match(articleSource, /activeCategory=\{article\.category\}/);
   assert.match(articleSource, /router\.push\(newsFilterHref/);
-  assert.match(source, /window\.history\.replaceState/);
   assert.match(filterSource, /aria-pressed=\{activeCategory === category\}/);
   assert.match(filterSource, /params\.set\("category", category\)/);
   assert.match(pageSource, /isNewsCategory\(categoryValue\)/);
   assert.match(pageSource, /initialQuery=\{query\}/);
-  assert.match(mastheadSource, /motion-reduce:animate-none/);
-  assert.match(mastheadSource, /bg-emerald-50/);
-  assert.match(mastheadSource, /animate-ping/);
+  assert.match(mastheadSource, /Tin tức/);
+  assert.match(mastheadSource, /font-serif/);
   assert.doesNotMatch(source, /vnru-infinity-loading/);
   assert.match(source, /animate-pulse/);
   assert.match(source, /aria-label="Đang tải ảnh"/);

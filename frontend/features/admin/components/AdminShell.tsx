@@ -15,7 +15,7 @@ import React, { Suspense, useState } from "react";
 const shellCopy: Record<Locale, Record<string, string>> = {
   vi: { brand: "Mạng lưới tri thức Nga - Việt" },
   en: { brand: "Russia - Vietnam Knowledge Network" },
-  ru: { brand: "Сеть знаний Россия – Вьетнам" },
+  ru: { brand: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ" },
 };
 
 export default function AdminShell({

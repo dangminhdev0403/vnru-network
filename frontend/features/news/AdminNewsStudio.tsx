@@ -2,9 +2,21 @@
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { showToast } from "@/lib/alerts";
 import { newsResource } from "./resource";
 import type { NewsArticle, NewsInput, NewsLocale } from "./repository";
+
+declare global {
+  interface Window {
+    Translator?: {
+      create(input: {
+        sourceLanguage: "vi";
+        targetLanguage: "ru";
+      }): Promise<{ translate(text: string): Promise<string> }>;
+    };
+  }
+}
 
 const news = newsResource.bind(undefined);
 const locales: NewsLocale[] = ["VI", "EN", "RU"];
@@ -61,12 +73,25 @@ const categories = {
 } as const;
 
 export function AdminNewsStudio() {
+  const searchParams = useSearchParams();
+  const view = searchParams.get("view");
   const [status, setStatus] = useState<"DRAFT" | "PUBLISHED" | undefined>();
   const [selectedId, setSelectedId] = useState<string>();
   const [form, setForm] = useState<NewsInput>(initial);
   const [featured, setFeatured] = useState(false);
   const [locale, setLocale] = useState<NewsLocale>("VI");
   const [query, setQuery] = useState("");
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [previousView, setPreviousView] = useState(view);
+  if (view !== previousView) {
+    setPreviousView(view);
+    if (view === "new") {
+      setSelectedId(undefined);
+      setForm(initial);
+      setFeatured(false);
+      setLocale("VI");
+    }
+  }
   const list = useQuery(news.queries.list.options(status));
   const detail = useQuery({
     ...news.queries.detail.options(selectedId ?? ""),
@@ -115,6 +140,13 @@ export function AdminNewsStudio() {
   const articles = useMemo(
     () =>
       list.data?.filter((article) => {
+        if (view === "featured" && !article.isFeatured) return false;
+        if (
+          ["ANNOUNCEMENT", "EVENT", "PROJECT", "OPPORTUNITY"].includes(
+            view ?? "",
+          ) && article.contentType !== view
+        )
+          return false;
         const text = [
           ...article.translations.map((item) => item.title),
         ]
@@ -122,7 +154,7 @@ export function AdminNewsStudio() {
           .toLocaleLowerCase();
         return text.includes(query.trim().toLocaleLowerCase());
       }) ?? [],
-    [list.data, query],
+    [list.data, query, view],
   );
   const published =
     list.data?.filter((article) => article.status === "PUBLISHED").length ?? 0;
@@ -146,6 +178,7 @@ export function AdminNewsStudio() {
     setFeatured(false);
     setLocale("VI");
   };
+
 
   const open = (article: NewsArticle) => {
     setSelectedId(article.id);
@@ -175,6 +208,39 @@ export function AdminNewsStudio() {
         [locale]: { ...translation, ...patch },
       },
     });
+
+  const translateVietnameseToRussian = async () => {
+    const Translator = window.Translator;
+    if (!Translator) {
+      showToast({ title: "Trình duyệt chưa hỗ trợ dịch tự động", icon: "error" });
+      return;
+    }
+    setIsTranslating(true);
+    try {
+      const translator = await Translator.create({
+        sourceLanguage: "vi", targetLanguage: "ru",
+      });
+      const source = form.translations.VI;
+      const [title, summary, content, actionLabel] = await Promise.all([
+        translator.translate(source.title),
+        translator.translate(source.summary),
+        translator.translate(source.content),
+        translator.translate(source.actionLabel ?? ""),
+      ]);
+      setForm((current) => ({
+        ...current,
+        translations: {
+          ...current.translations,
+          RU: { title, summary, content, actionLabel },
+        },
+      }));
+      showToast({ title: "Đã dịch sang tiếng Nga", icon: "success" });
+    } catch {
+      showToast({ title: "Không thể dịch tự động", icon: "error" });
+    } finally {
+      setIsTranslating(false);
+    }
+  };
 
   return (
     <div className="mx-auto max-w-[1700px] px-4 py-6 sm:px-6 lg:px-8">
@@ -393,6 +459,17 @@ export function AdminNewsStudio() {
                 />
               </label>
               <label className="text-base font-bold text-slate-800 lg:col-span-2">
+                Nhãn thao tác
+                <input
+                  value={translation.actionLabel ?? ""}
+                  onChange={(event) =>
+                    setTranslation({ actionLabel: event.target.value })
+                  }
+                  placeholder="Ví dụ: Đăng ký tham dự"
+                  className="mt-2 min-h-11 w-full rounded-xl border border-slate-300 px-3 font-normal outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                />
+              </label>
+              <label className="text-base font-bold text-slate-800 lg:col-span-2">
                 Liên kết thao tác
                 <input
                   type="url"
@@ -461,6 +538,16 @@ export function AdminNewsStudio() {
                   {localeNames[item]}
                 </button>
               ))}
+              {locale === "RU" ? (
+                <button
+                  type="button"
+                  disabled={isTranslating}
+                  onClick={translateVietnameseToRussian}
+                  className="min-h-11 rounded-xl border border-blue-300 px-4 text-base font-bold text-blue-700 hover:bg-blue-50 disabled:opacity-50"
+                >
+                  {isTranslating ? "Đang dịch…" : "Dịch từ tiếng Việt"}
+                </button>
+              ) : null}
             </div>
 
             <fieldset className="mt-5 rounded-2xl border border-slate-200 p-4 sm:p-5">
@@ -498,17 +585,6 @@ export function AdminNewsStudio() {
                     setTranslation({ content: event.target.value })
                   }
                   className="mt-2 min-h-80 w-full rounded-xl border border-slate-300 p-3 font-normal leading-7 outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
-                />
-              </label>
-              <label className="mt-4 block text-base font-bold text-slate-800">
-                Nhãn thao tác
-                <input
-                  value={translation.actionLabel ?? ""}
-                  onChange={(event) =>
-                    setTranslation({ actionLabel: event.target.value })
-                  }
-                  placeholder="Ví dụ: Đăng ký tham dự"
-                  className="mt-2 min-h-11 w-full rounded-xl border border-slate-300 px-3 font-normal outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                 />
               </label>
             </fieldset>

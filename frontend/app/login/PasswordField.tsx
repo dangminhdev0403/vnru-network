@@ -6,12 +6,14 @@ type PasswordFieldProps = Readonly<{
   placeholder: string;
   showLabel: string;
   hideLabel: string;
+  disabled?: boolean;
 }>;
 
 export function PasswordField({
   placeholder,
   showLabel,
   hideLabel,
+  disabled = false,
 }: PasswordFieldProps) {
   const [visible, setVisible] = useState(false);
 
@@ -34,15 +36,17 @@ export function PasswordField({
         type={visible ? "text" : "password"}
         autoComplete="current-password"
         required
+        disabled={disabled}
         placeholder={placeholder}
-        className="min-h-13 w-full rounded-xl border border-slate-300 bg-white py-3 pr-14 pl-12 text-base transition placeholder:text-slate-400 focus:border-blue-700 focus-visible:outline-none"
+        className="min-h-13 w-full rounded-xl border border-slate-300 bg-white py-3 pr-14 pl-12 text-base transition placeholder:text-slate-400 focus:border-blue-700 focus-visible:outline-none disabled:bg-slate-50 disabled:text-slate-500"
       />
       <button
         type="button"
+        disabled={disabled}
         aria-label={visible ? hideLabel : showLabel}
         aria-pressed={visible}
         onClick={() => setVisible((current) => !current)}
-        className="absolute right-1 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-lg text-slate-500 transition-colors hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-700"
+        className="absolute right-1 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-lg text-slate-500 transition-colors hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-700 disabled:pointer-events-none disabled:opacity-50"
       >
         {visible ? (
           <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
