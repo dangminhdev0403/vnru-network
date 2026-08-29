@@ -3,7 +3,7 @@ FROM node:22-alpine AS deps
 RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable
 
 COPY package.json pnpm-lock.yaml* ./
 RUN pnpm install --frozen-lockfile --ignore-scripts
@@ -13,7 +13,7 @@ RUN pnpm rebuild sharp
 FROM node:22-alpine AS builder
 RUN apk add --no-cache openssl
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -36,8 +36,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
-RUN corepack enable && corepack prepare pnpm@latest --activate && \
-    addgroup --system --gid 1001 nestjs && \
+RUN addgroup --system --gid 1001 nestjs && \
     adduser --system --uid 1001 nestjs
 
 COPY --from=builder /app/package.json ./package.json

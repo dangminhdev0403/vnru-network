@@ -68,6 +68,11 @@ services:
     depends_on:
       migrate:
         condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/v1/news?limit=1').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
     networks: [vnru-net]
 
   frontend:
@@ -88,7 +93,12 @@ services:
       - "host.docker.internal:host-gateway"
     depends_on:
       auth-service:
-        condition: service_started
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
     networks: [vnru-net]
 
   nginx:
@@ -98,6 +108,8 @@ services:
       - "${NGINX_HTTP_PORT:-8082}:80"
 
     depends_on:
-      - frontend
-      - auth-service
+      frontend:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
     networks: [vnru-net]
