@@ -40,6 +40,7 @@ test("news is canonical and legacy explore redirects", async () => {
 
   const detailPage = await readFile("app/news/[id]/page.tsx", "utf8");
   assert.match(detailPage, /getPublicNewsArticle/);
+  assert.match(detailPage, /generateMetadata[\s\S]*if \(!article\) notFound\(\)/);
   assert.doesNotMatch(detailPage, /VALID_IDS|Number\(id\)/);
 });
 

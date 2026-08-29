@@ -10,6 +10,7 @@ type PageProps = {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
   const article = await getPublicNewsArticle(id, "vi");
+  if (!article) notFound();
 
   return {
     title: article ? `${article.title} | Mạng lưới RU-VN` : "Tin tức | Mạng lưới RU-VN",
