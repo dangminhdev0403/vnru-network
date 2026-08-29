@@ -15,10 +15,49 @@ export const NEWS_CATEGORIES: readonly NewsCategory[] = [
   "cooperation",
 ];
 
-export function newsFilterHref(category: NewsCategory, query = "") {
+export const NEWS_FILTER_SCOPES = [
+  "all",
+  "vietnam",
+  "russia",
+  "bilateral",
+] as const;
+export const NEWS_FILTER_CONTENT_TYPES = [
+  "news",
+  "research",
+  "event",
+  "policy",
+] as const;
+export const NEWS_FILTER_PERIODS = ["newest", "7days", "30days"] as const;
+
+export type NewsAdvancedFilters = {
+  topics: string[];
+  scope: (typeof NEWS_FILTER_SCOPES)[number];
+  contentTypes: Array<(typeof NEWS_FILTER_CONTENT_TYPES)[number]>;
+  period: (typeof NEWS_FILTER_PERIODS)[number];
+};
+
+export const DEFAULT_NEWS_ADVANCED_FILTERS: NewsAdvancedFilters = {
+  topics: [],
+  scope: "all",
+  contentTypes: [],
+  period: "newest",
+};
+
+export function newsFilterHref(
+  category: NewsCategory,
+  query = "",
+  filters: NewsAdvancedFilters = DEFAULT_NEWS_ADVANCED_FILTERS,
+) {
   const params = new URLSearchParams();
   if (category !== "all") params.set("category", category);
   if (query.trim()) params.set("q", query.trim().slice(0, 200));
+  filters.topics.slice(0, 12).forEach((topic) => {
+    const value = topic.trim().slice(0, 100);
+    if (value) params.append("topic", value);
+  });
+  if (filters.scope !== "all") params.set("scope", filters.scope);
+  filters.contentTypes.forEach((type) => params.append("type", type));
+  if (filters.period !== "newest") params.set("period", filters.period);
   const search = params.toString();
   return `/news${search ? `?${search}` : ""}`;
 }
@@ -33,6 +72,7 @@ type GuestNewsFilterNavProps = {
   onSearchSubmit?: (query: string) => void;
   query: string;
   searchPlaceholder: string;
+  searchSubmitLabel: string;
 };
 
 export function GuestNewsFilterNav({
@@ -45,6 +85,7 @@ export function GuestNewsFilterNav({
   onSearchSubmit,
   query,
   searchPlaceholder,
+  searchSubmitLabel,
 }: GuestNewsFilterNavProps) {
   return (
     <section
@@ -101,27 +142,13 @@ export function GuestNewsFilterNav({
               ×
             </button>
           ) : null}
-          <svg
-            viewBox="0 0 24 24"
-            className="size-5 shrink-0 text-slate-400"
-            aria-hidden="true"
-          >
-            <circle
-              cx="11"
-              cy="11"
-              r="6.7"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-            />
-            <path
-              d="m16 16 4 4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-            />
-          </svg>
         </label>
+        <button
+          type="submit"
+          className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-blue-600 px-4 text-base font-bold text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        >
+          {searchSubmitLabel}
+        </button>
       </form>
     </section>
   );

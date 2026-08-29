@@ -14,6 +14,7 @@ export const useLocale = create<{
       locale: "vi",
       setLocale: (locale) => {
         document.cookie = `vnru_locale=${locale}; Path=/; Max-Age=31536000; SameSite=Lax`;
+        document.documentElement.lang = locale;
         set({ locale });
       },
     }),

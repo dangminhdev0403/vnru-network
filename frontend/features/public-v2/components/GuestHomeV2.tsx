@@ -6,9 +6,9 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { z } from "zod";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { OFFICIAL_NEWS } from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
-import { ThreeContentBackground } from "./ThreeHeroBackground";
 
 const HERO_BANNERS = [
   {
@@ -113,6 +113,22 @@ export const HOME_COPY: Record<
       icon: string;
       tone: "blue" | "cyan" | "emerald" | "purple" | "amber";
     }[];
+    bilateralGateway: {
+      title: string;
+      subtitle: string;
+      foundationBadge: string;
+      foundationName: string;
+      foundationDesc: string;
+      foundationHighlights: string[];
+      learnMoreBtn: string;
+      partnersBtn: string;
+      pillars: {
+        num: string;
+        title: string;
+        desc: string;
+        icon: string;
+      }[];
+    };
     contactSection: {
       title: string;
       subtitle: string;
@@ -425,11 +441,53 @@ export const HOME_COPY: Record<
         tone: "amber",
       },
     ],
+    bilateralGateway: {
+      title: "Cổng kết nối Hợp tác Song phương",
+      subtitle:
+        "Nền tảng liên kết chiến lược giữa giới trí thức, các viện hàn lâm, trường đại học trọng điểm và doanh nghiệp công nghệ cao của Liên bang Nga và Việt Nam.",
+      foundationBadge: "Đơn vị sáng lập & Điều phối",
+      foundationName: "Quỹ Truyền thống và Hữu nghị",
+      foundationDesc:
+        "Tổ chức phi thương mại đăng ký tại Bộ Tư pháp Liên bang Nga (Mã số: 1207700294020), trực tiếp sáng lập, sở hữu và điều phối trung tâm toàn bộ Mạng lưới tri thức Nga – Việt.",
+      foundationHighlights: [
+        "Hiện thực hóa định hướng đổi mới sáng tạo theo Nghị quyết 57-NQ/TW",
+        "Đồng hành sự kiện trọng thể Năm Khoa học và Giáo dục Việt - Nga 2026",
+        "Mô hình ký Thỏa thuận song phương trực tiếp, linh hoạt và minh bạch",
+      ],
+      learnMoreBtn: "Tìm hiểu về Mạng lưới",
+      partnersBtn: "26+ Đối tác tham gia",
+      pillars: [
+        {
+          num: "01",
+          title: "Kết nối Trí thức & Viện trường",
+          desc: "Quy tụ hơn 500+ giáo sư, tiến sĩ và nhà khoa học hàng đầu từ các viện hàn lâm, viện nghiên cứu và trường đại học hai nước.",
+          icon: "groups",
+        },
+        {
+          num: "02",
+          title: "Đồng nghiên cứu & Chuyển giao R&D",
+          desc: "Triển khai các dự án khoa học công nghệ mũi nhọn: AI, Vật liệu mới, Công nghệ sinh học, Năng lượng và Y dược tiên tiến.",
+          icon: "hub",
+        },
+        {
+          num: "03",
+          title: "Thương mại hóa & Gắn kết Doanh nghiệp",
+          desc: "Đưa kết quả nghiên cứu vào ứng dụng thực tiễn, làm cầu nối gắn kết chặt chẽ viện trường với khối doanh nghiệp công nghệ cao.",
+          icon: "public",
+        },
+        {
+          num: "04",
+          title: "Đào tạo & Trao đổi Học thuật",
+          desc: "Hỗ trợ học bổng, chương trình trao đổi giảng viên, nhà nghiên cứu và tổ chức Diễn đàn Tri thức Nga – Việt thường niên luân phiên.",
+          icon: "education",
+        },
+      ],
+    },
     contactSection: {
       title: "Kết nối & Liên hệ",
       subtitle:
         "Chúng tôi luôn sẵn sàng kết nối, hợp tác và đồng hành cùng cộng đồng khoa học Nga – Việt.",
-      infoTitle: "Về chúng tôi",
+      infoTitle: "Thông tin Mạng lưới",
       infoDesc:
         "Mạng lưới tri thức Nga – Việt được điều phối bởi Quỹ Truyền thống và Hữu nghị, kết nối các viện nghiên cứu, trường đại học và chuyên gia để thúc đẩy hợp tác khoa học – công nghệ, đổi mới sáng tạo và chuyển giao tri thức.",
       coordinatorLabel: "Đơn vị điều phối",
@@ -752,11 +810,53 @@ export const HOME_COPY: Record<
         tone: "amber",
       },
     ],
+    bilateralGateway: {
+      title: "Шлюз двустороннего сотрудничества",
+      subtitle:
+        "Стратегическая платформа взаимодействия академического сообщества, ведущих институтов, университетов и высокотехнологичных предприятий России и Вьетнама.",
+      foundationBadge: "Учредитель и координатор",
+      foundationName: "Фонд «Традиции и дружба»",
+      foundationDesc:
+        "Некоммерческая организация, зарегистрированная в Минюсте РФ (ОГРН: 1207700294020), выступающая единственным учредителем и центральным координационным органом Сети знаний Россия – Вьетнам.",
+      foundationHighlights: [
+        "Реализация курса на инновации и высокие технологии (Резолюция 57-NQ/TW)",
+        "Поддержка ключевого события — Года науки и образования Россия — Вьетнам 2026",
+        "Модель прямого двустороннего сотрудничества на основе соглашений",
+      ],
+      learnMoreBtn: "О Сети знаний",
+      partnersBtn: "26+ Партнёрских организаций",
+      pillars: [
+        {
+          num: "01",
+          title: "Объединение учёных и вузов",
+          desc: "Привлечение более 500 ведущих учёных, профессоров и экспертов из академических институтов и университетов двух стран.",
+          icon: "groups",
+        },
+        {
+          num: "02",
+          title: "Совместные НИОКР и трансфер",
+          desc: "Реализация ключевых проектов в области ИИ, новых материалов, биотехнологий, энергетики и передовой медицины.",
+          icon: "hub",
+        },
+        {
+          num: "03",
+          title: "Связь с индустрией и бизнесом",
+          desc: "Коммерциализация результатов исследований и практическое внедрение передовых технологий в промышленность.",
+          icon: "public",
+        },
+        {
+          num: "04",
+          title: "Образование и академический обмен",
+          desc: "Поддержка стипендий, программ обмена и регулярное проведение Российско-Вьетнамского форума знаний.",
+          icon: "education",
+        },
+      ],
+    },
     contactSection: {
       title: "Связь и контакты",
       subtitle:
         "Мы всегда готовы к диалогу, партнерству и поддержке научно-технологического сообщества России и Вьетнама.",
-      infoTitle: "О нас",
+      infoTitle: "О сети",
       infoDesc:
         "Сеть знаний Россия – Вьетнам координируется Фондом «Традиции и дружба», объединяя институты, университеты и ученых для развития науки, инноваций и трансфера знаний.",
       coordinatorLabel: "Координатор",
@@ -1077,11 +1177,53 @@ export const HOME_COPY: Record<
         tone: "amber",
       },
     ],
+    bilateralGateway: {
+      title: "Bilateral Cooperation Gateway",
+      subtitle:
+        "Strategic connection platform uniting intellectuals, leading academies, top universities, and high-tech enterprises of the Russian Federation and Vietnam.",
+      foundationBadge: "Founding & Coordinating Entity",
+      foundationName: "Tradition and Friendship Foundation",
+      foundationDesc:
+        "Non-profit organization registered with the Ministry of Justice of the Russian Federation (Reg. No. 1207700294020), serving as the sole founder, owner, and central coordinator of the Russia – Vietnam Knowledge Network.",
+      foundationHighlights: [
+        "Advancing innovation & high-tech priorities under Resolution 57-NQ/TW",
+        "Supporting the landmark Vietnam - Russia Year of Science & Education 2026",
+        "Direct bilateral cooperation model: transparent, agile, and sustainable",
+      ],
+      learnMoreBtn: "About the Network",
+      partnersBtn: "26+ Partner Institutions",
+      pillars: [
+        {
+          num: "01",
+          title: "Academic & Scholar Network",
+          desc: "Bringing together 500+ leading scientists, professors, and experts from renowned academies and universities of both countries.",
+          icon: "groups",
+        },
+        {
+          num: "02",
+          title: "Joint R&D & Tech Transfer",
+          desc: "Executing breakthrough projects in AI, advanced materials, biotechnology, clean energy, and medicine.",
+          icon: "hub",
+        },
+        {
+          num: "03",
+          title: "Enterprise & Practical Application",
+          desc: "Commercializing research outcomes and bridging academia with tech industry leaders in both nations.",
+          icon: "public",
+        },
+        {
+          num: "04",
+          title: "Education & Academic Exchange",
+          desc: "Supporting scholarships, researcher exchanges, and the annual bilateral Russia - Vietnam Knowledge Forum.",
+          icon: "education",
+        },
+      ],
+    },
     contactSection: {
       title: "Connect & Inquiries",
       subtitle:
         "We are always open to collaboration, partnership, and joint scientific initiatives between Russia and Vietnam.",
-      infoTitle: "About Us",
+      infoTitle: "About the Network",
       infoDesc:
         "The Russia – Vietnam Knowledge Network is coordinated by the Traditions & Friendship Foundation, connecting institutes, universities, and researchers to foster bilateral R&D, innovation, and knowledge transfer.",
       coordinatorLabel: "Coordinating Body",
@@ -1955,7 +2097,7 @@ function GuestContactSection({
             : "Gửi liên hệ thành công!",
       text:
         locale === "ru"
-          ? "Мы получили ваше обращение và ответим в течение 1–2 рабочих дней."
+          ? "Мы получили ваше обращение и ответим в течение 1–2 рабочих дней."
           : locale === "en"
             ? "We have received your message and will respond within 1–2 business days."
             : "Chúng tôi đã tiếp nhận thông tin và sẽ phản hồi trong 01–02 ngày làm việc.",
@@ -2182,6 +2324,147 @@ function GuestContactSection({
   );
 }
 
+function BilateralGatewaySection({
+  copy,
+}: Readonly<{
+  copy: (typeof HOME_COPY)[Locale]["bilateralGateway"];
+}>) {
+  return (
+    <section
+      id="about-gateway"
+      className="relative isolate overflow-hidden bg-[#eef5fc] px-4 pt-16 pb-20 sm:px-6 sm:pt-20 sm:pb-24 lg:px-8 lg:pt-24 lg:pb-28"
+    >
+      {/* Background Banner Artwork */}
+      <Image
+        src="/images/home-bilateral-gateway.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="pointer-events-none select-none object-cover object-top"
+        aria-hidden="true"
+      />
+
+      {/* Gentle White-to-Blue Gradients ensuring maximum legibility while keeping visual depth */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(240,244,249,0.85)_0%,rgba(240,244,249,0.42)_35%,rgba(240,244,249,0.88)_78%,#f0f4f9_100%)]"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 mx-auto max-w-[1460px]">
+        {/* Section Header */}
+        <div className="mx-auto mb-12 max-w-4xl text-center sm:mb-16">
+          <h2 className="font-serif text-3xl font-black tracking-tight text-[#071936] sm:text-4xl lg:text-5xl">
+            {copy.title}
+          </h2>
+
+          <p className="mx-auto mt-5 max-w-3xl text-lg font-medium leading-relaxed text-slate-700 sm:text-xl sm:leading-8">
+            {copy.subtitle}
+          </p>
+        </div>
+
+        {/* 2-Column Asymmetric Content Grid */}
+        <div className="grid gap-8 lg:grid-cols-12">
+          {/* Left Column: Legal Foundation & Coordination Anchor Card (5 cols) */}
+          <div className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-blue-200 bg-white/95 p-8 shadow-xl shadow-blue-900/10 backdrop-blur-md transition duration-200 hover:border-blue-300 lg:col-span-5 sm:p-10">
+            <div>
+              <div className="flex items-center justify-between gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-100/80 px-4 py-2 text-xs font-extrabold text-blue-800 sm:text-sm">
+                  <span
+                    className="size-2.5 rounded-full bg-blue-600"
+                    aria-hidden="true"
+                  />
+                  {copy.foundationBadge}
+                </span>
+                <span className="font-mono text-sm font-bold text-slate-400">
+                  EST. 2026
+                </span>
+              </div>
+
+              <h3 className="mt-7 font-serif text-3xl font-black leading-tight tracking-tight text-[#082352] sm:text-4xl lg:text-[2.5rem]">
+                {copy.foundationName}
+              </h3>
+
+              <div
+                className="my-6 h-px w-full bg-slate-200"
+                aria-hidden="true"
+              />
+
+              <p className="text-lg font-normal leading-relaxed text-slate-700 sm:text-xl">
+                {copy.foundationDesc}
+              </p>
+
+              {/* Key Institutional Highlights */}
+              <ul className="mt-8 space-y-4">
+                {copy.foundationHighlights.map((item, idx) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-4 rounded-2xl border border-blue-100 bg-blue-50/60 p-4 transition hover:bg-blue-50/90"
+                  >
+                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-blue-600 font-mono text-sm font-black text-white shadow-xs">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-base font-bold leading-snug text-slate-800 sm:text-lg">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Action Button at bottom of Left Card */}
+            <div className="mt-10 flex justify-center border-t border-slate-200 pt-6">
+              <Link
+                href="/about"
+                className="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-blue-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition duration-150 hover:-translate-y-0.5 hover:bg-blue-700 sm:w-auto sm:text-lg"
+              >
+                <span>{copy.learnMoreBtn}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: 4 Bilateral Gateway Pillars (7 cols, 2x2 Grid) */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:col-span-7">
+            {copy.pillars.map((pillar) => (
+              <div
+                key={pillar.num}
+                className="group relative flex flex-col justify-between rounded-3xl border border-blue-100 bg-white/95 p-8 shadow-lg shadow-blue-900/5 backdrop-blur-[2px] transition duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl sm:p-9"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-4xl font-black text-blue-500 sm:text-5xl">
+                      {pillar.num}
+                    </span>
+                    <span className="grid size-16 place-items-center rounded-2xl border border-blue-200 bg-blue-100/60 text-blue-600 shadow-xs transition duration-200 group-hover:scale-105 sm:size-18">
+                      <NetworkIconGlyph
+                        icon={pillar.icon}
+                        className="size-8 sm:size-9"
+                      />
+                    </span>
+                  </div>
+
+                  <h3 className="mt-6 font-serif text-2xl font-black leading-tight tracking-tight text-[#082352] sm:text-[1.7rem]">
+                    {pillar.title}
+                  </h3>
+
+                  <div
+                    className="my-5 h-px w-full bg-slate-200/80"
+                    aria-hidden="true"
+                  />
+
+                  <p className="text-base font-normal leading-relaxed text-slate-700 sm:text-lg sm:leading-8">
+                    {pillar.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function GuestHomeV2({
   isAuthenticated,
   workspaceHref,
@@ -2272,6 +2555,9 @@ export function GuestHomeV2({
           </div>
         </section>
 
+        {/* ═══════════ SECTION 1: CỔNG KẾT NỐI HỢP TÁC SONG PHƯƠNG (VỀ CHÚNG TÔI) ═══════════ */}
+        <BilateralGatewaySection copy={t.bilateralGateway} />
+
         {/* ═══════════ SECTION 1: TIN TỨC (NEWS) ═══════════ */}
         <section id="news" className="px-4 pt-14 pb-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
@@ -2293,21 +2579,23 @@ export function GuestHomeV2({
 
             {/* News Cards Grid */}
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {t.news.items.map((item) => (
+              {OFFICIAL_NEWS.slice(0, 4).map((item) => (
                 <Link
                   key={item.id}
                   href={`/news/${item.id}`}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
                 >
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      unoptimized
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                    {item.image ? (
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : null}
                   </div>
                   <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
                     <h3 className="line-clamp-2 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-lg">

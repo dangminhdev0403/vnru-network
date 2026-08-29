@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Noto_Sans, Noto_Serif } from "next/font/google";
 import QueryProvider from "../components/providers/QueryProvider";
+import { cookies } from "next/headers";
 import "@designcodeio/threeui/style.css";
 import "./globals.css";
 
@@ -38,14 +39,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const savedLocale = (await cookies()).get("vnru_locale")?.value;
+  const locale = savedLocale === "en" || savedLocale === "ru" ? savedLocale : "vi";
   return (
     <html
-      lang="vi"
+      lang={locale}
       suppressHydrationWarning
       className={`${beVietnamPro.variable} ${sans.variable} ${serif.variable}`}
     >
       <head>
+        <meta name="google" content="notranslate" />
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

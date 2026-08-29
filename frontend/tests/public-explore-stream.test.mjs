@@ -38,8 +38,12 @@ test("news pages share masthead while the listing keeps spotlight and featured s
 
   assert.match(source, /const SPOTLIGHT_INTERVAL_MS = 5_000/);
   assert.match(source, /duration-\[1500ms\]/);
-  assert.match(source, /LATEST = \[.*\].*slice\(0, 5\)/s);
+  assert.match(source, /const LATEST = OFFICIAL_NEWS\.slice\(0, 5\)/);
   assert.match(source, /window\.setInterval/);
+  assert.doesNotMatch(
+    source,
+    /matchMedia\("\(prefers-reduced-motion: reduce\)"\)\.matches\) return/,
+  );
   assert.match(source, /<GuestNewsMasthead \/>/);
   assert.match(articleSource, /<GuestNewsMasthead \/>/);
   assert.match(source, /<GuestNewsFilterNav/);

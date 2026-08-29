@@ -1415,8 +1415,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestExpertsV2.tsx": {
-    "mtime": 1787908416.396546,
-    "ast_hash": "13e84d7196b09a83bf83cf4a4979db3a",
+    "mtime": 1787931288.8270664,
+    "ast_hash": "d73cc8003ff8b4164a4d487565b8766f",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestExploreMedia.tsx": {
@@ -1425,8 +1425,8 @@
     "semantic_hash": "11001fad5db2b4a2af6f6d5fa2c60186"
   },
   "frontend/features/public-v2/components/GuestHomeV2.tsx": {
-    "mtime": 1787921201.8101356,
-    "ast_hash": "0126f7643851e9d78f67120318a927d4",
+    "mtime": 1787931288.8220603,
+    "ast_hash": "5cff9740394e9a2e42a121bd782a7048",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicNav.tsx": {
@@ -1435,8 +1435,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestKnowledgeV2.tsx": {
-    "mtime": 1787908416.3991418,
-    "ast_hash": "08b6ad12f52290b9876e032e8ae4b2d7",
+    "mtime": 1787931288.8240669,
+    "ast_hash": "3528111b8434aa0f43071ee8f2b9885c",
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/UnifiedWorkspaceDashboard.tsx": {
@@ -1450,8 +1450,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestOpportunitiesV2.tsx": {
-    "mtime": 1787908416.4152524,
-    "ast_hash": "4ebc44497467f9453dac91dbc27c8184",
+    "mtime": 1787931288.828055,
+    "ast_hash": "f7115dc55bb86edc58decf9a229b6777",
     "semantic_hash": ""
   },
   "frontend/app/register/page.tsx": {
@@ -1715,8 +1715,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicFooter.tsx": {
-    "mtime": 1787909744.8685243,
-    "ast_hash": "c12f8aee51f7ab5765a22f743670cf47",
+    "mtime": 1787931288.821053,
+    "ast_hash": "3cd732431f4f2259ef6b07f191cfb9b8",
     "semantic_hash": ""
   },
   "frontend/tests/public-explore-stream.test.mjs": {
@@ -2010,8 +2010,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestEcosystemV2.tsx": {
-    "mtime": 1787916715.502591,
-    "ast_hash": "eee526717bdaf9fe9967ad76f407aa99",
+    "mtime": 1787931340.332415,
+    "ast_hash": "1d01b94e656ba586730df2a261244448",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-hero-bg.jpg": {
@@ -2062,6 +2062,16 @@
   "frontend/features/news/resource.ts": {
     "mtime": 1787914815.7570734,
     "ast_hash": "85ad93364affe66c0e6b6d1a8d97b47e",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/ecosystem-connect-bg.png": {
+    "mtime": 1787931018.0685432,
+    "ast_hash": "584b48cf079725da754a9fca49678e72",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/ecosystem-join-bg.jpg": {
+    "mtime": 1787931018.067467,
+    "ast_hash": "edf1c1c3cdc5b2b0414d93010496bfed",
     "semantic_hash": ""
   }
 }

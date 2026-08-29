@@ -6,7 +6,12 @@ import { promisify } from 'node:util';
 import { z } from 'zod';
 import { importFixture } from './import-fixture';
 
-const roles = ['SUPER_ADMIN', 'READER', 'PORTAL_MEMBER'] as const;
+const roles = [
+  'SUPER_ADMIN',
+  'READER',
+  'PORTAL_MEMBER',
+  'CONTENT_EDITOR',
+] as const;
 const customRoles = [
   { name: 'CUSTOM_EMPTY_TEST', permissions: [] },
   { name: 'CUSTOM_PORTAL_TEST', permissions: ['portal.member.access'] },
@@ -32,7 +37,7 @@ const accountsSchema = z.object({
         role: z.enum(roles),
       }),
     )
-    .length(6)
+    .length(7)
     .superRefine((accounts, context) => {
       const counts = Object.fromEntries(
         roles.map((role) => [
@@ -43,12 +48,13 @@ const accountsSchema = z.object({
       if (
         counts.SUPER_ADMIN !== 1 ||
         counts.READER !== 3 ||
-        counts.PORTAL_MEMBER !== 2
+        counts.PORTAL_MEMBER !== 2 ||
+        counts.CONTENT_EDITOR !== 1
       ) {
         context.addIssue({
           code: z.ZodIssueCode.custom,
           message:
-            'Demo accounts require 1 SUPER_ADMIN, 3 READER, and 2 PORTAL_MEMBER',
+            'Demo accounts require 1 SUPER_ADMIN, 3 READER, 2 PORTAL_MEMBER, and 1 CONTENT_EDITOR',
         });
       }
     }),
@@ -85,6 +91,12 @@ const bindings = {
       assignmentId: '7809a72b-8a8e-49b8-897b-dd663ee38005',
     },
   ],
+  CONTENT_EDITOR: [
+    {
+      userId: '4f128a30-78eb-48ff-8419-8124593653b5',
+      assignmentId: '3bc4fec6-d862-4cbf-bb37-446128135b93',
+    },
+  ],
 } as const;
 
 async function main() {
@@ -119,7 +131,12 @@ async function main() {
           })),
         });
     }
-    const indexes = { SUPER_ADMIN: 0, READER: 0, PORTAL_MEMBER: 0 };
+    const indexes = {
+      SUPER_ADMIN: 0,
+      READER: 0,
+      PORTAL_MEMBER: 0,
+      CONTENT_EDITOR: 0,
+    };
     for (const account of accounts) {
       const binding = bindings[account.role][indexes[account.role]++];
       if (!binding) throw new Error(`Too many ${account.role} demo accounts`);
@@ -190,7 +207,7 @@ async function main() {
     });
     await prisma.permission.deleteMany({ where: { roles: { none: {} } } });
     console.log(
-      `Provisioned ${accounts.length} Auth.js demo identities for 3 portal roles.`,
+      `Provisioned ${accounts.length} Auth.js demo identities for 4 portal roles.`,
     );
   } finally {
     await prisma.$disconnect();

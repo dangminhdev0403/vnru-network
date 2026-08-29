@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { BrandMark } from "@/components/shared/BrandMark";
+import { MenuIcon } from "@/components/shared/icons/SidebarIcons";
 
 type GuestNavActive =
   | "home"
@@ -35,6 +36,7 @@ const COPY: Record<
     register: string;
     login: string;
     workspace: string;
+    menu: string;
   }
 > = {
   vi: {
@@ -47,6 +49,7 @@ const COPY: Record<
     register: "Đăng ký",
     login: "Đăng nhập",
     workspace: "Tài khoản",
+    menu: "Mở menu",
   },
   en: {
     brandTitle: "Russia - Vietnam Knowledge Network",
@@ -58,6 +61,7 @@ const COPY: Record<
     register: "Register",
     login: "Sign in",
     workspace: "Account",
+    menu: "Open menu",
   },
   ru: {
     brandTitle: "Сеть знаний Россия – Вьетнам",
@@ -69,6 +73,7 @@ const COPY: Record<
     register: "Регистрация",
     login: "Войти",
     workspace: "Аккаунт",
+    menu: "Открыть меню",
   },
 };
 
@@ -115,47 +120,52 @@ export function GuestPublicNav({
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-blue-200/80 bg-[#edf5fe]/95 shadow-[0_4px_20px_-12px_rgba(37,99,235,.2)] backdrop-blur-xl">
-      <div className="mx-auto flex h-[74px] max-w-[1460px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <header
+      translate="no"
+      className="sticky top-0 z-50 border-b border-blue-200/80 bg-[#edf5fe]/95 shadow-[0_4px_20px_-12px_rgba(37,99,235,.2)] backdrop-blur-xl"
+    >
+      <div className="mx-auto flex h-[74px] max-w-[1536px] items-center justify-between gap-x-3 px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex min-w-0 shrink-0 items-center gap-3.5"
+          className="flex min-w-0 shrink-0 items-center gap-3"
           aria-label={t.brandTitle}
           onClick={() => setClickedKey("home")}
         >
-          <BrandMark className="size-[52px] shadow-xs" />
-          <strong className="hidden truncate text-base font-black tracking-tight text-slate-950 sm:block xl:text-lg">
+          <BrandMark className="size-11 shrink-0 shadow-xs sm:size-[50px]" />
+          <strong className="hidden truncate text-sm font-black tracking-tight text-slate-950 sm:block xl:text-lg">
             {t.brandTitle}
           </strong>
         </Link>
 
-        <nav
-          className="hidden items-center rounded-xl border border-blue-200/80 bg-blue-100/70 p-1 shadow-2xs xl:flex"
-          aria-label="Điều hướng công khai"
-        >
-          {items.map((item) => {
-            const selected = item.key === activeKey;
-            return (
-              <Link
-                key={item.key}
-                href={item.href}
-                onClick={() => setClickedKey(item.key)}
-                aria-current={selected ? "page" : undefined}
-                className={`inline-flex items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-center text-base font-bold uppercase leading-tight transition-all duration-150 ${selected ? "bg-white text-blue-700 shadow-2xs font-extrabold" : "text-slate-700 hover:bg-white/70 hover:text-blue-700"}`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+        <div className="hidden items-center justify-center lg:flex">
+          <nav
+            className="flex items-center justify-center rounded-xl border border-blue-200/80 bg-blue-100/70 p-1 shadow-2xs"
+            aria-label="Điều hướng công khai"
+          >
+            {items.map((item) => {
+              const selected = item.key === activeKey;
+              return (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  onClick={() => setClickedKey(item.key)}
+                  aria-current={selected ? "page" : undefined}
+                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2.5 py-1.5 text-center text-sm font-bold uppercase leading-tight transition-all duration-150 xl:px-4 xl:py-2 xl:text-base ${selected ? "bg-blue-600 font-extrabold text-white shadow-2xs" : "text-blue-950 hover:bg-white/70 hover:text-blue-700"}`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <LanguageSwitcher variant="light" compact />
 
           {!isAuthenticated ? (
             <Link
               href="/register"
-              className="hidden h-11 items-center justify-center whitespace-nowrap rounded-xl border border-blue-300 bg-white px-4 text-center text-base font-bold text-blue-700 transition hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:inline-flex"
+              className="hidden h-10 items-center justify-center whitespace-nowrap rounded-xl border border-blue-300 bg-white px-3.5 text-center text-sm font-bold text-blue-700 transition hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:inline-flex xl:h-11 xl:px-4 xl:text-base"
             >
               {t.register}
             </Link>
@@ -163,33 +173,55 @@ export function GuestPublicNav({
 
           <Link
             href={isAuthenticated ? workspaceHref : "/login"}
-            className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-xl bg-blue-600 px-4 text-center text-base font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+            className="hidden h-10 items-center justify-center whitespace-nowrap rounded-xl bg-blue-600 px-3.5 text-center text-sm font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:inline-flex xl:h-11 xl:px-4 xl:text-base"
           >
             {isAuthenticated ? t.workspace : t.login}
           </Link>
+
+          <details className="group static lg:hidden">
+            <summary
+              aria-label={t.menu}
+              className="grid size-11 cursor-pointer list-none place-items-center rounded-xl border border-blue-200 bg-white text-blue-950 transition-colors hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 [&::-webkit-details-marker]:hidden"
+            >
+              <MenuIcon aria-hidden="true" />
+            </summary>
+            <div className="absolute inset-x-4 top-[calc(100%+8px)] rounded-2xl border border-blue-200 bg-white p-3 shadow-xl sm:inset-x-6">
+              <nav className="grid gap-1" aria-label={t.menu}>
+                {items.map((item) => {
+                  const selected = item.key === activeKey;
+                  return (
+                    <Link
+                      key={item.key}
+                      href={item.href}
+                      onClick={() => setClickedKey(item.key)}
+                      aria-current={selected ? "page" : undefined}
+                      className={`flex min-h-11 items-center justify-center rounded-xl px-4 text-center text-base font-bold ${selected ? "bg-blue-600 text-white" : "text-blue-950 hover:bg-blue-50"}`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+              <div className="mt-3 grid gap-2 border-t border-blue-100 pt-3 sm:grid-cols-2">
+                {!isAuthenticated ? (
+                  <Link
+                    href="/register"
+                    className="inline-flex min-h-11 items-center justify-center rounded-xl border border-blue-300 px-3 text-base font-bold text-blue-700"
+                  >
+                    {t.register}
+                  </Link>
+                ) : null}
+                <Link
+                  href={isAuthenticated ? workspaceHref : "/login"}
+                  className={`${isAuthenticated ? "col-span-2" : ""} inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-600 px-3 text-base font-bold text-white`}
+                >
+                  {isAuthenticated ? t.workspace : t.login}
+                </Link>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
-
-      <nav
-        className="border-t border-blue-200/60 bg-[#edf5fe] xl:hidden"
-        aria-label="Điều hướng công khai trên di động"
-      >
-        <div className="mx-auto flex max-w-[1460px] gap-1.5 overflow-x-auto px-4 py-2.5 sm:px-6">
-          {items.map((item) => {
-            const selected = item.key === activeKey;
-            return (
-              <Link
-                key={item.key}
-                href={item.href}
-                onClick={() => setClickedKey(item.key)}
-                className={`inline-flex shrink-0 flex-col items-center justify-center rounded-full px-3.5 py-1.5 text-center text-base font-bold uppercase leading-tight transition-all ${selected ? "bg-blue-600 text-white shadow-2xs" : "text-blue-950 hover:bg-blue-50 hover:text-blue-700"}`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
     </header>
   );
 }

@@ -21,15 +21,21 @@ test("workspace root renders the unified member dashboard while legacy IAM route
 });
 
 test("content administration reuses admin chrome with its own navigation", async () => {
-  const [contentLayout, contentSidebar, iamLayout, iamSidebar] = await Promise.all([
+  const [contentLayout, contentSidebar, studio, iamLayout, iamSidebar] = await Promise.all([
     read("app/(content-admin)/layout.tsx"),
     read("features/news/ContentAdminSidebar.tsx"),
+    read("features/news/AdminNewsStudio.tsx"),
     read("app/(admin)/layout.tsx"),
     read("features/admin/components/AdminSidebar.tsx"),
   ]);
   assert.match(contentLayout, /AdminShell area="content"/);
   assert.match(contentSidebar, /href: "\/workspace\/news"/);
   assert.doesNotMatch(contentSidebar, /\/admin\/access/);
+  assert.match(studio, /Trung tâm nội dung/);
+  assert.match(studio, /Danh sách bài viết/);
+  assert.match(studio, /VI.*EN.*RU|locales\.map/);
+  assert.match(studio, /news\.mutations\.publish/);
+  assert.doesNotMatch(studio, /localStorage|translate\.googleapis|mymemory/);
   assert.doesNotMatch(iamLayout, /area="content"/);
   assert.doesNotMatch(iamSidebar, /\/workspace\/news/);
 });

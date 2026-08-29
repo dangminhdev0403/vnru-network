@@ -3,24 +3,24 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
+import { OFFICIAL_NEWS, type OfficialNewsArticle } from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { HOME_COPY } from "./GuestHomeV2";
 import {
+  getNewsFilterTopics,
+  GuestNewsAdvancedFilters,
+} from "./GuestNewsAdvancedFilters";
+import {
+  DEFAULT_NEWS_ADVANCED_FILTERS,
   GuestNewsFilterNav,
   newsFilterHref,
+  type NewsAdvancedFilters,
   type NewsCategory,
 } from "./GuestNewsFilterNav";
 import { GuestNewsMasthead } from "./GuestNewsMasthead";
 import { GuestPublicNav } from "./GuestPublicNav";
 
-type FeedCategory = Exclude<NewsCategory, "all">;
-type NewsItem = {
-  title: string;
-  summary: string;
-  category: FeedCategory;
-  time: string;
-  image: string;
-};
+type NewsItem = OfficialNewsArticle;
 
 const TEXT = {
   vi: {
@@ -34,6 +34,7 @@ const TEXT = {
     stream: "Dòng tin liên tục",
     streamLead: "Cập nhật liên tục những tin tức mới nhất từ các chuyên mục",
     search: "Tìm kiếm tin tức...",
+    searchSubmit: "Tìm kiếm",
     viewAll: "Xem tất cả",
     spotlight: "Tiêu điểm",
     allCategories: "Tất cả chuyên mục",
@@ -63,6 +64,7 @@ const TEXT = {
     stream: "Continuous news",
     streamLead: "Continuously updated news from the network's key categories",
     search: "Search news...",
+    searchSubmit: "Search",
     viewAll: "View all",
     spotlight: "Spotlight",
     allCategories: "All categories",
@@ -92,6 +94,7 @@ const TEXT = {
     stream: "Лента новостей",
     streamLead: "Постоянно обновляемые новости по основным направлениям сети",
     search: "Поиск новостей...",
+    searchSubmit: "Найти",
     viewAll: "Все материалы",
     spotlight: "Главное",
     allCategories: "Все категории",
@@ -112,403 +115,9 @@ const TEXT = {
   },
 } as const;
 
-const SCIENCE_ITEMS: NewsItem[] = [
-  {
-    title: "Nga phát triển chip lượng tử thế hệ mới mạnh gấp 100 lần",
-    summary:
-      "Công nghệ mới mở rộng khả năng xử lý trong các hệ thống tính toán hiệu năng cao.",
-    category: "science",
-    time: "3 giờ trước",
-    image: "https://picsum.photos/seed/sci1/800/500",
-  },
-  {
-    title: "Các nhà khoa học Việt Nam giải mã thành công gen lúa chịu hạn",
-    summary:
-      "Kết quả nghiên cứu góp phần tạo giống cây trồng thích ứng tốt hơn với biến đổi khí hậu.",
-    category: "science",
-    time: "5 giờ trước",
-    image: "https://picsum.photos/seed/sci2/800/500",
-  },
-  {
-    title: "Nga phóng vệ tinh viễn thám mới hỗ trợ nghiên cứu khí hậu Trái Đất",
-    summary:
-      "Dữ liệu vệ tinh phục vụ giám sát môi trường và nghiên cứu khí hậu.",
-    category: "science",
-    time: "1 ngày trước",
-    image: "https://picsum.photos/seed/sci3/800/500",
-  },
-  {
-    title: "Nghiên cứu chung về vật liệu mới cho năng lượng sạch",
-    summary:
-      "Các nhóm nghiên cứu hai nước phát triển vật liệu tiên tiến cho pin thế hệ mới.",
-    category: "science",
-    time: "4 giờ trước",
-    image: "https://picsum.photos/seed/sci4/800/500",
-  },
-];
-
-const ITEMS: Record<FeedCategory, NewsItem[]> = {
-  cooperation: [
-    {
-      title: "Diễn đàn Khoa học và Công nghệ Việt - Nga 2025 tại Hà Nội",
-      summary:
-        "Các chuyên gia hai nước trao đổi về xu hướng và cơ hội hợp tác công nghệ cao.",
-      category: "cooperation",
-      time: "1 ngày trước",
-      image: "https://picsum.photos/seed/intl1/800/500",
-    },
-    {
-      title:
-        "Việt Nam và Nga ký kết 5 thỏa thuận hợp tác trong lĩnh vực công nghệ cao",
-      summary:
-        "Các thỏa thuận tập trung vào nghiên cứu chung, đào tạo và chuyển giao công nghệ.",
-      category: "cooperation",
-      time: "2 giờ trước",
-      image: "https://picsum.photos/seed/intl2/800/500",
-    },
-    {
-      title:
-        "Tăng cường kết nối doanh nghiệp Việt - Nga trong lĩnh vực công nghệ",
-      summary: "Các hoạt động kết nối tiếp tục được mở rộng giữa hai nước.",
-      category: "cooperation",
-      time: "8 giờ trước",
-      image: "https://picsum.photos/seed/intl3/800/500",
-    },
-    {
-      title:
-        "Mạng lưới đối tác nghiên cứu song phương được mở rộng trong năm 2026",
-      summary:
-        "Viện nghiên cứu và trường đại học tăng cường kết nối chuyên môn.",
-      category: "cooperation",
-      time: "1 ngày trước",
-      image: "https://picsum.photos/seed/intl4/800/500",
-    },
-  ],
-  science: [
-    ...SCIENCE_ITEMS,
-    {
-      title: "AI giúp mô phỏng vật liệu mới chính xác hơn gấp 10 lần",
-      summary: "Mô hình mới rút ngắn thời gian thử nghiệm vật liệu tiên tiến.",
-      category: "science",
-      time: "2 ngày trước",
-      image: "https://picsum.photos/seed/inno1/800/500",
-    },
-    {
-      title: "Trí tuệ nhân tạo: Cơ hội và thách thức trong kỷ nguyên mới",
-      summary:
-        "Các chuyên gia phân tích xu hướng AI và tác động đến nghiên cứu, giáo dục và sản xuất.",
-      category: "science",
-      time: "7 giờ trước",
-      image: "https://picsum.photos/seed/inno2/800/500",
-    },
-    {
-      title: "Startup Việt góp mặt tại triển lãm công nghệ quốc tế ở Nga",
-      summary: "Các dự án giới thiệu giải pháp AI, dữ liệu lớn và tự động hóa.",
-      category: "science",
-      time: "9 giờ trước",
-      image: "https://picsum.photos/seed/inno3/800/500",
-    },
-    {
-      title:
-        "Mô hình chuyển giao công nghệ từ phòng thí nghiệm tới doanh nghiệp tăng tốc",
-      summary:
-        "Các trung tâm đổi mới rút ngắn khoảng cách từ nghiên cứu tới ứng dụng.",
-      category: "science",
-      time: "2 ngày trước",
-      image: "https://picsum.photos/seed/inno4/800/500",
-    },
-  ],
-  education: [
-    {
-      title: "Chương trình học bổng toàn phần cho sinh viên Việt Nam tại Nga",
-      summary:
-        "Nhiều cơ hội học tập dành cho các ngành khoa học, công nghệ và kỹ thuật.",
-      category: "education",
-      time: "6 giờ trước",
-      image: "https://picsum.photos/seed/edu1/800/500",
-    },
-    {
-      title: "Bộ GD&ĐT Việt Nam và Nga ký kết chương trình đào tạo song bằng",
-      summary:
-        "Chương trình mở rộng cơ hội học tập và nghiên cứu cho sinh viên hai nước.",
-      category: "education",
-      time: "8 giờ trước",
-      image: "https://picsum.photos/seed/edu2/800/500",
-    },
-    {
-      title:
-        "Mở rộng đào tạo nhân lực chất lượng cao trong các ngành công nghệ mũi nhọn",
-      summary: "Hai bên thúc đẩy trao đổi giảng viên và nghiên cứu sinh.",
-      category: "education",
-      time: "10 giờ trước",
-      image: "https://picsum.photos/seed/edu3/800/500",
-    },
-    {
-      title:
-        "Đại học hai nước hợp tác xây dựng giáo trình song ngữ về công nghệ",
-      summary:
-        "Giáo trình mới hỗ trợ trao đổi học thuật và đào tạo chuyên sâu.",
-      category: "education",
-      time: "2 ngày trước",
-      image: "https://picsum.photos/seed/edu4/800/500",
-    },
-  ],
-  society: [
-    {
-      title: "Việt Nam đẩy mạnh hợp tác năng lượng sạch với Nga",
-      summary:
-        "Hai bên hướng tới các dự án năng lượng tái tạo và công nghệ xanh.",
-      category: "society",
-      time: "7 giờ trước",
-      image: "https://picsum.photos/seed/soc1/800/500",
-    },
-    {
-      title:
-        "Kinh tế số mở ra cơ hội hợp tác mới giữa các doanh nghiệp công nghệ",
-      summary:
-        "Doanh nghiệp tăng cường chia sẻ giải pháp số và kinh nghiệm triển khai.",
-      category: "society",
-      time: "5 giờ trước",
-      image: "https://picsum.photos/seed/soc2/800/500",
-    },
-    {
-      title:
-        "Ứng dụng công nghệ xanh hỗ trợ phát triển bền vững tại nhiều địa phương",
-      summary:
-        "Các mô hình mới tập trung vào tiết kiệm năng lượng và giảm phát thải.",
-      category: "society",
-      time: "8 giờ trước",
-      image: "https://picsum.photos/seed/soc3/800/500",
-    },
-    {
-      title: "Chính sách mới thúc đẩy đổi mới sáng tạo trong khu vực công",
-      summary: "Các cơ chế mới tạo điều kiện thử nghiệm giải pháp công nghệ.",
-      category: "society",
-      time: "1 ngày trước",
-      image: "https://picsum.photos/seed/soc4/800/500",
-    },
-  ],
-};
-
-const LATEST = [
-  ITEMS.science[0],
-  ITEMS.cooperation[1],
-  ITEMS.education[0],
-  ITEMS.science[5],
-  ITEMS.society[0],
-].slice(0, 5);
-
-const FEATURED = [
-  ITEMS.cooperation[1],
-  ITEMS.science[3],
-  ITEMS.education[0],
-  ITEMS.science[5],
-];
-
-const STREAM: NewsItem[] = [
-  {
-    title: "Nga thử nghiệm thế hệ vật liệu mới cho công nghệ lượng tử",
-    summary:
-      "Nghiên cứu mở ra khả năng ứng dụng trong các hệ thống tính toán thế hệ mới.",
-    category: "science",
-    time: "10:32",
-    image: "https://picsum.photos/seed/str1/800/500",
-  },
-  {
-    title: "Vệ tinh Việt Nam - Nga quan sát Trái Đất thành công",
-    summary: "Dữ liệu hỗ trợ giám sát môi trường và phòng chống thiên tai.",
-    category: "science",
-    time: "10:10",
-    image: "https://picsum.photos/seed/str2/800/500",
-  },
-  {
-    title: "Hội thảo quốc tế về trí tuệ nhân tạo Việt - Nga diễn ra tại Hà Nội",
-    summary:
-      "Các chuyên gia hai nước trao đổi về xu hướng và cơ hội hợp tác trong lĩnh vực AI.",
-    category: "cooperation",
-    time: "09:15",
-    image: "https://picsum.photos/seed/str3/800/500",
-  },
-  {
-    title:
-      "Tăng cường kết nối doanh nghiệp Việt - Nga trong lĩnh vực công nghệ",
-    summary:
-      "Nhiều thỏa thuận hợp tác được ký kết tại các chương trình kết nối chuyên môn.",
-    category: "cooperation",
-    time: "08:55",
-    image: "https://picsum.photos/seed/str4/800/500",
-  },
-  {
-    title: "Bộ GD&ĐT Việt Nam và Nga ký kết chương trình đào tạo song bằng",
-    summary: "Mở ra cơ hội học tập và nghiên cứu cho sinh viên hai nước.",
-    category: "education",
-    time: "08:20",
-    image: "https://picsum.photos/seed/str5/800/500",
-  },
-  {
-    title: "Startup Việt góp mặt tại triển lãm công nghệ quốc tế ở Nga",
-    summary:
-      "Giới thiệu nhiều giải pháp sáng tạo trong lĩnh vực AI và dữ liệu lớn.",
-    category: "science",
-    time: "07:30",
-    image: "https://picsum.photos/seed/str6/800/500",
-  },
-  {
-    title: "Việt Nam đẩy mạnh hợp tác năng lượng sạch với Nga",
-    summary:
-      "Hai bên hướng tới các dự án năng lượng tái tạo và công nghệ xanh.",
-    category: "society",
-    time: "07:45",
-    image: "https://picsum.photos/seed/str7/800/500",
-  },
-  {
-    title: "Dự án năng lượng hạt nhân thế hệ mới tiếp tục được thúc đẩy",
-    summary:
-      "Hai nước khẳng định cam kết phát triển công nghệ năng lượng vì mục tiêu bền vững.",
-    category: "science",
-    time: "06:15",
-    image: "https://picsum.photos/seed/str8/800/500",
-  },
-  {
-    title: "Phòng thí nghiệm chung công bố bộ dữ liệu vật liệu mở",
-    summary:
-      "Bộ dữ liệu hỗ trợ các nhóm nghiên cứu rút ngắn thời gian sàng lọc vật liệu mới.",
-    category: "science",
-    time: "05:50",
-    image: "https://picsum.photos/seed/str9/800/500",
-  },
-  {
-    title: "Chương trình trao đổi chuyên gia trẻ mở đợt đăng ký mới",
-    summary:
-      "Ứng viên có thể đề xuất chủ đề nghiên cứu chung tại các cơ sở đối tác hai nước.",
-    category: "education",
-    time: "05:25",
-    image: "https://picsum.photos/seed/str10/800/500",
-  },
-  {
-    title: "Doanh nghiệp thử nghiệm nền tảng logistics số Việt - Nga",
-    summary:
-      "Giải pháp tập trung theo dõi hành trình và chuẩn hóa dữ liệu chuỗi cung ứng.",
-    category: "society",
-    time: "05:05",
-    image: "https://picsum.photos/seed/str11/800/500",
-  },
-  {
-    title: "Trung tâm đổi mới sáng tạo kết nối thêm mười nhóm nghiên cứu",
-    summary:
-      "Mạng lưới mới ưu tiên AI, robot, công nghệ sinh học và năng lượng sạch.",
-    category: "science",
-    time: "04:40",
-    image: "https://picsum.photos/seed/str12/800/500",
-  },
-  {
-    title: "Hai viện hàn lâm thống nhất lịch hội thảo khoa học thường niên",
-    summary:
-      "Chuỗi hội thảo tạo diễn đàn chia sẻ kết quả và hình thành đề tài liên ngành.",
-    category: "cooperation",
-    time: "04:15",
-    image: "https://picsum.photos/seed/str13/800/500",
-  },
-  {
-    title: "Mô hình dự báo khí hậu được hiệu chỉnh bằng dữ liệu song phương",
-    summary:
-      "Kết quả cải thiện độ chính xác khi phân tích các hiện tượng thời tiết cực đoan.",
-    category: "science",
-    time: "03:50",
-    image: "https://picsum.photos/seed/str14/800/500",
-  },
-  {
-    title: "Sinh viên phát triển robot hỗ trợ kiểm tra hạ tầng công nghiệp",
-    summary:
-      "Nguyên mẫu sử dụng thị giác máy tính để nhận diện sớm dấu hiệu xuống cấp.",
-    category: "education",
-    time: "03:20",
-    image: "https://picsum.photos/seed/str15/800/500",
-  },
-  {
-    title: "Nền tảng bản đồ chuyên gia bổ sung hồ sơ nghiên cứu liên ngành",
-    summary:
-      "Dữ liệu mới giúp tổ chức tìm đúng đối tác theo chuyên môn và địa bàn.",
-    category: "science",
-    time: "02:55",
-    image: "https://picsum.photos/seed/str16/800/500",
-  },
-];
-
-const STREAM_BATCH_SIZE = 4;
-const STREAM_INITIAL_COUNT = 8;
+const LATEST = OFFICIAL_NEWS.slice(0, 5);
+const FEATURED = OFFICIAL_NEWS.slice(5, 9);
 const SPOTLIGHT_INTERVAL_MS = 5_000;
-
-const CATALOGS: Array<{
-  category: NewsCategory;
-  title: { vi: string; en: string; ru: string };
-  children: string[];
-}> = [
-  {
-    category: "science",
-    title: {
-      vi: "Khoa học - Công nghệ",
-      en: "Science - Technology",
-      ru: "Наука - Технологии",
-    },
-    children: [
-      "Trí tuệ nhân tạo",
-      "Công nghệ lượng tử",
-      "Vật liệu mới",
-      "Năng lượng sạch",
-      "Công nghệ sinh học",
-      "Vũ trụ - Hàng không",
-    ],
-  },
-  {
-    category: "cooperation",
-    title: {
-      vi: "Hợp tác",
-      en: "Cooperation",
-      ru: "Сотрудничество",
-    },
-    children: [
-      "Hợp tác Việt - Nga",
-      "Viện nghiên cứu",
-      "Trường đại học",
-      "Doanh nghiệp công nghệ",
-      "Hiệp định song phương",
-      "Mạng lưới đối tác",
-    ],
-  },
-  {
-    category: "education",
-    title: {
-      vi: "Giáo dục đào tạo",
-      en: "Education and Training",
-      ru: "Образование и подготовка",
-    },
-    children: [
-      "Học bổng toàn phần",
-      "Đào tạo song bằng",
-      "Sinh viên & Du học",
-      "Nghiên cứu sinh",
-      "Chuyên gia thỉnh giảng",
-      "Trao đổi học thuật",
-    ],
-  },
-  {
-    category: "society",
-    title: {
-      vi: "Kinh tế - Xã hội",
-      en: "Economy - Society",
-      ru: "Экономика - Общество",
-    },
-    children: [
-      "Kinh tế số",
-      "Công nghiệp công nghệ",
-      "Logistics & Thương mại",
-      "Chính sách KH & CN",
-      "Phát triển bền vững",
-      "Đô thị thông minh",
-    ],
-  },
-];
 
 function NewsImage({
   className = "",
@@ -548,11 +157,11 @@ function SmallRow({ item }: { item: NewsItem }) {
       className="grid grid-cols-[128px_minmax(0,1fr)] gap-4 border-b border-slate-100 py-5 first:pt-0 sm:grid-cols-[180px_minmax(0,1fr)]"
     >
       <NewsImage
-        src={item.image}
+        src={item.image ?? undefined}
         className="h-[88px] w-full rounded-xl sm:h-[112px]"
       />
       <div className="min-w-0">
-        <h3 className="text-[15px] font-extrabold leading-[1.4] transition-colors hover:text-blue-700 sm:text-lg">
+        <h3 className="text-base font-extrabold leading-[1.4] transition-colors hover:text-blue-700 sm:text-lg">
           {item.title}
         </h3>
         <p className="mt-2.5 line-clamp-2 text-sm leading-6 text-slate-600 sm:text-base">
@@ -564,48 +173,325 @@ function SmallRow({ item }: { item: NewsItem }) {
 }
 
 function articleId(item: NewsItem) {
-  return (
-    1 +
-    ([...item.title].reduce(
-      (sum, character) => sum + character.codePointAt(0)!,
-      0,
-    ) %
-      28)
-  );
+  return item.id;
+}
+
+function matchesTopics(
+  article: OfficialNewsArticle,
+  topics: string[],
+): boolean {
+  if (topics.length === 0) return true;
+  const content =
+    `${article.title} ${article.summary} ${article.body.join(" ")}`.toLowerCase();
+
+  return topics.some((topic) => {
+    const t = topic.toLowerCase();
+    if (t.includes("trí tuệ nhân tạo") || t === "ai") {
+      return (
+        content.includes("ai") ||
+        content.includes("trí tuệ nhân tạo") ||
+        content.includes("robot") ||
+        content.includes("học máy")
+      );
+    }
+    if (t.includes("lượng tử")) {
+      return content.includes("lượng tử") || content.includes("quantum");
+    }
+    if (t.includes("vật liệu")) {
+      return (
+        content.includes("vật liệu") ||
+        content.includes("nano") ||
+        content.includes("skif")
+      );
+    }
+    if (t.includes("năng lượng")) {
+      return (
+        content.includes("năng lượng") ||
+        content.includes("hạt nhân") ||
+        content.includes("vver") ||
+        content.includes("nguyên tử") ||
+        content.includes("rosatom")
+      );
+    }
+    if (t.includes("sinh học")) {
+      return (
+        content.includes("sinh học") ||
+        content.includes("y sinh") ||
+        content.includes("y khoa") ||
+        content.includes("y tế")
+      );
+    }
+    if (t.includes("vũ trụ") || t.includes("hàng không")) {
+      return (
+        content.includes("vũ trụ") ||
+        content.includes("hàng không") ||
+        content.includes("uav") ||
+        content.includes("bắc cực")
+      );
+    }
+    if (t.includes("học bổng") || t.includes("tuyển sinh")) {
+      return (
+        content.includes("học bổng") ||
+        content.includes("tuyển sinh") ||
+        content.includes("chỉ tiêu")
+      );
+    }
+    if (t.includes("du học") || t.includes("sinh viên")) {
+      return (
+        content.includes("sinh viên") ||
+        content.includes("du học") ||
+        content.includes("lưu học sinh") ||
+        content.includes("thanh niên")
+      );
+    }
+    if (t.includes("nghiên cứu sinh") || t.includes("tiến sĩ")) {
+      return (
+        content.includes("nghiên cứu sinh") ||
+        content.includes("tiến sĩ") ||
+        content.includes("thạc sĩ")
+      );
+    }
+    if (
+      t.includes("trao đổi") ||
+      t.includes("học thuật") ||
+      t.includes("studturizm")
+    ) {
+      return (
+        content.includes("trao đổi") ||
+        content.includes("studturizm") ||
+        content.includes("tọa đàm") ||
+        content.includes("diễn đàn") ||
+        content.includes("hội thảo")
+      );
+    }
+    if (
+      t.includes("thương mại") ||
+      t.includes("logistics") ||
+      t.includes("đầu tư")
+    ) {
+      return (
+        content.includes("thương mại") ||
+        content.includes("đầu tư") ||
+        content.includes("logistics") ||
+        content.includes("xuất khẩu") ||
+        content.includes("kim ngạch") ||
+        content.includes("eaeu")
+      );
+    }
+    if (
+      t.includes("kinh tế") ||
+      t.includes("công nghiệp") ||
+      t.includes("doanh nghiệp")
+    ) {
+      return (
+        content.includes("kinh tế") ||
+        content.includes("doanh nghiệp") ||
+        content.includes("công nghiệp")
+      );
+    }
+    if (t.includes("chính sách") || t.includes("hiệp định")) {
+      return (
+        content.includes("chính sách") ||
+        content.includes("hiệp định") ||
+        content.includes("nghị quyết") ||
+        content.includes("phê duyệt")
+      );
+    }
+    if (
+      t.includes("việt - nga") ||
+      t.includes("đối tác") ||
+      t.includes("song phương")
+    ) {
+      return (
+        content.includes("việt - nga") ||
+        content.includes("nga - việt") ||
+        content.includes("song phương") ||
+        content.includes("đối tác") ||
+        (content.includes("việt nam") && content.includes("nga"))
+      );
+    }
+    if (t.includes("viện nghiên cứu") || t.includes("trường đại học")) {
+      return (
+        content.includes("viện") ||
+        content.includes("đại học") ||
+        content.includes("trường") ||
+        content.includes("học viện")
+      );
+    }
+    if (t.includes("du lịch") || t.includes("mice")) {
+      return (
+        content.includes("du lịch") ||
+        content.includes("mice") ||
+        content.includes("lữ hành") ||
+        content.includes("khách du lịch")
+      );
+    }
+    if (t.includes("văn hóa")) {
+      return (
+        content.includes("văn hóa") ||
+        content.includes("hữu nghị") ||
+        content.includes("tiếng nga") ||
+        content.includes("tiếng việt")
+      );
+    }
+    return content.includes(t);
+  });
+}
+
+function matchesScope(article: OfficialNewsArticle, scope: string): boolean {
+  if (!scope || scope === "all") return true;
+  const content =
+    `${article.title} ${article.summary} ${article.body.join(" ")}`.toLowerCase();
+
+  if (scope === "vietnam") {
+    return (
+      content.includes("việt nam") ||
+      content.includes("hà nội") ||
+      content.includes("tp.hcm") ||
+      content.includes("thành phố hồ chí minh") ||
+      content.includes("đà nẵng") ||
+      content.includes("bình dương") ||
+      content.includes("quảng bình") ||
+      content.includes("vast") ||
+      content.includes("đhqg") ||
+      content.includes("quốc hội")
+    );
+  }
+  if (scope === "russia") {
+    return (
+      content.includes("nga") ||
+      content.includes("liên bang nga") ||
+      content.includes("moskva") ||
+      content.includes("saint petersburg") ||
+      content.includes("rosatom") ||
+      content.includes("bauman") ||
+      content.includes("herzen") ||
+      content.includes("rostov") ||
+      content.includes("stavropol") ||
+      content.includes("fefu")
+    );
+  }
+  if (scope === "bilateral") {
+    return (
+      content.includes("việt - nga") ||
+      content.includes("nga - việt") ||
+      content.includes("việt nam - liên bang nga") ||
+      content.includes("việt nam và nga") ||
+      content.includes("song phương") ||
+      content.includes("quỹ truyền thống và hữu nghị") ||
+      (content.includes("việt nam") && content.includes("nga"))
+    );
+  }
+  return true;
+}
+
+function matchesContentType(
+  article: OfficialNewsArticle,
+  contentTypes: string[],
+): boolean {
+  if (contentTypes.length === 0) return true;
+  const content =
+    `${article.title} ${article.summary} ${article.body.join(" ")}`.toLowerCase();
+
+  return contentTypes.some((type) => {
+    if (type === "news") {
+      return true;
+    }
+    if (type === "research") {
+      return (
+        content.includes("nghiên cứu") ||
+        content.includes("khoa học") ||
+        content.includes("công nghệ") ||
+        content.includes("lượng tử") ||
+        content.includes("skif") ||
+        content.includes("uav") ||
+        content.includes("luận án") ||
+        content.includes("ai") ||
+        content.includes("r&d") ||
+        content.includes("bắc cực")
+      );
+    }
+    if (type === "event") {
+      return (
+        content.includes("sự kiện") ||
+        content.includes("diễn đàn") ||
+        content.includes("hội thảo") ||
+        content.includes("tọa đàm") ||
+        content.includes("ngày hội") ||
+        content.includes("studturizm") ||
+        content.includes("meet global mice") ||
+        content.includes("lễ kỷ niệm") ||
+        content.includes("khóa học") ||
+        content.includes("gặp gỡ")
+      );
+    }
+    if (type === "policy") {
+      return (
+        content.includes("chính sách") ||
+        content.includes("nghị quyết") ||
+        content.includes("phê duyệt") ||
+        content.includes("chính phủ") ||
+        content.includes("quốc hội") ||
+        content.includes("chỉ đạo") ||
+        content.includes("ủy ban liên chính phủ") ||
+        content.includes("chiến lược") ||
+        content.includes("thỏa thuận") ||
+        content.includes("hiệp định")
+      );
+    }
+    return true;
+  });
+}
+
+function matchesPeriod(article: OfficialNewsArticle, period: string): boolean {
+  if (!period || period === "newest") return true;
+  if (period === "7days") {
+    return article.id >= 25;
+  }
+  if (period === "30days") {
+    return article.id >= 10;
+  }
+  return true;
 }
 
 export function GuestExploreV2({
   initialCategory = "all",
   initialQuery = "",
+  initialAdvancedFilters = DEFAULT_NEWS_ADVANCED_FILTERS,
 }: {
   initialCategory?: NewsCategory;
   initialQuery?: string;
+  initialAdvancedFilters?: NewsAdvancedFilters;
 }) {
   const { locale } = useLocale();
   const t = TEXT[locale] ?? TEXT.vi;
   const [activeCategory, setActiveCategory] =
     useState<NewsCategory>(initialCategory);
-  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-  const [selectedScope, setSelectedScope] = useState("all");
-  const [selectedContentTypes, setSelectedContentTypes] = useState<string[]>(
-    [],
+  const [advancedFilters, setAdvancedFilters] = useState<NewsAdvancedFilters>(
+    () => ({
+      ...initialAdvancedFilters,
+      topics: [...initialAdvancedFilters.topics],
+      contentTypes: [...initialAdvancedFilters.contentTypes],
+    }),
   );
-  const [selectedPeriod, setSelectedPeriod] = useState("newest");
-  const [showAllTopics, setShowAllTopics] = useState(false);
   const [query, setQuery] = useState(initialQuery);
   const [spotlightIndex, setSpotlightIndex] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
   const slidingTimerRef = useRef<number | null>(null);
   const selectCategory = (category: NewsCategory) => {
     setActiveCategory(category);
-    window.history.replaceState(null, "", newsFilterHref(category, query));
+    window.history.replaceState(
+      null,
+      "",
+      newsFilterHref(category, query, advancedFilters),
+    );
   };
   const updateQuery = (nextQuery: string) => {
     setQuery(nextQuery);
     window.history.replaceState(
       null,
       "",
-      newsFilterHref(activeCategory, nextQuery),
+      newsFilterHref(activeCategory, nextQuery, advancedFilters),
     );
   };
 
@@ -620,33 +506,62 @@ export function GuestExploreV2({
     }, 1200);
   };
 
-  const filterDetailsRef = useRef<HTMLDetailsElement | null>(null);
+  const availableTopics = getNewsFilterTopics(activeCategory);
 
   const filtered = useMemo(() => {
-    const source =
+    let list =
       activeCategory === "all"
-        ? Object.values(ITEMS).flat()
-        : ITEMS[activeCategory];
-    const q = query.trim().toLocaleLowerCase(locale);
-    return q
-      ? source.filter((item) =>
-          item.title.toLocaleLowerCase(locale).includes(q),
-        )
-      : source;
-  }, [activeCategory, locale, query]);
-  const previewCategory = CATALOGS.find((group) =>
-    group.children.some((topic) => selectedTopics.includes(topic)),
-  )?.category;
-  const filterResultCount =
-    previewCategory && previewCategory !== "all"
-      ? ITEMS[previewCategory].length
-      : Object.values(ITEMS).flat().length;
+        ? OFFICIAL_NEWS
+        : OFFICIAL_NEWS.filter((item) => item.category === activeCategory);
 
-  const categoryMode = activeCategory !== "all" || query.trim().length > 0;
+    const q = query.trim().toLocaleLowerCase(locale);
+    if (q) {
+      list = list.filter(
+        (item) =>
+          item.title.toLocaleLowerCase(locale).includes(q) ||
+          item.summary.toLocaleLowerCase(locale).includes(q) ||
+          item.body.some((p) => p.toLocaleLowerCase(locale).includes(q)),
+      );
+    }
+
+    if (advancedFilters.topics.length > 0) {
+      list = list.filter((item) => matchesTopics(item, advancedFilters.topics));
+    }
+
+    if (advancedFilters.scope !== "all") {
+      list = list.filter((item) => matchesScope(item, advancedFilters.scope));
+    }
+
+    if (advancedFilters.contentTypes.length > 0) {
+      list = list.filter((item) =>
+        matchesContentType(item, advancedFilters.contentTypes),
+      );
+    }
+
+    if (advancedFilters.period !== "newest") {
+      list = list.filter((item) =>
+        matchesPeriod(item, advancedFilters.period),
+      );
+    }
+
+    return list;
+  }, [
+    activeCategory,
+    advancedFilters,
+    locale,
+    query,
+  ]);
+
+  const categoryMode =
+    activeCategory !== "all" ||
+    query.trim().length > 0 ||
+    advancedFilters.topics.length > 0 ||
+    advancedFilters.scope !== "all" ||
+    advancedFilters.contentTypes.length > 0 ||
+    advancedFilters.period !== "newest";
   const filteredHalf = Math.ceil(filtered.length / 2);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(
       () => changeSpotlight((current) => (current + 1) % LATEST.length),
       SPOTLIGHT_INTERVAL_MS,
@@ -670,221 +585,23 @@ export function GuestExploreV2({
           clearSearchLabel="Xóa tìm kiếm"
           query={query}
           searchPlaceholder={t.search}
+          searchSubmitLabel={t.searchSubmit}
           onCategoryChange={selectCategory}
           onQueryChange={updateQuery}
           filterControl={
-            <details ref={filterDetailsRef} className="group">
-              <summary
-                title={t.allCategories}
-                className="grid size-11 shrink-0 list-none cursor-pointer place-items-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 [&::-webkit-details-marker]:hidden"
-              >
-                <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
-                  <path
-                    d="M4 7h3M11 7h9M4 17h9M17 17h3"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                  />
-                  <circle
-                    cx="9"
-                    cy="7"
-                    r="2"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                  />
-                  <circle
-                    cx="15"
-                    cy="17"
-                    r="2"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                  />
-                </svg>
-              </summary>
-              <div className="absolute -left-px -right-px top-full z-50 -mt-px overflow-hidden rounded-b-lg border-x border-b border-slate-200 bg-white shadow-xl">
-                <div className="grid grid-cols-1 md:grid-cols-2">
-                  <fieldset className="border-b border-slate-200 p-5 md:border-r">
-                    <legend className="flex items-center gap-2 text-base font-black text-slate-900">
-                      <span
-                        className="text-xl font-normal text-blue-600"
-                        aria-hidden="true"
-                      >
-                        ◇
-                      </span>
-                      Chủ đề
-                    </legend>
-                    <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                      {CATALOGS[0].children
-                        .slice(0, showAllTopics ? undefined : 5)
-                        .map((topic) => (
-                          <label
-                            key={topic}
-                            className="flex min-h-9 cursor-pointer items-center gap-3 text-sm text-slate-700"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={selectedTopics.includes(topic)}
-                              onChange={() =>
-                                setSelectedTopics((current) =>
-                                  current.includes(topic)
-                                    ? current.filter((item) => item !== topic)
-                                    : [...current, topic],
-                                )
-                              }
-                              className="size-4 rounded accent-blue-600"
-                            />
-                            <span>{topic}</span>
-                          </label>
-                        ))}
-                      <button
-                        type="button"
-                        onClick={() => setShowAllTopics((current) => !current)}
-                        className="min-h-9 text-left text-sm font-semibold text-blue-600"
-                      >
-                        {showAllTopics ? "− Thu gọn" : "+ Xem thêm"}
-                      </button>
-                    </div>
-                  </fieldset>
-
-                  <fieldset className="border-b border-slate-200 p-5">
-                    <legend className="flex items-center gap-2 text-base font-black text-slate-900">
-                      <span
-                        className="text-xl font-normal text-blue-600"
-                        aria-hidden="true"
-                      >
-                        ◎
-                      </span>
-                      Phạm vi
-                    </legend>
-                    <div className="mt-3 grid grid-cols-2 gap-3">
-                      {[
-                        ["all", "Tất cả"],
-                        ["vietnam", "Việt Nam"],
-                        ["russia", "Liên bang Nga"],
-                        ["bilateral", "Hợp tác Việt - Nga"],
-                      ].map(([value, label]) => (
-                        <label
-                          key={value}
-                          className="flex cursor-pointer items-center gap-2 text-sm text-slate-700"
-                        >
-                          <input
-                            type="radio"
-                            name="filter-scope"
-                            value={value}
-                            checked={selectedScope === value}
-                            onChange={() => setSelectedScope(value)}
-                            className="size-4 accent-blue-600"
-                          />
-                          <span>{label}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </fieldset>
-
-                  <fieldset className="border-b border-slate-200 p-5 md:border-b-0 md:border-r">
-                    <legend className="flex items-center gap-2 text-base font-black text-slate-900">
-                      <span
-                        className="text-xl font-normal text-blue-600"
-                        aria-hidden="true"
-                      >
-                        ▣
-                      </span>
-                      Loại nội dung
-                    </legend>
-                    <div className="mt-3 grid grid-cols-2 gap-3">
-                      {[
-                        ["news", "Tin tức"],
-                        ["research", "Nghiên cứu"],
-                        ["event", "Sự kiện"],
-                        ["policy", "Chính sách"],
-                      ].map(([value, label]) => (
-                        <label
-                          key={value}
-                          className="flex cursor-pointer items-center gap-2 text-sm text-slate-700"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={selectedContentTypes.includes(value)}
-                            onChange={() =>
-                              setSelectedContentTypes((current) =>
-                                current.includes(value)
-                                  ? current.filter((item) => item !== value)
-                                  : [...current, value],
-                              )
-                            }
-                            className="size-4 rounded accent-blue-600"
-                          />
-                          <span>{label}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </fieldset>
-
-                  <fieldset className="p-5">
-                    <legend className="flex items-center gap-2 text-base font-black text-slate-900">
-                      <span
-                        className="text-xl font-normal text-blue-600"
-                        aria-hidden="true"
-                      >
-                        ◷
-                      </span>
-                      Thời gian
-                    </legend>
-                    <div className="mt-3 grid grid-cols-3 overflow-hidden rounded-lg border border-slate-200">
-                      {[
-                        ["newest", "Mới nhất"],
-                        ["7days", "7 ngày"],
-                        ["30days", "30 ngày"],
-                      ].map(([value, label]) => (
-                        <button
-                          key={value}
-                          type="button"
-                          onClick={() => setSelectedPeriod(value)}
-                          aria-pressed={selectedPeriod === value}
-                          className={`min-h-11 border-r border-slate-200 px-3 text-sm font-semibold last:border-r-0 ${selectedPeriod === value ? "bg-blue-50 text-blue-600 ring-1 ring-inset ring-blue-600" : "bg-white text-slate-600 hover:bg-slate-50"}`}
-                        >
-                          {label}
-                        </button>
-                      ))}
-                    </div>
-                  </fieldset>
-
-                  <div className="grid grid-cols-2 gap-3 border-t border-slate-200 p-5 md:col-span-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedTopics([]);
-                        setSelectedScope("all");
-                        setSelectedContentTypes([]);
-                        setSelectedPeriod("newest");
-                      }}
-                      className="min-h-11 rounded-lg border border-slate-200 bg-white px-4 text-base font-bold text-slate-700 hover:bg-slate-50"
-                    >
-                      Đặt lại
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const selectedGroup = CATALOGS.find((group) =>
-                          group.children.some((topic) =>
-                            selectedTopics.includes(topic),
-                          ),
-                        );
-                        selectCategory(selectedGroup?.category ?? "all");
-                        if (filterDetailsRef.current)
-                          filterDetailsRef.current.open = false;
-                      }}
-                      className="min-h-11 rounded-lg bg-blue-600 px-4 text-base font-bold text-white shadow-sm hover:bg-blue-700"
-                    >
-                      Áp dụng bộ lọc ({filterResultCount})
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </details>
+            <GuestNewsAdvancedFilters
+              availableTopics={availableTopics}
+              filters={advancedFilters}
+              onApply={(filters) =>
+                window.history.replaceState(
+                  null,
+                  "",
+                  newsFilterHref(activeCategory, query, filters),
+                )
+              }
+              onFiltersChange={setAdvancedFilters}
+              triggerLabel={t.allCategories}
+            />
           }
         />
 
@@ -909,7 +626,7 @@ export function GuestExploreV2({
                       tabIndex={index === spotlightIndex ? 0 : -1}
                     >
                       <NewsImage
-                        src={item.image}
+                        src={item.image ?? undefined}
                         label="Ảnh bài viết nổi bật"
                         className="absolute inset-0 h-full w-full rounded-none"
                       />
@@ -927,7 +644,7 @@ export function GuestExploreV2({
                         <div className="mt-5 flex items-center gap-2 text-xs font-semibold text-white/85">
                           <span>{t.categories[item.category]}</span>
                           <span>•</span>
-                          <span>{item.time}</span>
+                          <span>{item.date}</span>
                         </div>
                       </div>
                     </Link>
@@ -987,7 +704,7 @@ export function GuestExploreV2({
                     className="overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:border-blue-200"
                   >
                     <NewsImage
-                      src={item.image}
+                      src={item.image ?? undefined}
                       label="Ảnh bài viết"
                       className="h-44 w-full"
                     />
