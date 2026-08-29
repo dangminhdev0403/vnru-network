@@ -1,7 +1,8 @@
 export type NewsCategoryKey = "science" | "cooperation" | "education" | "society";
 
 export type OfficialNewsArticle = {
-  id: number;
+  id: number | string;
+  slug?: string;
   title: string;
   summary: string;
   category: NewsCategoryKey;
@@ -9,6 +10,10 @@ export type OfficialNewsArticle = {
   image: string | null;
   body: string[];
   sources: string[];
+  contentType?: "ARTICLE" | "EVENT" | "ANNOUNCEMENT" | "PROJECT" | "OPPORTUNITY" | "PUBLICATION";
+  actionUrl?: string | null;
+  actionClosesAt?: string | null;
+  actionLabel?: string | null;
 };
 
 // Generated from the official DOCX files in /Tin tức.
@@ -986,6 +991,6 @@ export const OFFICIAL_NEWS = [
   }
 ] satisfies OfficialNewsArticle[];
 
-export function getOfficialNewsArticle(id: number) {
-  return OFFICIAL_NEWS.find((article) => article.id === id) ?? OFFICIAL_NEWS[0];
+export function getOfficialNewsArticle(id: string | number) {
+  return OFFICIAL_NEWS.find((article) => String(article.id) === String(id));
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { GuestExploreV2 } from "@/features/public-v2/components/GuestExploreV2";
+import { getPublicNews } from "@/features/public-v2/data/public-news-server";
 import {
   DEFAULT_NEWS_ADVANCED_FILTERS,
   NEWS_CATEGORIES,
@@ -69,9 +70,11 @@ export default async function Page({
   const categoryValue =
     typeof params.category === "string" ? params.category : "all";
   const query = typeof params.q === "string" ? params.q.trim().slice(0, 200) : "";
+  const articles = await getPublicNews("vi");
 
   return (
     <GuestExploreV2
+      initialArticles={articles}
       initialCategory={
         isNewsCategory(categoryValue) ? categoryValue : "all"
       }

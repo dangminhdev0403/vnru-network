@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
 import {
-  OFFICIAL_NEWS,
-  getOfficialNewsArticle,
   type NewsCategoryKey,
   type OfficialNewsArticle,
 } from "../data/official-news";
@@ -167,7 +165,7 @@ function ShareButton({ label }: { label: string }) {
   );
 }
 
-export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
+export function GuestNewsArticleV2({ article, articles }: { article: OfficialNewsArticle; articles: OfficialNewsArticle[] }) {
   const router = useRouter();
   const { locale } = useLocale();
   const t = ui[locale] ?? ui.vi;
@@ -180,18 +178,17 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
       contentTypes: [],
     }),
   );
-  const article = getOfficialNewsArticle(articleId);
   const availableTopics = getNewsFilterTopics(article.category);
-  const related = OFFICIAL_NEWS.filter(
+  const related = articles.filter(
     (item) =>
       item.id !== article.id &&
       (item.category === article.category || item.category === "cooperation"),
   ).slice(0, 4);
-  const popular = OFFICIAL_NEWS.filter((item) => item.id !== article.id).slice(
+  const popular = articles.filter((item) => item.id !== article.id).slice(
     0,
     5,
   );
-  const bottomRelated = OFFICIAL_NEWS.filter(
+  const bottomRelated = articles.filter(
     (item) => item.id !== article.id,
   ).slice(5, 9);
 
@@ -258,9 +255,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
                 <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
                   <span>{article.date}</span>
                   <span>•</span>
-                  <span>Mạng lưới tri thức Nga - Việt</span>
-                  <span>•</span>
-                  <span>{1_200 + article.id * 17} lượt xem</span>
+                  <span>Mạng lưới RU-VN</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="mr-1 text-sm text-slate-500">
@@ -290,6 +285,11 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
               {article.body.map((paragraph, index) => (
                 <p key={`${article.id}-${index}`}>{paragraph}</p>
               ))}
+              {article.actionUrl ? (
+                <a href={article.actionUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center rounded-xl bg-blue-700 px-5 font-bold text-white hover:bg-blue-800">
+                  {article.actionLabel || "Xem thông tin"}
+                </a>
+              ) : null}
               {article.sources.length > 0 && (
                 <div className="border-t border-blue-100 pt-5 text-sm text-slate-600">
                   <span className="font-bold">Nguồn: </span>
@@ -343,7 +343,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
                 {related.map((item) => (
                   <Link
                     key={item.id}
-                    href={`/news/${item.id}`}
+                    href={`/news/${item.slug ?? item.id}`}
                     className="flex gap-3 border-b border-blue-50 pb-4 last:border-0 last:pb-0"
                   >
                     <Thumb item={item} />
@@ -365,7 +365,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
                 {popular.map((item) => (
                   <Link
                     key={item.id}
-                    href={`/news/${item.id}`}
+                    href={`/news/${item.slug ?? item.id}`}
                     className="group block py-4 first:pt-0 last:pb-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                   >
                     <span className="line-clamp-2 block text-base font-bold leading-6 text-slate-800 transition-colors group-hover:text-blue-700">
@@ -389,7 +389,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
             {bottomRelated.map((item) => (
               <Link
                 key={item.id}
-                href={`/news/${item.id}`}
+                href={`/news/${item.slug ?? item.id}`}
                 className="overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-[0_5px_18px_rgba(37,99,235,.05)] transition hover:-translate-y-1 hover:border-blue-200"
               >
                 {item.image ? (

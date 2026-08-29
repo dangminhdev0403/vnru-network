@@ -115,8 +115,6 @@ const TEXT = {
   },
 } as const;
 
-const LATEST = OFFICIAL_NEWS.slice(0, 5);
-const FEATURED = OFFICIAL_NEWS.slice(5, 9);
 const SPOTLIGHT_INTERVAL_MS = 5_000;
 
 function NewsImage({
@@ -173,7 +171,7 @@ function SmallRow({ item }: { item: NewsItem }) {
 }
 
 function articleId(item: NewsItem) {
-  return item.id;
+  return item.slug ?? item.id;
 }
 
 function matchesTopics(
@@ -445,20 +443,19 @@ function matchesContentType(
 
 function matchesPeriod(article: OfficialNewsArticle, period: string): boolean {
   if (!period || period === "newest") return true;
-  if (period === "7days") {
-    return article.id >= 25;
-  }
-  if (period === "30days") {
-    return article.id >= 10;
-  }
+  if (typeof article.id !== "number") return true;
+  if (period === "7days") return article.id >= 25;
+  if (period === "30days") return article.id >= 10;
   return true;
 }
 
 export function GuestExploreV2({
+  initialArticles = OFFICIAL_NEWS,
   initialCategory = "all",
   initialQuery = "",
   initialAdvancedFilters = DEFAULT_NEWS_ADVANCED_FILTERS,
 }: {
+  initialArticles?: OfficialNewsArticle[];
   initialCategory?: NewsCategory;
   initialQuery?: string;
   initialAdvancedFilters?: NewsAdvancedFilters;
@@ -475,6 +472,8 @@ export function GuestExploreV2({
     }),
   );
   const [query, setQuery] = useState(initialQuery);
+  const latest = initialArticles.slice(0, 5);
+  const featured = initialArticles.slice(5, 9);
   const [spotlightIndex, setSpotlightIndex] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
   const slidingTimerRef = useRef<number | null>(null);
@@ -511,8 +510,8 @@ export function GuestExploreV2({
   const filtered = useMemo(() => {
     let list =
       activeCategory === "all"
-        ? OFFICIAL_NEWS
-        : OFFICIAL_NEWS.filter((item) => item.category === activeCategory);
+        ? initialArticles
+        : initialArticles.filter((item) => item.category === activeCategory);
 
     const q = query.trim().toLocaleLowerCase(locale);
     if (q) {
@@ -543,7 +542,7 @@ export function GuestExploreV2({
     }
 
     return list;
-  }, [activeCategory, advancedFilters, locale, query]);
+  }, [activeCategory, advancedFilters, initialArticles, locale, query]);
 
   const categoryMode =
     activeCategory !== "all" ||
@@ -556,14 +555,14 @@ export function GuestExploreV2({
 
   useEffect(() => {
     const timer = window.setInterval(
-      () => changeSpotlight((current) => (current + 1) % LATEST.length),
+      () => changeSpotlight((current) => (current + 1) % latest.length),
       SPOTLIGHT_INTERVAL_MS,
     );
     return () => {
       window.clearInterval(timer);
       if (slidingTimerRef.current) window.clearTimeout(slidingTimerRef.current);
     };
-  }, []);
+  }, [latest.length]);
 
   return (
     <div className="min-h-screen bg-white text-slate-950">
@@ -610,7 +609,7 @@ export function GuestExploreV2({
                   className="absolute inset-0 flex transition-transform duration-[1500ms] ease-in-out motion-reduce:transition-none"
                   style={{ transform: `translateX(-${spotlightIndex * 100}%)` }}
                 >
-                  {LATEST.map((item, index) => (
+                  {latest.map((item, index) => (
                     <Link
                       key={item.title}
                       href={`/news/${articleId(item)}`}
@@ -644,14 +643,14 @@ export function GuestExploreV2({
                   ))}
                 </div>
                 <div className="absolute bottom-6 right-6 z-20 flex items-center gap-1.5">
-                  {LATEST.map((item, index) => {
+                  {latest.map((item, index) => {
                     const isActive = index === spotlightIndex;
                     return (
                       <button
                         key={item.title}
                         type="button"
                         onClick={() => changeSpotlight(index)}
-                        aria-label={`${index + 1} / ${LATEST.length}`}
+                        aria-label={`${index + 1} / ${latest.length}`}
                         aria-current={isActive ? "true" : undefined}
                         className="group grid h-7 w-7 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                       >
@@ -676,7 +675,7 @@ export function GuestExploreV2({
                     {t.latest}
                   </h2>
                 </div>
-                {LATEST.map((item) => (
+                {latest.map((item) => (
                   <SmallRow key={item.title} item={item} />
                 ))}
               </aside>
@@ -690,7 +689,7 @@ export function GuestExploreV2({
                 <span className="h-px flex-1 bg-blue-100" />
               </div>
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                {FEATURED.map((item) => (
+                {featured.map((item) => (
                   <Link
                     key={item.title}
                     href={`/news/${articleId(item)}`}

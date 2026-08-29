@@ -34,7 +34,13 @@ test("news is canonical and legacy explore redirects", async () => {
   assert.doesNotMatch(advancedFilter, /Xem thêm|Thu gọn|resultCount/);
   assert.match(advancedFilter, />\s*Áp dụng bộ lọc\s*<\/button>/);
   const page = await readFile("app/news/page.tsx", "utf8");
+  assert.match(page, /getPublicNews/);
+  assert.match(page, /initialArticles=\{articles\}/);
   assert.match(page, /initialAdvancedFilters=\{parseAdvancedFilters\(params\)\}/);
+
+  const detailPage = await readFile("app/news/[id]/page.tsx", "utf8");
+  assert.match(detailPage, /getPublicNewsArticle/);
+  assert.doesNotMatch(detailPage, /VALID_IDS|Number\(id\)/);
 });
 
 test("public news uses the official DOCX-derived catalog", async () => {
@@ -47,7 +53,7 @@ test("public news uses the official DOCX-derived catalog", async () => {
   assert.match(data, /Mở rộng hợp tác khoa học, giáo dục vì phát triển Việt - Nga/);
   assert.match(data, /Generated from the official DOCX files in \/Tin tức/);
   assert.match(explore, /OFFICIAL_NEWS/);
-  assert.match(article, /getOfficialNewsArticle/);
+  assert.match(article, /articles: OfficialNewsArticle\[\]/);
   assert.match(article, /article\.body\.map/);
   assert.match(article, /<Thumb item=\{item\}/);
   assert.match(article, /src=\{item\.image\}/);
