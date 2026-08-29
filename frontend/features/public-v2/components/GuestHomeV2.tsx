@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { z } from "zod";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { OFFICIAL_NEWS } from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
@@ -219,159 +221,6 @@ export const HOME_COPY: Record<
         "Cầu nối trực tiếp giữa các viện nghiên cứu và trường đại học hàng đầu Việt Nam – Liên bang Nga.",
       items: [
         {
-          num: "16",
-          title: "Viện nghiên cứu & Đại học trọng điểm",
-          tag: "Học thuật",
-          desc: "Hợp tác trực tiếp giữa VAST, Viện Hàn lâm Khoa học Nga (RAS), ĐHQG Hà Nội, Bách Khoa và MISIS.",
-        },
-        {
-          num: "500+",
-          title: "Chuyên gia khoa học song phương",
-          tag: "Chuyên gia",
-          desc: "Đội ngũ giáo sư và nhà khoa học sẵn sàng kết nối, phản biện độc lập và đồng chủ trì đề tài.",
-        },
-        {
-          num: "14",
-          title: "Hướng nghiên cứu trọng điểm năm 2026",
-          tag: "Nghiên cứu",
-          desc: "Ưu tiên các lĩnh vực AI, Khoa học Biển, Vật liệu Nano, Năng lượng mới và Chuyển giao công nghệ.",
-        },
-      ],
-      cta: "Khám phá cơ hội hợp tác ngay →",
-    },
-    news: {
-      title: "TIN TỨC",
-      viewAll: "Xem tất cả tin tức →",
-      items: [
-        {
-          id: 1,
-          category: "HỢP TÁC",
-          categoryTone: "bg-blue-600/90 text-white",
-          title:
-            "Diễn đàn hợp tác giáo dục Việt – Nga 2026: Mở rộng cơ hội kết nối",
-          date: "12/05/2026",
-          image:
-            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
-        },
-        {
-          id: 2,
-          category: "GIÁO DỤC",
-          categoryTone: "bg-emerald-600/90 text-white",
-          title: "Ký kết thỏa thuận hợp tác giữa các trường đại học hàng đầu",
-          date: "09/05/2026",
-          image:
-            "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
-        },
-        {
-          id: 3,
-          category: "KHOA HỌC",
-          categoryTone: "bg-purple-600/90 text-white",
-          title:
-            "Dự án nghiên cứu chung về công nghệ vật liệu mới giữa VN và RU",
-          date: "06/05/2026",
-          image:
-            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
-        },
-        {
-          id: 4,
-          category: "VĂN HÓA",
-          categoryTone: "bg-amber-600/90 text-white",
-          title:
-            "Ngày văn hóa Nga tại Việt Nam 2026: Kết nối di sản, lan tỏa hữu nghị",
-          date: "02/05/2026",
-          image:
-            "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
-        },
-      ],
-    },
-    ecosystem: {
-      eyebrow: "HỆ SINH THÁI",
-      title: "LIÊN KẾT TRI THỨC VIỆT – NGA",
-      cardCta: "Khám phá →",
-      cards: [
-        {
-          icon: "handshake",
-          title: "CƠ HỘI HỢP TÁC",
-          desc: "Kết nối doanh nghiệp, tổ chức và cá nhân tìm kiếm cơ hội hợp tác bền vững.",
-          href: "/opportunities",
-          tone: "blue",
-        },
-        {
-          icon: "groups",
-          title: "THÀNH VIÊN",
-          desc: "Mạng lưới thành viên rộng khắp Việt Nam và Liên bang Nga, cùng chung tầm nhìn.",
-          href: "/experts",
-          tone: "emerald",
-        },
-        {
-          icon: "insights",
-          title: "DỰ ÁN & KẾT QUẢ",
-          desc: "Các dự án nổi bật và những kết quả hợp tác đã đạt được giữa hai quốc gia.",
-          href: "/opportunities",
-          tone: "purple",
-        },
-        {
-          icon: "menu_book",
-          title: "THƯ VIỆN TRI THỨC",
-          desc: "Kho tri thức phong phú về nghiên cứu, báo cáo và tài liệu chuyên ngành.",
-          href: "/knowledge",
-          tone: "amber",
-        },
-      ],
-    },
-    events: {
-      eyebrow: "SỰ KIỆN",
-      title: "SỰ KIỆN",
-      viewAll: "Xem tất cả sự kiện →",
-      tabUpcoming: "Sắp diễn ra",
-      tabPast: "Đã tổ chức",
-      registerBtn: "Đăng ký tham gia",
-      items: [
-        {
-          id: 1,
-          date: "25",
-          month: "THÁNG 8",
-          year: "2026",
-          kind: "HỘI THẢO",
-          title: "Hội thảo hợp tác khoa học & công nghệ Việt – Nga 2026",
-          place: "Hà Nội, Việt Nam",
-          time: "08:30 - 17:00",
-          image:
-            "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80",
-          isPast: false,
-        },
-        {
-          id: 2,
-          date: "10",
-          month: "THÁNG 9",
-          year: "2026",
-          kind: "DIỄN ĐÀN",
-          title: "Diễn đàn Doanh nghiệp Việt – Nga: Kết nối & Phát triển",
-          place: "Moskva, Nga",
-          time: "10:00 - 18:00",
-          image:
-            "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=800&q=80",
-          isPast: false,
-        },
-        {
-          id: 3,
-          date: "20",
-          month: "THÁNG 9",
-          year: "2026",
-          kind: "HỘI THẢO",
-          title: "Trí tuệ nhân tạo và chuyển đổi số trong hợp tác VN – RU",
-          place: "TP. Hồ Chí Minh, Việt Nam",
-          time: "09:00 - 16:30",
-          image:
-            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
-          isPast: false,
-        },
-        {
-          id: 4,
-          date: "15",
-          month: "THÁNG 5",
-          year: "2026",
-          kind: "TỌA ĐÀM",
           title: "Tọa đàm Chuyển giao công nghệ sinh học và vật liệu mới",
           place: "Hà Nội, Việt Nam",
           time: "14:00 - 17:30",
@@ -653,7 +502,7 @@ export const HOME_COPY: Record<
     },
     ecosystem: {
       eyebrow: "ЭКОСИСТЕМА",
-      title: "НАУЧНО-ОБРАЗОВАТЕЛЬНЫЙ МОСТ РОССИЯ – ВЬЕТНАМ",
+      title: "ЭКОСИСТЕМА СЕТИ RU-VN",
       cardCta: "Исследовать →",
       cards: [
         {
@@ -1021,7 +870,7 @@ export const HOME_COPY: Record<
     },
     ecosystem: {
       eyebrow: "ECOSYSTEM",
-      title: "VIETNAM – RUSSIA KNOWLEDGE NETWORK",
+      title: "RU-VN NETWORK ECOSYSTEM",
       cardCta: "Explore →",
       cards: [
         {
@@ -1281,6 +1130,1188 @@ export const HOME_COPY: Record<
   },
 };
 
+type NetworkStat = (typeof HOME_COPY)[Locale]["stats"][number];
+
+const NETWORK_TONE_STYLES = {
+  blue: {
+    glow: "drop-shadow-[0_16px_22px_rgba(30,100,235,0.3)]",
+    accent: "#2d8cff",
+    faceStart: "#3db6ff",
+    faceEnd: "#1554db",
+  },
+  cyan: {
+    glow: "drop-shadow-[0_16px_22px_rgba(8,168,198,0.3)]",
+    accent: "#17c5dd",
+    faceStart: "#31dce8",
+    faceEnd: "#0794b6",
+  },
+  emerald: {
+    glow: "drop-shadow-[0_16px_22px_rgba(18,174,98,0.3)]",
+    accent: "#32d486",
+    faceStart: "#5ce49a",
+    faceEnd: "#159f5b",
+  },
+  purple: {
+    glow: "drop-shadow-[0_16px_22px_rgba(112,66,218,0.3)]",
+    accent: "#8c62f5",
+    faceStart: "#a97bff",
+    faceEnd: "#6438d0",
+  },
+  amber: {
+    glow: "drop-shadow-[0_16px_22px_rgba(238,139,19,0.3)]",
+    accent: "#ffae2d",
+    faceStart: "#ffc64d",
+    faceEnd: "#ec7f16",
+  },
+} as const;
+
+const NETWORK_ROUNDED_PENTAGON_PATH =
+  "M 8 -80 L 72 -34 Q 82 -27 79 -16 L 55 61 Q 52 72 41 72 L -41 72 Q -52 72 -55 61 L -79 -16 Q -82 -27 -72 -34 L -8 -80 Q 0 -86 8 -80 Z";
+
+const NETWORK_DESKTOP_NODES = [
+  {
+    connector: [600, 175, 600, 237],
+    center: [600, 100],
+    rotation: 180,
+    scale: 0.9,
+    content: [535, 40, 130, 122],
+  },
+  {
+    connector: [431, 316, 493, 316],
+    center: [346, 316],
+    rotation: 90,
+    scale: 1.02,
+    content: [269, 242, 154, 148],
+  },
+  {
+    connector: [769, 316, 707, 316],
+    center: [854, 316],
+    rotation: -90,
+    scale: 1.02,
+    content: [777, 242, 154, 148],
+  },
+  {
+    connector: [478.3, 475, 532, 444],
+    center: [405, 517],
+    rotation: 60,
+    scale: 1.02,
+    content: [328, 442, 154, 148],
+  },
+  {
+    connector: [721.7, 475, 668, 444],
+    center: [795, 517],
+    rotation: -60,
+    scale: 1.02,
+    content: [718, 442, 154, 148],
+  },
+] as const;
+
+export function NetworkIconGlyph({
+  icon,
+  className = "size-7",
+}: Readonly<{ icon: string; className?: string }>) {
+  const shared = {
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+
+  if (icon === "public") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <circle cx="12" cy="12" r="8.25" {...shared} />
+        <path
+          d="M3.9 9.25h16.2M3.9 14.75h16.2M12 3.75c2.1 2.3 3.15 5.05 3.15 8.25S14.1 17.95 12 20.25C9.9 17.95 8.85 15.2 8.85 12S9.9 6.05 12 3.75Z"
+          {...shared}
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "groups") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <circle cx="8" cy="8" r="2.4" {...shared} />
+        <circle cx="16" cy="8.5" r="2.1" {...shared} />
+        <path
+          d="M3.5 19c.35-3.3 1.95-5.1 4.5-5.1s4.15 1.8 4.5 5.1M13.15 14.2c.75-.45 1.7-.65 2.85-.65 2.35 0 3.85 1.55 4.2 4.45"
+          {...shared}
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "hub") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <circle cx="12" cy="12" r="2.2" {...shared} />
+        <circle cx="12" cy="4" r="1.75" {...shared} />
+        <circle cx="20" cy="12" r="1.75" {...shared} />
+        <circle cx="12" cy="20" r="1.75" {...shared} />
+        <circle cx="4" cy="12" r="1.75" {...shared} />
+        <path
+          d="M12 5.75v4.05M18.25 12H14.2M12 14.2v4.05M9.8 12H5.75"
+          {...shared}
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "science") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <path
+          d="M9 3.75h6M10 3.75v5.1l-5.2 8.7a1.8 1.8 0 0 0 1.55 2.7h11.3a1.8 1.8 0 0 0 1.55-2.7L14 8.85v-5.1M7.75 14.6h8.5"
+          {...shared}
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "account_balance") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <path
+          d="m3.5 9 8.5-4.5L20.5 9H3.5ZM5.25 19.5h13.5M6.5 10.5V17M10.2 10.5V17M13.8 10.5V17M17.5 10.5V17"
+          {...shared}
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "network") {
+    return (
+      <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+        <path
+          d="m12 3.25 7 4.1v9.3l-7 4.1-7-4.1v-9.3l7-4.1Zm0 0v17.5M5 7.35l14 9.3M19 7.35 5 16.65"
+          {...shared}
+        />
+        <circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path
+        d="m3.5 9 8.5-4.5L20.5 9 12 13.5 3.5 9ZM7 11.25v4.5c2.8 2 7.2 2 10 0v-4.5M20.5 9v5"
+        {...shared}
+      />
+    </svg>
+  );
+}
+
+function NetworkStatNode({
+  stat,
+  className = "",
+}: Readonly<{
+  stat: NetworkStat;
+  className?: string;
+}>) {
+  const styles = NETWORK_TONE_STYLES[stat.tone];
+
+  return (
+    <div className={`flex w-full justify-center ${className}`}>
+      <div className={`relative h-[172px] w-[180px] max-w-full ${styles.glow}`}>
+        <svg
+          viewBox="-90 -90 180 180"
+          className="absolute inset-0 size-full overflow-visible"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient
+              id={`network-mobile-face-${stat.tone}`}
+              x1="-70"
+              y1="-70"
+              x2="65"
+              y2="70"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0" stopColor={styles.faceStart} />
+              <stop offset="1" stopColor={styles.faceEnd} />
+            </linearGradient>
+          </defs>
+          <path
+            d={NETWORK_ROUNDED_PENTAGON_PATH}
+            fill={`url(#network-mobile-face-${stat.tone})`}
+            stroke="#ffffff"
+            strokeWidth="6"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center px-4 pb-1 text-center text-white">
+          <div className="flex max-h-[136px] flex-col items-center justify-center">
+            <NetworkIconGlyph icon={stat.icon} className="size-6" />
+            <strong className="mt-1 text-[26px] font-black leading-none tracking-[-0.03em]">
+              {stat.val}
+            </strong>
+            <span className="mt-1 max-w-[144px] text-sm font-bold leading-tight text-white/95">
+              {stat.lbl}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NetworkCore({
+  titleMain,
+  country1,
+  hyphen,
+  country2,
+}: Readonly<{
+  titleMain: string;
+  country1: string;
+  hyphen: string;
+  country2: string;
+}>) {
+  return (
+    <div className="relative h-[184px] w-[200px] drop-shadow-[0_18px_25px_rgba(31,99,233,0.24)]">
+      <svg
+        viewBox="-100 -95 200 190"
+        className="absolute inset-0 size-full overflow-visible"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient
+            id="network-mobile-core"
+            x1="0"
+            y1="-90"
+            x2="0"
+            y2="80"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stopColor="#ffffff" />
+            <stop offset="1" stopColor="#e8eef8" />
+          </linearGradient>
+        </defs>
+        <g transform="scale(1.02)">
+          <path
+            d={NETWORK_ROUNDED_PENTAGON_PATH}
+            fill="url(#network-mobile-core)"
+            stroke="#ffffff"
+            strokeWidth="10"
+            strokeLinejoin="round"
+          />
+          <path
+            d={NETWORK_ROUNDED_PENTAGON_PATH}
+            fill="url(#network-mobile-core)"
+            stroke="#4f91f5"
+            strokeWidth="3"
+            strokeLinejoin="round"
+          />
+        </g>
+      </svg>
+      <div className="absolute inset-0 grid place-items-center px-7 pb-1 text-center">
+        <div>
+          <NetworkIconGlyph
+            icon="network"
+            className="mx-auto size-7 text-blue-600"
+          />
+          <h2 className="mt-2 font-serif text-base font-bold leading-tight text-[#0a2450]">
+            {titleMain}
+          </h2>
+          <p className="mt-1 text-lg font-black leading-tight text-[#071a33]">
+            {country1} <span className="text-blue-500">{hyphen}</span>{" "}
+            {country2}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NetworkStatsInfographic({
+  stats,
+  titleMain,
+  country1,
+  hyphen,
+  country2,
+  sectionTitle,
+}: Readonly<{
+  stats: readonly NetworkStat[];
+  titleMain: string;
+  country1: string;
+  hyphen: string;
+  country2: string;
+  sectionTitle?: string;
+}>) {
+  const accessibleLabel = `${titleMain} ${country1} ${hyphen} ${country2}`;
+
+  return (
+    <section
+      id="ecosystem"
+      className="scroll-mt-36 px-4 pt-4 pb-12 sm:px-6 sm:pb-14 lg:px-8 xl:scroll-mt-28"
+      aria-labelledby="network-stats-heading"
+    >
+      <div className="mx-auto max-w-[1460px]">
+        {sectionTitle ? (
+          <div className="mb-8 flex flex-col items-center justify-center text-center sm:mb-10">
+            <div className="inline-flex items-center gap-2">
+              <span className="h-1 w-8 rounded-full bg-blue-600" />
+              <h2
+                id="network-stats-heading"
+                className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl"
+              >
+                {sectionTitle}
+              </h2>
+              <span className="h-1 w-8 rounded-full bg-blue-600" />
+            </div>
+          </div>
+        ) : (
+          <h2 id="network-stats-heading" className="sr-only">
+            {accessibleLabel}
+          </h2>
+        )}
+        <ul className="sr-only">
+          {stats.map((stat) => (
+            <li key={stat.lbl}>
+              {stat.val} {stat.lbl}
+            </li>
+          ))}
+        </ul>
+
+        <div className="relative overflow-hidden rounded-[30px] border border-blue-100/80 bg-[#eff6ff] shadow-[0_30px_80px_-48px_rgba(31,99,233,0.5)]">
+          <Image
+            src="/images/network-stats-bg.png"
+            alt=""
+            fill
+            sizes="(min-width: 1536px) 1460px, 100vw"
+            className="object-cover"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.04)_0%,rgba(239,246,255,0.12)_46%,rgba(224,236,255,0.42)_100%)] xl:bg-[radial-gradient(circle_at_50%_46%,rgba(37,99,235,0.18)_0%,rgba(20,74,157,0.28)_54%,rgba(7,26,51,0.46)_100%)]"
+            aria-hidden="true"
+          />
+
+          <div
+            className="relative px-3 py-10 sm:px-8 xl:hidden"
+            aria-hidden="true"
+          >
+            <div className="flex justify-center">
+              <NetworkCore
+                titleMain={titleMain}
+                country1={country1}
+                hyphen={hyphen}
+                country2={country2}
+              />
+            </div>
+            <div className="mx-auto mt-8 grid max-w-md grid-cols-1 gap-5 sm:grid-cols-2">
+              {stats.map((stat, index) => (
+                <NetworkStatNode
+                  key={stat.lbl}
+                  stat={stat}
+                  className={
+                    index === stats.length - 1 ? "sm:col-span-2 sm:mx-auto" : ""
+                  }
+                />
+              ))}
+            </div>
+          </div>
+
+          <div
+            className="relative hidden aspect-[1200/675] xl:block"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 1200 675" className="block size-full">
+              <defs>
+                <path
+                  id="network-rounded-pentagon"
+                  d={NETWORK_ROUNDED_PENTAGON_PATH}
+                />
+                <linearGradient
+                  id="network-face-blue"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#3db6ff" />
+                  <stop offset="0.55" stopColor="#2379f2" />
+                  <stop offset="1" stopColor="#1554db" />
+                </linearGradient>
+                <linearGradient
+                  id="network-face-cyan"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#31dce8" />
+                  <stop offset="0.55" stopColor="#15b9d0" />
+                  <stop offset="1" stopColor="#0794b6" />
+                </linearGradient>
+                <linearGradient
+                  id="network-face-emerald"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#5ce49a" />
+                  <stop offset="0.55" stopColor="#2bc778" />
+                  <stop offset="1" stopColor="#159f5b" />
+                </linearGradient>
+                <linearGradient
+                  id="network-face-purple"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#a97bff" />
+                  <stop offset="0.55" stopColor="#8154ed" />
+                  <stop offset="1" stopColor="#6438d0" />
+                </linearGradient>
+                <linearGradient
+                  id="network-face-amber"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#ffc64d" />
+                  <stop offset="0.55" stopColor="#f5a225" />
+                  <stop offset="1" stopColor="#ec7f16" />
+                </linearGradient>
+                <linearGradient
+                  id="network-core-face"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0" stopColor="#ffffff" />
+                  <stop offset="0.62" stopColor="#f8fbff" />
+                  <stop offset="1" stopColor="#e8eef8" />
+                </linearGradient>
+                <filter
+                  id="network-node-shadow"
+                  x="-35%"
+                  y="-35%"
+                  width="170%"
+                  height="190%"
+                >
+                  <feDropShadow
+                    dx="0"
+                    dy="10"
+                    stdDeviation="11"
+                    floodColor="#1f63e9"
+                    floodOpacity="0.24"
+                  />
+                  <feDropShadow
+                    dx="0"
+                    dy="0"
+                    stdDeviation="5"
+                    floodColor="#ffffff"
+                    floodOpacity="0.9"
+                  />
+                </filter>
+                <filter
+                  id="network-core-shadow"
+                  x="-35%"
+                  y="-35%"
+                  width="170%"
+                  height="190%"
+                >
+                  <feDropShadow
+                    dx="0"
+                    dy="18"
+                    stdDeviation="18"
+                    floodColor="#1f63e9"
+                    floodOpacity="0.28"
+                  />
+                </filter>
+                <filter
+                  id="network-connector-glow"
+                  x="-40%"
+                  y="-80%"
+                  width="180%"
+                  height="260%"
+                >
+                  <feGaussianBlur stdDeviation="4" />
+                </filter>
+              </defs>
+
+              <g fill="none" stroke="#ffffff" strokeLinecap="round">
+                <ellipse
+                  cx="600"
+                  cy="346"
+                  rx="236"
+                  ry="224"
+                  strokeOpacity="0.72"
+                  strokeWidth="1.6"
+                />
+                <ellipse
+                  cx="600"
+                  cy="346"
+                  rx="274"
+                  ry="258"
+                  strokeOpacity="0.42"
+                  strokeWidth="1.2"
+                />
+                <ellipse
+                  cx="600"
+                  cy="346"
+                  rx="206"
+                  ry="195"
+                  stroke="#67e8f9"
+                  strokeDasharray="2 8"
+                  strokeOpacity="0.7"
+                  strokeWidth="2"
+                />
+              </g>
+
+              {NETWORK_DESKTOP_NODES.map((node, index) => {
+                const stat = stats[index];
+                if (!stat) return null;
+
+                return (
+                  <g key={`connector-${stat.lbl}`}>
+                    <line
+                      x1={node.connector[0]}
+                      y1={node.connector[1]}
+                      x2={node.connector[2]}
+                      y2={node.connector[3]}
+                      stroke="#ffffff"
+                      strokeOpacity="0.44"
+                      strokeWidth="24"
+                      strokeLinecap="round"
+                      filter="url(#network-connector-glow)"
+                    />
+                    <line
+                      x1={node.connector[0]}
+                      y1={node.connector[1]}
+                      x2={node.connector[2]}
+                      y2={node.connector[3]}
+                      stroke="#ffffff"
+                      strokeWidth="14"
+                      strokeLinecap="round"
+                    />
+                  </g>
+                );
+              })}
+
+              {stats.map((stat, index) => {
+                const node = NETWORK_DESKTOP_NODES[index];
+                if (!node) return null;
+
+                return (
+                  <g key={stat.lbl}>
+                    <g
+                      transform={`translate(${node.center[0]} ${node.center[1]}) rotate(${node.rotation}) scale(${node.scale})`}
+                    >
+                      <use
+                        href="#network-rounded-pentagon"
+                        fill={`url(#network-face-${stat.tone})`}
+                        stroke="#ffffff"
+                        strokeWidth="6"
+                        strokeLinejoin="round"
+                        vectorEffect="non-scaling-stroke"
+                        filter="url(#network-node-shadow)"
+                      />
+                    </g>
+                    <foreignObject
+                      x={node.content[0]}
+                      y={node.content[1]}
+                      width={node.content[2]}
+                      height={node.content[3]}
+                    >
+                      <div className="flex size-full flex-col items-center justify-center px-2 text-center text-white drop-shadow-sm">
+                        <NetworkIconGlyph icon={stat.icon} className="size-6" />
+                        <strong className="mt-1 text-[30px] font-black leading-none tracking-[-0.04em]">
+                          {stat.val}
+                        </strong>
+                        <span className="mt-1.5 max-w-[126px] text-[14px] font-bold leading-[1.16] text-white/95">
+                          {stat.lbl}
+                        </span>
+                      </div>
+                    </foreignObject>
+                  </g>
+                );
+              })}
+
+              {NETWORK_DESKTOP_NODES.map((node, index) => {
+                const stat = stats[index];
+                if (!stat) return null;
+                const styles = NETWORK_TONE_STYLES[stat.tone];
+
+                return (
+                  <g key={`${stat.lbl}-endpoint`}>
+                    <circle
+                      cx={node.connector[0]}
+                      cy={node.connector[1]}
+                      r="9"
+                      fill="#ffffff"
+                      fillOpacity="0.96"
+                      stroke="#ffffff"
+                      strokeWidth="3"
+                    />
+                    <circle
+                      cx={node.connector[0]}
+                      cy={node.connector[1]}
+                      r="3.5"
+                      fill={styles.accent}
+                    />
+                  </g>
+                );
+              })}
+              <g transform="translate(600 350)">
+                <use
+                  href="#network-rounded-pentagon"
+                  fill="url(#network-core-face)"
+                  stroke="#ffffff"
+                  strokeWidth="14"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                  transform="scale(1.36)"
+                  filter="url(#network-core-shadow)"
+                />
+                <use
+                  href="#network-rounded-pentagon"
+                  fill="url(#network-core-face)"
+                  stroke="#4f91f5"
+                  strokeWidth="4"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                  transform="scale(1.36)"
+                />
+              </g>
+              <foreignObject x="505" y="276" width="190" height="150">
+                <div className="flex size-full flex-col items-center justify-center px-4 text-center">
+                  <NetworkIconGlyph
+                    icon="network"
+                    className="size-8 text-[#2676ee]"
+                  />
+                  <h2 className="mt-2 font-serif text-[19px] font-bold leading-tight text-[#0a2450]">
+                    {titleMain}
+                  </h2>
+                  <p className="mt-1 text-[27px] font-black leading-none tracking-[-0.035em] text-[#071a33]">
+                    {country1} <span className="text-[#2d7ef1]">{hyphen}</span>{" "}
+                    {country2}
+                  </p>
+                </div>
+              </foreignObject>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const getContactSchema = (locale: string) => {
+  if (locale === "ru") {
+    return z.object({
+      name: z.string().trim().min(2, "Минимум 2 символа"),
+      email: z.string().trim().email("Некорректный email"),
+      message: z
+        .string()
+        .trim()
+        .min(10, "Минимум 10 символов")
+        .max(1000, "Максимум 1000 символов"),
+    });
+  }
+  if (locale === "en") {
+    return z.object({
+      name: z.string().trim().min(2, "Min 2 characters"),
+      email: z.string().trim().email("Invalid email"),
+      message: z
+        .string()
+        .trim()
+        .min(10, "Min 10 characters")
+        .max(1000, "Max 1000 characters"),
+    });
+  }
+  return z.object({
+    name: z.string().trim().min(2, "Tối thiểu 2 ký tự"),
+    email: z.string().trim().email("Email không hợp lệ"),
+    message: z
+      .string()
+      .trim()
+      .min(10, "Tối thiểu 10 ký tự")
+      .max(1000, "Tối đa 1000 ký tự"),
+  });
+};
+
+function GuestContactSection({
+  copy,
+  locale,
+}: Readonly<{
+  copy: (typeof HOME_COPY)["vi"]["contactSection"];
+  locale: string;
+}>) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    message?: string;
+  }>({});
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const schema = getContactSchema(locale);
+    const result = schema.safeParse({ name, email, message });
+
+    if (!result.success) {
+      const fieldErrors: {
+        name?: string;
+        email?: string;
+        message?: string;
+      } = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path[0] as keyof typeof fieldErrors;
+        if (!fieldErrors[key]) {
+          fieldErrors[key] = issue.message;
+        }
+      }
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setErrors({});
+
+    // Step 1: Confirmation Modal
+    const confirmResult = await Swal.fire({
+      icon: "question",
+      title:
+        locale === "ru"
+          ? "Подтвердить отправку?"
+          : locale === "en"
+            ? "Confirm Submission?"
+            : "Xác nhận gửi liên hệ?",
+      text:
+        locale === "ru"
+          ? "Вы хотите отправить обращение в Бан координации?"
+          : locale === "en"
+            ? "Do you want to submit this inquiry to the Coordination Board?"
+            : "Bạn có chắc chắn muốn gửi thông tin liên hệ này?",
+      showCancelButton: true,
+      confirmButtonColor: "#2563eb",
+      cancelButtonColor: "#94a3b8",
+      confirmButtonText:
+        locale === "ru"
+          ? "Отправить"
+          : locale === "en"
+            ? "Send"
+            : "Xác nhận gửi",
+      cancelButtonText:
+        locale === "ru" ? "Отмена" : locale === "en" ? "Cancel" : "Hủy",
+      reverseButtons: true,
+    });
+
+    if (!confirmResult.isConfirmed) return;
+
+    // Step 2: SweetAlert2 Loading Modal
+    Swal.fire({
+      title:
+        locale === "ru"
+          ? "Отправка сообщения..."
+          : locale === "en"
+            ? "Sending inquiry..."
+            : "Đang gửi liên hệ...",
+      text:
+        locale === "ru"
+          ? "Пожалуйста, подождите..."
+          : locale === "en"
+            ? "Please wait a moment..."
+            : "Vui lòng chờ trong giây lát...",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    // Simulate sending delay
+    await new Promise((resolve) => setTimeout(resolve, 900));
+
+    // Step 3: SweetAlert2 Success Alert
+    await Swal.fire({
+      icon: "success",
+      title:
+        locale === "ru"
+          ? "Успешно отправлено!"
+          : locale === "en"
+            ? "Inquiry Sent Successfully!"
+            : "Gửi liên hệ thành công!",
+      text:
+        locale === "ru"
+          ? "Мы получили ваше обращение и ответим в течение 1–2 рабочих дней."
+          : locale === "en"
+            ? "We have received your message and will respond within 1–2 business days."
+            : "Chúng tôi đã tiếp nhận thông tin và sẽ phản hồi trong 01–02 ngày làm việc.",
+      confirmButtonColor: "#2563eb",
+      confirmButtonText:
+        locale === "ru" ? "Đóng / Закрыть" : locale === "en" ? "Close" : "Đóng",
+    });
+
+    // Reset Form
+    setName("");
+    setEmail("");
+    setMessage("");
+  }
+
+  return (
+    <section id="contact" className="scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1460px]">
+        {/* Section Header */}
+        <div className="mb-10 text-center sm:mb-12">
+          <div className="inline-flex items-center gap-2">
+            <span className="h-1 w-8 rounded-full bg-blue-600" />
+            <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+              {copy.title}
+            </h2>
+            <span className="h-1 w-8 rounded-full bg-blue-600" />
+          </div>
+          <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+            {copy.subtitle}
+          </p>
+        </div>
+
+        {/* 2-Column Grid */}
+        <div className="grid gap-8 lg:grid-cols-2">
+          {/* Left Column: Contact Information */}
+          <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
+            <div>
+              {/* Card Header */}
+              <div>
+                <h3 className="text-xl font-black text-slate-900 sm:text-2xl">
+                  {copy.infoTitle}
+                </h3>
+                <div className="mt-1.5 h-0.5 w-8 rounded-full bg-blue-600" />
+              </div>
+
+              {/* Info Items List - Distributed to balance height */}
+              <div className="mt-6 flex flex-col justify-between gap-4.5 sm:gap-5">
+                <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
+                    <span className="material-symbols-outlined text-2xl">
+                      groups
+                    </span>
+                  </span>
+                  <div>
+                    <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
+                      {copy.coordinatorLabel}
+                    </span>
+                    <strong className="mt-1 block text-base font-bold text-slate-900 sm:text-lg">
+                      {copy.coordinatorValue}
+                    </strong>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
+                    <span className="material-symbols-outlined text-2xl">
+                      pin_drop
+                    </span>
+                  </span>
+                  <div>
+                    <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
+                      {copy.addressLabel}
+                    </span>
+                    <span className="mt-1 block text-sm font-semibold leading-relaxed text-slate-800 sm:text-base">
+                      {copy.addressValue}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
+                    <span className="material-symbols-outlined text-2xl">
+                      mail
+                    </span>
+                  </span>
+                  <div>
+                    <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
+                      {copy.supportLabel}
+                    </span>
+                    <a
+                      href={`mailto:${copy.supportValue}`}
+                      className="mt-1 block text-base font-bold text-blue-600 transition hover:text-blue-700 hover:underline sm:text-lg"
+                    >
+                      {copy.supportValue}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Contact Form */}
+          <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
+            <div>
+              {/* Card Header */}
+              <div>
+                <h3 className="text-xl font-black text-slate-900 sm:text-2xl">
+                  {copy.formTitle}
+                </h3>
+                <div className="mt-1.5 h-0.5 w-8 rounded-full bg-blue-600" />
+              </div>
+
+              {/* Form without default HTML5 validation */}
+              <form
+                noValidate
+                onSubmit={handleSubmit}
+                className="mt-6 flex flex-col justify-between gap-4"
+              >
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className="block text-sm font-bold text-slate-800 sm:text-base">
+                      {copy.nameLabel}
+                    </label>
+                    <input
+                      type="text"
+                      value={name}
+                      style={{ outline: "none", boxShadow: "none" }}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                        if (errors.name) {
+                          setErrors((prev) => ({ ...prev, name: undefined }));
+                        }
+                      }}
+                      placeholder={copy.namePlaceholder}
+                      className={`mt-1.5 w-full rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 [outline:none] [box-shadow:none] focus:bg-white focus:[outline:none] focus:[box-shadow:none] focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 ${
+                        errors.name
+                          ? "border-red-500 bg-red-50/20 focus:border-red-600"
+                          : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
+                      }`}
+                    />
+                    {errors.name ? (
+                      <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
+                        {errors.name}
+                      </p>
+                    ) : null}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-800 sm:text-base">
+                      {copy.emailLabel}
+                    </label>
+                    <input
+                      type="email"
+                      value={email}
+                      style={{ outline: "none", boxShadow: "none" }}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (errors.email) {
+                          setErrors((prev) => ({ ...prev, email: undefined }));
+                        }
+                      }}
+                      placeholder={copy.emailPlaceholder}
+                      className={`mt-1.5 w-full rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 [outline:none] [box-shadow:none] focus:bg-white focus:[outline:none] focus:[box-shadow:none] focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 ${
+                        errors.email
+                          ? "border-red-500 bg-red-50/20 focus:border-red-600"
+                          : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
+                      }`}
+                    />
+                    {errors.email ? (
+                      <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
+                        {errors.email}
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label className="block text-sm font-bold text-slate-800 sm:text-base">
+                      {copy.messageLabel}
+                    </label>
+                    <span className="text-xs font-semibold text-slate-400">
+                      {message.length}/1000
+                    </span>
+                  </div>
+                  <textarea
+                    rows={6}
+                    maxLength={1000}
+                    value={message}
+                    style={{ outline: "none", boxShadow: "none" }}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                      if (errors.message) {
+                        setErrors((prev) => ({ ...prev, message: undefined }));
+                      }
+                    }}
+                    placeholder={copy.messagePlaceholder}
+                    className={`mt-1.5 min-h-[175px] w-full resize-y rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 [outline:none] [box-shadow:none] focus:bg-white focus:[outline:none] focus:[box-shadow:none] focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 ${
+                      errors.message
+                        ? "border-red-500 bg-red-50/20 focus:border-red-600"
+                        : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
+                    }`}
+                  />
+                  {errors.message ? (
+                    <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
+                      {errors.message}
+                    </p>
+                  ) : null}
+                </div>
+
+                <button
+                  type="submit"
+                  className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 text-base font-bold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.99] sm:py-4 sm:text-lg"
+                >
+                  <span className="material-symbols-outlined text-2xl">
+                    mail
+                  </span>
+                  <span>{copy.sendBtn}</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BilateralGatewaySection({
+  copy,
+}: Readonly<{
+  copy: (typeof HOME_COPY)[Locale]["bilateralGateway"];
+}>) {
+  return (
+    <section
+      id="about-gateway"
+      className="relative isolate overflow-hidden bg-[#eef5fc] px-4 pt-16 pb-20 sm:px-6 sm:pt-20 sm:pb-24 lg:px-8 lg:pt-24 lg:pb-28"
+    >
+      {/* Background Banner Artwork */}
+      <Image
+        src="/images/home-bilateral-gateway.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="pointer-events-none select-none object-cover object-top"
+        aria-hidden="true"
+      />
+
+      {/* Gentle White-to-Blue Gradients ensuring maximum legibility while keeping visual depth */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(240,244,249,0.85)_0%,rgba(240,244,249,0.42)_35%,rgba(240,244,249,0.88)_78%,#f0f4f9_100%)]"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 mx-auto max-w-[1460px]">
+        {/* Section Header */}
+        <div className="mx-auto mb-12 max-w-4xl text-center sm:mb-16">
+          <h2 className="font-serif text-3xl font-black tracking-tight text-[#071936] sm:text-4xl lg:text-5xl">
+            {copy.title}
+          </h2>
+
+          <p className="mx-auto mt-5 max-w-3xl text-lg font-medium leading-relaxed text-slate-700 sm:text-xl sm:leading-8">
+            {copy.subtitle}
+          </p>
+        </div>
+
+        {/* 2-Column Asymmetric Content Grid */}
+        <div className="grid gap-8 lg:grid-cols-12">
+          {/* Left Column: Legal Foundation & Coordination Anchor Card (5 cols) */}
+          <div className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-blue-200 bg-white/95 p-8 shadow-xl shadow-blue-900/10 backdrop-blur-md transition duration-200 hover:border-blue-300 lg:col-span-5 sm:p-10">
+            <div>
+              <div className="flex items-center justify-between gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-100/80 px-4 py-2 text-xs font-extrabold text-blue-800 sm:text-sm">
+                  <span
+                    className="size-2.5 rounded-full bg-blue-600"
+                    aria-hidden="true"
+                  />
+                  {copy.foundationBadge}
+                </span>
+                <span className="font-mono text-sm font-bold text-slate-400">
+                  EST. 2026
+                </span>
+              </div>
+
+              <h3 className="mt-7 font-serif text-3xl font-black leading-tight tracking-tight text-[#082352] sm:text-4xl lg:text-[2.5rem]">
+                {copy.foundationName}
+              </h3>
+
+              <div
+                className="my-6 h-px w-full bg-slate-200"
+                aria-hidden="true"
+              />
+
+              <p className="text-lg font-normal leading-relaxed text-slate-700 sm:text-xl">
+                {copy.foundationDesc}
+              </p>
+
+              {/* Key Institutional Highlights */}
+              <ul className="mt-8 space-y-4">
+                {copy.foundationHighlights.map((item, idx) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-4 rounded-2xl border border-blue-100 bg-blue-50/60 p-4 transition hover:bg-blue-50/90"
+                  >
+                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-blue-600 font-mono text-sm font-black text-white shadow-xs">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-base font-bold leading-snug text-slate-800 sm:text-lg">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Action Button at bottom of Left Card */}
+            <div className="mt-10 flex justify-center border-t border-slate-200 pt-6">
+              <Link
+                href="/about"
+                className="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-blue-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition duration-150 hover:-translate-y-0.5 hover:bg-blue-700 sm:w-auto sm:text-lg"
+              >
+                <span>{copy.learnMoreBtn}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: 4 Bilateral Gateway Pillars (7 cols, 2x2 Grid) */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:col-span-7">
+            {copy.pillars.map((pillar) => (
+              <div
+                key={pillar.num}
+                className="group relative flex flex-col justify-between rounded-3xl border border-blue-100 bg-white/95 p-8 shadow-lg shadow-blue-900/5 backdrop-blur-[2px] transition duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl sm:p-9"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-4xl font-black text-blue-500 sm:text-5xl">
+                      {pillar.num}
+                    </span>
+                    <span className="grid size-16 place-items-center rounded-2xl border border-blue-200 bg-blue-100/60 text-blue-600 shadow-xs transition duration-200 group-hover:scale-105 sm:size-18">
+                      <NetworkIconGlyph
+                        icon={pillar.icon}
+                        className="size-8 sm:size-9"
+                      />
+                    </span>
+                  </div>
+
+                  <h3 className="mt-6 font-serif text-2xl font-black leading-tight tracking-tight text-[#082352] sm:text-[1.7rem]">
+                    {pillar.title}
+                  </h3>
+
+                  <div
+                    className="my-5 h-px w-full bg-slate-200/80"
+                    aria-hidden="true"
+                  />
+
+                  <p className="text-base font-normal leading-relaxed text-slate-700 sm:text-lg sm:leading-8">
+                    {pillar.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function GuestHomeV2({
   isAuthenticated,
   workspaceHref,
@@ -1288,6 +2319,14 @@ export function GuestHomeV2({
   const { locale } = useLocale();
   const t = HOME_COPY[locale] ?? HOME_COPY.vi;
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [eventTab, setEventTab] = useState<"upcoming" | "past">("upcoming");
+
+  const filteredEvents = t.events.items.filter((event) =>
+    eventTab === "past" ? Boolean(event.isPast) : !event.isPast,
+  );
+  const displayedEvents =
+    filteredEvents.length > 0 ? filteredEvents : t.events.items;
+
   useEffect(() => {
     const timer = window.setInterval(() => {
       setCurrentSlide((previous) => (previous + 1) % HERO_BANNERS.length);
@@ -1363,6 +2402,9 @@ export function GuestHomeV2({
           </div>
         </section>
 
+        {/* ═══════════ SECTION 1: CỔNG KẾT NỐI HỢP TÁC SONG PHƯƠNG (VỀ CHÚNG TÔI) ═══════════ */}
+        <BilateralGatewaySection copy={t.bilateralGateway} />
+
         {/* ═══════════ SECTION 1: TIN TỨC (NEWS) ═══════════ */}
         <section id="news" className="px-4 pt-14 pb-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
@@ -1422,44 +2464,161 @@ export function GuestHomeV2({
           </div>
         </section>
 
-        <section
-          id="ecosystem"
-          className="scroll-mt-24 border-y border-blue-100 bg-white px-4 py-14 sm:px-6 lg:px-8"
-        >
+        {/* ═══════════ SECTION 2: SỰ KIỆN (EVENTS) ═══════════ */}
+        <section id="events" className="px-4 pt-8 pb-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
-            <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
-              {t.ecosystem.title}
-            </h2>
-            <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-              {t.ecosystem.cards.map((card) => (
-                <Link
-                  key={card.title}
-                  href={card.href.replace("/opportunities", "/ecosystem#opportunities").replace("/experts", "/ecosystem#members").replace("/knowledge", "/ecosystem#knowledge-library")}
-                  className="rounded-2xl border border-blue-100 bg-blue-50/60 p-6 transition hover:-translate-y-1 hover:border-blue-300 hover:bg-white motion-reduce:transform-none motion-reduce:transition-none"
+            {/* Section Header */}
+            <div className="relative mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
+              <div className="inline-flex items-center gap-2.5">
+                <span className="h-1 w-8 rounded-full bg-blue-600" />
+                <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+                  {t.events.title}
+                </h2>
+              </div>
+              <Link
+                href="/opportunities"
+                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:text-base"
+              >
+                <span>{t.events.viewAll}</span>
+              </Link>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="mb-8 inline-flex items-center gap-2 rounded-2xl border border-blue-200/80 bg-white/95 p-1.5 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => setEventTab("upcoming")}
+                className={`inline-flex items-center gap-2 rounded-xl px-4.5 py-2.5 text-xs sm:text-sm font-bold transition-all duration-150 ${
+                  eventTab === "upcoming"
+                    ? "bg-blue-600 text-white shadow-xs"
+                    : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+                }`}
+              >
+                <span
+                  className="material-symbols-outlined text-lg"
+                  aria-hidden="true"
                 >
-                  <h3 className="text-xl font-black text-slate-950">{card.title}</h3>
-                  <p className="mt-3 text-base leading-7 text-slate-600">{card.desc}</p>
-                </Link>
+                  event
+                </span>
+                <span>{t.events.tabUpcoming}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setEventTab("past")}
+                className={`inline-flex items-center gap-2 rounded-xl px-4.5 py-2.5 text-xs sm:text-sm font-bold transition-all duration-150 ${
+                  eventTab === "past"
+                    ? "bg-blue-600 text-white shadow-xs"
+                    : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+                }`}
+              >
+                <span
+                  className="material-symbols-outlined text-lg"
+                  aria-hidden="true"
+                >
+                  event_available
+                </span>
+                <span>{t.events.tabPast}</span>
+              </button>
+            </div>
+
+            {/* Events Cards Grid (Redesigned matching mockups) */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {displayedEvents.map((event) => (
+                <article
+                  key={event.id}
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
+                >
+                  {/* Top Featured Image Banner */}
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                    <Image
+                      src={event.image}
+                      alt={event.title}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-60" />
+                  </div>
+
+                  {/* Card Content Body */}
+                  <div className="flex flex-1 flex-col justify-between p-6">
+                    <div>
+                      {/* Date Headline */}
+                      <div className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-blue-600">
+                        {event.date} {event.month} · {event.year}
+                      </div>
+
+                      {/* Title */}
+                      <h3 className="mt-2.5 line-clamp-2 min-h-14 text-lg font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:min-h-16 sm:text-xl">
+                        {event.title}
+                      </h3>
+
+                      {/* Location & Time */}
+                      <div className="mt-4 grid min-h-14 content-start gap-2 text-xs font-medium text-slate-600 sm:text-sm">
+                        <span className="inline-flex items-center gap-1.5">
+                          <span
+                            className="material-symbols-outlined text-base text-slate-400"
+                            aria-hidden="true"
+                          >
+                            location_on
+                          </span>
+                          <span>{event.place}</span>
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 text-slate-500">
+                          <span
+                            className="material-symbols-outlined text-base text-slate-400"
+                            aria-hidden="true"
+                          >
+                            schedule
+                          </span>
+                          <span>{event.time}</span>
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Bottom Action Link */}
+                    <div className="mt-6 border-t border-slate-100 pt-4">
+                      <Link
+                        href={`/opportunities?event=${event.id}`}
+                        className="group/link inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 decoration-2 underline-offset-4 transition-colors duration-150 hover:text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:text-sm"
+                      >
+                        <span>
+                          {event.isPast
+                            ? locale === "ru"
+                              ? "Смотреть итоги"
+                              : locale === "en"
+                                ? "View summary"
+                                : "Xem tổng kết"
+                            : t.events.registerBtn}
+                        </span>
+                        <span
+                          className="transition-transform duration-200 group-hover/link:translate-x-1"
+                          aria-hidden="true"
+                        >
+                          →
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
+                </article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ═══════════ SECTION 2: SỰ KIỆN (EVENTS) ═══════════ */}
-        <section id="events" className="scroll-mt-24 px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1460px] rounded-3xl border border-dashed border-blue-200 bg-blue-50/70 p-8 sm:p-10">
-            <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
-              {t.events.title}
-            </h2>
-            <p className="mt-4 text-base leading-7 text-slate-600">
-              {locale === "ru"
-                ? "Официальная информация о предстоящих событиях обновляется."
-                : locale === "en"
-                  ? "Official upcoming event information is being updated."
-                  : "Thông tin sự kiện sắp tới chính thức đang được cập nhật."}
-            </p>
-          </div>
-        </section>
+        {/* ═══════════ SECTION 3: SƠ ĐỒ NGŨ GIÁC HỆ SINH THÁI ═══════════ */}
+        <NetworkStatsInfographic
+          stats={t.stats}
+          titleMain={t.titleMain}
+          country1={t.country1}
+          hyphen={t.hyphen}
+          country2={t.country2}
+          sectionTitle={t.ecosystem.title}
+        />
+
+        {/* ═══════════ SECTION 4: KẾT NỐI & LIÊN HỆ (CONNECT & CONTACT) ═══════════ */}
+        <GuestContactSection copy={t.contactSection} locale={locale} />
       </main>
 
       <GuestPublicFooter copy={t} />

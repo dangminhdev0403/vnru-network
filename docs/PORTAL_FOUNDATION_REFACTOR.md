@@ -1,19 +1,5 @@
 # Portal Foundation Decisions
 
-## Public content source and structure
-
-`vn-ru-portal/RVSTIN/` is the current official content handoff. Its folder model is:
-
-- `Dev_Phân Tích Nghiệp Vụ trước khi triển khai/`: business-analysis source, not a page;
-- `Giới thiệu/`: `/about`;
-- `Hệ sinh thái/`: `/ecosystem`;
-- `Tin tức/`: `/news` and `/news/[id]`;
-- `Liên hệ/`: `/contact`.
-
-Public navigation is `/`, `/about`, `/ecosystem`, `/news`, `/contact`. Homepage order is Banner → four latest News items → Ecosystem → Upcoming Events → verified Statistics. Statistics stay hidden until official values exist. News and Event are separate concepts. Unsupported metrics, experts, projects, events and contact delivery must not be presented as real.
-
-Public content flows from the content tree before domain, access, API and UI decisions. Each visible claim needs an official source; pending information is hidden or labeled pending rather than replaced by synthetic production-looking data.
-
 ## Current product boundary
 
 Only Identity/IAM and membership-application backend flows are implemented. Member discovery pages currently use synthetic display data; specialist workflow/persona pages are absent.
@@ -21,10 +7,7 @@ Only Identity/IAM and membership-application backend flows are implemented. Memb
 | Concern | Canonical route |
 | --- | --- |
 | Landing page | `/` |
-| About | `/about` |
-| Ecosystem | `/ecosystem` |
 | Public news stream | `/news` (`/explore` redirects here) |
-| Contact | `/contact` |
 | Member discovery | `/knowledge`, `/experts`, `/opportunities` |
 | Login | `/login` |
 | Membership application | `/register` |

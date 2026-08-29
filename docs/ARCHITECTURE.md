@@ -12,7 +12,7 @@ Browser
         -> PostgreSQL auth_db
 ```
 
-Public `/`, `/about`, `/ecosystem`, `/news`, `/news/[id]` and `/contact` routes are informational. `/knowledge`, `/experts` and `/opportunities` require member access. Their current display data does not prove that a described future backend capability exists.
+Public `/` and `/news` routes are informational. `/knowledge`, `/experts` and `/opportunities` require member access. Their current display data does not prove that a described future backend capability exists.
 
 ## Runtime ownership
 
@@ -26,10 +26,7 @@ Public `/`, `/about`, `/ecosystem`, `/news`, `/news/[id]` and `/contact` routes 
 ## Canonical routes
 
 - `/`: public landing page.
-- `/about`: public network profile.
-- `/ecosystem`: public opportunities, organizations, projects and knowledge overview.
 - `/news`: public science and technology news stream. Legacy `/explore` permanently redirects here.
-- `/contact`: public official contact information.
 - `/login`: Auth.js Credentials authentication entry.
 - `/register`: localized membership application. It creates a pending application only; it does not create identities, credentials or role assignments.
 - `/account`: member profile.
