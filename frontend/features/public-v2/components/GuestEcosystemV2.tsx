@@ -7,337 +7,609 @@ import { HOME_COPY } from "./GuestHomeV2";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
 
-const COPY: Record<Locale, Record<string, string>> = {
+type OpportunityTeaser = {
+  id: string;
+  category: string;
+  title: string;
+  meta: string;
+  desc: string;
+  url: string;
+};
+
+type ProjectTeaser = {
+  id: string;
+  category: string;
+  title: string;
+  partner: string;
+  desc: string;
+  url: string;
+};
+
+type KnowledgeTeaser = {
+  id: string;
+  type: string;
+  title: string;
+  author: string;
+  institution: string;
+  desc: string;
+  url: string;
+};
+
+type EntityTeaser = {
+  id: string;
+  badge: string;
+  name: string;
+  city: string;
+  desc: string;
+  url: string;
+};
+
+const COPY: Record<
+  Locale,
+  {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    exploreDetail: string;
+    gateways: {
+      opportunities: { title: string; subtitle: string; href: string };
+      directory: { title: string; subtitle: string; href: string };
+      projects: { title: string; subtitle: string; href: string };
+      library: { title: string; subtitle: string; href: string };
+    };
+    opportunitiesSection: {
+      tag: string;
+      title: string;
+      subtitle: string;
+      viewAllText: string;
+      fundsTag: string;
+    };
+    projectsSection: {
+      tag: string;
+      title: string;
+      subtitle: string;
+      viewAllText: string;
+    };
+    librarySection: {
+      tag: string;
+      title: string;
+      subtitle: string;
+      viewAllText: string;
+    };
+    directorySection: {
+      tag: string;
+      title: string;
+      subtitle: string;
+      viewAllText: string;
+    };
+    joinCta: {
+      title: string;
+      desc: string;
+      primaryButton: string;
+      secondaryButton: string;
+    };
+  }
+> = {
   vi: {
-    eyebrow: "Hệ sinh thái hợp tác",
-    title: "Kết nối hợp tác & tri thức Việt – Nga",
+    eyebrow: "Mạng lưới Tri thức Nga – Việt",
+    title: "Hệ sinh thái Hợp tác & Tri thức Nga – Việt",
     intro:
-      "Một điểm đến chung để khám phá chuyên gia, tổ chức, dự án, cơ hội và nguồn tri thức giữa Việt Nam và Liên bang Nga.",
-    explore: "Khám phá hệ sinh thái",
-    join: "Đăng ký tham gia",
-    opportunities: "Cơ hội hợp tác",
-    opportunitiesSubtitle:
-      "Kết nối tri thức – Chia sẻ giá trị – Kiến tạo tương lai Việt – Nga",
-    members: "Thành viên",
-    membersSubtitle: "Mạng lưới chuyên gia và các tổ chức nghiên cứu hàng đầu",
-    projects: "Dự án & kết quả",
-    projectsSubtitle:
-      "Các chương trình hợp tác khoa học trọng điểm và chuyển giao công nghệ",
-    library: "Thư viện tri thức",
-    librarySubtitle:
-      "Cơ sở dữ liệu ấn phẩm khoa học, sáng chế và báo cáo chuyên ngành",
-    impact: "Thống kê & tác động",
-    preview: "Dữ liệu giới thiệu",
-    viewAll: "Xem tất cả",
-    connectPartner: "Kết nối đúng đối tác",
-    connectPartnerDesc:
-      "Tìm chuyên gia hoặc tổ chức phù hợp cho ý tưởng và dự án của bạn.",
-    feature1: "Tiếp cận mạng lưới chuyên gia hàng đầu Việt – Nga",
-    feature2: "Tăng tốc hợp tác & phát triển dự án",
-    feature3: "Tin cậy – Minh bạch – Hiệu quả",
-    startConnecting: "Bắt đầu kết nối",
-    callsEvents: "Công bố & sự kiện",
-    joinNetwork: "Tham gia mạng lưới",
-    joinNetworkDesc:
-      "Trở thành một phần của mạng lưới tri thức Việt – Nga, mở rộng cơ hội hợp tác và cùng kiến tạo giá trị mới.",
-    registerNow: "Đăng ký ngay",
-    memberCount: "Hơn 2.500+ thành viên đã tham gia",
-    learnMoreNetwork: "Tìm hiểu thêm về mạng lưới",
-    viewProfile: "Xem hồ sơ",
-    viewDetail: "Xem chi tiết",
-    viewDocument: "Xem tài liệu",
+      "Cổng thông tin và kết nối chiến lược giữa cộng đồng khoa học công nghệ, viện nghiên cứu và trường đại học hai nước Việt Nam – Liên bang Nga.",
+    exploreDetail: "Xem chi tiết",
+    gateways: {
+      opportunities: {
+        title: "Cơ hội hợp tác",
+        subtitle: "Học bổng, giải thưởng & tài trợ",
+        href: "#opportunities",
+      },
+      directory: {
+        title: "Chuyên gia & Tổ chức",
+        subtitle: "Viện Hàn lâm & Đại học đối tác",
+        href: "#network-directory",
+      },
+      projects: {
+        title: "Dự án",
+        subtitle: "Các chương trình hợp tác trọng điểm",
+        href: "#projects",
+      },
+      library: {
+        title: "Thư viện tri thức",
+        subtitle: "Công trình chuyên khảo & nghiên cứu",
+        href: "#knowledge-library",
+      },
+    },
+    opportunitiesSection: {
+      tag: "Tài trợ & Học bổng",
+      title: "Cơ hội hợp tác",
+      subtitle:
+        "Các chương trình tài trợ nghiên cứu song phương và cuộc thi học thuật tuyển chọn",
+      viewAllText: "Xem tất cả cơ hội",
+      fundsTag: "Đối tác quỹ tài trợ chính thức",
+    },
+    projectsSection: {
+      tag: "Hợp tác Trọng điểm",
+      title: "Dự án tiêu biểu",
+      subtitle:
+        "Những sáng kiến biểu tượng trong khoa học, dịch thuật, giáo dục và giao lưu thế hệ trẻ",
+      viewAllText: "Xem tất cả dự án",
+    },
+    librarySection: {
+      tag: "Kho tàng Học thuật",
+      title: "Thư viện tri thức",
+      subtitle:
+        "Công trình nghiên cứu khoa học chuyên sâu và báo cáo phân tích chiến lược",
+      viewAllText: "Khám phá thư viện",
+    },
+    directorySection: {
+      tag: "Đối tác Chiến lược",
+      title: "Chuyên gia & Tổ chức",
+      subtitle:
+        "Mạng lưới viện hàn lâm, trường đại học hàng đầu và tổ chức đối tác song phương",
+      viewAllText: "Xem danh bạ mạng lưới",
+    },
+    joinCta: {
+      title: "Cùng Kiến tạo Mạng lưới Tri thức Nga – Việt",
+      desc: "Tham gia kết nối với các viện nghiên cứu, trường đại học và nhà khoa học hàng đầu để cùng phát triển các dự án hợp tác song phương.",
+      primaryButton: "Tham gia mạng lưới",
+      secondaryButton: "Khám phá dự án",
+    },
   },
   en: {
-    eyebrow: "Collaboration ecosystem",
-    title: "Connect Vietnam–Russia knowledge & collaboration",
+    eyebrow: "Russia–Vietnam Knowledge Network",
+    title: "Russia–Vietnam Collaboration & Knowledge Ecosystem",
     intro:
-      "One shared destination to discover experts, organizations, projects, opportunities and knowledge across Vietnam and Russia.",
-    explore: "Explore ecosystem",
-    join: "Join the network",
-    opportunities: "Opportunities",
-    opportunitiesSubtitle:
-      "Connecting Knowledge – Sharing Value – Building Vietnam–Russia Future",
-    members: "Members",
-    membersSubtitle:
-      "Network of leading researchers and scientific institutions",
-    projects: "Projects & outcomes",
-    projectsSubtitle:
-      "Key bilateral scientific programs and technology transfers",
-    library: "Knowledge library",
-    librarySubtitle:
-      "Database of scientific publications, patents, and technical reports",
-    impact: "Statistics & impact",
-    preview: "Illustrative data",
-    viewAll: "View all",
-    connectPartner: "Targeted Partner Matching",
-    connectPartnerDesc:
-      "Find verified experts or institutions aligned with your research proposals.",
-    feature1: "Access top Vietnam–Russia expert network",
-    feature2: "Accelerate collaboration & project delivery",
-    feature3: "Reliable – Transparent – High Impact",
-    startConnecting: "Start Matching",
-    callsEvents: "Calls & Events",
-    joinNetwork: "Join the Network",
-    joinNetworkDesc:
-      "Become part of the bilateral knowledge network, expand joint opportunities and build new value together.",
-    registerNow: "Register Now",
-    memberCount: "Over 2,500+ members have joined",
-    learnMoreNetwork: "Learn more about the network",
-    viewProfile: "View profile",
-    viewDetail: "View details",
-    viewDocument: "View document",
+      "A strategic collaborative gateway connecting scientific communities, research institutes, and universities across Vietnam and the Russian Federation.",
+    exploreDetail: "Explore details",
+    gateways: {
+      opportunities: {
+        title: "Opportunities",
+        subtitle: "Grants, awards & funding channels",
+        href: "#opportunities",
+      },
+      directory: {
+        title: "Experts & Organizations",
+        subtitle: "Academies of science & universities",
+        href: "#network-directory",
+      },
+      projects: {
+        title: "Projects",
+        subtitle: "Flagship cooperation initiatives",
+        href: "#projects",
+      },
+      library: {
+        title: "Knowledge Library",
+        subtitle: "Research monographs & publications",
+        href: "#knowledge-library",
+      },
+    },
+    opportunitiesSection: {
+      tag: "Grants & Awards",
+      title: "Active Opportunities",
+      subtitle:
+        "Bilateral research grants and premier scientific talent competitions",
+      viewAllText: "View all opportunities",
+      fundsTag: "Accredited foundation partners",
+    },
+    projectsSection: {
+      tag: "Flagship Initiatives",
+      title: "Featured Projects",
+      subtitle:
+        "Iconic bilateral initiatives across science, translation, education, and youth exchange",
+      viewAllText: "View all projects",
+    },
+    librarySection: {
+      tag: "Academic Repository",
+      title: "Latest Knowledge",
+      subtitle:
+        "In-depth research monographs and strategic analytical assessments",
+      viewAllText: "Explore library",
+    },
+    directorySection: {
+      tag: "Strategic Partners",
+      title: "Experts & Organizations",
+      subtitle:
+        "A network of premier academies of sciences, national universities, and partner bodies",
+      viewAllText: "View network directory",
+    },
+    joinCta: {
+      title: "Join the Russia–Vietnam Knowledge Network",
+      desc: "Connect with leading universities, research institutes, and scholars to accelerate bilateral innovation and collaborative research.",
+      primaryButton: "Join Network",
+      secondaryButton: "Explore Projects",
+    },
   },
   ru: {
-    eyebrow: "Экосистема сотрудничества",
-    title: "Знания и сотрудничество России и Вьетнама",
+    eyebrow: "Сеть знаний Россия – Вьетнам",
+    title: "Экосистема сотрудничества и знаний Россия – Вьетнам",
     intro:
-      "Единое пространство для поиска экспертов, организаций, проектов, возможностей и знаний России и Вьетнама.",
-    explore: "Открыть экосистему",
-    join: "Присоединиться",
-    opportunities: "Возможности",
-    opportunitiesSubtitle:
-      "Объединяя знания – Разделяя ценности – Создавая будущее",
-    members: "Участники",
-    membersSubtitle:
-      "Сеть ведущих ученых, экспертов и научно-исследовательских институтов",
-    projects: "Проекты и результаты",
-    projectsSubtitle: "Ключевые программы научно-технического сотрудничества",
-    library: "Библиотека знаний",
-    librarySubtitle:
-      "База научных публикаций, патентов и специализированных отчетов",
-    impact: "Статистика и влияние",
-    preview: "Демонстрационные данные",
-    viewAll: "Смотреть все",
-    connectPartner: "Подбор партнёров",
-    connectPartnerDesc:
-      "Поиск профильных экспертов и организаций для совместных инициатив.",
-    feature1: "Доступ к пулу ведущих экспертов России и Вьетнама",
-    feature2: "Ускорение совместных проектов и разработок",
-    feature3: "Надежность – Прозрачность – Результат",
-    startConnecting: "Начать сотрудничество",
-    callsEvents: "Объявления и события",
-    joinNetwork: "Присоединиться к сети",
-    joinNetworkDesc:
-      "Станьте частью двусторонней научной сети, расширяйте возможности сотрудничества.",
-    registerNow: "Зарегистрироваться",
-    memberCount: "Более 2 500+ участников уже присоединились",
-    learnMoreNetwork: "Узнать больше о сети",
-    viewProfile: "Профиль",
-    viewDetail: "Подробнее",
-    viewDocument: "Смотреть",
+      "Стратегический портал взаимодействия между научным сообществом, исследовательскими институтами и университетами России и Вьетнама.",
+    exploreDetail: "Подробнее",
+    gateways: {
+      opportunities: {
+        title: "Возможности",
+        subtitle: "Гранты, стипендии и конкурсы",
+        href: "#opportunities",
+      },
+      directory: {
+        title: "Эксперты и организации",
+        subtitle: "Институты РАН и ведущие вузы",
+        href: "#network-directory",
+      },
+      projects: {
+        title: "Проекты",
+        subtitle: "Флагманские программы сотрудничества",
+        href: "#projects",
+      },
+      library: {
+        title: "Библиотека знаний",
+        subtitle: "Научные монографии и публикации",
+        href: "#knowledge-library",
+      },
+    },
+    opportunitiesSection: {
+      tag: "Гранты и стипендии",
+      title: "Гранты и возможности",
+      subtitle:
+        "Совместные исследовательские программы и академические конкурсы",
+      viewAllText: "Все грантовые программы",
+      fundsTag: "Партнерские научные фонды",
+    },
+    projectsSection: {
+      tag: "Ключевые Программы",
+      title: "Флагманские проекты",
+      subtitle:
+        "Символические инициативы в области науки, перевода, образования и молодежного диалога",
+      viewAllText: "Все проекты",
+    },
+    librarySection: {
+      tag: "Академическая База",
+      title: "Библиотека знаний",
+      subtitle:
+        "Фундаментальные научные монографии и стратегические аналитические доклады",
+      viewAllText: "Перейти в библиотеку",
+    },
+    directorySection: {
+      tag: "Партнеры Сети",
+      title: "Эксперты и организации",
+      subtitle:
+        "Сеть институтов Российской академии наук, ведущих университетов и партнерских фондов",
+      viewAllText: "Каталог участников",
+    },
+    joinCta: {
+      title: "Присоединяйтесь к сети знаний Россия – Вьетнам",
+      desc: "Объединяйтесь с учеными, университетами и исследовательскими центрами для реализации совместных проектов.",
+      primaryButton: "Вступить в сеть",
+      secondaryButton: "Изучить проекты",
+    },
   },
 };
 
-const CALLS_DATA = {
+const OPPORTUNITIES_TEASERS: Record<Locale, OpportunityTeaser[]> = {
   vi: [
     {
-      day: "20",
-      month: "THG 06",
-      year: "2026",
-      tag: "HỘI THẢO QUỐC TẾ",
-      tagClass: "text-red-600",
-      title: "Hội thảo Quốc tế về Trí tuệ nhân tạo và Ứng dụng",
-      location: "Hà Nội, Việt Nam",
-      format: "Trực tiếp & trực tuyến",
-      status: "Mở đăng ký",
-      badgeClass: "border-emerald-200 bg-emerald-50 text-emerald-700",
-      icon: "person",
+      id: "studrussia",
+      category: "Cuộc thi Toàn Nga",
+      title: "Cuộc thi toàn Nga cho sinh viên quốc tế “StudRussia”",
+      meta: "Hạn: 20/09/2026 • ĐH TUSUR",
+      desc: "Giải thưởng danh giá tôn vinh tài năng sinh viên quốc tế tại Nga qua 7 hạng mục khoa học, lãnh đạo và sáng tạo.",
+      url: "https://tusur.ru/ru/novosti-i-meropriyatiya/jizn-v-tusure/prosmotr/-/novost-inostrannyh-studentov-tusura-priglashayut-na-konkurs-studrussia",
     },
     {
-      day: "05",
-      month: "THG 07",
-      year: "2026",
-      tag: "CALL FOR PAPERS",
-      tagClass: "text-blue-600",
-      title: "Call for Papers – Khoa học & Công nghệ Việt – Nga",
-      location: "Đa quốc gia",
-      format: "Hạn nộp: 15/08/2026",
-      status: "Đang nhận bài",
-      badgeClass: "border-blue-200 bg-blue-50 text-blue-700",
-      icon: "description",
+      id: "vietnam-russia-joint",
+      category: "Chương trình Song phương",
+      title:
+        "Tuyển chọn dự án nghiên cứu khoa học chung Việt – Nga (2025–2035)",
+      meta: "Bộ KH&CN Việt Nam & Bộ KH&GDĐH LB Nga",
+      desc: "Tài trợ nghiên cứu mũi nhọn song phương trong các lĩnh vực AI, công nghệ lượng tử, vũ trụ và nghiên cứu biển.",
+      url: "/opportunities",
     },
     {
-      day: "15",
-      month: "THG 08",
-      year: "2026",
-      tag: "HỘI THẢO",
-      tagClass: "text-purple-600",
-      title: "Hội thảo Năng lượng sạch và Chuyển đổi số",
-      location: "TP. Hồ Chí Minh, Việt Nam",
-      format: "Sắp diễn ra",
-      status: "Sắp diễn ra",
-      badgeClass: "border-amber-200 bg-amber-50 text-amber-700",
-      icon: "calendar_month",
-    },
-  ],
-  ru: [
-    {
-      day: "20",
-      month: "ИЮН",
-      year: "2026",
-      tag: "МЕЖДУНАРОДНЫЙ СИМПОЗИУМ",
-      tagClass: "text-red-600",
-      title: "Международный симпозиум по ИИ и прикладным технологиям",
-      location: "Ханой, Вьетнам",
-      format: "Очно и онлайн",
-      status: "Регистрация открыта",
-      badgeClass: "border-emerald-200 bg-emerald-50 text-emerald-700",
-      icon: "person",
-    },
-    {
-      day: "05",
-      month: "ИЮЛ",
-      year: "2026",
-      tag: "CALL FOR PAPERS",
-      tagClass: "text-blue-600",
-      title: "Call for Papers – Наука и технологии Россия – Вьетнам",
-      location: "Международный формат",
-      format: "Дедлайн: 15.08.2026",
-      status: "Приём заявок",
-      badgeClass: "border-blue-200 bg-blue-50 text-blue-700",
-      icon: "description",
-    },
-    {
-      day: "15",
-      month: "АВГ",
-      year: "2026",
-      tag: "СИМПОЗИУМ",
-      tagClass: "text-purple-600",
-      title: "Симпозиум по чистой энергии и цифровой трансформации",
-      location: "Хошимин, Вьетнам",
-      format: "Скоро",
-      status: "Скоро",
-      badgeClass: "border-amber-200 bg-amber-50 text-amber-700",
-      icon: "calendar_month",
+      id: "nafosted-rsf",
+      category: "Tài trợ Đối ứng",
+      title: "Chương trình Tiên phong NAFOSTED (Việt Nam) & RSF (Nga)",
+      meta: "NAFOSTED & Quỹ Khoa học Nga (RSF)",
+      desc: "Tài trợ đối ứng cho các nhóm nghiên cứu chung xuất sắc giữa viện/trường hai nước.",
+      url: "/opportunities",
     },
   ],
   en: [
     {
-      day: "20",
-      month: "JUN",
-      year: "2026",
-      tag: "INTERNATIONAL SYMPOSIUM",
-      tagClass: "text-red-600",
-      title: "International Symposium on AI and Applied Technologies",
-      location: "Hanoi, Vietnam",
-      format: "Hybrid (In-person & Online)",
-      status: "Open for Registration",
-      badgeClass: "border-emerald-200 bg-emerald-50 text-emerald-700",
-      icon: "person",
+      id: "studrussia",
+      category: "All-Russian Competition",
+      title: "All-Russian Competition for International Students “StudRussia”",
+      meta: "Deadline: Sep 20, 2026 • TUSUR University",
+      desc: "Prestigious contest honoring outstanding international students across 7 categories in science, leadership, and arts.",
+      url: "https://tusur.ru/ru/novosti-i-meropriyatiya/jizn-v-tusure/prosmotr/-/novost-inostrannyh-studentov-tusura-priglashayut-na-konkurs-studrussia",
     },
     {
-      day: "05",
-      month: "JUL",
-      year: "2026",
-      tag: "CALL FOR PAPERS",
-      tagClass: "text-blue-600",
-      title: "Call for Papers – Vietnam–Russia Science & Technology",
-      location: "Bilateral / Multi-nation",
-      format: "Deadline: Aug 15, 2026",
-      status: "Call for Papers",
-      badgeClass: "border-blue-200 bg-blue-50 text-blue-700",
-      icon: "description",
+      id: "vietnam-russia-joint",
+      category: "Bilateral Program",
+      title: "Vietnam–Russia Joint Research Selection Program (2025–2035)",
+      meta: "MOST Vietnam & Ministry of Science & Higher Education of Russia",
+      desc: "Funding frontier research in AI, Quantum Technology, Space Science, and Marine Studies.",
+      url: "/opportunities",
     },
     {
-      day: "15",
-      month: "AUG",
-      year: "2026",
-      tag: "SYMPOSIUM",
-      tagClass: "text-purple-600",
-      title: "Clean Energy & Digital Transformation Symposium",
-      location: "Ho Chi Minh City, Vietnam",
-      format: "Upcoming",
-      status: "Upcoming",
-      badgeClass: "border-amber-200 bg-amber-50 text-amber-700",
-      icon: "calendar_month",
+      id: "nafosted-rsf",
+      category: "Joint Co-funding",
+      title: "NAFOSTED (Vietnam) & RSF (Russia) Bilateral Research Program",
+      meta: "NAFOSTED & Russian Science Foundation (RSF)",
+      desc: "Strategic co-funding for collaborative research teams between Vietnamese and Russian institutions.",
+      url: "/opportunities",
+    },
+  ],
+  ru: [
+    {
+      id: "studrussia",
+      category: "Всероссийский Конкурс",
+      title: "Всероссийский конкурс для иностранных студентов «StudRussia»",
+      meta: "Срок: 20.09.2026 • ТУСУР",
+      desc: "Престижная премия поддержки талантливых иностранных студентов по 7 номинациям в науке и творчестве.",
+      url: "https://tusur.ru/ru/novosti-i-meropriyatiya/jizn-v-tusure/prosmotr/-/novost-inostrannyh-studentov-tusura-priglashayut-na-konkurs-studrussia",
+    },
+    {
+      id: "vietnam-russia-joint",
+      category: "Двусторонняя Программа",
+      title: "Отбор совместных научных проектов Россия – Вьетнам (2025–2035)",
+      meta: "Минобрнауки России и Миннауки Вьетнама",
+      desc: "Поддержка передовых исследований в области ИИ, квантовых технологий, космоса и океанологии.",
+      url: "/opportunities",
+    },
+    {
+      id: "nafosted-rsf",
+      category: "Паритетное Финансирование",
+      title: "Совместная программа РНФ (Россия) и NAFOSTED (Вьетнам)",
+      meta: "РНФ и фонд NAFOSTED",
+      desc: "Грантовое финансирование совместных исследовательских коллективов институтов и университетов двух стран.",
+      url: "/opportunities",
     },
   ],
 };
 
-const EXPERTS = [
+const PROJECT_TEASERS: Record<Locale, ProjectTeaser[]> = {
+  vi: [
+    {
+      id: "khai-sang",
+      category: "Chương trình Tiêu biểu",
+      title: "Dự án “Khai sáng”",
+      partner: "Quỹ Truyền thống và Hữu nghị",
+      desc: "Chương trình học thuật chiến lược khuyến khích phong trào học tập, nghiên cứu khoa học và phát triển ngành Việt Nam học tại Nga cũng như Nga học tại Việt Nam.",
+      url: "/projects",
+    },
+    {
+      id: "mgimo-translation",
+      category: "Dịch thuật & Học thuật",
+      title: "Cuộc thi Dịch tiếng Việt chuyên nghiệp toàn Nga",
+      partner: "Đại học Quan hệ Quốc tế Moskva (MGIMO)",
+      desc: "Nâng cao năng lực biên - phiên dịch chính trị, kinh tế, xã hội song ngữ cho sinh viên và giới nghiên cứu trên toàn nước Nga.",
+      url: "/projects",
+    },
+    {
+      id: "iksa-vietnam-room",
+      category: "Không gian Học thuật",
+      title: "Phòng Việt Nam tại Viện IKSA (Viện Hàn lâm Khoa học Nga)",
+      partner: "Viện Trung Quốc và Châu Á đương đại (РАН)",
+      desc: "Không gian học thuật chuyên biệt thúc đẩy nghiên cứu Việt Nam học và tổ chức các diễn đàn khoa học chiến lược.",
+      url: "/projects",
+    },
+  ],
+  en: [
+    {
+      id: "khai-sang",
+      category: "Flagship Initiative",
+      title: "“Khai Sang” Project",
+      partner: "Traditions and Friendship Foundation",
+      desc: "Strategic flagship initiative fostering academic research, Vietnamese studies in Russia, and Russian studies in Vietnam.",
+      url: "/projects",
+    },
+    {
+      id: "mgimo-translation",
+      category: "Translation & Scholarship",
+      title: "All-Russian Professional Vietnamese Translation Competition",
+      partner: "MGIMO University (Moscow)",
+      desc: "Advancing socio-political translation competencies between Russian and Vietnamese across Russian universities.",
+      url: "/projects",
+    },
+    {
+      id: "iksa-vietnam-room",
+      category: "Academic Space",
+      title:
+        "Vietnam Room at the Institute of China and Contemporary Asia (RAS)",
+      partner: "Russian Academy of Sciences (Moscow)",
+      desc: "Dedicated academic hub advancing Vietnamese studies, scholarly symposia, and bilateral research.",
+      url: "/projects",
+    },
+  ],
+  ru: [
+    {
+      id: "khai-sang",
+      category: "Флагманская Программа",
+      title: "Проект «Просвещение» (Khai Sáng)",
+      partner: "Фонд «Традиции и дружба»",
+      desc: "Стратегическая программа поддержки научно-исследовательской активности молодежи, развития вьетнамоведения в РФ и русистики во Вьетнаме.",
+      url: "/projects",
+    },
+    {
+      id: "mgimo-translation",
+      category: "Перевод и Востоковедение",
+      title:
+        "Всероссийский конкурс профессионального перевода вьетнамского языка",
+      partner: "МГИМО МИД России",
+      desc: "Повышение компетенций студентов и востоковедов в области общественно-политического перевода между русским и вьетнамским языками.",
+      url: "/projects",
+    },
+    {
+      id: "iksa-vietnam-room",
+      category: "Академическое Пространство",
+      title: "Кабинет Вьетнама в ИКСА РАН",
+      partner: "Институт Китая и современной Азии РАН",
+      desc: "Специализированное пространство для исследований вьетнамоведения и проведения научных круглых столов.",
+      url: "/projects",
+    },
+  ],
+};
+
+const KNOWLEDGE_TEASERS: Record<Locale, KnowledgeTeaser[]> = {
+  vi: [
+    {
+      id: "lenchuk-monograph",
+      type: "Chuyên khảo Khoa học",
+      title:
+        "Chuyển đổi kinh tế Nga trong bối cảnh xây dựng chủ quyền công nghệ",
+      author: "E. B. Lenchuk (Chủ biên)",
+      institution: "Viện Kinh tế, Viện Hàn lâm Khoa học Nga (РАН)",
+      desc: "Công trình phân tích chiến lược hiện đại hóa công nghệ, đổi mới thay thế nhập khẩu và gia tăng đầu tư vào kinh tế tri thức.",
+      url: "/knowledge",
+    },
+    {
+      id: "vn-foreign-trade",
+      type: "Sách Tra cứu Tổng hợp",
+      title:
+        "Kinh tế đối ngoại Việt Nam: Thành tựu, phương hướng và chính sách",
+      author: "Nhóm chuyên gia RAS & ISAA MGU",
+      institution: "Viện Hàn lâm Khoa học Nga & ĐHQG Moskva",
+      desc: "Ấn phẩm tra cứu hệ thống hóa thành tựu và chính sách hội nhập kinh tế quốc tế sâu rộng của Việt Nam.",
+      url: "/knowledge",
+    },
+  ],
+  en: [
+    {
+      id: "lenchuk-monograph",
+      type: "Research Monograph",
+      title:
+        "Transformation of the Russian Economy in the Context of Building Technological Sovereignty",
+      author: "E. B. Lenchuk (Lead Editor)",
+      institution: "Institute of Economics, Russian Academy of Sciences (RAS)",
+      desc: "Strategic assessment on technological modernization, import substitution innovation, and knowledge economy capital investments.",
+      url: "/knowledge",
+    },
+    {
+      id: "vn-foreign-trade",
+      type: "Reference Monograph",
+      title: "Vietnam's Foreign Economic Relations: Achievements and Policies",
+      author: "RAS & ISAA MSU Expert Group",
+      institution: "Russian Academy of Sciences & Moscow State University",
+      desc: "Comprehensive reference systematizing Vietnam's foreign economic integration and trade policy trajectory.",
+      url: "/knowledge",
+    },
+  ],
+  ru: [
+    {
+      id: "lenchuk-monograph",
+      type: "Научная Монография",
+      title:
+        "Трансформация российской экономики в условиях формирования технологического суверенитета",
+      author: "Е. Б. Ленчук (Главный редактор)",
+      institution: "Институт экономики Российской академии наук (ИЭ РАН)",
+      desc: "Фундаментальный труд по структурно-технологической модернизации, импортозамещению и инвестициям в экономику знаний.",
+      url: "/knowledge",
+    },
+    {
+      id: "vn-foreign-trade",
+      type: "Справочное Издание",
+      title: "Внешнеэкономическая деятельность Вьетнама: итоги и направления",
+      author: "Коллектив экспертов ИКСА РАН и ИСАА МГУ",
+      institution: "Российская академия наук и МГУ им. М. В. Ломоносова",
+      desc: "Комплексное справочное издание, систематизирующее достижения внешнеэкономической интеграции Вьетнама.",
+      url: "/knowledge",
+    },
+  ],
+};
+
+const ENTITY_TEASERS: Record<Locale, EntityTeaser[]> = {
+  vi: [
+    {
+      id: "ras",
+      badge: "Viện Hàn lâm",
+      name: "Viện Hàn lâm Khoa học Nga (РАН / RAS)",
+      city: "Moskva, LB Nga",
+      desc: "Cơ quan khoa học hàn lâm cao nhất của Liên bang Nga với mạng lưới viện nghiên cứu trực thuộc chuyên sâu.",
+      url: "/directory",
+    },
+    {
+      id: "msu",
+      badge: "Đại học Quốc gia",
+      name: "Đại học Quốc gia Moskva (MGU Lomonosov)",
+      city: "Moskva, LB Nga",
+      desc: "Trường đại học danh tiếng số 1 nước Nga, trung tâm nghiên cứu khoa học tự nhiên và phương Đông học.",
+      url: "/directory",
+    },
+    {
+      id: "vnu",
+      badge: "ĐHQG Việt Nam",
+      name: "ĐHQG Hà Nội & ĐHQG TP. Hồ Chí Minh",
+      city: "Hà Nội & TP.HCM, Việt Nam",
+      desc: "Hai trung tâm đại học và nghiên cứu khoa học công nghệ đa ngành mũi nhọn hàng đầu tại Việt Nam.",
+      url: "/directory",
+    },
+  ],
+  en: [
+    {
+      id: "ras",
+      badge: "Academy of Sciences",
+      name: "Russian Academy of Sciences (RAS)",
+      city: "Moscow, Russia",
+      desc: "The supreme scientific organization of the Russian Federation coordinating fundamental and applied research.",
+      url: "/directory",
+    },
+    {
+      id: "msu",
+      badge: "National Flagship",
+      name: "Lomonosov Moscow State University (MSU)",
+      city: "Moscow, Russia",
+      desc: "Russia's premier university and academic powerhouse in physics, mathematics, and Oriental studies.",
+      url: "/directory",
+    },
+    {
+      id: "vnu",
+      badge: "National University",
+      name: "Vietnam National University (VNU)",
+      city: "Hanoi & Ho Chi Minh City, Vietnam",
+      desc: "Vietnam's two leading comprehensive scientific research and higher education universities.",
+      url: "/directory",
+    },
+  ],
+  ru: [
+    {
+      id: "ras",
+      badge: "Академия наук",
+      name: "Российская академия наук (РАН)",
+      city: "Москва, Россия",
+      desc: "Высшая научная организация РФ, координирующая фундаментальные и прикладные исследования.",
+      url: "/directory",
+    },
+    {
+      id: "msu",
+      badge: "Национальный флагман",
+      name: "МГУ имени М. В. Ломоносова",
+      city: "Москва, Россия",
+      desc: "Ведущий университет России, центр передовых естественных наук и востоковедения.",
+      url: "/directory",
+    },
+    {
+      id: "vnu",
+      badge: "ВНУ Вьетнама",
+      name: "Вьетнамский национальный университет (Ханой и Хошимин)",
+      city: "Ханой и Хошимин, Вьетнам",
+      desc: "Два ведущих национальных университета Вьетнама, партнеры академических центров РФ.",
+      url: "/directory",
+    },
+  ],
+};
+
+const FUNDS_LIST = [
+  { name: "NAFOSTED", country: "VN", url: "https://nafosted.gov.vn" },
+  { name: "NATIF", country: "VN", url: "https://natif.vn" },
+  { name: "VINIF", country: "VN", url: "https://vinif.org" },
+  { name: "RSF (РНФ)", country: "RU", url: "https://rscf.ru/en/" },
+  { name: "JINR Dubna", country: "RU/VN", url: "http://vietnam.jinr.ru" },
+  { name: "Quỹ Gorchakov", country: "RU", url: "https://en.gorchakovfund.ru" },
   {
-    name: "GS. Trần Minh Đức",
-    field: "Trí tuệ nhân tạo & Khoa học dữ liệu",
-    organization: "ĐHQG Hà Nội",
-    flag: "🇻🇳 VN",
-  },
-  {
-    name: "PGS. Anna Petrova",
-    field: "Vật liệu tiên tiến & Nano",
-    organization: "Moscow State University",
-    flag: "🇷🇺 RU",
-  },
-  {
-    name: "TS. Nguyễn Hữu Lộc",
-    field: "Năng lượng tái tạo & Lưu trữ",
-    organization: "ĐH Bách khoa TP.HCM",
-    flag: "🇻🇳 VN",
+    name: "Quỹ Tổng thống PGF",
+    country: "RU",
+    url: "https://xn--80afcdbalict6afooklqi5m.xn--p1ai/",
   },
 ];
-
-const PROJECTS = [
-  {
-    title: "Học bổng Khai Sáng",
-    desc: "Chương trình học bổng dành cho sinh viên Việt Nam học tập tại các trường đại học hàng đầu của Nga.",
-    image:
-      "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80",
-    meta: "2021–2026 · Giáo dục",
-  },
-  {
-    title: "Nghiên cứu pin thế hệ mới Việt – Nga",
-    desc: "Phát triển vật liệu điện cực và công nghệ lưu trữ năng lượng hiệu suất cao.",
-    image:
-      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1000&q=80",
-    meta: "2023–2027 · Vật liệu mới",
-  },
-  {
-    title: "Hợp tác KHCN Biển & Hải dương",
-    desc: "Nghiên cứu biển, dự báo khí hậu và phát triển kinh tế biển bền vững.",
-    image:
-      "https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=1000&q=80",
-    meta: "2019–2024 · Môi trường",
-  },
-];
-
-const PUBLICATIONS = [
-  {
-    kind: "Bài báo khoa học",
-    title: "Deep learning for medical image classification in bilateral health",
-    meta: "T. M. Đức và cộng sự · 2026",
-  },
-  {
-    kind: "Tạp chí chuyên ngành",
-    title: "Tạp chí Khoa học & Công nghệ song phương Việt – Nga",
-    meta: "ISSN 2525-2518 · Xuất bản định kỳ",
-  },
-  {
-    kind: "Sở hữu trí tuệ",
-    title: "Vật liệu hấp phụ CO₂ tiên tiến từ khí thải công nghiệp",
-    meta: "VN-2026-23456-B · Bằng độc quyền sáng chế",
-  },
-];
-
-function SectionHeading({
-  title,
-  subtitle,
-}: Readonly<{ title: string; subtitle?: string }>) {
-  return (
-    <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-      <div>
-        <h2 className="font-serif text-3xl font-black tracking-tight text-[#081e46] sm:text-4xl">
-          {title}
-        </h2>
-        {subtitle ? (
-          <div className="mt-2.5 flex items-center gap-2 text-xs font-semibold text-slate-600 sm:text-sm">
-            <span className="inline-block h-0.5 w-5 rounded-full bg-red-600" />
-            <span className="size-1.5 rounded-full bg-blue-600" />
-            <span>{subtitle}</span>
-          </div>
-        ) : null}
-      </div>
-    </div>
-  );
-}
 
 export function GuestEcosystemV2({
   isAuthenticated,
@@ -345,302 +617,391 @@ export function GuestEcosystemV2({
 }: Readonly<{ isAuthenticated: boolean; workspaceHref: string }>) {
   const { locale } = useLocale();
   const t = COPY[locale] ?? COPY.vi;
-  const calls = CALLS_DATA[locale] ?? CALLS_DATA.vi;
+  const opps = OPPORTUNITIES_TEASERS[locale] ?? OPPORTUNITIES_TEASERS.vi;
+  const projects = PROJECT_TEASERS[locale] ?? PROJECT_TEASERS.vi;
+  const knowledge = KNOWLEDGE_TEASERS[locale] ?? KNOWLEDGE_TEASERS.vi;
+  const entities = ENTITY_TEASERS[locale] ?? ENTITY_TEASERS.vi;
   const footerCopy = HOME_COPY[locale] ?? HOME_COPY.vi;
 
   return (
-    <div className="min-h-screen bg-[#f0f4f9] text-slate-900 font-sans">
+    <div className="min-h-screen bg-[#edf3f9] text-slate-900 font-sans selection:bg-blue-600 selection:text-white">
       <GuestPublicNav
         active="ecosystem"
         isAuthenticated={isAuthenticated}
         workspaceHref={workspaceHref}
       />
-      <main>
-        {/* ═══════════ HERO BANNER SECTION ═══════════ */}
-        <section className="relative isolate flex min-h-[440px] items-center overflow-hidden border-b border-blue-100 bg-[#edf5fc] px-4 py-16 text-slate-950 sm:min-h-[500px] sm:px-6 lg:min-h-[560px] lg:px-8 lg:py-20">
-          <div className="absolute inset-0 -z-10">
+
+      <main id="main-content">
+        {/* ═══════════════════════════════════════════════════
+            1. HERO SECTION WITH FROSTED GLASS SPLIT ARTWORK
+            ═══════════════════════════════════════════════════ */}
+        <section className="relative isolate min-h-[420px] overflow-hidden border-b border-blue-200/50 bg-[#eef4fb] px-4 py-12 sm:min-h-[460px] sm:px-6 sm:py-16 lg:min-h-[520px] lg:px-8 lg:py-20">
+          {/* 3D Ecosystem Graphic: Desktop Only on Right Half */}
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 hidden w-[52%] select-none lg:block xl:w-[50%]"
+            aria-hidden="true"
+          >
             <Image
-              src="/images/ecosystem-hero-bg.jpg"
-              alt="Ecosystem Background"
+              src="/images/ecosystem-hero-bg.png"
+              alt=""
               fill
+              sizes="(min-width: 1024px) 55vw, 100vw"
+              unoptimized
               priority
-              sizes="100vw"
-              className="object-cover object-right md:object-center"
+              className="object-cover object-right brightness-[0.92] contrast-[0.98]"
             />
+            {/* Subtle soft dark film overlay to prevent glare */}
+            <div className="absolute inset-0 bg-slate-950/[0.05]" />
+            {/* Left-edge smooth fade into the left text background */}
+            <div className="absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-[#eef4fb] via-[#eef4fb]/90 to-transparent xl:w-48" />
           </div>
-          <div className="mx-auto w-full max-w-[1460px]">
-            <div className="max-w-xl text-left lg:max-w-2xl">
-              <h1 className="text-3xl font-black leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl xl:text-6xl">
+
+          {/* Soft natural bottom gradient transition */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#edf3f9] to-transparent"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 mx-auto flex min-h-[320px] w-full max-w-[1460px] flex-col justify-center">
+            <div className="max-w-xl lg:max-w-[500px] xl:max-w-[560px] pl-2 sm:pl-4">
+              <div className="inline-flex items-center gap-3 rounded-full bg-white/60 px-3.5 py-1.5 backdrop-blur-md border border-blue-200/60 shadow-2xs">
+                <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-700 sm:text-sm">
+                  {t.eyebrow}
+                </span>
+              </div>
+
+              <h1 className="mt-4 font-serif text-3xl font-bold tracking-tight text-[#071936] sm:text-4xl lg:text-5xl xl:text-[3.25rem] leading-[1.14]">
                 {t.title}
               </h1>
-              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg lg:text-xl">
+
+              <p className="mt-4 text-base leading-relaxed text-slate-700 sm:text-lg sm:leading-8">
                 {t.intro}
               </p>
             </div>
           </div>
         </section>
 
-        {/* ═══════════ SECTION 1: CƠ HỘI HỢP TÁC (OPPORTUNITIES) ═══════════ */}
+        {/* ═══════════════════════════════════════════════════
+            2. ACTIVE NETWORK OPPORTUNITIES (#opportunities)
+            ═══════════════════════════════════════════════════ */}
         <section
           id="opportunities"
-          className="scroll-mt-28 px-4 py-14 sm:px-6 lg:px-8"
+          className="scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8"
         >
           <div className="mx-auto max-w-[1460px]">
-            <SectionHeading
-              title={t.opportunities}
-              subtitle={t.opportunitiesSubtitle}
-            />
-            {/* Full-width Spacious "Công bố & sự kiện" Container */}
-            <div className="overflow-hidden rounded-3xl border border-blue-200/80 bg-white/95 p-6 shadow-xs transition-all duration-300 hover:border-blue-300 hover:shadow-md sm:p-9 lg:p-10">
-              <div className="flex flex-col gap-4 border-b border-slate-100 pb-6 sm:flex-row sm:items-center sm:justify-between">
-                <div className="inline-flex items-center gap-3.5">
-                  <span className="grid size-12 place-items-center rounded-2xl bg-blue-50 text-blue-600">
-                    <span className="material-symbols-outlined text-3xl">
-                      event_note
-                    </span>
-                  </span>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b border-blue-200/60 pb-5 mb-8">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                  {t.opportunitiesSection.tag}
+                </span>
+                <h2 className="mt-1 font-serif text-2xl font-bold tracking-tight text-[#071936] sm:text-3xl">
+                  {t.opportunitiesSection.title}
+                </h2>
+              </div>
+              <Link
+                href="/opportunities"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-800 transition"
+              >
+                <span>{t.opportunitiesSection.viewAllText}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+
+            {/* 3 Representative Opportunity Cards (Glassmorphism Blur) */}
+            <div className="grid gap-6 md:grid-cols-3">
+              {opps.map((item) => (
+                <article
+                  key={item.id}
+                  className="flex flex-col justify-between rounded-2xl border border-white/70 bg-white/60 p-6 shadow-[0_4px_20px_-4px_rgba(0,30,80,0.05)] backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:border-blue-300 hover:bg-white/80 hover:shadow-md"
+                >
                   <div>
-                    <h3 className="text-2xl font-black text-slate-900 sm:text-3xl">
-                      {t.callsEvents}
+                    <span className="rounded-lg bg-blue-100/70 px-2.5 py-1 text-[11px] font-bold text-blue-900">
+                      {item.category}
+                    </span>
+                    <h3 className="mt-3 font-serif text-lg font-bold text-[#071936] leading-snug">
+                      {item.title}
                     </h3>
-                    <p className="mt-1 text-xs font-medium text-slate-500 sm:text-sm">
-                      {locale === "ru"
-                        ? "Актуальные научные мероприятия, симпозиумы и приём заявок"
-                        : locale === "en"
-                          ? "Upcoming scientific events, symposiums and open calls"
-                          : "Các sự kiện khoa học, hội thảo quốc tế và đợt kêu gọi tài trợ mới nhất"}
+                    <div className="mt-2 text-xs font-medium text-slate-500">
+                      {item.meta}
+                    </div>
+                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                      {item.desc}
                     </p>
                   </div>
-                </div>
 
-                <Link
-                  href="/opportunities"
-                  className="group/link inline-flex items-center gap-1.5 self-start rounded-xl border border-blue-200/80 bg-blue-50/60 px-4 py-2.5 text-xs font-bold text-blue-600 transition hover:bg-blue-600 hover:text-white sm:self-center sm:text-sm"
-                >
-                  <span>{t.viewAll}</span>
-                  <span
-                    className="transition-transform duration-200 group-hover/link:translate-x-1"
-                    aria-hidden="true"
+                  <div className="mt-5 border-t border-slate-200/50 pt-4">
+                    <a
+                      href={item.url}
+                      target={
+                        item.url.startsWith("http") ? "_blank" : undefined
+                      }
+                      rel={
+                        item.url.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                      className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-800"
+                    >
+                      <span>{t.exploreDetail}</span>
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {/* Compact Accredited Funds Badge Ribbon */}
+            <div className="mt-8 rounded-2xl border border-white/70 bg-white/50 p-4 sm:p-5 backdrop-blur-md flex flex-col md:flex-row md:items-center md:justify-between gap-4 shadow-2xs">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-600 shrink-0">
+                🏛 {t.opportunitiesSection.fundsTag}:
+              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                {FUNDS_LIST.map((fund) => (
+                  <a
+                    key={fund.name}
+                    href={fund.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-lg border border-slate-200/70 bg-white/60 px-2.5 py-1 text-xs font-semibold text-slate-700 hover:border-blue-300 hover:bg-blue-50/80 hover:text-blue-800 transition backdrop-blur-xs"
                   >
-                    →
-                  </span>
-                </Link>
-              </div>
-
-              <div className="divide-y divide-slate-100">
-                {calls.map((item) => (
-                  <article
-                    key={item.title}
-                    className="group/item flex flex-col gap-4 py-6 transition-colors duration-150 hover:bg-blue-50/30 sm:flex-row sm:items-center sm:justify-between sm:rounded-2xl sm:px-4"
-                  >
-                    {/* Date Left Column */}
-                    <div className="flex items-center gap-3 sm:w-28 sm:flex-col sm:items-start sm:gap-0.5">
-                      <span className="text-3xl font-black leading-none tracking-tight text-blue-600 sm:text-4xl">
-                        {item.day}
-                      </span>
-                      <div className="text-xs font-bold uppercase tracking-wide text-slate-500">
-                        {item.month}
-                        <span className="block font-medium text-slate-400">
-                          {item.year}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Title & Metadata Center */}
-                    <div className="flex-1 sm:px-6">
-                      <span
-                        className={`text-[11px] font-extrabold uppercase tracking-wider ${item.tagClass}`}
-                      >
-                        {item.tag}
-                      </span>
-                      <h4 className="mt-1 text-base font-bold leading-snug text-slate-900 transition-colors duration-150 group-hover/item:text-blue-600 sm:text-lg">
-                        {item.title}
-                      </h4>
-                      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-medium text-slate-500 sm:text-sm">
-                        <span className="inline-flex items-center gap-1.5">
-                          <span className="material-symbols-outlined text-base text-slate-400">
-                            location_on
-                          </span>
-                          <span>{item.location}</span>
-                        </span>
-                        <span className="text-slate-300">◇</span>
-                        <span>{item.format}</span>
-                      </div>
-                    </div>
-
-                    {/* Status Badge Right */}
-                    <div className="shrink-0 sm:self-center">
-                      <span
-                        className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-bold sm:text-sm ${item.badgeClass}`}
-                      >
-                        <span className="material-symbols-outlined text-base">
-                          {item.icon}
-                        </span>
-                        <span>{item.status}</span>
-                      </span>
-                    </div>
-                  </article>
+                    {fund.name}
+                  </a>
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* ═══════════ SECTION 2: THÀNH VIÊN (MEMBERS) ═══════════ */}
-        <section className="border-t border-blue-100 bg-[#f8fafd] px-4 py-14 sm:px-6 lg:px-8">
+        {/* ═══════════════════════════════════════════════════
+            4. FEATURED PROJECTS (#projects)
+            ═══════════════════════════════════════════════════ */}
+        <section
+          id="projects"
+          className="scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8 border-y border-blue-200/50 bg-[#e9f1f8]/60"
+        >
           <div className="mx-auto max-w-[1460px]">
-            <SectionHeading title={t.members} subtitle={t.membersSubtitle} />
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {EXPERTS.map((expert) => (
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b border-blue-200/60 pb-5 mb-8">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                  {t.projectsSection.tag}
+                </span>
+                <h2 className="mt-1 font-serif text-2xl font-bold tracking-tight text-[#071936] sm:text-3xl">
+                  {t.projectsSection.title}
+                </h2>
+              </div>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-800 transition"
+              >
+                <span>{t.projectsSection.viewAllText}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+
+            {/* 3 Representative Project Cards (Glassmorphism Blur) */}
+            <div className="grid gap-6 md:grid-cols-3">
+              {projects.map((item) => (
                 <article
-                  key={expert.name}
-                  className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
+                  key={item.id}
+                  className="flex flex-col justify-between rounded-2xl border border-white/70 bg-white/65 p-6 shadow-[0_4px_20px_-4px_rgba(0,30,80,0.05)] backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:border-blue-300 hover:bg-white/85 hover:shadow-md"
                 >
                   <div>
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex size-13 items-center justify-center rounded-2xl border border-blue-100 bg-blue-50 text-blue-700">
-                        <span
-                          className="material-symbols-outlined text-3xl"
-                          aria-hidden="true"
-                        >
-                          person
-                        </span>
-                      </div>
-                      <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-black text-blue-900">
-                        {expert.flag}
-                      </span>
-                    </div>
-                    <h3 className="mt-5 text-lg font-black text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-xl">
-                      {expert.name}
-                    </h3>
-                    <p className="mt-2 text-xs font-extrabold uppercase tracking-wide text-blue-600 sm:text-sm">
-                      {expert.field}
-                    </p>
-                    <p className="mt-2 text-xs font-medium text-slate-500 sm:text-sm">
-                      {expert.organization}
-                    </p>
-                  </div>
-                  <div className="mt-6 border-t border-slate-100 pt-4">
-                    <Link
-                      href="/experts"
-                      className="group/link inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 transition hover:text-blue-800 sm:text-sm"
-                    >
-                      <span>{t.viewProfile}</span>
-                      <span
-                        className="transition-transform duration-200 group-hover/link:translate-x-1"
-                        aria-hidden="true"
-                      >
-                        →
-                      </span>
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════ SECTION 3: DỰ ÁN & KẾT QUẢ (PROJECTS) ═══════════ */}
-        <section className="border-t border-blue-100 px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1460px]">
-            <SectionHeading title={t.projects} subtitle={t.projectsSubtitle} />
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {PROJECTS.map((project) => (
-                <article
-                  key={project.title}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
-                >
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col justify-between p-6">
-                    <div>
-                      <div className="mb-2 text-xs font-bold uppercase tracking-wider text-blue-600">
-                        {project.meta}
-                      </div>
-                      <h3 className="line-clamp-2 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-lg">
-                        {project.title}
-                      </h3>
-                      <p className="mt-2.5 line-clamp-2 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                        {project.desc}
-                      </p>
-                    </div>
-                    <div className="mt-6 border-t border-slate-100 pt-4">
-                      <Link
-                        href="/opportunities"
-                        className="group/link inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 transition hover:text-blue-800 sm:text-sm"
-                      >
-                        <span>{t.viewDetail}</span>
-                        <span
-                          className="transition-transform duration-200 group-hover/link:translate-x-1"
-                          aria-hidden="true"
-                        >
-                          →
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════ SECTION 4: THƯ VIỆN TRI THỨC (LIBRARY) ═══════════ */}
-        <section className="border-t border-blue-100 bg-[#f8fafd] px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1460px]">
-            <SectionHeading title={t.library} subtitle={t.librarySubtitle} />
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {PUBLICATIONS.map((item) => (
-                <article
-                  key={item.title}
-                  className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
-                >
-                  <div>
-                    <div className="flex size-13 items-center justify-center rounded-2xl border border-blue-100 bg-blue-50 text-blue-600">
-                      <span
-                        className="material-symbols-outlined text-3xl"
-                        aria-hidden="true"
-                      >
-                        menu_book
-                      </span>
-                    </div>
-                    <p className="mt-5 text-[11px] font-extrabold uppercase tracking-wider text-blue-600">
-                      {item.kind}
-                    </p>
-                    <h3 className="mt-2 line-clamp-2 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-lg">
+                    <span className="rounded-lg bg-blue-100/80 px-2.5 py-1 text-[11px] font-bold text-blue-900">
+                      {item.category}
+                    </span>
+                    <h3 className="mt-3 font-serif text-lg font-bold text-[#071936] leading-snug">
                       {item.title}
                     </h3>
-                    <p className="mt-2.5 text-xs font-medium text-slate-500 sm:text-sm">
-                      {item.meta}
+                    <div className="mt-1.5 text-xs font-medium text-blue-700">
+                      {item.partner}
+                    </div>
+                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                      {item.desc}
                     </p>
                   </div>
-                  <div className="mt-6 border-t border-slate-100 pt-4">
+
+                  <div className="mt-5 border-t border-slate-200/50 pt-4">
                     <Link
-                      href="/knowledge"
-                      className="group/link inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 transition hover:text-blue-800 sm:text-sm"
+                      href={item.url}
+                      className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-800"
                     >
-                      <span>{t.viewDocument}</span>
-                      <span
-                        className="transition-transform duration-200 group-hover/link:translate-x-1"
-                        aria-hidden="true"
-                      >
-                        →
-                      </span>
+                      <span>{t.exploreDetail}</span>
+                      <span aria-hidden="true">→</span>
                     </Link>
                   </div>
                 </article>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════
+            5. LATEST KNOWLEDGE (#knowledge-library)
+            ═══════════════════════════════════════════════════ */}
+        <section
+          id="knowledge-library"
+          className="scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8"
+        >
+          <div className="mx-auto max-w-[1460px]">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b border-blue-200/60 pb-5 mb-8">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                  {t.librarySection.tag}
+                </span>
+                <h2 className="mt-1 font-serif text-2xl font-bold tracking-tight text-[#071936] sm:text-3xl">
+                  {t.librarySection.title}
+                </h2>
+              </div>
+              <Link
+                href="/knowledge"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-800 transition"
+              >
+                <span>{t.librarySection.viewAllText}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+
+            {/* 2 Representative Knowledge Publications (Glassmorphism Blur) */}
+            <div className="grid gap-6 md:grid-cols-2">
+              {knowledge.map((item) => (
+                <article
+                  key={item.id}
+                  className="flex flex-col justify-between rounded-2xl border border-white/70 bg-white/60 p-6 shadow-[0_4px_20px_-4px_rgba(0,30,80,0.05)] backdrop-blur-md transition hover:border-blue-400 hover:bg-white/80"
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="rounded-md bg-blue-100/80 px-2.5 py-0.5 text-[11px] font-bold text-blue-900">
+                        {item.type}
+                      </span>
+                      <span className="text-xs font-semibold text-slate-500">
+                        {item.author}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-3 font-serif text-lg font-bold text-[#071936] leading-snug">
+                      {item.title}
+                    </h3>
+                    <div className="mt-1.5 text-xs text-slate-500 font-medium">
+                      {item.institution}
+                    </div>
+                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 border-t border-slate-200/50 pt-4">
+                    <Link
+                      href={item.url}
+                      className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-800"
+                    >
+                      <span>{t.exploreDetail}</span>
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════
+            6. EXPERTS & ORGANIZATIONS (#network-directory)
+            ═══════════════════════════════════════════════════ */}
+        <section
+          id="network-directory"
+          className="scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8 border-t border-blue-200/50 bg-[#e9f1f8]/60"
+        >
+          <div className="mx-auto max-w-[1460px]">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b border-blue-200/60 pb-5 mb-8">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                  {t.directorySection.tag}
+                </span>
+                <h2 className="mt-1 font-serif text-2xl font-bold tracking-tight text-[#071936] sm:text-3xl">
+                  {t.directorySection.title}
+                </h2>
+              </div>
+              <Link
+                href="/directory"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-800 transition"
+              >
+                <span>{t.directorySection.viewAllText}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+
+            {/* 3 Representative Institutional Partners (Glassmorphism Blur) */}
+            <div className="grid gap-6 md:grid-cols-3">
+              {entities.map((item) => (
+                <article
+                  key={item.id}
+                  className="flex flex-col justify-between rounded-2xl border border-white/70 bg-white/65 p-6 shadow-[0_4px_20px_-4px_rgba(0,30,80,0.05)] backdrop-blur-md transition hover:border-blue-300 hover:bg-white/85"
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="rounded-md bg-blue-100/80 px-2 py-0.5 text-[11px] font-bold text-blue-800">
+                        {item.badge}
+                      </span>
+                      <span className="text-xs font-medium text-slate-400">
+                        {item.city}
+                      </span>
+                    </div>
+                    <h3 className="mt-3 font-serif text-base font-bold text-[#071936]">
+                      {item.name}
+                    </h3>
+                    <p className="mt-2.5 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 border-t border-slate-200/50 pt-4">
+                    <Link
+                      href={item.url}
+                      className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-800"
+                    >
+                      <span>{t.exploreDetail}</span>
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════
+            7. JOIN NETWORK CTA SECTION
+            ═══════════════════════════════════════════════════ */}
+        <section className="px-4 py-16 sm:px-6 lg:px-8 bg-gradient-to-br from-[#071936] via-[#0c2b5e] to-blue-900 text-white">
+          <div className="mx-auto max-w-[1460px] text-center">
+            <div className="max-w-2xl mx-auto">
+              <h2 className="font-serif text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
+                {t.joinCta.title}
+              </h2>
+              <p className="mt-3 text-sm sm:text-base text-blue-100/90 leading-relaxed">
+                {t.joinCta.desc}
+              </p>
+
+              <div className="mt-7 flex flex-wrap justify-center gap-3.5">
+                <Link
+                  href="/register"
+                  className="rounded-xl bg-blue-600 px-7 py-3 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-900/30 hover:bg-blue-500 transition duration-150"
+                >
+                  {t.joinCta.primaryButton}
+                </Link>
+                <Link
+                  href="/projects"
+                  className="rounded-xl border border-white/20 bg-white/10 px-7 py-3 text-xs sm:text-sm font-bold text-white hover:bg-white/20 transition duration-150"
+                >
+                  {t.joinCta.secondaryButton}
+                </Link>
+              </div>
             </div>
           </div>
         </section>
       </main>
+
       <GuestPublicFooter copy={footerCopy} />
     </div>
   );

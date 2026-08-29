@@ -35,6 +35,17 @@ const publicQuerySchema = paginationSchema.extend({
     .transform((value) => value === 'true')
     .optional(),
   locale: localeSchema,
+  category: z.string().optional(),
+  contentType: z
+    .enum([
+      'ARTICLE',
+      'EVENT',
+      'ANNOUNCEMENT',
+      'PROJECT',
+      'OPPORTUNITY',
+      'PUBLICATION',
+    ])
+    .optional(),
 });
 const adminQuerySchema = paginationSchema.extend({
   status: z.enum(['DRAFT', 'PUBLISHED']).optional(),
@@ -44,6 +55,7 @@ const translationSchema = z
     title: z.string().trim().min(1).max(250),
     summary: z.string().trim().min(1).max(1000),
     content: z.string().trim().min(1).max(100_000),
+    actionLabel: z.string().trim().min(1).max(200).nullable().optional(),
   })
   .strict();
 const articleFields = {
@@ -60,6 +72,19 @@ const articleFields = {
     'cooperation',
   ]),
   coverImageUrl: z.url().max(2000).nullable().optional(),
+  contentType: z
+    .enum([
+      'ARTICLE',
+      'EVENT',
+      'ANNOUNCEMENT',
+      'PROJECT',
+      'OPPORTUNITY',
+      'PUBLICATION',
+    ])
+    .optional(),
+  actionUrl: z.url().max(2000).nullable().optional(),
+  actionClosesAt: z.coerce.date().nullable().optional(),
+  sourceUrls: z.array(z.url().max(2000)).max(10).optional(),
 };
 const createSchema = z
   .object({
@@ -148,14 +173,14 @@ export class AdminNewsController {
   }
 
   @Get()
-  @RequirePermission('content.article.update')
+  @RequirePermission('content.article.read')
   list(@Query() query: Record<string, unknown>) {
     const input = parse(adminQuerySchema, query);
     return this.service.listAdmin(input.limit, input.offset, input.status);
   }
 
   @Get(':id')
-  @RequirePermission('content.article.update')
+  @RequirePermission('content.article.read')
   get(@Param('id') id: string) {
     return this.service.getAdmin(parse(uuidSchema, id));
   }

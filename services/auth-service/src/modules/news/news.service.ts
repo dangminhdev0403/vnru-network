@@ -8,11 +8,13 @@ import {
 export const NEWS_PRISMA = 'NEWS_PRISMA';
 export type NewsLocale = 'VI' | 'EN' | 'RU';
 export type NewsStatus = 'DRAFT' | 'PUBLISHED';
+export type NewsContentType = 'ARTICLE' | 'EVENT' | 'ANNOUNCEMENT' | 'PROJECT' | 'OPPORTUNITY' | 'PUBLICATION';
 
 export interface NewsTranslationInput {
   title: string;
   summary: string;
   content: string;
+  actionLabel?: string | null;
 }
 
 export interface NewsPrismaClient {
@@ -28,6 +30,7 @@ const articleSelect = {
   id: true,
   slug: true,
   category: true,
+  contentType: true,
   coverImageUrl: true,
   status: true,
   isFeatured: true,
@@ -35,8 +38,11 @@ const articleSelect = {
   createdAt: true,
   updatedAt: true,
   authorId: true,
+  actionUrl: true,
+  actionClosesAt: true,
+  sourceUrls: true,
   translations: {
-    select: { locale: true, title: true, summary: true, content: true },
+    select: { locale: true, title: true, summary: true, content: true, actionLabel: true },
   },
 };
 
@@ -57,11 +63,15 @@ export class NewsService {
     limit: number;
     offset: number;
     locale?: NewsLocale;
+    category?: string;
+    contentType?: NewsContentType;
   }) {
     const articles = await this.prisma.newsArticle.findMany({
       where: {
         status: 'PUBLISHED',
         ...(input.featured === undefined ? {} : { isFeatured: input.featured }),
+        ...(input.category === undefined ? {} : { category: input.category }),
+        ...(input.contentType === undefined ? {} : { contentType: input.contentType }),
       },
       orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
       take: input.limit,
@@ -102,7 +112,11 @@ export class NewsService {
   create(input: {
     slug: string;
     category: string;
+    contentType?: NewsContentType;
     coverImageUrl?: string | null;
+    actionUrl?: string | null;
+    actionClosesAt?: Date | null;
+    sourceUrls?: string[];
     authorId: string;
     translations: Record<NewsLocale, NewsTranslationInput>;
   }) {
@@ -126,7 +140,11 @@ export class NewsService {
     input: {
       slug?: string;
       category?: string;
+      contentType?: NewsContentType;
       coverImageUrl?: string | null;
+      actionUrl?: string | null;
+      actionClosesAt?: Date | null;
+      sourceUrls?: string[];
       translations?: Partial<Record<NewsLocale, NewsTranslationInput>>;
     },
   ) {

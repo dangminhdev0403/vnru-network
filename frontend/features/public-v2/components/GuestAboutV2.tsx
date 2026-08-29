@@ -234,7 +234,7 @@ const COPY: Record<
     title: "Kết nối tri thức, kiến tạo tương lai",
     alternateTitle: "Hợp tác bền vững, cùng mở tương lai",
     heroTitleLine1: "Mạng lưới Tri thức",
-    heroTitleLine2: "Việt Nam – Liên bang Nga",
+    heroTitleLine2: "Nga – Việt",
     heroMetadata: ["Khoa học", "Công nghệ", "Tri thức", "Hợp tác"],
     heroNav: {
       mechanism: "Cơ chế vận hành",
@@ -1381,28 +1381,38 @@ export function GuestAboutV2() {
     <div className="min-h-screen bg-[#f6f9fe] text-slate-950">
       <GuestPublicNav active="about" />
       <main>
-        {/* LIGHT INSTITUTIONAL VIETNAM-RUSSIA HERO */}
-        <section className="relative isolate min-h-[580px] overflow-hidden bg-white text-slate-900 sm:min-h-[640px] lg:min-h-[700px]">
-          {/* Full-color High-Resolution Vietnam-Russia Network Artwork */}
-          <Image
-            src="/images/about-light-hero-v2.png"
-            alt=""
-            fill
-            sizes="100vw"
-            unoptimized
-            className="pointer-events-none select-none object-cover object-[80%_center] lg:object-right"
-            priority
+        {/* LIGHT INSTITUTIONAL VIETNAM-RUSSIA HERO (SPLIT LAYOUT) */}
+        <section className="relative isolate min-h-[520px] overflow-hidden bg-[#f4f7fb] text-slate-900 sm:min-h-[580px] lg:min-h-[640px]">
+          {/* Right half: Artwork with smooth blend to soft slate-blue on the left */}
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 w-full select-none lg:w-[58%] xl:w-[56%]"
             aria-hidden="true"
-          />
+          >
+            <Image
+              src="/images/about-light-hero-v2.png"
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 60vw, 100vw"
+              unoptimized
+              className="object-cover object-right brightness-[0.94] contrast-[0.98]"
+              priority
+            />
+
+            {/* Left-edge smooth fade to soft background on desktop */}
+            <div className="absolute inset-y-0 left-0 hidden w-44 bg-gradient-to-r from-[#f4f7fb] via-[#f4f7fb]/85 to-transparent lg:block xl:w-60" />
+
+            {/* Mobile soft veil so text is clear on small screens */}
+            <div className="absolute inset-0 bg-[#f4f7fb]/80 lg:hidden" />
+          </div>
 
           {/* Soft natural bottom gradient transition */}
           <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#f6f9fe] to-transparent"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#f6f9fe] to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 mx-auto flex min-h-[580px] max-w-[1460px] flex-col justify-center px-4 py-16 sm:min-h-[640px] sm:px-6 lg:min-h-[700px] lg:px-8 lg:py-24">
-            <div className="max-w-3xl lg:max-w-4xl xl:max-w-5xl pl-2 sm:pl-4">
+          <div className="relative z-10 mx-auto flex min-h-[520px] max-w-[1460px] flex-col justify-center px-4 py-12 sm:min-h-[580px] sm:px-6 lg:min-h-[640px] lg:px-8 lg:py-16">
+            <div className="max-w-xl lg:max-w-2xl xl:max-w-[620px] pl-2 sm:pl-4">
               {/* Eyebrow with horizontal line */}
               <div className="flex items-center gap-3">
                 <span className="text-sm font-bold uppercase tracking-wider text-blue-600 sm:text-base">
@@ -1417,11 +1427,13 @@ export function GuestAboutV2() {
               {/* Main Heading (Editorial Typography, 2 Lines) */}
               <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight text-[#071936] sm:text-5xl lg:text-6xl xl:text-[3.8rem] leading-[1.12]">
                 <span className="block">{t.heroTitleLine1}</span>
-                <span className="mt-1 block">{t.heroTitleLine2}</span>
+                <span className="mt-1 block sm:whitespace-nowrap">
+                  {t.heroTitleLine2}
+                </span>
               </h1>
 
               {/* Description */}
-              <p className="mt-5 max-w-2xl text-base font-normal leading-relaxed text-slate-700 sm:text-lg sm:leading-8">
+              <p className="mt-5 text-base font-normal leading-relaxed text-slate-700 sm:text-lg sm:leading-8">
                 {t.intro}
               </p>
 
@@ -1443,14 +1455,14 @@ export function GuestAboutV2() {
               </div>
 
               {/* 3 Action Buttons / Cards in Hero */}
-              <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-3.5">
+              <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a
                   href="#operating-mechanism"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/25 transition duration-150 hover:-translate-y-0.5 hover:bg-blue-700 sm:px-5 sm:py-3.5 sm:text-base"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-blue-200 bg-white/95 px-3.5 py-2.5 text-xs font-bold text-[#071936] shadow-2xs backdrop-blur-md transition duration-150 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-3 sm:text-sm"
                 >
-                  <span className="grid size-7 place-items-center rounded-xl bg-blue-500/80 text-white sm:size-8">
+                  <span className="grid size-6 place-items-center rounded-lg bg-blue-50 text-blue-600 sm:size-7">
                     <svg
-                      className="size-4.5 sm:size-5"
+                      className="size-3.5 sm:size-4"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -1468,11 +1480,11 @@ export function GuestAboutV2() {
 
                 <a
                   href="#board"
-                  className="inline-flex items-center gap-2 rounded-2xl border border-blue-200 bg-white/95 px-4 py-3 text-sm font-bold text-[#071936] shadow-2xs backdrop-blur-md transition duration-150 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-white hover:text-blue-700 sm:px-5 sm:py-3.5 sm:text-base"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-blue-200 bg-white/95 px-3.5 py-2.5 text-xs font-bold text-[#071936] shadow-2xs backdrop-blur-md transition duration-150 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-3 sm:text-sm"
                 >
-                  <span className="grid size-7 place-items-center rounded-xl bg-blue-50 text-blue-600 sm:size-8">
+                  <span className="grid size-6 place-items-center rounded-lg bg-blue-50 text-blue-600 sm:size-7">
                     <svg
-                      className="size-4.5 sm:size-5"
+                      className="size-3.5 sm:size-4"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -1492,11 +1504,11 @@ export function GuestAboutV2() {
 
                 <a
                   href="#participating-partners"
-                  className="inline-flex items-center gap-2 rounded-2xl border border-blue-200 bg-white/95 px-4 py-3 text-sm font-bold text-[#071936] shadow-2xs backdrop-blur-md transition duration-150 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-white hover:text-blue-700 sm:px-5 sm:py-3.5 sm:text-base"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-blue-200 bg-white/95 px-3.5 py-2.5 text-xs font-bold text-[#071936] shadow-2xs backdrop-blur-md transition duration-150 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-3 sm:text-sm"
                 >
-                  <span className="grid size-7 place-items-center rounded-xl bg-blue-50 text-blue-600 sm:size-8">
+                  <span className="grid size-6 place-items-center rounded-lg bg-blue-50 text-blue-600 sm:size-7">
                     <svg
-                      className="size-4.5 sm:size-5"
+                      className="size-3.5 sm:size-4"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -1511,7 +1523,7 @@ export function GuestAboutV2() {
                       <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" />
                     </svg>
                   </span>
-                  <div className="flex flex-col text-left leading-tight">
+                  <div className="flex items-center gap-1 leading-tight">
                     <span className="font-extrabold text-blue-700">26+</span>
                     <span className="text-xs text-slate-700 sm:text-sm">
                       {PARTNER_COPY[locale].title}

@@ -182,17 +182,18 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
   );
   const article = getOfficialNewsArticle(articleId);
   const availableTopics = getNewsFilterTopics(article.category);
-  const related = OFFICIAL_NEWS
-    .filter(
-      (item) =>
-        item.id !== article.id &&
-        (item.category === article.category || item.category === "cooperation"),
-    )
-    .slice(0, 4);
-  const popular = OFFICIAL_NEWS.filter((item) => item.id !== article.id).slice(0, 5);
-  const bottomRelated = OFFICIAL_NEWS
-    .filter((item) => item.id !== article.id)
-    .slice(5, 9);
+  const related = OFFICIAL_NEWS.filter(
+    (item) =>
+      item.id !== article.id &&
+      (item.category === article.category || item.category === "cooperation"),
+  ).slice(0, 4);
+  const popular = OFFICIAL_NEWS.filter((item) => item.id !== article.id).slice(
+    0,
+    5,
+  );
+  const bottomRelated = OFFICIAL_NEWS.filter(
+    (item) => item.id !== article.id,
+  ).slice(5, 9);
 
   const openNews = (category: NewsCategory, query = filterQuery) => {
     router.push(newsFilterHref(category, query, advancedFilters));
@@ -221,11 +222,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
               filters={advancedFilters}
               onApply={(nextFilters) =>
                 router.push(
-                  newsFilterHref(
-                    article.category,
-                    filterQuery,
-                    nextFilters,
-                  ),
+                  newsFilterHref(article.category, filterQuery, nextFilters),
                 )
               }
               onFiltersChange={setAdvancedFilters}
@@ -279,7 +276,11 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
             <div className="mt-7">
               {article.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={article.image} alt={article.title} className="max-h-[640px] w-full rounded-2xl object-cover" />
+                <img
+                  src={article.image}
+                  alt={article.title}
+                  className="max-h-[640px] w-full rounded-2xl object-cover"
+                />
               ) : (
                 <ArticleVisual category={article.category} />
               )}
@@ -293,7 +294,13 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
                 <div className="border-t border-blue-100 pt-5 text-sm text-slate-600">
                   <span className="font-bold">Nguồn: </span>
                   {article.sources.map((source) => (
-                    <a key={source} href={source} target="_blank" rel="noopener noreferrer" className="block break-all text-blue-700 hover:underline">
+                    <a
+                      key={source}
+                      href={source}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block break-all text-blue-700 hover:underline"
+                    >
                       {source}
                     </a>
                   ))}
@@ -338,13 +345,13 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
                     key={item.id}
                     href={`/news/${item.id}`}
                     className="flex gap-3 border-b border-blue-50 pb-4 last:border-0 last:pb-0"
-                    >
-                      <Thumb item={item} />
-                      <div className="min-w-0">
-                        <h3 className="text-base font-extrabold leading-6 text-slate-900">
-                          {item.title}
-                        </h3>
-                      </div>
+                  >
+                    <Thumb item={item} />
+                    <div className="min-w-0">
+                      <h3 className="line-clamp-2 text-base font-extrabold leading-6 text-slate-900">
+                        {item.title}
+                      </h3>
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -361,7 +368,7 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
                     href={`/news/${item.id}`}
                     className="group block py-4 first:pt-0 last:pb-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                   >
-                    <span className="block text-base font-bold leading-6 text-slate-800 transition-colors group-hover:text-blue-700">
+                    <span className="line-clamp-2 block text-base font-bold leading-6 text-slate-800 transition-colors group-hover:text-blue-700">
                       {item.title}
                     </span>
                   </Link>
@@ -387,12 +394,16 @@ export function GuestNewsArticleV2({ articleId }: { articleId: number }) {
               >
                 {item.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={item.image} alt="" className="h-36 w-full object-cover" />
+                  <img
+                    src={item.image}
+                    alt=""
+                    className="h-36 w-full object-cover"
+                  />
                 ) : (
                   <div className="h-36 bg-[linear-gradient(135deg,#104a9c,#3c7acb_55%,#143d76)]" />
                 )}
                 <div className="p-4">
-                  <h3 className="text-base font-extrabold leading-6">
+                  <h3 className="line-clamp-2 text-base font-extrabold leading-6">
                     {item.title}
                   </h3>
                 </div>

@@ -2,11 +2,16 @@ import { httpClient } from "@/lib/httpClient";
 
 export type NewsStatus = "DRAFT" | "PUBLISHED";
 export type NewsLocale = "VI" | "EN" | "RU";
-export type NewsTranslation = { locale?: NewsLocale; title: string; summary: string; content: string };
+export type NewsContentType = "ARTICLE" | "EVENT" | "ANNOUNCEMENT" | "PROJECT" | "OPPORTUNITY" | "PUBLICATION";
+export type NewsTranslation = { locale?: NewsLocale; title: string; summary: string; content: string; actionLabel?: string | null };
 export type NewsArticle = {
   id: string;
   slug: string;
   category: string;
+  contentType: NewsContentType;
+  actionUrl: string | null;
+  actionClosesAt: string | null;
+  sourceUrls: string[];
   coverImageUrl: string | null;
   status: NewsStatus;
   isFeatured: boolean;
@@ -17,6 +22,10 @@ export type NewsArticle = {
 export type NewsInput = {
   slug: string;
   category: string;
+  contentType: NewsContentType;
+  actionUrl?: string | null;
+  actionClosesAt?: string | null;
+  sourceUrls?: string[];
   coverImageUrl?: string | null;
   translations: Record<NewsLocale, NewsTranslation>;
 };

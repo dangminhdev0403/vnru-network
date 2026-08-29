@@ -161,7 +161,7 @@ function SmallRow({ item }: { item: NewsItem }) {
         className="h-[88px] w-full rounded-xl sm:h-[112px]"
       />
       <div className="min-w-0">
-        <h3 className="text-base font-extrabold leading-[1.4] transition-colors hover:text-blue-700 sm:text-lg">
+        <h3 className="line-clamp-2 text-base font-extrabold leading-[1.4] transition-colors hover:text-blue-700 sm:text-lg">
           {item.title}
         </h3>
         <p className="mt-2.5 line-clamp-2 text-sm leading-6 text-slate-600 sm:text-base">
@@ -539,18 +539,11 @@ export function GuestExploreV2({
     }
 
     if (advancedFilters.period !== "newest") {
-      list = list.filter((item) =>
-        matchesPeriod(item, advancedFilters.period),
-      );
+      list = list.filter((item) => matchesPeriod(item, advancedFilters.period));
     }
 
     return list;
-  }, [
-    activeCategory,
-    advancedFilters,
-    locale,
-    query,
-  ]);
+  }, [activeCategory, advancedFilters, locale, query]);
 
   const categoryMode =
     activeCategory !== "all" ||
@@ -709,7 +702,7 @@ export function GuestExploreV2({
                       className="h-44 w-full"
                     />
                     <div className="p-4">
-                      <h3 className="text-base font-extrabold leading-[1.45]">
+                      <h3 className="line-clamp-2 text-base font-extrabold leading-[1.45]">
                         {item.title}
                       </h3>
                       <p className="mt-2.5 line-clamp-2 text-sm leading-6 text-slate-600 sm:text-base">

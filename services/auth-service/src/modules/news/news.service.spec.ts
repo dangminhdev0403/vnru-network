@@ -27,6 +27,27 @@ describe('NewsService', () => {
     });
   });
 
+  it('filters public articles by category and contentType', async () => {
+    prisma.newsArticle.findMany.mockResolvedValue([]);
+
+    await service.listPublic({
+      limit: 10,
+      offset: 0,
+      category: 'science-technology',
+      contentType: 'EVENT',
+    });
+
+    expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          status: 'PUBLISHED',
+          category: 'science-technology',
+          contentType: 'EVENT',
+        },
+      }),
+    );
+  });
+
   it('filters admin drafts and returns all translations for editing', async () => {
     prisma.newsArticle.findMany.mockResolvedValue([]);
     prisma.newsArticle.findFirst.mockResolvedValue({

@@ -8,9 +8,9 @@ import {
 } from "@/features/auth/server";
 
 export const metadata: Metadata = {
-  title: "Hệ sinh thái hợp tác | Mạng lưới tri thức Nga - Việt",
+  title: "Hệ sinh thái | Mạng lưới RU-VN",
   description:
-    "Khám phá chuyên gia, tổ chức, dự án, cơ hội hợp tác và nguồn tri thức Việt – Nga.",
+    "Chương trình tài trợ khoa học, dự án Khai sáng và thư viện tri thức song phương Việt Nam – Liên bang Nga.",
 };
 
 export default async function Page() {

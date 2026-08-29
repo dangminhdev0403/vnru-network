@@ -288,7 +288,7 @@ export const HOME_COPY: Record<
     },
     ecosystem: {
       eyebrow: "HỆ SINH THÁI",
-      title: "HỆ SINH THÁI MẠNG LƯỚI RU-VN",
+      title: "LIÊN KẾT TRI THỨC VIỆT – NGA",
       cardCta: "Khám phá →",
       cards: [
         {
@@ -484,7 +484,7 @@ export const HOME_COPY: Record<
       ],
     },
     contactSection: {
-      title: "Kết nối & Liên hệ",
+      title: "Kết nối với chúng tôi",
       subtitle:
         "Chúng tôi luôn sẵn sàng kết nối, hợp tác và đồng hành cùng cộng đồng khoa học Nga – Việt.",
       infoTitle: "Thông tin Mạng lưới",
@@ -655,7 +655,7 @@ export const HOME_COPY: Record<
     },
     ecosystem: {
       eyebrow: "ЭКОСИСТЕМА",
-      title: "ЭКОСИСТЕМА СЕТИ RU-VN",
+      title: "НАУЧНО-ОБРАЗОВАТЕЛЬНЫЙ МОСТ РОССИЯ – ВЬЕТНАМ",
       cardCta: "Исследовать →",
       cards: [
         {
@@ -1023,7 +1023,7 @@ export const HOME_COPY: Record<
     },
     ecosystem: {
       eyebrow: "ECOSYSTEM",
-      title: "RU-VN NETWORK ECOSYSTEM",
+      title: "VIETNAM – RUSSIA KNOWLEDGE NETWORK",
       cardCta: "Explore →",
       cards: [
         {
@@ -1653,13 +1653,15 @@ function NetworkStatsInfographic({
                 country2={country2}
               />
             </div>
-            <div className="mx-auto mt-8 grid max-w-md grid-cols-1 gap-5 sm:grid-cols-2">
+            <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-5 sm:grid-cols-2 lg:max-w-4xl lg:grid-cols-3">
               {stats.map((stat, index) => (
                 <NetworkStatNode
                   key={stat.lbl}
                   stat={stat}
                   className={
-                    index === stats.length - 1 ? "sm:col-span-2 sm:mx-auto" : ""
+                    index === stats.length - 1
+                      ? "sm:col-span-2 sm:mx-auto lg:col-span-1"
+                      : ""
                   }
                 />
               ))}
@@ -2431,19 +2433,7 @@ function BilateralGatewaySection({
                 className="group relative flex flex-col justify-between rounded-3xl border border-blue-100 bg-white/95 p-8 shadow-lg shadow-blue-900/5 backdrop-blur-[2px] transition duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl sm:p-9"
               >
                 <div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-4xl font-black text-blue-500 sm:text-5xl">
-                      {pillar.num}
-                    </span>
-                    <span className="grid size-16 place-items-center rounded-2xl border border-blue-200 bg-blue-100/60 text-blue-600 shadow-xs transition duration-200 group-hover:scale-105 sm:size-18">
-                      <NetworkIconGlyph
-                        icon={pillar.icon}
-                        className="size-8 sm:size-9"
-                      />
-                    </span>
-                  </div>
-
-                  <h3 className="mt-6 font-serif text-2xl font-black leading-tight tracking-tight text-[#082352] sm:text-[1.7rem]">
+                  <h3 className="font-serif text-[1.7rem] font-black leading-tight tracking-tight text-[#082352] sm:text-3xl">
                     {pillar.title}
                   </h3>
 
@@ -2452,7 +2442,7 @@ function BilateralGatewaySection({
                     aria-hidden="true"
                   />
 
-                  <p className="text-base font-normal leading-relaxed text-slate-700 sm:text-lg sm:leading-8">
+                  <p className="text-lg font-normal leading-relaxed text-slate-700 sm:text-xl sm:leading-9">
                     {pillar.desc}
                   </p>
                 </div>

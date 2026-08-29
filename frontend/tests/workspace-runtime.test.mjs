@@ -35,6 +35,10 @@ test("content administration reuses admin chrome with its own navigation", async
   assert.match(studio, /Danh sách bài viết/);
   assert.match(studio, /VI.*EN.*RU|locales\.map/);
   assert.match(studio, /news\.mutations\.publish/);
+  for (const field of ["contentType", "actionUrl", "actionClosesAt", "sourceUrls", "actionLabel"]) {
+    assert.match(studio, new RegExp(field));
+  }
+  assert.match(studio, /type="datetime-local"/);
   assert.doesNotMatch(studio, /localStorage|translate\.googleapis|mymemory/);
   assert.doesNotMatch(iamLayout, /area="content"/);
   assert.doesNotMatch(iamSidebar, /\/workspace\/news/);
