@@ -101,10 +101,10 @@ export function GuestPublicNav({
     if (clickedKey) return clickedKey;
     if (pathname.startsWith("/news")) return "news";
     if (pathname === "/ecosystem") return "ecosystem";
+    if (pathname === "/contact") return "contact";
     if (pathname === "/about") return "about";
     if (pathname === "/") {
       if (currentHash === "#ecosystem") return "ecosystem";
-      if (currentHash === "#contact") return "contact";
       return "home";
     }
     return active || "home";
@@ -116,7 +116,7 @@ export function GuestPublicNav({
     { key: "about", label: t.about, href: "/about" },
     { key: "ecosystem", label: t.ecosystem, href: "/ecosystem" },
     { key: "news", label: t.news, href: "/news" },
-    { key: "contact", label: t.contact, href: "/#contact" },
+    { key: "contact", label: t.contact, href: "/contact" },
   ];
 
   return (

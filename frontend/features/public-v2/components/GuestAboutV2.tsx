@@ -17,44 +17,25 @@ const BOARD_MEMBERS = [
   {
     name: "TS Nguyễn Quốc Hùng",
     image: "/images/board/nguyen-quoc-hung.webp",
-    contacts: [
-      { label: "Điện thoại", href: "tel:+79856905856", icon: "phone" },
-      {
-        label: "Telegram",
-        href: "https://t.me/+79856905856",
-        icon: "telegram",
-      },
-    ],
+    contact: "+798****5856",
   },
   {
     name: "Trần Đức Tùng",
     image: "/images/board/tran-duc-tung.webp",
-    contacts: [
-      { label: "Điện thoại", href: "tel:+79996676240", icon: "phone" },
-      {
-        label: "Telegram",
-        href: "https://t.me/+79996676240",
-        icon: "telegram",
-      },
-      {
-        label: "WhatsApp",
-        href: "https://wa.me/79996676240",
-        icon: "whatsapp",
-      },
-    ],
+    contact: "+799****6240",
   },
 ] as const;
 
 const PARTNER_COPY: Record<Locale, { title: string; ru: string; vi: string }> =
   {
-    vi: { title: "Đối tác tham gia", ru: "Liên bang Nga", vi: "Việt Nam" },
+    vi: { title: "Tổ chức mong muốn tham gia", ru: "Liên bang Nga", vi: "Việt Nam" },
     en: {
-      title: "Participating partners",
+      title: "Prospective participating organizations",
       ru: "Russian Federation",
       vi: "Vietnam",
     },
     ru: {
-      title: "Партнёры-участники",
+      title: "Организации, заинтересованные в участии",
       ru: "Российская Федерация",
       vi: "Вьетнам",
     },
@@ -923,47 +904,6 @@ function PrincipleIcon({ index }: Readonly<{ index: number }>) {
   );
 }
 
-function BoardContactIcon({ icon }: Readonly<{ icon: string }>) {
-  if (icon === "telegram") {
-    return (
-      <svg
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="size-5 text-[#229ED9]"
-        aria-hidden="true"
-      >
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .37z" />
-      </svg>
-    );
-  }
-  if (icon === "whatsapp") {
-    return (
-      <svg
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="size-5 text-[#25D366]"
-        aria-hidden="true"
-      >
-        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.17-.48-.29z" />
-      </svg>
-    );
-  }
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="size-5 text-blue-700"
-      aria-hidden="true"
-    >
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 1 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  );
-}
-
 function OperatingMechanismDiagram({
   data,
 }: Readonly<{
@@ -1613,29 +1553,9 @@ export function GuestAboutV2() {
                             <span className="text-xs font-black uppercase tracking-wider text-slate-500 sm:text-sm">
                               {t.contactLabel}:
                             </span>
-                            <div className="mt-2.5 flex flex-wrap items-center gap-3">
-                              {member.contacts.map((contact) => (
-                                <a
-                                  key={contact.label}
-                                  href={contact.href}
-                                  target={
-                                    contact.href.startsWith("http")
-                                      ? "_blank"
-                                      : undefined
-                                  }
-                                  rel={
-                                    contact.href.startsWith("http")
-                                      ? "noopener noreferrer"
-                                      : undefined
-                                  }
-                                  aria-label={`${contact.label}: ${member.name}`}
-                                  title={contact.label}
-                                  className="grid size-12 place-items-center rounded-2xl border border-blue-200 bg-blue-50/80 text-blue-700 shadow-2xs transition hover:-translate-y-0.5 hover:border-blue-400 hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transform-none motion-reduce:transition-none sm:size-13"
-                                >
-                                  <BoardContactIcon icon={contact.icon} />
-                                </a>
-                              ))}
-                            </div>
+                            <p className="mt-2.5 text-base font-bold text-slate-700">
+                              {member.contact}
+                            </p>
                           </div>
                         </div>
                       </div>

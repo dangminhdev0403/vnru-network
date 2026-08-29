@@ -2,7 +2,7 @@
 
 The frontend currently contains:
 
-- public landing page `/`, ecosystem overview `/ecosystem`, and news stream `/news` (with legacy `/explore` redirect);
+- public landing page `/`, about `/about`, ecosystem overview `/ecosystem`, news stream `/news` (with legacy `/explore` redirect), and contact `/contact`;
 - authenticated member information under `/knowledge`, `/experts` and `/opportunities`;
 - Auth.js Credentials login and session bridge under `/login` and `/api/auth/*`, plus a localized `/register` request preview that does not create identities;
 - member account `/account`;

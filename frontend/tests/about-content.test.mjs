@@ -33,14 +33,13 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /target="_blank"/);
   assert.match(about, /rel="noopener noreferrer"/);
   assert.match(about, /hover:-translate-y-1/);
-  assert.match(about, /title: "Đối tác tham gia"/);
-  assert.match(about, /tel:\+79856905856/);
-  assert.match(about, /https:\/\/t\.me\/\+79856905856/);
-  assert.match(about, /https:\/\/wa\.me\/79996676240/);
+  assert.match(about, /title: "Tổ chức mong muốn tham gia"/);
+  assert.match(about, /contact: "\+798\*\*\*\*5856"/);
+  assert.doesNotMatch(about, /tel:\+798|t\.me\/\+798|wa\.me\/79996676240/);
   assert.match(about, /overflow-hidden rounded-full/);
   assert.match(about, /\{t\.contactLabel\}:/);
   assert.match(about, /<OperatingMechanismDiagram[\s\S]*id="participating-partners"/);
-  assert.doesNotMatch(about, /t\.boardIntro|\{t\.eyebrow\}[\s\S]{0,200}\{t\.boardTitle\}|member\.phone|member\.channels|Đối tác mong muốn tham gia|Chọn logo để mở website chính thức trong tab mới\.|id="prospective-partners"/);
+  assert.doesNotMatch(about, /t\.boardIntro|\{t\.eyebrow\}[\s\S]{0,200}\{t\.boardTitle\}|member\.phone|member\.channels|Chọn logo để mở website chính thức trong tab mới\.|id="prospective-partners"/);
   assert.equal((about.match(/url: "https:\/\/www\.spbume\.ru\/"/g) ?? []).length, 1);
   assert.doesNotMatch(about, /GS\.TS\. Nguyễn Văn Kính|Alexander Petrov|MEMBER_ORGANIZATIONS|LEADERS/);
 });

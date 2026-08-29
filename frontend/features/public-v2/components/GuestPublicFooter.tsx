@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/shared/BrandMark";
 
-const SUPPORT_EMAIL = "info@fonddruzhba.ru";
+const SUPPORT_EMAIL = "info@rvstin.com";
 
 type GuestPublicFooterCopy = {
   footer: {
@@ -40,7 +40,6 @@ export function GuestPublicFooter({
 }: Readonly<{ copy: GuestPublicFooterCopy }>) {
   return (
     <footer
-      id="contact"
       className="scroll-mt-24 border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700"
     >
       <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
@@ -75,7 +74,7 @@ export function GuestPublicFooter({
             <ul className="mt-4 space-y-2.5 text-xs sm:text-sm font-semibold text-slate-600">
               <li>
                 <Link
-                  href="/opportunities"
+                  href="/ecosystem#opportunities"
                   className="transition hover:text-blue-700 hover:underline"
                 >
                   {t.ecosystem.cards[0].title}
@@ -83,7 +82,7 @@ export function GuestPublicFooter({
               </li>
               <li>
                 <Link
-                  href="/experts"
+                  href="/ecosystem#members"
                   className="transition hover:text-blue-700 hover:underline"
                 >
                   {t.ecosystem.cards[1].title}
@@ -91,7 +90,7 @@ export function GuestPublicFooter({
               </li>
               <li>
                 <Link
-                  href="/knowledge"
+                  href="/ecosystem#knowledge-library"
                   className="transition hover:text-blue-700 hover:underline"
                 >
                   {t.ecosystem.cards[3].title}
