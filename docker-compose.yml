@@ -82,6 +82,7 @@ services:
       NODE_ENV: production
       PORT: 3000
       AUTH_SERVICE_URL: http://auth-service:3000
+      AUTH_URL: ${FRONTEND_URL:-http://localhost:8082}
       NEXTAUTH_URL: ${FRONTEND_URL:-http://localhost:8082}
       NEXTAUTH_SECRET: ${AUTH_SECRET:?set in secrets/demo.env}
       AUTH_SECRET: ${AUTH_SECRET:?set in secrets/demo.env}

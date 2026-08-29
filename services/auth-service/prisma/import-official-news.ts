@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
+import { createHash } from 'node:crypto';
 
 type OfficialArticle = {
   id: number;
@@ -20,7 +21,10 @@ const categories = {
   cooperation: 'cooperation',
 } as const;
 
-const slugify = (value: string, id: string | number) => `${value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/đ/g, 'd').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 180)}-${id}`;
+const articleId = (id: number) => {
+  const hex = createHash('sha256').update(`vnru-official-news:${id}`).digest('hex');
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-4${hex.slice(13, 16)}-8${hex.slice(17, 20)}-${hex.slice(20, 32)}`;
+};
 
 async function main() {
   const catalogUrl = pathToFileURL(resolve(__dirname, '../../../frontend/features/public-v2/data/official-news.ts')).href;
@@ -36,9 +40,12 @@ async function main() {
     if (!editor) throw new Error('Active CONTENT_EDITOR assignment is required');
 
     for (const item of OFFICIAL_NEWS) {
-      const slug = slugify(item.title, item.id);
+      const existing = await prisma.newsArticle.findFirst({
+        where: { translations: { some: { locale: 'VI', title: item.title } } },
+        select: { id: true },
+      });
       const article = await prisma.newsArticle.upsert({
-        where: { slug },
+        where: { id: existing?.id ?? articleId(item.id) },
         update: {
           category: categories[item.category],
           coverImageUrl: item.image,
@@ -46,7 +53,7 @@ async function main() {
           status: 'PUBLISHED',
         },
         create: {
-          slug,
+          id: articleId(item.id),
           category: categories[item.category],
           contentType: 'ARTICLE',
           coverImageUrl: item.image,

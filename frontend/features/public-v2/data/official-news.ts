@@ -2,7 +2,6 @@ export type NewsCategoryKey = "science" | "cooperation" | "education" | "society
 
 export type OfficialNewsArticle = {
   id: number | string;
-  slug?: string;
   title: string;
   summary: string;
   category: NewsCategoryKey;
@@ -15,6 +14,18 @@ export type OfficialNewsArticle = {
   actionClosesAt?: string | null;
   actionLabel?: string | null;
 };
+
+export function newsArticleHref(article: Pick<OfficialNewsArticle, "id" | "title">) {
+  const slug = article.title
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("vi")
+    .replace(/đ/g, "d")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 100);
+  return `/news/${article.id}/${slug || "tin-tuc"}`;
+}
 
 // Generated from the official DOCX files in /Tin tức.
 export const OFFICIAL_NEWS = [

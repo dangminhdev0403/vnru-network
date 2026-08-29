@@ -22,16 +22,11 @@ function isNewsCategory(value: string): value is NewsCategory {
 }
 
 function parseAdvancedFilters(params: {
-  topic?: string | string[];
   scope?: string | string[];
   type?: string | string[];
   period?: string | string[];
 }): NewsAdvancedFilters {
-  const topics = (Array.isArray(params.topic) ? params.topic : [params.topic])
-    .filter((value): value is string => typeof value === "string")
-    .map((value) => value.trim().slice(0, 100))
-    .filter(Boolean)
-    .slice(0, 12);
+
   const contentTypeValues = Array.isArray(params.type)
     ? params.type
     : [params.type];
@@ -45,7 +40,6 @@ function parseAdvancedFilters(params: {
 
   return {
     ...DEFAULT_NEWS_ADVANCED_FILTERS,
-    topics,
     scope:
       NEWS_FILTER_SCOPES.find((scope) => scope === scopeValue) ?? "all",
     contentTypes,
@@ -62,7 +56,7 @@ export default async function Page({
     period?: string | string[];
     q?: string | string[];
     scope?: string | string[];
-    topic?: string | string[];
+
     type?: string | string[];
   }>;
 }) {

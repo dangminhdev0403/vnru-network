@@ -21,9 +21,13 @@ export function isSameOriginRequest(request: Request): boolean {
     || requestUrl.host;
   const protocol = request.headers.get("x-forwarded-proto")?.split(",", 1)[0]?.trim()
     || requestUrl.protocol.slice(0, -1);
-  const target = new URL(`${protocol}://${host}`);
+  const target = new URL(process.env.AUTH_URL ?? process.env.NEXTAUTH_URL ?? `${protocol}://${host}`);
   return source.origin === target.origin
     || request.headers.get("sec-fetch-site") === "same-origin";
+}
+
+export function publicRequestUrl(request: Request, path: string): URL {
+  return new URL(path, process.env.AUTH_URL ?? process.env.NEXTAUTH_URL ?? request.url);
 }
 
 export function isSystemAdministrator(capabilities: string[] = []): boolean {

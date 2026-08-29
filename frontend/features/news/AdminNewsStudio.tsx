@@ -15,7 +15,6 @@ const localeNames: Record<NewsLocale, string> = {
 };
 const empty = () => ({ title: "", summary: "", content: "", actionLabel: "" });
 const initial: NewsInput = {
-  slug: "",
   category: "science-technology",
   contentType: "ARTICLE",
   actionUrl: null,
@@ -117,7 +116,6 @@ export function AdminNewsStudio() {
     () =>
       list.data?.filter((article) => {
         const text = [
-          article.slug,
           ...article.translations.map((item) => item.title),
         ]
           .join(" ")
@@ -153,7 +151,6 @@ export function AdminNewsStudio() {
     setSelectedId(article.id);
     setFeatured(article.isFeatured);
     setForm({
-      slug: article.slug,
       category: article.category,
       contentType: article.contentType,
       actionUrl: article.actionUrl,
@@ -242,7 +239,7 @@ export function AdminNewsStudio() {
               aria-label="Tìm bài viết"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Tìm tiêu đề hoặc slug…"
+              placeholder="Tìm tiêu đề…"
               className="mt-4 min-h-11 w-full rounded-xl border border-slate-300 px-3 text-base outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
             />
             <select
@@ -276,7 +273,7 @@ export function AdminNewsStudio() {
               >
                 <strong className="line-clamp-2 block text-base leading-6 text-slate-950">
                   {article.translations.find((item) => item.locale === "VI")
-                    ?.title || article.slug}
+                    ?.title || article.id}
                 </strong>
                 <span
                   className={`mt-2 inline-flex rounded-full px-2.5 py-1 text-sm font-bold ${article.status === "PUBLISHED" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-800"}`}
@@ -345,18 +342,6 @@ export function AdminNewsStudio() {
             ) : null}
 
             <div className="grid gap-4 lg:grid-cols-2">
-              <label className="text-base font-bold text-slate-800">
-                Slug
-                <input
-                  required
-                  pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
-                  value={form.slug}
-                  onChange={(event) =>
-                    setForm({ ...form, slug: event.target.value })
-                  }
-                  className="mt-2 min-h-11 w-full rounded-xl border border-slate-300 px-3 font-normal outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
-                />
-              </label>
               <label className="text-base font-bold text-slate-800">
                 Danh mục
                 <select

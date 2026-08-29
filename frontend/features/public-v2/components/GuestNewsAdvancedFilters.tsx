@@ -4,72 +4,9 @@ import { useRef } from "react";
 import {
   DEFAULT_NEWS_ADVANCED_FILTERS,
   type NewsAdvancedFilters,
-  type NewsCategory,
 } from "./GuestNewsFilterNav";
 
-export const NEWS_FILTER_CATALOGS: Array<{
-  category: Exclude<NewsCategory, "all">;
-  children: string[];
-}> = [
-  {
-    category: "science",
-    children: [
-      "Trí tuệ nhân tạo",
-      "Công nghệ lượng tử",
-      "Vật liệu mới",
-      "Năng lượng sạch",
-      "Công nghệ sinh học",
-      "Vũ trụ - Hàng không",
-    ],
-  },
-  {
-    category: "cooperation",
-    children: [
-      "Hợp tác Việt - Nga",
-      "Viện nghiên cứu",
-      "Trường đại học",
-      "Doanh nghiệp công nghệ",
-      "Hiệp định song phương",
-      "Mạng lưới đối tác",
-    ],
-  },
-  {
-    category: "education",
-    children: [
-      "Học bổng toàn phần",
-      "Đào tạo song bằng",
-      "Sinh viên & Du học",
-      "Nghiên cứu sinh",
-      "Chuyên gia thỉnh giảng",
-      "Trao đổi học thuật",
-    ],
-  },
-  {
-    category: "society",
-    children: [
-      "Kinh tế số",
-      "Công nghiệp công nghệ",
-      "Logistics & Thương mại",
-      "Chính sách KH & CN",
-      "Phát triển bền vững",
-      "Đô thị thông minh",
-    ],
-  },
-];
-
-export function getNewsFilterTopics(category: NewsCategory) {
-  if (category === "all") {
-    return NEWS_FILTER_CATALOGS.flatMap((catalog) => catalog.children);
-  }
-
-  return (
-    NEWS_FILTER_CATALOGS.find((catalog) => catalog.category === category)
-      ?.children ?? []
-  );
-}
-
 type GuestNewsAdvancedFiltersProps = {
-  availableTopics: string[];
   filters: NewsAdvancedFilters;
   onApply: (filters: NewsAdvancedFilters) => void;
   onFiltersChange: (filters: NewsAdvancedFilters) => void;
@@ -77,7 +14,6 @@ type GuestNewsAdvancedFiltersProps = {
 };
 
 export function GuestNewsAdvancedFilters({
-  availableTopics,
   filters,
   onApply,
   onFiltersChange,
@@ -125,37 +61,6 @@ export function GuestNewsAdvancedFilters({
 
       <div className="absolute -left-px -right-px top-full z-50 -mt-px overflow-hidden rounded-b-lg border-x border-b border-slate-200 bg-white shadow-xl">
         <div className="grid grid-cols-1 md:grid-cols-2">
-          <fieldset className="border-b border-slate-200 p-5 md:border-r">
-            <legend className="flex items-center gap-2 text-base font-black text-slate-900">
-              <span className="text-xl font-normal text-blue-600" aria-hidden="true">
-                ◇
-              </span>
-              Chủ đề
-            </legend>
-            <div className="mt-3 grid gap-2 sm:grid-cols-2">
-              {availableTopics.map((topic) => (
-                <label
-                  key={topic}
-                  className="flex min-h-11 cursor-pointer items-center gap-3 text-base text-slate-700 hover:text-blue-700"
-                >
-                  <input
-                    type="checkbox"
-                    checked={filters.topics.includes(topic)}
-                    onChange={() =>
-                      update({
-                        topics: filters.topics.includes(topic)
-                          ? filters.topics.filter((item) => item !== topic)
-                          : [...filters.topics, topic],
-                      })
-                    }
-                    className="size-4 rounded accent-blue-600"
-                  />
-                  <span>{topic}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-
           <fieldset className="border-b border-slate-200 p-5">
             <legend className="flex items-center gap-2 text-base font-black text-slate-900">
               <span className="text-xl font-normal text-blue-600" aria-hidden="true">
@@ -201,10 +106,12 @@ export function GuestNewsAdvancedFilters({
             </legend>
             <div className="mt-3 grid grid-cols-2 gap-3">
               {[
-                ["news", "Tin tức"],
-                ["research", "Nghiên cứu"],
-                ["event", "Sự kiện"],
-                ["policy", "Chính sách"],
+                ["ARTICLE", "Bài viết"],
+                ["EVENT", "Sự kiện"],
+                ["ANNOUNCEMENT", "Công bố"],
+                ["PROJECT", "Dự án"],
+                ["OPPORTUNITY", "Cơ hội"],
+                ["PUBLICATION", "Ấn phẩm"],
               ].map(([value, label]) => (
                 <label
                   key={value}
@@ -272,7 +179,6 @@ export function GuestNewsAdvancedFilters({
               onClick={() =>
                 onFiltersChange({
                   ...DEFAULT_NEWS_ADVANCED_FILTERS,
-                  topics: [],
                   contentTypes: [],
                 })
               }

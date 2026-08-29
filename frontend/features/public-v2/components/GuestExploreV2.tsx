@@ -3,13 +3,10 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
-import { OFFICIAL_NEWS, type OfficialNewsArticle } from "../data/official-news";
+import { newsArticleHref, OFFICIAL_NEWS, type OfficialNewsArticle } from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { HOME_COPY } from "./GuestHomeV2";
-import {
-  getNewsFilterTopics,
-  GuestNewsAdvancedFilters,
-} from "./GuestNewsAdvancedFilters";
+import { GuestNewsAdvancedFilters } from "./GuestNewsAdvancedFilters";
 import {
   DEFAULT_NEWS_ADVANCED_FILTERS,
   GuestNewsFilterNav,
@@ -151,7 +148,7 @@ function NewsImage({
 function SmallRow({ item }: { item: NewsItem }) {
   return (
     <Link
-      href={`/news/${articleId(item)}`}
+      href={newsArticleHref(item)}
       className="grid grid-cols-[128px_minmax(0,1fr)] gap-4 border-b border-slate-100 py-5 first:pt-0 sm:grid-cols-[180px_minmax(0,1fr)]"
     >
       <NewsImage
@@ -170,171 +167,6 @@ function SmallRow({ item }: { item: NewsItem }) {
   );
 }
 
-function articleId(item: NewsItem) {
-  return item.slug ?? item.id;
-}
-
-function matchesTopics(
-  article: OfficialNewsArticle,
-  topics: string[],
-): boolean {
-  if (topics.length === 0) return true;
-  const content =
-    `${article.title} ${article.summary} ${article.body.join(" ")}`.toLowerCase();
-
-  return topics.some((topic) => {
-    const t = topic.toLowerCase();
-    if (t.includes("trí tuệ nhân tạo") || t === "ai") {
-      return (
-        content.includes("ai") ||
-        content.includes("trí tuệ nhân tạo") ||
-        content.includes("robot") ||
-        content.includes("học máy")
-      );
-    }
-    if (t.includes("lượng tử")) {
-      return content.includes("lượng tử") || content.includes("quantum");
-    }
-    if (t.includes("vật liệu")) {
-      return (
-        content.includes("vật liệu") ||
-        content.includes("nano") ||
-        content.includes("skif")
-      );
-    }
-    if (t.includes("năng lượng")) {
-      return (
-        content.includes("năng lượng") ||
-        content.includes("hạt nhân") ||
-        content.includes("vver") ||
-        content.includes("nguyên tử") ||
-        content.includes("rosatom")
-      );
-    }
-    if (t.includes("sinh học")) {
-      return (
-        content.includes("sinh học") ||
-        content.includes("y sinh") ||
-        content.includes("y khoa") ||
-        content.includes("y tế")
-      );
-    }
-    if (t.includes("vũ trụ") || t.includes("hàng không")) {
-      return (
-        content.includes("vũ trụ") ||
-        content.includes("hàng không") ||
-        content.includes("uav") ||
-        content.includes("bắc cực")
-      );
-    }
-    if (t.includes("học bổng") || t.includes("tuyển sinh")) {
-      return (
-        content.includes("học bổng") ||
-        content.includes("tuyển sinh") ||
-        content.includes("chỉ tiêu")
-      );
-    }
-    if (t.includes("du học") || t.includes("sinh viên")) {
-      return (
-        content.includes("sinh viên") ||
-        content.includes("du học") ||
-        content.includes("lưu học sinh") ||
-        content.includes("thanh niên")
-      );
-    }
-    if (t.includes("nghiên cứu sinh") || t.includes("tiến sĩ")) {
-      return (
-        content.includes("nghiên cứu sinh") ||
-        content.includes("tiến sĩ") ||
-        content.includes("thạc sĩ")
-      );
-    }
-    if (
-      t.includes("trao đổi") ||
-      t.includes("học thuật") ||
-      t.includes("studturizm")
-    ) {
-      return (
-        content.includes("trao đổi") ||
-        content.includes("studturizm") ||
-        content.includes("tọa đàm") ||
-        content.includes("diễn đàn") ||
-        content.includes("hội thảo")
-      );
-    }
-    if (
-      t.includes("thương mại") ||
-      t.includes("logistics") ||
-      t.includes("đầu tư")
-    ) {
-      return (
-        content.includes("thương mại") ||
-        content.includes("đầu tư") ||
-        content.includes("logistics") ||
-        content.includes("xuất khẩu") ||
-        content.includes("kim ngạch") ||
-        content.includes("eaeu")
-      );
-    }
-    if (
-      t.includes("kinh tế") ||
-      t.includes("công nghiệp") ||
-      t.includes("doanh nghiệp")
-    ) {
-      return (
-        content.includes("kinh tế") ||
-        content.includes("doanh nghiệp") ||
-        content.includes("công nghiệp")
-      );
-    }
-    if (t.includes("chính sách") || t.includes("hiệp định")) {
-      return (
-        content.includes("chính sách") ||
-        content.includes("hiệp định") ||
-        content.includes("nghị quyết") ||
-        content.includes("phê duyệt")
-      );
-    }
-    if (
-      t.includes("việt - nga") ||
-      t.includes("đối tác") ||
-      t.includes("song phương")
-    ) {
-      return (
-        content.includes("việt - nga") ||
-        content.includes("nga - việt") ||
-        content.includes("song phương") ||
-        content.includes("đối tác") ||
-        (content.includes("việt nam") && content.includes("nga"))
-      );
-    }
-    if (t.includes("viện nghiên cứu") || t.includes("trường đại học")) {
-      return (
-        content.includes("viện") ||
-        content.includes("đại học") ||
-        content.includes("trường") ||
-        content.includes("học viện")
-      );
-    }
-    if (t.includes("du lịch") || t.includes("mice")) {
-      return (
-        content.includes("du lịch") ||
-        content.includes("mice") ||
-        content.includes("lữ hành") ||
-        content.includes("khách du lịch")
-      );
-    }
-    if (t.includes("văn hóa")) {
-      return (
-        content.includes("văn hóa") ||
-        content.includes("hữu nghị") ||
-        content.includes("tiếng nga") ||
-        content.includes("tiếng việt")
-      );
-    }
-    return content.includes(t);
-  });
-}
 
 function matchesScope(article: OfficialNewsArticle, scope: string): boolean {
   if (!scope || scope === "all") return true;
@@ -388,57 +220,7 @@ function matchesContentType(
   contentTypes: string[],
 ): boolean {
   if (contentTypes.length === 0) return true;
-  const content =
-    `${article.title} ${article.summary} ${article.body.join(" ")}`.toLowerCase();
-
-  return contentTypes.some((type) => {
-    if (type === "news") {
-      return true;
-    }
-    if (type === "research") {
-      return (
-        content.includes("nghiên cứu") ||
-        content.includes("khoa học") ||
-        content.includes("công nghệ") ||
-        content.includes("lượng tử") ||
-        content.includes("skif") ||
-        content.includes("uav") ||
-        content.includes("luận án") ||
-        content.includes("ai") ||
-        content.includes("r&d") ||
-        content.includes("bắc cực")
-      );
-    }
-    if (type === "event") {
-      return (
-        content.includes("sự kiện") ||
-        content.includes("diễn đàn") ||
-        content.includes("hội thảo") ||
-        content.includes("tọa đàm") ||
-        content.includes("ngày hội") ||
-        content.includes("studturizm") ||
-        content.includes("meet global mice") ||
-        content.includes("lễ kỷ niệm") ||
-        content.includes("khóa học") ||
-        content.includes("gặp gỡ")
-      );
-    }
-    if (type === "policy") {
-      return (
-        content.includes("chính sách") ||
-        content.includes("nghị quyết") ||
-        content.includes("phê duyệt") ||
-        content.includes("chính phủ") ||
-        content.includes("quốc hội") ||
-        content.includes("chỉ đạo") ||
-        content.includes("ủy ban liên chính phủ") ||
-        content.includes("chiến lược") ||
-        content.includes("thỏa thuận") ||
-        content.includes("hiệp định")
-      );
-    }
-    return true;
-  });
+  return contentTypes.includes(article.contentType ?? "ARTICLE");
 }
 
 function matchesPeriod(article: OfficialNewsArticle, period: string): boolean {
@@ -467,7 +249,6 @@ export function GuestExploreV2({
   const [advancedFilters, setAdvancedFilters] = useState<NewsAdvancedFilters>(
     () => ({
       ...initialAdvancedFilters,
-      topics: [...initialAdvancedFilters.topics],
       contentTypes: [...initialAdvancedFilters.contentTypes],
     }),
   );
@@ -505,7 +286,6 @@ export function GuestExploreV2({
     }, 1200);
   };
 
-  const availableTopics = getNewsFilterTopics(activeCategory);
 
   const filtered = useMemo(() => {
     let list =
@@ -523,9 +303,6 @@ export function GuestExploreV2({
       );
     }
 
-    if (advancedFilters.topics.length > 0) {
-      list = list.filter((item) => matchesTopics(item, advancedFilters.topics));
-    }
 
     if (advancedFilters.scope !== "all") {
       list = list.filter((item) => matchesScope(item, advancedFilters.scope));
@@ -547,7 +324,7 @@ export function GuestExploreV2({
   const categoryMode =
     activeCategory !== "all" ||
     query.trim().length > 0 ||
-    advancedFilters.topics.length > 0 ||
+
     advancedFilters.scope !== "all" ||
     advancedFilters.contentTypes.length > 0 ||
     advancedFilters.period !== "newest";
@@ -582,7 +359,7 @@ export function GuestExploreV2({
           onQueryChange={updateQuery}
           filterControl={
             <GuestNewsAdvancedFilters
-              availableTopics={availableTopics}
+
               filters={advancedFilters}
               onApply={(filters) =>
                 window.history.replaceState(
@@ -612,7 +389,7 @@ export function GuestExploreV2({
                   {latest.map((item, index) => (
                     <Link
                       key={item.title}
-                      href={`/news/${articleId(item)}`}
+                      href={newsArticleHref(item)}
                       className="relative min-w-full"
                       aria-hidden={index !== spotlightIndex}
                       tabIndex={index === spotlightIndex ? 0 : -1}
@@ -692,7 +469,7 @@ export function GuestExploreV2({
                 {featured.map((item) => (
                   <Link
                     key={item.title}
-                    href={`/news/${articleId(item)}`}
+                    href={newsArticleHref(item)}
                     className="overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:border-blue-200"
                   >
                     <NewsImage

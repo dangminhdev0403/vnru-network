@@ -64,7 +64,6 @@ model User {
 
 model NewsArticle {
   id             String                   @id @default(uuid())
-  slug           String                   @unique
   category       String
   contentType    NewsContentType          @default(ARTICLE)
   actionUrl      String?

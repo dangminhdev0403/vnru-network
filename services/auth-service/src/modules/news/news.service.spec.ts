@@ -48,6 +48,14 @@ describe('NewsService', () => {
     );
   });
 
+  it('loads a published article by id', async () => {
+    prisma.newsArticle.findFirst.mockResolvedValue({ id: 'article-1', translations: [] });
+    await service.getPublic('article-1');
+    expect(prisma.newsArticle.findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { id: 'article-1', status: 'PUBLISHED' } }),
+    );
+  });
+
   it('filters admin drafts and returns all translations for editing', async () => {
     prisma.newsArticle.findMany.mockResolvedValue([]);
     prisma.newsArticle.findFirst.mockResolvedValue({

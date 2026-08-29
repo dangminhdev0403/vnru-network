@@ -12,7 +12,7 @@ Implemented API families:
 - `/api/v1/admin/role-assignments/*`: assignment administration.
 - `POST /api/v1/membership-applications`: public membership application intake. Stores a normalized `PENDING` application; never creates a user or role assignment.
 - `GET /api/v1/news`: public published-news feed; supports bounded pagination, `locale`, and optional `featured`.
-- `GET /api/v1/news/:slug`: public published article with VI fallback.
+- `GET /api/v1/news/:id`: public published article with VI fallback.
 - `/api/v1/admin/news/*`: authenticated article create/update/publish/unpublish operations authorized by `content.article.*` capabilities.
 - `GET /api/v1/admin/news`: bounded admin list with optional `status=DRAFT|PUBLISHED`; `GET /api/v1/admin/news/:id` returns all translations for editing.
 - `POST /api/v1/admin/news/media`: authenticated multipart image upload (`file`, JPEG/PNG/WebP, max 5 MB) through `nestjs-cloudinary@1.0.7`; response returns Cloudinary URL and public ID for article/banner fields.

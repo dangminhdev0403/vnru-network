@@ -22,22 +22,22 @@ export const NEWS_FILTER_SCOPES = [
   "bilateral",
 ] as const;
 export const NEWS_FILTER_CONTENT_TYPES = [
-  "news",
-  "research",
-  "event",
-  "policy",
+  "ARTICLE",
+  "EVENT",
+  "ANNOUNCEMENT",
+  "PROJECT",
+  "OPPORTUNITY",
+  "PUBLICATION",
 ] as const;
 export const NEWS_FILTER_PERIODS = ["newest", "7days", "30days"] as const;
 
 export type NewsAdvancedFilters = {
-  topics: string[];
   scope: (typeof NEWS_FILTER_SCOPES)[number];
   contentTypes: Array<(typeof NEWS_FILTER_CONTENT_TYPES)[number]>;
   period: (typeof NEWS_FILTER_PERIODS)[number];
 };
 
 export const DEFAULT_NEWS_ADVANCED_FILTERS: NewsAdvancedFilters = {
-  topics: [],
   scope: "all",
   contentTypes: [],
   period: "newest",
@@ -51,10 +51,7 @@ export function newsFilterHref(
   const params = new URLSearchParams();
   if (category !== "all") params.set("category", category);
   if (query.trim()) params.set("q", query.trim().slice(0, 200));
-  filters.topics.slice(0, 12).forEach((topic) => {
-    const value = topic.trim().slice(0, 100);
-    if (value) params.append("topic", value);
-  });
+
   if (filters.scope !== "all") params.set("scope", filters.scope);
   filters.contentTypes.forEach((type) => params.append("type", type));
   if (filters.period !== "newest") params.set("period", filters.period);

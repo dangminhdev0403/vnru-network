@@ -28,7 +28,6 @@ export interface NewsPrismaClient {
 
 const articleSelect = {
   id: true,
-  slug: true,
   category: true,
   contentType: true,
   coverImageUrl: true,
@@ -81,9 +80,9 @@ export class NewsService {
     return articles.map((article) => localize(article, input.locale ?? 'VI'));
   }
 
-  async getPublic(slug: string, locale: NewsLocale = 'VI') {
+  async getPublic(id: string, locale: NewsLocale = 'VI') {
     const article = await this.prisma.newsArticle.findFirst({
-      where: { slug, status: 'PUBLISHED' },
+      where: { id, status: 'PUBLISHED' },
       select: articleSelect,
     });
     if (!article) throw new NotFoundException('News article not found');
@@ -110,7 +109,6 @@ export class NewsService {
   }
 
   create(input: {
-    slug: string;
     category: string;
     contentType?: NewsContentType;
     coverImageUrl?: string | null;
@@ -138,7 +136,6 @@ export class NewsService {
   update(
     id: string,
     input: {
-      slug?: string;
       category?: string;
       contentType?: NewsContentType;
       coverImageUrl?: string | null;

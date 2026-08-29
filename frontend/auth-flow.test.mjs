@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { isSameOriginRequest, resolveLandingPath, sanitizeLocale, sanitizeReturnTo } from "./features/auth/server.ts";
+import { isSameOriginRequest, publicRequestUrl, resolveLandingPath, sanitizeLocale, sanitizeReturnTo } from "./features/auth/server.ts";
 
 test("login origin uses the public forwarded origin behind a tunnel", () => {
   const request = new Request("https://public.example:3000/api/auth/login", {
@@ -19,6 +19,21 @@ test("login origin uses the public forwarded origin behind a tunnel", () => {
     isSameOriginRequest(new Request(request, { headers: badHeaders })),
     false,
   );
+});
+
+test("auth redirects use the configured public URL instead of the container host", () => {
+  const previous = process.env.AUTH_URL;
+  process.env.AUTH_URL = "https://rvstin.com";
+  try {
+    const request = new Request("http://0.0.0.0:3000/api/auth/login", {
+      headers: { origin: "https://rvstin.com" },
+    });
+    assert.equal(isSameOriginRequest(request), true);
+    assert.equal(publicRequestUrl(request, "/login").href, "https://rvstin.com/login");
+  } finally {
+    if (previous === undefined) delete process.env.AUTH_URL;
+    else process.env.AUTH_URL = previous;
+  }
 });
 
 test("reader login defaults to public home", () => {
@@ -64,7 +79,7 @@ test("login renders the Auth.js Credentials form", async () => {
   assert.doesNotMatch(page, /iframe|html-templates\/login/);
 });
 
-test("registration remains a non-persisting localized request preview", async () => {
+test("registration uses the backend and canonical origin guard", async () => {
   const { readFile } = await import("node:fs/promises");
   const [page, route] = await Promise.all([
     readFile(new URL("./app/register/page.tsx", import.meta.url), "utf8"),
@@ -72,9 +87,11 @@ test("registration remains a non-persisting localized request preview", async ()
   ]);
   assert.match(page, /useLocale\(\)/);
   assert.match(page, /event\.preventDefault\(\)/);
-  assert.match(page, /self-registration API access is not yet available/);
+  assert.match(page, /fetch\("\/api\/auth\/register"/);
   assert.match(route, /signIn\("credentials"/);
-  assert.doesNotMatch(route, /REGISTER|localStorage|sessionStorage/);
+  const registerRoute = await readFile(new URL("./app/api/auth/register/route.ts", import.meta.url), "utf8");
+  assert.match(registerRoute, /isSameOriginRequest\(request\)/);
+  assert.doesNotMatch(route + registerRoute, /localStorage|sessionStorage/);
 });
 
 test("login and home use backend-authoritative session state", async () => {

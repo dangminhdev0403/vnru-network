@@ -59,12 +59,6 @@ const translationSchema = z
   })
   .strict();
 const articleFields = {
-  slug: z
-    .string()
-    .trim()
-    .min(1)
-    .max(200)
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   category: z.enum([
     'science-technology',
     'economy-society',
@@ -148,10 +142,10 @@ export class PublicNewsController {
     });
   }
 
-  @Get(':slug')
-  get(@Param('slug') slug: string, @Query('locale') locale?: string) {
+  @Get(':id')
+  get(@Param('id') id: string, @Query('locale') locale?: string) {
     const parsedLocale = parse(localeSchema, locale);
-    return this.service.getPublic(slug, localeMap[parsedLocale]);
+    return this.service.getPublic(parse(uuidSchema, id), localeMap[parsedLocale]);
   }
 }
 

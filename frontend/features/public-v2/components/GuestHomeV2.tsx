@@ -6,7 +6,7 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { z } from "zod";
 import { useLocale, type Locale } from "@/core/i18n/locale";
-import { OFFICIAL_NEWS } from "../data/official-news";
+import { newsArticleHref, OFFICIAL_NEWS } from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
 
@@ -2572,7 +2572,7 @@ export function GuestHomeV2({
               {OFFICIAL_NEWS.slice(0, 4).map((item) => (
                 <Link
                   key={item.id}
-                  href={`/news/${item.id}`}
+                  href={newsArticleHref(item)}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
                 >
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">

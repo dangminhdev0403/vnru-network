@@ -6,7 +6,6 @@ export type NewsContentType = "ARTICLE" | "EVENT" | "ANNOUNCEMENT" | "PROJECT" |
 export type NewsTranslation = { locale?: NewsLocale; title: string; summary: string; content: string; actionLabel?: string | null };
 export type NewsArticle = {
   id: string;
-  slug: string;
   category: string;
   contentType: NewsContentType;
   actionUrl: string | null;
@@ -20,7 +19,6 @@ export type NewsArticle = {
   translations: NewsTranslation[];
 };
 export type NewsInput = {
-  slug: string;
   category: string;
   contentType: NewsContentType;
   actionUrl?: string | null;
