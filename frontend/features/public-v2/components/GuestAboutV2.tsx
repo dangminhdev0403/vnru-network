@@ -728,23 +728,26 @@ const ECOSYSTEM_ORB_IMAGES: Record<string, string> = {
   knowledge: "/images/ecosystem-icons/knowledge.webp",
 };
 
-type AboutTabId = "overview" | "ecosystem" | "board";
+type AboutTabId = "overview" | "ecosystem" | "board" | "partners";
 
 const TAB_LABELS: Record<Locale, Record<AboutTabId, string>> = {
   vi: {
     overview: "Giới thiệu chung",
     ecosystem: "Hệ sinh thái",
     board: "Ban Điều hành",
+    partners: "Đối tác",
   },
   ru: {
     overview: "Общие сведения",
     ecosystem: "Экосистема",
     board: "Правление",
+    partners: "Партнёры",
   },
   en: {
     overview: "General Overview",
     ecosystem: "Ecosystem",
     board: "Board of Directors",
+    partners: "Partners",
   },
 };
 
@@ -752,12 +755,14 @@ const SECTION_OFFSETS: Record<AboutTabId, number> = {
   overview: 150,
   ecosystem: 150,
   board: 152,
+  partners: 150,
 };
 
 const SECTION_IDS: Record<AboutTabId, string> = {
   overview: "about-overview",
   ecosystem: "about-ecosystem",
   board: "board",
+  partners: "participating-partners",
 };
 
 function customSmoothScroll(
@@ -818,6 +823,7 @@ export function GuestAboutV2() {
       { id: "about-overview", tab: "overview" },
       { id: "about-ecosystem", tab: "ecosystem" },
       { id: "board", tab: "board" },
+      { id: "participating-partners", tab: "partners" },
     ];
 
     const observer = new IntersectionObserver(
@@ -922,7 +928,7 @@ export function GuestAboutV2() {
                 id="about-mobile-menu"
                 className="mt-2 overflow-hidden rounded-xl border border-blue-200 bg-white shadow-sm"
               >
-                {(["overview", "ecosystem", "board"] as const).map((tabId) => (
+                {(["overview", "ecosystem", "board", "partners"] as const).map((tabId) => (
                   <button
                     key={tabId}
                     type="button"
@@ -945,7 +951,7 @@ export function GuestAboutV2() {
           </div>
 
           <div className="mx-auto hidden w-max items-center gap-1 rounded-xl border border-blue-200/80 bg-white/95 p-1 shadow-xs sm:flex">
-            {(["overview", "ecosystem", "board"] as const).map((tabId) => {
+            {(["overview", "ecosystem", "board", "partners"] as const).map((tabId) => {
               const isActive = activeSection === tabId;
               return (
                 <button
