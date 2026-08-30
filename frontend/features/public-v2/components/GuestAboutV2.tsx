@@ -1263,15 +1263,47 @@ export function GuestAboutV2() {
           </div>
         </section>
 
-        {/* ═══════════ 4. ĐỐI TÁC THAM GIA (PARTNERS - TẠM ẨN) ═══════════ */}
-        {/* 
+        {/* ═══════════ 4. ĐỐI TÁC ═══════════ */}
         <section
           id="participating-partners"
           className="scroll-mt-32 border-t border-blue-100 bg-[#edf5ff] px-4 pt-6 pb-12 sm:px-6 sm:pt-8 sm:pb-14 lg:px-8 lg:pt-8 lg:pb-16"
         >
-          ...
+          <div className="mx-auto max-w-[1460px]">
+            <h2 className="text-center font-serif text-3xl font-black tracking-tight text-[#082352] sm:text-4xl lg:text-5xl">
+              {PARTNER_COPY[locale].title}
+            </h2>
+            {(["ru", "vi"] as const).map((country) => (
+              <div key={country} className="mt-8 sm:mt-10">
+                <h3 className="text-xl font-black text-slate-950 sm:text-2xl">
+                  {PARTNER_COPY[locale][country]}
+                </h3>
+                <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+                  {PARTNERS.filter(
+                    (partner) => partner.country === country,
+                  ).map((partner) => (
+                    <li key={partner.url}>
+                      <a
+                        href={partner.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={partner.name}
+                        className="group flex min-h-36 items-center justify-center rounded-3xl border border-blue-100 bg-white p-5 shadow-xs transition duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transform-none motion-reduce:transition-none"
+                      >
+                        <Image
+                          src={`/images/partners/${partner.logo}.webp`}
+                          alt={partner.name}
+                          width={180}
+                          height={100}
+                          className="max-h-24 w-auto object-contain transition duration-200 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
+                        />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </section>
-        */}
       </main>
       <GuestPublicFooter copy={homeCopy} />
     </div>

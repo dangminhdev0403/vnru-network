@@ -49,6 +49,9 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /noopener noreferrer/);
   assert.match(about, /hover:-translate-y-1/);
   assert.match(about, /title: "Đối tác"/);
+  assert.match(about, /id="participating-partners"[\s\S]*PARTNER_COPY\[locale\]\.title/);
+  assert.match(about, /PARTNERS\.filter\([\s\S]*partner\.country === country/);
+  assert.doesNotMatch(about, /PARTNERS - TẠM ẨN/);
   assert.match(about, /tel:\+79856905856/);
   assert.match(about, /https:\/\/t\.me\/\+79856905856/);
   assert.match(about, /https:\/\/wa\.me\/79996676240/);
