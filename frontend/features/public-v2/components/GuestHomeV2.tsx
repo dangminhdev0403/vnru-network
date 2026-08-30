@@ -1481,116 +1481,141 @@ export function EcosystemOrbIcon({
   icon: string;
 }) {
   return (
-    <div className="relative flex size-18 items-center justify-center sm:size-20">
+    <div className="relative flex size-[76px] items-center justify-center sm:size-[84px]">
       {/* Outer Orbiting Constellation Ring with Satellite Dots */}
       <svg
-        className="absolute inset-0 size-full text-blue-500/40"
-        viewBox="0 0 80 80"
+        className="absolute inset-0 size-full text-blue-500/50"
+        viewBox="0 0 96 96"
         fill="none"
         aria-hidden="true"
       >
+        {/* Subtle full dashed guide */}
         <circle
-          cx="40"
-          cy="40"
-          r="36"
+          cx="48"
+          cy="48"
+          r="44"
           stroke="currentColor"
           strokeWidth="1"
           strokeDasharray="4 6"
-          opacity="0.65"
+          opacity="0.45"
         />
-        {/* Orbital Satellite Dots */}
-        <circle cx="40" cy="4" r="2.5" fill="#2563eb" />
-        <circle cx="76" cy="40" r="1.8" fill="#38bdf8" />
-        <circle cx="10" cy="58" r="2" fill="#2563eb" />
+        {/* Orbital Solid Arc Highlights */}
+        <path
+          d="M20 16 A 44 44 0 0 1 84 32"
+          stroke="#2563eb"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+        />
+        <path
+          d="M76 80 A 44 44 0 0 1 12 64"
+          stroke="#2563eb"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+        />
+        {/* Satellite Beads */}
+        <circle cx="48" cy="4" r="3" fill="#2563eb" />
+        <circle cx="92" cy="48" r="2.2" fill="#38bdf8" />
+        <circle cx="12" cy="64" r="2.8" fill="#2563eb" />
+        <circle cx="20" cy="16" r="2" fill="#38bdf8" />
       </svg>
 
       {/* Inner Glowing Disc */}
-      <div className="relative flex size-14 items-center justify-center rounded-full border border-blue-200/90 bg-gradient-to-b from-blue-50 via-white to-blue-100/50 shadow-[0_4px_16px_-4px_rgba(37,99,235,0.2)] transition-all duration-300 group-hover:scale-105 group-hover:border-blue-400 group-hover:shadow-[0_8px_24px_-4px_rgba(37,99,235,0.3)] sm:size-16">
+      <div className="relative flex size-[58px] items-center justify-center rounded-full border border-blue-200/90 bg-gradient-to-b from-blue-50/80 via-white to-blue-50/50 shadow-[0_8px_24px_-6px_rgba(37,99,235,0.22)] ring-1 ring-blue-100/80 transition-all duration-300 group-hover:scale-105 group-hover:border-blue-400 group-hover:shadow-[0_12px_28px_-6px_rgba(37,99,235,0.32)] sm:size-[66px]">
         {icon === "handshake" || icon === "agreement" ? (
           <svg
-            viewBox="0 0 24 24"
-            className="size-7 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-8"
+            viewBox="0 0 48 48"
+            className="size-8 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-9"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.7"
+            strokeWidth="2.2"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden="true"
           >
-            {/* Left sleeve / cuff */}
-            <path d="M2 13.5l4.5-4.5 2 2-3.5 3.5a1 1 0 0 1-1.4 0L2 13.5z" />
-            {/* Right sleeve / cuff */}
-            <path d="M22 10.5l-4.5 4.5-2-2 3.5-3.5a1 1 0 0 1 1.4 0l1.6 1z" />
-            {/* Handshake clasp */}
-            <path d="M8.5 11l3 3a1 1 0 0 0 1.4 0l4.1-4.1a1 1 0 0 0 0-1.4l-1.5-1.5a1 1 0 0 0-1.4 0l-3.6 3.6" />
-            <path d="M10 12.5l2 2a1 1 0 0 0 1.4 0l2.6-2.6" />
-            <path d="M7 14.5l1.5 1.5a1 1 0 0 0 1.4 0l2.6-2.6" />
+            {/* Left Cuff */}
+            <path d="M6 31L13 18L18 21L11 34L6 31Z" />
+            <line x1="9.5" y1="24.5" x2="14.5" y2="27.5" />
+            {/* Right Cuff */}
+            <path d="M42 31L35 18L30 21L37 34L42 31Z" />
+            <line x1="38.5" y1="24.5" x2="33.5" y2="27.5" />
+            {/* Upper hands join */}
+            <path d="M15.5 19.5L21.5 16C23 15 25 15.5 26 17L28 20" />
+            <path d="M32.5 19.5L26.5 16C25 15 23 15.5 22 17L20 20" />
+            {/* 4 Interlocking Fingers */}
+            <path d="M17 24L24 31C25 32 26.5 32 27.5 31L32 26.5" />
+            <path d="M19.5 26.5L25 32C26 33 27.5 33 28.5 32L31 29.5" />
+            <path d="M22 29L26 33C27 34 28 34 29 33L30 32" />
+            <path d="M24.5 31.5L27 34" />
           </svg>
         ) : icon === "groups" || icon === "users" || icon === "members" ? (
           <svg
-            viewBox="0 0 24 24"
-            className="size-7 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-8"
+            viewBox="0 0 48 48"
+            className="size-8 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-9"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.7"
+            strokeWidth="2.2"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden="true"
           >
-            {/* Center Leader */}
-            <circle cx="12" cy="7" r="3.2" />
-            <path d="M6.5 19v-1a5.5 5.5 0 0 1 11 0v1" />
+            {/* Center Main User */}
+            <circle cx="24" cy="15" r="5.5" />
+            <path d="M16 34C16 28.5 19.5 25.5 24 25.5C28.5 25.5 32 28.5 32 34H16Z" />
+            <path d="M21 25.5L24 29L27 25.5" />
             {/* Left User */}
-            <circle cx="5" cy="9.5" r="2.2" />
-            <path d="M2 19v-.7a4 4 0 0 1 3.5-3.8" />
+            <circle cx="13" cy="19" r="4" />
+            <path d="M6.5 34C6.5 30 9.2 27.5 13 27.5C14.5 27.5 15.8 28 16.8 28.8" />
             {/* Right User */}
-            <circle cx="19" cy="9.5" r="2.2" />
-            <path d="M22 19v-.7a4 4 0 0 0-3.5-3.8" />
+            <circle cx="35" cy="19" r="4" />
+            <path d="M41.5 34C41.5 30 38.8 27.5 35 27.5C33.5 27.5 32.2 28 31.2 28.8" />
           </svg>
         ) : icon === "insights" || icon === "chart_up" || icon === "projects" ? (
           <svg
-            viewBox="0 0 24 24"
-            className="size-7 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-8"
+            viewBox="0 0 48 48"
+            className="size-8 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-9"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.7"
+            strokeWidth="2.2"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden="true"
           >
             {/* 4 Vertical Bars */}
-            <rect x="3" y="16" width="3" height="5" rx="0.75" />
-            <rect x="8" y="13" width="3" height="8" rx="0.75" />
-            <rect x="13" y="10" width="3" height="11" rx="0.75" />
-            <rect x="18" y="7" width="3" height="14" rx="0.75" />
+            <rect x="9.5" y="27" width="5.5" height="10" rx="1.5" />
+            <rect x="18" y="22" width="5.5" height="15" rx="1.5" />
+            <rect x="26.5" y="18" width="5.5" height="19" rx="1.5" />
+            <rect x="35" y="14" width="5.5" height="23" rx="1.5" />
             {/* Upward Trend Line */}
-            <path d="M3.5 13.5l4-4 4.5 3.5 7.5-7.5" />
-            <polyline points="15.5 5.5 19.5 5.5 19.5 9.5" />
-            <circle cx="3.5" cy="13.5" r="0.9" fill="currentColor" />
-            <circle cx="7.5" cy="9.5" r="0.9" fill="currentColor" />
-            <circle cx="12" cy="13" r="0.9" fill="currentColor" />
+            <path d="M10 23.5L18.5 16.5L27 21L37.5 10" />
+            <polyline points="29.5 10 37.5 10 37.5 18" />
+            {/* Line Nodes */}
+            <circle cx="10" cy="23.5" r="1.5" fill="currentColor" />
+            <circle cx="18.5" cy="16.5" r="1.5" fill="currentColor" />
+            <circle cx="27" cy="21" r="1.5" fill="currentColor" />
           </svg>
         ) : (
           <svg
-            viewBox="0 0 24 24"
-            className="size-7 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-8"
+            viewBox="0 0 48 48"
+            className="size-8 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-9"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.7"
+            strokeWidth="2.2"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden="true"
           >
-            {/* Open Book Pages */}
-            <path d="M3 4.5C6 4.5 9 6 12 7.5C15 6 18 4.5 21 4.5V18.5C18 18.5 15 20 12 21.5C9 20 6 18.5 3 18.5V4.5Z" />
-            <line x1="12" y1="7.5" x2="12" y2="21.5" />
+            {/* Open Book Outline */}
+            <path d="M24 13.5C18.5 11 12 11.8 7 13.5V33.5C12 31.8 18.5 31 24 33.5C29.5 31 36 31.8 41 33.5V13.5C36 11.8 29.5 11 24 13.5Z" />
+            <line x1="24" y1="13.5" x2="24" y2="33.5" />
             {/* Bookmark ribbon on left page */}
-            <path d="M6 4.5v5l1.5-1 1.5 1v-5" fill="currentColor" opacity="0.15" />
-            <path d="M6 4.5v5l1.5-1 1.5 1v-5" />
-            {/* Text lines on right page */}
-            <line x1="14" y1="9" x2="18.5" y2="9" />
-            <line x1="14" y1="12.5" x2="18.5" y2="12.5" />
-            <line x1="14" y1="16" x2="17" y2="16" />
+            <path d="M12.5 12.5V20.5L15 19L17.5 20.5V12.8" fill="currentColor" fillOpacity="0.18" />
+            <path d="M12.5 12.5V20.5L15 19L17.5 20.5V12.8" />
+            {/* Right page content lines */}
+            <line x1="28.5" y1="17.5" x2="36.5" y2="17.5" />
+            <line x1="28.5" y1="22.5" x2="36.5" y2="22.5" />
+            <line x1="28.5" y1="27.5" x2="34.5" y2="27.5" />
+            {/* Left page content lines */}
+            <line x1="11.5" y1="25.5" x2="19.5" y2="25.5" />
           </svg>
         )}
       </div>
