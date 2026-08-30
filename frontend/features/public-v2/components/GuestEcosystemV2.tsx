@@ -221,9 +221,9 @@ const GRANTS_ITEMS = [
       ru: "Приём заявок: Стажировка InteRussia в области ядерных технологий",
     },
     desc: {
-      vi: "The InteRussia team announces a call for applications to join the InteRussia fellowship for foreign specialists in nuclear technologies.",
-      en: "The InteRussia team announces a call for applications to join the InteRussia fellowship for foreign specialists in nuclear technologies.",
-      ru: "Команда InteRussia объявляет о приёме заявок на участие в исследовательской стажировке для иностранных специалистов в области ядерных технологий.",
+      vi: "The InteRussia team announces a call for applications to join the fellowship for foreign specialists in nuclear technologies.",
+      en: "The InteRussia team announces a call for applications to join the fellowship for foreign specialists in nuclear technologies.",
+      ru: "Команда InteRussia объявляет о приёме заявок на стажировку для иностранных специалистов в области ядерных технологий.",
     },
     cta: {
       vi: "Read more →",
@@ -242,9 +242,9 @@ const GRANTS_ITEMS = [
       ru: "Приём заявок: Стажировка InteRussia для специалистов в области МО",
     },
     desc: {
-      vi: "The InteRussia team is launching a call for applications for the InteRussia scientific and research fellowship for foreign specialists in international relations, political science, and regional studies.",
-      en: "The InteRussia team is launching a call for applications for the InteRussia scientific and research fellowship for foreign specialists in international relations, political science, and regional studies.",
-      ru: "Команда InteRussia объявляет о приёме заявок на научную стажировку для иностранных специалистов в области международных отношений, политологии и регионоведения.",
+      vi: "The InteRussia team announces a call for applications to join the fellowship for foreign specialists in international relations.",
+      en: "The InteRussia team announces a call for applications to join the fellowship for foreign specialists in international relations.",
+      ru: "Команда InteRussia объявляет о приёме заявок на стажировку для иностранных специалистов в области международных отношений.",
     },
     cta: {
       vi: "Read more →",
@@ -263,8 +263,8 @@ const GRANTS_ITEMS = [
       ru: "Приём заявок: Гранты Фонда Горчакова на двусторонние исследования",
     },
     desc: {
-      vi: "The Gorchakov Fund announces funding support for international scientific research projects, academic exchanges, and bilateral collaboration initiatives.",
-      en: "The Gorchakov Fund announces funding support for international scientific research projects, academic exchanges, and bilateral collaboration initiatives.",
+      vi: "The Gorchakov Fund announces funding support for international scientific research projects and bilateral exchanges.",
+      en: "The Gorchakov Fund announces funding support for international scientific research projects and bilateral exchanges.",
       ru: "Фонд Горчакова объявляет о выделении грантов на международные исследовательские проекты и академические обмены.",
     },
     cta: {
@@ -983,7 +983,7 @@ export function GuestEcosystemV2({
                       </div>
 
                       {/* Title */}
-                      <h3 className="mt-1.5 text-base font-bold leading-snug text-[#781428] transition-colors group-hover:text-[#5a0d1e] sm:text-lg">
+                      <h3 className="mt-1.5 line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#781428] transition-colors group-hover:text-[#5a0d1e] sm:text-lg">
                         <a
                           href={item.href}
                           target="_blank"
@@ -995,7 +995,7 @@ export function GuestEcosystemV2({
                       </h3>
 
                       {/* Description */}
-                      <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                      <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
                         {item.desc[locale] ?? item.desc.vi}
                       </p>
                     </div>
