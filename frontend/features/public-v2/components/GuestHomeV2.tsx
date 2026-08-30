@@ -1475,152 +1475,35 @@ export function NetworkIconGlyph({
   );
 }
 
-export function EcosystemOrbIcon({ icon }: { icon: string }) {
-  return (
-    <div className="relative flex size-[76px] items-center justify-center sm:size-[84px]">
-      {/* Outer Orbiting Constellation Ring with Satellite Dots */}
-      <svg
-        className="absolute inset-0 size-full text-blue-500/50"
-        viewBox="0 0 96 96"
-        fill="none"
-        aria-hidden="true"
-      >
-        {/* Subtle full dashed guide */}
-        <circle
-          cx="48"
-          cy="48"
-          r="44"
-          stroke="currentColor"
-          strokeWidth="1"
-          strokeDasharray="4 6"
-          opacity="0.45"
-        />
-        {/* Orbital Solid Arc Highlights */}
-        <path
-          d="M20 16 A 44 44 0 0 1 84 32"
-          stroke="#2563eb"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-        <path
-          d="M76 80 A 44 44 0 0 1 12 64"
-          stroke="#2563eb"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-        {/* Satellite Beads */}
-        <circle cx="48" cy="4" r="3" fill="#2563eb" />
-        <circle cx="92" cy="48" r="2.2" fill="#38bdf8" />
-        <circle cx="12" cy="64" r="2.8" fill="#2563eb" />
-        <circle cx="20" cy="16" r="2" fill="#38bdf8" />
-      </svg>
+const ECOSYSTEM_ORB_IMAGES: Record<string, string> = {
+  handshake: "/images/ecosystem-icons/opportunities.webp",
+  agreement: "/images/ecosystem-icons/opportunities.webp",
+  groups: "/images/ecosystem-icons/members.webp",
+  users: "/images/ecosystem-icons/members.webp",
+  members: "/images/ecosystem-icons/members.webp",
+  insights: "/images/ecosystem-icons/projects.webp",
+  chart_up: "/images/ecosystem-icons/projects.webp",
+  projects: "/images/ecosystem-icons/projects.webp",
+  menu_book: "/images/ecosystem-icons/knowledge.webp",
+  library: "/images/ecosystem-icons/knowledge.webp",
+  book_open: "/images/ecosystem-icons/knowledge.webp",
+  knowledge: "/images/ecosystem-icons/knowledge.webp",
+};
 
-      {/* Inner Glowing Disc */}
-      <div className="relative flex size-[58px] items-center justify-center rounded-full border border-blue-200/90 bg-gradient-to-b from-blue-50/80 via-white to-blue-50/50 shadow-[0_8px_24px_-6px_rgba(37,99,235,0.22)] ring-1 ring-blue-100/80 transition-all duration-300 group-hover:scale-105 group-hover:border-blue-400 group-hover:shadow-[0_12px_28px_-6px_rgba(37,99,235,0.32)] sm:size-[66px]">
-        {icon === "handshake" || icon === "agreement" ? (
-          <svg
-            viewBox="0 0 48 48"
-            className="size-8 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-9"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            {/* Left Cuff */}
-            <path d="M6 31L13 18L18 21L11 34L6 31Z" />
-            <line x1="9.5" y1="24.5" x2="14.5" y2="27.5" />
-            {/* Right Cuff */}
-            <path d="M42 31L35 18L30 21L37 34L42 31Z" />
-            <line x1="38.5" y1="24.5" x2="33.5" y2="27.5" />
-            {/* Upper hands join */}
-            <path d="M15.5 19.5L21.5 16C23 15 25 15.5 26 17L28 20" />
-            <path d="M32.5 19.5L26.5 16C25 15 23 15.5 22 17L20 20" />
-            {/* 4 Interlocking Fingers */}
-            <path d="M17 24L24 31C25 32 26.5 32 27.5 31L32 26.5" />
-            <path d="M19.5 26.5L25 32C26 33 27.5 33 28.5 32L31 29.5" />
-            <path d="M22 29L26 33C27 34 28 34 29 33L30 32" />
-            <path d="M24.5 31.5L27 34" />
-          </svg>
-        ) : icon === "groups" || icon === "users" || icon === "members" ? (
-          <svg
-            viewBox="0 0 48 48"
-            className="size-8 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-9"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            {/* Center Main User */}
-            <circle cx="24" cy="15" r="5.5" />
-            <path d="M16 34C16 28.5 19.5 25.5 24 25.5C28.5 25.5 32 28.5 32 34H16Z" />
-            <path d="M21 25.5L24 29L27 25.5" />
-            {/* Left User */}
-            <circle cx="13" cy="19" r="4" />
-            <path d="M6.5 34C6.5 30 9.2 27.5 13 27.5C14.5 27.5 15.8 28 16.8 28.8" />
-            {/* Right User */}
-            <circle cx="35" cy="19" r="4" />
-            <path d="M41.5 34C41.5 30 38.8 27.5 35 27.5C33.5 27.5 32.2 28 31.2 28.8" />
-          </svg>
-        ) : icon === "insights" ||
-          icon === "chart_up" ||
-          icon === "projects" ? (
-          <svg
-            viewBox="0 0 48 48"
-            className="size-8 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-9"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            {/* 4 Vertical Bars */}
-            <rect x="9.5" y="27" width="5.5" height="10" rx="1.5" />
-            <rect x="18" y="22" width="5.5" height="15" rx="1.5" />
-            <rect x="26.5" y="18" width="5.5" height="19" rx="1.5" />
-            <rect x="35" y="14" width="5.5" height="23" rx="1.5" />
-            {/* Upward Trend Line */}
-            <path d="M10 23.5L18.5 16.5L27 21L37.5 10" />
-            <polyline points="29.5 10 37.5 10 37.5 18" />
-            {/* Line Nodes */}
-            <circle cx="10" cy="23.5" r="1.5" fill="currentColor" />
-            <circle cx="18.5" cy="16.5" r="1.5" fill="currentColor" />
-            <circle cx="27" cy="21" r="1.5" fill="currentColor" />
-          </svg>
-        ) : (
-          <svg
-            viewBox="0 0 48 48"
-            className="size-8 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-9"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            {/* Open Book Outline */}
-            <path d="M24 13.5C18.5 11 12 11.8 7 13.5V33.5C12 31.8 18.5 31 24 33.5C29.5 31 36 31.8 41 33.5V13.5C36 11.8 29.5 11 24 13.5Z" />
-            <line x1="24" y1="13.5" x2="24" y2="33.5" />
-            {/* Bookmark ribbon on left page */}
-            <path
-              d="M12.5 12.5V20.5L15 19L17.5 20.5V12.8"
-              fill="currentColor"
-              fillOpacity="0.18"
-            />
-            <path d="M12.5 12.5V20.5L15 19L17.5 20.5V12.8" />
-            {/* Right page content lines */}
-            <line x1="28.5" y1="17.5" x2="36.5" y2="17.5" />
-            <line x1="28.5" y1="22.5" x2="36.5" y2="22.5" />
-            <line x1="28.5" y1="27.5" x2="34.5" y2="27.5" />
-            {/* Left page content lines */}
-            <line x1="11.5" y1="25.5" x2="19.5" y2="25.5" />
-          </svg>
-        )}
-      </div>
+export function EcosystemOrbIcon({ icon }: { icon: string }) {
+  const imageSrc =
+    ECOSYSTEM_ORB_IMAGES[icon] ?? "/images/ecosystem-icons/opportunities.webp";
+
+  return (
+    <div className="relative flex size-[72px] items-center justify-center sm:size-[80px]">
+      <Image
+        src={imageSrc}
+        alt=""
+        width={80}
+        height={80}
+        unoptimized
+        className="size-full object-contain drop-shadow-[0_4px_12px_rgba(37,99,235,0.18)] transition-transform duration-300 group-hover:scale-105"
+      />
     </div>
   );
 }

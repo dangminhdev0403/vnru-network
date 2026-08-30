@@ -1425,8 +1425,8 @@
     "semantic_hash": "11001fad5db2b4a2af6f6d5fa2c60186"
   },
   "frontend/features/public-v2/components/GuestHomeV2.tsx": {
-    "mtime": 1788068547.7739656,
-    "ast_hash": "6cfc7f9c1ec5c2f7cefec6c8b0983f4d",
+    "mtime": 1788068717.7837508,
+    "ast_hash": "d83b7f97856a293887f1fb643d02b345",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicNav.tsx": {
@@ -2392,6 +2392,46 @@
   "frontend/features/public-v2/components/GuestContactV2.tsx": {
     "mtime": 1788032513.2689157,
     "ast_hash": "9a73d49259e48ef1d7cb552c1a34c3d8",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/ecosystem-icons/knowledge.png": {
+    "mtime": 1788068696.167013,
+    "ast_hash": "88e82db700d06fa6435c49f0ab1419bb",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/ecosystem-icons/knowledge.webp": {
+    "mtime": 1788068696.2356348,
+    "ast_hash": "b17f98512fdfb19016bedc4443130d35",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/ecosystem-icons/members.png": {
+    "mtime": 1788068695.9434383,
+    "ast_hash": "386b98e857fed27dcc1d0e0361d8ab50",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/ecosystem-icons/members.webp": {
+    "mtime": 1788068696.013958,
+    "ast_hash": "bc80cf3d2b69cbd2ffacf48eb8a676a7",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/ecosystem-icons/opportunities.png": {
+    "mtime": 1788068695.8053524,
+    "ast_hash": "3ca76ff7ca300be765c4cd5ef2fb947e",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/ecosystem-icons/opportunities.webp": {
+    "mtime": 1788068695.8982615,
+    "ast_hash": "e1db774f5a11b5f17a71a198014b3e92",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/ecosystem-icons/projects.png": {
+    "mtime": 1788068696.0572948,
+    "ast_hash": "a09de27abae8262845db18218dd99d5d",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/ecosystem-icons/projects.webp": {
+    "mtime": 1788068696.1231182,
+    "ast_hash": "ca7dad0e8a111920d076aa80f6c79338",
     "semantic_hash": ""
   }
 }

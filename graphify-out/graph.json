@@ -143,8 +143,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_roles_id_page",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "page.tsx"
     },
     {
@@ -154,8 +154,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_roles_id_page_pageprops",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "pageprops"
     },
     {
@@ -165,8 +165,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_roles_id_page_roledetailroute",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "roledetailroute()"
     },
     {
@@ -407,8 +407,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_workspace_security_page",
-      "community": 2,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 0,
+      "community_name": "authServiceUrl",
       "norm_label": "page.tsx"
     },
     {
@@ -418,8 +418,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_app_workspace_security_page_securitypage",
-      "community": 2,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 0,
+      "community_name": "authServiceUrl",
       "norm_label": "securitypage()"
     },
     {
@@ -1078,8 +1078,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_contact_page",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "page.tsx"
     },
     {
@@ -1089,8 +1089,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "frontend_app_contact_page_metadata",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "metadata"
     },
     {
@@ -1100,8 +1100,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "frontend_app_contact_page_page",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "page()"
     },
     {
@@ -1452,8 +1452,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_news_id_slug_page",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "page.tsx"
     },
     {
@@ -1463,8 +1463,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "frontend_app_news_id_slug_page_pageprops",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "pageprops"
     },
     {
@@ -1474,8 +1474,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "frontend_app_news_id_slug_page_generatemetadata",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "generatemetadata()"
     },
     {
@@ -1485,8 +1485,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "frontend_app_news_id_slug_page_page",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "page()"
     },
     {
@@ -1496,8 +1496,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_news_id_page",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "page.tsx"
     },
     {
@@ -1507,8 +1507,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "frontend_app_news_id_page_page",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "page()"
     },
     {
@@ -1683,8 +1683,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_register_page",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "page.tsx"
     },
     {
@@ -1694,8 +1694,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "frontend_app_register_page_copy",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "copy"
     },
     {
@@ -1705,8 +1705,8 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "frontend_app_register_page_registerpage",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "registerpage()"
     },
     {
@@ -1716,8 +1716,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_register_validation",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "validation.ts"
     },
     {
@@ -1727,8 +1727,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_app_register_validation_registrationfield",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "registrationfield"
     },
     {
@@ -1738,8 +1738,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "frontend_app_register_validation_registrationvalidationcopy",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "registrationvalidationcopy"
     },
     {
@@ -1749,8 +1749,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_app_register_validation_createregistrationschema",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "createregistrationschema()"
     },
     {
@@ -1760,8 +1760,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "frontend_app_register_validation_isregistrationfield",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "isregistrationfield()"
     },
     {
@@ -1881,8 +1881,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_components_shared_brandmark",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "brandmark.tsx"
     },
     {
@@ -1892,8 +1892,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "frontend_components_shared_brandmark_brandmarkprops",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "brandmarkprops"
     },
     {
@@ -1903,8 +1903,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_components_shared_brandmark_brandmark",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "brandmark()"
     },
     {
@@ -2431,8 +2431,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_components_tailgrids_core_breadcrumbs",
-      "community": 32,
-      "community_name": "cn",
+      "community": 10,
+      "community_name": "PublicDiscoveryPages.tsx",
       "norm_label": "breadcrumbs.tsx"
     },
     {
@@ -2442,8 +2442,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_components_tailgrids_core_breadcrumbs_breadcrumbitem",
-      "community": 32,
-      "community_name": "cn",
+      "community": 10,
+      "community_name": "PublicDiscoveryPages.tsx",
       "norm_label": "breadcrumbitem"
     },
     {
@@ -2453,8 +2453,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_components_tailgrids_core_breadcrumbs_breadcrumbsprops",
-      "community": 32,
-      "community_name": "cn",
+      "community": 10,
+      "community_name": "PublicDiscoveryPages.tsx",
       "norm_label": "breadcrumbsprops"
     },
     {
@@ -2464,8 +2464,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "frontend_components_tailgrids_core_breadcrumbs_breadcrumbs",
-      "community": 32,
-      "community_name": "cn",
+      "community": 10,
+      "community_name": "PublicDiscoveryPages.tsx",
       "norm_label": "breadcrumbs()"
     },
     {
@@ -3113,8 +3113,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_core_i18n_locale_uselocale",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 10,
+      "community_name": "PublicDiscoveryPages.tsx",
       "norm_label": "uselocale"
     },
     {
@@ -3267,8 +3267,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "roledetailpage.tsx"
     },
     {
@@ -3278,8 +3278,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage_copy",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "copy"
     },
     {
@@ -3289,8 +3289,8 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage_grantfilter",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "grantfilter"
     },
     {
@@ -3300,8 +3300,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage_issystemrole",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "issystemrole()"
     },
     {
@@ -3311,8 +3311,8 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage_roledetailpageprops",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "roledetailpageprops"
     },
     {
@@ -3322,8 +3322,8 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage_roledetailpage",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "roledetailpage()"
     },
     {
@@ -3806,8 +3806,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_auth_components_account_accountclientpage",
-      "community": 133,
-      "community_name": "ProfileDialog.tsx",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "accountclientpage.tsx"
     },
     {
@@ -3817,8 +3817,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_features_auth_components_account_accountclientpage_copy",
-      "community": 133,
-      "community_name": "ProfileDialog.tsx",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "copy"
     },
     {
@@ -3828,8 +3828,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_features_auth_components_account_accountclientpage_accountclientpage",
-      "community": 133,
-      "community_name": "ProfileDialog.tsx",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "accountclientpage()"
     },
     {
@@ -3839,8 +3839,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_auth_components_security_mfacontrol",
-      "community": 2,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "mfacontrol.tsx"
     },
     {
@@ -3850,8 +3850,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_auth_components_security_mfacontrol_copy",
-      "community": 2,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "copy"
     },
     {
@@ -3861,8 +3861,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "frontend_features_auth_components_security_mfacontrol_mfacontrol",
-      "community": 2,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "mfacontrol()"
     },
     {
@@ -3905,8 +3905,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_auth_components_security_securityclientpage",
-      "community": 2,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "securityclientpage.tsx"
     },
     {
@@ -3916,8 +3916,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_features_auth_components_security_securityclientpage_securitycopy",
-      "community": 2,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "securitycopy"
     },
     {
@@ -3927,8 +3927,8 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "frontend_features_auth_components_security_securityclientpage_securityclientpage",
-      "community": 2,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "securityclientpage()"
     },
     {
@@ -4004,8 +4004,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "frontend_features_auth_server_state_uselogout",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "uselogout()"
     },
     {
@@ -4224,8 +4224,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "frontend_features_iam_hooks_useiamadministration",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "useiamadministration()"
     },
     {
@@ -4235,8 +4235,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "frontend_features_iam_hooks_usesessions",
-      "community": 2,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "usesessions()"
     },
     {
@@ -4301,8 +4301,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "frontend_features_iam_repository_iamsession",
-      "community": 2,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "iamsession"
     },
     {
@@ -4323,8 +4323,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "frontend_features_iam_repository_apierror",
-      "community": 146,
-      "community_name": "NewsMediaService",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "apierror"
     },
     {
@@ -4334,8 +4334,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_features_iam_repository_apierror_constructor",
-      "community": 146,
-      "community_name": "NewsMediaService",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": ".constructor()"
     },
     {
@@ -4796,8 +4796,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_discovery_components_publicdiscoveryshell",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 10,
+      "community_name": "PublicDiscoveryPages.tsx",
       "norm_label": "publicdiscoveryshell.tsx"
     },
     {
@@ -4807,8 +4807,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_features_public_discovery_components_publicdiscoveryshell_copy",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 10,
+      "community_name": "PublicDiscoveryPages.tsx",
       "norm_label": "copy"
     },
     {
@@ -4818,8 +4818,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "frontend_features_public_discovery_components_publicdiscoveryshell_publicdiscoveryshell",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 10,
+      "community_name": "PublicDiscoveryPages.tsx",
       "norm_label": "publicdiscoveryshell()"
     },
     {
@@ -5005,8 +5005,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_home_components_publichome",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "publichome.tsx"
     },
     {
@@ -5016,8 +5016,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "frontend_features_public_home_components_publichome_hero_static_title",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "hero_static_title"
     },
     {
@@ -5027,8 +5027,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "frontend_features_public_home_components_publichome_hero_dynamic_phrases",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "hero_dynamic_phrases"
     },
     {
@@ -5038,8 +5038,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "frontend_features_public_home_components_publichome_useherotyping",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "useherotyping()"
     },
     {
@@ -5049,8 +5049,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "frontend_features_public_home_components_publichome_publichome",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "publichome()"
     },
     {
@@ -5203,8 +5203,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestcontactv2",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "guestcontactv2.tsx"
     },
     {
@@ -5214,8 +5214,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestcontactv2_getcontactschema",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "getcontactschema()"
     },
     {
@@ -5225,8 +5225,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestcontactv2_guestcontactv2",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "guestcontactv2()"
     },
     {
@@ -5478,8 +5478,8 @@
       "source_location": "L334",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexploremedia_guestexploremedia",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "guestexploremedia()"
     },
     {
@@ -5489,8 +5489,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestexplorev2.tsx"
     },
     {
@@ -5500,8 +5500,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_newsitem",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "newsitem"
     },
     {
@@ -5511,8 +5511,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_text",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "text"
     },
     {
@@ -5522,8 +5522,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_default_fallback_images",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "default_fallback_images"
     },
     {
@@ -5533,8 +5533,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_formattitle",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "formattitle()"
     },
     {
@@ -5544,8 +5544,8 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_newsimage",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "newsimage()"
     },
     {
@@ -5555,8 +5555,8 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_smallrow",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "smallrow()"
     },
     {
@@ -5566,8 +5566,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_textrow",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "textrow()"
     },
     {
@@ -5577,8 +5577,8 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_matchesscope",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "matchesscope()"
     },
     {
@@ -5588,8 +5588,8 @@
       "source_location": "L245",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_matchescontenttype",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "matchescontenttype()"
     },
     {
@@ -5599,8 +5599,8 @@
       "source_location": "L253",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_matchesperiod",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "matchesperiod()"
     },
     {
@@ -5610,8 +5610,8 @@
       "source_location": "L261",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_guestexplorev2",
-      "community": 130,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestexplorev2()"
     },
     {
@@ -5621,8 +5621,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "guesthomev2.tsx"
     },
     {
@@ -5632,8 +5632,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_hero_banners",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "hero_banners"
     },
     {
@@ -5643,8 +5643,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_default_fallback_images",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "default_fallback_images"
     },
     {
@@ -5654,8 +5654,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_formattitle",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "formattitle()"
     },
     {
@@ -5665,8 +5665,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_home_copy",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "home_copy"
     },
     {
@@ -5676,8 +5676,8 @@
       "source_location": "L1305",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_networkstat",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "networkstat"
     },
     {
@@ -5687,8 +5687,8 @@
       "source_location": "L1307",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_network_tone_styles",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "network_tone_styles"
     },
     {
@@ -5698,8 +5698,8 @@
       "source_location": "L1343",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_network_desktop_nodes",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "network_desktop_nodes"
     },
     {
@@ -5709,41 +5709,52 @@
       "source_location": "L1381",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_networkiconglyph",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "networkiconglyph()"
+    },
+    {
+      "label": "ECOSYSTEM_ORB_IMAGES",
+      "file_type": "code",
+      "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
+      "source_location": "L1478",
+      "_origin": "ast",
+      "id": "frontend_features_public_v2_components_guesthomev2_ecosystem_orb_images",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
+      "norm_label": "ecosystem_orb_images"
     },
     {
       "label": "EcosystemOrbIcon()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1478",
+      "source_location": "L1493",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_ecosystemorbicon",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "ecosystemorbicon()"
     },
     {
       "label": "NetworkStatsInfographic()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1628",
+      "source_location": "L1511",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_networkstatsinfographic",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "networkstatsinfographic()"
     },
     {
       "label": "GuestHomeV2()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1972",
+      "source_location": "L1855",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_guesthomev2",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "guesthomev2()"
     },
     {
@@ -5830,8 +5841,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestnewsarticlev2.tsx"
     },
     {
@@ -5841,8 +5852,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_category",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "category"
     },
     {
@@ -5852,8 +5863,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_categorylabels",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "categorylabels"
     },
     {
@@ -5863,8 +5874,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_ui",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "ui"
     },
     {
@@ -5874,8 +5885,8 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_thumb",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "thumb()"
     },
     {
@@ -5885,8 +5896,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_sharebutton",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "sharebutton()"
     },
     {
@@ -5896,8 +5907,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_guestnewsarticlev2",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestnewsarticlev2()"
     },
     {
@@ -6028,8 +6039,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestopportunitiesv2",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "guestopportunitiesv2.tsx"
     },
     {
@@ -6039,8 +6050,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestopportunitiesv2_copy",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "copy"
     },
     {
@@ -6050,8 +6061,8 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestopportunitiesv2_guestopportunitiesv2",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "guestopportunitiesv2()"
     },
     {
@@ -6061,8 +6072,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicfooter",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "guestpublicfooter.tsx"
     },
     {
@@ -6072,8 +6083,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicfooter_guestpublicfootercopy",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "guestpublicfootercopy"
     },
     {
@@ -6083,8 +6094,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicfooter_guestpublicfooter",
-      "community": 111,
-      "community_name": "UserAdministration.tsx",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "guestpublicfooter()"
     },
     {
@@ -6094,8 +6105,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicnav",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "guestpublicnav.tsx"
     },
     {
@@ -6105,8 +6116,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicnav_guestnavactive",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "guestnavactive"
     },
     {
@@ -6116,8 +6127,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicnav_guestpublicnavprops",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "guestpublicnavprops"
     },
     {
@@ -6127,8 +6138,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicnav_copy",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "copy"
     },
     {
@@ -6138,8 +6149,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicnav_brand_title",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 46,
+      "community_name": "GuestEcosystemV2.tsx",
       "norm_label": "brand_title"
     },
     {
@@ -6149,8 +6160,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicnav_guestpublicnav",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 50,
+      "community_name": "GuestNewsArticleV2.tsx",
       "norm_label": "guestpublicnav()"
     },
     {
@@ -6193,8 +6204,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_official_news",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "official-news.ts"
     },
     {
@@ -6204,8 +6215,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_official_news_newscategorykey",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "newscategorykey"
     },
     {
@@ -6215,8 +6226,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_official_news_officialnewsarticle",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "officialnewsarticle"
     },
     {
@@ -6226,8 +6237,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_official_news_newsarticlehref",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "newsarticlehref()"
     },
     {
@@ -6237,8 +6248,8 @@
       "source_location": "L1013",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_official_news_getofficialnewsarticle",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "getofficialnewsarticle()"
     },
     {
@@ -6248,8 +6259,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_public_news_server",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "public-news-server.ts"
     },
     {
@@ -6259,8 +6270,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_public_news_server_categories",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "categories"
     },
     {
@@ -6270,8 +6281,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_public_news_server_apiarticle",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "apiarticle"
     },
     {
@@ -6281,8 +6292,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_public_news_server_maparticle",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "maparticle()"
     },
     {
@@ -6292,8 +6303,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_public_news_server_getpublicnews",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "getpublicnews()"
     },
     {
@@ -6303,8 +6314,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "frontend_features_public_v2_data_public_news_server_getpublicnewsarticle",
-      "community": 60,
-      "community_name": "NewsService",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "getpublicnewsarticle()"
     },
     {
@@ -6380,8 +6391,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_unifiedworkspacedashboard",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "unifiedworkspacedashboard.tsx"
     },
     {
@@ -6391,8 +6402,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_unifiedworkspacedashboard_surfacekey",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "surfacekey"
     },
     {
@@ -6402,8 +6413,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_unifiedworkspacedashboard_surfaces",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "surfaces"
     },
     {
@@ -6413,8 +6424,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_unifiedworkspacedashboard_copy",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "copy"
     },
     {
@@ -6424,8 +6435,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_unifiedworkspacedashboard_unifiedworkspacedashboard",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "unifiedworkspacedashboard()"
     },
     {
@@ -6853,8 +6864,8 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "frontend_lib_alerts_showerror",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 146,
+      "community_name": "NewsMediaService",
       "norm_label": "showerror()"
     },
     {
@@ -7172,8 +7183,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "frontend_package_dependencies_i18next",
-      "community": 3,
-      "community_name": "dependencies",
+      "community": 130,
+      "community_name": "RolePermissionsPage.tsx",
       "norm_label": "i18next"
     },
     {
@@ -7183,8 +7194,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "i18next",
-      "community": 3,
-      "community_name": "dependencies",
+      "community": 130,
+      "community_name": "RolePermissionsPage.tsx",
       "norm_label": "i18next"
     },
     {
@@ -7216,8 +7227,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "frontend_package_dependencies_next",
-      "community": 144,
-      "community_name": "next",
+      "community": 3,
+      "community_name": "dependencies",
       "norm_label": "next"
     },
     {
@@ -7227,8 +7238,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "next",
-      "community": 144,
-      "community_name": "next",
+      "community": 3,
+      "community_name": "dependencies",
       "norm_label": "next"
     },
     {
@@ -7788,8 +7799,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_tests_membership_registration_validation_test",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "membership-registration-validation.test.mjs"
     },
     {
@@ -7799,8 +7810,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "frontend_tests_membership_registration_validation_test_schema",
-      "community": 188,
-      "community_name": "page.tsx",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "schema"
     },
     {
@@ -8690,8 +8701,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "services_auth_service_package_dependencies_prisma_client",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "@prisma/client"
     },
     {
@@ -8701,8 +8712,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "prisma_client",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "@prisma/client"
     },
     {
@@ -8833,8 +8844,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_eslint_eslintrc",
-      "community": 174,
-      "community_name": ".list",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "@eslint/eslintrc"
     },
     {
@@ -8844,8 +8855,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "eslint_eslintrc",
-      "community": 174,
-      "community_name": ".list",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "@eslint/eslintrc"
     },
     {
@@ -8855,8 +8866,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_eslint_js",
-      "community": 175,
-      "community_name": "MembershipApplicationService",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "@eslint/js"
     },
     {
@@ -8866,8 +8877,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "eslint_js",
-      "community": 175,
-      "community_name": "MembershipApplicationService",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "@eslint/js"
     },
     {
@@ -8899,8 +8910,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_nestjs_schematics",
-      "community": 203,
-      "community_name": "auth.ts",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "@nestjs/schematics"
     },
     {
@@ -8910,8 +8921,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "nestjs_schematics",
-      "community": 203,
-      "community_name": "auth.ts",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "@nestjs/schematics"
     },
     {
@@ -8921,8 +8932,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_nestjs_testing",
-      "community": 204,
-      "community_name": "next-auth",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "@nestjs/testing"
     },
     {
@@ -8932,8 +8943,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "nestjs_testing",
-      "community": 204,
-      "community_name": "next-auth",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "@nestjs/testing"
     },
     {
@@ -8965,8 +8976,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_types_jest",
-      "community": 235,
-      "community_name": "button.tsx",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "@types/jest"
     },
     {
@@ -8976,8 +8987,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "types_jest",
-      "community": 235,
-      "community_name": "button.tsx",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "@types/jest"
     },
     {
@@ -9075,8 +9086,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_eslint_plugin_prettier",
-      "community": 178,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "eslint-plugin-prettier"
     },
     {
@@ -9086,8 +9097,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "eslint_plugin_prettier",
-      "community": 178,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "eslint-plugin-prettier"
     },
     {
@@ -9119,8 +9130,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_jest",
-      "community": 202,
-      "community_name": "collapsible.tsx",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "jest"
     },
     {
@@ -9130,8 +9141,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "jest",
-      "community": 202,
-      "community_name": "collapsible.tsx",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "jest"
     },
     {
@@ -9163,8 +9174,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_prisma",
-      "community": 208,
-      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "prisma"
     },
     {
@@ -9174,8 +9185,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "prisma",
-      "community": 208,
-      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "prisma"
     },
     {
@@ -9185,8 +9196,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_source_map_support",
-      "community": 216,
-      "community_name": "route.ts",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "source-map-support"
     },
     {
@@ -9196,8 +9207,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "source_map_support",
-      "community": 216,
-      "community_name": "route.ts",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "source-map-support"
     },
     {
@@ -9229,8 +9240,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_ts_jest",
-      "community": 217,
-      "community_name": "RequirePermission",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "ts-jest"
     },
     {
@@ -9240,8 +9251,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "ts_jest",
-      "community": 217,
-      "community_name": "RequirePermission",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "ts-jest"
     },
     {
@@ -9251,8 +9262,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_ts_loader",
-      "community": 218,
-      "community_name": "route.ts",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "ts-loader"
     },
     {
@@ -9262,8 +9273,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "ts_loader",
-      "community": 218,
-      "community_name": "route.ts",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "ts-loader"
     },
     {
@@ -9273,8 +9284,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_ts_node",
-      "community": 227,
-      "community_name": "AdminNewsController",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "ts-node"
     },
     {
@@ -9284,8 +9295,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "ts_node",
-      "community": 227,
-      "community_name": "AdminNewsController",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "ts-node"
     },
     {
@@ -9295,8 +9306,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_tsconfig_paths",
-      "community": 232,
-      "community_name": "badge.tsx",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "tsconfig-paths"
     },
     {
@@ -9306,8 +9317,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "tsconfig_paths",
-      "community": 232,
-      "community_name": "badge.tsx",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "tsconfig-paths"
     },
     {
@@ -9317,8 +9328,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "services_auth_service_package_devdependencies_typescript",
-      "community": 237,
-      "community_name": "typescript",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "typescript"
     },
     {
@@ -9328,8 +9339,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "services_auth_service_package_json_typescript",
-      "community": 237,
-      "community_name": "typescript",
+      "community": 49,
+      "community_name": "devDependencies",
       "norm_label": "typescript"
     },
     {
@@ -9515,8 +9526,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 66,
+      "community_name": "RolePermissionsPage.tsx",
       "norm_label": "import-fixture.ts"
     },
     {
@@ -9526,8 +9537,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_allowed_capabilities",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 66,
+      "community_name": "RolePermissionsPage.tsx",
       "norm_label": "allowed_capabilities"
     },
     {
@@ -9537,8 +9548,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_allowed_roles",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 66,
+      "community_name": "RolePermissionsPage.tsx",
       "norm_label": "allowed_roles"
     },
     {
@@ -9548,8 +9559,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_allowed_context_types",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 66,
+      "community_name": "RolePermissionsPage.tsx",
       "norm_label": "allowed_context_types"
     },
     {
@@ -9559,8 +9570,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_role_policies",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 66,
+      "community_name": "RolePermissionsPage.tsx",
       "norm_label": "role_policies"
     },
     {
@@ -9570,8 +9581,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_singlefixtureschema",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 66,
+      "community_name": "RolePermissionsPage.tsx",
       "norm_label": "singlefixtureschema"
     },
     {
@@ -9581,8 +9592,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_fixturesdocumentschema",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 66,
+      "community_name": "RolePermissionsPage.tsx",
       "norm_label": "fixturesdocumentschema"
     },
     {
@@ -9592,8 +9603,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_importfixture",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "importfixture()"
     },
     {
@@ -9603,8 +9614,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_official_news",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 111,
+      "community_name": "UserAdministration.tsx",
       "norm_label": "import-official-news.ts"
     },
     {
@@ -9614,8 +9625,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_official_news_officialarticle",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 111,
+      "community_name": "UserAdministration.tsx",
       "norm_label": "officialarticle"
     },
     {
@@ -9625,8 +9636,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_official_news_categories",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 111,
+      "community_name": "UserAdministration.tsx",
       "norm_label": "categories"
     },
     {
@@ -9636,8 +9647,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_official_news_articleid",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 111,
+      "community_name": "UserAdministration.tsx",
       "norm_label": "articleid()"
     },
     {
@@ -9647,8 +9658,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_official_news_main",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 111,
+      "community_name": "UserAdministration.tsx",
       "norm_label": "main()"
     },
     {
@@ -9658,8 +9669,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_prisma_seed_demo",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "seed-demo.ts"
     },
     {
@@ -9669,8 +9680,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "services_auth_service_prisma_seed_demo_roles",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "roles"
     },
     {
@@ -9680,8 +9691,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "services_auth_service_prisma_seed_demo_customroles",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "customroles"
     },
     {
@@ -9691,8 +9702,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "services_auth_service_prisma_seed_demo_legacyrolenames",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "legacyrolenames"
     },
     {
@@ -9702,8 +9713,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "services_auth_service_prisma_seed_demo_scrypt",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "scrypt"
     },
     {
@@ -9713,8 +9724,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "services_auth_service_prisma_seed_demo_accountsschema",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "accountsschema"
     },
     {
@@ -9724,8 +9735,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "services_auth_service_prisma_seed_demo_bindings",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "bindings"
     },
     {
@@ -9735,8 +9746,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "services_auth_service_prisma_seed_demo_main",
-      "community": 42,
-      "community_name": "dependencies",
+      "community": 2,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "main()"
     },
     {
@@ -10098,8 +10109,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_access_control_service_spec",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "access-control.service.spec.ts"
     },
     {
@@ -10109,8 +10120,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_access_control_service",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "access-control.service.ts"
     },
     {
@@ -10120,8 +10131,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_access_control_service_resolvecapabilitiesinput",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "resolvecapabilitiesinput"
     },
     {
@@ -10131,8 +10142,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_access_control_service_permissionrecord",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "permissionrecord"
     },
     {
@@ -10142,8 +10153,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_access_control_service_rolepermissionrecord",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "rolepermissionrecord"
     },
     {
@@ -10153,8 +10164,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_access_control_service_rolerecord",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "rolerecord"
     },
     {
@@ -10164,8 +10175,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_access_control_service_roleassignmentrecord",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "roleassignmentrecord"
     },
     {
@@ -10175,8 +10186,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_access_control_service_accesscontrolprismaclient",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "accesscontrolprismaclient"
     },
     {
@@ -10285,8 +10296,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 38,
+      "community_name": "public-news-server.ts",
       "norm_label": "iam-admin.controller.ts"
     },
     {
@@ -10296,8 +10307,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_paginationschema",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 38,
+      "community_name": "public-news-server.ts",
       "norm_label": "paginationschema"
     },
     {
@@ -10307,8 +10318,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_userstatusschema",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 38,
+      "community_name": "public-news-server.ts",
       "norm_label": "userstatusschema"
     },
     {
@@ -10318,8 +10329,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_passwordresetschema",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 38,
+      "community_name": "public-news-server.ts",
       "norm_label": "passwordresetschema"
     },
     {
@@ -10329,8 +10340,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_uuidschema",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 38,
+      "community_name": "public-news-server.ts",
       "norm_label": "uuidschema"
     },
     {
@@ -10340,8 +10351,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_roleassignmentschema",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 38,
+      "community_name": "public-news-server.ts",
       "norm_label": "roleassignmentschema"
     },
     {
@@ -10351,8 +10362,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_rolepermissionsschema",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 38,
+      "community_name": "public-news-server.ts",
       "norm_label": "rolepermissionsschema"
     },
     {
@@ -11176,8 +11187,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_constructor",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 44,
+      "community_name": "IdentityService",
       "norm_label": ".constructor()"
     },
     {
@@ -11341,8 +11352,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_spec",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "authentication.service.spec.ts"
     },
     {
@@ -11352,8 +11363,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service",
-      "community": 44,
-      "community_name": "IdentityService",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "authentication.service.ts"
     },
     {
@@ -11363,8 +11374,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_callbackresult",
-      "community": 44,
-      "community_name": "IdentityService",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "callbackresult"
     },
     {
@@ -11374,8 +11385,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_exchangeresult",
-      "community": 44,
-      "community_name": "IdentityService",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "exchangeresult"
     },
     {
@@ -11385,8 +11396,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_authjsexchangeinput",
-      "community": 44,
-      "community_name": "IdentityService",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "authjsexchangeinput"
     },
     {
@@ -11407,8 +11418,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_authenticationservice",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "authenticationservice"
     },
     {
@@ -11418,8 +11429,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_ts_injectable",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "injectable"
     },
     {
@@ -11429,8 +11440,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_authenticationservice_constructor",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": ".constructor()"
     },
     {
@@ -11440,8 +11451,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_authenticationservice_exchangeauthjsassertion",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 44,
+      "community_name": "IdentityService",
       "norm_label": ".exchangeauthjsassertion()"
     },
     {
@@ -11484,8 +11495,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_module",
-      "community": 19,
-      "community_name": "LocalCredentialService",
+      "community": 110,
+      "community_name": "GuestExploreV2.tsx",
       "norm_label": "identity.module.ts"
     },
     {
@@ -12826,8 +12837,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_public",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "session-public.ts"
     },
     {
@@ -12870,8 +12881,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_spec",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "session.service.spec.ts"
     },
     {
@@ -12881,8 +12892,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "session.service.ts"
     },
     {
@@ -12892,8 +12903,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_createsessioninput",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "createsessioninput"
     },
     {
@@ -12903,8 +12914,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionrecord",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "sessionrecord"
     },
     {
@@ -12914,8 +12925,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_createsessionresult",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "createsessionresult"
     },
     {
@@ -12925,8 +12936,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionserviceoptions",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "sessionserviceoptions"
     },
     {
@@ -12936,8 +12947,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionprismaclient",
-      "community": 66,
-      "community_name": "RolePermissionsPage.tsx",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": "sessionprismaclient"
     },
     {
@@ -13057,8 +13068,8 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_revokesessionbyidforuser",
-      "community": 18,
-      "community_name": "AuthenticationController",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": ".revokesessionbyidforuser()"
     },
     {
@@ -13079,8 +13090,8 @@
       "source_location": "L253",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_getsessionbyid",
-      "community": 18,
-      "community_name": "AuthenticationController",
+      "community": 88,
+      "community_name": ".getCurrentUser",
       "norm_label": ".getsessionbyid()"
     },
     {
@@ -23702,8 +23713,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "architecture_module_map",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 169,
+      "community_name": "VN-RU Module Map",
       "norm_label": "module_map.md"
     },
     {
@@ -23768,8 +23779,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "architecture_readme",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 171,
+      "community_name": "VN-RU Architecture Hub",
       "norm_label": "readme.md"
     },
     {
@@ -24087,8 +24098,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_api_spec",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 171,
+      "community_name": "VN-RU Architecture Hub",
       "norm_label": "api_spec.md"
     },
     {
@@ -24098,8 +24109,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_api_spec_module_1_api_contract_policy",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 171,
+      "community_name": "VN-RU Architecture Hub",
       "norm_label": "module 1 api contract policy"
     },
     {
@@ -24164,8 +24175,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_deployment",
-      "community": 234,
-      "community_name": "Deployment and Local Operation",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "deployment.md"
     },
     {
@@ -24175,8 +24186,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_deployment_deployment_and_local_operation",
-      "community": 234,
-      "community_name": "Deployment and Local Operation",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "deployment and local operation"
     },
     {
@@ -24186,8 +24197,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "docs_deployment_local_source_development",
-      "community": 234,
-      "community_name": "Deployment and Local Operation",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "local source development"
     },
     {
@@ -24197,8 +24208,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "docs_deployment_production_compose_deployment",
-      "community": 234,
-      "community_name": "Deployment and Local Operation",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "production compose deployment"
     },
     {
@@ -24274,8 +24285,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_rbac_architecture",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 171,
+      "community_name": "VN-RU Architecture Hub",
       "norm_label": "rbac_architecture.md"
     },
     {
@@ -24285,8 +24296,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_rbac_architecture_module_1_rbac_architecture",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 171,
+      "community_name": "VN-RU Architecture Hub",
       "norm_label": "module 1 rbac architecture"
     },
     {
@@ -24296,8 +24307,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "docs_rbac_architecture_product_access_classes",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 171,
+      "community_name": "VN-RU Architecture Hub",
       "norm_label": "product access classes"
     },
     {
@@ -24428,8 +24439,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_verification_guide",
-      "community": 37,
-      "community_name": "3.4 Full",
+      "community": 60,
+      "community_name": "NewsService",
       "norm_label": "verification_guide.md"
     },
     {
@@ -24439,8 +24450,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_verification_guide_pro_max_verification_guide_selectable_test_profiles",
-      "community": 37,
-      "community_name": "3.4 Full",
+      "community": 60,
+      "community_name": "NewsService",
       "norm_label": "pro-max verification guide \u2014 selectable test profiles"
     },
     {
@@ -24450,8 +24461,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "docs_verification_guide_1_command_dispatch",
-      "community": 37,
-      "community_name": "3.4 Full",
+      "community": 60,
+      "community_name": "NewsService",
       "norm_label": "1. command dispatch"
     },
     {
@@ -24461,8 +24472,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "docs_verification_guide_2_common_verification_rules",
-      "community": 37,
-      "community_name": "3.4 Full",
+      "community": 60,
+      "community_name": "NewsService",
       "norm_label": "2. common verification rules"
     },
     {
@@ -24593,8 +24604,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "docs_verification_guide_4_module_aware_test_selection",
-      "community": 37,
-      "community_name": "3.4 Full",
+      "community": 60,
+      "community_name": "NewsService",
       "norm_label": "4. module-aware test selection"
     },
     {
@@ -24604,8 +24615,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "docs_verification_guide_5_evidence_standard",
-      "community": 37,
-      "community_name": "3.4 Full",
+      "community": 60,
+      "community_name": "NewsService",
       "norm_label": "5. evidence standard"
     },
     {
@@ -24615,8 +24626,8 @@
       "source_location": "L193",
       "_origin": "ast",
       "id": "docs_verification_guide_6_examples",
-      "community": 37,
-      "community_name": "3.4 Full",
+      "community": 60,
+      "community_name": "NewsService",
       "norm_label": "6. examples"
     },
     {
@@ -24890,8 +24901,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_docs_architecture",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 98,
+      "community_name": "Frontend Rules",
       "norm_label": "architecture.md"
     },
     {
@@ -24901,8 +24912,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_docs_architecture_frontend_architecture",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 98,
+      "community_name": "Frontend Rules",
       "norm_label": "frontend architecture"
     },
     {
@@ -25110,8 +25121,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_docs_prompt_pre_test_focused_fix",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 98,
+      "community_name": "Frontend Rules",
       "norm_label": "prompt_pre_test_focused_fix.md"
     },
     {
@@ -25121,8 +25132,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_docs_prompt_pre_test_focused_fix_archived_pre_test_prompt",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 98,
+      "community_name": "Frontend Rules",
       "norm_label": "archived pre-test prompt"
     },
     {
@@ -26166,8 +26177,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_docs_architecture",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 171,
+      "community_name": "VN-RU Architecture Hub",
       "norm_label": "architecture.md"
     },
     {
@@ -26177,8 +26188,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_docs_architecture_backend_architecture",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 171,
+      "community_name": "VN-RU Architecture Hub",
       "norm_label": "backend architecture"
     },
     {
@@ -34988,7 +34999,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1976",
+      "source_location": "L1859",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2_guesthomev2",
@@ -40428,6 +40439,17 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2",
+      "target": "frontend_features_public_v2_components_guesthomev2_ecosystem_orb_images",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
+      "source_location": "L1493",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guesthomev2",
       "target": "frontend_features_public_v2_components_guesthomev2_ecosystemorbicon",
       "confidence_score": 1.0
     },
@@ -40446,7 +40468,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1972",
+      "source_location": "L1855",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2",
@@ -40523,7 +40545,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1628",
+      "source_location": "L1511",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2",
@@ -40619,7 +40641,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L2119",
+      "source_location": "L2002",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2_guesthomev2",
@@ -40644,7 +40666,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L2104",
+      "source_location": "L1987",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2_guesthomev2",
@@ -65954,5 +65976,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e49440e79bb92b16764b53af48a4825f63a71d07"
+  "built_at_commit": "a1ec95e92dda1214b957d6248f9f8ec697a8bc01"
 }
