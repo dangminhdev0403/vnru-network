@@ -163,9 +163,6 @@ export default async function LoginPage({
           <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
             {t.title}
           </h1>
-          <p className="mt-3 text-base leading-7 text-slate-600">
-            {t.description}
-          </p>
 
           <LoginForm
             destination={destination}

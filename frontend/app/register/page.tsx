@@ -303,9 +303,6 @@ export default function RegisterPage() {
           >
             {t.title}
           </h1>
-          <p className="mt-3 max-w-[58ch] text-base leading-6 text-slate-600">
-            {t.description}
-          </p>
 
           {status === "success" || status === "error" ? (
             <p

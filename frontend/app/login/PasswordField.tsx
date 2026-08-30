@@ -36,9 +36,9 @@ export function PasswordField({
         type={visible ? "text" : "password"}
         autoComplete="current-password"
         required
-        disabled={disabled}
+        readOnly={disabled}
         placeholder={placeholder}
-        className="min-h-13 w-full rounded-xl border border-slate-300 bg-white py-3 pr-14 pl-12 text-base transition placeholder:text-slate-400 focus:border-blue-700 focus-visible:outline-none disabled:bg-slate-50 disabled:text-slate-500"
+        className="min-h-13 w-full rounded-xl border border-slate-300 bg-white py-3 pr-14 pl-12 text-base transition placeholder:text-slate-400 focus:border-blue-700 focus-visible:outline-none read-only:bg-slate-50 read-only:text-slate-500"
       />
       <button
         type="button"

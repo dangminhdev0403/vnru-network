@@ -77,10 +77,14 @@ test("login renders the Auth.js Credentials form", async () => {
     readFile(new URL("./app/login/LoginForm.tsx", import.meta.url), "utf8"),
     readFile(new URL("./app/login/PasswordField.tsx", import.meta.url), "utf8"),
   ]);
-  assert.match(page, /<LoginForm destination=\{destination\}/);
+  assert.match(page, /<LoginForm[\s\S]*?destination=\{destination\}/);
   assert.match(form, /action="\/api\/auth\/login"/);
   assert.match(form, /name="account"/);
   assert.match(password, /name="password"/);
+  assert.match(form, /readOnly=\{isSubmitting\}/);
+  assert.match(password, /readOnly=\{disabled\}/);
+  assert.doesNotMatch(form, /name="account"[\s\S]{0,180}disabled=\{isSubmitting\}/);
+  assert.doesNotMatch(password, /name="password"[\s\S]{0,180}disabled=\{disabled\}/);
   assert.doesNotMatch(page + form + password, /iframe|html-templates\/login/);
 });
 

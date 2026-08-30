@@ -40,10 +40,7 @@ export function LoginForm({
   return (
     <>
       {error && (
-        <p
-          role="alert"
-          className="mt-3 text-sm font-semibold text-rose-600"
-        >
+        <p role="alert" className="mt-3 text-sm font-semibold text-rose-600">
           {t.error || error}
         </p>
       )}
@@ -75,11 +72,11 @@ export function LoginForm({
               autoComplete="username"
               required
               autoFocus={!initialAccount}
-              disabled={isSubmitting}
+              readOnly={isSubmitting}
               value={account}
               onChange={(e) => setAccount(e.target.value)}
               placeholder={t.accountPlaceholder}
-              className="min-h-13 w-full rounded-xl border border-slate-300 bg-white py-3 pr-4 pl-12 text-base transition placeholder:text-slate-400 focus:border-blue-700 focus-visible:outline-none disabled:bg-slate-50 disabled:text-slate-500"
+              className="min-h-13 w-full rounded-xl border border-slate-300 bg-white py-3 pr-4 pl-12 text-base transition placeholder:text-slate-400 focus:border-blue-700 focus-visible:outline-none read-only:bg-slate-50 read-only:text-slate-500"
             />
           </span>
         </label>
