@@ -879,26 +879,26 @@ export function GuestEcosystemV2({
 
             {/* SUBTAB 2: CÔNG BỐ */}
             {oppSubTab === "call-for-papers" && (
-              <div className="grid gap-6 md:grid-cols-3">
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
+              <div className="grid gap-5 md:grid-cols-3">
+                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
                   <div>
-                    <h3 className="font-serif line-clamp-2 text-lg font-bold leading-snug text-[#082352] sm:text-xl">
+                    <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
                       Chương trình Học bổng Nghiên cứu InteRussia Fellowships
                       2026
                     </h3>
-                    <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                    <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
                       Chương trình học bổng uy tín dành cho các nhà khoa học,
                       chuyên gia trẻ quốc tế sang nghiên cứu trực tiếp tại các
                       viện và trường ĐH hàng đầu của Nga. Tài trợ toàn phần vé
                       máy bay, chỗ ở tại Moskva và sinh hoạt phí.
                     </p>
                   </div>
-                  <div className="mt-6 border-t border-slate-100 pt-4">
+                  <div className="mt-4 border-t border-slate-100 pt-3">
                     <a
                       href="https://interussia.com/announce_en"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:text-blue-800"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 sm:text-sm"
                     >
                       <span>Xem thông báo chính thức</span>
                       <span aria-hidden="true">↗</span>
@@ -906,23 +906,23 @@ export function GuestEcosystemV2({
                   </div>
                 </article>
 
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
+                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
                   <div>
-                    <h3 className="font-serif line-clamp-2 text-lg font-bold leading-snug text-[#082352] sm:text-xl">
+                    <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
                       Hội nghị Khoa học Quốc tế Song phương VAST – RAS (Nga –
                       Việt)
                     </h3>
-                    <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                    <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
                       Kêu gọi gửi bài báo tham luận khoa học cho Hội thảo khoa
                       học quốc tế thường niên giữa Viện Hàn lâm KHCN Việt Nam và
                       Viện Hàn lâm Khoa học Nga trong các lĩnh vực vật liệu,
                       công nghệ sinh học và chuyển đổi số.
                     </p>
                   </div>
-                  <div className="mt-6 border-t border-slate-100 pt-4">
+                  <div className="mt-4 border-t border-slate-100 pt-3">
                     <Link
                       href="/news/3/meet-global-mice-congress-2026-du-kien-dien-ra-tai-moskva"
-                      className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:text-blue-800"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 sm:text-sm"
                     >
                       <span>Xem chi tiết</span>
                       <span aria-hidden="true">→</span>
@@ -930,23 +930,23 @@ export function GuestEcosystemV2({
                   </div>
                 </article>
 
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
+                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
                   <div>
-                    <h3 className="font-serif line-clamp-2 text-lg font-bold leading-snug text-[#082352] sm:text-xl">
+                    <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
                       Chuyên san Hợp tác Khoa học Song phương Việt Nam – Liên
                       bang Nga
                     </h3>
-                    <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                    <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
                       Đợt tiếp nhận công trình nghiên cứu gốc từ các nhóm tác
                       giả liên kết hai nước đăng trên chuyên san đặc biệt của
                       các tạp chí khoa học quốc tế uy tín thuộc hệ thống RAS &
                       VAST.
                     </p>
                   </div>
-                  <div className="mt-6 border-t border-slate-100 pt-4">
+                  <div className="mt-4 border-t border-slate-100 pt-3">
                     <Link
                       href="/news"
-                      className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:text-blue-800"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 sm:text-sm"
                     >
                       <span>Xem chi tiết</span>
                       <span aria-hidden="true">→</span>
@@ -958,32 +958,32 @@ export function GuestEcosystemV2({
 
             {/* SUBTAB 3: TÀI TRỢ */}
             {oppSubTab === "grants" && (
-              <div className="grid gap-6 md:grid-cols-3">
+              <div className="grid gap-5 md:grid-cols-3">
                 {GRANTS_ITEMS.map((item) => (
                   <article
                     key={item.id}
-                    className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs transition duration-200 hover:-translate-y-1 hover:border-rose-300 hover:shadow-md sm:p-6"
+                    className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-xs transition duration-200 hover:-translate-y-1 hover:border-rose-300 hover:shadow-md sm:p-4"
                   >
                     <div>
-                      {/* Image Preview Banner */}
-                      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-[#5a0d1e] shadow-xs">
+                      {/* Compact Image Preview Banner */}
+                      <div className="relative h-28 sm:h-32 w-full overflow-hidden rounded-xl bg-[#5a0d1e] shadow-xs">
                         <Image
                           src={item.image}
                           alt={item.title[locale] ?? item.title.vi}
                           fill
                           unoptimized
-                          sizes="(max-width: 768px) 100vw, 50vw"
+                          sizes="(max-width: 768px) 100vw, 33vw"
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
 
                       {/* Date Meta */}
-                      <div className="mt-4 text-xs font-medium text-slate-500">
+                      <div className="mt-2 text-[11px] font-medium text-slate-500">
                         {item.date}
                       </div>
 
                       {/* Title */}
-                      <h3 className="mt-1.5 line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#781428] transition-colors group-hover:text-[#5a0d1e] sm:text-lg">
+                      <h3 className="mt-1 line-clamp-2 min-h-[38px] text-xs font-bold leading-snug text-[#781428] transition-colors group-hover:text-[#5a0d1e] sm:text-sm">
                         <a
                           href={item.href}
                           target="_blank"
@@ -995,18 +995,18 @@ export function GuestEcosystemV2({
                       </h3>
 
                       {/* Description */}
-                      <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
+                      <p className="mt-1 line-clamp-2 min-h-[32px] text-[11px] leading-relaxed text-slate-600 sm:text-xs">
                         {item.desc[locale] ?? item.desc.vi}
                       </p>
                     </div>
 
                     {/* Bottom Read More CTA */}
-                    <div className="mt-4 pt-2">
+                    <div className="mt-2 pt-1">
                       <a
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-semibold text-[#781428] transition hover:text-[#5a0d1e] hover:underline sm:text-sm"
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-[#781428] transition hover:text-[#5a0d1e] hover:underline"
                       >
                         <span>{item.cta[locale] ?? item.cta.vi}</span>
                       </a>
