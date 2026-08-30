@@ -913,7 +913,8 @@ export function GuestAboutV2() {
               onClick={() => setAboutMenuOpen((open) => !open)}
               className="flex min-h-10 w-full items-center justify-between rounded-xl border border-blue-200 bg-white px-3.5 text-left text-sm font-bold text-[#082352] shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
             >
-              {TAB_LABELS[locale]?.[activeSection] ?? TAB_LABELS.vi[activeSection]}
+              {TAB_LABELS[locale]?.[activeSection] ??
+                TAB_LABELS.vi[activeSection]}
               <span aria-hidden="true">⌄</span>
             </button>
             {aboutMenuOpen && (
@@ -995,14 +996,18 @@ export function GuestAboutV2() {
                 <h2 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
                   {t.overviewTitle}
                 </h2>
-                <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">{t.overview}</p>
+                <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">
+                  {t.overview}
+                </p>
               </section>
 
               <section id="mission">
                 <h2 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
                   {t.missionTitle}
                 </h2>
-                <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">{t.missionSubtitle}</p>
+                <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">
+                  {t.missionSubtitle}
+                </p>
                 <ul className="mt-2 list-disc space-y-1.5 pl-5 text-xs leading-normal sm:text-sm sm:leading-relaxed">
                   {t.highlights.map((item) => (
                     <li key={item.title}>
@@ -1021,7 +1026,9 @@ export function GuestAboutV2() {
                     {section.title}
                   </h2>
                   {section.intro ? (
-                    <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">{section.intro}</p>
+                    <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">
+                      {section.intro}
+                    </p>
                   ) : null}
                   <ul className="mt-2 list-disc space-y-1.5 pl-5 text-xs leading-normal sm:text-sm sm:leading-relaxed">
                     {section.items.map((item) => (
@@ -1078,7 +1085,6 @@ export function GuestAboutV2() {
                 className="group/link inline-flex items-center gap-1 text-xs font-bold text-blue-600 transition hover:text-blue-800 sm:text-sm"
               >
                 <span>{homeCopy.ecosystem.cardCta}</span>
-                <span aria-hidden="true">→</span>
               </Link>
             </div>
 
@@ -1120,7 +1126,6 @@ export function GuestAboutV2() {
 
                     <div className="mt-4 flex items-center gap-1 text-[11px] font-bold text-blue-600 transition group-hover:text-blue-800">
                       <span>{homeCopy.ecosystem.cardCta}</span>
-                      <span aria-hidden="true">→</span>
                     </div>
                   </Link>
                 );
@@ -1130,10 +1135,7 @@ export function GuestAboutV2() {
         </section>
 
         {/* ═══════════ 3. BAN ĐIỀU HÀNH (BOARD MEMBERS) ═══════════ */}
-        <section
-          id="board"
-          className="scroll-mt-36 pt-4 pb-8 sm:pt-6 sm:pb-10"
-        >
+        <section id="board" className="scroll-mt-36 pt-4 pb-8 sm:pt-6 sm:pb-10">
           <div className="mx-auto mb-4 max-w-4xl text-center sm:mb-5">
             <h2 className="font-serif text-lg font-bold tracking-tight text-[#082352] sm:text-xl">
               {t.boardTitle}
@@ -1189,8 +1191,16 @@ export function GuestAboutV2() {
                           <a
                             key={contact.label}
                             href={contact.href}
-                            target={contact.href.startsWith("http") ? "_blank" : undefined}
-                            rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                            target={
+                              contact.href.startsWith("http")
+                                ? "_blank"
+                                : undefined
+                            }
+                            rel={
+                              contact.href.startsWith("http")
+                                ? "noopener noreferrer"
+                                : undefined
+                            }
                             aria-label={`${contact.label}: ${member.name}`}
                             title={contact.label}
                             className="grid size-10 place-items-center rounded-xl border border-blue-200 bg-blue-50/80 text-blue-700 shadow-2xs transition hover:-translate-y-0.5 hover:border-blue-400 hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transform-none motion-reduce:transition-none sm:size-11"
