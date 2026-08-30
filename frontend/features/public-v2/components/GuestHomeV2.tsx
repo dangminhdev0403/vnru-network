@@ -918,7 +918,8 @@ export const HOME_COPY: Record<
       sendLabel: "Отправить",
       mailClientHint: "Кнопка откроет почтовое приложение на вашем устройстве.",
       emailSubject: "Обращение из сети RU-VN",
-      copyright: "© 2026 РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ. Все права защищены.",
+      copyright:
+        "© 2026 РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ. Все права защищены.",
       terms: "Условия сотрудничества",
       privacy: "Политика конфиденциальности",
       ethics: "Научная этика",
@@ -1474,124 +1475,127 @@ export function NetworkIconGlyph({
   );
 }
 
-export function AgreementHandshakeIcon({
-  className = "size-6",
-}: {
-  className?: string;
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="m11 17 2 2a1 1 0 0 0 1.4 0l4.3-4.3a1 1 0 0 0 0-1.4l-2.4-2.4a1 1 0 0 0-1.4 0L14.3 12" />
-      <path d="m7 13-2.3 2.3a1 1 0 0 0 0 1.4l2 2a1 1 0 0 0 1.4 0L11 16" />
-      <path d="m18 10 3.3-3.3a1 1 0 0 0 0-1.4l-2.6-2.6a1 1 0 0 0-1.4 0L14 6" />
-      <path d="m2 6.7 3.3-3.3a1 1 0 0 1 1.4 0l3.3 3.3" />
-      <path d="M10 10l3.5 3.5" />
-    </svg>
-  );
-}
-
-export function UserMultiple02Icon({
-  className = "size-6",
-}: {
-  className?: string;
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  );
-}
-
-export function ChartUpAnalytics02Icon({
-  className = "size-6",
-}: {
-  className?: string;
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M3 3v18h18" />
-      <path d="m19 9-5 5-4-4-3 3" />
-      <path d="M14 9h5v5" />
-    </svg>
-  );
-}
-
-export function BookOpenLibrary02Icon({
-  className = "size-6",
-}: {
-  className?: string;
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-      <path d="M6 8h2" />
-      <path d="M6 12h2" />
-      <path d="M16 8h2" />
-      <path d="M16 12h2" />
-    </svg>
-  );
-}
-
-export function EcosystemCardIcon({
+export function EcosystemOrbIcon({
   icon,
-  className = "size-6",
 }: {
   icon: string;
-  className?: string;
 }) {
-  if (icon === "handshake" || icon === "agreement") {
-    return <AgreementHandshakeIcon className={className} />;
-  }
-  if (icon === "groups" || icon === "users" || icon === "user_multiple") {
-    return <UserMultiple02Icon className={className} />;
-  }
-  if (icon === "insights" || icon === "chart_up" || icon === "analytics") {
-    return <ChartUpAnalytics02Icon className={className} />;
-  }
-  if (icon === "menu_book" || icon === "library" || icon === "book_open") {
-    return <BookOpenLibrary02Icon className={className} />;
-  }
-  return <NetworkIconGlyph icon={icon} className={className} />;
+  return (
+    <div className="relative flex size-18 items-center justify-center sm:size-20">
+      {/* Outer Orbiting Constellation Ring with Satellite Dots */}
+      <svg
+        className="absolute inset-0 size-full text-blue-500/40"
+        viewBox="0 0 80 80"
+        fill="none"
+        aria-hidden="true"
+      >
+        <circle
+          cx="40"
+          cy="40"
+          r="36"
+          stroke="currentColor"
+          strokeWidth="1"
+          strokeDasharray="4 6"
+          opacity="0.65"
+        />
+        {/* Orbital Satellite Dots */}
+        <circle cx="40" cy="4" r="2.5" fill="#2563eb" />
+        <circle cx="76" cy="40" r="1.8" fill="#38bdf8" />
+        <circle cx="10" cy="58" r="2" fill="#2563eb" />
+      </svg>
+
+      {/* Inner Glowing Disc */}
+      <div className="relative flex size-14 items-center justify-center rounded-full border border-blue-200/90 bg-gradient-to-b from-blue-50 via-white to-blue-100/50 shadow-[0_4px_16px_-4px_rgba(37,99,235,0.2)] transition-all duration-300 group-hover:scale-105 group-hover:border-blue-400 group-hover:shadow-[0_8px_24px_-4px_rgba(37,99,235,0.3)] sm:size-16">
+        {icon === "handshake" || icon === "agreement" ? (
+          <svg
+            viewBox="0 0 24 24"
+            className="size-7 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-8"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            {/* Left sleeve / cuff */}
+            <path d="M2 13.5l4.5-4.5 2 2-3.5 3.5a1 1 0 0 1-1.4 0L2 13.5z" />
+            {/* Right sleeve / cuff */}
+            <path d="M22 10.5l-4.5 4.5-2-2 3.5-3.5a1 1 0 0 1 1.4 0l1.6 1z" />
+            {/* Handshake clasp */}
+            <path d="M8.5 11l3 3a1 1 0 0 0 1.4 0l4.1-4.1a1 1 0 0 0 0-1.4l-1.5-1.5a1 1 0 0 0-1.4 0l-3.6 3.6" />
+            <path d="M10 12.5l2 2a1 1 0 0 0 1.4 0l2.6-2.6" />
+            <path d="M7 14.5l1.5 1.5a1 1 0 0 0 1.4 0l2.6-2.6" />
+          </svg>
+        ) : icon === "groups" || icon === "users" || icon === "members" ? (
+          <svg
+            viewBox="0 0 24 24"
+            className="size-7 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-8"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            {/* Center Leader */}
+            <circle cx="12" cy="7" r="3.2" />
+            <path d="M6.5 19v-1a5.5 5.5 0 0 1 11 0v1" />
+            {/* Left User */}
+            <circle cx="5" cy="9.5" r="2.2" />
+            <path d="M2 19v-.7a4 4 0 0 1 3.5-3.8" />
+            {/* Right User */}
+            <circle cx="19" cy="9.5" r="2.2" />
+            <path d="M22 19v-.7a4 4 0 0 0-3.5-3.8" />
+          </svg>
+        ) : icon === "insights" || icon === "chart_up" || icon === "projects" ? (
+          <svg
+            viewBox="0 0 24 24"
+            className="size-7 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-8"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            {/* 4 Vertical Bars */}
+            <rect x="3" y="16" width="3" height="5" rx="0.75" />
+            <rect x="8" y="13" width="3" height="8" rx="0.75" />
+            <rect x="13" y="10" width="3" height="11" rx="0.75" />
+            <rect x="18" y="7" width="3" height="14" rx="0.75" />
+            {/* Upward Trend Line */}
+            <path d="M3.5 13.5l4-4 4.5 3.5 7.5-7.5" />
+            <polyline points="15.5 5.5 19.5 5.5 19.5 9.5" />
+            <circle cx="3.5" cy="13.5" r="0.9" fill="currentColor" />
+            <circle cx="7.5" cy="9.5" r="0.9" fill="currentColor" />
+            <circle cx="12" cy="13" r="0.9" fill="currentColor" />
+          </svg>
+        ) : (
+          <svg
+            viewBox="0 0 24 24"
+            className="size-7 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-8"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            {/* Open Book Pages */}
+            <path d="M3 4.5C6 4.5 9 6 12 7.5C15 6 18 4.5 21 4.5V18.5C18 18.5 15 20 12 21.5C9 20 6 18.5 3 18.5V4.5Z" />
+            <line x1="12" y1="7.5" x2="12" y2="21.5" />
+            {/* Bookmark ribbon on left page */}
+            <path d="M6 4.5v5l1.5-1 1.5 1v-5" fill="currentColor" opacity="0.15" />
+            <path d="M6 4.5v5l1.5-1 1.5 1v-5" />
+            {/* Text lines on right page */}
+            <line x1="14" y1="9" x2="18.5" y2="9" />
+            <line x1="14" y1="12.5" x2="18.5" y2="12.5" />
+            <line x1="14" y1="16" x2="17" y2="16" />
+          </svg>
+        )}
+      </div>
+    </div>
+  );
 }
 
 function NetworkStatsInfographic({
@@ -2064,7 +2068,9 @@ export function GuestHomeV2({
               {OFFICIAL_NEWS.slice(0, 4).map((item, index) => {
                 const imgSrc =
                   item.image ||
-                  DEFAULT_FALLBACK_IMAGES[index % DEFAULT_FALLBACK_IMAGES.length];
+                  DEFAULT_FALLBACK_IMAGES[
+                    index % DEFAULT_FALLBACK_IMAGES.length
+                  ];
                 return (
                   <Link
                     key={item.id}
@@ -2114,50 +2120,38 @@ export function GuestHomeV2({
 
             {/* 4 Ecosystem Cards Grid */}
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {t.ecosystem.cards.map((card) => {
-                const toneBg =
-                  {
-                    blue: "bg-blue-50 text-blue-600",
-                    emerald: "bg-emerald-50 text-emerald-600",
-                    purple: "bg-purple-50 text-purple-600",
-                    amber: "bg-amber-50 text-amber-600",
-                  }[card.tone] ?? "bg-blue-50 text-blue-600";
-
-                return (
-                  <Link
-                    key={card.title}
-                    href={card.href}
-                    className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <span
-                          className={`grid size-11 place-items-center rounded-xl ${toneBg} transition-transform duration-300 group-hover:scale-110`}
-                        >
-                          <EcosystemCardIcon
-                            icon={card.icon}
-                            className="size-6"
-                          />
-                        </span>
-                        <span className="text-xs font-bold text-slate-400 group-hover:text-blue-600 transition">
-                          →
-                        </span>
-                      </div>
-
-                      <h3 className="mt-4 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600">
-                        {card.title}
-                      </h3>
-                      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-600">
-                        {card.desc}
-                      </p>
+              {t.ecosystem.cards.map((card) => (
+                <Link
+                  key={card.title}
+                  href={card.href}
+                  className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-6 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                >
+                  <div>
+                    {/* Top: Circular Orbiting Icon Orb */}
+                    <div className="flex items-center">
+                      <EcosystemOrbIcon icon={card.icon} />
                     </div>
 
-                    <div className="mt-5 flex items-center gap-1.5 text-xs font-bold text-blue-600 transition group-hover:text-blue-800">
-                      <span>{t.ecosystem.cardCta}</span>
-                    </div>
-                  </Link>
-                );
-              })}
+                    {/* Title */}
+                    <h3 className="mt-5 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600">
+                      {card.title}
+                    </h3>
+
+                    {/* Blue Accent Bar */}
+                    <span className="mt-2.5 block h-0.5 w-6 rounded-full bg-blue-600" />
+
+                    {/* Description */}
+                    <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600">
+                      {card.desc}
+                    </p>
+                  </div>
+
+                  {/* Bottom CTA Link */}
+                  <div className="mt-6 flex items-center gap-1.5 text-xs font-bold text-blue-600 transition group-hover:text-blue-800">
+                    <span>{t.ecosystem.cardCta}</span>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
@@ -2187,7 +2181,9 @@ export function GuestHomeV2({
                 (item, index) => {
                   const imgSrc =
                     item.image ||
-                    DEFAULT_FALLBACK_IMAGES[index % DEFAULT_FALLBACK_IMAGES.length];
+                    DEFAULT_FALLBACK_IMAGES[
+                      index % DEFAULT_FALLBACK_IMAGES.length
+                    ];
                   return (
                     <Link
                       key={item.id}
