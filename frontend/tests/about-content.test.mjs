@@ -48,7 +48,7 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /_blank/);
   assert.match(about, /noopener noreferrer/);
   assert.match(about, /hover:-translate-y-1/);
-  assert.match(about, /title: "Đối tác"/);
+  assert.match(about, /title: "Các đối tác mong muốn tham gia Mạng lưới"/);
   assert.match(about, /id="participating-partners"[\s\S]*PARTNER_COPY\[locale\]\.title/);
   assert.match(about, /partners: "Đối tác"/);
   assert.match(about, /partners: "participating-partners"/);
@@ -69,7 +69,7 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /hidden w-max[\s\S]*?sm:flex/);
   assert.doesNotMatch(
     about,
-    /t\.boardIntro|\{t\.eyebrow\}[\s\S]{0,200}\{t\.boardTitle\}|member\.phone|member\.channels|Đối tác mong muốn tham gia|Chọn logo để mở website chính thức trong tab mới\.|id="prospective-partners"/,
+    /t\.boardIntro|\{t\.eyebrow\}[\s\S]{0,200}\{t\.boardTitle\}|member\.phone|member\.channels|Chọn logo để mở website chính thức trong tab mới\.|id="prospective-partners"/,
   );
   assert.equal(
     (about.match(/url: "https:\/\/www\.spbume\.ru\/"/g) ?? []).length,

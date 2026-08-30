@@ -48,30 +48,118 @@ const BOARD_MEMBERS = [
 
 const PARTNER_COPY: Record<Locale, { title: string; ru: string; vi: string }> =
   {
-    vi: { title: "Đối tác", ru: "Liên bang Nga", vi: "Việt Nam" },
+    vi: {
+      title: "Các đối tác mong muốn tham gia Mạng lưới",
+      ru: "Về phía Nga",
+      vi: "Về phía Việt Nam",
+    },
     en: {
-      title: "Participating partners",
-      ru: "Russian Federation",
-      vi: "Vietnam",
+      title: "Partners Wishing to Join the Network",
+      ru: "Russian Partners",
+      vi: "Vietnamese Partners",
     },
     ru: {
-      title: "Партнёры-участники",
-      ru: "Российская Федерация",
-      vi: "Вьетнам",
+      title: "Партнёры, желающие вступить в Сеть",
+      ru: "С российской стороны",
+      vi: "С вьетнамской стороны",
     },
   };
 
 const PARTNERS = [
+  // ══════════════════ VỀ PHÍA NGA (9 ĐỐI TÁC ACTIVE) ══════════════════
+  {
+    name: "Đại học Viễn thông Quốc gia Saint Petersburg mang tên MA Bonch-Bruevich (СПбГУТ)",
+    shortName: "СПбГУТ",
+    logo: "sut",
+    url: "https://www.sut.ru/",
+    country: "ru",
+  },
+  {
+    name: "Đại học kỹ thuật điện quốc gia Saint Petersburg (ЛЭТИ - СПбГЭТУ)",
+    shortName: "ЛЭТИ",
+    logo: "leti",
+    url: "https://etu.ru/",
+    country: "ru",
+  },
+  {
+    name: "Đại học kinh tế Nga Plekhanov (РЭУ им. Г.В. Плеханова)",
+    shortName: "РЭУ им. Г.В. Плеханова",
+    logo: "plekhanov",
+    url: "https://рэу.рф/",
+    country: "ru",
+  },
+  {
+    name: "Đại học bách khoa Perm (Пермский Политех - ПНИПУ)",
+    shortName: "Пермский Политех",
+    logo: "perm-polytech",
+    url: "https://pstu.ru/",
+    country: "ru",
+  },
+  {
+    name: "Đại học nhân văn quốc gia Nga (РГГУ)",
+    shortName: "РГГУ",
+    logo: "rsuh",
+    url: "https://www.rsuh.ru/",
+    country: "ru",
+  },
+  {
+    name: "Đại học sư phạm quốc gia Nga mang tên Herzen (РГПУ им. А. И. Герцена)",
+    shortName: "РГПУ им. А. И. Герцена",
+    logo: "herzen",
+    url: "https://www.herzen.spb.ru/",
+    country: "ru",
+  },
+  {
+    name: "Đại học khí tượng thủy văn Saint Petersburg (РГГМУ)",
+    shortName: "РГГМУ",
+    logo: "rshu",
+    url: "https://www.rshu.ru/",
+    country: "ru",
+  },
+  {
+    name: "Trường kinh tế Moskva, Đại học quốc gia Moskva (МШЭ МГУ)",
+    shortName: "МШЭ МГУ",
+    logo: "mse-msu",
+    url: "https://mse-msu.ru/",
+    country: "ru",
+  },
+  {
+    name: "Đại học công nghệ quản lý và kinh tế Saint Petersburg (СПбУТУиЭ)",
+    shortName: "СПбУТУиЭ",
+    logo: "spbume",
+    url: "https://www.spbume.ru/",
+    country: "ru",
+  },
+
+  // ══════════════════ VỀ PHÍA VIỆT NAM (3 ĐỐI TÁC ACTIVE) ══════════════════
+  {
+    name: "Đại học Quốc gia Hà Nội",
+    shortName: "VNU",
+    logo: "vnu",
+    url: "http://vnu.edu.vn/",
+    country: "vi",
+  },
+  {
+    name: "Học viện Công nghệ Bưu chính Viễn thông",
+    shortName: "PTIT",
+    logo: "ptit",
+    url: "https://ptit.edu.vn/",
+    country: "vi",
+  },
+  {
+    name: "Đại học Kinh tế - Kỹ thuật Công nghiệp",
+    shortName: "UNETI",
+    logo: "uneti",
+    url: "https://uneti.edu.vn/",
+    country: "vi",
+  },
+
+  // ══════════════════ ĐỐI TÁC TẠM ẨN (PRESERVED / COMMENTED OUT) ══════════════════
+  /*
   {
     name: "Московский Политех",
     logo: "mospolytech",
     url: "https://mospolytech.ru/",
-    country: "ru",
-  },
-  {
-    name: "СПбУТУиЭ",
-    logo: "spbume",
-    url: "https://www.spbume.ru/",
     country: "ru",
   },
   {
@@ -80,7 +168,6 @@ const PARTNERS = [
     url: "https://www.cemi.rssi.ru/",
     country: "ru",
   },
-  { name: "СПбГУТ", logo: "sut", url: "https://www.sut.ru/", country: "ru" },
   {
     name: "СЗИУ РАНХиГС",
     logo: "ranepa-northwest",
@@ -93,28 +180,24 @@ const PARTNERS = [
     url: "https://inecon.org/",
     country: "ru",
   },
-  { name: "ЛЭТИ", logo: "leti", url: "https://etu.ru/", country: "ru" },
   {
-    name: "РЭУ им. Г.В. Плеханова",
-    logo: "plekhanov",
-    url: "https://рэу.рф/",
+    name: "СПбГУ",
+    logo: "spbu",
+    url: "https://spbu.ru/",
     country: "ru",
   },
-  { name: "СПбГУ", logo: "spbu", url: "https://spbu.ru/", country: "ru" },
   {
     name: "Финуниверситет",
     logo: "financial-university",
     url: "https://www.fa.ru/",
     country: "ru",
   },
-  { name: "РУДН", logo: "rudn", url: "https://www.rudn.ru/", country: "ru" },
   {
-    name: "Пермский Политех",
-    logo: "perm-polytech",
-    url: "https://pstu.ru/",
+    name: "РУДН",
+    logo: "rudn",
+    url: "https://www.rudn.ru/",
     country: "ru",
   },
-  { name: "РГГУ", logo: "rsuh", url: "https://www.rsuh.ru/", country: "ru" },
   {
     name: "РУТ МИИТ",
     logo: "rut-miit",
@@ -122,47 +205,42 @@ const PARTNERS = [
     country: "ru",
   },
   {
-    name: "РГПУ им. А. И. Герцена",
-    logo: "herzen",
-    url: "https://www.herzen.spb.ru/",
+    name: "ИГХТУ",
+    logo: "isuct",
+    url: "https://www.isuct.ru/",
     country: "ru",
   },
-  { name: "РГГМУ", logo: "rshu", url: "https://www.rshu.ru/", country: "ru" },
-  { name: "ИГХТУ", logo: "isuct", url: "https://www.isuct.ru/", country: "ru" },
   {
-    name: "МШЭ МГУ",
-    logo: "mse-msu",
-    url: "https://mse-msu.ru/",
+    name: "УрГЭУ",
+    logo: "usue",
+    url: "https://www.usue.ru/",
     country: "ru",
   },
-  { name: "УрГЭУ", logo: "usue", url: "https://www.usue.ru/", country: "ru" },
-  { name: "СПбГЭУ", logo: "unecon", url: "https://unecon.ru/", country: "ru" },
-  { name: "МПГУ", logo: "mpgu", url: "https://mpgu.su/", country: "ru" },
-  { name: "МГЛУ", logo: "mslu", url: "https://linguanet.ru/", country: "ru" },
+  {
+    name: "СПбГЭУ",
+    logo: "unecon",
+    url: "https://unecon.ru/",
+    country: "ru",
+  },
+  {
+    name: "МПГУ",
+    logo: "mpgu",
+    url: "https://mpgu.su/",
+    country: "ru",
+  },
+  {
+    name: "МГЛУ",
+    logo: "mslu",
+    url: "https://linguanet.ru/",
+    country: "ru",
+  },
   {
     name: "Co-laboratoria",
     logo: "co-laboratoria",
     url: "https://co-laboratoria.ru/",
     country: "ru",
   },
-  {
-    name: "Đại học Quốc gia Hà Nội",
-    logo: "vnu",
-    url: "http://vnu.edu.vn/",
-    country: "vi",
-  },
-  {
-    name: "Học viện Công nghệ Bưu chính Viễn thông",
-    logo: "ptit",
-    url: "https://ptit.edu.vn/",
-    country: "vi",
-  },
-  {
-    name: "Đại học Kinh tế - Kỹ thuật Công nghiệp",
-    logo: "uneti",
-    url: "https://uneti.edu.vn/",
-    country: "vi",
-  },
+  */
 ] as const;
 
 type OperationMechanism = {
@@ -1275,15 +1353,20 @@ export function GuestAboutV2() {
           className="scroll-mt-32 border-t border-blue-100 bg-[#edf5ff] px-4 pt-6 pb-12 sm:px-6 sm:pt-8 sm:pb-14 lg:px-8 lg:pt-8 lg:pb-16"
         >
           <div className="mx-auto max-w-[1460px]">
-            <h2 className="text-center font-serif text-3xl font-black tracking-tight text-[#082352] sm:text-4xl lg:text-5xl">
-              {PARTNER_COPY[locale].title}
-            </h2>
+            <div className="mb-4 text-center sm:mb-6">
+              <h2 className="font-serif text-xl font-bold tracking-tight text-[#082352] sm:text-2xl">
+                {PARTNER_COPY[locale].title}
+              </h2>
+            </div>
             {(["ru", "vi"] as const).map((country) => (
-              <div key={country} className="mt-8 sm:mt-10">
-                <h3 className="text-xl font-black text-slate-950 sm:text-2xl">
-                  {PARTNER_COPY[locale][country]}
-                </h3>
-                <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+              <div key={country} className="mt-6 sm:mt-8">
+                <div className="mb-4 flex items-center gap-2">
+                  <span className="h-1 w-5 rounded-full bg-blue-600" />
+                  <h3 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
+                    {PARTNER_COPY[locale][country]}
+                  </h3>
+                </div>
+                <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                   {PARTNERS.filter(
                     (partner) => partner.country === country,
                   ).map((partner) => (
@@ -1293,6 +1376,7 @@ export function GuestAboutV2() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={partner.name}
+                        title={partner.name}
                         className="group flex min-h-36 items-center justify-center rounded-3xl border border-blue-100 bg-white p-5 shadow-xs transition duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transform-none motion-reduce:transition-none"
                       >
                         <Image
