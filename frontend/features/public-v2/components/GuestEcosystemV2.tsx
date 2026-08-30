@@ -223,7 +223,7 @@ const GRANTS_ITEMS = [
     desc: {
       vi: "The InteRussia team announces a call for applications to join the InteRussia fellowship for foreign specialists in nuclear technologies.",
       en: "The InteRussia team announces a call for applications to join the InteRussia fellowship for foreign specialists in nuclear technologies.",
-      ru: "Команда InteRussia объявляет о приёме заявок на участие в исследовательской стажировке для иностранных специалистов в области ядерных технологий при поддержке Фонда Горчакова.",
+      ru: "Команда InteRussia объявляет о приёме заявок на участие в исследовательской стажировке для иностранных специалистов в области ядерных технологий.",
     },
     cta: {
       vi: "Read more →",
@@ -252,6 +252,27 @@ const GRANTS_ITEMS = [
       ru: "Подробнее →",
     },
     href: "https://interussia.com/announce_en",
+  },
+  {
+    id: "scientific-cooperation",
+    image: "/images/opportunities/interussia-gorchakov.webp",
+    date: "30.04.2026",
+    title: {
+      vi: "Call for Applications: Gorchakov Fund Bilateral Research Grants",
+      en: "Call for Applications: Gorchakov Fund Bilateral Research Grants",
+      ru: "Приём заявок: Гранты Фонда Горчакова на двусторонние исследования",
+    },
+    desc: {
+      vi: "The Gorchakov Fund announces funding support for international scientific research projects, academic exchanges, and bilateral collaboration initiatives.",
+      en: "The Gorchakov Fund announces funding support for international scientific research projects, academic exchanges, and bilateral collaboration initiatives.",
+      ru: "Фонд Горчакова объявляет о выделении грантов на международные исследовательские проекты и академические обмены.",
+    },
+    cta: {
+      vi: "Read more →",
+      en: "Read more →",
+      ru: "Подробнее →",
+    },
+    href: "https://gorchakovfund.ru",
   },
 ];
 
@@ -937,7 +958,7 @@ export function GuestEcosystemV2({
 
             {/* SUBTAB 3: TÀI TRỢ */}
             {oppSubTab === "grants" && (
-              <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2">
+              <div className="grid gap-6 md:grid-cols-3">
                 {GRANTS_ITEMS.map((item) => (
                   <article
                     key={item.id}
