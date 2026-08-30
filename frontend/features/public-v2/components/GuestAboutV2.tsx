@@ -16,7 +16,7 @@ type AboutSection = {
 
 const BOARD_MEMBERS = [
   {
-    name: "TS Nguyễn Quốc Hùng",
+    name: "Nguyễn Quốc Hùng",
     image: "/images/board/nguyen-quoc-hung.webp",
     contacts: [
       { label: "Điện thoại", href: "tel:+79856905856", icon: "phone" },

@@ -26,10 +26,7 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /eyebrow: "Về chúng tôi"/);
   assert.match(about, /eyebrow: "About us"/);
   assert.match(about, /eyebrow: "О нас"/);
-  assert.match(
-    about,
-    /text-xl font-bold tracking-tight[\s\S]*?\{t\.eyebrow\}/,
-  );
+  assert.match(about, /text-xl font-bold tracking-tight[\s\S]*?\{t\.eyebrow\}/);
   assert.match(about, /id="about-overview"/);
   assert.match(about, /id="about-ecosystem"/);
   assert.match(about, /id="operating-mechanism"/);
@@ -41,7 +38,7 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
     about,
     /Cơ cấu & Sứ mệnh|font-mono text-3xl|bg-gradient-to-r from-blue-700/,
   );
-  assert.match(about, /TS Nguyễn Quốc Hùng/);
+  assert.match(about, /Nguyễn Quốc Hùng/);
   assert.match(about, /Trần Đức Tùng/);
   assert.match(about, /\/images\/board\/nguyen-quoc-hung\.webp/);
   assert.match(about, /\/images\/board\/tran-duc-tung\.webp/);
@@ -58,7 +55,10 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /overflow-hidden rounded-full/);
   assert.match(about, /\{t\.contactLabel\}:/);
   assert.match(about, /id="operating-mechanism"[\s\S]*id="board"/);
-  assert.match(about, /aria-expanded=\{aboutMenuOpen\}[\s\S]*?about-mobile-menu/);
+  assert.match(
+    about,
+    /aria-expanded=\{aboutMenuOpen\}[\s\S]*?about-mobile-menu/,
+  );
   assert.match(about, /setAboutMenuOpen\(false\)[\s\S]*?SECTION_IDS\[tabId\]/);
   assert.match(about, /hidden w-max[\s\S]*?sm:flex/);
   assert.doesNotMatch(

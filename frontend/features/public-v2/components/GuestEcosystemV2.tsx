@@ -108,40 +108,40 @@ type ExpertItem = {
 const EXPERTS_RAW: ExpertItem[] = [
   {
     name: "Bùi Bảo Thiện",
-    role: "PGS.TS · Trợ lý Nghiên cứu",
+    role: "Trợ lý Nghiên cứu",
   },
   {
     name: "Denis Avetisyan",
-    role: "Prof. Dr. · Cố vấn Trưởng",
+    role: "Cố vấn Trưởng",
   },
   {
     name: "Elena Kurchatova",
-    role: "Prof. Dr. · Viện sĩ",
+    role: "Viện sĩ",
   },
   {
     name: "Lê Thị Mai",
-    role: "PGS.TS · Trưởng PTN Viễn thám",
+    role: "Trưởng PTN Viễn thám",
   },
   {
     name: "Mikhail Sokolov",
-    role: "Prof. Dr. · Viện sĩ thông tấn RAS",
+    role: "Viện sĩ thông tấn RAS",
   },
   {
     name: "Nguyễn Quốc Hùng",
-    role: "TS · Giám đốc Quỹ",
+    role: "Chủ tịch Hội đồng điều phối",
     image: "/images/board/nguyen-quoc-hung.webp",
   },
   {
     name: "Nguyễn Văn An",
-    role: "GS.TS · Viện sĩ Viện KH Vật liệu",
+    role: "Viện sĩ Viện KH Vật liệu",
   },
   {
     name: "Phạm Quốc Phòng",
-    role: "NCS. ThS · Kỹ sư Điều khiển",
+    role: "Kỹ sư Điều khiển",
   },
   {
     name: "Trần Đức Tùng",
-    role: "PGS.TS · Giám đốc Kỹ thuật Mạng lưới",
+    role: "Giám đốc Kỹ thuật Mạng lưới",
     image: "/images/board/tran-duc-tung.webp",
   },
 ];
