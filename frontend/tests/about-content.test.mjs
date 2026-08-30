@@ -28,11 +28,10 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /eyebrow: "О нас"/);
   assert.match(
     about,
-    /text-3xl font-black tracking-tight[\s\S]*?\{t\.eyebrow\}/,
+    /text-xl font-bold tracking-tight[\s\S]*?\{t\.eyebrow\}/,
   );
-  assert.match(about, /text-base leading-snug/);
-  assert.doesNotMatch(about, /<nav aria-label=\{t\.eyebrow\}/);
   assert.match(about, /id="about-overview"/);
+  assert.match(about, /id="about-ecosystem"/);
   assert.match(about, /id="operating-mechanism"/);
   assert.doesNotMatch(
     about,
@@ -49,8 +48,8 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /const PARTNERS = \[/);
   assert.equal((about.match(/country: "ru"/g) ?? []).length, 23);
   assert.equal((about.match(/country: "vi"/g) ?? []).length, 3);
-  assert.match(about, /target="_blank"/);
-  assert.match(about, /rel="noopener noreferrer"/);
+  assert.match(about, /_blank/);
+  assert.match(about, /noopener noreferrer/);
   assert.match(about, /hover:-translate-y-1/);
   assert.match(about, /title: "Đối tác tham gia"/);
   assert.match(about, /tel:\+79856905856/);

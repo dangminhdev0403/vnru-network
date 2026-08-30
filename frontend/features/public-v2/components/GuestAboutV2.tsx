@@ -713,36 +713,51 @@ function BoardContactIcon({ icon }: Readonly<{ icon: string }>) {
   );
 }
 
-type AboutTabId = "overview" | "board" | "partners";
+const ECOSYSTEM_ORB_IMAGES: Record<string, string> = {
+  handshake: "/images/ecosystem-icons/opportunities.webp",
+  agreement: "/images/ecosystem-icons/opportunities.webp",
+  groups: "/images/ecosystem-icons/members.webp",
+  users: "/images/ecosystem-icons/members.webp",
+  members: "/images/ecosystem-icons/members.webp",
+  insights: "/images/ecosystem-icons/projects.webp",
+  chart_up: "/images/ecosystem-icons/projects.webp",
+  projects: "/images/ecosystem-icons/projects.webp",
+  menu_book: "/images/ecosystem-icons/knowledge.webp",
+  library: "/images/ecosystem-icons/knowledge.webp",
+  book_open: "/images/ecosystem-icons/knowledge.webp",
+  knowledge: "/images/ecosystem-icons/knowledge.webp",
+};
+
+type AboutTabId = "overview" | "ecosystem" | "board";
 
 const TAB_LABELS: Record<Locale, Record<AboutTabId, string>> = {
   vi: {
     overview: "Giới thiệu chung",
+    ecosystem: "Hệ sinh thái",
     board: "Ban Điều hành",
-    partners: "Đối tác tham gia",
   },
   ru: {
     overview: "Общие сведения",
+    ecosystem: "Экосистема",
     board: "Правление",
-    partners: "Партнёры-участники",
   },
   en: {
     overview: "General Overview",
+    ecosystem: "Ecosystem",
     board: "Board of Directors",
-    partners: "Participating Partners",
   },
 };
 
 const SECTION_OFFSETS: Record<AboutTabId, number> = {
   overview: 150,
+  ecosystem: 150,
   board: 152,
-  partners: 150,
 };
 
 const SECTION_IDS: Record<AboutTabId, string> = {
   overview: "about-overview",
+  ecosystem: "about-ecosystem",
   board: "board",
-  partners: "participating-partners",
 };
 
 function customSmoothScroll(
@@ -801,8 +816,8 @@ export function GuestAboutV2() {
   useEffect(() => {
     const sectionIds: { id: string; tab: AboutTabId }[] = [
       { id: "about-overview", tab: "overview" },
+      { id: "about-ecosystem", tab: "ecosystem" },
       { id: "board", tab: "board" },
-      { id: "participating-partners", tab: "partners" },
     ];
 
     const observer = new IntersectionObserver(
@@ -896,7 +911,7 @@ export function GuestAboutV2() {
               aria-expanded={aboutMenuOpen}
               aria-controls="about-mobile-menu"
               onClick={() => setAboutMenuOpen((open) => !open)}
-              className="flex min-h-11 w-full items-center justify-between rounded-xl border border-blue-200 bg-white px-4 text-left text-base font-bold text-[#082352] shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+              className="flex min-h-10 w-full items-center justify-between rounded-xl border border-blue-200 bg-white px-3.5 text-left text-sm font-bold text-[#082352] shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
             >
               {TAB_LABELS[locale]?.[activeSection] ?? TAB_LABELS.vi[activeSection]}
               <span aria-hidden="true">⌄</span>
@@ -906,7 +921,7 @@ export function GuestAboutV2() {
                 id="about-mobile-menu"
                 className="mt-2 overflow-hidden rounded-xl border border-blue-200 bg-white shadow-sm"
               >
-                {(["overview", "board", "partners"] as const).map((tabId) => (
+                {(["overview", "ecosystem", "board"] as const).map((tabId) => (
                   <button
                     key={tabId}
                     type="button"
@@ -915,7 +930,7 @@ export function GuestAboutV2() {
                       setAboutMenuOpen(false);
                       scrollToSection(SECTION_IDS[tabId], tabId);
                     }}
-                    className={`block min-h-11 w-full border-b border-blue-100 px-4 py-3 text-left text-base font-bold last:border-0 ${
+                    className={`block min-h-10 w-full border-b border-blue-100 px-4 py-2.5 text-left text-sm font-bold last:border-0 ${
                       activeSection === tabId
                         ? "bg-blue-600 text-white"
                         : "text-slate-700 hover:bg-blue-50"
@@ -929,21 +944,21 @@ export function GuestAboutV2() {
           </div>
 
           <div className="mx-auto hidden w-max items-center gap-1 rounded-xl border border-blue-200/80 bg-white/95 p-1 shadow-xs sm:flex">
-            {(["overview", "board", "partners"] as const).map((tabId) => {
+            {(["overview", "ecosystem", "board"] as const).map((tabId) => {
               const isActive = activeSection === tabId;
               return (
                 <button
                   key={tabId}
                   type="button"
                   onClick={() => scrollToSection(SECTION_IDS[tabId], tabId)}
-                  className={`inline-flex min-h-11 items-center gap-2 rounded-lg px-5 py-2 text-base font-bold whitespace-nowrap transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
+                  className={`inline-flex min-h-9 items-center gap-2 rounded-lg px-4 py-1.5 text-sm font-bold whitespace-nowrap transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
                     isActive
-                      ? "bg-blue-600 text-white shadow-sm shadow-blue-600/20"
+                      ? "bg-blue-600 text-white shadow-xs shadow-blue-600/20"
                       : "text-slate-700 hover:bg-blue-50/70 hover:text-blue-900"
                   }`}
                 >
                   <span
-                    className={`size-2 rounded-full ${
+                    className={`size-1.5 rounded-full ${
                       isActive ? "bg-white" : "bg-slate-300"
                     }`}
                     aria-hidden="true"
@@ -959,39 +974,39 @@ export function GuestAboutV2() {
       <main>
         <div
           id="about-overview"
-          className="mx-auto max-w-[1460px] scroll-mt-32 px-4 pt-3 pb-6 sm:px-6 sm:pt-4 lg:px-8"
+          className="mx-auto max-w-[1460px] scroll-mt-32 px-4 pt-3 pb-5 sm:px-6 sm:pt-4 lg:px-8"
         >
-          <article className="rounded-3xl border border-blue-100/80 bg-white px-6 pt-5 pb-8 shadow-sm sm:px-12 sm:pt-6 sm:pb-10 lg:px-16">
+          <article className="rounded-2xl border border-blue-100/80 bg-white px-5 py-6 shadow-xs sm:px-8 sm:py-8 lg:px-10">
             {/* ═══════════ HEADER ═══════════ */}
-            <div className="mb-3 text-center sm:mb-4">
-              <h1 className="font-serif text-3xl font-black tracking-tight text-[#082352] sm:text-4xl">
+            <div className="mb-2 text-center sm:mb-3">
+              <h1 className="font-serif text-xl font-bold tracking-tight text-[#082352] sm:text-2xl">
                 {t.eyebrow}
               </h1>
             </div>
 
             <div
-              className="my-4 h-px w-full bg-slate-200/80 sm:my-5"
+              className="my-3 h-px w-full bg-slate-200/80 sm:my-4"
               aria-hidden="true"
             />
 
             {/* ═══════════ 1. GIỚI THIỆU CHUNG (OVERVIEW) ═══════════ */}
-            <div className="space-y-8 text-base leading-snug text-slate-800 sm:text-lg sm:leading-snug">
+            <div className="space-y-5 text-xs leading-normal text-slate-700 sm:space-y-6 sm:text-sm sm:leading-relaxed">
               <section id="about-intro">
-                <h2 className="font-serif text-xl font-black text-[#082352] sm:text-2xl">
+                <h2 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
                   {t.overviewTitle}
                 </h2>
-                <p className="mt-2.5 leading-snug">{t.overview}</p>
+                <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">{t.overview}</p>
               </section>
 
               <section id="mission">
-                <h2 className="font-serif text-xl font-black text-[#082352] sm:text-2xl">
+                <h2 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
                   {t.missionTitle}
                 </h2>
-                <p className="mt-2.5 leading-snug">{t.missionSubtitle}</p>
-                <ul className="mt-2.5 list-disc space-y-2 pl-7 leading-snug">
+                <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">{t.missionSubtitle}</p>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 text-xs leading-normal sm:text-sm sm:leading-relaxed">
                   {t.highlights.map((item) => (
                     <li key={item.title}>
-                      <strong className="text-slate-950 font-bold">
+                      <strong className="font-bold text-slate-900">
                         {item.title}:
                       </strong>{" "}
                       {item.description}
@@ -1002,13 +1017,13 @@ export function GuestAboutV2() {
 
               {t.sections.map((section, index) => (
                 <section key={section.title} id={`about-section-${index}`}>
-                  <h2 className="font-serif text-xl font-black text-[#082352] sm:text-2xl">
+                  <h2 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
                     {section.title}
                   </h2>
                   {section.intro ? (
-                    <p className="mt-2.5 leading-snug">{section.intro}</p>
+                    <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">{section.intro}</p>
                   ) : null}
-                  <ul className="mt-2.5 list-disc space-y-2 pl-7 leading-snug">
+                  <ul className="mt-2 list-disc space-y-1.5 pl-5 text-xs leading-normal sm:text-sm sm:leading-relaxed">
                     {section.items.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
@@ -1017,25 +1032,25 @@ export function GuestAboutV2() {
               ))}
 
               <div
-                className="my-6 h-px w-full bg-slate-200/80 sm:my-8"
+                className="my-4 h-px w-full bg-slate-200/80 sm:my-5"
                 aria-hidden="true"
               />
 
-              {/* ═══════════ 2. CƠ CHẾ VẬN HÀNH (OPERATING MECHANISM) ═══════════ */}
+              {/* ═══════════ CƠ CHẾ VẬN HÀNH ═══════════ */}
               <section id="operating-mechanism" className="scroll-mt-32">
-                <h2 className="font-serif text-xl font-black text-[#082352] sm:text-2xl">
+                <h2 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
                   {t.operationTitle}
                 </h2>
-                <div className="mt-3 flex flex-wrap items-center gap-3">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-extrabold text-blue-800 sm:text-base">
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-800">
                     <span
-                      className="size-2.5 rounded-full bg-blue-600"
+                      className="size-2 rounded-full bg-blue-600"
                       aria-hidden="true"
                     />
                     ОГРН / Mã số đăng ký: 1207700294020
                   </span>
                 </div>
-                <ul className="mt-4 list-disc space-y-2 pl-7 leading-snug">
+                <ul className="mt-3 list-disc space-y-1.5 pl-5 text-xs leading-normal sm:text-sm sm:leading-relaxed">
                   {t.operationItems.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
@@ -1045,33 +1060,102 @@ export function GuestAboutV2() {
           </article>
         </div>
 
+        {/* ═══════════ 2. HỆ SINH THÁI (ECOSYSTEM) ═══════════ */}
+        <section
+          id="about-ecosystem"
+          className="scroll-mt-36 pt-4 pb-6 sm:pt-6 sm:pb-8"
+        >
+          <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
+            <div className="mb-4 flex flex-col items-center justify-between gap-2 sm:mb-5 sm:flex-row">
+              <div className="inline-flex items-center gap-2">
+                <span className="h-1 w-6 rounded-full bg-blue-600" />
+                <h2 className="font-serif text-lg font-bold tracking-tight text-[#082352] sm:text-xl">
+                  {homeCopy.ecosystem.eyebrow}
+                </h2>
+              </div>
+              <Link
+                href="/ecosystem"
+                className="group/link inline-flex items-center gap-1 text-xs font-bold text-blue-600 transition hover:text-blue-800 sm:text-sm"
+              >
+                <span>{homeCopy.ecosystem.cardCta}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {homeCopy.ecosystem.cards.map((card) => {
+                const iconSrc =
+                  ECOSYSTEM_ORB_IMAGES[card.icon] ??
+                  "/images/ecosystem-icons/opportunities.webp";
+                return (
+                  <Link
+                    key={card.title}
+                    href={card.href}
+                    className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                  >
+                    <div>
+                      <div className="flex items-center">
+                        <div className="relative flex size-14 items-center justify-center sm:size-16">
+                          <Image
+                            src={iconSrc}
+                            alt=""
+                            width={64}
+                            height={64}
+                            unoptimized
+                            className="size-full object-contain drop-shadow-[0_4px_12px_rgba(37,99,235,0.18)] transition-transform duration-300 group-hover:scale-105"
+                          />
+                        </div>
+                      </div>
+
+                      <h3 className="mt-4 text-sm font-bold uppercase tracking-tight text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-base">
+                        {card.title}
+                      </h3>
+
+                      <span className="mt-2 block h-0.5 w-5 rounded-full bg-blue-600" />
+
+                      <p className="mt-2.5 line-clamp-3 text-xs leading-relaxed text-slate-600">
+                        {card.desc}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 flex items-center gap-1 text-[11px] font-bold text-blue-600 transition group-hover:text-blue-800">
+                      <span>{homeCopy.ecosystem.cardCta}</span>
+                      <span aria-hidden="true">→</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         {/* ═══════════ 3. BAN ĐIỀU HÀNH (BOARD MEMBERS) ═══════════ */}
         <section
           id="board"
-          className="scroll-mt-36 pt-4 pb-10 sm:pt-6 sm:pb-12 lg:pt-6 lg:pb-14"
+          className="scroll-mt-36 pt-4 pb-8 sm:pt-6 sm:pb-10"
         >
           <div className="mx-auto mb-4 max-w-4xl text-center sm:mb-5">
-            <h2 className="font-serif text-2xl font-black tracking-tight text-[#082352] sm:text-3xl">
+            <h2 className="font-serif text-lg font-bold tracking-tight text-[#082352] sm:text-xl">
               {t.boardTitle}
             </h2>
           </div>
-          <div className="mx-auto grid max-w-5xl gap-8 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
+          <div className="mx-auto grid max-w-5xl gap-5 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
             {BOARD_MEMBERS.map((member, index) => (
               <article
                 key={member.name}
-                className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-blue-200 bg-white/95 p-8 shadow-lg shadow-blue-950/5 backdrop-blur-xs transition duration-200 hover:-translate-y-1 hover:border-blue-400 hover:shadow-xl motion-reduce:transform-none motion-reduce:transition-none sm:p-9"
+                className="relative flex flex-col justify-between overflow-hidden rounded-2xl border border-blue-200 bg-white/95 p-5 shadow-sm backdrop-blur-xs transition duration-200 hover:-translate-y-1 hover:border-blue-400 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none sm:p-6"
               >
                 <div>
                   {/* 1. Name at the top */}
-                  <h3 className="font-serif text-3xl font-black tracking-tight text-[#082352] sm:text-4xl">
+                  <h3 className="font-serif text-lg font-bold tracking-tight text-[#082352] sm:text-xl">
                     {member.name}
                   </h3>
 
                   {/* 2. Role / Position Badge */}
-                  <div className="mt-3">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-100/80 px-4 py-1.5 text-xs font-extrabold text-blue-800 sm:text-sm">
+                  <div className="mt-2">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-100/80 px-3 py-1 text-xs font-bold text-blue-800">
                       <span
-                        className="size-2 rounded-full bg-blue-600"
+                        className="size-1.5 rounded-full bg-blue-600"
                         aria-hidden="true"
                       />
                       {t.boardRoles[index]}
@@ -1080,44 +1164,36 @@ export function GuestAboutV2() {
 
                   {/* 3. Clean divider */}
                   <div
-                    className="my-6 h-px w-full bg-slate-200"
+                    className="my-4 h-px w-full bg-slate-200"
                     aria-hidden="true"
                   />
 
                   {/* 4. Avatar & Contact Channels */}
-                  <div className="flex items-center gap-6 sm:gap-7">
-                    <div className="relative size-24 shrink-0 overflow-hidden rounded-full border-2 border-blue-200 bg-gradient-to-b from-blue-50 to-slate-100 shadow-md ring-4 ring-blue-50 sm:size-28">
+                  <div className="flex items-center gap-4 sm:gap-5">
+                    <div className="relative size-16 shrink-0 overflow-hidden rounded-full border-2 border-blue-200 bg-gradient-to-b from-blue-50 to-slate-100 shadow-xs ring-2 ring-blue-50 sm:size-20">
                       <Image
                         src={member.image}
                         alt={member.name}
                         fill
-                        sizes="112px"
+                        sizes="80px"
                         className="object-cover object-top"
                       />
                     </div>
 
                     <div className="flex flex-1 flex-col">
-                      <span className="text-xs font-black uppercase tracking-wider text-slate-500 sm:text-sm">
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                         {t.contactLabel}:
                       </span>
-                      <div className="mt-2.5 flex flex-wrap items-center gap-3">
+                      <div className="mt-2 flex flex-wrap items-center gap-2.5">
                         {member.contacts.map((contact) => (
                           <a
                             key={contact.label}
                             href={contact.href}
-                            target={
-                              contact.href.startsWith("http")
-                                ? "_blank"
-                                : undefined
-                            }
-                            rel={
-                              contact.href.startsWith("http")
-                                ? "noopener noreferrer"
-                                : undefined
-                            }
+                            target={contact.href.startsWith("http") ? "_blank" : undefined}
+                            rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
                             aria-label={`${contact.label}: ${member.name}`}
                             title={contact.label}
-                            className="grid size-12 place-items-center rounded-2xl border border-blue-200 bg-blue-50/80 text-blue-700 shadow-2xs transition hover:-translate-y-0.5 hover:border-blue-400 hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transform-none motion-reduce:transition-none sm:size-13"
+                            className="grid size-10 place-items-center rounded-xl border border-blue-200 bg-blue-50/80 text-blue-700 shadow-2xs transition hover:-translate-y-0.5 hover:border-blue-400 hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transform-none motion-reduce:transition-none sm:size-11"
                           >
                             <BoardContactIcon icon={contact.icon} />
                           </a>
@@ -1132,30 +1208,30 @@ export function GuestAboutV2() {
         </section>
 
         {/* ═══════════ CTA BANNER ═══════════ */}
-        <section className="px-4 pb-10 sm:px-6 lg:px-8 lg:pb-14">
-          <div className="relative mx-auto flex max-w-[1460px] flex-col items-start justify-between gap-8 overflow-hidden rounded-3xl border-2 border-blue-200/90 bg-gradient-to-br from-white via-blue-50/70 to-blue-100/50 p-8 text-slate-900 shadow-xl shadow-blue-900/5 sm:p-12 lg:flex-row lg:items-center lg:p-14">
+        <section className="px-4 pb-8 sm:px-6 lg:px-8 lg:pb-10">
+          <div className="relative mx-auto flex max-w-[1460px] flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl border border-blue-200 bg-gradient-to-br from-white via-blue-50/70 to-blue-100/50 p-6 text-slate-900 shadow-lg shadow-blue-900/5 sm:p-8 lg:flex-row lg:items-center lg:p-10">
             <div
               className="pointer-events-none absolute -bottom-10 -right-10 size-80 rounded-full bg-blue-400/15 blur-3xl"
               aria-hidden="true"
             />
 
             <div className="relative z-10 max-w-3xl">
-              <h2 className="font-serif text-3xl font-black leading-tight tracking-tight text-[#071936] sm:text-4xl lg:text-5xl">
+              <h2 className="font-serif text-xl font-bold leading-snug tracking-tight text-[#071936] sm:text-2xl lg:text-3xl">
                 {t.ctaTitle}
               </h2>
-              <p className="mt-4 text-base font-normal leading-relaxed text-slate-600 sm:text-lg lg:text-xl">
+              <p className="mt-3 text-xs font-normal leading-relaxed text-slate-600 sm:text-sm lg:text-base">
                 {t.ctaDescription}
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-3 text-xs font-bold text-slate-700 sm:text-sm">
-                <span className="inline-flex items-center gap-2 rounded-xl border border-blue-200/80 bg-white/90 px-3.5 py-2 text-blue-900 shadow-2xs">
+              <div className="mt-4 flex flex-wrap items-center gap-2.5 text-xs font-bold text-slate-700">
+                <span className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200/80 bg-white/90 px-3 py-1.5 text-blue-900 shadow-2xs">
                   <span
                     className="size-1.5 rounded-full bg-blue-600"
                     aria-hidden="true"
                   />
                   Viện Hàn lâm, Trường ĐH & Doanh nghiệp
                 </span>
-                <span className="inline-flex items-center gap-2 rounded-xl border border-blue-200/80 bg-white/90 px-3.5 py-2 text-blue-900 shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200/80 bg-white/90 px-3 py-1.5 text-blue-900 shadow-2xs">
                   <span
                     className="size-1.5 rounded-full bg-blue-600"
                     aria-hidden="true"
@@ -1168,7 +1244,7 @@ export function GuestAboutV2() {
             <div className="relative z-10 shrink-0">
               <Link
                 href="/register"
-                className="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-blue-600 px-8 py-4.5 text-base font-black text-white shadow-lg shadow-blue-600/25 transition duration-150 hover:-translate-y-0.5 hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:text-lg"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-md shadow-blue-600/25 transition duration-150 hover:-translate-y-0.5 hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:text-base"
               >
                 <span>{t.cta}</span>
                 <span aria-hidden="true">→</span>
@@ -1177,47 +1253,15 @@ export function GuestAboutV2() {
           </div>
         </section>
 
-        {/* ═══════════ 4. ĐỐI TÁC THAM GIA (PARTNERS) ═══════════ */}
+        {/* ═══════════ 4. ĐỐI TÁC THAM GIA (PARTNERS - TẠM ẨN) ═══════════ */}
+        {/* 
         <section
           id="participating-partners"
           className="scroll-mt-32 border-t border-blue-100 bg-[#edf5ff] px-4 pt-6 pb-12 sm:px-6 sm:pt-8 sm:pb-14 lg:px-8 lg:pt-8 lg:pb-16"
         >
-          <div className="mx-auto max-w-[1460px]">
-            <h2 className="font-serif text-center text-3xl font-black tracking-tight text-[#082352] sm:text-4xl lg:text-5xl">
-              {PARTNER_COPY[locale].title}
-            </h2>
-            {(["ru", "vi"] as const).map((country) => (
-              <div key={country} className="mt-8 sm:mt-10">
-                <h3 className="text-xl font-black text-slate-950 sm:text-2xl">
-                  {PARTNER_COPY[locale][country]}
-                </h3>
-                <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                  {PARTNERS.filter(
-                    (partner) => partner.country === country,
-                  ).map((partner) => (
-                    <li key={partner.url}>
-                      <a
-                        href={partner.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={partner.name}
-                        className="group flex min-h-36 items-center justify-center rounded-3xl border border-blue-100 bg-white p-5 shadow-xs transition duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transform-none motion-reduce:transition-none"
-                      >
-                        <Image
-                          src={`/images/partners/${partner.logo}.webp`}
-                          alt={partner.name}
-                          width={180}
-                          height={100}
-                          className="max-h-24 w-auto object-contain transition duration-200 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
-                        />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          ...
         </section>
+        */}
       </main>
       <GuestPublicFooter copy={homeCopy} />
     </div>

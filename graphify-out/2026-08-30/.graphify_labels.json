@@ -143,8 +143,8 @@
   "141": "impeccable.md",
   "142": "principles.md",
   "143": "workflows/graphify.md",
+  "144": "Deployment and Local Operation",
   "145": "frontend/package.json",
-  "146": "NewsMediaService",
   "147": "(admin)/admin/page.tsx",
   "148": "explore/page.tsx",
   "149": "governance/page.tsx",
@@ -172,7 +172,6 @@
   "171": "VN-RU Architecture Hub",
   "172": "Loop Group Nodes",
   "173": "news.controller.ts",
-  "176": "SidebarFrame.tsx",
   "177": "backend-architecture.spec.ts",
   "179": "assignments/page.tsx",
   "180": "vnru-full-modules-prototype-v3/README.md",
@@ -218,6 +217,5 @@
   "229": "about-content.test.mjs",
   "230": "ecosystem-rvstin-content.test.mjs",
   "231": "home-bilateral-gateway.test.mjs",
-  "233": "7. DIAL DEFINITIONS (Technical Reference)",
   "236": "next"
 }
