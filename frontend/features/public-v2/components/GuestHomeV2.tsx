@@ -1475,11 +1475,7 @@ export function NetworkIconGlyph({
   );
 }
 
-export function EcosystemOrbIcon({
-  icon,
-}: {
-  icon: string;
-}) {
+export function EcosystemOrbIcon({ icon }: { icon: string }) {
   return (
     <div className="relative flex size-[76px] items-center justify-center sm:size-[84px]">
       {/* Outer Orbiting Constellation Ring with Satellite Dots */}
@@ -1569,7 +1565,9 @@ export function EcosystemOrbIcon({
             <circle cx="35" cy="19" r="4" />
             <path d="M41.5 34C41.5 30 38.8 27.5 35 27.5C33.5 27.5 32.2 28 31.2 28.8" />
           </svg>
-        ) : icon === "insights" || icon === "chart_up" || icon === "projects" ? (
+        ) : icon === "insights" ||
+          icon === "chart_up" ||
+          icon === "projects" ? (
           <svg
             viewBox="0 0 48 48"
             className="size-8 text-blue-600 transition-transform duration-300 group-hover:scale-110 sm:size-9"
@@ -1608,7 +1606,11 @@ export function EcosystemOrbIcon({
             <path d="M24 13.5C18.5 11 12 11.8 7 13.5V33.5C12 31.8 18.5 31 24 33.5C29.5 31 36 31.8 41 33.5V13.5C36 11.8 29.5 11 24 13.5Z" />
             <line x1="24" y1="13.5" x2="24" y2="33.5" />
             {/* Bookmark ribbon on left page */}
-            <path d="M12.5 12.5V20.5L15 19L17.5 20.5V12.8" fill="currentColor" fillOpacity="0.18" />
+            <path
+              d="M12.5 12.5V20.5L15 19L17.5 20.5V12.8"
+              fill="currentColor"
+              fillOpacity="0.18"
+            />
             <path d="M12.5 12.5V20.5L15 19L17.5 20.5V12.8" />
             {/* Right page content lines */}
             <line x1="28.5" y1="17.5" x2="36.5" y2="17.5" />
@@ -2158,7 +2160,7 @@ export function GuestHomeV2({
                     </div>
 
                     {/* Title */}
-                    <h3 className="mt-5 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600">
+                    <h3 className="mt-5 text-base font-bold uppercase tracking-tight text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-lg">
                       {card.title}
                     </h3>
 

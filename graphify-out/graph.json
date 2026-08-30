@@ -5728,7 +5728,7 @@
       "label": "NetworkStatsInfographic()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1626",
+      "source_location": "L1628",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_networkstatsinfographic",
       "community": 111,
@@ -5739,7 +5739,7 @@
       "label": "GuestHomeV2()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1970",
+      "source_location": "L1972",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_guesthomev2",
       "community": 111,
@@ -7172,8 +7172,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "frontend_package_dependencies_i18next",
-      "community": 144,
-      "community_name": "next",
+      "community": 3,
+      "community_name": "dependencies",
       "norm_label": "i18next"
     },
     {
@@ -7183,8 +7183,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "i18next",
-      "community": 144,
-      "community_name": "next",
+      "community": 3,
+      "community_name": "dependencies",
       "norm_label": "i18next"
     },
     {
@@ -7216,8 +7216,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "frontend_package_dependencies_next",
-      "community": 3,
-      "community_name": "dependencies",
+      "community": 144,
+      "community_name": "next",
       "norm_label": "next"
     },
     {
@@ -7227,8 +7227,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "next",
-      "community": 3,
-      "community_name": "dependencies",
+      "community": 144,
+      "community_name": "next",
       "norm_label": "next"
     },
     {
@@ -34988,7 +34988,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1974",
+      "source_location": "L1976",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2_guesthomev2",
@@ -40446,7 +40446,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1970",
+      "source_location": "L1972",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2",
@@ -40523,7 +40523,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L1626",
+      "source_location": "L1628",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2",
@@ -40619,7 +40619,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L2117",
+      "source_location": "L2119",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2_guesthomev2",
@@ -40644,7 +40644,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestHomeV2.tsx",
-      "source_location": "L2102",
+      "source_location": "L2104",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guesthomev2_guesthomev2",
@@ -65954,5 +65954,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "2ddcef4fe01770ae322be29257e9bf5f742b80f5"
+  "built_at_commit": "e49440e79bb92b16764b53af48a4825f63a71d07"
 }

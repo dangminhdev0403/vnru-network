@@ -1425,8 +1425,8 @@
     "semantic_hash": "11001fad5db2b4a2af6f6d5fa2c60186"
   },
   "frontend/features/public-v2/components/GuestHomeV2.tsx": {
-    "mtime": 1788068373.0129485,
-    "ast_hash": "7ceed35493dd4eca7afcbcd4ecd5261a",
+    "mtime": 1788068443.717756,
+    "ast_hash": "2e4ec8aa5cad33cc84723ae9b1228638",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicNav.tsx": {
