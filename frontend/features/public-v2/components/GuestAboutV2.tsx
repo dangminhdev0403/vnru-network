@@ -66,7 +66,14 @@ const PARTNER_COPY: Record<Locale, { title: string; ru: string; vi: string }> =
   };
 
 const PARTNERS = [
-  // ══════════════════ VỀ PHÍA NGA (9 ĐỐI TÁC ACTIVE) ══════════════════
+  // ══════════════════ VỀ PHÍA NGA (11 ĐỐI TÁC ACTIVE) ══════════════════
+  {
+    name: "Đại học công nghệ quản lý và kinh tế Saint Petersburg (СПбУТУиЭ)",
+    shortName: "СПбУТУиЭ",
+    logo: "spbume",
+    url: "https://www.spbume.ru/",
+    country: "ru",
+  },
   {
     name: "Đại học Viễn thông Quốc gia Saint Petersburg mang tên MA Bonch-Bruevich (СПбГУТ)",
     shortName: "СПбГУТ",
@@ -82,10 +89,17 @@ const PARTNERS = [
     country: "ru",
   },
   {
-    name: "Đại học kinh tế Nga Plekhanov (РЭУ им. Г.В. Плеханова)",
+    name: "Đại học kinh tế Nga Plekhanov (РЭУ им. Г.В. Пleханова)",
     shortName: "РЭУ им. Г.В. Плеханова",
     logo: "plekhanov",
     url: "https://рэу.рф/",
+    country: "ru",
+  },
+  {
+    name: "Đại học quốc gia Saint Petersburg (СПбГУ)",
+    shortName: "СПбГУ",
+    logo: "spbu",
+    url: "https://spbu.ru/",
     country: "ru",
   },
   {
@@ -124,10 +138,10 @@ const PARTNERS = [
     country: "ru",
   },
   {
-    name: "Đại học công nghệ quản lý và kinh tế Saint Petersburg (СПбУТУиЭ)",
-    shortName: "СПбУТУиЭ",
-    logo: "spbume",
-    url: "https://www.spbume.ru/",
+    name: "Đại học kinh tế quốc gia Saint Petersburg (СПбГЭУ)",
+    shortName: "СПбГЭУ",
+    logo: "unecon",
+    url: "https://unecon.ru/",
     country: "ru",
   },
 
@@ -181,12 +195,6 @@ const PARTNERS = [
     country: "ru",
   },
   {
-    name: "СПбГУ",
-    logo: "spbu",
-    url: "https://spbu.ru/",
-    country: "ru",
-  },
-  {
     name: "Финуниверситет",
     logo: "financial-university",
     url: "https://www.fa.ru/",
@@ -214,12 +222,6 @@ const PARTNERS = [
     name: "УрГЭУ",
     logo: "usue",
     url: "https://www.usue.ru/",
-    country: "ru",
-  },
-  {
-    name: "СПбГЭУ",
-    logo: "unecon",
-    url: "https://unecon.ru/",
     country: "ru",
   },
   {
