@@ -15,9 +15,10 @@ export async function POST(request: NextRequest) {
   }
   const form = await request.formData();
   const returnTo = sanitizeReturnTo(form.get("returnTo")?.toString());
+  const account = form.get("account")?.toString()?.trim() || "";
   try {
     await signIn("credentials", {
-      account: form.get("account"),
+      account,
       password: form.get("password"),
       redirectTo: returnTo,
     });
@@ -26,6 +27,9 @@ export async function POST(request: NextRequest) {
     const login = publicRequestUrl(request, "/login");
     login.searchParams.set("returnTo", returnTo);
     login.searchParams.set("error", "CredentialsSignin");
+    if (account) {
+      login.searchParams.set("account", account);
+    }
     return NextResponse.redirect(login);
   }
 }

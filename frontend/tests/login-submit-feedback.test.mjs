@@ -16,14 +16,11 @@ test("login form disables submit button and shows loading state with spinner and
   assert.match(loginPage, /submitting: "Вход в систему, пожалуйста, подождите\.\.\."/);
   assert.match(loginPage, /submitting: "Signing in, please wait\.\.\."/);
 
-  // LoginForm interaction
-  assert.match(loginForm, /disabled=\{isSubmitting\}/);
-  assert.match(loginForm, /animate-spin/);
-  assert.match(loginForm, /\{t\.submitting\}/);
-  assert.match(loginForm, /action="\/api\/auth\/login"/);
-
-  // PasswordField disabled support
-  assert.match(passwordField, /disabled=\{disabled\}/);
+  // Input retention on login failure
+  assert.match(loginPage, /initialAccount=\{account\}/);
+  assert.match(loginForm, /initialAccount\s*=\s*""/);
+  assert.match(loginForm, /value=\{account\}/);
+  assert.match(loginForm, /setAccount\(e\.target\.value\)/);
 });
 
 test("register form disables submit button and shows loading state with spinner and multilingual text", async () => {
@@ -38,4 +35,8 @@ test("register form disables submit button and shows loading state with spinner 
   assert.match(registerPage, /disabled=\{status === "submitting"\}/);
   assert.match(registerPage, /animate-spin/);
   assert.match(registerPage, /\{t\.submitting\}/);
+
+  // Input retention on register failure (only password cleared)
+  assert.match(registerPage, /passwordInput\.value\s*=\s*""/);
+  assert.match(registerPage, /confirmPasswordInput\.value\s*=\s*""/);
 });

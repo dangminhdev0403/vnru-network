@@ -18,12 +18,15 @@ export type LoginFormCopy = {
 export function LoginForm({
   destination,
   error,
+  initialAccount = "",
   t,
 }: Readonly<{
   destination: string;
   error?: string;
+  initialAccount?: string;
   t: LoginFormCopy;
 }>) {
+  const [account, setAccount] = useState(initialAccount);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -71,8 +74,10 @@ export function LoginForm({
               type="text"
               autoComplete="username"
               required
-              autoFocus
+              autoFocus={!initialAccount}
               disabled={isSubmitting}
+              value={account}
+              onChange={(e) => setAccount(e.target.value)}
               placeholder={t.accountPlaceholder}
               className="min-h-13 w-full rounded-xl border border-slate-300 bg-white py-3 pr-4 pl-12 text-base transition placeholder:text-slate-400 focus:border-blue-700 focus-visible:outline-none disabled:bg-slate-50 disabled:text-slate-500"
             />

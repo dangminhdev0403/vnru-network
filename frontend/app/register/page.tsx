@@ -221,8 +221,20 @@ export default function RegisterPage() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify(registration),
     }).catch(() => null);
-    setStatus(response?.ok ? "success" : "error");
-    if (response?.ok) formElement.reset();
+    if (response?.ok) {
+      setStatus("success");
+      formElement.reset();
+    } else {
+      setStatus("error");
+      const passwordInput = formElement.elements.namedItem(
+        "password",
+      ) as HTMLInputElement | null;
+      const confirmPasswordInput = formElement.elements.namedItem(
+        "confirmPassword",
+      ) as HTMLInputElement | null;
+      if (passwordInput) passwordInput.value = "";
+      if (confirmPasswordInput) confirmPasswordInput.value = "";
+    }
   }
 
   return (

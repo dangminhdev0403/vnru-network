@@ -92,9 +92,9 @@ const copy = {
 export default async function LoginPage({
   searchParams,
 }: Readonly<{
-  searchParams: Promise<{ returnTo?: string; error?: string }>;
+  searchParams: Promise<{ returnTo?: string; error?: string; account?: string }>;
 }>) {
-  const { returnTo, error } = await searchParams;
+  const { returnTo, error, account } = await searchParams;
   const destination = sanitizeReturnTo(returnTo);
   const cookieStore = await cookies();
   const session = await getCurrentSession(
@@ -163,7 +163,12 @@ export default async function LoginPage({
             {t.description}
           </p>
 
-          <LoginForm destination={destination} error={error} t={t} />
+          <LoginForm
+            destination={destination}
+            error={error}
+            initialAccount={account}
+            t={t}
+          />
 
           <div
             className="my-6 flex items-center gap-4 text-sm text-slate-500"
