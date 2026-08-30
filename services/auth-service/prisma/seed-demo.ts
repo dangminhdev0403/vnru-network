@@ -119,9 +119,16 @@ async function main() {
         where: { name: account.role },
         select: { id: true },
       });
-      await prisma.user.update({
+      await prisma.user.upsert({
         where: { id: binding.userId },
-        data: {
+        update: {
+          email: account.account,
+          firstName: account.role === 'SUPER_ADMIN' ? 'Super' : 'Demo',
+          lastName: account.role.replaceAll('_', ' '),
+          status: 'ACTIVE',
+        },
+        create: {
+          id: binding.userId,
           email: account.account,
           firstName: account.role === 'SUPER_ADMIN' ? 'Super' : 'Demo',
           lastName: account.role.replaceAll('_', ' '),
@@ -152,9 +159,17 @@ async function main() {
           userId: binding.userId,
         },
       });
-      await prisma.roleAssignment.update({
+      await prisma.roleAssignment.upsert({
         where: { id: binding.assignmentId },
-        data: {
+        update: {
+          userId: binding.userId,
+          roleId: role.id,
+          contextType: 'PLATFORM',
+          contextId: 'GLOBAL',
+          status: 'ACTIVE',
+        },
+        create: {
+          id: binding.assignmentId,
           userId: binding.userId,
           roleId: role.id,
           contextType: 'PLATFORM',
