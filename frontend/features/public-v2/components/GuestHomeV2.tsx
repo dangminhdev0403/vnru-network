@@ -1474,6 +1474,126 @@ export function NetworkIconGlyph({
   );
 }
 
+export function AgreementHandshakeIcon({
+  className = "size-6",
+}: {
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="m11 17 2 2a1 1 0 0 0 1.4 0l4.3-4.3a1 1 0 0 0 0-1.4l-2.4-2.4a1 1 0 0 0-1.4 0L14.3 12" />
+      <path d="m7 13-2.3 2.3a1 1 0 0 0 0 1.4l2 2a1 1 0 0 0 1.4 0L11 16" />
+      <path d="m18 10 3.3-3.3a1 1 0 0 0 0-1.4l-2.6-2.6a1 1 0 0 0-1.4 0L14 6" />
+      <path d="m2 6.7 3.3-3.3a1 1 0 0 1 1.4 0l3.3 3.3" />
+      <path d="M10 10l3.5 3.5" />
+    </svg>
+  );
+}
+
+export function UserMultiple02Icon({
+  className = "size-6",
+}: {
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  );
+}
+
+export function ChartUpAnalytics02Icon({
+  className = "size-6",
+}: {
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M3 3v18h18" />
+      <path d="m19 9-5 5-4-4-3 3" />
+      <path d="M14 9h5v5" />
+    </svg>
+  );
+}
+
+export function BookOpenLibrary02Icon({
+  className = "size-6",
+}: {
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+      <path d="M6 8h2" />
+      <path d="M6 12h2" />
+      <path d="M16 8h2" />
+      <path d="M16 12h2" />
+    </svg>
+  );
+}
+
+export function EcosystemCardIcon({
+  icon,
+  className = "size-6",
+}: {
+  icon: string;
+  className?: string;
+}) {
+  if (icon === "handshake" || icon === "agreement") {
+    return <AgreementHandshakeIcon className={className} />;
+  }
+  if (icon === "groups" || icon === "users" || icon === "user_multiple") {
+    return <UserMultiple02Icon className={className} />;
+  }
+  if (icon === "insights" || icon === "chart_up" || icon === "analytics") {
+    return <ChartUpAnalytics02Icon className={className} />;
+  }
+  if (icon === "menu_book" || icon === "library" || icon === "book_open") {
+    return <BookOpenLibrary02Icon className={className} />;
+  }
+  return <NetworkIconGlyph icon={icon} className={className} />;
+}
+
 function NetworkStatsInfographic({
   stats,
   titleMain,
@@ -2014,12 +2134,10 @@ export function GuestHomeV2({
                         <span
                           className={`grid size-11 place-items-center rounded-xl ${toneBg} transition-transform duration-300 group-hover:scale-110`}
                         >
-                          <span
-                            className="material-symbols-outlined text-2xl"
-                            aria-hidden="true"
-                          >
-                            {card.icon}
-                          </span>
+                          <EcosystemCardIcon
+                            icon={card.icon}
+                            className="size-6"
+                          />
                         </span>
                         <span className="text-xs font-bold text-slate-400 group-hover:text-blue-600 transition">
                           →
