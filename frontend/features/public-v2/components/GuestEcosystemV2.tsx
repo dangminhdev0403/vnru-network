@@ -882,11 +882,11 @@ export function GuestEcosystemV2({
               <div className="grid gap-6 md:grid-cols-3">
                 <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
                   <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
+                    <h3 className="font-serif line-clamp-2 text-lg font-bold leading-snug text-[#082352] sm:text-xl">
                       Chương trình Học bổng Nghiên cứu InteRussia Fellowships
                       2026
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                    <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
                       Chương trình học bổng uy tín dành cho các nhà khoa học,
                       chuyên gia trẻ quốc tế sang nghiên cứu trực tiếp tại các
                       viện và trường ĐH hàng đầu của Nga. Tài trợ toàn phần vé
@@ -908,11 +908,11 @@ export function GuestEcosystemV2({
 
                 <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
                   <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
+                    <h3 className="font-serif line-clamp-2 text-lg font-bold leading-snug text-[#082352] sm:text-xl">
                       Hội nghị Khoa học Quốc tế Song phương VAST – RAS (Nga –
                       Việt)
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                    <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
                       Kêu gọi gửi bài báo tham luận khoa học cho Hội thảo khoa
                       học quốc tế thường niên giữa Viện Hàn lâm KHCN Việt Nam và
                       Viện Hàn lâm Khoa học Nga trong các lĩnh vực vật liệu,
@@ -932,11 +932,11 @@ export function GuestEcosystemV2({
 
                 <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
                   <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
+                    <h3 className="font-serif line-clamp-2 text-lg font-bold leading-snug text-[#082352] sm:text-xl">
                       Chuyên san Hợp tác Khoa học Song phương Việt Nam – Liên
                       bang Nga
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                    <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
                       Đợt tiếp nhận công trình nghiên cứu gốc từ các nhóm tác
                       giả liên kết hai nước đăng trên chuyên san đặc biệt của
                       các tạp chí khoa học quốc tế uy tín thuộc hệ thống RAS &
