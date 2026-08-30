@@ -13,7 +13,10 @@ test("login form disables submit button and shows loading state with spinner and
 
   // Multilingual copy
   assert.match(loginPage, /submitting: "Đang đăng nhập, xin chờ\.\.\."/);
-  assert.match(loginPage, /submitting: "Вход в систему, пожалуйста, подождите\.\.\."/);
+  assert.match(
+    loginPage,
+    /submitting: "Вход в систему, пожалуйста, подождите\.\.\."/,
+  );
   assert.match(loginPage, /submitting: "Signing in, please wait\.\.\."/);
 
   // Input retention on login failure
@@ -28,8 +31,14 @@ test("register form disables submit button and shows loading state with spinner 
 
   // Multilingual copy
   assert.match(registerPage, /submitting: "Đang tạo tài khoản, xin chờ\.\.\."/);
-  assert.match(registerPage, /submitting: "Создание аккаунта, пожалуйста, подождите\.\.\."/);
-  assert.match(registerPage, /submitting: "Creating account, please wait\.\.\."/);
+  assert.match(
+    registerPage,
+    /submitting: "Создание аккаунта, пожалуйста, подождите\.\.\."/,
+  );
+  assert.match(
+    registerPage,
+    /submitting: "Creating account, please wait\.\.\."/,
+  );
 
   // RegisterPage interaction
   assert.match(registerPage, /disabled=\{status === "submitting"\}/);

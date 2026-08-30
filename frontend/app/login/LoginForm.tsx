@@ -42,7 +42,7 @@ export function LoginForm({
       {error && (
         <p
           role="alert"
-          className="mt-5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-base font-semibold text-rose-800"
+          className="mt-3 text-sm font-semibold text-rose-600"
         >
           {t.error || error}
         </p>
@@ -52,7 +52,7 @@ export function LoginForm({
         action="/api/auth/login"
         method="post"
         onSubmit={handleSubmit}
-        className="mt-7 space-y-5"
+        className="mt-5 space-y-5"
       >
         <input type="hidden" name="returnTo" value={destination} />
         <label className="block text-base font-bold text-slate-800">

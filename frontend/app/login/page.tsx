@@ -92,7 +92,11 @@ const copy = {
 export default async function LoginPage({
   searchParams,
 }: Readonly<{
-  searchParams: Promise<{ returnTo?: string; error?: string; account?: string }>;
+  searchParams: Promise<{
+    returnTo?: string;
+    error?: string;
+    account?: string;
+  }>;
 }>) {
   const { returnTo, error, account } = await searchParams;
   const destination = sanitizeReturnTo(returnTo);

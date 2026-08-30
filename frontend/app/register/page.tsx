@@ -310,7 +310,7 @@ export default function RegisterPage() {
           {status === "success" || status === "error" ? (
             <p
               role={status === "error" ? "alert" : "status"}
-              className={`mt-5 rounded-xl border px-4 py-3 text-base font-semibold leading-6 ${status === "error" ? "border-red-200 bg-red-50 text-red-900" : "border-emerald-200 bg-emerald-50 text-emerald-900"}`}
+              className={`mt-3 text-sm font-semibold leading-6 ${status === "error" ? "text-rose-600" : "text-emerald-600"}`}
             >
               {status === "error" ? t.error : t.success}
             </p>
@@ -376,7 +376,9 @@ export default function RegisterPage() {
             </label>
             <label className="block text-base font-bold text-slate-800">
               {t.password}{" "}
-              <span className="text-red-600" aria-hidden="true">*</span>
+              <span className="text-red-600" aria-hidden="true">
+                *
+              </span>
               <input
                 name="password"
                 type="password"
@@ -384,18 +386,25 @@ export default function RegisterPage() {
                 disabled={status === "submitting"}
                 aria-required="true"
                 aria-invalid={Boolean(fieldErrors.password)}
-                aria-describedby={fieldErrors.password ? "password-error" : undefined}
+                aria-describedby={
+                  fieldErrors.password ? "password-error" : undefined
+                }
                 className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none disabled:bg-slate-50 disabled:text-slate-500 ${fieldErrors.password ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
               />
               {fieldErrors.password ? (
-                <span id="password-error" className="mt-2 block text-sm font-semibold text-red-700">
+                <span
+                  id="password-error"
+                  className="mt-2 block text-sm font-semibold text-red-700"
+                >
                   {fieldErrors.password}
                 </span>
               ) : null}
             </label>
             <label className="block text-base font-bold text-slate-800">
               {t.confirmPassword}{" "}
-              <span className="text-red-600" aria-hidden="true">*</span>
+              <span className="text-red-600" aria-hidden="true">
+                *
+              </span>
               <input
                 name="confirmPassword"
                 type="password"
@@ -403,11 +412,18 @@ export default function RegisterPage() {
                 disabled={status === "submitting"}
                 aria-required="true"
                 aria-invalid={Boolean(fieldErrors.confirmPassword)}
-                aria-describedby={fieldErrors.confirmPassword ? "confirmPassword-error" : undefined}
+                aria-describedby={
+                  fieldErrors.confirmPassword
+                    ? "confirmPassword-error"
+                    : undefined
+                }
                 className={`mt-2 min-h-12 w-full rounded-xl border bg-white px-4 text-base transition focus-visible:outline-none disabled:bg-slate-50 disabled:text-slate-500 ${fieldErrors.confirmPassword ? "border-red-600 focus:border-red-700" : "border-slate-300 focus:border-blue-700"}`}
               />
               {fieldErrors.confirmPassword ? (
-                <span id="confirmPassword-error" className="mt-2 block text-sm font-semibold text-red-700">
+                <span
+                  id="confirmPassword-error"
+                  className="mt-2 block text-sm font-semibold text-red-700"
+                >
                   {fieldErrors.confirmPassword}
                 </span>
               ) : null}
