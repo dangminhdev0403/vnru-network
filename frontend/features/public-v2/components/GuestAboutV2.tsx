@@ -879,7 +879,7 @@ export function GuestAboutV2() {
 
       {/* ═══════════ STICKY SUB-TABS BAR ═══════════ */}
       <nav
-        className="sticky top-[74px] z-40 border-b border-blue-200/70 bg-[#f0f4f9]/90 py-3.5 backdrop-blur-md transition-all duration-200"
+        className="sticky top-[74px] z-40 border-b border-blue-200/70 bg-[#f0f4f9]/90 pt-2.5 pb-2.5 sm:pt-3 sm:pb-0 backdrop-blur-md transition-all duration-200"
         aria-label="About navigation"
       >
         <div className="mx-auto flex max-w-[1460px] items-center justify-start overflow-x-auto px-4 sm:justify-center sm:px-6 lg:px-8">
@@ -920,36 +920,36 @@ export function GuestAboutV2() {
       <main>
         <div
           id="about-overview"
-          className="mx-auto max-w-[1460px] scroll-mt-32 px-4 pt-10 pb-8 sm:px-6 sm:pt-14 lg:px-8"
+          className="mx-auto max-w-[1460px] scroll-mt-32 px-4 pt-3 pb-6 sm:px-6 sm:pt-4 lg:px-8"
         >
-          <article className="rounded-3xl border border-blue-100/80 bg-white px-8 py-12 shadow-sm sm:px-14 sm:py-16 lg:px-20">
+          <article className="rounded-3xl border border-blue-100/80 bg-white px-6 pt-5 pb-8 shadow-sm sm:px-12 sm:pt-6 sm:pb-10 lg:px-16">
             {/* ═══════════ HEADER ═══════════ */}
-            <div className="mb-10 text-center sm:mb-12">
-              <h1 className="font-serif text-4xl font-black tracking-tight text-[#082352] sm:text-5xl lg:text-6xl">
+            <div className="mb-3 text-center sm:mb-4">
+              <h1 className="font-serif text-3xl font-black tracking-tight text-[#082352] sm:text-4xl">
                 {t.eyebrow}
               </h1>
             </div>
 
             <div
-              className="my-10 h-px w-full bg-slate-200/80 sm:my-12"
+              className="my-4 h-px w-full bg-slate-200/80 sm:my-5"
               aria-hidden="true"
             />
 
             {/* ═══════════ 1. GIỚI THIỆU CHUNG (OVERVIEW) ═══════════ */}
-            <div className="space-y-12 text-lg leading-relaxed text-slate-800 sm:text-xl sm:leading-9 lg:text-2xl lg:leading-10">
+            <div className="space-y-8 text-base leading-snug text-slate-800 sm:text-lg sm:leading-snug">
               <section id="about-intro">
-                <h2 className="font-serif text-2xl font-black text-[#082352] sm:text-3xl lg:text-4xl">
+                <h2 className="font-serif text-xl font-black text-[#082352] sm:text-2xl">
                   {t.overviewTitle}
                 </h2>
-                <p className="mt-4">{t.overview}</p>
+                <p className="mt-2.5 leading-snug">{t.overview}</p>
               </section>
 
               <section id="mission">
-                <h2 className="font-serif text-2xl font-black text-[#082352] sm:text-3xl lg:text-4xl">
+                <h2 className="font-serif text-xl font-black text-[#082352] sm:text-2xl">
                   {t.missionTitle}
                 </h2>
-                <p className="mt-4">{t.missionSubtitle}</p>
-                <ul className="mt-4 list-disc space-y-3.5 pl-7">
+                <p className="mt-2.5 leading-snug">{t.missionSubtitle}</p>
+                <ul className="mt-2.5 list-disc space-y-2 pl-7 leading-snug">
                   {t.highlights.map((item) => (
                     <li key={item.title}>
                       <strong className="text-slate-950 font-bold">
@@ -963,13 +963,13 @@ export function GuestAboutV2() {
 
               {t.sections.map((section, index) => (
                 <section key={section.title} id={`about-section-${index}`}>
-                  <h2 className="font-serif text-2xl font-black text-[#082352] sm:text-3xl lg:text-4xl">
+                  <h2 className="font-serif text-xl font-black text-[#082352] sm:text-2xl">
                     {section.title}
                   </h2>
                   {section.intro ? (
-                    <p className="mt-4">{section.intro}</p>
+                    <p className="mt-2.5 leading-snug">{section.intro}</p>
                   ) : null}
-                  <ul className="mt-4 list-disc space-y-3.5 pl-7">
+                  <ul className="mt-2.5 list-disc space-y-2 pl-7 leading-snug">
                     {section.items.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
@@ -978,17 +978,17 @@ export function GuestAboutV2() {
               ))}
 
               <div
-                className="my-10 h-px w-full bg-slate-200/80 sm:my-12"
+                className="my-6 h-px w-full bg-slate-200/80 sm:my-8"
                 aria-hidden="true"
               />
 
               {/* ═══════════ 2. CƠ CHẾ VẬN HÀNH (OPERATING MECHANISM) ═══════════ */}
               <section id="operating-mechanism" className="scroll-mt-32">
-                <h2 className="font-serif text-2xl font-black text-[#082352] sm:text-3xl lg:text-4xl">
+                <h2 className="font-serif text-xl font-black text-[#082352] sm:text-2xl">
                   {t.operationTitle}
                 </h2>
-                <div className="mt-4 flex flex-wrap items-center gap-3">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-extrabold text-blue-800 sm:text-base">
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-extrabold text-blue-800 sm:text-base">
                     <span
                       className="size-2.5 rounded-full bg-blue-600"
                       aria-hidden="true"
@@ -996,7 +996,7 @@ export function GuestAboutV2() {
                     ОГРН / Mã số đăng ký: 1207700294020
                   </span>
                 </div>
-                <ul className="mt-6 list-disc space-y-3.5 pl-7">
+                <ul className="mt-4 list-disc space-y-2 pl-7 leading-snug">
                   {t.operationItems.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
@@ -1009,10 +1009,10 @@ export function GuestAboutV2() {
         {/* ═══════════ 3. BAN ĐIỀU HÀNH (BOARD MEMBERS) ═══════════ */}
         <section
           id="board"
-          className="scroll-mt-36 pt-4 pb-14 sm:pt-6 sm:pb-16 lg:pt-8 lg:pb-20"
+          className="scroll-mt-36 pt-4 pb-10 sm:pt-6 sm:pb-12 lg:pt-6 lg:pb-14"
         >
-          <div className="mx-auto mb-7 max-w-4xl text-center sm:mb-8">
-            <h2 className="font-serif text-3xl font-black tracking-tight text-[#082352] sm:text-4xl lg:text-5xl">
+          <div className="mx-auto mb-4 max-w-4xl text-center sm:mb-5">
+            <h2 className="font-serif text-2xl font-black tracking-tight text-[#082352] sm:text-3xl">
               {t.boardTitle}
             </h2>
           </div>
@@ -1093,7 +1093,7 @@ export function GuestAboutV2() {
         </section>
 
         {/* ═══════════ CTA BANNER ═══════════ */}
-        <section className="px-4 pb-16 sm:px-6 lg:px-8 lg:pb-24">
+        <section className="px-4 pb-10 sm:px-6 lg:px-8 lg:pb-14">
           <div className="relative mx-auto flex max-w-[1460px] flex-col items-start justify-between gap-8 overflow-hidden rounded-3xl border-2 border-blue-200/90 bg-gradient-to-br from-white via-blue-50/70 to-blue-100/50 p-8 text-slate-900 shadow-xl shadow-blue-900/5 sm:p-12 lg:flex-row lg:items-center lg:p-14">
             <div
               className="pointer-events-none absolute -bottom-10 -right-10 size-80 rounded-full bg-blue-400/15 blur-3xl"
@@ -1141,14 +1141,14 @@ export function GuestAboutV2() {
         {/* ═══════════ 4. ĐỐI TÁC THAM GIA (PARTNERS) ═══════════ */}
         <section
           id="participating-partners"
-          className="scroll-mt-32 border-t border-blue-100 bg-[#edf5ff] px-4 pt-8 pb-16 sm:px-6 sm:pt-10 sm:pb-20 lg:px-8 lg:pt-12 lg:pb-24"
+          className="scroll-mt-32 border-t border-blue-100 bg-[#edf5ff] px-4 pt-6 pb-12 sm:px-6 sm:pt-8 sm:pb-14 lg:px-8 lg:pt-8 lg:pb-16"
         >
           <div className="mx-auto max-w-[1460px]">
             <h2 className="font-serif text-center text-3xl font-black tracking-tight text-[#082352] sm:text-4xl lg:text-5xl">
               {PARTNER_COPY[locale].title}
             </h2>
             {(["ru", "vi"] as const).map((country) => (
-              <div key={country} className="mt-12">
+              <div key={country} className="mt-8 sm:mt-10">
                 <h3 className="text-xl font-black text-slate-950 sm:text-2xl">
                   {PARTNER_COPY[locale][country]}
                 </h3>

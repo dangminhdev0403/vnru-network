@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
 import {
   newsArticleHref,
@@ -11,15 +9,6 @@ import {
 } from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { HOME_COPY } from "./GuestHomeV2";
-import { GuestNewsAdvancedFilters } from "./GuestNewsAdvancedFilters";
-import {
-  DEFAULT_NEWS_ADVANCED_FILTERS,
-  GuestNewsFilterNav,
-  newsFilterHref,
-  type NewsAdvancedFilters,
-  type NewsCategory,
-} from "./GuestNewsFilterNav";
-import { GuestNewsMasthead } from "./GuestNewsMasthead";
 import { GuestPublicNav } from "./GuestPublicNav";
 
 type Category = NewsCategoryKey;
@@ -31,41 +20,6 @@ const categoryLabels: Record<Category, string> = {
   cooperation: "Hợp tác",
 };
 
-const filterCopy = {
-  vi: {
-    search: "Tìm kiếm tin tức...",
-    searchSubmit: "Tìm kiếm",
-    clear: "Xóa tìm kiếm",
-    open: "Mở bộ lọc tin tức",
-    categories: { all: "Tất cả", ...categoryLabels },
-  },
-  en: {
-    search: "Search news...",
-    searchSubmit: "Search",
-    clear: "Clear search",
-    open: "Open news filters",
-    categories: {
-      all: "All",
-      science: "Science - Technology",
-      society: "Economy - Society",
-      education: "Education and Training",
-      cooperation: "Cooperation",
-    },
-  },
-  ru: {
-    search: "Поиск новостей...",
-    searchSubmit: "Найти",
-    clear: "Очистить поиск",
-    open: "Открыть фильтры новостей",
-    categories: {
-      all: "Все",
-      science: "Наука - Технологии",
-      society: "Экономика - Общество",
-      education: "Образование и подготовка",
-      cooperation: "Сотрудничество",
-    },
-  },
-} as const;
 
 const ui = {
   vi: {
@@ -192,18 +146,9 @@ export function GuestNewsArticleV2({
   article: OfficialNewsArticle;
   articles: OfficialNewsArticle[];
 }) {
-  const router = useRouter();
   const { locale } = useLocale();
   const t = ui[locale] ?? ui.vi;
   const contentType = article.contentType ?? "ARTICLE";
-  const filters = filterCopy[locale] ?? filterCopy.vi;
-  const [filterQuery, setFilterQuery] = useState("");
-  const [advancedFilters, setAdvancedFilters] = useState<NewsAdvancedFilters>(
-    () => ({
-      ...DEFAULT_NEWS_ADVANCED_FILTERS,
-      contentTypes: [],
-    }),
-  );
 
   const related = articles
     .filter(
@@ -217,40 +162,13 @@ export function GuestNewsArticleV2({
     .filter((item) => item.id !== article.id)
     .slice(5, 9);
 
-  const openNews = (category: NewsCategory, query = filterQuery) => {
-    router.push(newsFilterHref(category, query, advancedFilters));
-  };
 
   return (
     <div className="min-h-screen bg-white text-slate-950">
       <GuestPublicNav active="news" />
 
       <main className="mx-auto max-w-[1460px] px-4 py-9 sm:px-6 lg:px-8">
-        <GuestNewsMasthead />
 
-        <GuestNewsFilterNav
-          activeCategory={article.category}
-          categoryLabels={filters.categories}
-          clearSearchLabel={filters.clear}
-          query={filterQuery}
-          searchPlaceholder={filters.search}
-          searchSubmitLabel={filters.searchSubmit}
-          onCategoryChange={openNews}
-          onQueryChange={setFilterQuery}
-          onSearchSubmit={(query) => openNews(article.category, query)}
-          filterControl={
-            <GuestNewsAdvancedFilters
-              filters={advancedFilters}
-              onApply={(nextFilters) =>
-                router.push(
-                  newsFilterHref(article.category, filterQuery, nextFilters),
-                )
-              }
-              onFiltersChange={setAdvancedFilters}
-              triggerLabel={filters.open}
-            />
-          }
-        />
 
         <div className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500">
           <Link href="/" className="hover:text-blue-600">
@@ -269,7 +187,7 @@ export function GuestNewsArticleV2({
         <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_340px]">
           <article className="min-w-0">
             <header>
-              <h2 className="max-w-5xl text-3xl font-black leading-[1.15] tracking-[-0.035em] text-slate-950 sm:text-4xl lg:text-5xl">
+              <h2 className="max-w-5xl text-2xl font-black leading-tight tracking-[-0.025em] text-slate-950 sm:text-3xl lg:text-4xl">
                 {article.title}
               </h2>
               <p className="mt-5 max-w-4xl text-base leading-7 text-slate-600 sm:text-lg">

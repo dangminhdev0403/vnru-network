@@ -17,13 +17,6 @@ test("news pages share masthead while the listing keeps spotlight and featured s
     ),
     "utf8",
   );
-  const mastheadSource = await readFile(
-    new URL(
-      "../features/public-v2/components/GuestNewsMasthead.tsx",
-      import.meta.url,
-    ),
-    "utf8",
-  );
   const filterSource = await readFile(
     new URL(
       "../features/public-v2/components/GuestNewsFilterNav.tsx",
@@ -43,20 +36,12 @@ test("news pages share masthead while the listing keeps spotlight and featured s
     source,
     /matchMedia\("\(prefers-reduced-motion: reduce\)"\)\.matches\) return/,
   );
-  assert.match(source, /<GuestNewsMasthead \/>/);
-  assert.match(articleSource, /<GuestNewsMasthead \/>/);
-  assert.match(articleSource, /<GuestNewsFilterNav/);
-  assert.match(articleSource, /activeCategory=\{article\.category\}/);
-  assert.match(articleSource, /router\.push\(newsFilterHref/);
+  assert.match(articleSource, /categoryLabels/);
   assert.match(filterSource, /aria-pressed=\{activeCategory === category\}/);
   assert.match(filterSource, /params\.set\("category", category\)/);
   assert.match(pageSource, /isNewsCategory\(categoryValue\)/);
   assert.match(pageSource, /initialQuery=\{query\}/);
-  assert.match(mastheadSource, /Tin tức/);
-  assert.match(mastheadSource, /font-serif/);
   assert.doesNotMatch(source, /vnru-infinity-loading/);
-  assert.match(source, /animate-pulse/);
-  assert.match(source, /aria-label="Đang tải ảnh"/);
   const newsLoading = await readFile(
     new URL("../app/news/loading.tsx", import.meta.url),
     "utf8",

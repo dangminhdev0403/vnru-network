@@ -4,7 +4,10 @@ import test from "node:test";
 
 test("about page renders the official VI profile with EN/RU parity", async () => {
   const about = await readFile(
-    new URL("../features/public-v2/components/GuestAboutV2.tsx", import.meta.url),
+    new URL(
+      "../features/public-v2/components/GuestAboutV2.tsx",
+      import.meta.url,
+    ),
     "utf8",
   );
 
@@ -14,7 +17,8 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
     "Đối tác chiến lược",
     "Lĩnh vực ưu tiên",
     "Cơ chế vận hành",
-  ]) assert.match(about, new RegExp(heading));
+  ])
+    assert.match(about, new RegExp(heading));
 
   assert.match(about, /1207700294020/g);
   assert.match(about, /Core objectives/);
@@ -22,11 +26,22 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /eyebrow: "Về chúng tôi"/);
   assert.match(about, /eyebrow: "About us"/);
   assert.match(about, /eyebrow: "О нас"/);
+  assert.match(
+    about,
+    /text-3xl font-black tracking-tight[\s\S]*?\{t\.eyebrow\}/,
+  );
+  assert.match(about, /text-base leading-snug/);
   assert.doesNotMatch(about, /<nav aria-label=\{t\.eyebrow\}/);
   assert.match(about, /id="about-overview"/);
   assert.match(about, /id="operating-mechanism"/);
-  assert.doesNotMatch(about, /about-light-hero-v2|t\.heroMetadata\.map|<MissionAndCoreOperations|<OperatingMechanismDiagram/);
-  assert.doesNotMatch(about, /Cơ cấu & Sứ mệnh|font-mono text-3xl|bg-gradient-to-r from-blue-700/);
+  assert.doesNotMatch(
+    about,
+    /about-light-hero-v2|t\.heroMetadata\.map|<MissionAndCoreOperations|<OperatingMechanismDiagram/,
+  );
+  assert.doesNotMatch(
+    about,
+    /Cơ cấu & Sứ mệnh|font-mono text-3xl|bg-gradient-to-r from-blue-700/,
+  );
   assert.match(about, /TS Nguyễn Quốc Hùng/);
   assert.match(about, /Trần Đức Tùng/);
   assert.match(about, /\/images\/board\/nguyen-quoc-hung\.webp/);
@@ -44,7 +59,16 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /overflow-hidden rounded-full/);
   assert.match(about, /\{t\.contactLabel\}:/);
   assert.match(about, /id="operating-mechanism"[\s\S]*id="board"/);
-  assert.doesNotMatch(about, /t\.boardIntro|\{t\.eyebrow\}[\s\S]{0,200}\{t\.boardTitle\}|member\.phone|member\.channels|Đối tác mong muốn tham gia|Chọn logo để mở website chính thức trong tab mới\.|id="prospective-partners"/);
-  assert.equal((about.match(/url: "https:\/\/www\.spbume\.ru\/"/g) ?? []).length, 1);
-  assert.doesNotMatch(about, /GS\.TS\. Nguyễn Văn Kính|Alexander Petrov|MEMBER_ORGANIZATIONS|LEADERS/);
+  assert.doesNotMatch(
+    about,
+    /t\.boardIntro|\{t\.eyebrow\}[\s\S]{0,200}\{t\.boardTitle\}|member\.phone|member\.channels|Đối tác mong muốn tham gia|Chọn logo để mở website chính thức trong tab mới\.|id="prospective-partners"/,
+  );
+  assert.equal(
+    (about.match(/url: "https:\/\/www\.spbume\.ru\/"/g) ?? []).length,
+    1,
+  );
+  assert.doesNotMatch(
+    about,
+    /GS\.TS\. Nguyễn Văn Kính|Alexander Petrov|MEMBER_ORGANIZATIONS|LEADERS/,
+  );
 });

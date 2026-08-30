@@ -460,8 +460,8 @@
     "semantic_hash": "edc356ee8dcf4ea0522a603eee8ddbe1"
   },
   "frontend/auth-flow.test.mjs": {
-    "mtime": 1788015076.9459448,
-    "ast_hash": "d264b9cbf15931be6757f7253fe77526",
+    "mtime": 1788035038.2856293,
+    "ast_hash": "db0f24256b1174ffd79ac0efbd673c93",
     "semantic_hash": ""
   },
   "frontend/components/shared/WorkspaceShell.tsx": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "frontend/tests/workspace-runtime.test.mjs": {
-    "mtime": 1788016623.9740853,
-    "ast_hash": "c39a58b08e6d16e24cb5c52ccf622236",
+    "mtime": 1788034929.029756,
+    "ast_hash": "b39eef0278b0d30e90412b91b0c7ddfc",
     "semantic_hash": ""
   },
   "services/auth-service/prisma/migrations/20260818120000_add_session_active_context/migration.sql": {
@@ -1430,8 +1430,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicNav.tsx": {
-    "mtime": 1788030159.842859,
-    "ast_hash": "ad8578103088b29c036b56db69298e0b",
+    "mtime": 1788067495.8030362,
+    "ast_hash": "59ed67bf9494a915a2ddee36223447fe",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestKnowledgeV2.tsx": {
@@ -1485,8 +1485,8 @@
     "semantic_hash": ""
   },
   "frontend/tests/motion-typography.test.mjs": {
-    "mtime": 1787945762.8489523,
-    "ast_hash": "3bd2dca42e24b32c1d1c48e072143b4c",
+    "mtime": 1788034928.1018438,
+    "ast_hash": "f83c4fd6028e2038d15700d02ee19bc2",
     "semantic_hash": ""
   },
   "tests/deploy-script.test.sh": {
@@ -1705,13 +1705,13 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestExploreV2.tsx": {
-    "mtime": 1788032452.6968324,
-    "ast_hash": "809b9c3f20943467dd8220f2bd6a5528",
+    "mtime": 1788066941.174654,
+    "ast_hash": "ee861e33387ad06dbd85d5e226645197",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestNewsArticleV2.tsx": {
-    "mtime": 1788021600.1345062,
-    "ast_hash": "7a96b5961d25feeaf4e00f0361dce793",
+    "mtime": 1788065260.0032082,
+    "ast_hash": "8b7d3807e576db6ebd090dbbb1816d81",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicFooter.tsx": {
@@ -1720,13 +1720,13 @@
     "semantic_hash": ""
   },
   "frontend/tests/public-explore-stream.test.mjs": {
-    "mtime": 1787974731.2145429,
-    "ast_hash": "6065d829a5f9dde52b9289f965a70059",
+    "mtime": 1788065710.2496674,
+    "ast_hash": "ceabd428c408283297ff5f39fd8e24a5",
     "semantic_hash": ""
   },
   "frontend/tests/public-news-routing.test.mjs": {
-    "mtime": 1788032453.7828298,
-    "ast_hash": "893ead9079a7a5a82a615dcc4502a5df",
+    "mtime": 1788066941.1533632,
+    "ast_hash": "e350e31fa8b047ecaee57bff7c471bb6",
     "semantic_hash": ""
   },
   "frontend/app/experts/page.tsx": {
@@ -1870,8 +1870,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestAboutV2.tsx": {
-    "mtime": 1788030200.6448824,
-    "ast_hash": "62cc4943966935c4801885758e142f77",
+    "mtime": 1788067388.6320584,
+    "ast_hash": "1d9aad171872737cd6a6335b8c0f4b7d",
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/ContentPublishStudio.tsx": {
@@ -2010,18 +2010,13 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestEcosystemV2.tsx": {
-    "mtime": 1788032580.3887005,
-    "ast_hash": "60e94f793843786eea3e0221a892db7c",
+    "mtime": 1788066519.1521106,
+    "ast_hash": "f1fa00038664ca0c7c5b131e608fb406",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-hero-bg.jpg": {
     "mtime": 1788018538.0303726,
     "ast_hash": "540f5e783271d27f268b29bfe90bf61b",
-    "semantic_hash": ""
-  },
-  "frontend/features/public-v2/components/GuestNewsMasthead.tsx": {
-    "mtime": 1787910816.5715446,
-    "ast_hash": "8271cfce26de1a8baa31cb85e51b07c2",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestNewsFilterNav.tsx": {
@@ -2095,13 +2090,13 @@
     "semantic_hash": ""
   },
   "frontend/tests/about-content.test.mjs": {
-    "mtime": 1788027536.8511133,
-    "ast_hash": "95514a93c353c6e614625b91e3e71a58",
+    "mtime": 1788067259.4201438,
+    "ast_hash": "8b4e8b541f3ac75f7584606004c08483",
     "semantic_hash": ""
   },
   "frontend/tests/ecosystem-rvstin-content.test.mjs": {
-    "mtime": 1788030623.7416756,
-    "ast_hash": "56c8e80f74c33004f59475df9bb9fcd6",
+    "mtime": 1788066519.0890164,
+    "ast_hash": "1525eda03e8c6c46f4a9b0ea3f442268",
     "semantic_hash": ""
   },
   "frontend/tests/home-bilateral-gateway.test.mjs": {

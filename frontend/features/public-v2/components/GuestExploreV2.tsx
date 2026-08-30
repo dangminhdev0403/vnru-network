@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
-import { newsArticleHref, OFFICIAL_NEWS, type OfficialNewsArticle } from "../data/official-news";
+import {
+  newsArticleHref,
+  OFFICIAL_NEWS,
+  type OfficialNewsArticle,
+} from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { HOME_COPY } from "./GuestHomeV2";
 import {
@@ -12,7 +16,7 @@ import {
   type NewsAdvancedFilters,
   type NewsCategory,
 } from "./GuestNewsFilterNav";
-import { GuestNewsMasthead } from "./GuestNewsMasthead";
+
 import { GuestPublicNav } from "./GuestPublicNav";
 
 type NewsItem = OfficialNewsArticle;
@@ -64,8 +68,6 @@ const TEXT = {
     newest: "Newest",
     top: "Top",
     noResults: "No matching articles found.",
-    scrollMore: "Scroll to load more",
-    loadingMore: "Loading more news...",
     showing: "Showing",
     articles: "articles",
     categories: {
@@ -93,8 +95,6 @@ const TEXT = {
     newest: "Сначала новые",
     top: "Наверх",
     noResults: "Подходящие материалы не найдены.",
-    scrollMore: "Прокрутите, чтобы загрузить ещё",
-    loadingMore: "Загружаем ещё...",
     showing: "Показано",
     articles: "материалов",
     categories: {
@@ -109,52 +109,69 @@ const TEXT = {
 
 const SPOTLIGHT_INTERVAL_MS = 5_000;
 
+const DEFAULT_FALLBACK_IMAGES = [
+  "/images/news/article-1.webp",
+  "/images/news/article-5.webp",
+  "/images/news/article-6.webp",
+  "/images/news/article-4.webp",
+  "/images/news/article-7.webp",
+  "/images/home-bilateral-gateway.jpg",
+];
+
+function formatTitle(title: string): string {
+  if (!title) return "";
+  const letters = title.replace(/[^a-zA-ZÀ-ỹ]/g, "");
+  const uppercaseLetters = title.replace(/[^A-ZÀ-Ỹ]/g, "");
+  if (letters.length > 5 && uppercaseLetters.length / letters.length > 0.7) {
+    const lower = title.toLowerCase();
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
+  }
+  return title;
+}
+
 function NewsImage({
   className = "",
   src,
   label = "Ảnh",
+  fallbackIndex = 0,
 }: {
   className?: string;
-  src?: string;
+  src?: string | null;
   label?: string;
+  fallbackIndex?: number;
 }) {
-  if (src) {
-    return (
-      /* eslint-disable-next-line @next/next/no-img-element */
-      <img
-        src={src}
-        alt={label}
-        loading="lazy"
-        className={`object-cover ${className}`}
-      />
-    );
-  }
+  const fallbackSrc =
+    DEFAULT_FALLBACK_IMAGES[fallbackIndex % DEFAULT_FALLBACK_IMAGES.length];
+  const finalSrc = src || fallbackSrc;
   return (
-    <div
-      role="img"
-      aria-label="Đang tải ảnh"
-      className={`animate-pulse bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 motion-reduce:animate-none ${className}`}
-    >
-      <span className="sr-only">{label}</span>
-    </div>
+    /* eslint-disable-next-line @next/next/no-img-element */
+    <img
+      src={finalSrc}
+      alt={label}
+      loading="lazy"
+      className={`object-cover ${className}`}
+    />
   );
 }
 
-function SmallRow({ item }: { item: NewsItem }) {
+function SmallRow({ item, index = 0 }: { item: NewsItem; index?: number }) {
   return (
     <Link
       href={newsArticleHref(item)}
-      className="grid grid-cols-[128px_minmax(0,1fr)] gap-4 border-b border-slate-100 py-5 first:pt-0 sm:grid-cols-[180px_minmax(0,1fr)]"
+      className="group flex flex-1 items-center gap-3.5 py-2 first:pt-0 last:pb-0"
     >
-      <NewsImage
-        src={item.image ?? undefined}
-        className="h-[88px] w-full rounded-xl sm:h-[112px]"
-      />
-      <div className="min-w-0">
-        <h3 className="line-clamp-2 text-base font-extrabold leading-[1.4] transition-colors hover:text-blue-700 sm:text-lg">
-          {item.title}
+      <div className="relative h-[68px] w-[92px] shrink-0 overflow-hidden rounded-xl bg-slate-100 shadow-2xs sm:h-[74px] sm:w-[102px]">
+        <NewsImage
+          src={item.image ?? undefined}
+          fallbackIndex={index + 1}
+          className="size-full transition duration-300 group-hover:scale-105"
+        />
+      </div>
+      <div className="min-w-0 flex-1">
+        <h3 className="line-clamp-2 font-serif text-sm font-bold leading-snug text-[#082352] transition-colors group-hover:text-blue-600 sm:text-[15px]">
+          {formatTitle(item.title)}
         </h3>
-        <p className="mt-2.5 line-clamp-2 text-sm leading-6 text-slate-600 sm:text-base">
+        <p className="mt-0.5 line-clamp-1 text-xs text-slate-500">
           {item.summary}
         </p>
       </div>
@@ -166,18 +183,17 @@ function TextRow({ item }: { item: NewsItem }) {
   return (
     <Link
       href={newsArticleHref(item)}
-      className="block border-b border-slate-200 py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      className="group block border-b border-slate-200 py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
     >
-      <h3 className="line-clamp-2 text-lg font-bold leading-7 text-slate-900 hover:text-blue-700 sm:text-xl">
-        {item.title}
+      <h3 className="line-clamp-2 font-serif text-base font-bold leading-snug text-[#082352] transition group-hover:text-blue-600 sm:text-lg">
+        {formatTitle(item.title)}
       </h3>
-      <p className="mt-1.5 line-clamp-2 text-base leading-6 text-slate-500">
+      <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-slate-600">
         {item.summary}
       </p>
     </Link>
   );
 }
-
 
 function matchesScope(article: OfficialNewsArticle, scope: string): boolean {
   if (!scope || scope === "all") return true;
@@ -267,19 +283,21 @@ export function GuestExploreV2({
       initialArticles.some((article) => article.category === category),
   );
   const [streamCategory, setStreamCategory] = useState<NewsCategory>("all");
-  const [streamPage, setStreamPage] = useState(1);
   const streamArticles =
     streamCategory === "all"
       ? initialArticles
-      : initialArticles.filter((article) => article.category === streamCategory);
-  const streamPageCount = Math.max(1, Math.ceil(streamArticles.length / 10));
+      : initialArticles.filter(
+          (article) => article.category === streamCategory,
+        );
+  const [spotlightIndex, setSpotlightIndex] = useState(0);
+  const [isSliding, setIsSliding] = useState(false);
+  const slidingTimerRef = useRef<number | null>(null);
+  const [streamPage, setStreamPage] = useState(1);
+  const streamPageCount = Math.ceil(streamArticles.length / 10);
   const paginatedStreamArticles = streamArticles.slice(
     (streamPage - 1) * 10,
     streamPage * 10,
   );
-  const [spotlightIndex, setSpotlightIndex] = useState(0);
-  const [isSliding, setIsSliding] = useState(false);
-  const slidingTimerRef = useRef<number | null>(null);
 
   const changeSpotlight = (nextIndex: number | ((curr: number) => number)) => {
     setIsSliding(true);
@@ -291,7 +309,6 @@ export function GuestExploreV2({
       setIsSliding(false);
     }, 1200);
   };
-
 
   const filtered = useMemo(() => {
     let list =
@@ -308,7 +325,6 @@ export function GuestExploreV2({
           item.body.some((p) => p.toLocaleLowerCase(locale).includes(q)),
       );
     }
-
 
     if (advancedFilters.scope !== "all") {
       list = list.filter((item) => matchesScope(item, advancedFilters.scope));
@@ -330,7 +346,6 @@ export function GuestExploreV2({
   const categoryMode =
     activeCategory !== "all" ||
     query.trim().length > 0 ||
-
     advancedFilters.scope !== "all" ||
     advancedFilters.contentTypes.length > 0 ||
     advancedFilters.period !== "newest";
@@ -348,18 +363,19 @@ export function GuestExploreV2({
   }, [spotlight.length]);
 
   return (
-    <div className="min-h-screen bg-white text-slate-950">
+    <div className="min-h-screen bg-[#edf3f9] text-slate-900 font-sans selection:bg-blue-600 selection:text-white">
       <GuestPublicNav active="news" />
 
-      <main className="mx-auto max-w-[1460px] px-4 py-9 sm:px-6 lg:px-8">
-        <GuestNewsMasthead />
-
-
+      <main className="mx-auto max-w-[1460px] px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
         {!categoryMode ? (
           <>
-            <section className="grid gap-8 lg:grid-cols-[1.35fr_.92fr]">
+            {/* ════════════════════════════════════════════════════════════════
+                TOP HERO SECTION: SPOTLIGHT (LEFT) + LATEST (RIGHT)
+                ════════════════════════════════════════════════════════════════ */}
+            <section className="grid gap-6 lg:grid-cols-[1.35fr_.92fr]">
+              {/* SPOTLIGHT CAROUSEL CARD */}
               <article
-                className="relative min-h-[360px] overflow-hidden rounded-2xl bg-slate-950 text-white lg:min-h-0"
+                className="relative h-[380px] overflow-hidden rounded-3xl border border-blue-200/90 bg-slate-950 text-white shadow-sm sm:h-[440px] lg:h-[490px]"
                 aria-roledescription="carousel"
                 aria-label={t.spotlight}
               >
@@ -378,24 +394,27 @@ export function GuestExploreV2({
                       <NewsImage
                         src={item.image ?? undefined}
                         label="Ảnh bài viết nổi bật"
+                        fallbackIndex={index}
                         className="absolute inset-0 h-full w-full rounded-none"
                       />
-                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,18,45,.02)_12%,rgba(3,18,45,.18)_48%,rgba(2,14,35,.94)_100%)]" />
-                      <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8">
-                        <span className="mb-3 inline-flex rounded-full bg-blue-600 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
-                          {t.spotlight}
-                        </span>
-                        <h2 className="max-w-4xl text-3xl font-black leading-[1.15] tracking-[-0.04em] sm:text-4xl">
-                          {item.title}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 z-10 p-6 pb-12 sm:p-8 sm:pb-14">
+                        <div className="text-xs font-bold text-blue-300 mb-2">
+                          {t.categories[item.category] ?? item.category}
+                        </div>
+                        <h2 className="max-w-4xl font-serif text-xl font-bold leading-snug text-white transition hover:text-blue-200 sm:text-2xl lg:text-3xl">
+                          {formatTitle(item.title)}
                         </h2>
-                        <p className="mt-4 line-clamp-2 max-w-3xl text-base leading-7 text-white/90 sm:text-lg">
+                        <p className="mt-2.5 line-clamp-2 max-w-3xl text-xs leading-relaxed text-slate-200 sm:text-sm sm:leading-normal">
                           {item.summary}
                         </p>
                       </div>
                     </Link>
                   ))}
                 </div>
-                <div className="absolute bottom-6 right-6 z-20 flex items-center gap-1.5">
+
+                {/* CAROUSEL INDICATOR DOTS */}
+                <div className="absolute bottom-4 right-6 z-20 flex items-center gap-1.5 rounded-full bg-slate-950/50 px-2.5 py-1 backdrop-blur-xs">
                   {spotlight.map((item, index) => {
                     const isActive = index === spotlightIndex;
                     return (
@@ -405,15 +424,13 @@ export function GuestExploreV2({
                         onClick={() => changeSpotlight(index)}
                         aria-label={`${index + 1} / ${spotlight.length}`}
                         aria-current={isActive ? "true" : undefined}
-                        className="group grid h-7 w-7 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                        className="group grid h-5 w-5 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-white"
                       >
                         <span
-                          className={`h-2 rounded-full transition-all duration-500 ease-out motion-reduce:transition-none ${
+                          className={`h-1.5 rounded-full transition-all duration-300 ${
                             isActive
-                              ? isSliding
-                                ? "w-7 bg-white"
-                                : "w-2 bg-white ring-2 ring-white/60"
-                              : "w-2 bg-white/40 group-hover:bg-white/75"
+                              ? "w-5 bg-white"
+                              : "w-1.5 bg-white/40 group-hover:bg-white/75"
                           }`}
                           aria-hidden="true"
                         />
@@ -422,54 +439,69 @@ export function GuestExploreV2({
                   })}
                 </div>
               </article>
-              <aside>
-                <div className="mb-4">
-                  <h2 className="text-lg font-black uppercase text-blue-600 sm:text-xl">
+
+              {/* LATEST COLUMN */}
+              <aside className="flex h-[380px] flex-col justify-between rounded-3xl border border-blue-200/90 bg-white p-5 shadow-xs sm:h-[440px] sm:p-6 lg:h-[490px]">
+                <div className="mb-1">
+                  <h2 className="font-serif text-lg font-bold text-[#082352] sm:text-xl">
                     {t.latest}
                   </h2>
                 </div>
-                {latest.map((item) => (
-                  <SmallRow key={item.title} item={item} />
-                ))}
+                <div className="flex flex-1 flex-col justify-between divide-y divide-slate-100 py-1">
+                  {latest.map((item, index) => (
+                    <SmallRow key={item.title} item={item} index={index} />
+                  ))}
+                </div>
               </aside>
             </section>
 
+            {/* ════════════════════════════════════════════════════════════════
+                FEATURED ARTICLES (4 CARDS)
+                ════════════════════════════════════════════════════════════════ */}
             <section className="mt-12">
               <div className="mb-5 flex items-center gap-4">
-                <h2 className="shrink-0 text-lg font-black uppercase text-blue-600 sm:text-xl">
+                <h2 className="shrink-0 font-serif text-xl font-bold text-[#082352] sm:text-2xl">
                   {t.featured}
                 </h2>
-                <span className="h-px flex-1 bg-blue-100" />
+                <span className="h-px flex-1 bg-blue-200/70" />
               </div>
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                {featured.map((item) => (
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+                {featured.map((item, index) => (
                   <Link
                     key={item.title}
                     href={newsArticleHref(item)}
-                    className="overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:border-blue-200"
+                    className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-blue-200/90 bg-white shadow-xs transition duration-150 hover:-translate-y-1 hover:border-blue-400 hover:shadow-md"
                   >
-                    <NewsImage
-                      src={item.image ?? undefined}
-                      label="Ảnh bài viết"
-                      className="h-44 w-full"
-                    />
-                    <div className="p-4">
-                      <h3 className="line-clamp-2 text-base font-extrabold leading-[1.45]">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2.5 line-clamp-2 text-sm leading-6 text-slate-600 sm:text-base">
-                        {item.summary}
-                      </p>
+                    <div>
+                      <div className="overflow-hidden bg-slate-100">
+                        <NewsImage
+                          src={item.image ?? undefined}
+                          label="Ảnh bài viết"
+                          fallbackIndex={index}
+                          className="h-44 w-full"
+                        />
+                      </div>
+                      <div className="p-5">
+                        <h3 className="line-clamp-2 font-serif text-base font-bold leading-snug text-[#082352] transition group-hover:text-blue-600">
+                          {formatTitle(item.title)}
+                        </h3>
+                        <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                          {item.summary}
+                        </p>
+                      </div>
                     </div>
                   </Link>
                 ))}
               </div>
             </section>
 
+            {/* ════════════════════════════════════════════════════════════════
+                NEWS STREAM & CATEGORY DROPDOWN
+                ════════════════════════════════════════════════════════════════ */}
             <section id="news-stream" className="mt-14 scroll-mt-24">
               <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                  <h2 className="text-xl font-black uppercase text-blue-600 sm:text-2xl">
+                  <h2 className="font-serif text-2xl font-bold text-[#082352] sm:text-3xl">
                     {t.stream}
                   </h2>
                 </div>
@@ -484,7 +516,7 @@ export function GuestExploreV2({
                       setStreamCategory(event.target.value as NewsCategory);
                       setStreamPage(1);
                     }}
-                    className="h-11 rounded-xl border border-blue-200 bg-white px-4 text-sm font-bold text-slate-700 outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+                    className="h-11 rounded-xl border border-blue-200 bg-white px-4 text-sm font-bold text-slate-700 outline-none focus-visible:ring-2 focus-visible:ring-blue-600 shadow-2xs"
                   >
                     {availableCategories.map((category) => (
                       <option key={category} value={category}>
@@ -492,73 +524,75 @@ export function GuestExploreV2({
                       </option>
                     ))}
                   </select>
-                  <span className="inline-flex h-11 items-center rounded-xl bg-slate-100 px-4 text-sm font-bold text-slate-700">
+                  <span className="inline-flex h-11 items-center rounded-xl bg-white border border-blue-200 px-4 text-sm font-bold text-slate-700 shadow-2xs">
                     {t.newest}
                   </span>
                   <a
                     href="#news-stream"
-                    className="inline-flex h-11 items-center rounded-xl bg-slate-100 px-4 text-sm font-bold text-slate-700 hover:bg-slate-200"
+                    className="inline-flex h-11 items-center rounded-xl bg-white border border-blue-200 px-4 text-sm font-bold text-slate-700 hover:bg-slate-50 shadow-2xs"
                   >
                     ↑ {t.top}
                   </a>
                 </div>
               </div>
-              <div className="grid gap-x-10 lg:grid-cols-2">
-                {paginatedStreamArticles.map((item) => (
-                  <TextRow key={item.id} item={item} />
-                ))}
+
+              <div className="rounded-3xl border border-blue-200/90 bg-white p-6 shadow-xs sm:p-8">
+                <div className="grid gap-x-12 gap-y-2 lg:grid-cols-2">
+                  {paginatedStreamArticles.map((item) => (
+                    <TextRow key={item.id} item={item} />
+                  ))}
+                </div>
+
+                {streamPageCount > 1 ? (
+                  <nav
+                    aria-label="Phân trang tin tức"
+                    className="mt-8 flex items-center justify-center gap-3 border-t border-slate-100 pt-6"
+                  >
+                    <button
+                      type="button"
+                      disabled={streamPage === 1}
+                      onClick={() => setStreamPage((page) => page - 1)}
+                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-2xs transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      ‹ Trang trước
+                    </button>
+                    <span className="text-sm font-semibold text-slate-600">
+                      {streamPage} / {streamPageCount}
+                    </span>
+                    <button
+                      type="button"
+                      disabled={streamPage === streamPageCount}
+                      onClick={() => setStreamPage((page) => page + 1)}
+                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-2xs transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      Trang sau ›
+                    </button>
+                  </nav>
+                ) : null}
               </div>
-              {streamPageCount > 1 ? (
-                <nav
-                  aria-label="Phân trang tin tức"
-                  className="mt-8 flex items-center justify-center gap-3"
-                >
-                  <button
-                    type="button"
-                    disabled={streamPage === 1}
-                    onClick={() => setStreamPage((page) => page - 1)}
-                    className="rounded-lg border border-slate-200 px-4 py-2 text-base font-bold text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    ‹
-                  </button>
-                  <span className="text-base font-semibold text-slate-600">
-                    {streamPage} / {streamPageCount}
-                  </span>
-                  <button
-                    type="button"
-                    disabled={streamPage === streamPageCount}
-                    onClick={() => setStreamPage((page) => page + 1)}
-                    className="rounded-lg border border-slate-200 px-4 py-2 text-base font-bold text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    ›
-                  </button>
-                </nav>
-              ) : null}
             </section>
           </>
         ) : (
           <section className="mt-8">
             <div className="mb-5 flex items-center gap-4">
-              <h2 className="shrink-0 text-lg font-black uppercase text-blue-600 sm:text-xl">
+              <h2 className="shrink-0 font-serif text-xl font-bold text-[#082352] sm:text-2xl">
                 {t.latest}
               </h2>
-              <span className="h-px flex-1 bg-blue-100" />
+              <span className="h-px flex-1 bg-blue-200/70" />
             </div>
             {filtered.length ? (
-              <div className="grid gap-x-10 lg:grid-cols-2">
-                <div>
-                  {filtered.slice(0, filteredHalf).map((item) => (
-                    <SmallRow key={item.title} item={item} />
-                  ))}
-                </div>
-                <div>
-                  {filtered.slice(filteredHalf).map((item) => (
-                    <SmallRow key={item.title} item={item} />
-                  ))}
-                </div>
+              <div className="grid gap-6 md:grid-cols-2">
+                {filtered.map((item, index) => (
+                  <div
+                    key={item.title}
+                    className="rounded-2xl border border-blue-200/90 bg-white p-4 shadow-xs"
+                  >
+                    <SmallRow item={item} index={index} />
+                  </div>
+                ))}
               </div>
             ) : (
-              <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-6 py-16 text-center text-sm font-semibold text-slate-500">
+              <div className="rounded-3xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm font-semibold text-slate-500">
                 {t.noResults}
               </div>
             )}

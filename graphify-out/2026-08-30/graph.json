@@ -77,8 +77,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_logs_page",
-      "community": 135,
-      "community_name": "NotFoundClient.tsx",
+      "community": 216,
+      "community_name": "7. DIAL DEFINITIONS (Technical Reference)",
       "norm_label": "page.tsx"
     },
     {
@@ -88,8 +88,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_logs_page_adminaccesslogspage",
-      "community": 135,
-      "community_name": "NotFoundClient.tsx",
+      "community": 216,
+      "community_name": "7. DIAL DEFINITIONS (Technical Reference)",
       "norm_label": "adminaccesslogspage()"
     },
     {
@@ -99,8 +99,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_page",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 135,
+      "community_name": "NotFoundClient.tsx",
       "norm_label": "page.tsx"
     },
     {
@@ -110,8 +110,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_page_adminaccesspage",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 135,
+      "community_name": "NotFoundClient.tsx",
       "norm_label": "adminaccesspage()"
     },
     {
@@ -121,8 +121,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_permissions_page",
-      "community": 16,
-      "community_name": "useLocale",
+      "community": 1,
+      "community_name": "RoleDetailPage.tsx",
       "norm_label": "page.tsx"
     },
     {
@@ -132,8 +132,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_permissions_page_adminaccesspermissionspage",
-      "community": 16,
-      "community_name": "useLocale",
+      "community": 1,
+      "community_name": "RoleDetailPage.tsx",
       "norm_label": "adminaccesspermissionspage()"
     },
     {
@@ -143,8 +143,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_roles_id_page",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 133,
+      "community_name": "getCurrentSession",
       "norm_label": "page.tsx"
     },
     {
@@ -154,8 +154,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_roles_id_page_pageprops",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 133,
+      "community_name": "getCurrentSession",
       "norm_label": "pageprops"
     },
     {
@@ -165,8 +165,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_roles_id_page_roledetailroute",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 133,
+      "community_name": "getCurrentSession",
       "norm_label": "roledetailroute()"
     },
     {
@@ -198,8 +198,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_users_page",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "page.tsx"
     },
     {
@@ -209,8 +209,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_app_admin_admin_access_users_page_adminaccessuserspage",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "adminaccessuserspage()"
     },
     {
@@ -550,7 +550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_notfoundclient",
-      "community": 135,
+      "community": 188,
       "community_name": "NotFoundClient.tsx",
       "norm_label": "notfoundclient.tsx"
     },
@@ -561,7 +561,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_app_notfoundclient_copy",
-      "community": 135,
+      "community": 188,
       "community_name": "NotFoundClient.tsx",
       "norm_label": "copy"
     },
@@ -572,7 +572,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "frontend_app_notfoundclient_routemap",
-      "community": 135,
+      "community": 188,
       "community_name": "NotFoundClient.tsx",
       "norm_label": "routemap()"
     },
@@ -583,7 +583,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "frontend_app_notfoundclient_notfoundclient",
-      "community": 135,
+      "community": 188,
       "community_name": "NotFoundClient.tsx",
       "norm_label": "notfoundclient()"
     },
@@ -1078,8 +1078,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_contact_page",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "page.tsx"
     },
     {
@@ -1089,8 +1089,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "frontend_app_contact_page_metadata",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "metadata"
     },
     {
@@ -1100,8 +1100,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "frontend_app_contact_page_page",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "page()"
     },
     {
@@ -1111,8 +1111,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_ecosystem_page",
-      "community": 133,
-      "community_name": "getCurrentSession",
+      "community": 203,
+      "community_name": "GuestExploreV2.tsx",
       "norm_label": "page.tsx"
     },
     {
@@ -1122,8 +1122,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "frontend_app_ecosystem_page_metadata",
-      "community": 133,
-      "community_name": "getCurrentSession",
+      "community": 203,
+      "community_name": "GuestExploreV2.tsx",
       "norm_label": "metadata"
     },
     {
@@ -1133,8 +1133,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_app_ecosystem_page_page",
-      "community": 133,
-      "community_name": "getCurrentSession",
+      "community": 203,
+      "community_name": "GuestExploreV2.tsx",
       "norm_label": "page()"
     },
     {
@@ -1529,8 +1529,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_news_page",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "page.tsx"
     },
     {
@@ -1540,8 +1540,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_app_news_page_metadata",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "metadata"
     },
     {
@@ -1551,8 +1551,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "frontend_app_news_page_isnewscategory",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "isnewscategory()"
     },
     {
@@ -1562,8 +1562,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_app_news_page_parseadvancedfilters",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "parseadvancedfilters()"
     },
     {
@@ -1573,8 +1573,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "frontend_app_news_page_page",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "page()"
     },
     {
@@ -1584,7 +1584,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_not_found",
-      "community": 135,
+      "community": 188,
       "community_name": "NotFoundClient.tsx",
       "norm_label": "not-found.tsx"
     },
@@ -1595,7 +1595,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "frontend_app_not_found_metadata",
-      "community": 135,
+      "community": 188,
       "community_name": "NotFoundClient.tsx",
       "norm_label": "metadata"
     },
@@ -1606,7 +1606,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "frontend_app_not_found_notfound",
-      "community": 135,
+      "community": 188,
       "community_name": "NotFoundClient.tsx",
       "norm_label": "notfound()"
     },
@@ -1650,8 +1650,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_page",
-      "community": 133,
-      "community_name": "getCurrentSession",
+      "community": 203,
+      "community_name": "GuestExploreV2.tsx",
       "norm_label": "page.tsx"
     },
     {
@@ -1661,8 +1661,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "frontend_app_page_homesession",
-      "community": 133,
-      "community_name": "getCurrentSession",
+      "community": 203,
+      "community_name": "GuestExploreV2.tsx",
       "norm_label": "homesession"
     },
     {
@@ -1672,8 +1672,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_app_page_home",
-      "community": 133,
-      "community_name": "getCurrentSession",
+      "community": 203,
+      "community_name": "GuestExploreV2.tsx",
       "norm_label": "home()"
     },
     {
@@ -1683,8 +1683,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_register_page",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "page.tsx"
     },
     {
@@ -1694,8 +1694,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "frontend_app_register_page_copy",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "copy"
     },
     {
@@ -1705,8 +1705,8 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "frontend_app_register_page_registerpage",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "registerpage()"
     },
     {
@@ -1716,8 +1716,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_app_register_validation",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "validation.ts"
     },
     {
@@ -1727,8 +1727,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_app_register_validation_registrationfield",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "registrationfield"
     },
     {
@@ -1738,8 +1738,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "frontend_app_register_validation_registrationvalidationcopy",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "registrationvalidationcopy"
     },
     {
@@ -1749,8 +1749,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_app_register_validation_createregistrationschema",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "createregistrationschema()"
     },
     {
@@ -1760,8 +1760,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "frontend_app_register_validation_isregistrationfield",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "isregistrationfield()"
     },
     {
@@ -1881,8 +1881,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_components_shared_brandmark",
-      "community": 45,
-      "community_name": "GuestPublicNav.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "brandmark.tsx"
     },
     {
@@ -1892,8 +1892,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "frontend_components_shared_brandmark_brandmarkprops",
-      "community": 45,
-      "community_name": "GuestPublicNav.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "brandmarkprops"
     },
     {
@@ -1903,8 +1903,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_components_shared_brandmark_brandmark",
-      "community": 45,
-      "community_name": "GuestPublicNav.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "brandmark()"
     },
     {
@@ -1914,8 +1914,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_components_shared_header",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "header.tsx"
     },
     {
@@ -1925,8 +1925,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "frontend_components_shared_header_headerprops",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "headerprops"
     },
     {
@@ -1936,8 +1936,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_components_shared_header_headercopy",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "headercopy"
     },
     {
@@ -1947,8 +1947,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "frontend_components_shared_header_header",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "header()"
     },
     {
@@ -3091,8 +3091,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_core_i18n_locale",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "locale.ts"
     },
     {
@@ -3102,8 +3102,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_core_i18n_locale_locale",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "locale"
     },
     {
@@ -3146,8 +3146,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_accesslogspage",
-      "community": 135,
-      "community_name": "NotFoundClient.tsx",
+      "community": 216,
+      "community_name": "7. DIAL DEFINITIONS (Technical Reference)",
       "norm_label": "accesslogspage.tsx"
     },
     {
@@ -3157,8 +3157,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_accesslogspage_copy",
-      "community": 135,
-      "community_name": "NotFoundClient.tsx",
+      "community": 216,
+      "community_name": "7. DIAL DEFINITIONS (Technical Reference)",
       "norm_label": "copy"
     },
     {
@@ -3168,8 +3168,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_accesslogspage_sample_logs",
-      "community": 135,
-      "community_name": "NotFoundClient.tsx",
+      "community": 216,
+      "community_name": "7. DIAL DEFINITIONS (Technical Reference)",
       "norm_label": "sample_logs"
     },
     {
@@ -3179,8 +3179,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_accesslogspage_accesslogspage",
-      "community": 135,
-      "community_name": "NotFoundClient.tsx",
+      "community": 216,
+      "community_name": "7. DIAL DEFINITIONS (Technical Reference)",
       "norm_label": "accesslogspage()"
     },
     {
@@ -3190,8 +3190,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_accessoverviewdashboard",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 135,
+      "community_name": "NotFoundClient.tsx",
       "norm_label": "accessoverviewdashboard.tsx"
     },
     {
@@ -3201,8 +3201,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_accessoverviewdashboard_copy",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 135,
+      "community_name": "NotFoundClient.tsx",
       "norm_label": "copy"
     },
     {
@@ -3212,8 +3212,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_accessoverviewdashboard_quickactions",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 135,
+      "community_name": "NotFoundClient.tsx",
       "norm_label": "quickactions"
     },
     {
@@ -3223,8 +3223,8 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_accessoverviewdashboard_accessoverviewdashboard",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 135,
+      "community_name": "NotFoundClient.tsx",
       "norm_label": "accessoverviewdashboard()"
     },
     {
@@ -3234,8 +3234,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_permissioncatalogpage",
-      "community": 16,
-      "community_name": "useLocale",
+      "community": 1,
+      "community_name": "RoleDetailPage.tsx",
       "norm_label": "permissioncatalogpage.tsx"
     },
     {
@@ -3245,8 +3245,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_permissioncatalogpage_copy",
-      "community": 16,
-      "community_name": "useLocale",
+      "community": 1,
+      "community_name": "RoleDetailPage.tsx",
       "norm_label": "copy"
     },
     {
@@ -3256,8 +3256,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_permissioncatalogpage_permissioncatalogpage",
-      "community": 16,
-      "community_name": "useLocale",
+      "community": 1,
+      "community_name": "RoleDetailPage.tsx",
       "norm_label": "permissioncatalogpage()"
     },
     {
@@ -3267,8 +3267,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 133,
+      "community_name": "getCurrentSession",
       "norm_label": "roledetailpage.tsx"
     },
     {
@@ -3278,8 +3278,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage_copy",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 133,
+      "community_name": "getCurrentSession",
       "norm_label": "copy"
     },
     {
@@ -3289,8 +3289,8 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage_grantfilter",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 133,
+      "community_name": "getCurrentSession",
       "norm_label": "grantfilter"
     },
     {
@@ -3300,8 +3300,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage_issystemrole",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 133,
+      "community_name": "getCurrentSession",
       "norm_label": "issystemrole()"
     },
     {
@@ -3311,8 +3311,8 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage_roledetailpageprops",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 133,
+      "community_name": "getCurrentSession",
       "norm_label": "roledetailpageprops"
     },
     {
@@ -3322,8 +3322,8 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_roledetailpage_roledetailpage",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 133,
+      "community_name": "getCurrentSession",
       "norm_label": "roledetailpage()"
     },
     {
@@ -3399,8 +3399,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_rolepermissionspage",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "rolepermissionspage.tsx"
     },
     {
@@ -3410,8 +3410,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_rolepermissionspage_copy",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "copy"
     },
     {
@@ -3421,8 +3421,8 @@
       "source_location": "L151",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_rolepermissionspage_permissionlabels",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "permissionlabels"
     },
     {
@@ -3432,8 +3432,8 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_rolepermissionspage_grouplabels",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "grouplabels"
     },
     {
@@ -3443,8 +3443,8 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_rolepermissionspage_tab",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "tab"
     },
     {
@@ -3454,8 +3454,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_rolepermissionspage_issystemrole",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "issystemrole()"
     },
     {
@@ -3465,8 +3465,8 @@
       "source_location": "L188",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_rolepermissionspage_rolepermissionspage",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "rolepermissionspage()"
     },
     {
@@ -3476,8 +3476,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_useradministration",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "useradministration.tsx"
     },
     {
@@ -3487,8 +3487,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_useradministration_view",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "view"
     },
     {
@@ -3498,8 +3498,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_useradministration_subscribetoclient",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "subscribetoclient()"
     },
     {
@@ -3509,8 +3509,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_useradministration_iamadmincopy",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "iamadmincopy"
     },
     {
@@ -3520,8 +3520,8 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_useradministration_permissionlabels",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "permissionlabels"
     },
     {
@@ -3531,8 +3531,8 @@
       "source_location": "L406",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_useradministration_grouplabels",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "grouplabels"
     },
     {
@@ -3542,8 +3542,8 @@
       "source_location": "L412",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_useradministration_rolelabels",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "rolelabels"
     },
     {
@@ -3553,8 +3553,8 @@
       "source_location": "L430",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_useradministration_grouppermissions",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "grouppermissions()"
     },
     {
@@ -3564,8 +3564,8 @@
       "source_location": "L450",
       "_origin": "ast",
       "id": "frontend_features_admin_access_components_useradministration_useradministration",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "useradministration()"
     },
     {
@@ -3575,8 +3575,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_admin_access_config_rbac_catalog",
-      "community": 16,
-      "community_name": "useLocale",
+      "community": 1,
+      "community_name": "RoleDetailPage.tsx",
       "norm_label": "rbac-catalog.ts"
     },
     {
@@ -3586,8 +3586,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_admin_access_config_rbac_catalog_accessscope",
-      "community": 16,
-      "community_name": "useLocale",
+      "community": 1,
+      "community_name": "RoleDetailPage.tsx",
       "norm_label": "accessscope"
     },
     {
@@ -3597,8 +3597,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_features_admin_access_config_rbac_catalog_permissiondefinition",
-      "community": 16,
-      "community_name": "useLocale",
+      "community": 1,
+      "community_name": "RoleDetailPage.tsx",
       "norm_label": "permissiondefinition"
     },
     {
@@ -3608,8 +3608,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "frontend_features_admin_access_config_rbac_catalog_permission_catalog",
-      "community": 16,
-      "community_name": "useLocale",
+      "community": 1,
+      "community_name": "RoleDetailPage.tsx",
       "norm_label": "permission_catalog"
     },
     {
@@ -3619,8 +3619,8 @@
       "source_location": "L333",
       "_origin": "ast",
       "id": "frontend_features_admin_access_config_rbac_catalog_scope_descriptions",
-      "community": 16,
-      "community_name": "useLocale",
+      "community": 1,
+      "community_name": "RoleDetailPage.tsx",
       "norm_label": "scope_descriptions"
     },
     {
@@ -3630,8 +3630,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_admin_access_config_role_display",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "role-display.ts"
     },
     {
@@ -3641,8 +3641,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_features_admin_access_config_role_display_rolelabels",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "rolelabels"
     },
     {
@@ -3652,8 +3652,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_features_admin_access_config_role_display_formatrolename",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "formatrolename()"
     },
     {
@@ -3806,8 +3806,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_auth_components_account_accountclientpage",
-      "community": 215,
-      "community_name": "UserAdministration.tsx",
+      "community": 146,
+      "community_name": "hooks.ts",
       "norm_label": "accountclientpage.tsx"
     },
     {
@@ -3817,8 +3817,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_features_auth_components_account_accountclientpage_copy",
-      "community": 215,
-      "community_name": "UserAdministration.tsx",
+      "community": 146,
+      "community_name": "hooks.ts",
       "norm_label": "copy"
     },
     {
@@ -3828,8 +3828,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_features_auth_components_account_accountclientpage_accountclientpage",
-      "community": 215,
-      "community_name": "UserAdministration.tsx",
+      "community": 146,
+      "community_name": "hooks.ts",
       "norm_label": "accountclientpage()"
     },
     {
@@ -3872,8 +3872,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_auth_components_security_profiledialog",
-      "community": 215,
-      "community_name": "UserAdministration.tsx",
+      "community": 146,
+      "community_name": "hooks.ts",
       "norm_label": "profiledialog.tsx"
     },
     {
@@ -3883,8 +3883,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "frontend_features_auth_components_security_profiledialog_schema",
-      "community": 215,
-      "community_name": "UserAdministration.tsx",
+      "community": 146,
+      "community_name": "hooks.ts",
       "norm_label": "schema"
     },
     {
@@ -3894,8 +3894,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_features_auth_components_security_profiledialog_profiledialog",
-      "community": 215,
-      "community_name": "UserAdministration.tsx",
+      "community": 146,
+      "community_name": "hooks.ts",
       "norm_label": "profiledialog()"
     },
     {
@@ -3927,8 +3927,8 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "frontend_features_auth_components_security_securityclientpage_securityclientpage",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 215,
+      "community_name": "UserAdministration.tsx",
       "norm_label": "securityclientpage()"
     },
     {
@@ -4004,8 +4004,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "frontend_features_auth_server_state_uselogout",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "uselogout()"
     },
     {
@@ -4081,8 +4081,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "frontend_features_auth_server_resolvelandingpath",
-      "community": 133,
-      "community_name": "getCurrentSession",
+      "community": 203,
+      "community_name": "GuestExploreV2.tsx",
       "norm_label": "resolvelandingpath()"
     },
     {
@@ -4125,8 +4125,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "frontend_features_auth_server_getcurrentsession",
-      "community": 133,
-      "community_name": "getCurrentSession",
+      "community": 203,
+      "community_name": "GuestExploreV2.tsx",
       "norm_label": "getcurrentsession()"
     },
     {
@@ -4224,8 +4224,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "frontend_features_iam_hooks_useiamadministration",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 133,
+      "community_name": "getCurrentSession",
       "norm_label": "useiamadministration()"
     },
     {
@@ -4246,8 +4246,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "frontend_features_iam_hooks_useprofile",
-      "community": 215,
-      "community_name": "UserAdministration.tsx",
+      "community": 146,
+      "community_name": "hooks.ts",
       "norm_label": "useprofile()"
     },
     {
@@ -4290,8 +4290,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "frontend_features_iam_repository_iamrole",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "iamrole"
     },
     {
@@ -4323,8 +4323,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "frontend_features_iam_repository_apierror",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": "apierror"
     },
     {
@@ -4334,8 +4334,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_features_iam_repository_apierror_constructor",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 17,
+      "community_name": "AdminNewsController",
       "norm_label": ".constructor()"
     },
     {
@@ -4796,8 +4796,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_discovery_components_publicdiscoveryshell",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "publicdiscoveryshell.tsx"
     },
     {
@@ -4807,8 +4807,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_features_public_discovery_components_publicdiscoveryshell_copy",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "copy"
     },
     {
@@ -4818,8 +4818,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "frontend_features_public_discovery_components_publicdiscoveryshell_publicdiscoveryshell",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 165,
+      "community_name": "import-fixture.ts",
       "norm_label": "publicdiscoveryshell()"
     },
     {
@@ -5005,8 +5005,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_home_components_publichome",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "publichome.tsx"
     },
     {
@@ -5016,8 +5016,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "frontend_features_public_home_components_publichome_hero_static_title",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "hero_static_title"
     },
     {
@@ -5027,8 +5027,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "frontend_features_public_home_components_publichome_hero_dynamic_phrases",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "hero_dynamic_phrases"
     },
     {
@@ -5038,8 +5038,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "frontend_features_public_home_components_publichome_useherotyping",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "useherotyping()"
     },
     {
@@ -5049,8 +5049,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "frontend_features_public_home_components_publichome_publichome",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 81,
+      "community_name": "LanguageSwitcher.tsx",
       "norm_label": "publichome()"
     },
     {
@@ -5203,8 +5203,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestcontactv2",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "guestcontactv2.tsx"
     },
     {
@@ -5214,8 +5214,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestcontactv2_getcontactschema",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "getcontactschema()"
     },
     {
@@ -5225,8 +5225,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestcontactv2_guestcontactv2",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "guestcontactv2()"
     },
     {
@@ -5244,7 +5244,7 @@
       "label": "EcosystemTabId",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_ecosystemtabid",
       "community": 173,
@@ -5252,10 +5252,32 @@
       "norm_label": "ecosystemtabid"
     },
     {
+      "label": "connectFormSchema",
+      "file_type": "code",
+      "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "frontend_features_public_v2_components_guestecosystemv2_connectformschema",
+      "community": 173,
+      "community_name": "GuestEcosystemV2.tsx",
+      "norm_label": "connectformschema"
+    },
+    {
+      "label": "ConnectField",
+      "file_type": "code",
+      "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "frontend_features_public_v2_components_guestecosystemv2_connectfield",
+      "community": 173,
+      "community_name": "GuestEcosystemV2.tsx",
+      "norm_label": "connectfield"
+    },
+    {
       "label": "TAB_LABELS",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L13",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_tab_labels",
       "community": 173,
@@ -5266,7 +5288,7 @@
       "label": "SECTION_OFFSETS",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L34",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_section_offsets",
       "community": 173,
@@ -5274,10 +5296,21 @@
       "norm_label": "section_offsets"
     },
     {
+      "label": "SECTION_IDS",
+      "file_type": "code",
+      "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
+      "source_location": "L51",
+      "_origin": "ast",
+      "id": "frontend_features_public_v2_components_guestecosystemv2_section_ids",
+      "community": 173,
+      "community_name": "GuestEcosystemV2.tsx",
+      "norm_label": "section_ids"
+    },
+    {
       "label": "customSmoothScroll()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L41",
+      "source_location": "L58",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_customsmoothscroll",
       "community": 173,
@@ -5288,7 +5321,7 @@
       "label": "ExpertItem",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L85",
+      "source_location": "L102",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_expertitem",
       "community": 173,
@@ -5299,7 +5332,7 @@
       "label": "EXPERTS_RAW",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L91",
+      "source_location": "L108",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_experts_raw",
       "community": 173,
@@ -5310,7 +5343,7 @@
       "label": "EXPERTS_LIST",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L132",
+      "source_location": "L149",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_experts_list",
       "community": 173,
@@ -5321,7 +5354,7 @@
       "label": "OrganizationItem",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L135",
+      "source_location": "L154",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_organizationitem",
       "community": 173,
@@ -5332,7 +5365,7 @@
       "label": "ORGANIZATIONS_RAW",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L141",
+      "source_location": "L160",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_organizations_raw",
       "community": 173,
@@ -5343,7 +5376,7 @@
       "label": "ORGANIZATIONS_LIST",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L189",
+      "source_location": "L208",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_organizations_list",
       "community": 173,
@@ -5354,7 +5387,7 @@
       "label": "KHAISANG_RESULTS",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L192",
+      "source_location": "L213",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_khaisang_results",
       "community": 173,
@@ -5365,7 +5398,7 @@
       "label": "GuestEcosystemV2()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L230",
+      "source_location": "L255",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestecosystemv2_guestecosystemv2",
       "community": 173,
@@ -5401,8 +5434,8 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexpertsv2_guestexpertsv2",
-      "community": 165,
-      "community_name": "import-fixture.ts",
+      "community": 135,
+      "community_name": "NotFoundClient.tsx",
       "norm_label": "guestexpertsv2()"
     },
     {
@@ -5456,96 +5489,129 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2",
-      "community": 203,
-      "community_name": "GuestExploreV2.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestexplorev2.tsx"
     },
     {
       "label": "NewsItem",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L17",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_newsitem",
-      "community": 203,
-      "community_name": "GuestExploreV2.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "newsitem"
     },
     {
       "label": "TEXT",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L19",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_text",
-      "community": 203,
-      "community_name": "GuestExploreV2.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "text"
+    },
+    {
+      "label": "DEFAULT_FALLBACK_IMAGES",
+      "file_type": "code",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L112",
+      "_origin": "ast",
+      "id": "frontend_features_public_v2_components_guestexplorev2_default_fallback_images",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
+      "norm_label": "default_fallback_images"
+    },
+    {
+      "label": "formatTitle()",
+      "file_type": "code",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L121",
+      "_origin": "ast",
+      "id": "frontend_features_public_v2_components_guestexplorev2_formattitle",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
+      "norm_label": "formattitle()"
     },
     {
       "label": "NewsImage()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L114",
+      "source_location": "L132",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_newsimage",
-      "community": 203,
-      "community_name": "GuestExploreV2.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "newsimage()"
     },
     {
       "label": "SmallRow()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L145",
+      "source_location": "L157",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_smallrow",
-      "community": 203,
-      "community_name": "GuestExploreV2.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "smallrow()"
+    },
+    {
+      "label": "TextRow()",
+      "file_type": "code",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L182",
+      "_origin": "ast",
+      "id": "frontend_features_public_v2_components_guestexplorev2_textrow",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
+      "norm_label": "textrow()"
     },
     {
       "label": "matchesScope()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L168",
+      "source_location": "L198",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_matchesscope",
-      "community": 203,
-      "community_name": "GuestExploreV2.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "matchesscope()"
     },
     {
       "label": "matchesContentType()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L215",
+      "source_location": "L245",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_matchescontenttype",
-      "community": 203,
-      "community_name": "GuestExploreV2.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "matchescontenttype()"
     },
     {
       "label": "matchesPeriod()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L223",
+      "source_location": "L253",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_matchesperiod",
-      "community": 203,
-      "community_name": "GuestExploreV2.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "matchesperiod()"
     },
     {
       "label": "GuestExploreV2()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L231",
+      "source_location": "L261",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestexplorev2_guestexplorev2",
-      "community": 203,
-      "community_name": "GuestExploreV2.tsx",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestexplorev2()"
     },
     {
@@ -5555,8 +5621,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "guesthomev2.tsx"
     },
     {
@@ -5566,8 +5632,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_hero_banners",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "hero_banners"
     },
     {
@@ -5577,8 +5643,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_home_copy",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "home_copy"
     },
     {
@@ -5588,8 +5654,8 @@
       "source_location": "L1284",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_networkstat",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "networkstat"
     },
     {
@@ -5599,8 +5665,8 @@
       "source_location": "L1286",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_network_tone_styles",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "network_tone_styles"
     },
     {
@@ -5610,8 +5676,8 @@
       "source_location": "L1322",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_network_desktop_nodes",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "network_desktop_nodes"
     },
     {
@@ -5621,8 +5687,8 @@
       "source_location": "L1360",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_networkiconglyph",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "networkiconglyph()"
     },
     {
@@ -5632,8 +5698,8 @@
       "source_location": "L1457",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_networkstatsinfographic",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "networkstatsinfographic()"
     },
     {
@@ -5643,8 +5709,8 @@
       "source_location": "L1801",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guesthomev2_guesthomev2",
-      "community": 133,
-      "community_name": "getCurrentSession",
+      "community": 203,
+      "community_name": "GuestExploreV2.tsx",
       "norm_label": "guesthomev2()"
     },
     {
@@ -5698,8 +5764,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsadvancedfilters",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestnewsadvancedfilters.tsx"
     },
     {
@@ -5709,8 +5775,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsadvancedfilters_guestnewsadvancedfiltersprops",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestnewsadvancedfiltersprops"
     },
     {
@@ -5720,8 +5786,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsadvancedfilters_guestnewsadvancedfilters",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestnewsadvancedfilters()"
     },
     {
@@ -5739,7 +5805,7 @@
       "label": "Category",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L25",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_category",
       "community": 26,
@@ -5750,7 +5816,7 @@
       "label": "categoryLabels",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L27",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_categorylabels",
       "community": 26,
@@ -5758,21 +5824,10 @@
       "norm_label": "categorylabels"
     },
     {
-      "label": "filterCopy",
-      "file_type": "code",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L34",
-      "_origin": "ast",
-      "id": "frontend_features_public_v2_components_guestnewsarticlev2_filtercopy",
-      "community": 26,
-      "community_name": "public-news-server.ts",
-      "norm_label": "filtercopy"
-    },
-    {
       "label": "ui",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L70",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_ui",
       "community": 26,
@@ -5783,7 +5838,7 @@
       "label": "Thumb()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L154",
+      "source_location": "L108",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_thumb",
       "community": 26,
@@ -5794,7 +5849,7 @@
       "label": "ShareButton()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L177",
+      "source_location": "L131",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_sharebutton",
       "community": 26,
@@ -5805,11 +5860,11 @@
       "label": "GuestNewsArticleV2()",
       "file_type": "code",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L188",
+      "source_location": "L142",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsarticlev2_guestnewsarticlev2",
-      "community": 139,
-      "community_name": "AccessLogsPage.tsx",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "guestnewsarticlev2()"
     },
     {
@@ -5819,8 +5874,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestnewsfilternav.tsx"
     },
     {
@@ -5830,8 +5885,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav_newscategory",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "newscategory"
     },
     {
@@ -5841,8 +5896,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav_news_categories",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "news_categories"
     },
     {
@@ -5852,8 +5907,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav_news_filter_scopes",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "news_filter_scopes"
     },
     {
@@ -5863,8 +5918,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav_news_filter_content_types",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "news_filter_content_types"
     },
     {
@@ -5874,8 +5929,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav_news_filter_periods",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "news_filter_periods"
     },
     {
@@ -5885,8 +5940,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav_newsadvancedfilters",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "newsadvancedfilters"
     },
     {
@@ -5896,8 +5951,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav_default_news_advanced_filters",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "default_news_advanced_filters"
     },
     {
@@ -5907,8 +5962,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav_newsfilterhref",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "newsfilterhref()"
     },
     {
@@ -5918,8 +5973,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav_guestnewsfilternavprops",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestnewsfilternavprops"
     },
     {
@@ -5929,42 +5984,9 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestnewsfilternav_guestnewsfilternav",
-      "community": 26,
-      "community_name": "public-news-server.ts",
+      "community": 139,
+      "community_name": "AccessLogsPage.tsx",
       "norm_label": "guestnewsfilternav()"
-    },
-    {
-      "label": "GuestNewsMasthead.tsx",
-      "file_type": "code",
-      "source_file": "frontend/features/public-v2/components/GuestNewsMasthead.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_features_public_v2_components_guestnewsmasthead",
-      "community": 15,
-      "community_name": "news.controller.ts",
-      "norm_label": "guestnewsmasthead.tsx"
-    },
-    {
-      "label": "COPY",
-      "file_type": "code",
-      "source_file": "frontend/features/public-v2/components/GuestNewsMasthead.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "frontend_features_public_v2_components_guestnewsmasthead_copy",
-      "community": 15,
-      "community_name": "news.controller.ts",
-      "norm_label": "copy"
-    },
-    {
-      "label": "GuestNewsMasthead()",
-      "file_type": "code",
-      "source_file": "frontend/features/public-v2/components/GuestNewsMasthead.tsx",
-      "source_location": "L46",
-      "_origin": "ast",
-      "id": "frontend_features_public_v2_components_guestnewsmasthead_guestnewsmasthead",
-      "community": 135,
-      "community_name": "NotFoundClient.tsx",
-      "norm_label": "guestnewsmasthead()"
     },
     {
       "label": "GuestOpportunitiesV2.tsx",
@@ -6006,8 +6028,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicfooter",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "guestpublicfooter.tsx"
     },
     {
@@ -6017,8 +6039,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicfooter_guestpublicfootercopy",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "guestpublicfootercopy"
     },
     {
@@ -6028,8 +6050,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "frontend_features_public_v2_components_guestpublicfooter_guestpublicfooter",
-      "community": 46,
-      "community_name": "getCurrentSession",
+      "community": 26,
+      "community_name": "public-news-server.ts",
       "norm_label": "guestpublicfooter()"
     },
     {
@@ -6248,8 +6270,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_contentpublishstudio",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "contentpublishstudio.tsx"
     },
     {
@@ -6259,8 +6281,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_contentpublishstudio_attachmentfile",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "attachmentfile"
     },
     {
@@ -6270,8 +6292,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_contentpublishstudio_recentarticle",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "recentarticle"
     },
     {
@@ -6281,8 +6303,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_contentpublishstudio_copy",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "copy"
     },
     {
@@ -6292,8 +6314,8 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_contentpublishstudio_initial_articles",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "initial_articles"
     },
     {
@@ -6303,8 +6325,8 @@
       "source_location": "L421",
       "_origin": "ast",
       "id": "frontend_features_workspace_components_contentpublishstudio_contentpublishstudio",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "contentpublishstudio()"
     },
     {
@@ -6688,8 +6710,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_lib_alerts",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "alerts.ts"
     },
     {
@@ -6699,8 +6721,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_lib_alerts_confirmactionoptions",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "confirmactionoptions"
     },
     {
@@ -6710,8 +6732,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_lib_alerts_alertcopy",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "alertcopy"
     },
     {
@@ -6721,8 +6743,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "frontend_lib_alerts_currentalertcopy",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "currentalertcopy()"
     },
     {
@@ -6732,8 +6754,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "frontend_lib_alerts_toastoptions",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "toastoptions"
     },
     {
@@ -6743,8 +6765,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "frontend_lib_alerts_confirmaction",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "confirmaction()"
     },
     {
@@ -6754,8 +6776,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "frontend_lib_alerts_confirmandrun",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "confirmandrun()"
     },
     {
@@ -6765,8 +6787,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "frontend_lib_alerts_showtoast",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "showtoast()"
     },
     {
@@ -6776,8 +6798,8 @@
       "source_location": "L147",
       "_origin": "ast",
       "id": "frontend_lib_alerts_showsuccess",
-      "community": 1,
-      "community_name": "RoleDetailPage.tsx",
+      "community": 16,
+      "community_name": "useLocale",
       "norm_label": "showsuccess()"
     },
     {
@@ -6820,8 +6842,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_lib_form_validation",
-      "community": 215,
-      "community_name": "UserAdministration.tsx",
+      "community": 146,
+      "community_name": "hooks.ts",
       "norm_label": "form-validation.ts"
     },
     {
@@ -6831,8 +6853,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "frontend_lib_form_validation_getfielderrors",
-      "community": 215,
-      "community_name": "UserAdministration.tsx",
+      "community": 146,
+      "community_name": "hooks.ts",
       "norm_label": "getfielderrors()"
     },
     {
@@ -7689,8 +7711,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_tests_iam_admin_test",
-      "community": 15,
-      "community_name": "news.controller.ts",
+      "community": 46,
+      "community_name": "getCurrentSession",
       "norm_label": "iam-admin.test.mjs"
     },
     {
@@ -7722,8 +7744,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_tests_membership_registration_validation_test",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "membership-registration-validation.test.mjs"
     },
     {
@@ -7733,8 +7755,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "frontend_tests_membership_registration_validation_test_schema",
-      "community": 81,
-      "community_name": "LanguageSwitcher.tsx",
+      "community": 19,
+      "community_name": "SessionService",
       "norm_label": "schema"
     },
     {
@@ -9449,8 +9471,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture",
-      "community": 146,
-      "community_name": "hooks.ts",
+      "community": 208,
+      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
       "norm_label": "import-fixture.ts"
     },
     {
@@ -9460,8 +9482,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_allowed_capabilities",
-      "community": 146,
-      "community_name": "hooks.ts",
+      "community": 208,
+      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
       "norm_label": "allowed_capabilities"
     },
     {
@@ -9471,8 +9493,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_allowed_roles",
-      "community": 146,
-      "community_name": "hooks.ts",
+      "community": 208,
+      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
       "norm_label": "allowed_roles"
     },
     {
@@ -9482,8 +9504,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_allowed_context_types",
-      "community": 146,
-      "community_name": "hooks.ts",
+      "community": 208,
+      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
       "norm_label": "allowed_context_types"
     },
     {
@@ -9493,8 +9515,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_role_policies",
-      "community": 146,
-      "community_name": "hooks.ts",
+      "community": 208,
+      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
       "norm_label": "role_policies"
     },
     {
@@ -9504,8 +9526,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_singlefixtureschema",
-      "community": 146,
-      "community_name": "hooks.ts",
+      "community": 208,
+      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
       "norm_label": "singlefixtureschema"
     },
     {
@@ -9515,8 +9537,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_fixture_fixturesdocumentschema",
-      "community": 146,
-      "community_name": "hooks.ts",
+      "community": 208,
+      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
       "norm_label": "fixturesdocumentschema"
     },
     {
@@ -9537,8 +9559,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_official_news",
-      "community": 188,
-      "community_name": "NotFoundClient.tsx",
+      "community": 227,
+      "community_name": "AdminNewsController",
       "norm_label": "import-official-news.ts"
     },
     {
@@ -9548,8 +9570,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_official_news_officialarticle",
-      "community": 188,
-      "community_name": "NotFoundClient.tsx",
+      "community": 227,
+      "community_name": "AdminNewsController",
       "norm_label": "officialarticle"
     },
     {
@@ -9559,8 +9581,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_official_news_categories",
-      "community": 188,
-      "community_name": "NotFoundClient.tsx",
+      "community": 227,
+      "community_name": "AdminNewsController",
       "norm_label": "categories"
     },
     {
@@ -9570,8 +9592,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_official_news_articleid",
-      "community": 188,
-      "community_name": "NotFoundClient.tsx",
+      "community": 227,
+      "community_name": "AdminNewsController",
       "norm_label": "articleid()"
     },
     {
@@ -9581,8 +9603,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "services_auth_service_prisma_import_official_news_main",
-      "community": 188,
-      "community_name": "NotFoundClient.tsx",
+      "community": 227,
+      "community_name": "AdminNewsController",
       "norm_label": "main()"
     },
     {
@@ -10197,8 +10219,8 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_access_control_service_accesscontrolservice_hasactiveassignment",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 232,
+      "community_name": "@eslint/eslintrc",
       "norm_label": ".hasactiveassignment()"
     },
     {
@@ -10208,8 +10230,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_access_control_iam_admin_controller_spec",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 6,
+      "community_name": "iam-admin.service.ts",
       "norm_label": "iam-admin.controller.spec.ts"
     },
     {
@@ -10802,8 +10824,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authenticated_request_context_spec",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "authenticated-request-context.spec.ts"
     },
     {
@@ -10813,8 +10835,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authenticated_request_context_spec_context",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "context()"
     },
     {
@@ -10857,8 +10879,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authenticated_request_context_requirepermission",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "requirepermission()"
     },
     {
@@ -10868,8 +10890,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authenticated_request_context_requireanypermission",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "requireanypermission()"
     },
     {
@@ -10879,8 +10901,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authenticated_request_context_requiremfa",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 76,
+      "community_name": "UnifiedWorkspaceDashboard.tsx",
       "norm_label": "requiremfa()"
     },
     {
@@ -11055,8 +11077,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_ts_body",
-      "community": 18,
-      "community_name": "AuthenticationController",
+      "community": 232,
+      "community_name": "@eslint/eslintrc",
       "norm_label": "body"
     },
     {
@@ -11066,8 +11088,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_ts_post",
-      "community": 18,
-      "community_name": "AuthenticationController",
+      "community": 232,
+      "community_name": "@eslint/eslintrc",
       "norm_label": "post"
     },
     {
@@ -11077,8 +11099,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "res",
-      "community": 18,
-      "community_name": "AuthenticationController",
+      "community": 232,
+      "community_name": "@eslint/eslintrc",
       "norm_label": "res"
     },
     {
@@ -11110,8 +11132,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_constructor",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 18,
+      "community_name": "AuthenticationController",
       "norm_label": ".constructor()"
     },
     {
@@ -11165,8 +11187,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_exchange",
-      "community": 18,
-      "community_name": "AuthenticationController",
+      "community": 232,
+      "community_name": "@eslint/eslintrc",
       "norm_label": ".exchange()"
     },
     {
@@ -11187,8 +11209,8 @@
       "source_location": "L153",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_switchcontext",
-      "community": 18,
-      "community_name": "AuthenticationController",
+      "community": 232,
+      "community_name": "@eslint/eslintrc",
       "norm_label": ".switchcontext()"
     },
     {
@@ -11198,8 +11220,8 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_controller_authenticationcontroller_logout",
-      "community": 18,
-      "community_name": "AuthenticationController",
+      "community": 232,
+      "community_name": "@eslint/eslintrc",
       "norm_label": ".logout()"
     },
     {
@@ -11286,8 +11308,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 44,
+      "community_name": "IdentityService",
       "norm_label": "authentication.service.ts"
     },
     {
@@ -11297,8 +11319,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_callbackresult",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 44,
+      "community_name": "IdentityService",
       "norm_label": "callbackresult"
     },
     {
@@ -11308,8 +11330,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_exchangeresult",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 44,
+      "community_name": "IdentityService",
       "norm_label": "exchangeresult"
     },
     {
@@ -11319,8 +11341,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_authjsexchangeinput",
-      "community": 76,
-      "community_name": "UnifiedWorkspaceDashboard.tsx",
+      "community": 44,
+      "community_name": "IdentityService",
       "norm_label": "authjsexchangeinput"
     },
     {
@@ -11396,8 +11418,8 @@
       "source_location": "L118",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_authentication_authentication_service_authenticationservice_logout",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 232,
+      "community_name": "@eslint/eslintrc",
       "norm_label": ".logout()"
     },
     {
@@ -11418,8 +11440,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_module",
-      "community": 44,
-      "community_name": "IdentityService",
+      "community": 175,
+      "community_name": "MembershipApplicationService",
       "norm_label": "identity.module.ts"
     },
     {
@@ -11429,8 +11451,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_module_identitymodule",
-      "community": 44,
-      "community_name": "IdentityService",
+      "community": 175,
+      "community_name": "MembershipApplicationService",
       "norm_label": "identitymodule"
     },
     {
@@ -11440,8 +11462,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_module_ts_module",
-      "community": 44,
-      "community_name": "IdentityService",
+      "community": 175,
+      "community_name": "MembershipApplicationService",
       "norm_label": "module"
     },
     {
@@ -11561,8 +11583,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_service_identityservice_findbyid",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 18,
+      "community_name": "AuthenticationController",
       "norm_label": ".findbyid()"
     },
     {
@@ -11583,8 +11605,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_identity_service_identityservice_updateprofile",
-      "community": 44,
-      "community_name": "IdentityService",
+      "community": 18,
+      "community_name": "AuthenticationController",
       "norm_label": ".updateprofile()"
     },
     {
@@ -11759,8 +11781,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_identity_local_credential_service_localcredentialservice_constructor",
-      "community": 89,
-      "community_name": "identity.module.ts",
+      "community": 10,
+      "community_name": "Header.tsx",
       "norm_label": ".constructor()"
     },
     {
@@ -11990,8 +12012,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_media_service",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "news-media.service.ts"
     },
     {
@@ -12001,8 +12023,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_media_service_allowed_image_types",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "allowed_image_types"
     },
     {
@@ -12012,8 +12034,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_media_service_newsimagefile",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "newsimagefile"
     },
     {
@@ -12023,8 +12045,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_media_service_validatenewsimage",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "validatenewsimage()"
     },
     {
@@ -12034,8 +12056,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_media_service_newsmediaservice",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "newsmediaservice"
     },
     {
@@ -12045,8 +12067,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_media_service_ts_injectable",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "injectable"
     },
     {
@@ -12056,8 +12078,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_media_service_newsmediaservice_constructor",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -12067,8 +12089,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_media_service_newsmediaservice_upload",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".upload()"
     },
     {
@@ -12078,8 +12100,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_media_spec",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "news-media.spec.ts"
     },
     {
@@ -12089,8 +12111,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "news.controller.ts"
     },
     {
@@ -12100,8 +12122,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_localeschema",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "localeschema"
     },
     {
@@ -12111,8 +12133,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_paginationschema",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "paginationschema"
     },
     {
@@ -12122,8 +12144,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_publicqueryschema",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "publicqueryschema"
     },
     {
@@ -12133,8 +12155,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_adminqueryschema",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "adminqueryschema"
     },
     {
@@ -12144,8 +12166,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_translationschema",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "translationschema"
     },
     {
@@ -12155,8 +12177,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_articlefields",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "articlefields"
     },
     {
@@ -12166,8 +12188,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_createschema",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "createschema"
     },
     {
@@ -12177,8 +12199,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_updateschema",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "updateschema"
     },
     {
@@ -12188,8 +12210,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_publishschema",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "publishschema"
     },
     {
@@ -12199,8 +12221,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_uuidschema",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "uuidschema"
     },
     {
@@ -12210,8 +12232,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_localemap",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "localemap"
     },
     {
@@ -12221,8 +12243,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_parse",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "parse()"
     },
     {
@@ -12232,8 +12254,8 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_publicnewscontroller",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "publicnewscontroller"
     },
     {
@@ -12243,8 +12265,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_ts_controller",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "controller"
     },
     {
@@ -12254,8 +12276,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_ts_get",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "get"
     },
     {
@@ -12265,8 +12287,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_ts_query",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "query"
     },
     {
@@ -12276,8 +12298,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_ts_param",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "param"
     },
     {
@@ -12287,8 +12309,8 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_publicnewscontroller_constructor",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -12298,8 +12320,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_publicnewscontroller_list",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".list()"
     },
     {
@@ -12309,8 +12331,8 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_publicnewscontroller_get",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".get()"
     },
     {
@@ -12320,8 +12342,8 @@
       "source_location": "L154",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_adminnewscontroller",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "adminnewscontroller"
     },
     {
@@ -12331,8 +12353,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_ts_useguards",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "useguards"
     },
     {
@@ -12342,8 +12364,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_ts_post",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "post"
     },
     {
@@ -12353,8 +12375,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "useinterceptors",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "useinterceptors"
     },
     {
@@ -12364,8 +12386,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "uploadedfile",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "uploadedfile"
     },
     {
@@ -12375,8 +12397,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_ts_body",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "body"
     },
     {
@@ -12386,8 +12408,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_ts_req",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "req"
     },
     {
@@ -12397,8 +12419,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_ts_patch",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "patch"
     },
     {
@@ -12408,8 +12430,8 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_adminnewscontroller_constructor",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -12419,8 +12441,8 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_adminnewscontroller_uploadmedia",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".uploadmedia()"
     },
     {
@@ -12430,8 +12452,8 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_adminnewscontroller_list",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".list()"
     },
     {
@@ -12441,8 +12463,8 @@
       "source_location": "L178",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_adminnewscontroller_get",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".get()"
     },
     {
@@ -12452,8 +12474,8 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_adminnewscontroller_create",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".create()"
     },
     {
@@ -12463,8 +12485,8 @@
       "source_location": "L193",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_adminnewscontroller_update",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".update()"
     },
     {
@@ -12474,8 +12496,8 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_adminnewscontroller_publish",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".publish()"
     },
     {
@@ -12485,8 +12507,8 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_controller_adminnewscontroller_unpublish",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".unpublish()"
     },
     {
@@ -12529,8 +12551,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_spec",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "news.service.spec.ts"
     },
     {
@@ -12540,8 +12562,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "news.service.ts"
     },
     {
@@ -12551,8 +12573,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newslocale",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "newslocale"
     },
     {
@@ -12562,8 +12584,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsstatus",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "newsstatus"
     },
     {
@@ -12573,8 +12595,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newscontenttype",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "newscontenttype"
     },
     {
@@ -12584,8 +12606,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newstranslationinput",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "newstranslationinput"
     },
     {
@@ -12595,8 +12617,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsprismaclient",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "newsprismaclient"
     },
     {
@@ -12606,8 +12628,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_articleselect",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "articleselect"
     },
     {
@@ -12617,8 +12639,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_localize",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "localize()"
     },
     {
@@ -12628,8 +12650,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsservice",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "newsservice"
     },
     {
@@ -12639,8 +12661,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_ts_injectable",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "injectable"
     },
     {
@@ -12650,8 +12672,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_ts_inject",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": "inject"
     },
     {
@@ -12661,8 +12683,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsservice_constructor",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -12672,8 +12694,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsservice_listpublic",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".listpublic()"
     },
     {
@@ -12683,8 +12705,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsservice_getpublic",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".getpublic()"
     },
     {
@@ -12694,8 +12716,8 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsservice_listadmin",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".listadmin()"
     },
     {
@@ -12705,8 +12727,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsservice_getadmin",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".getadmin()"
     },
     {
@@ -12716,8 +12738,8 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsservice_create",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".create()"
     },
     {
@@ -12727,8 +12749,8 @@
       "source_location": "L136",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsservice_update",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".update()"
     },
     {
@@ -12738,8 +12760,8 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsservice_publish",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".publish()"
     },
     {
@@ -12749,8 +12771,8 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_news_news_service_newsservice_unpublish",
-      "community": 17,
-      "community_name": "AdminNewsController",
+      "community": 15,
+      "community_name": "news.controller.ts",
       "norm_label": ".unpublish()"
     },
     {
@@ -12958,8 +12980,8 @@
       "source_location": "L164",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_revokesession",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 232,
+      "community_name": "@eslint/eslintrc",
       "norm_label": ".revokesession()"
     },
     {
@@ -12980,8 +13002,8 @@
       "source_location": "L193",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_getactivesessionsforuser",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 18,
+      "community_name": "AuthenticationController",
       "norm_label": ".getactivesessionsforuser()"
     },
     {
@@ -13002,8 +13024,8 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_revokeothersessionsforuser",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 18,
+      "community_name": "AuthenticationController",
       "norm_label": ".revokeothersessionsforuser()"
     },
     {
@@ -13024,8 +13046,8 @@
       "source_location": "L259",
       "_origin": "ast",
       "id": "services_auth_service_src_modules_session_session_service_sessionservice_switchcontext",
-      "community": 88,
-      "community_name": ".getCurrentUser",
+      "community": 232,
+      "community_name": "@eslint/eslintrc",
       "norm_label": ".switchcontext()"
     },
     {
@@ -18609,7 +18631,7 @@
       "source_location": "L552",
       "_origin": "ast",
       "id": "agents_skills_design_taste_frontend_skill_7_dial_definitions_technical_reference",
-      "community": 216,
+      "community": 233,
       "community_name": "7. DIAL DEFINITIONS (Technical Reference)",
       "norm_label": "7. dial definitions (technical reference)"
     },
@@ -18620,7 +18642,7 @@
       "source_location": "L554",
       "_origin": "ast",
       "id": "agents_skills_design_taste_frontend_skill_design_variance_level_1_10",
-      "community": 216,
+      "community": 233,
       "community_name": "7. DIAL DEFINITIONS (Technical Reference)",
       "norm_label": "design_variance (level 1-10)"
     },
@@ -18631,7 +18653,7 @@
       "source_location": "L560",
       "_origin": "ast",
       "id": "agents_skills_design_taste_frontend_skill_motion_intensity_level_1_10",
-      "community": 216,
+      "community": 233,
       "community_name": "7. DIAL DEFINITIONS (Technical Reference)",
       "norm_label": "motion_intensity (level 1-10)"
     },
@@ -18642,7 +18664,7 @@
       "source_location": "L565",
       "_origin": "ast",
       "id": "agents_skills_design_taste_frontend_skill_visual_density_level_1_10",
-      "community": 216,
+      "community": 233,
       "community_name": "7. DIAL DEFINITIONS (Technical Reference)",
       "norm_label": "visual_density (level 1-10)"
     },
@@ -19764,8 +19786,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_skills_motion_design_skill",
-      "community": 19,
-      "community_name": "SessionService",
+      "community": 95,
+      "community_name": "motion-design/SKILL.md",
       "norm_label": "skill.md"
     },
     {
@@ -20402,8 +20424,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_skills_motion_design_director_decision_framework",
-      "community": 19,
-      "community_name": "SessionService",
+      "community": 95,
+      "community_name": "motion-design/SKILL.md",
       "norm_label": "decision-framework.md"
     },
     {
@@ -20545,8 +20567,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_skills_motion_design_director_disney_principles",
-      "community": 19,
-      "community_name": "SessionService",
+      "community": 95,
+      "community_name": "motion-design/SKILL.md",
       "norm_label": "disney-principles.md"
     },
     {
@@ -20798,8 +20820,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_skills_motion_design_director_motion_personality",
-      "community": 19,
-      "community_name": "SessionService",
+      "community": 95,
+      "community_name": "motion-design/SKILL.md",
       "norm_label": "motion-personality.md"
     },
     {
@@ -21865,8 +21887,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_skills_motion_design_reference_property_selection",
-      "community": 19,
-      "community_name": "SessionService",
+      "community": 95,
+      "community_name": "motion-design/SKILL.md",
       "norm_label": "property-selection.md"
     },
     {
@@ -22096,8 +22118,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_skills_motion_design_reference_timing_easing_tables",
-      "community": 19,
-      "community_name": "SessionService",
+      "community": 95,
+      "community_name": "motion-design/SKILL.md",
       "norm_label": "timing-easing-tables.md"
     },
     {
@@ -22239,8 +22261,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_skills_motion_design_reference_troubleshooting",
-      "community": 19,
-      "community_name": "SessionService",
+      "community": 95,
+      "community_name": "motion-design/SKILL.md",
       "norm_label": "troubleshooting.md"
     },
     {
@@ -23636,8 +23658,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "architecture_module_map",
-      "community": 169,
-      "community_name": "VN-RU Module Map",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "module_map.md"
     },
     {
@@ -23702,8 +23724,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "architecture_readme",
-      "community": 171,
-      "community_name": "VN-RU Architecture Hub",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "readme.md"
     },
     {
@@ -24021,8 +24043,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_api_spec",
-      "community": 171,
-      "community_name": "VN-RU Architecture Hub",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "api_spec.md"
     },
     {
@@ -24032,8 +24054,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_api_spec_module_1_api_contract_policy",
-      "community": 171,
-      "community_name": "VN-RU Architecture Hub",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "module 1 api contract policy"
     },
     {
@@ -24098,8 +24120,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_deployment",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 234,
+      "community_name": "Deployment and Local Operation",
       "norm_label": "deployment.md"
     },
     {
@@ -24109,8 +24131,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_deployment_deployment_and_local_operation",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 234,
+      "community_name": "Deployment and Local Operation",
       "norm_label": "deployment and local operation"
     },
     {
@@ -24120,8 +24142,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "docs_deployment_local_source_development",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 234,
+      "community_name": "Deployment and Local Operation",
       "norm_label": "local source development"
     },
     {
@@ -24131,8 +24153,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "docs_deployment_production_compose_deployment",
-      "community": 54,
-      "community_name": "GUIDES.md",
+      "community": 234,
+      "community_name": "Deployment and Local Operation",
       "norm_label": "production compose deployment"
     },
     {
@@ -24208,8 +24230,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_rbac_architecture",
-      "community": 171,
-      "community_name": "VN-RU Architecture Hub",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "rbac_architecture.md"
     },
     {
@@ -24219,8 +24241,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_rbac_architecture_module_1_rbac_architecture",
-      "community": 171,
-      "community_name": "VN-RU Architecture Hub",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "module 1 rbac architecture"
     },
     {
@@ -24230,8 +24252,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "docs_rbac_architecture_product_access_classes",
-      "community": 171,
-      "community_name": "VN-RU Architecture Hub",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "product access classes"
     },
     {
@@ -24362,8 +24384,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_verification_guide",
-      "community": 208,
-      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
+      "community": 37,
+      "community_name": "3.4 Full",
       "norm_label": "verification_guide.md"
     },
     {
@@ -24373,8 +24395,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_verification_guide_pro_max_verification_guide_selectable_test_profiles",
-      "community": 208,
-      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
+      "community": 37,
+      "community_name": "3.4 Full",
       "norm_label": "pro-max verification guide \u2014 selectable test profiles"
     },
     {
@@ -24384,8 +24406,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "docs_verification_guide_1_command_dispatch",
-      "community": 208,
-      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
+      "community": 37,
+      "community_name": "3.4 Full",
       "norm_label": "1. command dispatch"
     },
     {
@@ -24395,8 +24417,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "docs_verification_guide_2_common_verification_rules",
-      "community": 208,
-      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
+      "community": 37,
+      "community_name": "3.4 Full",
       "norm_label": "2. common verification rules"
     },
     {
@@ -24527,8 +24549,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "docs_verification_guide_4_module_aware_test_selection",
-      "community": 208,
-      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
+      "community": 37,
+      "community_name": "3.4 Full",
       "norm_label": "4. module-aware test selection"
     },
     {
@@ -24538,8 +24560,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "docs_verification_guide_5_evidence_standard",
-      "community": 208,
-      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
+      "community": 37,
+      "community_name": "3.4 Full",
       "norm_label": "5. evidence standard"
     },
     {
@@ -24549,8 +24571,8 @@
       "source_location": "L193",
       "_origin": "ast",
       "id": "docs_verification_guide_6_examples",
-      "community": 208,
-      "community_name": "Pro-Max Verification Guide \u2014 Selectable Test Profiles",
+      "community": 37,
+      "community_name": "3.4 Full",
       "norm_label": "6. examples"
     },
     {
@@ -24824,8 +24846,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_docs_architecture",
-      "community": 98,
-      "community_name": "Frontend Rules",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "architecture.md"
     },
     {
@@ -24835,8 +24857,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_docs_architecture_frontend_architecture",
-      "community": 98,
-      "community_name": "Frontend Rules",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "frontend architecture"
     },
     {
@@ -25044,8 +25066,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_docs_prompt_pre_test_focused_fix",
-      "community": 98,
-      "community_name": "Frontend Rules",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "prompt_pre_test_focused_fix.md"
     },
     {
@@ -25055,8 +25077,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_docs_prompt_pre_test_focused_fix_archived_pre_test_prompt",
-      "community": 98,
-      "community_name": "Frontend Rules",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "archived pre-test prompt"
     },
     {
@@ -26100,8 +26122,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_docs_architecture",
-      "community": 171,
-      "community_name": "VN-RU Architecture Hub",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "architecture.md"
     },
     {
@@ -26111,8 +26133,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_docs_architecture_backend_architecture",
-      "community": 171,
-      "community_name": "VN-RU Architecture Hub",
+      "community": 54,
+      "community_name": "GUIDES.md",
       "norm_label": "backend architecture"
     },
     {
@@ -33865,7 +33887,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -33937,22 +33959,10 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L6",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_core_i18n_locale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsMasthead.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsmasthead",
       "target": "frontend_core_i18n_locale",
       "confidence_score": 1.0
     },
@@ -34237,7 +34247,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -34289,18 +34299,6 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestknowledgev2",
-      "target": "frontend_core_i18n_locale_locale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsMasthead.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsmasthead",
       "target": "frontend_core_i18n_locale_locale",
       "confidence_score": 1.0
     },
@@ -34837,7 +34835,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -34850,7 +34848,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L234",
+      "source_location": "L259",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2_guestecosystemv2",
@@ -34922,7 +34920,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L242",
+      "source_location": "L272",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2_guestexplorev2",
@@ -34981,7 +34979,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L6",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -34994,34 +34992,10 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L196",
+      "source_location": "L149",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2_guestnewsarticlev2",
-      "target": "frontend_core_i18n_locale_uselocale"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsMasthead.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsmasthead",
-      "target": "frontend_core_i18n_locale_uselocale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/features/public-v2/components/GuestNewsMasthead.tsx",
-      "source_location": "L47",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsmasthead_guestnewsmasthead",
       "target": "frontend_core_i18n_locale_uselocale"
     },
     {
@@ -39670,7 +39644,29 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L41",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestecosystemv2",
+      "target": "frontend_features_public_v2_components_guestecosystemv2_connectfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestecosystemv2",
+      "target": "frontend_features_public_v2_components_guestecosystemv2_connectformschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
+      "source_location": "L58",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39681,7 +39677,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39692,7 +39688,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L85",
+      "source_location": "L102",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39703,7 +39699,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L132",
+      "source_location": "L149",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39714,7 +39710,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L91",
+      "source_location": "L108",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39725,7 +39721,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L230",
+      "source_location": "L255",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39736,7 +39732,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L192",
+      "source_location": "L213",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39747,7 +39743,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L135",
+      "source_location": "L154",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39758,7 +39754,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L189",
+      "source_location": "L208",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39769,7 +39765,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L141",
+      "source_location": "L160",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39780,7 +39776,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L34",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestecosystemv2",
+      "target": "frontend_features_public_v2_components_guestecosystemv2_section_ids",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
+      "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39791,7 +39798,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L13",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39803,7 +39810,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39815,7 +39822,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39827,7 +39834,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39839,7 +39846,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39851,7 +39858,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39863,7 +39870,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2",
@@ -39875,7 +39882,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestEcosystemV2.tsx",
-      "source_location": "L311",
+      "source_location": "L347",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestecosystemv2_guestecosystemv2",
@@ -39965,7 +39972,29 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L231",
+      "source_location": "L112",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestexplorev2",
+      "target": "frontend_features_public_v2_components_guestexplorev2_default_fallback_images",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L121",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestexplorev2",
+      "target": "frontend_features_public_v2_components_guestexplorev2_formattitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L261",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -39976,7 +40005,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L215",
+      "source_location": "L245",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -39987,7 +40016,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L223",
+      "source_location": "L253",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -39998,7 +40027,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L168",
+      "source_location": "L198",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40009,7 +40038,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L114",
+      "source_location": "L132",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40020,7 +40049,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L17",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40031,7 +40060,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L145",
+      "source_location": "L157",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40042,7 +40071,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L19",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40050,11 +40079,22 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L182",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestexplorev2",
+      "target": "frontend_features_public_v2_components_guestexplorev2_textrow",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L8",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40066,7 +40106,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L8",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40078,7 +40118,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L9",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40090,7 +40130,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L9",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40102,7 +40142,19 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L9",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestexplorev2",
+      "target": "frontend_features_public_v2_components_guestnewsfilternav_news_categories",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40114,7 +40166,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L9",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40126,31 +40178,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestexplorev2",
-      "target": "frontend_features_public_v2_components_guestnewsmasthead",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestexplorev2",
-      "target": "frontend_features_public_v2_components_guestnewsmasthead_guestnewsmasthead",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L7",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40162,7 +40190,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L7",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40174,7 +40202,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L15",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40186,7 +40214,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L15",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2",
@@ -40233,9 +40261,45 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L406",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestexplorev2_guestexplorev2",
+      "target": "frontend_features_public_v2_components_guestexplorev2_formattitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L172",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestexplorev2_smallrow",
+      "target": "frontend_features_public_v2_components_guestexplorev2_formattitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L189",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestexplorev2_textrow",
+      "target": "frontend_features_public_v2_components_guestexplorev2_formattitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L148",
+      "source_location": "L160",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2_smallrow",
@@ -40245,8 +40309,20 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L283",
+      "source_location": "L185",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_features_public_v2_components_guestexplorev2_textrow",
+      "target": "frontend_features_public_v2_data_official_news_newsarticlehref"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
+      "source_location": "L330",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2_guestexplorev2",
@@ -40258,7 +40334,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L288",
+      "source_location": "L335",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2_guestexplorev2",
@@ -40270,7 +40346,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L293",
+      "source_location": "L340",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2_guestexplorev2",
@@ -40283,7 +40359,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestExploreV2.tsx",
-      "source_location": "L342",
+      "source_location": "L389",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestexplorev2_guestexplorev2",
@@ -40454,7 +40530,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L13",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40466,7 +40542,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L13",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40637,34 +40713,10 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsadvancedfilters",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsadvancedfilters_guestnewsadvancedfilters",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L25",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40675,7 +40727,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L27",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40686,18 +40738,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L34",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsarticlev2_filtercopy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L188",
+      "source_location": "L142",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40708,7 +40749,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L177",
+      "source_location": "L131",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40719,7 +40760,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L154",
+      "source_location": "L108",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40730,7 +40771,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L70",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40742,103 +40783,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsfilternav",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsfilternav_default_news_advanced_filters",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsfilternav_guestnewsfilternav",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsfilternav_newsadvancedfilters",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsfilternav_newscategory",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsfilternav_newsfilterhref",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L22",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsmasthead",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L22",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsmasthead_guestnewsmasthead",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L12",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40850,7 +40795,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L12",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40862,7 +40807,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L23",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40874,7 +40819,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L23",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40886,7 +40831,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L7",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40898,7 +40843,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L7",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40910,7 +40855,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L7",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40922,7 +40867,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L7",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2",
@@ -40935,19 +40880,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L221",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsarticlev2_guestnewsarticlev2",
-      "target": "frontend_features_public_v2_components_guestnewsfilternav_newsfilterhref"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/features/public-v2/components/GuestNewsArticleV2.tsx",
-      "source_location": "L382",
+      "source_location": "L300",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsarticlev2_guestnewsarticlev2",
@@ -41061,28 +40994,6 @@
       "_origin": "ast",
       "source": "frontend_features_public_v2_components_guestnewsfilternav",
       "target": "frontend_features_public_v2_components_guestnewsfilternav_newsfilterhref",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsMasthead.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsmasthead",
-      "target": "frontend_features_public_v2_components_guestnewsmasthead_copy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/features/public-v2/components/GuestNewsMasthead.tsx",
-      "source_location": "L46",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_features_public_v2_components_guestnewsmasthead",
-      "target": "frontend_features_public_v2_components_guestnewsmasthead_guestnewsmasthead",
       "confidence_score": 1.0
     },
     {
@@ -65943,5 +65854,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "db42f21f7c691feb3b118bfca8649e66bfa36d38"
+  "built_at_commit": "770c87c80e7a9193550a5b697ad32d5dba8e5eef"
 }

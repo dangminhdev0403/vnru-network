@@ -226,8 +226,12 @@
   "224": "[[...path]]/route.ts",
   "225": "import-official-news.ts",
   "226": "ts-jest",
+  "227": "AdminNewsController",
   "228": "ThreeHeroBackground.tsx",
   "229": "about-content.test.mjs",
   "230": "ecosystem-rvstin-content.test.mjs",
-  "231": "home-bilateral-gateway.test.mjs"
+  "231": "home-bilateral-gateway.test.mjs",
+  "232": "@eslint/eslintrc",
+  "233": "7. DIAL DEFINITIONS (Technical Reference)",
+  "234": "Deployment and Local Operation"
 }

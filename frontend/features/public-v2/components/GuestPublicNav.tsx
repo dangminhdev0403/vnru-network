@@ -64,7 +64,7 @@ const COPY: Record<
     menu: "Open menu",
   },
   ru: {
-    brandTitle: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
+    brandTitle: "Российско-вьетнамская сеть знаний",
     home: "Главная",
     about: "О сети",
     ecosystem: "Экосистема",
@@ -74,6 +74,21 @@ const COPY: Record<
     login: "Войти",
     workspace: "Аккаунт",
     menu: "Открыть меню",
+  },
+};
+
+const BRAND_TITLE: Record<Locale, { line1: string; line2: string }> = {
+  vi: {
+    line1: "Mạng lưới Tri thức",
+    line2: "Nga - Việt",
+  },
+  en: {
+    line1: "Knowledge Network",
+    line2: "Russia - Vietnam",
+  },
+  ru: {
+    line1: "Российско-Вьетнамская",
+    line2: "сеть знаний",
   },
 };
 
@@ -87,6 +102,7 @@ export function GuestPublicNav({
   const [clickedKey, setClickedKey] = useState<string | null>(null);
   const [currentHash, setCurrentHash] = useState<string>("");
   const t = COPY[locale] ?? COPY.vi;
+  const brand = BRAND_TITLE[locale] ?? BRAND_TITLE.vi;
 
   useEffect(() => {
     const handleHash = () => {
@@ -102,7 +118,8 @@ export function GuestPublicNav({
     if (pathname.startsWith("/news")) return "news";
     if (pathname === "/ecosystem") return "ecosystem";
     if (pathname === "/about") return "about";
-    if (pathname === "/contact" || pathname.startsWith("/contact")) return "contact";
+    if (pathname === "/contact" || pathname.startsWith("/contact"))
+      return "contact";
     if (pathname === "/") {
       if (currentHash === "#ecosystem") return "ecosystem";
       return "home";
@@ -124,7 +141,7 @@ export function GuestPublicNav({
       translate="no"
       className="sticky top-0 z-50 border-b border-blue-200/80 bg-[#edf5fe]/95 shadow-[0_4px_20px_-12px_rgba(37,99,235,.2)] backdrop-blur-xl"
     >
-      <div className="mx-auto flex h-[74px] max-w-[1536px] items-center justify-between gap-x-3 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[74px] max-w-[1536px] items-center justify-between gap-x-2 px-4 sm:px-6 lg:gap-x-3 lg:px-8">
         <Link
           href="/"
           className="flex min-w-0 shrink-0 items-center gap-3"
@@ -132,9 +149,14 @@ export function GuestPublicNav({
           onClick={() => setClickedKey("home")}
         >
           <BrandMark className="size-11 shrink-0 shadow-xs sm:size-[50px]" />
-          <strong className="hidden truncate text-sm font-black tracking-tight text-slate-950 sm:block xl:text-lg">
-            {t.brandTitle}
-          </strong>
+          <div className="hidden flex-col justify-center leading-tight sm:flex">
+            <span className="text-sm font-black tracking-tight text-slate-950 sm:text-base xl:text-[17px]">
+              {brand.line1}
+            </span>
+            <span className="text-xs font-black tracking-tight text-blue-700 sm:text-sm xl:text-[15px]">
+              {brand.line2}
+            </span>
+          </div>
         </Link>
 
         <div className="hidden items-center justify-center lg:flex">
@@ -150,7 +172,7 @@ export function GuestPublicNav({
                   href={item.href}
                   onClick={() => setClickedKey(item.key)}
                   aria-current={selected ? "page" : undefined}
-                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2.5 py-1.5 text-center text-sm font-bold uppercase leading-tight transition-all duration-150 xl:px-4 xl:py-2 xl:text-base ${selected ? "bg-blue-600 font-extrabold text-white shadow-2xs" : "text-blue-950 hover:bg-white/70 hover:text-blue-700"}`}
+                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2 py-1.5 text-center text-xs font-bold uppercase leading-tight transition-all duration-150 xl:px-3 xl:py-1.5 xl:text-sm 2xl:px-4 2xl:py-2 2xl:text-base ${selected ? "bg-blue-600 font-extrabold text-white shadow-2xs" : "text-blue-950 hover:bg-white/70 hover:text-blue-700"}`}
                 >
                   {item.label}
                 </Link>
@@ -159,13 +181,13 @@ export function GuestPublicNav({
           </nav>
         </div>
 
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 xl:gap-3">
           <LanguageSwitcher variant="light" compact />
 
           {!isAuthenticated ? (
             <Link
               href="/register"
-              className="hidden h-10 items-center justify-center whitespace-nowrap rounded-xl border border-blue-300 bg-white px-3.5 text-center text-sm font-bold text-blue-700 transition hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:inline-flex xl:h-11 xl:px-4 xl:text-base"
+              className="hidden h-9 items-center justify-center whitespace-nowrap rounded-xl border border-blue-300 bg-white px-2.5 text-center text-xs font-bold text-blue-700 transition hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:inline-flex xl:h-10 xl:px-3.5 xl:text-sm 2xl:h-11 2xl:px-4 2xl:text-base"
             >
               {t.register}
             </Link>
@@ -173,7 +195,7 @@ export function GuestPublicNav({
 
           <Link
             href={isAuthenticated ? workspaceHref : "/login"}
-            className="hidden h-10 items-center justify-center whitespace-nowrap rounded-xl bg-blue-600 px-3.5 text-center text-sm font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:inline-flex xl:h-11 xl:px-4 xl:text-base"
+            className="hidden h-9 items-center justify-center whitespace-nowrap rounded-xl bg-blue-600 px-2.5 text-center text-xs font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:inline-flex xl:h-10 xl:px-3.5 xl:text-sm 2xl:h-11 2xl:px-4 2xl:text-base"
           >
             {isAuthenticated ? t.workspace : t.login}
           </Link>
