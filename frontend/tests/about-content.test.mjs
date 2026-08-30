@@ -48,7 +48,7 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /_blank/);
   assert.match(about, /noopener noreferrer/);
   assert.match(about, /hover:-translate-y-1/);
-  assert.match(about, /title: "Đối tác tham gia"/);
+  assert.match(about, /title: "Đối tác"/);
   assert.match(about, /tel:\+79856905856/);
   assert.match(about, /https:\/\/t\.me\/\+79856905856/);
   assert.match(about, /https:\/\/wa\.me\/79996676240/);

@@ -48,7 +48,7 @@ const BOARD_MEMBERS = [
 
 const PARTNER_COPY: Record<Locale, { title: string; ru: string; vi: string }> =
   {
-    vi: { title: "Đối tác tham gia", ru: "Liên bang Nga", vi: "Việt Nam" },
+    vi: { title: "Đối tác", ru: "Liên bang Nga", vi: "Việt Nam" },
     en: {
       title: "Participating partners",
       ru: "Russian Federation",
@@ -239,7 +239,7 @@ const COPY: Record<
     heroMetadata: ["Khoa học", "Công nghệ", "Tri thức", "Hợp tác"],
     heroNav: {
       mechanism: "Cơ chế vận hành",
-      partners: "26+ Đối tác tham gia",
+      partners: "26+ Đối tác",
     },
     intro:
       "Mạng lưới Tri thức Việt Nam - Liên bang Nga là nền tảng kết nối hiện đại và bền vững. Chúng tôi thúc đẩy hợp tác chuyên sâu giữa giới trí thức, viện, trường và doanh nghiệp hai nước nhằm đón đầu kỷ nguyên khoa học công nghệ mới.",

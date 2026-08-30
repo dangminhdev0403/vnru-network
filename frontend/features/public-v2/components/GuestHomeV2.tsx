@@ -473,7 +473,7 @@ export const HOME_COPY: Record<
         "Mô hình ký Thỏa thuận song phương trực tiếp, linh hoạt và minh bạch",
       ],
       learnMoreBtn: "Tìm hiểu về Mạng lưới",
-      partnersBtn: "26+ Đối tác tham gia",
+      partnersBtn: "26+ Đối tác",
       pillars: [
         {
           num: "01",
