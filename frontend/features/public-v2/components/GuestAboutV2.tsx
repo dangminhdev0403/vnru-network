@@ -739,6 +739,12 @@ const SECTION_OFFSETS: Record<AboutTabId, number> = {
   partners: 150,
 };
 
+const SECTION_IDS: Record<AboutTabId, string> = {
+  overview: "about-overview",
+  board: "board",
+  partners: "participating-partners",
+};
+
 function customSmoothScroll(
   targetY: number,
   duration = 850,
@@ -788,6 +794,7 @@ export function GuestAboutV2() {
   const t = COPY[locale] ?? COPY.vi;
   const homeCopy = HOME_COPY[locale] ?? HOME_COPY.vi;
   const [activeSection, setActiveSection] = useState<AboutTabId>("overview");
+  const [aboutMenuOpen, setAboutMenuOpen] = useState(false);
   const isScrollingRef = useRef(false);
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -882,22 +889,54 @@ export function GuestAboutV2() {
         className="sticky top-[74px] z-40 border-b border-blue-200/70 bg-[#f0f4f9]/90 pt-2.5 pb-2.5 sm:pt-3 sm:pb-0 backdrop-blur-md transition-all duration-200"
         aria-label="About navigation"
       >
-        <div className="mx-auto flex max-w-[1460px] items-center justify-start overflow-x-auto px-4 sm:justify-center sm:px-6 lg:px-8">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 bg-white/95 p-1.5 shadow-xs">
+        <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
+          <div className="sm:hidden">
+            <button
+              type="button"
+              aria-expanded={aboutMenuOpen}
+              aria-controls="about-mobile-menu"
+              onClick={() => setAboutMenuOpen((open) => !open)}
+              className="flex min-h-11 w-full items-center justify-between rounded-xl border border-blue-200 bg-white px-4 text-left text-base font-bold text-[#082352] shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+            >
+              {TAB_LABELS[locale]?.[activeSection] ?? TAB_LABELS.vi[activeSection]}
+              <span aria-hidden="true">⌄</span>
+            </button>
+            {aboutMenuOpen && (
+              <div
+                id="about-mobile-menu"
+                className="mt-2 overflow-hidden rounded-xl border border-blue-200 bg-white shadow-sm"
+              >
+                {(["overview", "board", "partners"] as const).map((tabId) => (
+                  <button
+                    key={tabId}
+                    type="button"
+                    aria-current={activeSection === tabId ? "page" : undefined}
+                    onClick={() => {
+                      setAboutMenuOpen(false);
+                      scrollToSection(SECTION_IDS[tabId], tabId);
+                    }}
+                    className={`block min-h-11 w-full border-b border-blue-100 px-4 py-3 text-left text-base font-bold last:border-0 ${
+                      activeSection === tabId
+                        ? "bg-blue-600 text-white"
+                        : "text-slate-700 hover:bg-blue-50"
+                    }`}
+                  >
+                    {TAB_LABELS[locale]?.[tabId] ?? TAB_LABELS.vi[tabId]}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="mx-auto hidden w-max items-center gap-1 rounded-xl border border-blue-200/80 bg-white/95 p-1 shadow-xs sm:flex">
             {(["overview", "board", "partners"] as const).map((tabId) => {
-              const targetId =
-                tabId === "overview"
-                  ? "about-overview"
-                  : tabId === "board"
-                    ? "board"
-                    : "participating-partners";
               const isActive = activeSection === tabId;
               return (
                 <button
                   key={tabId}
                   type="button"
-                  onClick={() => scrollToSection(targetId, tabId)}
-                  className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold whitespace-nowrap transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:px-6 sm:py-2.5 sm:text-base ${
+                  onClick={() => scrollToSection(SECTION_IDS[tabId], tabId)}
+                  className={`inline-flex min-h-11 items-center gap-2 rounded-lg px-5 py-2 text-base font-bold whitespace-nowrap transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
                     isActive
                       ? "bg-blue-600 text-white shadow-sm shadow-blue-600/20"
                       : "text-slate-700 hover:bg-blue-50/70 hover:text-blue-900"

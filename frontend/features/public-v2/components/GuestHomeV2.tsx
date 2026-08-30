@@ -1904,9 +1904,9 @@ export function GuestHomeV2({
           />
           <div className="mx-auto flex min-h-[560px] max-w-[1460px] items-center px-4 py-12 sm:min-h-[620px] sm:px-6 sm:py-16 lg:px-8">
             <div className="mr-auto w-full max-w-[760px] text-left">
-              <div className="mb-5 inline-flex max-w-full items-center gap-2.5 rounded-full border-[2.5px] border-amber-400/90 bg-black/20 px-4 py-2 text-[15px] font-black text-amber-300 sm:mb-6 sm:px-5 sm:text-[17px]">
+              <div className="mb-4 inline-flex max-w-full items-center gap-2 rounded-full border border-amber-400/80 bg-black/20 px-3.5 py-1.5 text-xs font-bold text-amber-300 sm:mb-5 sm:px-4 sm:text-sm">
                 <span
-                  className="size-2.5 shrink-0 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.9)]"
+                  className="size-2 shrink-0 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)]"
                   aria-hidden="true"
                 />
                 <span>{t.eyebrow}</span>
@@ -1914,36 +1914,36 @@ export function GuestHomeV2({
 
               <h1
                 aria-label={`${t.titleMain} ${t.country1} ${t.hyphen} ${t.country2}`}
-                className="overflow-visible font-sans font-black leading-[1.15] text-slate-300 drop-shadow-[0_3px_12px_rgba(0,0,0,0.38)]"
+                className="overflow-visible font-sans font-extrabold leading-[1.15] text-slate-200 drop-shadow-[0_3px_12px_rgba(0,0,0,0.38)]"
               >
                 {locale === "ru" ? (
                   <>
-                    <span className="block bg-gradient-to-r from-white via-blue-300 to-red-500 bg-clip-text text-3xl text-transparent sm:text-5xl lg:text-[62px]">
+                    <span className="block bg-gradient-to-r from-white via-blue-300 to-red-500 bg-clip-text text-2xl text-transparent sm:text-4xl lg:text-[44px]">
                       РОССИЙСКО-
                     </span>
-                    <span className="block bg-gradient-to-r from-red-500 via-red-400 to-amber-300 bg-clip-text text-3xl text-transparent sm:text-5xl lg:text-[62px]">
+                    <span className="block bg-gradient-to-r from-red-500 via-red-400 to-amber-300 bg-clip-text text-2xl text-transparent sm:text-4xl lg:text-[44px]">
                       ВЬЕТНАМСКАЯ
                     </span>
-                    <span className="block text-3xl sm:text-5xl lg:text-[62px]">
+                    <span className="block text-2xl sm:text-4xl lg:text-[44px]">
                       ИНТЕЛЛЕКТУАЛЬНАЯ
                     </span>
-                    <span className="block text-3xl sm:text-5xl lg:text-[62px]">
+                    <span className="block text-2xl sm:text-4xl lg:text-[44px]">
                       СЕТЬ
                     </span>
                   </>
                 ) : (
                   <>
-                    <span className="block text-3xl sm:text-5xl lg:text-[62px]">
+                    <span className="block text-2xl sm:text-4xl lg:text-[44px]">
                       {t.titleMain}
                     </span>
-                    <span className="flex w-fit items-center justify-start gap-x-3 overflow-visible pb-2 pt-0 text-5xl leading-[1.15] sm:gap-x-6 sm:text-[80px] lg:text-[104px]">
-                      <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">
+                    <span className="flex w-fit items-center justify-start gap-x-3 overflow-visible pb-1 pt-0 text-3xl leading-[1.15] sm:gap-x-5 sm:text-5xl lg:text-[68px]">
+                      <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text pb-1 pt-0 leading-[1.2] text-transparent">
                         {t.country1}
                       </span>
                       <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-medium text-transparent">
                         {t.hyphen}
                       </span>
-                      <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text pb-2 pt-0 leading-[1.25] text-transparent">
+                      <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text pb-1 pt-0 leading-[1.2] text-transparent">
                         {t.country2}
                       </span>
                     </span>
@@ -1955,19 +1955,19 @@ export function GuestHomeV2({
         </section>
 
         {/* ═══════════ SECTION 1: TIN TỨC (NEWS) ═══════════ */}
-        <section id="news" className="px-4 pt-10 pb-4 sm:px-6 sm:pt-12 lg:px-8">
+        <section id="news" className="px-4 pt-8 pb-4 sm:px-6 sm:pt-10 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
             {/* Section Header */}
-            <div className="relative mb-6 flex flex-col items-center justify-between gap-4 sm:mb-7 sm:flex-row">
-              <div className="inline-flex items-center gap-2.5">
-                <span className="h-1 w-7 rounded-full bg-blue-600" />
-                <h2 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
+            <div className="relative mb-5 flex flex-col items-center justify-between gap-3 sm:mb-6 sm:flex-row">
+              <div className="inline-flex items-center gap-2">
+                <span className="h-1 w-6 rounded-full bg-blue-600" />
+                <h2 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
                   {t.news.title}
                 </h2>
               </div>
               <Link
                 href="/news"
-                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800"
+                className="group/link inline-flex items-center gap-1 text-xs font-bold text-blue-600 transition hover:text-blue-800 sm:text-sm"
               >
                 <span>{t.news.viewAll}</span>
               </Link>
@@ -1985,7 +1985,7 @@ export function GuestHomeV2({
                   <Link
                     key={item.id}
                     href={newsArticleHref(item)}
-                    className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md hover:shadow-blue-500/10"
                   >
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                       <Image
@@ -1997,8 +1997,8 @@ export function GuestHomeV2({
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
-                    <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
-                      <h3 className="line-clamp-2 text-sm font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-base">
+                    <div className="flex flex-1 flex-col justify-between p-3.5 sm:p-4">
+                      <h3 className="line-clamp-2 text-xs font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-sm">
                         {formatTitle(item.title)}
                       </h3>
                     </div>
@@ -2010,19 +2010,19 @@ export function GuestHomeV2({
         </section>
 
         {/* ═══════════ SECTION 2: HỆ SINH THÁI (ECOSYSTEM) ═══════════ */}
-        <section id="ecosystem" className="px-4 pt-6 pb-6 sm:px-6 lg:px-8">
+        <section id="ecosystem" className="px-4 pt-5 pb-5 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
             {/* Section Header */}
-            <div className="relative mb-6 flex flex-col items-center justify-between gap-4 sm:mb-7 sm:flex-row">
-              <div className="inline-flex items-center gap-2.5">
-                <span className="h-1 w-7 rounded-full bg-blue-600" />
-                <h2 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
+            <div className="relative mb-5 flex flex-col items-center justify-between gap-3 sm:mb-6 sm:flex-row">
+              <div className="inline-flex items-center gap-2">
+                <span className="h-1 w-6 rounded-full bg-blue-600" />
+                <h2 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
                   {t.ecosystem.eyebrow}
                 </h2>
               </div>
               <Link
                 href="/ecosystem"
-                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800"
+                className="group/link inline-flex items-center gap-1 text-xs font-bold text-blue-600 transition hover:text-blue-800 sm:text-sm"
               >
                 <span>{t.ecosystem.cardCta}</span>
               </Link>
@@ -2034,7 +2034,7 @@ export function GuestHomeV2({
                 <Link
                   key={card.title}
                   href={card.href}
-                  className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-6 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                  className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
                 >
                   <div>
                     {/* Top: Circular Orbiting Icon Orb */}
@@ -2043,21 +2043,21 @@ export function GuestHomeV2({
                     </div>
 
                     {/* Title */}
-                    <h3 className="mt-5 text-base font-bold uppercase tracking-tight text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-lg">
+                    <h3 className="mt-4 text-sm font-bold uppercase tracking-tight text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-base">
                       {card.title}
                     </h3>
 
                     {/* Blue Accent Bar */}
-                    <span className="mt-2.5 block h-0.5 w-6 rounded-full bg-blue-600" />
+                    <span className="mt-2 block h-0.5 w-5 rounded-full bg-blue-600" />
 
                     {/* Description */}
-                    <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600">
+                    <p className="mt-2.5 line-clamp-3 text-xs leading-relaxed text-slate-600">
                       {card.desc}
                     </p>
                   </div>
 
                   {/* Bottom CTA Link */}
-                  <div className="mt-6 flex items-center gap-1.5 text-xs font-bold text-blue-600 transition group-hover:text-blue-800">
+                  <div className="mt-4 flex items-center gap-1 text-[11px] font-bold text-blue-600 transition group-hover:text-blue-800">
                     <span>{t.ecosystem.cardCta}</span>
                   </div>
                 </Link>
@@ -2067,19 +2067,19 @@ export function GuestHomeV2({
         </section>
 
         {/* ═══════════ SECTION 3: SỰ KIỆN (EVENTS) ═══════════ */}
-        <section id="events" className="px-4 pt-6 pb-8 sm:px-6 lg:px-8">
+        <section id="events" className="px-4 pt-5 pb-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
             {/* Section Header */}
-            <div className="relative mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
-              <div className="inline-flex items-center gap-2.5">
-                <span className="h-1 w-7 rounded-full bg-blue-600" />
-                <h2 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
+            <div className="relative mb-5 flex flex-col items-center justify-between gap-3 sm:flex-row">
+              <div className="inline-flex items-center gap-2">
+                <span className="h-1 w-6 rounded-full bg-blue-600" />
+                <h2 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
                   {t.events.title}
                 </h2>
               </div>
               <Link
                 href="/news?type=EVENT"
-                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800"
+                className="group/link inline-flex items-center gap-1 text-xs font-bold text-blue-600 transition hover:text-blue-800 sm:text-sm"
               >
                 <span>{t.events.viewAll}</span>
               </Link>
@@ -2098,7 +2098,7 @@ export function GuestHomeV2({
                     <Link
                       key={item.id}
                       href={newsArticleHref(item)}
-                      className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                      className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
                     >
                       <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                         <Image
@@ -2110,8 +2110,8 @@ export function GuestHomeV2({
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
-                      <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
-                        <h3 className="line-clamp-2 text-sm font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-base">
+                      <div className="flex flex-1 flex-col justify-between p-3.5 sm:p-4">
+                        <h3 className="line-clamp-2 text-xs font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-sm">
                           {formatTitle(item.title)}
                         </h3>
                       </div>
@@ -2123,7 +2123,8 @@ export function GuestHomeV2({
           </div>
         </section>
 
-        {/* ═══════════ SECTION 4: NHỮNG CON SỐ (SƠ ĐỒ NGŨ GIÁC) ═══════════ */}
+        {/* ═══════════ SECTION 4: NHỮNG CON SỐ (TẠM ẨN - XEM docs/PENTAGON_STATS_INFOGRAPHIC.md) ═══════════ */}
+        {/* 
         <NetworkStatsInfographic
           stats={t.stats}
           titleMain={t.titleMain}
@@ -2131,6 +2132,7 @@ export function GuestHomeV2({
           hyphen={t.hyphen}
           country2={t.country2}
         />
+        */}
       </main>
 
       <GuestPublicFooter copy={t} />

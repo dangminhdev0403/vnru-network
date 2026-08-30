@@ -59,6 +59,9 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /overflow-hidden rounded-full/);
   assert.match(about, /\{t\.contactLabel\}:/);
   assert.match(about, /id="operating-mechanism"[\s\S]*id="board"/);
+  assert.match(about, /aria-expanded=\{aboutMenuOpen\}[\s\S]*?about-mobile-menu/);
+  assert.match(about, /setAboutMenuOpen\(false\)[\s\S]*?SECTION_IDS\[tabId\]/);
+  assert.match(about, /hidden w-max[\s\S]*?sm:flex/);
   assert.doesNotMatch(
     about,
     /t\.boardIntro|\{t\.eyebrow\}[\s\S]{0,200}\{t\.boardTitle\}|member\.phone|member\.channels|Đối tác mong muốn tham gia|Chọn logo để mở website chính thức trong tab mới\.|id="prospective-partners"/,
