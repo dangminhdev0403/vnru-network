@@ -16,7 +16,16 @@ test("home page renders streamlined news and event sections", async () => {
     /OFFICIAL_NEWS\.(slice\(2,\s*6\)|filter\(\(item\) => item\.contentType === "EVENT"\))/,
   );
   assert.match(home, /href=\{newsArticleHref\(item\)\}/);
-  assert.doesNotMatch(home, /displayedEvents|setEventTab|\/opportunities\?event=/);
-  assert.match(home, /locale === "ru"[\s\S]*?from-white via-blue-300 to-red-500[\s\S]*?РОССИЙСКО-/);
-  assert.match(home, /from-red-500 via-red-400 to-amber-300[\s\S]*?ВЬЕТНАМСКАЯ/);
+  assert.doesNotMatch(
+    home,
+    /displayedEvents|setEventTab|\/opportunities\?event=/,
+  );
+  assert.match(
+    home,
+    /locale === "ru"[\s\S]*?from-white via-blue-300 to-red-500[\s\S]*?РОССИЙСКО-/,
+  );
+  assert.match(
+    home,
+    /from-red-500 via-red-400 to-amber-300[\s\S]*?ВЬЕТНАМСКАЯ/,
+  );
 });

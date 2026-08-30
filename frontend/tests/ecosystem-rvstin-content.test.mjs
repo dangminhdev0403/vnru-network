@@ -34,8 +34,7 @@ test("ecosystem page renders comprehensive network gateways, interactive form, A
   assert.match(connectForm, /aria-invalid=\{!!connectErrors\.fullName\}/);
   assert.doesNotMatch(connectForm, /\brequired\b|\balert\(|focus:ring/);
   assert.match(ecosystem, /InteRussia/);
-  assert.match(ecosystem, /Gorchakov/);
-  assert.match(ecosystem, /minobrnaukiofficial/);
+  assert.match(ecosystem, /interussia\.com/);
 
   // 4. Section 2 (Members): A-Z Experts & Organizations
   assert.match(ecosystem, /EXPERTS_LIST/);

@@ -162,6 +162,8 @@ test("public news uses the official DOCX-derived catalog", async () => {
   assert.match(explore, /className="h-44 w-full"/);
   assert.doesNotMatch(explore, /text-white\/85[\s\S]*?\{item\.date\}/);
   assert.match(explore, /line-clamp-2 max-w-3xl[\s\S]*?\{item\.summary\}/);
+  assert.match(explore, /replace\(\/việt nam\/gi, "Việt Nam"\)/);
+  assert.match(explore, /replace\(\/liên bang nga\/gi, "Liên bang Nga"\)/);
   assert.match(article, /articles: OfficialNewsArticle\[\]/);
   assert.match(article, /article\.body\.map/);
   assert.match(

@@ -122,11 +122,13 @@ function formatTitle(title: string): string {
   if (!title) return "";
   const letters = title.replace(/[^a-zA-ZÀ-ỹ]/g, "");
   const uppercaseLetters = title.replace(/[^A-ZÀ-Ỹ]/g, "");
-  if (letters.length > 5 && uppercaseLetters.length / letters.length > 0.7) {
-    const lower = title.toLowerCase();
-    return lower.charAt(0).toUpperCase() + lower.slice(1);
-  }
-  return title;
+  const formatted =
+    letters.length > 5 && uppercaseLetters.length / letters.length > 0.7
+      ? title.charAt(0) + title.slice(1).toLowerCase()
+      : title;
+  return formatted
+    .replace(/việt nam/gi, "Việt Nam")
+    .replace(/liên bang nga/gi, "Liên bang Nga");
 }
 
 function NewsImage({

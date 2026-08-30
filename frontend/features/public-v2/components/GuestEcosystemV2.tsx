@@ -209,6 +209,52 @@ const ORGANIZATIONS_LIST: OrganizationItem[] = [...ORGANIZATIONS_RAW].sort(
   (a, b) => a.name.localeCompare(b.name, "vi"),
 );
 
+// ══════════════════ DATA: TÀI TRỢ / FELLOWSHIPS & GRANTS (INTERUSSIA) ══════════════════
+const GRANTS_ITEMS = [
+  {
+    id: "nuclear-technologies",
+    image: "/images/opportunities/interussia-nuclear.webp",
+    date: "30.04.2026",
+    title: {
+      vi: "Call for Applications: InteRussia Fellowship in Nuclear Technologies",
+      en: "Call for Applications: InteRussia Fellowship in Nuclear Technologies",
+      ru: "Приём заявок: Стажировка InteRussia в области ядерных технологий",
+    },
+    desc: {
+      vi: "The InteRussia team announces a call for applications to join the InteRussia fellowship for foreign specialists in nuclear technologies.",
+      en: "The InteRussia team announces a call for applications to join the InteRussia fellowship for foreign specialists in nuclear technologies.",
+      ru: "Команда InteRussia объявляет о приёме заявок на участие в исследовательской стажировке для иностранных специалистов в области ядерных технологий при поддержке Фонда Горчакова.",
+    },
+    cta: {
+      vi: "Read more →",
+      en: "Read more →",
+      ru: "Подробнее →",
+    },
+    href: "https://interussia.com/announce_en",
+  },
+  {
+    id: "ir-specialists",
+    image: "/images/opportunities/interussia-ir.webp",
+    date: "30.04.2026",
+    title: {
+      vi: "Call for Applications: InteRussia Fellowship for IR Specialists",
+      en: "Call for Applications: InteRussia Fellowship for IR Specialists",
+      ru: "Приём заявок: Стажировка InteRussia для специалистов в области МО",
+    },
+    desc: {
+      vi: "The InteRussia team is launching a call for applications for the InteRussia scientific and research fellowship for foreign specialists in international relations, political science, and regional studies.",
+      en: "The InteRussia team is launching a call for applications for the InteRussia scientific and research fellowship for foreign specialists in international relations, political science, and regional studies.",
+      ru: "Команда InteRussia объявляет о приёме заявок на научную стажировку для иностранных специалистов в области международных отношений, политологии и регионоведения.",
+    },
+    cta: {
+      vi: "Read more →",
+      en: "Read more →",
+      ru: "Подробнее →",
+    },
+    href: "https://interussia.com/announce_en",
+  },
+];
+
 // ══════════════════ DATA: KHOÁ HỌC BỔNG KHAI SÁNG RESULTS ══════════════════
 const KHAISANG_RESULTS = [
   {
@@ -891,81 +937,61 @@ export function GuestEcosystemV2({
 
             {/* SUBTAB 3: TÀI TRỢ */}
             {oppSubTab === "grants" && (
-              <div className="grid gap-6 md:grid-cols-3">
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
-                      Quỹ Hỗ trợ Ngoại giao Công chúng Alexander Gorchakov (LB
-                      Nga)
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                      Cấp kinh phí tài trợ cho các đề tài nghiên cứu quốc tế,
-                      hội thảo khoa học và dự án giao lưu học thuật giữa các
-                      chuyên gia, tổ chức phi chính phủ và viện nghiên cứu Việt
-                      Nam – LB Nga.
-                    </p>
-                  </div>
-                  <div className="mt-6 border-t border-slate-100 pt-4">
-                    <a
-                      href="https://gorchakovfund.ru"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:text-blue-800"
-                    >
-                      <span>Xem chi tiết</span>
-                      <span aria-hidden="true">↗</span>
-                    </a>
-                  </div>
-                </article>
+              <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2">
+                {GRANTS_ITEMS.map((item) => (
+                  <article
+                    key={item.id}
+                    className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs transition duration-200 hover:-translate-y-1 hover:border-rose-300 hover:shadow-md sm:p-6"
+                  >
+                    <div>
+                      {/* Image Preview Banner */}
+                      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-[#5a0d1e] shadow-xs">
+                        <Image
+                          src={item.image}
+                          alt={item.title[locale] ?? item.title.vi}
+                          fill
+                          unoptimized
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
 
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
-                      Gói Tài trợ Đề tài Nghiên cứu Cơ bản Song phương Nga –
-                      ASEAN
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                      Thông báo từ Bộ Khoa học và Giáo dục Đại học Liên bang Nga
-                      (Minobrnauki) tài trợ các nhóm nghiên cứu phối hợp giữa
-                      các trường đại học Nga và các nhà khoa học Việt Nam trong
-                      lĩnh vực công nghệ xanh và AI.
-                    </p>
-                  </div>
-                  <div className="mt-6 border-t border-slate-100 pt-4">
-                    <a
-                      href="https://t.me/minobrnaukiofficial/20016"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:text-blue-800"
-                    >
-                      <span>Xem chi tiết (Telegram)</span>
-                      <span aria-hidden="true">↗</span>
-                    </a>
-                  </div>
-                </article>
+                      {/* Date Meta */}
+                      <div className="mt-4 text-xs font-medium text-slate-500">
+                        {item.date}
+                      </div>
 
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
-                      Tài trợ Ươm tạo Sáng chế & Chuyển giao Công nghệ Nga –
-                      Việt
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                      Gói hỗ trợ tài chính và pháp lý giúp thương mại hóa các
-                      phát minh, đăng ký bằng độc quyền sáng chế song phương và
-                      ứng dụng thực tiễn vào doanh nghiệp hai nước.
-                    </p>
-                  </div>
-                  <div className="mt-6 border-t border-slate-100 pt-4">
-                    <Link
-                      href="/news/4/tuyen-sinh-trong-khuon-kho-truong-quoc-te-studturizm"
-                      className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:text-blue-800"
-                    >
-                      <span>Xem chi tiết</span>
-                      <span aria-hidden="true">→</span>
-                    </Link>
-                  </div>
-                </article>
+                      {/* Title */}
+                      <h3 className="mt-1.5 text-base font-bold leading-snug text-[#781428] transition-colors group-hover:text-[#5a0d1e] sm:text-lg">
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
+                          {item.title[locale] ?? item.title.vi}
+                        </a>
+                      </h3>
+
+                      {/* Description */}
+                      <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                        {item.desc[locale] ?? item.desc.vi}
+                      </p>
+                    </div>
+
+                    {/* Bottom Read More CTA */}
+                    <div className="mt-4 pt-2">
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-[#781428] transition hover:text-[#5a0d1e] hover:underline sm:text-sm"
+                      >
+                        <span>{item.cta[locale] ?? item.cta.vi}</span>
+                      </a>
+                    </div>
+                  </article>
+                ))}
               </div>
             )}
           </div>
