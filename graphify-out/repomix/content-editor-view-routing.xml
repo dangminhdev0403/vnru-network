@@ -1,0 +1,122 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: frontend/features/news/AdminNewsStudio.tsx, frontend/features/news/ContentAdminSidebar.tsx, frontend/tests/workspace-runtime.test.mjs
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+frontend/
+  features/
+    news/
+      AdminNewsStudio.tsx
+      ContentAdminSidebar.tsx
+  tests/
+    workspace-runtime.test.mjs
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="frontend/features/news/ContentAdminSidebar.tsx">
+import SidebarFrame from "@/components/shared/SidebarFrame";
+import { useLocale } from "@/core/i18n/locale";
+import { useCurrentUser } from "@/features/auth/server-state";
+⋮----
+export default function ContentAdminSidebar({
+  isSidebarOpen,
+  toggleSidebar,
+  isMobile = false,
+  onItemClick,
+}: {
+  isSidebarOpen: boolean;
+toggleSidebar: ()
+</file>
+
+<file path="frontend/features/news/AdminNewsStudio.tsx">
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { showToast } from "@/lib/alerts";
+import { newsResource } from "./resource";
+import type { NewsArticle, NewsInput, NewsLocale } from "./repository";
+⋮----
+interface Window {
+    Translator?: {
+      create(input: {
+        sourceLanguage: "vi";
+        targetLanguage: "ru";
+      }): Promise<{ translate(text: string): Promise<string> }>;
+    };
+  }
+⋮----
+create(input: {
+        sourceLanguage: "vi";
+        targetLanguage: "ru";
+}): Promise<
+⋮----
+}): Promise<
+⋮----
+const empty = () => (
+⋮----
+const dateTimeValue = (value?: string | null)
+const payload = (form: NewsInput): NewsInput => (
+⋮----
+const reset = () =>
+⋮----
+const open = (article: NewsArticle) =>
+⋮----
+const setTranslation = (patch: Partial<typeof translation>)
+⋮----
+const translateVietnameseToRussian = async () =>
+⋮----
+event.preventDefault();
+const input = payload(form);
+if (selectedId) update.mutate(
+else create.mutate(input);
+⋮----
+publish.mutate(
+</file>
+
+<file path="frontend/tests/workspace-runtime.test.mjs">
+const read = (path) => readFile(new URL(`../$
+</file>
+
+</files>

@@ -425,8 +425,8 @@
     "semantic_hash": "a19049fafa3bc8ad5e855528c665bcc1"
   },
   "frontend/app/api/auth/login/route.ts": {
-    "mtime": 1788014984.9185033,
-    "ast_hash": "6f8ed189b1f6c325181041992aca7da4",
+    "mtime": 1788081760.5987816,
+    "ast_hash": "cea71504f803c069a55b28b23fb02660",
     "semantic_hash": ""
   },
   "frontend/app/api/auth/logout/route.ts": {
@@ -450,8 +450,8 @@
     "semantic_hash": "10f56d43b38a1c5f225aeb1f18385323"
   },
   "frontend/app/login/page.tsx": {
-    "mtime": 1788020445.9223342,
-    "ast_hash": "d54aafcf58b2ded3295c3b0f75d27cfc",
+    "mtime": 1788082173.9266398,
+    "ast_hash": "64e0487b5b312ac195652b34b9898c93",
     "semantic_hash": ""
   },
   "frontend/app/not-found.tsx": {
@@ -460,8 +460,8 @@
     "semantic_hash": "edc356ee8dcf4ea0522a603eee8ddbe1"
   },
   "frontend/auth-flow.test.mjs": {
-    "mtime": 1788035038.2856293,
-    "ast_hash": "db0f24256b1174ffd79ac0efbd673c93",
+    "mtime": 1788082067.3794658,
+    "ast_hash": "66d7df10edb4f1bac55f3f5b2955e91c",
     "semantic_hash": ""
   },
   "frontend/components/shared/WorkspaceShell.tsx": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "frontend/tests/workspace-runtime.test.mjs": {
-    "mtime": 1788034929.029756,
-    "ast_hash": "b39eef0278b0d30e90412b91b0c7ddfc",
+    "mtime": 1788083444.1551287,
+    "ast_hash": "910508c58605a3283486fa44c4c2a189",
     "semantic_hash": ""
   },
   "services/auth-service/prisma/migrations/20260818120000_add_session_active_context/migration.sql": {
@@ -1425,8 +1425,8 @@
     "semantic_hash": "11001fad5db2b4a2af6f6d5fa2c60186"
   },
   "frontend/features/public-v2/components/GuestHomeV2.tsx": {
-    "mtime": 1788079410.8660407,
-    "ast_hash": "3373207f97b22c7bee7e7d2a99fc156d",
+    "mtime": 1788084883.290642,
+    "ast_hash": "7cc51946ca2229bc5cd35d1073accdf5",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicNav.tsx": {
@@ -1455,13 +1455,13 @@
     "semantic_hash": ""
   },
   "frontend/app/register/page.tsx": {
-    "mtime": 1788030159.8190956,
-    "ast_hash": "60fd08abf3f526981d09ac9ed5bd82ce",
+    "mtime": 1788082173.951589,
+    "ast_hash": "397b4647ab8ac43d933cc83e5cc4dfa9",
     "semantic_hash": ""
   },
   "services/auth-service/prisma/seed-demo.ts": {
-    "mtime": 1787932785.0420773,
-    "ast_hash": "90f799eb844f3d911c93a2b7c3db57d0",
+    "mtime": 1788082499.6938646,
+    "ast_hash": "675d412ea7102f2c742de903f23447bf",
     "semantic_hash": ""
   },
   "services/auth-service/prisma/migrations/20260824190000_move_profile_to_authjs/migration.sql": {
@@ -1705,13 +1705,13 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestExploreV2.tsx": {
-    "mtime": 1788066941.174654,
-    "ast_hash": "ee861e33387ad06dbd85d5e226645197",
+    "mtime": 1788084847.0709376,
+    "ast_hash": "a5c54d0c173b55e35ff80580ce2f1c78",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestNewsArticleV2.tsx": {
-    "mtime": 1788065260.0032082,
-    "ast_hash": "8b7d3807e576db6ebd090dbbb1816d81",
+    "mtime": 1788085036.684612,
+    "ast_hash": "07214990cf600f19e0146d9c64e04ef7",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicFooter.tsx": {
@@ -1725,8 +1725,8 @@
     "semantic_hash": ""
   },
   "frontend/tests/public-news-routing.test.mjs": {
-    "mtime": 1788066941.1533632,
-    "ast_hash": "e350e31fa8b047ecaee57bff7c471bb6",
+    "mtime": 1788085037.7140446,
+    "ast_hash": "55642e636fbbb98083b70e636d81de50",
     "semantic_hash": ""
   },
   "frontend/app/experts/page.tsx": {
@@ -1825,8 +1825,8 @@
     "semantic_hash": ""
   },
   "frontend/app/login/PasswordField.tsx": {
-    "mtime": 1788020423.8445234,
-    "ast_hash": "5e1135bb3a0808cd50dd6d5125e03d6f",
+    "mtime": 1788082017.9903464,
+    "ast_hash": "eef366c91ad4a014b408e96cccab4cbe",
     "semantic_hash": ""
   },
   "frontend/app/register/validation.ts": {
@@ -1870,8 +1870,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestAboutV2.tsx": {
-    "mtime": 1788079596.5441842,
-    "ast_hash": "19695366562fe83d75f1094318e01a52",
+    "mtime": 1788085362.5005102,
+    "ast_hash": "9a42b74ff71c4eeb78660e3096a96567",
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/ContentPublishStudio.tsx": {
@@ -2010,8 +2010,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestEcosystemV2.tsx": {
-    "mtime": 1788066519.1521106,
-    "ast_hash": "f1fa00038664ca0c7c5b131e608fb406",
+    "mtime": 1788081283.6852446,
+    "ast_hash": "375417e1f1a8e52f889646e223404e53",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-hero-bg.jpg": {
@@ -2040,8 +2040,8 @@
     "semantic_hash": ""
   },
   "frontend/features/news/AdminNewsStudio.tsx": {
-    "mtime": 1788016728.254661,
-    "ast_hash": "38a6423248e49849adfbd127e9ee4d9d",
+    "mtime": 1788084194.7001555,
+    "ast_hash": "6fc3ef79207776adf5bbfe17d732d7f8",
     "semantic_hash": ""
   },
   "frontend/features/news/ContentAdminSidebar.tsx": {
@@ -2070,8 +2070,8 @@
     "semantic_hash": ""
   },
   "frontend/app/news/[id]/[slug]/page.tsx": {
-    "mtime": 1788013235.2227232,
-    "ast_hash": "c7e98943e32cb70d8dae0b2ab4646e15",
+    "mtime": 1788085035.6820097,
+    "ast_hash": "52eae034d898e85f4ffd7d1b92771d95",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestNewsAdvancedFilters.tsx": {
@@ -2080,8 +2080,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/data/official-news.ts": {
-    "mtime": 1788079579.796211,
-    "ast_hash": "44d69a1ee38e51fc2303c9927b6175a7",
+    "mtime": 1788084949.8169599,
+    "ast_hash": "7ca50ad2a76f45bd6d318ae15c21e3d2",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/data/public-news-server.ts": {
@@ -2090,18 +2090,18 @@
     "semantic_hash": ""
   },
   "frontend/tests/about-content.test.mjs": {
-    "mtime": 1788079603.2351813,
-    "ast_hash": "7b3a6cad4af85749ed4f10333c6bc68a",
+    "mtime": 1788085370.438368,
+    "ast_hash": "34aeb19c82c76414188a938b77fc45fd",
     "semantic_hash": ""
   },
   "frontend/tests/ecosystem-rvstin-content.test.mjs": {
-    "mtime": 1788066519.0890164,
-    "ast_hash": "1525eda03e8c6c46f4a9b0ea3f442268",
+    "mtime": 1788080441.8976603,
+    "ast_hash": "f930f967b51a97561dfcfb49593ba1db",
     "semantic_hash": ""
   },
   "frontend/tests/home-bilateral-gateway.test.mjs": {
-    "mtime": 1788079544.402811,
-    "ast_hash": "41bd3ebccd6f1d2ffa2601c499a3a4e1",
+    "mtime": 1788079733.6158502,
+    "ast_hash": "d2c48ff442ea8a5d476b207c2966cff7",
     "semantic_hash": ""
   },
   "services/auth-service/prisma/import-official-news.ts": {
@@ -2375,13 +2375,13 @@
     "semantic_hash": ""
   },
   "frontend/app/login/LoginForm.tsx": {
-    "mtime": 1788020437.5685892,
-    "ast_hash": "972effb6917d817150b18d51918188ff",
+    "mtime": 1788082008.2899785,
+    "ast_hash": "d65cde1d3cc80bf5a95b88bd4e72e6a9",
     "semantic_hash": ""
   },
   "frontend/tests/login-submit-feedback.test.mjs": {
-    "mtime": 1788020753.1330876,
-    "ast_hash": "05856c6f90ffcb343f2201ff08a2aa96",
+    "mtime": 1788081760.438987,
+    "ast_hash": "ca3e1ff9566fdc80930a9bd31307dd5e",
     "semantic_hash": ""
   },
   "frontend/app/contact/page.tsx": {
@@ -2437,6 +2437,21 @@
   "docs/PENTAGON_STATS_INFOGRAPHIC.md": {
     "mtime": 1788078901.0855975,
     "ast_hash": "2d6827f4d57015a6f4a89f2a8bfe2441",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/opportunities/interussia-gorchakov.webp": {
+    "mtime": 1788080538.7744057,
+    "ast_hash": "dba06be436830104cd3c9c4db6c51505",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/opportunities/interussia-ir.webp": {
+    "mtime": 1788080309.4467647,
+    "ast_hash": "938b4be331213afcd4455c390ffdf3cd",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/opportunities/interussia-nuclear.webp": {
+    "mtime": 1788080309.4257207,
+    "ast_hash": "f3c02b12666b11d9deadddc8947dfdeb",
     "semantic_hash": ""
   }
 }

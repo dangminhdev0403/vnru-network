@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLocale } from "@/core/i18n/locale";
 import {
+  formatNewsTitle,
   newsArticleHref,
   type NewsCategoryKey,
   type OfficialNewsArticle,
@@ -188,7 +189,7 @@ export function GuestNewsArticleV2({
           <article className="min-w-0">
             <header>
               <h2 className="max-w-5xl text-2xl font-black leading-tight tracking-[-0.025em] text-slate-950 sm:text-3xl lg:text-4xl">
-                {article.title}
+                {formatNewsTitle(article.title)}
               </h2>
               <p className="mt-5 max-w-4xl text-base leading-7 text-slate-600 sm:text-lg">
                 {article.summary}
@@ -215,7 +216,7 @@ export function GuestNewsArticleV2({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={article.image}
-                  alt={article.title}
+                  alt={formatNewsTitle(article.title)}
                   className="max-h-[640px] w-full rounded-2xl object-cover"
                 />
               </div>
@@ -303,7 +304,7 @@ export function GuestNewsArticleV2({
                     <Thumb item={item} />
                     <div className="min-w-0">
                       <h3 className="line-clamp-2 text-base font-extrabold leading-6 text-slate-900">
-                        {item.title}
+                        {formatNewsTitle(item.title)}
                       </h3>
                     </div>
                   </Link>
@@ -323,7 +324,7 @@ export function GuestNewsArticleV2({
                     className="group block py-4 first:pt-0 last:pb-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                   >
                     <span className="line-clamp-2 block text-base font-bold leading-6 text-slate-800 transition-colors group-hover:text-blue-700">
-                      {item.title}
+                      {formatNewsTitle(item.title)}
                     </span>
                   </Link>
                 ))}
@@ -358,7 +359,7 @@ export function GuestNewsArticleV2({
                 )}
                 <div className="p-4">
                   <h3 className="line-clamp-2 text-base font-extrabold leading-6">
-                    {item.title}
+                    {formatNewsTitle(item.title)}
                   </h3>
                 </div>
               </Link>

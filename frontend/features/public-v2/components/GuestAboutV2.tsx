@@ -1006,52 +1006,58 @@ export function GuestAboutV2() {
                 id="about-mobile-menu"
                 className="mt-2 overflow-hidden rounded-xl border border-blue-200 bg-white shadow-sm"
               >
-                {(["overview", "ecosystem", "board", "partners"] as const).map((tabId) => (
-                  <button
-                    key={tabId}
-                    type="button"
-                    aria-current={activeSection === tabId ? "page" : undefined}
-                    onClick={() => {
-                      setAboutMenuOpen(false);
-                      scrollToSection(SECTION_IDS[tabId], tabId);
-                    }}
-                    className={`block min-h-10 w-full border-b border-blue-100 px-4 py-2.5 text-left text-sm font-bold last:border-0 ${
-                      activeSection === tabId
-                        ? "bg-blue-600 text-white"
-                        : "text-slate-700 hover:bg-blue-50"
-                    }`}
-                  >
-                    {TAB_LABELS[locale]?.[tabId] ?? TAB_LABELS.vi[tabId]}
-                  </button>
-                ))}
+                {(["overview", "ecosystem", "board", "partners"] as const).map(
+                  (tabId) => (
+                    <button
+                      key={tabId}
+                      type="button"
+                      aria-current={
+                        activeSection === tabId ? "page" : undefined
+                      }
+                      onClick={() => {
+                        setAboutMenuOpen(false);
+                        scrollToSection(SECTION_IDS[tabId], tabId);
+                      }}
+                      className={`block min-h-10 w-full border-b border-blue-100 px-4 py-2.5 text-left text-sm font-bold last:border-0 ${
+                        activeSection === tabId
+                          ? "bg-blue-600 text-white"
+                          : "text-slate-700 hover:bg-blue-50"
+                      }`}
+                    >
+                      {TAB_LABELS[locale]?.[tabId] ?? TAB_LABELS.vi[tabId]}
+                    </button>
+                  ),
+                )}
               </div>
             )}
           </div>
 
           <div className="mx-auto hidden w-max items-center gap-1 rounded-xl border border-blue-200/80 bg-white/95 p-1 shadow-xs sm:flex">
-            {(["overview", "ecosystem", "board", "partners"] as const).map((tabId) => {
-              const isActive = activeSection === tabId;
-              return (
-                <button
-                  key={tabId}
-                  type="button"
-                  onClick={() => scrollToSection(SECTION_IDS[tabId], tabId)}
-                  className={`inline-flex min-h-9 items-center gap-2 rounded-lg px-4 py-1.5 text-sm font-bold whitespace-nowrap transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
-                    isActive
-                      ? "bg-blue-600 text-white shadow-xs shadow-blue-600/20"
-                      : "text-slate-700 hover:bg-blue-50/70 hover:text-blue-900"
-                  }`}
-                >
-                  <span
-                    className={`size-1.5 rounded-full ${
-                      isActive ? "bg-white" : "bg-slate-300"
+            {(["overview", "ecosystem", "board", "partners"] as const).map(
+              (tabId) => {
+                const isActive = activeSection === tabId;
+                return (
+                  <button
+                    key={tabId}
+                    type="button"
+                    onClick={() => scrollToSection(SECTION_IDS[tabId], tabId)}
+                    className={`inline-flex min-h-9 items-center gap-2 rounded-lg px-4 py-1.5 text-sm font-bold whitespace-nowrap transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
+                      isActive
+                        ? "bg-blue-600 text-white shadow-xs shadow-blue-600/20"
+                        : "text-slate-700 hover:bg-blue-50/70 hover:text-blue-900"
                     }`}
-                    aria-hidden="true"
-                  />
-                  {TAB_LABELS[locale]?.[tabId] ?? TAB_LABELS.vi[tabId]}
-                </button>
-              );
-            })}
+                  >
+                    <span
+                      className={`size-1.5 rounded-full ${
+                        isActive ? "bg-white" : "bg-slate-300"
+                      }`}
+                      aria-hidden="true"
+                    />
+                    {TAB_LABELS[locale]?.[tabId] ?? TAB_LABELS.vi[tabId]}
+                  </button>
+                );
+              },
+            )}
           </div>
         </div>
       </nav>

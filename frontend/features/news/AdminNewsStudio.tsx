@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { showToast } from "@/lib/alerts";
 import { newsResource } from "./resource";
 import type { NewsArticle, NewsInput, NewsLocale } from "./repository";
@@ -73,6 +73,7 @@ const categories = {
 } as const;
 
 export function AdminNewsStudio() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const view = searchParams.get("view");
   const [status, setStatus] = useState<"DRAFT" | "PUBLISHED" | undefined>();
@@ -85,8 +86,8 @@ export function AdminNewsStudio() {
   const [previousView, setPreviousView] = useState(view);
   if (view !== previousView) {
     setPreviousView(view);
+    setSelectedId(undefined);
     if (view === "new") {
-      setSelectedId(undefined);
       setForm(initial);
       setFeatured(false);
       setLocale("VI");
@@ -163,6 +164,9 @@ export function AdminNewsStudio() {
   const featuredCount =
     list.data?.filter((article) => article.isFeatured).length ?? 0;
   const translation = form.translations[locale];
+  const showOverview = !view;
+  const showList = Boolean(view && view !== "new" && !selectedId);
+  const showEditor = view === "new" || Boolean(selectedId);
   const error = [
     list.error,
     create.error,
@@ -177,6 +181,7 @@ export function AdminNewsStudio() {
     setForm(initial);
     setFeatured(false);
     setLocale("VI");
+    router.push("/workspace/news?view=new");
   };
 
 
@@ -265,7 +270,7 @@ export function AdminNewsStudio() {
         </button>
       </header>
 
-      <section
+      {showOverview ? (<section
         aria-label="Tổng quan nội dung"
         className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
       >
@@ -293,10 +298,10 @@ export function AdminNewsStudio() {
             </div>
           </article>
         ))}
-      </section>
+      </section>) : null}
 
-      <div className="grid gap-5 xl:grid-cols-[360px_minmax(0,1fr)]">
-        <aside className="self-start rounded-2xl border border-slate-200 bg-white shadow-sm xl:sticky xl:top-24">
+      {showList || showEditor ? (<div className="grid gap-5">
+        {showList ? (<aside className="self-start rounded-2xl border border-slate-200 bg-white shadow-sm xl:sticky xl:top-24">
           <div className="border-b border-slate-200 p-4">
             <h2 className="text-xl font-black text-slate-950">
               Danh sách bài viết
@@ -349,9 +354,9 @@ export function AdminNewsStudio() {
               </button>
             ))}
           </div>
-        </aside>
+        </aside>) : null}
 
-        <form
+        {showEditor ? (<form
           onSubmit={(event) => {
             event.preventDefault();
             const input = payload(form);
@@ -370,6 +375,17 @@ export function AdminNewsStudio() {
               </h2>
             </div>
             <div className="flex flex-wrap gap-2">
+              {selectedId ? (
+                <label className="flex min-h-11 items-center gap-3 rounded-xl border border-slate-300 px-4 text-base font-semibold">
+                  <input
+                    type="checkbox"
+                    checked={featured}
+                    onChange={(event) => setFeatured(event.target.checked)}
+                    className="size-5"
+                  />
+                  Đặt làm tin nổi bật
+                </label>
+              ) : null}
               <button
                 type="submit"
                 disabled={create.isPending || update.isPending}
@@ -591,15 +607,6 @@ export function AdminNewsStudio() {
 
             {selectedId ? (
               <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-slate-200 pt-5">
-                <label className="flex min-h-11 items-center gap-3 rounded-xl border border-slate-300 px-4 text-base font-semibold">
-                  <input
-                    type="checkbox"
-                    checked={featured}
-                    onChange={(event) => setFeatured(event.target.checked)}
-                    className="size-5"
-                  />
-                  Đặt làm tin nổi bật
-                </label>
                 <button
                   type="button"
                   onClick={() => unpublish.mutate(selectedId)}
@@ -610,8 +617,8 @@ export function AdminNewsStudio() {
               </div>
             ) : null}
           </div>
-        </form>
-      </div>
+        </form>) : null}
+      </div>) : null}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
 import {
+  formatNewsTitle,
   newsArticleHref,
   OFFICIAL_NEWS,
   type OfficialNewsArticle,
@@ -118,19 +119,6 @@ const DEFAULT_FALLBACK_IMAGES = [
   "/images/home-bilateral-gateway.jpg",
 ];
 
-function formatTitle(title: string): string {
-  if (!title) return "";
-  const letters = title.replace(/[^a-zA-ZÀ-ỹ]/g, "");
-  const uppercaseLetters = title.replace(/[^A-ZÀ-Ỹ]/g, "");
-  const formatted =
-    letters.length > 5 && uppercaseLetters.length / letters.length > 0.7
-      ? title.charAt(0) + title.slice(1).toLowerCase()
-      : title;
-  return formatted
-    .replace(/việt nam/gi, "Việt Nam")
-    .replace(/liên bang nga/gi, "Liên bang Nga");
-}
-
 function NewsImage({
   className = "",
   src,
@@ -171,7 +159,7 @@ function SmallRow({ item, index = 0 }: { item: NewsItem; index?: number }) {
       </div>
       <div className="min-w-0 flex-1">
         <h3 className="line-clamp-2 font-serif text-sm font-bold leading-snug text-[#082352] transition-colors group-hover:text-blue-600 sm:text-[15px]">
-          {formatTitle(item.title)}
+          {formatNewsTitle(item.title)}
         </h3>
         <p className="mt-0.5 line-clamp-1 text-xs text-slate-500">
           {item.summary}
@@ -188,7 +176,7 @@ function TextRow({ item }: { item: NewsItem }) {
       className="group block border-b border-slate-200 py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
     >
       <h3 className="line-clamp-2 font-serif text-base font-bold leading-snug text-[#082352] transition group-hover:text-blue-600 sm:text-lg">
-        {formatTitle(item.title)}
+        {formatNewsTitle(item.title)}
       </h3>
       <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-slate-600">
         {item.summary}
@@ -405,7 +393,7 @@ export function GuestExploreV2({
                           {t.categories[item.category] ?? item.category}
                         </div>
                         <h2 className="max-w-4xl font-serif text-xl font-bold leading-snug text-white transition hover:text-blue-200 sm:text-2xl lg:text-3xl">
-                          {formatTitle(item.title)}
+                          {formatNewsTitle(item.title)}
                         </h2>
                         <p className="mt-2.5 line-clamp-2 max-w-3xl text-xs leading-relaxed text-slate-200 sm:text-sm sm:leading-normal">
                           {item.summary}
@@ -485,7 +473,7 @@ export function GuestExploreV2({
                       </div>
                       <div className="p-5">
                         <h3 className="line-clamp-2 font-serif text-base font-bold leading-snug text-[#082352] transition group-hover:text-blue-600">
-                          {formatTitle(item.title)}
+                          {formatNewsTitle(item.title)}
                         </h3>
                         <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-600 sm:text-sm">
                           {item.summary}

@@ -34,6 +34,12 @@ test("content administration reuses admin chrome with its own navigation", async
     assert.match(contentSidebar, new RegExp(`view=${view}`));
   }
   assert.match(studio, /searchParams\.get\("view"\)/);
+  assert.match(studio, /const showOverview = !view/);
+  assert.match(studio, /const showList = Boolean\(view && view !== "new" && !selectedId\)/);
+  assert.match(studio, /const showEditor = view === "new" \|\| Boolean\(selectedId\)/);
+  assert.match(studio, /showOverview \? \([\s\S]*Tổng quan nội dung/);
+  assert.match(studio, /showList \? \([\s\S]*Danh sách bài viết/);
+  assert.match(studio, /showEditor \? \([\s\S]*onSubmit/);
   assert.doesNotMatch(contentSidebar, /\/admin\/access/);
   assert.match(studio, /Trung tâm nội dung/);
   assert.match(studio, /Danh sách bài viết/);

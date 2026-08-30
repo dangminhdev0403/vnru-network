@@ -15,6 +15,55 @@ export type OfficialNewsArticle = {
   actionLabel?: string | null;
 };
 
+const NEWS_TITLE_NAMES = [
+  ["rosatom quantum", "Rosatom Quantum"],
+  ["dmitry chernyshenko", "Dmitry Chernyshenko"],
+  ["bauman moscow", "Bauman Moscow"],
+  ["saint petersburg", "Saint Petersburg"],
+  ["bonch-bruevich", "Bonch-Bruevich"],
+  ["leningrad pushkin", "Leningrad Pushkin"],
+  ["mega-science", "Mega-Science"],
+  ["vostokgosplan", "Vostokgosplan"],
+  ["innopraktika", "Innopraktika"],
+  ["studturizm", "Studturizm"],
+  ["mendeleev", "Mendeleev"],
+  ["rosatom", "Rosatom"],
+  ["bologna", "Bologna"],
+  ["herzen", "Herzen"],
+  ["putin", "Putin"],
+  ["ninh thuận", "Ninh Thuận"],
+  ["bình dương", "Bình Dương"],
+  ["quảng bình", "Quảng Bình"],
+  ["bắc cực", "Bắc Cực"],
+  ["việt nam", "Việt Nam"],
+  ["liên bang nga", "Liên bang Nga"],
+  ["nga", "Nga"],
+] as const;
+
+export function formatNewsTitle(title: string): string {
+  if (!title) return "";
+  const letters = title.replace(/[^a-zA-ZÀ-ỹ]/g, "");
+  const uppercaseLetters = title.replace(/[^A-ZÀ-Ỹ]/g, "");
+  let formatted =
+    letters.length > 5 && uppercaseLetters.length / letters.length > 0.7
+      ? title.charAt(0) + title.slice(1).toLocaleLowerCase("vi")
+      : title;
+
+  for (const [name, canonical] of NEWS_TITLE_NAMES) {
+    const pattern = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    formatted = formatted.replace(
+      new RegExp(`(?<![\\p{L}\\p{N}])${pattern}(?![\\p{L}\\p{N}])`, "giu"),
+      canonical,
+    );
+  }
+
+  return formatted
+    .replace(/\b(AI|EEF|HUS|MICE|PTIT|SKIF|UAV|VNU|VVER-1200)\b/gi, (value) =>
+      value.toUpperCase(),
+    )
+    .replace(/\bM\.A\./gi, "M.A.");
+}
+
 export function newsArticleHref(article: Pick<OfficialNewsArticle, "id" | "title">) {
   const slug = article.title
     .normalize("NFD")

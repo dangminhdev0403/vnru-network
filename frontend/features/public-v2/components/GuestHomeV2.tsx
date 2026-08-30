@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, type Locale } from "@/core/i18n/locale";
-import { newsArticleHref, OFFICIAL_NEWS } from "../data/official-news";
+import {
+  formatNewsTitle,
+  newsArticleHref,
+  OFFICIAL_NEWS,
+} from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
 
@@ -37,17 +41,6 @@ const DEFAULT_FALLBACK_IMAGES = [
   "/images/news/article-7.webp",
   "/images/home-bilateral-gateway.jpg",
 ];
-
-function formatTitle(title: string): string {
-  if (!title) return "";
-  const letters = title.replace(/[^a-zA-ZÀ-ỹ]/g, "");
-  const uppercaseLetters = title.replace(/[^A-ZÀ-Ỹ]/g, "");
-  if (letters.length > 5 && uppercaseLetters.length / letters.length > 0.7) {
-    const lower = title.toLowerCase();
-    return lower.charAt(0).toUpperCase() + lower.slice(1);
-  }
-  return title;
-}
 
 export const HOME_COPY: Record<
   Locale,
@@ -1999,7 +1992,7 @@ export function GuestHomeV2({
                     </div>
                     <div className="flex flex-1 flex-col justify-between p-3.5 sm:p-4">
                       <h3 className="line-clamp-2 text-xs font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-sm">
-                        {formatTitle(item.title)}
+                        {formatNewsTitle(item.title)}
                       </h3>
                     </div>
                   </Link>
@@ -2138,7 +2131,7 @@ export function GuestHomeV2({
                       </div>
 
                       <h3 className="line-clamp-2 text-xs font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-sm">
-                        {formatTitle(item.title)}
+                        {formatNewsTitle(item.title)}
                       </h3>
                     </div>
                   </Link>
