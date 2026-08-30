@@ -43,6 +43,8 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /\/images\/board\/nguyen-quoc-hung\.webp/);
   assert.match(about, /\/images\/board\/tran-duc-tung\.webp/);
   assert.match(about, /const PARTNERS = \[/);
+  const activePartners = about.split("ĐỐI TÁC TẠM ẨN", 1)[0];
+  assert.equal((activePartners.match(/country: "ru"/g) ?? []).length, 13);
   assert.equal((about.match(/country: "ru"/g) ?? []).length, 23);
   assert.equal((about.match(/country: "vi"/g) ?? []).length, 3);
   assert.match(about, /_blank/);

@@ -66,7 +66,21 @@ const PARTNER_COPY: Record<Locale, { title: string; ru: string; vi: string }> =
   };
 
 const PARTNERS = [
-  // ══════════════════ VỀ PHÍA NGA (11 ĐỐI TÁC ACTIVE) ══════════════════
+  // ══════════════════ VỀ PHÍA NGA (13 ĐỐI TÁC ACTIVE) ══════════════════
+  {
+    name: "Học viện Tổng thống, khu vực Tây Bắc (Северо-Западный институт управления РАНХиГС)",
+    shortName: "СЗИУ РАНХиГС",
+    logo: "ranepa-northwest",
+    url: "https://sziu.ranepa.ru/",
+    country: "ru",
+  },
+  {
+    name: "Tổ chức tư vấn khoa học giáo dục Kolaboratoria (Колаборатория / Co-laboratoria)",
+    shortName: "Co-laboratoria",
+    logo: "co-laboratoria",
+    url: "https://co-laboratoria.ru/",
+    country: "ru",
+  },
   {
     name: "Đại học công nghệ quản lý và kinh tế Saint Petersburg (СПбУТУиЭ)",
     shortName: "СПбУТУиЭ",
@@ -182,12 +196,7 @@ const PARTNERS = [
     url: "https://www.cemi.rssi.ru/",
     country: "ru",
   },
-  {
-    name: "СЗИУ РАНХиГС",
-    logo: "ranepa-northwest",
-    url: "https://sziu.ranepa.ru/",
-    country: "ru",
-  },
+
   {
     name: "ИЭ РАН",
     logo: "inecon-ran",
@@ -236,12 +245,7 @@ const PARTNERS = [
     url: "https://linguanet.ru/",
     country: "ru",
   },
-  {
-    name: "Co-laboratoria",
-    logo: "co-laboratoria",
-    url: "https://co-laboratoria.ru/",
-    country: "ru",
-  },
+
   */
 ] as const;
 
