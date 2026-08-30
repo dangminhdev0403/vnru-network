@@ -1430,8 +1430,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicNav.tsx": {
-    "mtime": 1788067495.8030362,
-    "ast_hash": "59ed67bf9494a915a2ddee36223447fe",
+    "mtime": 1788067828.8038197,
+    "ast_hash": "f0e9a142fae585381f9d0eda68f1cc7d",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestKnowledgeV2.tsx": {

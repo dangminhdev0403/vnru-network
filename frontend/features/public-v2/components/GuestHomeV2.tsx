@@ -29,6 +29,26 @@ const HERO_BANNERS = [
   },
 ] as const;
 
+const DEFAULT_FALLBACK_IMAGES = [
+  "/images/news/article-1.webp",
+  "/images/news/article-5.webp",
+  "/images/news/article-6.webp",
+  "/images/news/article-4.webp",
+  "/images/news/article-7.webp",
+  "/images/home-bilateral-gateway.jpg",
+];
+
+function formatTitle(title: string): string {
+  if (!title) return "";
+  const letters = title.replace(/[^a-zA-ZÀ-ỹ]/g, "");
+  const uppercaseLetters = title.replace(/[^A-ZÀ-Ỹ]/g, "");
+  if (letters.length > 5 && uppercaseLetters.length / letters.length > 0.7) {
+    const lower = title.toLowerCase();
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
+  }
+  return title;
+}
+
 export const HOME_COPY: Record<
   Locale,
   {
@@ -240,7 +260,7 @@ export const HOME_COPY: Record<
       cta: "Khám phá cơ hội hợp tác ngay →",
     },
     news: {
-      title: "TIN TỨC",
+      title: "Tin tức",
       viewAll: "Xem tất cả tin tức →",
       items: [
         {
@@ -285,34 +305,34 @@ export const HOME_COPY: Record<
       ],
     },
     ecosystem: {
-      eyebrow: "HỆ SINH THÁI",
+      eyebrow: "Hệ sinh thái",
       title: "LIÊN KẾT TRI THỨC VIỆT – NGA",
       cardCta: "Khám phá →",
       cards: [
         {
           icon: "handshake",
-          title: "CƠ HỘI HỢP TÁC",
+          title: "Cơ hội hợp tác",
           desc: "Kết nối doanh nghiệp, tổ chức và cá nhân tìm kiếm cơ hội hợp tác bền vững.",
           href: "/opportunities",
           tone: "blue",
         },
         {
           icon: "groups",
-          title: "THÀNH VIÊN",
+          title: "Thành viên",
           desc: "Mạng lưới thành viên rộng khắp Việt Nam và Liên bang Nga, cùng chung tầm nhìn.",
           href: "/experts",
           tone: "emerald",
         },
         {
           icon: "insights",
-          title: "DỰ ÁN & KẾT QUẢ",
+          title: "Dự án & Kết quả",
           desc: "Các dự án nổi bật và những kết quả hợp tác đã đạt được giữa hai quốc gia.",
           href: "/opportunities",
           tone: "purple",
         },
         {
           icon: "menu_book",
-          title: "THƯ VIỆN TRI THỨC",
+          title: "Thư viện tri thức",
           desc: "Kho tri thức phong phú về nghiên cứu, báo cáo và tài liệu chuyên ngành.",
           href: "/knowledge",
           tone: "amber",
@@ -320,8 +340,8 @@ export const HOME_COPY: Record<
       ],
     },
     events: {
-      eyebrow: "SỰ KIỆN",
-      title: "SỰ KIỆN",
+      eyebrow: "Sự kiện",
+      title: "Sự kiện",
       viewAll: "Xem tất cả sự kiện →",
       tabUpcoming: "Sắp diễn ra",
       tabPast: "Đã tổ chức",
@@ -606,22 +626,22 @@ export const HOME_COPY: Record<
       cta: "Смотреть возможности сотрудничества →",
     },
     news: {
-      title: "НОВОСТИ",
+      title: "Новости",
       viewAll: "Все новости →",
       items: [
         {
           id: 1,
-          category: "СОТРУДНИЧЕСТВО",
+          category: "Сотрудничество",
           categoryTone: "bg-blue-600/90 text-white",
           title:
-            "Форум образовательного сотрудничества Россия – Вьетнам 2026: Расширение связей",
+            "Форум образовательного сотрудничества Россия – Вьетнам 2026: Новые горизонты",
           date: "12/05/2026",
           image:
             "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
         },
         {
           id: 2,
-          category: "ОБРАЗОВАНИЕ",
+          category: "Образование",
           categoryTone: "bg-emerald-600/90 text-white",
           title:
             "Подписание соглашений о сотрудничестве между ведущими университетами",
@@ -631,7 +651,7 @@ export const HOME_COPY: Record<
         },
         {
           id: 3,
-          category: "НАУКА",
+          category: "Наука",
           categoryTone: "bg-purple-600/90 text-white",
           title:
             "Совместный исследовательский проект по новым материалам РФ и ВР",
@@ -641,7 +661,7 @@ export const HOME_COPY: Record<
         },
         {
           id: 4,
-          category: "КУЛЬТУРА",
+          category: "Культура",
           categoryTone: "bg-amber-600/90 text-white",
           title:
             "Дни российской культуры во Вьетнаме 2026: Диалог наследия и дружбы",
@@ -652,34 +672,34 @@ export const HOME_COPY: Record<
       ],
     },
     ecosystem: {
-      eyebrow: "ЭКОСИСТЕМА",
-      title: "НАУЧНО-ОБРАЗОВАТЕЛЬНЫЙ МОСТ РОССИЯ – ВЬЕТНАМ",
+      eyebrow: "Экосистема",
+      title: "Научно-образовательный мост Россия – Вьетнам",
       cardCta: "Исследовать →",
       cards: [
         {
           icon: "handshake",
-          title: "ВОЗМОЖНОСТИ СОТРУДНИЧЕСТВА",
+          title: "Возможности сотрудничества",
           desc: "Связь предприятий, организаций и ученых для долгосрочного партнерства.",
           href: "/opportunities",
           tone: "blue",
         },
         {
           icon: "groups",
-          title: "УЧАСТНИКИ",
+          title: "Участники",
           desc: "Широкая сеть участников по всему Вьетнаму и России с единым видением.",
           href: "/experts",
           tone: "emerald",
         },
         {
           icon: "insights",
-          title: "ПРОЕКТЫ И РЕЗУЛЬТАТЫ",
+          title: "Проекты и результаты",
           desc: "Ключевые проекты и достигнутые результаты совместной работы.",
           href: "/opportunities",
           tone: "purple",
         },
         {
           icon: "menu_book",
-          title: "БИБЛИОТЕКА ЗНАНИЙ",
+          title: "Библиотека знаний",
           desc: "Богатая база знаний: исследования, отчеты и профильные материалы.",
           href: "/knowledge",
           tone: "amber",
@@ -687,8 +707,8 @@ export const HOME_COPY: Record<
       ],
     },
     events: {
-      eyebrow: "СОБЫТИЯ",
-      title: "СОБЫТИЯ",
+      eyebrow: "События",
+      title: "События",
       viewAll: "Все события →",
       tabUpcoming: "Предстоящие",
       tabPast: "Прошедшие",
@@ -975,7 +995,7 @@ export const HOME_COPY: Record<
       cta: "Explore Opportunities Now →",
     },
     news: {
-      title: "NEWS",
+      title: "News",
       viewAll: "View all news →",
       items: [
         {
@@ -1020,34 +1040,34 @@ export const HOME_COPY: Record<
       ],
     },
     ecosystem: {
-      eyebrow: "ECOSYSTEM",
+      eyebrow: "Ecosystem",
       title: "VIETNAM – RUSSIA KNOWLEDGE NETWORK",
       cardCta: "Explore →",
       cards: [
         {
           icon: "handshake",
-          title: "COLLABORATION OPPORTUNITIES",
+          title: "Collaboration Opportunities",
           desc: "Connecting businesses, institutions, and researchers for sustainable partnership.",
           href: "/opportunities",
           tone: "blue",
         },
         {
           icon: "groups",
-          title: "MEMBERS",
+          title: "Members",
           desc: "Broad network of verified members across Vietnam and the Russian Federation.",
           href: "/experts",
           tone: "emerald",
         },
         {
           icon: "insights",
-          title: "PROJECTS & OUTCOMES",
+          title: "Projects & Outcomes",
           desc: "Featured research projects and high-impact bilateral milestones.",
           href: "/opportunities",
           tone: "purple",
         },
         {
           icon: "menu_book",
-          title: "KNOWLEDGE LIBRARY",
+          title: "Knowledge Library",
           desc: "Rich repository of research publications, technical reports, and datasets.",
           href: "/knowledge",
           tone: "amber",
@@ -1055,8 +1075,8 @@ export const HOME_COPY: Record<
       ],
     },
     events: {
-      eyebrow: "EVENTS",
-      title: "EVENTS",
+      eyebrow: "Events",
+      title: "Events",
       viewAll: "View all events →",
       tabUpcoming: "Upcoming",
       tabPast: "Past Events",
@@ -1901,60 +1921,54 @@ export function GuestHomeV2({
         </section>
 
         {/* ═══════════ SECTION 1: TIN TỨC (NEWS) ═══════════ */}
-        <section id="news" className="px-4 pt-14 pb-6 sm:px-6 lg:px-8">
+        <section id="news" className="px-4 pt-10 pb-4 sm:px-6 sm:pt-12 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
             {/* Section Header */}
-            <div className="relative mb-8 flex flex-col items-center justify-between gap-4 sm:mb-10 sm:flex-row">
+            <div className="relative mb-6 flex flex-col items-center justify-between gap-4 sm:mb-7 sm:flex-row">
               <div className="inline-flex items-center gap-2.5">
-                <span className="h-1 w-8 rounded-full bg-blue-600" />
-                <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+                <span className="h-1 w-7 rounded-full bg-blue-600" />
+                <h2 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
                   {t.news.title}
                 </h2>
               </div>
               <Link
                 href="/news"
-                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:text-base"
+                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800"
               >
                 <span>{t.news.viewAll}</span>
               </Link>
             </div>
 
             {/* News Cards Grid */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {OFFICIAL_NEWS.slice(0, 4).map((item) => (
-                <Link
-                  key={item.id}
-                  href={newsArticleHref(item)}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
-                >
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                    {item.image ? (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {OFFICIAL_NEWS.slice(0, 4).map((item, index) => {
+                const imgSrc =
+                  item.image ||
+                  DEFAULT_FALLBACK_IMAGES[index % DEFAULT_FALLBACK_IMAGES.length];
+                return (
+                  <Link
+                    key={item.id}
+                    href={newsArticleHref(item)}
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
+                  >
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                       <Image
-                        src={item.image}
+                        src={imgSrc}
                         alt={item.title}
                         fill
                         unoptimized
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                    ) : null}
-                  </div>
-                  <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
-                    <h3 className="line-clamp-2 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-lg">
-                      {item.title}
-                    </h3>
-                    <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-slate-500">
-                      <span
-                        className="material-symbols-outlined text-sm text-slate-400"
-                        aria-hidden="true"
-                      >
-                        calendar_today
-                      </span>
-                      <span>{item.date}</span>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                    <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
+                      <h3 className="line-clamp-2 text-sm font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-base">
+                        {formatTitle(item.title)}
+                      </h3>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -1963,23 +1977,23 @@ export function GuestHomeV2({
         <section id="ecosystem" className="px-4 pt-6 pb-6 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
             {/* Section Header */}
-            <div className="relative mb-8 flex flex-col items-center justify-between gap-4 sm:mb-10 sm:flex-row">
+            <div className="relative mb-6 flex flex-col items-center justify-between gap-4 sm:mb-7 sm:flex-row">
               <div className="inline-flex items-center gap-2.5">
-                <span className="h-1 w-8 rounded-full bg-blue-600" />
-                <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+                <span className="h-1 w-7 rounded-full bg-blue-600" />
+                <h2 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
                   {t.ecosystem.eyebrow}
                 </h2>
               </div>
               <Link
                 href="/ecosystem"
-                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:text-base"
+                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800"
               >
                 <span>{t.ecosystem.cardCta}</span>
               </Link>
             </div>
 
             {/* 4 Ecosystem Cards Grid */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {t.ecosystem.cards.map((card) => {
                 const toneBg =
                   {
@@ -1993,12 +2007,12 @@ export function GuestHomeV2({
                   <Link
                     key={card.title}
                     href={card.href}
-                    className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-6 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                    className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
                   >
                     <div>
                       <div className="flex items-center justify-between">
                         <span
-                          className={`grid size-12 place-items-center rounded-xl ${toneBg} transition-transform duration-300 group-hover:scale-110`}
+                          className={`grid size-11 place-items-center rounded-xl ${toneBg} transition-transform duration-300 group-hover:scale-110`}
                         >
                           <span
                             className="material-symbols-outlined text-2xl"
@@ -2012,15 +2026,15 @@ export function GuestHomeV2({
                         </span>
                       </div>
 
-                      <h3 className="mt-5 text-lg font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600">
+                      <h3 className="mt-4 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600">
                         {card.title}
                       </h3>
-                      <p className="mt-2.5 line-clamp-3 text-sm leading-relaxed text-slate-600">
+                      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-600">
                         {card.desc}
                       </p>
                     </div>
 
-                    <div className="mt-6 flex items-center gap-1.5 text-xs font-bold text-blue-600 transition group-hover:text-blue-800">
+                    <div className="mt-5 flex items-center gap-1.5 text-xs font-bold text-blue-600 transition group-hover:text-blue-800">
                       <span>{t.ecosystem.cardCta}</span>
                     </div>
                   </Link>
@@ -2036,56 +2050,50 @@ export function GuestHomeV2({
             {/* Section Header */}
             <div className="relative mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
               <div className="inline-flex items-center gap-2.5">
-                <span className="h-1 w-8 rounded-full bg-blue-600" />
-                <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+                <span className="h-1 w-7 rounded-full bg-blue-600" />
+                <h2 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
                   {t.events.title}
                 </h2>
               </div>
               <Link
                 href="/news?type=EVENT"
-                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800 sm:text-base"
+                className="group/link inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 transition hover:text-blue-800"
               >
                 <span>{t.events.viewAll}</span>
               </Link>
             </div>
 
             {/* Event articles */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {OFFICIAL_NEWS.filter((item) => item.contentType === "EVENT").map(
-                (item) => (
-                  <Link
-                    key={item.id}
-                    href={newsArticleHref(item)}
-                    className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-                  >
-                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                      {item.image ? (
+                (item, index) => {
+                  const imgSrc =
+                    item.image ||
+                    DEFAULT_FALLBACK_IMAGES[index % DEFAULT_FALLBACK_IMAGES.length];
+                  return (
+                    <Link
+                      key={item.id}
+                      href={newsArticleHref(item)}
+                      className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                    >
+                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                         <Image
-                          src={item.image}
+                          src={imgSrc}
                           alt={item.title}
                           fill
                           unoptimized
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                      ) : null}
-                    </div>
-                    <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
-                      <h3 className="line-clamp-2 text-base font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-lg">
-                        {item.title}
-                      </h3>
-                      <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-slate-500">
-                        <span
-                          className="material-symbols-outlined text-sm text-slate-400"
-                          aria-hidden="true"
-                        >
-                          calendar_today
-                        </span>
-                        <span>{item.date}</span>
                       </div>
-                    </div>
-                  </Link>
-                ),
+                      <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
+                        <h3 className="line-clamp-2 text-sm font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-base">
+                          {formatTitle(item.title)}
+                        </h3>
+                      </div>
+                    </Link>
+                  );
+                },
               )}
             </div>
           </div>
