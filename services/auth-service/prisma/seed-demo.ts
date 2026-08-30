@@ -6,12 +6,7 @@ import { promisify } from 'node:util';
 import { z } from 'zod';
 import { importFixture } from './import-fixture';
 
-const roles = [
-  'SUPER_ADMIN',
-  'READER',
-  'PORTAL_MEMBER',
-  'CONTENT_EDITOR',
-] as const;
+const roles = ['SUPER_ADMIN', 'PORTAL_MEMBER', 'CONTENT_EDITOR'] as const;
 const customRoles = [
   { name: 'CUSTOM_EMPTY_TEST', permissions: [] },
   { name: 'CUSTOM_PORTAL_TEST', permissions: ['portal.member.access'] },
@@ -37,7 +32,7 @@ const accountsSchema = z.object({
         role: z.enum(roles),
       }),
     )
-    .length(7)
+    .length(3)
     .superRefine((accounts, context) => {
       const counts = Object.fromEntries(
         roles.map((role) => [
@@ -47,14 +42,13 @@ const accountsSchema = z.object({
       );
       if (
         counts.SUPER_ADMIN !== 1 ||
-        counts.READER !== 3 ||
-        counts.PORTAL_MEMBER !== 2 ||
+        counts.PORTAL_MEMBER !== 1 ||
         counts.CONTENT_EDITOR !== 1
       ) {
         context.addIssue({
           code: z.ZodIssueCode.custom,
           message:
-            'Demo accounts require 1 SUPER_ADMIN, 3 READER, 2 PORTAL_MEMBER, and 1 CONTENT_EDITOR',
+            'Demo accounts require 1 SUPER_ADMIN, 1 PORTAL_MEMBER, and 1 CONTENT_EDITOR',
         });
       }
     }),
@@ -67,28 +61,10 @@ const bindings = {
       assignmentId: '7a23f350-6cbb-49d9-a63a-10e2f136d20e',
     },
   ],
-  READER: [
-    {
-      userId: '7809a72b-8a8e-49b8-897b-bb663ee38021',
-      assignmentId: '7809a72b-8a8e-49b8-897b-dd663ee38021',
-    },
-    {
-      userId: '7809a72b-8a8e-49b8-897b-aa663ee38003',
-      assignmentId: '7809a72b-8a8e-49b8-897b-dd663ee38002',
-    },
-    {
-      userId: '7809a72b-8a8e-49b8-897b-bb663ee38023',
-      assignmentId: '7809a72b-8a8e-49b8-897b-dd663ee38022',
-    },
-  ],
   PORTAL_MEMBER: [
     {
       userId: '7809a72b-8a8e-49b8-897b-aa663ee38007',
       assignmentId: '7809a72b-8a8e-49b8-897b-dd663ee38004',
-    },
-    {
-      userId: '7809a72b-8a8e-49b8-897b-aa663ee38009',
-      assignmentId: '7809a72b-8a8e-49b8-897b-dd663ee38005',
     },
   ],
   CONTENT_EDITOR: [
@@ -133,7 +109,6 @@ async function main() {
     }
     const indexes = {
       SUPER_ADMIN: 0,
-      READER: 0,
       PORTAL_MEMBER: 0,
       CONTENT_EDITOR: 0,
     };
@@ -207,7 +182,7 @@ async function main() {
     });
     await prisma.permission.deleteMany({ where: { roles: { none: {} } } });
     console.log(
-      `Provisioned ${accounts.length} Auth.js demo identities for 4 portal roles.`,
+      `Provisioned ${accounts.length} Auth.js demo identities for 3 portal roles.`,
     );
   } finally {
     await prisma.$disconnect();

@@ -879,8 +879,8 @@ export function GuestEcosystemV2({
 
             {/* SUBTAB 2: CÔNG BỐ */}
             {oppSubTab === "call-for-papers" && (
-              <div className="grid gap-5 md:grid-cols-3">
-                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
+              <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-3">
+                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md sm:p-5">
                   <div>
                     <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
                       Chương trình Học bổng Nghiên cứu InteRussia Fellowships
@@ -906,7 +906,7 @@ export function GuestEcosystemV2({
                   </div>
                 </article>
 
-                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
+                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md sm:p-5">
                   <div>
                     <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
                       Hội nghị Khoa học Quốc tế Song phương VAST – RAS (Nga –
@@ -930,7 +930,7 @@ export function GuestEcosystemV2({
                   </div>
                 </article>
 
-                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
+                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md sm:p-5">
                   <div>
                     <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
                       Chuyên san Hợp tác Khoa học Song phương Việt Nam – Liên
@@ -958,27 +958,27 @@ export function GuestEcosystemV2({
 
             {/* SUBTAB 3: TÀI TRỢ */}
             {oppSubTab === "grants" && (
-              <div className="grid gap-5 md:grid-cols-3">
+              <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-3">
                 {GRANTS_ITEMS.map((item) => (
                   <article
                     key={item.id}
                     className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-xs transition duration-200 hover:-translate-y-1 hover:border-rose-300 hover:shadow-md sm:p-4"
                   >
                     <div>
-                      {/* Compact Image Preview Banner */}
-                      <div className="relative h-28 sm:h-32 w-full overflow-hidden rounded-xl bg-[#5a0d1e] shadow-xs">
+                      {/* Scaled Proportional Banner */}
+                      <div className="relative aspect-[418/235] w-full overflow-hidden rounded-xl bg-[#5a0d1e] shadow-xs">
                         <Image
                           src={item.image}
                           alt={item.title[locale] ?? item.title.vi}
                           fill
                           unoptimized
                           sizes="(max-width: 768px) 100vw, 33vw"
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="object-contain transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
 
                       {/* Date Meta */}
-                      <div className="mt-2 text-[11px] font-medium text-slate-500">
+                      <div className="mt-2.5 text-[11px] font-medium text-slate-500">
                         {item.date}
                       </div>
 
