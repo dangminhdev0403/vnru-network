@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Noto_Sans, Noto_Serif } from "next/font/google";
+import Script from "next/script";
 import QueryProvider from "../components/providers/QueryProvider";
 import { cookies } from "next/headers";
 import "@designcodeio/threeui/style.css";
@@ -63,6 +64,19 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <body suppressHydrationWarning className="vnru-motion-root min-h-screen bg-background font-sans text-on-background antialiased">
         <QueryProvider>{children}</QueryProvider>
       </body>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-QBYFT521Y4"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-QBYFT521Y4');
+        `}
+      </Script>
     </html>
   );
 }
