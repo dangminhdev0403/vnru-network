@@ -23,6 +23,9 @@ importers:
       '@prisma/client':
         specifier: ^7.9.1
         version: 7.9.1(prisma@7.9.1(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3))(typescript@5.9.3)
+      cloudinary:
+        specifier: ^2.11.0
+        version: 2.11.0
       nestjs-cloudinary:
         specifier: 1.0.7
         version: 1.0.7(@nestjs/common@11.1.28(reflect-metadata@0.2.2)(rxjs@7.8.2)(supports-color@8.1.1))
@@ -1635,6 +1638,10 @@ packages:
   cloudinary@1.41.3:
     resolution: {integrity: sha512-4o84y+E7dbif3lMns+p3UW6w6hLHEifbX/7zBJvaih1E9QNMZITENQ14GPYJC4JmhygYXsuuBb9bRA3xWEoOfg==}
     engines: {node: '>=0.6'}
+
+  cloudinary@2.11.0:
+    resolution: {integrity: sha512-o2pAkDDqrzPFE/mn9GCfFjBIGQmPs++Ts6rtkFl4vY528DNHiMovKWjH16HBjeGa9iwI7eAad24aWN2emT0aww==}
+    engines: {node: '>=9'}
 
   co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
@@ -5511,6 +5518,10 @@ snapshots:
       core-js: 3.50.0
       lodash: 4.18.1
       q: 1.5.1
+
+  cloudinary@2.11.0:
+    dependencies:
+      lodash: 4.18.1
 
   co@4.6.0: {}
 

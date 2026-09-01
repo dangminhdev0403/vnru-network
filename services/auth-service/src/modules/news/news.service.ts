@@ -1,14 +1,15 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { NewsMediaService } from './news-media.service';
 
 export const NEWS_PRISMA = 'NEWS_PRISMA';
 export type NewsLocale = 'VI' | 'EN' | 'RU';
-export type NewsStatus = 'DRAFT' | 'PUBLISHED';
-export type NewsContentType = 'ARTICLE' | 'EVENT' | 'ANNOUNCEMENT' | 'PROJECT' | 'OPPORTUNITY' | 'PUBLICATION';
+export type NewsContentType =
+  | 'ARTICLE'
+  | 'EVENT'
+  | 'ANNOUNCEMENT'
+  | 'PROJECT'
+  | 'OPPORTUNITY'
+  | 'PUBLICATION';
 
 export interface NewsTranslationInput {
   title: string;
@@ -23,7 +24,25 @@ export interface NewsPrismaClient {
     findFirst: (args: Record<string, unknown>) => Promise<any | null>;
     create: (args: Record<string, unknown>) => Promise<any>;
     update: (args: Record<string, unknown>) => Promise<any>;
+    delete: (args: Record<string, unknown>) => Promise<any>;
+    count: (args?: Record<string, unknown>) => Promise<number>;
   };
+}
+
+export interface AdminListNewsInput {
+  limit: number;
+  offset: number;
+  contentType?: NewsContentType;
+  category?: string;
+  query?: string;
+  sort?: 'updated-desc' | 'updated-asc' | 'title-asc';
+  featured?: boolean;
+}
+
+export interface AdminNewsListResponse {
+  items: any[];
+  total: number;
+  counts: { total: number; featured: number };
 }
 
 const articleSelect = {
@@ -31,7 +50,6 @@ const articleSelect = {
   category: true,
   contentType: true,
   coverImageUrl: true,
-  status: true,
   isFeatured: true,
   publishedAt: true,
   createdAt: true,
@@ -41,7 +59,38 @@ const articleSelect = {
   actionClosesAt: true,
   sourceUrls: true,
   translations: {
-    select: { locale: true, title: true, summary: true, content: true, actionLabel: true },
+    select: {
+      locale: true,
+      title: true,
+      summary: true,
+      content: true,
+      actionLabel: true,
+    },
+  },
+};
+
+const adminArticleSelect = {
+  id: true,
+  category: true,
+  contentType: true,
+  coverImageUrl: true,
+  isFeatured: true,
+  publishedAt: true,
+  updatedAt: true,
+  actionClosesAt: true,
+  author: {
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+    },
+  },
+  translations: {
+    select: {
+      locale: true,
+      title: true,
+      summary: true,
+    },
   },
 };
 
@@ -53,9 +102,24 @@ function localize(article: any, locale: NewsLocale) {
   return { ...rest, ...translation, locale: translation?.locale ?? 'VI' };
 }
 
+function articleImageUrls(article: any) {
+  const urls = new Set<string>();
+  if (article?.coverImageUrl) urls.add(article.coverImageUrl);
+  for (const translation of article?.translations ?? []) {
+    for (const match of translation.content?.matchAll(
+      /https:\/\/res\.cloudinary\.com\/[^\s)'"<>]+/g,
+    ) ?? [])
+      urls.add(match[0]);
+  }
+  return urls;
+}
+
 @Injectable()
 export class NewsService {
-  constructor(@Inject(NEWS_PRISMA) private readonly prisma: NewsPrismaClient) {}
+  constructor(
+    @Inject(NEWS_PRISMA) private readonly prisma: NewsPrismaClient,
+    private readonly media: NewsMediaService,
+  ) {}
 
   async listPublic(input: {
     featured?: boolean;
@@ -67,10 +131,11 @@ export class NewsService {
   }) {
     const articles = await this.prisma.newsArticle.findMany({
       where: {
-        status: 'PUBLISHED',
         ...(input.featured === undefined ? {} : { isFeatured: input.featured }),
         ...(input.category === undefined ? {} : { category: input.category }),
-        ...(input.contentType === undefined ? {} : { contentType: input.contentType }),
+        ...(input.contentType === undefined
+          ? {}
+          : { contentType: input.contentType }),
       },
       orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
       take: input.limit,
@@ -82,21 +147,72 @@ export class NewsService {
 
   async getPublic(id: string, locale: NewsLocale = 'VI') {
     const article = await this.prisma.newsArticle.findFirst({
-      where: { id, status: 'PUBLISHED' },
+      where: { id },
       select: articleSelect,
     });
     if (!article) throw new NotFoundException('News article not found');
     return localize(article, locale);
   }
 
-  listAdmin(limit: number, offset: number, status?: NewsStatus) {
-    return this.prisma.newsArticle.findMany({
-      ...(status ? { where: { status } } : {}),
-      orderBy: { updatedAt: 'desc' },
-      take: limit,
-      skip: offset,
-      select: articleSelect,
-    });
+  async listAdmin(input: AdminListNewsInput): Promise<AdminNewsListResponse> {
+    const where: Record<string, unknown> = {};
+
+    if (input.contentType) {
+      where.contentType = input.contentType;
+    }
+    if (input.category) {
+      where.category = input.category;
+    }
+    if (input.featured !== undefined) {
+      where.isFeatured = input.featured;
+    }
+    if (input.query && input.query.trim()) {
+      const q = input.query.trim();
+      where.translations = {
+        some: {
+          OR: [
+            { title: { contains: q, mode: 'insensitive' } },
+            { summary: { contains: q, mode: 'insensitive' } },
+          ],
+        },
+      };
+    }
+
+    let orderBy: any = { updatedAt: 'desc' };
+    if (input.sort === 'updated-asc') {
+      orderBy = { updatedAt: 'asc' };
+    } else if (input.sort === 'title-asc') {
+      orderBy = { updatedAt: 'desc' };
+    }
+
+    const countsWhere: Record<string, unknown> = {};
+    if (input.contentType) countsWhere.contentType = input.contentType;
+    if (input.category) countsWhere.category = input.category;
+
+    const [items, total, allCount, featuredCount] =
+      await Promise.all([
+        this.prisma.newsArticle.findMany({
+          where,
+          orderBy,
+          take: input.limit,
+          skip: input.offset,
+          select: adminArticleSelect,
+        }),
+        this.prisma.newsArticle.count({ where }),
+        this.prisma.newsArticle.count({ where: countsWhere }),
+        this.prisma.newsArticle.count({
+          where: { ...countsWhere, isFeatured: true },
+        }),
+      ]);
+
+    return {
+      items,
+      total,
+      counts: {
+        total: allCount,
+        featured: featuredCount,
+      },
+    };
   }
 
   async getAdmin(id: string) {
@@ -111,10 +227,11 @@ export class NewsService {
   create(input: {
     category: string;
     contentType?: NewsContentType;
-    coverImageUrl?: string | null;
+    coverImageUrl: string;
     actionUrl?: string | null;
     actionClosesAt?: Date | null;
     sourceUrls?: string[];
+    isFeatured?: boolean;
     authorId: string;
     translations: Record<NewsLocale, NewsTranslationInput>;
   }) {
@@ -122,6 +239,7 @@ export class NewsService {
     return this.prisma.newsArticle.create({
       data: {
         ...data,
+        publishedAt: new Date(),
         translations: {
           create: Object.entries(translations).map(([locale, value]) => ({
             locale,
@@ -133,7 +251,7 @@ export class NewsService {
     });
   }
 
-  update(
+  async update(
     id: string,
     input: {
       category?: string;
@@ -142,11 +260,13 @@ export class NewsService {
       actionUrl?: string | null;
       actionClosesAt?: Date | null;
       sourceUrls?: string[];
+      isFeatured?: boolean;
       translations?: Partial<Record<NewsLocale, NewsTranslationInput>>;
     },
   ) {
+    const previous = await this.getAdmin(id);
     const { translations, ...fields } = input;
-    return this.prisma.newsArticle.update({
+    const updated = await this.prisma.newsArticle.update({
       where: { id },
       data: {
         ...fields,
@@ -164,30 +284,18 @@ export class NewsService {
       },
       select: articleSelect,
     });
+    const retained = articleImageUrls(updated);
+    await this.media.delete(
+      [...articleImageUrls(previous)].filter((url) => !retained.has(url)),
+    );
+    return updated;
   }
 
-  async publish(id: string, isFeatured: boolean) {
-    const article = await this.prisma.newsArticle.findFirst({
-      where: { id },
-      select: { coverImageUrl: true },
-    });
-    if (!article) throw new NotFoundException('News article not found');
-    if (!article.coverImageUrl)
-      throw new BadRequestException(
-        'Cover image upload must finish before publishing',
-      );
-    return this.prisma.newsArticle.update({
-      where: { id },
-      data: { status: 'PUBLISHED', publishedAt: new Date(), isFeatured },
-      select: articleSelect,
-    });
+  async delete(id: string): Promise<{ ok: true }> {
+    const article = await this.getAdmin(id);
+    await this.prisma.newsArticle.delete({ where: { id } });
+    await this.media.delete(articleImageUrls(article));
+    return { ok: true };
   }
 
-  unpublish(id: string) {
-    return this.prisma.newsArticle.update({
-      where: { id },
-      data: { status: 'DRAFT', publishedAt: null, isFeatured: false },
-      select: articleSelect,
-    });
-  }
 }

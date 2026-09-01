@@ -21,7 +21,6 @@ const categoryLabels: Record<Category, string> = {
   cooperation: "Hợp tác",
 };
 
-
 const ui = {
   vi: {
     home: "Trang chủ",
@@ -163,14 +162,11 @@ export function GuestNewsArticleV2({
     .filter((item) => item.id !== article.id)
     .slice(5, 9);
 
-
   return (
     <div className="min-h-screen bg-white text-slate-950">
       <GuestPublicNav active="news" />
 
       <main className="mx-auto max-w-[1460px] px-4 py-9 sm:px-6 lg:px-8">
-
-
         <div className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500">
           <Link href="/" className="hover:text-blue-600">
             {t.home}
@@ -223,9 +219,28 @@ export function GuestNewsArticleV2({
             ) : null}
 
             <div className="mt-8 space-y-6 text-lg leading-8 text-slate-800">
-              {article.body.map((paragraph, index) => (
-                <p key={`${article.id}-${index}`}>{paragraph}</p>
-              ))}
+              {article.body.map((paragraph, index) => {
+                const imgMatch = paragraph.match(/^!\[(.*?)\]\((.*?)\)$/);
+                if (imgMatch) {
+                  const alt = imgMatch[1];
+                  const src = imgMatch[2];
+                  return (
+                    <figure key={`${article.id}-${index}`} className="my-6">
+                      <img
+                        src={src}
+                        alt={alt || formatNewsTitle(article.title)}
+                        className="max-h-[540px] w-full rounded-2xl object-cover border border-slate-100 shadow-sm"
+                      />
+                      {alt && alt !== "Hình ảnh" && alt !== "image" ? (
+                        <figcaption className="mt-2 text-center text-sm text-slate-500 italic">
+                          {alt}
+                        </figcaption>
+                      ) : null}
+                    </figure>
+                  );
+                }
+                return <p key={`${article.id}-${index}`}>{paragraph}</p>;
+              })}
               {article.actionClosesAt ? (
                 <p className="text-base font-semibold text-slate-600">
                   {t.actionCloses}:{" "}

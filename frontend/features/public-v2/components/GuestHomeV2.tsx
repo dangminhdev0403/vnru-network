@@ -34,11 +34,6 @@ const HERO_BANNERS = [
 ] as const;
 
 const DEFAULT_FALLBACK_IMAGES = [
-  "/images/news/article-1.webp",
-  "/images/news/article-5.webp",
-  "/images/news/article-6.webp",
-  "/images/news/article-4.webp",
-  "/images/news/article-7.webp",
   "/images/home-bilateral-gateway.jpg",
 ];
 

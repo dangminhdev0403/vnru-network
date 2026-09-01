@@ -84,7 +84,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Từ nước Nga nhìn về quê hương, hầu như tất cả cộng đồng người Việt Nam tại Nga nói chung và đội ngũ trí thức... nói riêng đều có một niềm tin lớn lao đặt vào tương lai đất nước. Trong tinh thần chung đó, niềm mong mỏi được “trở về Việt Nam”, hay “kết thúc khóa học sớm để trở về Việt Nam” từ các chuyên gia, nghiên cứu sinh, sinh viên... để cống hiến, để làm việc, ngày càng trở nên thiết tha hơn.",
     "category": "cooperation",
     "date": "08/2026",
-    "image": "/images/news/article-1.webp",
+    "image": null,
     "body": [
       "Từ nước Nga nhìn về quê hương, hầu như tất cả cộng đồng người Việt Nam tại Nga nói chung và đội ngũ trí thức... nói riêng đều có một niềm tin lớn lao đặt vào tương lai đất nước. Trong tinh thần chung đó, niềm mong mỏi được “trở về Việt Nam”, hay “kết thúc khóa học sớm để trở về Việt Nam” từ các chuyên gia, nghiên cứu sinh, sinh viên... để cống hiến, để làm việc, ngày càng trở nên thiết tha hơn.",
       "Quỹ “Truyền thống và Hữu nghị” trao tặng bằng khen những sinh viên có thành tích học tập xuất sắc.",
@@ -118,7 +118,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Trong suốt những năm hoạt động, Quỹ đã triển khai nhiều dự án thiết thực nhằm củng cố và phát triển quan hệ hợp tác song phương Nga – Việt, nhận được sự đánh giá cao từ đại diện các cơ quan chính quyền, các tổ chức xã hội và cơ sở giáo dục của cả hai nước.",
     "category": "cooperation",
     "date": "08/2026",
-    "image": null,
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169200/vnru/news/official-edbe2e6d-a90d-4dc0-be56-098fae9b5936.webp",
     "body": [
       "Trong suốt những năm hoạt động, Quỹ đã triển khai nhiều dự án thiết thực nhằm củng cố và phát triển quan hệ hợp tác song phương Nga – Việt, nhận được sự đánh giá cao từ đại diện các cơ quan chính quyền, các tổ chức xã hội và cơ sở giáo dục của cả hai nước.",
       "Ông Đỗ Xuân Hoàng hiện là Chủ tịch liên hiệp các tổ chức người Việt Nam tại Liên bang Nga, Ủy viên Ủy ban Trung ương Mặt trận Tổ quốc Việt Nam. Ông luôn tích cực ủng hộ các chương trình của Saint Petersburg trong việc thiết lập, mở rộng quan hệ với các địa phương của Việt Nam, với các tổ chức xã hội và cộng đồng người Việt tại Liên bang Nga; đồng thời đóng góp hiệu quả vào các dự án giao lưu và phát triển văn hóa Nga – Việt, cũng như các hoạt động quảng bá tiếng Nga tại Việt Nam và tiếng Việt tại Nga.",
@@ -155,7 +155,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Khóa học Du lịch Sinh viên Quốc tế sẽ được tổ chức từ ngày 21 đến 26 tháng 9 năm 2026 tại Việt Nam, tại Đại học Đà Nẵng (Đại học Ngoại ngữ).",
     "category": "cooperation",
     "date": "08/2026",
-    "image": "/images/news/article-4.webp",
+    "image": null,
     "body": [
       "Khóa học Du lịch Sinh viên Quốc tế sẽ được tổ chức từ ngày 21 đến 26 tháng 9 năm 2026 tại Việt Nam, tại Đại học Đà Nẵng (Đại học Ngoại ngữ).",
       "Năm 2026 được tuyên bố là Năm Hợp tác Khoa học và Giáo dục Nga - Việt Nam.",
@@ -177,7 +177,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Ngày 12/8/2026, tại Trường Đại học Khoa học Tự nhiên, ĐHQGHN (HUS), lãnh đạo Nhà trường đã có buổi gặp gỡ và trao đổi với đoàn đại biểu từ Rosatom Quantum, đơn vị điều phối sáng kiến quốc gia của Nga về điện toán lượng tử, nhằm thảo luận về định hướng hợp tác khoa học – công nghệ, với trọng tâm là công nghệ lượng tử.",
     "category": "education",
     "date": "12/08/2026",
-    "image": "/images/news/article-5.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169181/vnru/news/official-5365b1a1-06e3-4dd3-9e70-c172c9c555c5.webp",
     "body": [
       "Ngày 12/8/2026, tại Trường Đại học Khoa học Tự nhiên, ĐHQGHN (HUS), lãnh đạo Nhà trường đã có buổi gặp gỡ và trao đổi với đoàn đại biểu từ Rosatom Quantum, đơn vị điều phối sáng kiến quốc gia của Nga về điện toán lượng tử, nhằm thảo luận về định hướng hợp tác khoa học – công nghệ, với trọng tâm là công nghệ lượng tử.",
       "Tại buổi làm việc, hai bên cùng nhìn lại nền tảng hợp tác lâu đời giữa Việt Nam và Liên bang Nga, đồng thời trao đổi về cách thức đưa mối quan hệ hợp tác vào những chương trình cụ thể, thiết thực hơn, đặc biệt trong đào tạo nguồn nhân lực trẻ và triển khai các dự án nghiên cứu chung.",
@@ -198,7 +198,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Ngày 13/8, ông Vladimir Murashkin, Trưởng Cơ quan đại diện Rossotrudnichestvo tại Việt Nam, tham dự cuộc làm việc tại Bộ Giáo dục và Đào tạo. Nội dung trao đổi tập trung vào những vấn đề hiện nay trong hợp tác song phương về giáo dục, khoa học và công nghệ.",
     "category": "education",
     "date": "13/08/2026",
-    "image": "/images/news/article-6.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169196/vnru/news/official-cd567ac8-0de8-45d8-a46a-1c50be23e42d.webp",
     "body": [
       "Ngày 13/8, ông Vladimir Murashkin, Trưởng Cơ quan đại diện Rossotrudnichestvo tại Việt Nam, tham dự cuộc làm việc tại Bộ Giáo dục và Đào tạo. Nội dung trao đổi tập trung vào những vấn đề hiện nay trong hợp tác song phương về giáo dục, khoa học và công nghệ.",
       "Tại cuộc gặp, hai bên đánh giá cao kết quả của các hoạt động hợp tác đã triển khai và thống nhất tiếp tục thúc đẩy quan hệ trong những lĩnh vực có thế mạnh. Kết thúc buổi làm việc, đại diện hai phía khẳng định sẵn sàng phát triển thêm các sáng kiến giáo dục, khoa học và công nghệ chung giữa Việt Nam và Nga.",
@@ -219,7 +219,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Ngày 26/8/2026, Phó Thủ tướng Nga Dmitry Chernyshenko đã có cuộc gặp làm việc với Đại sứ Việt Nam tại Liên bang Nga Đặng Minh Khôi. Hai bên đã thảo luận về hợp tác giữa hai nước trên nhiều lĩnh vực, bao gồm du lịch, thương mại và tài chính.",
     "category": "society",
     "date": "26/08/2026",
-    "image": "/images/news/article-7.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169183/vnru/news/official-53aff395-c1bc-4120-ae40-1a7c260aa11c.webp",
     "body": [
       "Ngày 26/8/2026, Phó Thủ tướng Nga Dmitry Chernyshenko đã có cuộc gặp làm việc với Đại sứ Việt Nam tại Liên bang Nga Đặng Minh Khôi. Hai bên đã thảo luận về hợp tác giữa hai nước trên nhiều lĩnh vực, bao gồm du lịch, thương mại và tài chính.",
       "Phó Thủ tướng Nga Dmitry Chernyshenko đã có cuộc gặp làm việc với Đại sứ Việt Nam tại Liên bang Nga Đặng Minh Khôi",
@@ -237,7 +237,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Năm 2026, quan hệ kinh tế giữa Nga và Việt Nam sẽ bước vào một giai đoạn mới. Điều này không chỉ bao gồm việc khôi phục thương mại song phương mà còn thiết lập một hệ thống hợp tác công nghiệp, công nghệ và hậu cần sâu rộng hơn. Các lĩnh vực hợp tác trọng điểm sẽ bao gồm sản xuất chung, đầu tư, vận tải và hậu cần, công nghệ số, năng lượng, du lịch và hợp tác khoa học công nghệ.",
     "category": "society",
     "date": "08/2026",
-    "image": null,
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169191/vnru/news/official-ae6ab3f0-9830-417e-9098-a8eca19c3102.webp",
     "body": [
       "Năm 2026, quan hệ kinh tế giữa Nga và Việt Nam sẽ bước vào một giai đoạn mới. Điều này không chỉ bao gồm việc khôi phục thương mại song phương mà còn thiết lập một hệ thống hợp tác công nghiệp, công nghệ và hậu cần sâu rộng hơn. Các lĩnh vực hợp tác trọng điểm sẽ bao gồm sản xuất chung, đầu tư, vận tải và hậu cần, công nghệ số, năng lượng, du lịch và hợp tác khoa học công nghệ.",
       "Năm 2025, kim ngạch thương mại giữa hai nước đạt 4,77 tỷ USD, tăng 4% so với năm trước. Việt Nam xuất khẩu hàng hóa trị giá 2,26 tỷ USD sang Nga và nhập khẩu hàng hóa Nga trị giá 2,51 tỷ USD. Trong 5 tháng đầu năm 2026, kim ngạch thương mại đạt khoảng 2,16 tỷ USD, tăng 6,6% so với cùng kỳ năm ngoái. Các mặt hàng xuất khẩu chính của Việt Nam gồm dệt may, cà phê, thủy sản, giày dép, hạt điều, tiêu, cao su và điện tử; Nga cung cấp dầu khí, than đá, phân bón, kim loại, thiết bị và hóa chất. Mục tiêu chiến lược của hai nước là nâng kim ngạch thương mại lên 10 tỷ USD.",
@@ -261,7 +261,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Vào ngày 26 tháng 8 tại Hà Nội, trong khuôn khổ Ngày Hội đồng Nhân dân Thế giới tại Việt Nam, Liên minh các Tổ chức Hữu nghị Việt Nam và Hội đồng Nhân dân Thế giới, phối hợp với Đại học Kinh tế - Đại học Quốc gia Việt Nam, Hà Nội, đã tổ chức hội thảo với chủ đề \"Hợp tác quốc tế trong khoa học và giáo dục như một yếu tố thúc đẩy phát triển bền vững\". Hội thảo đã thảo luận các giải pháp mở rộng hợp tác trong giáo dục, khoa học và công nghệ, tập trung vào kết nối Việt Nam và Liên bang Nga.",
     "category": "education",
     "date": "08/2026",
-    "image": "/images/news/article-9.webp",
+    "image": null,
     "body": [
       "Vào ngày 26 tháng 8 tại Hà Nội, trong khuôn khổ Ngày Hội đồng Nhân dân Thế giới tại Việt Nam, Liên minh các Tổ chức Hữu nghị Việt Nam và Hội đồng Nhân dân Thế giới, phối hợp với Đại học Kinh tế - Đại học Quốc gia Việt Nam, Hà Nội, đã tổ chức hội thảo với chủ đề \"Hợp tác quốc tế trong khoa học và giáo dục như một yếu tố thúc đẩy phát triển bền vững\". Hội thảo đã thảo luận các giải pháp mở rộng hợp tác trong giáo dục, khoa học và công nghệ, tập trung vào kết nối Việt Nam và Liên bang Nga.",
       "Kết nối tri thức vì phát triển bền vững",
@@ -295,7 +295,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Sáng nay (27/8), tại Trụ sở Chính phủ, Phó Thủ tướng Thường trực Chính phủ Phạm Gia Túc có buổi làm việc với Đại sứ Liên bang Nga tại Việt Nam Bezdetko Gennady Stepanovich.",
     "category": "cooperation",
     "date": "27/08/2026",
-    "image": "/images/news/article-10.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169193/vnru/news/official-b39014db-7d27-4e4a-abde-e1396cec3c2d.webp",
     "body": [
       "Sáng nay (27/8), tại Trụ sở Chính phủ, Phó Thủ tướng Thường trực Chính phủ Phạm Gia Túc có buổi làm việc với Đại sứ Liên bang Nga tại Việt Nam Bezdetko Gennady Stepanovich.",
       "Phó Thủ tướng Thường trực Chính phủ Phạm Gia Túc có buổi làm việc với Đại sứ Liên bang Nga tại Việt Nam Bezdetko Gennady Stepanovich - Ảnh: chinhphu.vn/Nguyễn Hoàng",
@@ -317,7 +317,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Quốc hội Việt Nam đã thông qua nghị quyết phê duyệt việc xây dựng Nhà máy điện hạt nhân Ninh Thuận-1 tại xã Phước Đình, huyện Thuận Nam. Quyết định này khởi động lại chương trình hạt nhân của đất nước sau 10 năm gián đoạn.",
     "category": "science",
     "date": "08/2026",
-    "image": "/images/news/article-11.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169186/vnru/news/official-6137f058-127b-49ff-97c7-073a8e681cb4.webp",
     "body": [
       "Quốc hội Việt Nam đã thông qua nghị quyết phê duyệt việc xây dựng Nhà máy điện hạt nhân Ninh Thuận-1 tại xã Phước Đình, huyện Thuận Nam. Quyết định này khởi động lại chương trình hạt nhân của đất nước sau 10 năm gián đoạn.",
       "Tập đoàn nhà nước Rosatom sẽ đảm nhiệm vai trò tổng thầu cho dự án. Nhà máy sẽ bao gồm hai tổ máy phát điện với lò phản ứng VVER-1200, tổng công suất 2.400 MW. Tổ máy số 2 của nhà máy điện hạt nhân Leningrad-2 đã được chọn làm mô hình tham khảo để xây dựng.",
@@ -335,7 +335,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Ngày 11/8/2026, tại trụ sở Bộ Văn hóa, Thể thao và Du lịch, Cục trưởng Cục Hợp tác quốc tế đã có buổi tiếp, làm việc với Đại biện lâm thời Đại sứ quán Liên bang Nga tại Việt Nam Ivan Nesterov trao đổi về hợp tác văn hóa, thể thao và du lịch Việt Nam – Liên bang Nga.",
     "category": "society",
     "date": "11/08/2026",
-    "image": "/images/news/article-12.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169185/vnru/news/official-5cc29b09-0150-41b1-9a7f-b781389200c4.webp",
     "body": [
       "Ngày 11/8/2026, tại trụ sở Bộ Văn hóa, Thể thao và Du lịch, Cục trưởng Cục Hợp tác quốc tế đã có buổi tiếp, làm việc với Đại biện lâm thời Đại sứ quán Liên bang Nga tại Việt Nam Ivan Nesterov trao đổi về hợp tác văn hóa, thể thao và du lịch Việt Nam – Liên bang Nga.",
       "Tại buổi tiếp, hai bên vui mừng trước những kết quả tích cực của hợp tác văn hóa, thể thao và du lịch Việt Nam – Liên bang Nga trên cơ sở quan hệ đối tác chiến lược toàn diện giữa hai nước đang phát triển rất tốt đẹp. Bên cạnh các hoạt động văn hóa lớn đã được tổ chức năm 2026 như Những ngày Văn hóa Nga tại Việt Nam, các hoạt động triển lãm của Nga tại Việt Nam, Cục trưởng Nguyễn Phương Hòa và Đại biện lâm thời Đại sứ quán Nga tại Việt Nam đánh giá, hợp tác du lịch Việt Nam – Nga đang có nhiều triển vọng lớn. Trong 6 tháng năm 2026, số khách du lịch Nga đến Việt Nam đạt gần 800 nghìn lượt, tăng gấp 3 lần so với cùng kỳ năm 2025. Hai bên tin tưởng, năm 2026, số khách du lịch Nga đến Việt Nam có thể đạt mốc 1 triệu lượt khách nhờ các chính sách thuận lợi của Việt Nam để thu hút du khách Nga hiện nay như miễn thị thực đơn phương cho khách du lịch Nga, nhiều chuyến bay thẳng giữa các thành phố của hai nước được kết nối, tăng cường…",
@@ -356,7 +356,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Tại Quantum Park thuộc Trường Đại học Kỹ thuật Quốc gia Moscow mang tên N.E. Bauman (Bauman MSTU) và Viện Nghiên cứu Khoa học Tự động Toàn Nga (VNIIA), các nhà khoa học đã phát triển thành công công nghệ chế tạo mạch tích hợp siêu dẫn dựa trên nền tảng tantalum (tantal) — một trong những nền tảng vật liệu đầy triển vọng cho các bộ đồng xử lý lượng tử. Chính công nghệ này cho phép cải thiện gấp nhiều lần chất lượng của cơ sở linh kiện điện tử (ЭКБ) lượng tử siêu dẫn. Hệ số phẩm chất (độ lợi) của các vi mạch tantalum do Nga sản xuất đã đạt tới con số hàng chục triệu — mức độ mà hiện nay chỉ có một vài trung tâm khoa học hàng đầu thế giới đạt được. Các kết quả nghiên cứu đã được công bố trên tạp chí khoa học uy tín Applied Physics Reviews (APR 2026). Những lô hàng bộ đồng xử lý lượng tử đầu tiên trên nền tảng tantalum đã được ký kết hợp đồng cung cấp ngay trong mùa thu năm 2026.Quy mô của cuộc cách mạng công nghệ AI hiện nay phụ thuộc trực tiếp vào năng lượng tính toán. Các siêu máy tính thế hệ mới là yếu tố cực kỳ then chốt cho việc huấn luyện mạng thần kinh nhân tạo (AI), mô phỏng khí hậu, giải mã bộ gen và tìm kiếm các vật liệu mới. Trong khi đó, máy tính truyền thống đang dần tiến đến ranh giới vật lý: chúng tiêu thụ hàng megawatt điện năng, chiếm dụng không gian của cả tòa nhà, và hiệu suất của chúng đang bị giới hạn bởi các định luật vật lý lượng tử. Đến năm 2030, thế giới sẽ cần đến các hệ thống tính toán ở cấp độ exaflop (exaflop systems) – nhanh hơn gấp nhiều lần so với các hệ thống hiện tại.",
     "category": "education",
     "date": "08/2026",
-    "image": "/images/news/article-13.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169199/vnru/news/official-e1fb2be7-d8b6-4803-bf6c-2dc5a0097971.webp",
     "body": [
       "Tại Quantum Park thuộc Trường Đại học Kỹ thuật Quốc gia Moscow mang tên N.E. Bauman (Bauman MSTU) và Viện Nghiên cứu Khoa học Tự động Toàn Nga (VNIIA), các nhà khoa học đã phát triển thành công công nghệ chế tạo mạch tích hợp siêu dẫn dựa trên nền tảng tantalum (tantal) — một trong những nền tảng vật liệu đầy triển vọng cho các bộ đồng xử lý lượng tử. Chính công nghệ này cho phép cải thiện gấp nhiều lần chất lượng của cơ sở linh kiện điện tử (ЭКБ) lượng tử siêu dẫn. Hệ số phẩm chất (độ lợi) của các vi mạch tantalum do Nga sản xuất đã đạt tới con số hàng chục triệu — mức độ mà hiện nay chỉ có một vài trung tâm khoa học hàng đầu thế giới đạt được. Các kết quả nghiên cứu đã được công bố trên tạp chí khoa học uy tín Applied Physics Reviews (APR 2026). Những lô hàng bộ đồng xử lý lượng tử đầu tiên trên nền tảng tantalum đã được ký kết hợp đồng cung cấp ngay trong mùa thu năm 2026.Quy mô của cuộc cách mạng công nghệ AI hiện nay phụ thuộc trực tiếp vào năng lượng tính toán. Các siêu máy tính thế hệ mới là yếu tố cực kỳ then chốt cho việc huấn luyện mạng thần kinh nhân tạo (AI), mô phỏng khí hậu, giải mã bộ gen và tìm kiếm các vật liệu mới. Trong khi đó, máy tính truyền thống đang dần tiến đến ranh giới vật lý: chúng tiêu thụ hàng megawatt điện năng, chiếm dụng không gian của cả tòa nhà, và hiệu suất của chúng đang bị giới hạn bởi các định luật vật lý lượng tử. Đến năm 2030, thế giới sẽ cần đến các hệ thống tính toán ở cấp độ exaflop (exaflop systems) – nhanh hơn gấp nhiều lần so với các hệ thống hiện tại.",
       "Ảnh SEM của một con chip có bộ cộng hưởng dựa trên tantali",
@@ -378,7 +378,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Sinh viên Việt Nam vừa tham gia chương trình giáo dục quốc tế Summer Institute \"Obninsk Tech: train-the-trainers” tại Nga, cùng hàng chục giảng viên trẻ và nhà nghiên cứu đến từ 12 quốc gia khác, tìm hiểu kinh nghiệm của Nga trong đào tạo nhân lực công nghệ cao và công nghệ hạt nhân.",
     "category": "education",
     "date": "20/07/2026",
-    "image": "/images/news/article-14.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169198/vnru/news/official-dac97b94-2f1c-43ef-8e76-6040c9bc030e.webp",
     "body": [
       "Sinh viên Việt Nam vừa tham gia chương trình giáo dục quốc tế Summer Institute \"Obninsk Tech: train-the-trainers” tại Nga, cùng hàng chục giảng viên trẻ và nhà nghiên cứu đến từ 12 quốc gia khác, tìm hiểu kinh nghiệm của Nga trong đào tạo nhân lực công nghệ cao và công nghệ hạt nhân.",
       "Chương trình diễn ra từ ngày 20/7 đến 2/8 tại các cơ sở giáo dục và khoa học hàng đầu của Nga, trong đó có Viện Năng lượng nguyên tử Obninsk thuộc Đại học Nghiên cứu hạt nhân quốc gia MEPhI, Học viện Kỹ thuật Rosatom, Đại học Điện kỹ thuật Saint Petersburg LETI và Đại học Bách khoa Saint Petersburg.",
@@ -403,7 +403,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Số lượng sinh viên nước ngoài tăng mạnh, đến năm 2030 cứ 10 sinh viên ở Nga thì 1 người là người nước ngoài",
     "category": "education",
     "date": "08/2026",
-    "image": "/images/news/article-15.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169194/vnru/news/official-c057d936-19de-4e5a-929e-5563b279cb2f.webp",
     "body": [
       "Số lượng sinh viên nước ngoài tăng mạnh, đến năm 2030 cứ 10 sinh viên ở Nga thì 1 người là người nước ngoài",
       "Ảnh của hãng tin Moscow",
@@ -443,7 +443,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Trí tuệ nhân tạo và an ninh thông tin tại Nga sẽ được giảng dạy từ bậc phổ thông. Tổng thống Putin đã giao nhiệm vụ đưa các điều chỉnh vào chiến lược phát triển giáo dục và các tiêu chuẩn giáo dục, có tính đến ảnh hưởng ngày càng tăng của các công nghệ mới.",
     "category": "education",
     "date": "08/2026",
-    "image": "/images/news/article-16.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169192/vnru/news/official-af81d69d-ca59-4758-8542-b124aeeface4.webp",
     "body": [
       "Trí tuệ nhân tạo và an ninh thông tin tại Nga sẽ được giảng dạy từ bậc phổ thông. Tổng thống Putin đã giao nhiệm vụ đưa các điều chỉnh vào chiến lược phát triển giáo dục và các tiêu chuẩn giáo dục, có tính đến ảnh hưởng ngày càng tăng của các công nghệ mới.",
       "Thay đổi trong chiến lược giáo dục",
@@ -472,7 +472,7 @@ export const OFFICIAL_NEWS = [
     "summary": "“Robot và Trí tuệ Nhân tạo: Thực tiễn và Cơ hội Quốc tế cho Nga, Viễn Đông và Bắc Cực” là tiêu đề của một bản tóm tắt mới do Trung tâm Phương Đông về Quy hoạch Bang thuộc Liên bang (Vostokgosplan) chuẩn bị phối hợp với Trường Kinh tế Cao cấp (HSE). Vào tháng 9, bản báo cáo sẽ được trình bày tại Diễn đàn Kinh tế Phương Đông.",
     "category": "society",
     "date": "08/2026",
-    "image": "/images/news/article-17.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169180/vnru/news/official-50ad77b4-0ce6-45a6-9ed8-08258d23f44b.webp",
     "body": [
       "“Robot và Trí tuệ Nhân tạo: Thực tiễn và Cơ hội Quốc tế cho Nga, Viễn Đông và Bắc Cực” là tiêu đề của một bản tóm tắt mới do Trung tâm Phương Đông về Quy hoạch Bang thuộc Liên bang (Vostokgosplan) chuẩn bị phối hợp với Trường Kinh tế Cao cấp (HSE). Vào tháng 9, bản báo cáo sẽ được trình bày tại Diễn đàn Kinh tế Phương Đông.",
       "Bản tóm tắt được gửi đến đại diện của các cơ quan chức năng, các tổ chức phát triển, khoa học, doanh nghiệp và cộng đồng chuyên gia tham gia vào việc hình thành chính sách phát triển công nghệ của Nga, đặc biệt là Viễn Đông và Bắc Cực, cũng như tất cả những ai theo dõi sự phát triển của robot và AI một cách chuyên nghiệp hoặc vì mục đích nghiên cứu,” các tác giả của công trình cho biết.",
@@ -496,7 +496,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Nhu cầu về chuyên gia trí tuệ nhân tạo (AI) tại Nga đang tăng vọt. Để đáp ứng nhu cầu của thị trường và thực hiện Chiến lược phát triển AI quốc gia đến năm 2030, Bộ Khoa học và Giáo dục Đại học Nga cùng các tập đoàn công nghệ lớn đã chọn ra 12 trường đại học hàng đầu đảm nhận sứ mệnh đào tạo các chuyên gia hàng đầu trong lĩnh vực này. Trong đó, cả công dân Nga và sinh viên nước ngoài đều có thể học tập tại đây.",
     "category": "education",
     "date": "08/2026",
-    "image": "/images/news/article-18.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169188/vnru/news/official-622e9e38-0c5d-4a57-a7ce-9fafd05c6ae5.webp",
     "body": [
       "Nhu cầu về chuyên gia trí tuệ nhân tạo (AI) tại Nga đang tăng vọt. Để đáp ứng nhu cầu của thị trường và thực hiện Chiến lược phát triển AI quốc gia đến năm 2030, Bộ Khoa học và Giáo dục Đại học Nga cùng các tập đoàn công nghệ lớn đã chọn ra 12 trường đại học hàng đầu đảm nhận sứ mệnh đào tạo các chuyên gia hàng đầu trong lĩnh vực này. Trong đó, cả công dân Nga và sinh viên nước ngoài đều có thể học tập tại đây.",
       "Sinh viên trường Đại học Kinh tế Cao cấp (HSE) đang tham dự hội thảo về AI",
@@ -538,7 +538,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Kể từ ngày 1 tháng 9 năm 2026, hệ thống giáo dục đại học của Liên bang Nga chính thức bước vào giai đoạn chuyển đổi quan trọng nhất trong hơn hai thập kỷ qua: từ bỏ mô hình hai cấp “cử nhân – thạc sĩ” theo chuẩn Bologna mà nước này đã gia nhập từ năm 2003, để chuyển sang một mô hình giáo dục nội địa hoàn toàn mới. Thay cho các khái niệm quen thuộc cử nhân và thạc sĩ, các trường đại học Nga sẽ áp dụng hai cấp học mới mang tên “giáo dục đại học cơ bản” và “giáo dục đại học chuyên sâu”.",
     "category": "education",
     "date": "08/2026",
-    "image": "/images/news/article-19.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169189/vnru/news/official-6ee78612-9bb5-4b3d-89b9-84b8eb67ce1e.webp",
     "body": [
       "Những thay đổi lớn tại các trường đại học từ ngày 1 tháng 9 năm 2026",
       "Một bước ngoặt lịch sử trong giáo dục Nga",
@@ -587,7 +587,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Cuộc đua lượng tử toàn cầu từ lâu đã bước ra khỏi những trang sách khoa học viễn tưởng để trở thành chiến trường công nghệ khốc liệt nhất của thế kỷ 21. Không đứng ngoài cuộc chơi, Nga đã và đang triển khai chiến lược lượng tử đầy tham vọng. Dưới sự dẫn dắt của Tập đoàn Năng lượng Nguyên tử Quốc gia (Rosatom), quốc gia này không chỉ đặt mục tiêu bắt kịp mà còn tham vọng tiên phong trong việc thương mại hóa và ứng dụng điện toán lượng tử vào các ngành kinh tế trọng điểm đến năm 2030.",
     "category": "science",
     "date": "08/2026",
-    "image": "/images/news/article-20.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169179/vnru/news/official-4c6bd669-1af1-443d-8723-b5acfcfaad58.webp",
     "body": [
       "Cuộc đua lượng tử toàn cầu từ lâu đã bước ra khỏi những trang sách khoa học viễn tưởng để trở thành chiến trường công nghệ khốc liệt nhất của thế kỷ 21. Không đứng ngoài cuộc chơi, Nga đã và đang triển khai chiến lược lượng tử đầy tham vọng. Dưới sự dẫn dắt của Tập đoàn Năng lượng Nguyên tử Quốc gia (Rosatom), quốc gia này không chỉ đặt mục tiêu bắt kịp mà còn tham vọng tiên phong trong việc thương mại hóa và ứng dụng điện toán lượng tử vào các ngành kinh tế trọng điểm đến năm 2030.",
       "Từ tiềm lực nền tảng đến cú bứt phá trên bản đồ lượng tử thế giới",
@@ -647,7 +647,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Chính phủ Liên bang Nga đã công bố kết quả Cuộc thi “Student Startup” (Khởi nghiệp sinh viên) năm 2026. Theo đó, 2.222 sinh viên, nghiên cứu sinh và bác sĩ nội trú sẽ được nhận khoản tài trợ 1 triệu rúp/người để phát triển các dự án khởi nghiệp dựa trên khoa học và công nghệ. Chương trình được triển khai từ năm 2022 theo sáng kiến của Bộ Khoa học và Giáo dục đại học Nga, trong khuôn khổ Nền tảng Khởi nghiệp Công nghệ Đại học. Bên cạnh công dân Nga, các thí sinh đến từ 8 quốc gia hữu nghị cũng có dự án được lựa chọn nhận tài trợ. Tuy nhiên, Ban Tổ chức chưa công bố danh sách các quốc gia và cá nhân đoạt giải. Vì vậy, hiện chưa có cơ sở xác nhận có sinh viên Việt Nam trong số các dự án được hỗ trợ.",
     "category": "education",
     "date": "07/2026",
-    "image": null,
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169177/vnru/news/official-1fc011ef-db6d-4eb7-bbd9-cb47b64b2729.webp",
     "body": [
       "Chính phủ Liên bang Nga đã công bố kết quả Cuộc thi “Student Startup” (Khởi nghiệp sinh viên) năm 2026. Theo đó, 2.222 sinh viên, nghiên cứu sinh và bác sĩ nội trú sẽ được nhận khoản tài trợ 1 triệu rúp/người để phát triển các dự án khởi nghiệp dựa trên khoa học và công nghệ. Chương trình được triển khai từ năm 2022 theo sáng kiến của Bộ Khoa học và Giáo dục đại học Nga, trong khuôn khổ Nền tảng Khởi nghiệp Công nghệ Đại học. Bên cạnh công dân Nga, các thí sinh đến từ 8 quốc gia hữu nghị cũng có dự án được lựa chọn nhận tài trợ. Tuy nhiên, Ban Tổ chức chưa công bố danh sách các quốc gia và cá nhân đoạt giải. Vì vậy, hiện chưa có cơ sở xác nhận có sinh viên Việt Nam trong số các dự án được hỗ trợ.",
       "Phó Thủ tướng Nga Dmitry Chernyshenko cho biết chương trình là một trong những công cụ quan trọng nhằm thực hiện mục tiêu quốc gia về đạt được vị thế dẫn đầu công nghệ. Khoảng 70% số dự án được tài trợ thuộc các lĩnh vực ưu tiên trong các chương trình quốc gia về phát triển công nghệ, góp phần thúc đẩy thương mại hóa các kết quả nghiên cứu ngay từ môi trường đại học.",
@@ -856,7 +856,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Ngày 22/4/2026, du học sinh Phạm Thị Gấm, nghiên cứu sinh chuyên ngành Hóa phân tích tại Đại học Tổng hợp Quốc gia Voronezh (VGU), Liên bang Nga, đã bảo vệ thành công luận án tiến sĩ với đề tài \"Xác định kháng sinh trong môi trường lỏng bằng cảm biến ampe dựa trên các polyme in dấu phân tử\", hoàn thành chương trình đào tạo trước thời hạn 18 tháng.",
     "category": "education",
     "date": "22/04/2026",
-    "image": "/images/news/article-31.webp",
+    "image": null,
     "body": [
       "Ngày 22/4/2026, du học sinh Phạm Thị Gấm, nghiên cứu sinh chuyên ngành Hóa phân tích tại Đại học Tổng hợp Quốc gia Voronezh (VGU), Liên bang Nga, đã bảo vệ thành công luận án tiến sĩ với đề tài \"Xác định kháng sinh trong môi trường lỏng bằng cảm biến ampe dựa trên các polyme in dấu phân tử\", hoàn thành chương trình đào tạo trước thời hạn 18 tháng.",
       "Đề tài nghiên cứu tập trung phát triển các cảm biến điện hóa sử dụng polyme in dấu phân tử (Molecularly Imprinted Polymers – MIP) nhằm phát hiện nhanh, có độ chọn lọc và độ nhạy cao đối với dư lượng kháng sinh trong các môi trường lỏng như nước và sữa. Kết quả nghiên cứu mở ra triển vọng ứng dụng trong kiểm soát an toàn thực phẩm, giám sát ô nhiễm môi trường và phát triển các phương pháp phân tích hiện đại với chi phí thấp, thời gian phân tích ngắn.",
@@ -875,7 +875,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Từ ngày 21/6 đến 8/7/2026, tại bán đảo Kamchatka (Liên bang Nga) đã diễn ra Diễn đàn Thanh niên toàn Nga về Sinh thái học 2026 với chủ đề “Hệ sinh thái – Vùng đất được bảo tồn”. Diễn đàn quy tụ 600 đại biểu, gồm 300 thanh niên và 300 thiếu niên được tuyển chọn từ 89 chủ thể của Liên bang Nga cùng đại diện 6 quốc gia gồm Việt Nam, Belarus, Kazakhstan, Ấn Độ, Maroc và Turkmenistan. Đại diện Việt Nam tham dự diễn đàn là nghiên cứu sinh Hồ Minh Nhựt, hiện đang học tập tại Đại học Bách khoa Saint Petersburg Peter Đại đế (SPbPU).",
     "category": "education",
     "date": "21/06/2026",
-    "image": "/images/news/article-32.webp",
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169190/vnru/news/official-761046d1-84ae-4c0c-81bf-668e6cf12bd3.webp",
     "body": [
       "Từ ngày 21/6 đến 8/7/2026, tại bán đảo Kamchatka (Liên bang Nga) đã diễn ra Diễn đàn Thanh niên toàn Nga về Sinh thái học 2026 với chủ đề “Hệ sinh thái – Vùng đất được bảo tồn”. Diễn đàn quy tụ 600 đại biểu, gồm 300 thanh niên và 300 thiếu niên được tuyển chọn từ 89 chủ thể của Liên bang Nga cùng đại diện 6 quốc gia gồm Việt Nam, Belarus, Kazakhstan, Ấn Độ, Maroc và Turkmenistan. Đại diện Việt Nam tham dự diễn đàn là nghiên cứu sinh Hồ Minh Nhựt, hiện đang học tập tại Đại học Bách khoa Saint Petersburg Peter Đại đế (SPbPU).",
       "Diễn đàn là một trong những hoạt động học thuật lớn của Nga trong lĩnh vực môi trường và phát triển bền vững, tập trung vào ba chủ đề chính: công nghệ sinh thái, giáo dục sinh thái và du lịch sinh thái. Bên cạnh các bài giảng chuyên đề, tọa đàm với các chuyên gia và hoạt động xây dựng dự án, các đại biểu còn tham gia khảo sát thực địa tại nhiều địa điểm tiêu biểu của Kamchatka như hồ Mikhizha, sông Bystra và bãi biển Khalaktyrsky bên bờ Thái Bình Dương, nổi tiếng với bãi cát đen được hình thành từ hoạt động núi lửa hàng triệu năm trước. Thông qua các hoạt động này, các đại biểu được thực hành các phương pháp nghiên cứu hiện trường về hệ sinh thái rừng, đồng bằng và ven biển, đồng thời cùng trao đổi, đề xuất các sáng kiến giải quyết những vấn đề môi trường trong tương lai.",
@@ -893,7 +893,7 @@ export const OFFICIAL_NEWS = [
     "summary": "Các tuyến du lịch được thiết kế theo hình thức trải nghiệm học thuật, kết hợp tham quan với các hoạt động giáo dục và phổ biến khoa học. Người tham gia có cơ hội tiếp cận trực tiếp các phòng thí nghiệm, trung tâm nghiên cứu, đài thiên văn, cung thiên văn, bảo tàng khoa học, công viên công nghệ và các cơ sở sản xuất công nghệ cao. Theo ông Dmitry Chernyshenko, sau hơn hai năm triển khai, chương trình đã bổ sung thêm hơn 30 tuyến mới, phản ánh nhu cầu ngày càng tăng đối với loại hình du lịch kết hợp giáo dục này.",
     "category": "society",
     "date": "08/2026",
-    "image": null,
+    "image": "https://res.cloudinary.com/dwjqosrrk/image/upload/v1788169176/vnru/news/official-1d2dc0c8-8651-4bfd-abf0-377c756e1338.webp",
     "body": [
       "Phó Thủ tướng Liên bang Nga Dmitry Chernyshenko cho biết, trong khuôn khổ Thập kỷ Khoa học và Công nghệ (2022–2031), Nga đã xây dựng gần 110 tuyến du lịch khoa học tại 35 chủ thể liên bang, góp phần đưa khoa học đến gần hơn với công chúng, đặc biệt là thanh thiếu niên và sinh viên. Chương trình được triển khai theo chỉ đạo của Tổng thống Vladimir Putin, hướng tới khơi dậy niềm yêu thích nghiên cứu khoa học và đổi mới sáng tạo trong thế hệ trẻ.",
       "Các tuyến du lịch được thiết kế theo hình thức trải nghiệm học thuật, kết hợp tham quan với các hoạt động giáo dục và phổ biến khoa học. Người tham gia có cơ hội tiếp cận trực tiếp các phòng thí nghiệm, trung tâm nghiên cứu, đài thiên văn, cung thiên văn, bảo tàng khoa học, công viên công nghệ và các cơ sở sản xuất công nghệ cao. Theo ông Dmitry Chernyshenko, sau hơn hai năm triển khai, chương trình đã bổ sung thêm hơn 30 tuyến mới, phản ánh nhu cầu ngày càng tăng đối với loại hình du lịch kết hợp giáo dục này.",

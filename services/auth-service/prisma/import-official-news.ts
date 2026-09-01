@@ -29,22 +29,34 @@ const categories = {
 } as const;
 
 const articleId = (id: number) => {
-  const hex = createHash('sha256').update(`vnru-official-news:${id}`).digest('hex');
+  const hex = createHash('sha256')
+    .update(`vnru-official-news:${id}`)
+    .digest('hex');
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-4${hex.slice(13, 16)}-8${hex.slice(17, 20)}-${hex.slice(20, 32)}`;
 };
 
 async function main() {
-  const catalogUrl = pathToFileURL(resolve(__dirname, '../../../frontend/features/public-v2/data/official-news.ts')).href;
-  const { OFFICIAL_NEWS } = await import(catalogUrl) as { OFFICIAL_NEWS: OfficialArticle[] };
+  const catalogUrl = pathToFileURL(
+    resolve(
+      __dirname,
+      '../../../frontend/features/public-v2/data/official-news.ts',
+    ),
+  ).href;
+  const { OFFICIAL_NEWS } = (await import(catalogUrl)) as {
+    OFFICIAL_NEWS: OfficialArticle[];
+  };
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) throw new Error('DATABASE_URL is required');
-  const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
+  const prisma = new PrismaClient({
+    adapter: new PrismaPg({ connectionString }),
+  });
   try {
     const editor = await prisma.roleAssignment.findFirst({
       where: { role: { name: 'CONTENT_EDITOR' }, status: 'ACTIVE' },
       select: { userId: true },
     });
-    if (!editor) throw new Error('Active CONTENT_EDITOR assignment is required');
+    if (!editor)
+      throw new Error('Active CONTENT_EDITOR assignment is required');
 
     for (const item of OFFICIAL_NEWS) {
       const existing = await prisma.newsArticle.findFirst({
@@ -56,9 +68,7 @@ async function main() {
         update: {
           category: categories[item.category],
           contentType: item.contentType ?? 'ARTICLE',
-          coverImageUrl: item.image,
           sourceUrls: item.sources,
-          status: 'PUBLISHED',
         },
         create: {
           id: articleId(item.id),
@@ -66,7 +76,6 @@ async function main() {
           contentType: item.contentType ?? 'ARTICLE',
           coverImageUrl: item.image,
           sourceUrls: item.sources,
-          status: 'PUBLISHED',
           publishedAt: new Date(),
           authorId: editor.userId,
         },
@@ -74,11 +83,29 @@ async function main() {
       });
       await prisma.newsArticleTranslation.upsert({
         where: { articleId_locale: { articleId: article.id, locale: 'VI' } },
-        update: { title: item.title, summary: item.summary, content: item.body.join('\n\n') },
-        create: { articleId: article.id, locale: 'VI', title: item.title, summary: item.summary, content: item.body.join('\n\n') },
+        update: {
+          title: item.title,
+          summary: item.summary,
+          content: item.body.join('\n\n'),
+        },
+        create: {
+          articleId: article.id,
+          locale: 'VI',
+          title: item.title,
+          summary: item.summary,
+          content: item.body.join('\n\n'),
+        },
       });
     }
     console.log(`Imported ${OFFICIAL_NEWS.length} official news articles`);
+    const breakdown = await prisma.newsArticle.groupBy({
+      by: ['contentType'],
+      _count: { id: true },
+    });
+    console.log(
+      'Breakdown by contentType:',
+      breakdown.map((b) => `${b.contentType}: ${b._count.id}`).join(', '),
+    );
   } finally {
     await prisma.$disconnect();
   }

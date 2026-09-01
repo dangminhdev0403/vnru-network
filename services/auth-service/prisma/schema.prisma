@@ -27,10 +27,6 @@ enum MembershipApplicationStatus {
   REJECTED
 }
 
-enum NewsStatus {
-  DRAFT
-  PUBLISHED
-}
 
 enum NewsLocale {
   VI
@@ -70,17 +66,16 @@ model NewsArticle {
   actionClosesAt DateTime?
   sourceUrls     String[]                 @default([])
   coverImageUrl  String?
-  status         NewsStatus               @default(DRAFT)
   isFeatured     Boolean                  @default(false)
-  publishedAt    DateTime?
+  publishedAt    DateTime                  @default(now())
   createdAt      DateTime                 @default(now())
   updatedAt      DateTime                 @updatedAt
   authorId       String
   author         User                     @relation(fields: [authorId], references: [id], onDelete: Restrict)
   translations   NewsArticleTranslation[]
 
-  @@index([status, isFeatured, publishedAt])
-  @@index([status, contentType, publishedAt])
+  @@index([isFeatured, publishedAt])
+  @@index([contentType, publishedAt])
 }
 
 model NewsArticleTranslation {

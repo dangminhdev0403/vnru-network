@@ -21,22 +21,32 @@ test("workspace root renders the unified member dashboard while legacy IAM route
 });
 
 test("content administration reuses admin chrome with its own navigation", async () => {
-  const [contentLayout, contentSidebar, studio, iamLayout, iamSidebar] = await Promise.all([
-    read("app/(content-admin)/layout.tsx"),
-    read("features/news/ContentAdminSidebar.tsx"),
-    read("features/news/AdminNewsStudio.tsx"),
-    read("app/(admin)/layout.tsx"),
-    read("features/admin/components/AdminSidebar.tsx"),
-  ]);
+  const [contentLayout, contentSidebar, studio, iamLayout, iamSidebar] =
+    await Promise.all([
+      read("app/(content-admin)/layout.tsx"),
+      read("features/news/ContentAdminSidebar.tsx"),
+      read("features/news/AdminNewsStudio.tsx"),
+      read("app/(admin)/layout.tsx"),
+      read("features/admin/components/AdminSidebar.tsx"),
+    ]);
   assert.match(contentLayout, /AdminShell area="content"/);
   assert.match(contentSidebar, /href: "\/workspace\/news"/);
-  for (const view of ["all", "featured", "ANNOUNCEMENT", "EVENT", "PROJECT", "OPPORTUNITY", "new"]) {
+  assert.match(contentSidebar, /view=ARTICLE/);
+  assert.doesNotMatch(contentSidebar, /view=all/);
+  assert.match(studio, /view === "all" \? "ARTICLE" : view/);
+  for (const view of ["ANNOUNCEMENT", "EVENT", "PROJECT", "OPPORTUNITY"]) {
     assert.match(contentSidebar, new RegExp(`view=${view}`));
   }
   assert.match(studio, /searchParams\.get\("view"\)/);
   assert.match(studio, /const showOverview = !view/);
-  assert.match(studio, /const showList = Boolean\(view && view !== "new" && !selectedId\)/);
-  assert.match(studio, /const showEditor = view === "new" \|\| Boolean\(selectedId\)/);
+  assert.match(
+    studio,
+    /const showList = Boolean\(view && view !== "new" && !selectedId\)/,
+  );
+  assert.match(
+    studio,
+    /const showEditor = view === "new" \|\| Boolean\(selectedId\)/,
+  );
   assert.match(studio, /showOverview \? \([\s\S]*Tổng quan nội dung/);
   assert.match(studio, /showList \? \([\s\S]*Danh sách bài viết/);
   assert.match(studio, /showEditor \? \([\s\S]*onSubmit/);
@@ -44,26 +54,81 @@ test("content administration reuses admin chrome with its own navigation", async
   assert.match(studio, /Trung tâm nội dung/);
   assert.match(studio, /Danh sách bài viết/);
   assert.match(studio, /VI.*EN.*RU|locales\.map/);
-  assert.match(studio, /news\.mutations\.publish/);
-  for (const field of ["contentType", "actionUrl", "actionClosesAt", "sourceUrls", "actionLabel"]) {
+  assert.doesNotMatch(studio, /news\.mutations\.(publish|unpublish)/);
+  assert.match(studio, /news\.mutations\.delete/);
+  assert.match(studio, /confirmAction/);
+  const [newsRepository, newsResource, newsBff] = await Promise.all([
+    read("features/news/repository.ts"),
+    read("features/news/resource.ts"),
+    read("app/api/admin/news/[[...path]]/route.ts"),
+  ]);
+  assert.match(newsRepository, /method: "DELETE"/);
+  assert.match(newsResource, /delete: defineMutation/);
+  assert.match(newsBff, /export const DELETE = proxy/);
+  for (const field of [
+    "contentType",
+    "actionUrl",
+    "actionClosesAt",
+    "sourceUrls",
+    "actionLabel",
+  ]) {
     assert.match(studio, new RegExp(field));
   }
-  assert.match(studio, /type="datetime-local"/);
-  assert.match(studio, /Nhãn thao tác[\s\S]*Liên kết thao tác/);
+  for (const label of [
+    "Loại nội dung",
+    "Hạn thao tác",
+    "Nhãn thao tác",
+    "Liên kết thao tác",
+    "Nguồn tham khảo",
+  ]) {
+    assert.doesNotMatch(studio, new RegExp(`>\\s*${label}\\s*<`));
+  }
+  assert.match(studio, /view=new&type=\$\{navContentType\}/);
+  assert.match(studio, /Tạo \{contentLabel\.toLocaleLowerCase\("vi"\)\} mới/);
+  assert.doesNotMatch(studio, /Viết bài mới|Tạo bài viết|Chỉnh sửa bài viết/);
+  assert.doesNotMatch(studio, /BẢN NHÁP MỚI|Lưu bản nháp|Lưu thay đổi/);
+  assert.match(studio, /Lưu chỉnh sửa/);
+  assert.doesNotMatch(studio, />\s*Loại\s*<\/th>|>\s*Cập nhật\s*<\/th>/);
+  assert.match(studio, />\s*Trạng thái\s*<\/th>/);
+  assert.match(studio, /colSpan=\{5\}/);
   assert.match(studio, /window\.Translator/);
-  assert.match(studio, /sourceLanguage: "vi", targetLanguage: "ru"/);
-  assert.match(studio, /Dịch từ tiếng Việt/);
+  assert.match(studio, /sourceLanguage: "vi";?[\s\S]*targetLanguage: "ru"/);
+  assert.equal(
+    (studio.match(/focus-within:border-blue-500/g) || []).length >= 1,
+    true,
+  );
+  assert.equal((studio.match(/appearance-none/g) || []).length >= 2, true);
+  assert.equal((studio.match(/expand_more/g) || []).length >= 2, true);
   assert.doesNotMatch(studio, /localStorage|translate\.googleapis|mymemory/);
+  assert.match(studio, /URL\.createObjectURL\(file\)/);
+  assert.match(studio, /pendingInlineImages/);
+  assert.match(studio, /uploadPendingInlineImages/);
+  assert.match(studio, /pendingInlineImages\.filter[\s\S]*content\.includes\(image\.url\)/);
+  assert.match(studio, /Promise\.all\([\s\S]*referencedImages\.map/);
+  assert.match(studio, /Promise\.all\(\[[\s\S]*pendingCoverFile/);
+  assert.doesNotMatch(
+    studio,
+    /handleInlineImageSelect[\s\S]*?upload\.mutateAsync\(file\)/,
+  );
   assert.doesNotMatch(iamLayout, /area="content"/);
   assert.doesNotMatch(iamSidebar, /\/workspace\/news/);
 });
 
+test("official news keeps cover images aligned with their article", async () => {
+  const catalog = await read("features/public-v2/data/official-news.ts");
+  assert.match(
+    catalog,
+    /"id": 1,[\s\S]*?"image": null,[\s\S]*?"id": 2,[\s\S]*?"title": "Ông Đỗ Xuân Hoàng[^\n]+[\s\S]*?"image": "https:\/\/res\.cloudinary\.com\/[^\n]+official-edbe2e6d[^\n]+"/,
+  );
+});
+
 test("authenticated shell contains one member workspace and canonical IAM bridge", async () => {
-  const [registry, proxy, header, layout] = await Promise.all([
+  const [registry, proxy, header, layout, shell] = await Promise.all([
     read("features/workspace/config/workspace-registry.ts"),
     read("proxy.ts"),
     read("components/shared/Header.tsx"),
     read("app/(workspace)/layout.tsx"),
+    read("components/shared/WorkspaceShell.tsx"),
   ]);
 
   for (const href of ["/workspace", "/security", "/admin/access"]) {
@@ -74,6 +139,11 @@ test("authenticated shell contains one member workspace and canonical IAM bridge
     /href: "\/workspace\/(researcher|reviewer|organization|collaboration|decisions|enterprise|leadership)"/,
   );
   assert.doesNotMatch(layout, /DemoWorkflowProvider/);
+  assert.match(
+    shell,
+    /capabilities\.some\(\(item\) => item\.startsWith\("content\.article\."\)\)/,
+  );
+  assert.match(shell, /ContentAdminSidebar/);
   assert.doesNotMatch(registry, /href: "\/governance"/);
   assert.doesNotMatch(header, /searchPlaceholder|\/admin\/catalogs/);
   assert.match(header, /roleName/);

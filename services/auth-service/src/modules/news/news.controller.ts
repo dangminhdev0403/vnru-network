@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -48,7 +49,26 @@ const publicQuerySchema = paginationSchema.extend({
     .optional(),
 });
 const adminQuerySchema = paginationSchema.extend({
-  status: z.enum(['DRAFT', 'PUBLISHED']).optional(),
+  contentType: z
+    .enum([
+      'ARTICLE',
+      'EVENT',
+      'ANNOUNCEMENT',
+      'PROJECT',
+      'OPPORTUNITY',
+      'PUBLICATION',
+    ])
+    .optional(),
+  category: z.string().optional(),
+  query: z.string().trim().optional(),
+  sort: z
+    .enum(['updated-desc', 'updated-asc', 'title-asc'])
+    .default('updated-desc'),
+  featured: z.preprocess((val) => {
+    if (val === 'true' || val === true) return true;
+    if (val === 'false' || val === false) return false;
+    return undefined;
+  }, z.boolean().optional()),
 });
 const translationSchema = z
   .object({
@@ -83,6 +103,8 @@ const articleFields = {
 const createSchema = z
   .object({
     ...articleFields,
+    coverImageUrl: z.url().max(2000),
+    isFeatured: z.boolean().optional(),
     translations: z
       .object({
         VI: translationSchema,
@@ -100,6 +122,7 @@ const updateSchema = z
         value.optional(),
       ]),
     ),
+    isFeatured: z.boolean().optional(),
     translations: z
       .object({
         VI: translationSchema.optional(),
@@ -114,9 +137,7 @@ const updateSchema = z
     (value) => Object.keys(value).length > 0,
     'At least one field is required',
   );
-const publishSchema = z
-  .object({ isFeatured: z.boolean().default(false) })
-  .strict();
+
 const uuidSchema = z.string().uuid();
 const localeMap = { vi: 'VI', en: 'EN', ru: 'RU' } as const;
 
@@ -145,7 +166,10 @@ export class PublicNewsController {
   @Get(':id')
   get(@Param('id') id: string, @Query('locale') locale?: string) {
     const parsedLocale = parse(localeSchema, locale);
-    return this.service.getPublic(parse(uuidSchema, id), localeMap[parsedLocale]);
+    return this.service.getPublic(
+      parse(uuidSchema, id),
+      localeMap[parsedLocale],
+    );
   }
 }
 
@@ -170,7 +194,7 @@ export class AdminNewsController {
   @RequirePermission('content.article.read')
   list(@Query() query: Record<string, unknown>) {
     const input = parse(adminQuerySchema, query);
-    return this.service.listAdmin(input.limit, input.offset, input.status);
+    return this.service.listAdmin(input);
   }
 
   @Get(':id')
@@ -197,16 +221,10 @@ export class AdminNewsController {
     );
   }
 
-  @Post(':id/publish')
-  @RequirePermission('content.article.publish')
-  publish(@Param('id') id: string, @Body() body: unknown) {
-    const input = parse(publishSchema, body);
-    return this.service.publish(parse(uuidSchema, id), input.isFeatured);
+  @Delete(':id')
+  @RequirePermission('content.article.update')
+  delete(@Param('id') id: string) {
+    return this.service.delete(parse(uuidSchema, id));
   }
 
-  @Post(':id/unpublish')
-  @RequirePermission('content.article.publish')
-  unpublish(@Param('id') id: string) {
-    return this.service.unpublish(parse(uuidSchema, id));
-  }
 }

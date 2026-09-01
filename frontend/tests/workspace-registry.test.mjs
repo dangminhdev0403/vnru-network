@@ -27,7 +27,6 @@ test("workspace navigation exposes only destinations allowed by capability", () 
   const editorCapabilities = [
     "content.article.create",
     "content.article.update",
-    "content.article.publish",
   ];
   assert.deepEqual(
     filterNavSections(editorCapabilities).flatMap((section) =>

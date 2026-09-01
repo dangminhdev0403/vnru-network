@@ -220,32 +220,6 @@ export const PERMISSION_CATALOG: PermissionDefinition[] = [
       ru: "Редактирование содержания статей в пределах полномочий.",
     },
   },
-  {
-    key: "content.article.publish",
-    module: {
-      vi: "Nội dung & Thành viên",
-      en: "Content & Members",
-      ru: "Контент и участники",
-    },
-    moduleKey: "content",
-    resource: {
-      vi: "Bài viết",
-      en: "Articles",
-      ru: "Статьи",
-    },
-    action: {
-      vi: "Xuất bản bài viết",
-      en: "Publish Articles",
-      ru: "Публикация статей",
-    },
-    actionType: "publish",
-    supportedScopes: ["Portal", "Global"],
-    description: {
-      vi: "Phê duyệt bài viết đã thẩm định và phát hành công khai lên cổng thông tin.",
-      en: "Approve reviewed submissions and publish them publicly to the portal.",
-      ru: "Публикация одобренных материалов на портале.",
-    },
-  },
 
   // ── Collaboration Module ──
   {

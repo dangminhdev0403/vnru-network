@@ -11,15 +11,15 @@ Implemented API families:
 - `/api/v1/admin/roles/*`: role and permission administration.
 - `/api/v1/admin/role-assignments/*`: assignment administration.
 - `POST /api/v1/membership-applications`: public membership application intake. Stores a normalized `PENDING` application; never creates a user or role assignment.
-- `GET /api/v1/news`: public published-news feed; supports bounded pagination, `locale`, and optional `featured`.
-- `GET /api/v1/news/:id`: public published article with VI fallback.
-- `/api/v1/admin/news/*`: authenticated article create/update/publish/unpublish operations authorized by `content.article.*` capabilities.
-- `GET /api/v1/admin/news`: bounded admin list with optional `status=DRAFT|PUBLISHED`; `GET /api/v1/admin/news/:id` returns all translations for editing.
+- `GET /api/v1/news`: public news feed; supports bounded pagination, `locale`, and optional `featured`.
+- `GET /api/v1/news/:id`: public article with VI fallback.
+- `/api/v1/admin/news/*`: authenticated article create/read/update/delete operations authorized by `content.article.*` capabilities; delete reuses `content.article.update`.
+- `GET /api/v1/admin/news`: bounded admin list; `GET /api/v1/admin/news/:id` returns all translations for editing.
 - `POST /api/v1/admin/news/media`: authenticated multipart image upload (`file`, JPEG/PNG/WebP, max 5 MB) through `nestjs-cloudinary@1.0.7`; response returns Cloudinary URL and public ID for article/banner fields.
 
 News media is uploaded only through the backend. Upload accepts either `content.article.create` or `content.article.update`, so editors can replace an existing cover. Frontend code must not sign Cloudinary requests, hold Cloudinary secrets, transform image binaries, or implement a parallel storage path.
 
-Create/update is authoritative and returns without waiting for media. The client uploads media independently, then patches the returned Cloudinary URL onto that article. Upload failure leaves the article as a retryable draft; publishing is rejected until `coverImageUrl` exists. This temporary client-managed task does not survive tab close/reload; add a durable backend queue only when that behavior is required.
+Create requires an uploaded `coverImageUrl` and makes the article public immediately. Update edits the same public article. The client uploads media before create/update; upload failure leaves no new article.
 
 Required backend runtime secrets: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`. Keep values only in ignored/runtime environment files; never commit or expose them to the browser.
 

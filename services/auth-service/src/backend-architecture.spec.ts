@@ -29,4 +29,13 @@ describe('backend module boundaries', () => {
       source('modules/authentication/authentication.module.ts'),
     ).not.toMatch(/IamAdminController/);
   });
+
+  it('does not overwrite managed news covers during catalog re-import', () => {
+    const importer = source('../prisma/import-official-news.ts');
+    const updateBlock = importer.slice(
+      importer.indexOf('update: {'),
+      importer.indexOf('create: {'),
+    );
+    expect(updateBlock).not.toMatch(/coverImageUrl/);
+  });
 });

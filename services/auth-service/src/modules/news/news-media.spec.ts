@@ -1,11 +1,31 @@
 import { BadRequestException } from '@nestjs/common';
-import { NewsMediaService, validateNewsImage } from './news-media.service';
+import {
+  NewsMediaService,
+  newsImagePublicId,
+  validateNewsImage,
+} from './news-media.service';
 
 describe('news media', () => {
   const cloudinary = { uploadFile: jest.fn() };
   const service = new NewsMediaService(cloudinary);
 
   beforeEach(() => jest.clearAllMocks());
+
+  it('only derives public IDs for this Cloudinary news folder', () => {
+    expect(
+      newsImagePublicId(
+        'https://res.cloudinary.com/demo/image/upload/v123/vnru/news/photo.webp',
+        'demo',
+      ),
+    ).toBe('vnru/news/photo');
+    expect(newsImagePublicId('https://example.com/vnru/news/photo.webp', 'demo')).toBeNull();
+    expect(
+      newsImagePublicId(
+        'https://res.cloudinary.com/demo/image/upload/v123/other/photo.webp',
+        'demo',
+      ),
+    ).toBeNull();
+  });
 
   it('rejects non-image files before upload', () => {
     expect(() =>

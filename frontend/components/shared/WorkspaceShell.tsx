@@ -13,6 +13,7 @@ import { useCurrentUser } from "@/features/auth/server-state";
 import React, { Suspense, useState } from "react";
 import Header from "./Header";
 import WorkspaceSidebar from "@/features/workspace/components/WorkspaceSidebar";
+import ContentAdminSidebar from "@/features/news/ContentAdminSidebar";
 
 const shellCopy: Record<Locale, Record<string, string>> = {
   vi: { brand: "Mạng lưới tri thức Nga - Việt" },
@@ -29,7 +30,9 @@ export default function WorkspaceShell({
   const capabilities = currentUser.data?.capabilities ?? [];
   const Sidebar = filterAdminNavSections(capabilities).length
     ? AdminSidebar
-    : WorkspaceSidebar;
+    : capabilities.some((item) => item.startsWith("content.article."))
+      ? ContentAdminSidebar
+      : WorkspaceSidebar;
 
   // Desktop sidebar (xl+) expand/collapse state
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
