@@ -34,7 +34,6 @@ export type AdminNewsListFilters = {
   contentType?: NewsContentType;
   category?: string;
   query?: string;
-  sort?: "updated-desc" | "updated-asc" | "title-asc";
   featured?: boolean;
 };
 
@@ -97,7 +96,6 @@ export const newsRepository = {
     if (filters?.contentType) params.set("contentType", filters.contentType);
     if (filters?.category) params.set("category", filters.category);
     if (filters?.query) params.set("query", filters.query);
-    if (filters?.sort) params.set("sort", filters.sort);
     if (filters?.featured !== undefined)
       params.set("featured", String(filters.featured));
     const queryString = params.toString();

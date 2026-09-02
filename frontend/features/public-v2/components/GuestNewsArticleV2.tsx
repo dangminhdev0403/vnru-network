@@ -8,9 +8,6 @@ import {
   type NewsCategoryKey,
   type OfficialNewsArticle,
 } from "../data/official-news";
-import { GuestPublicFooter } from "./GuestPublicFooter";
-import { HOME_COPY } from "./GuestHomeV2";
-import { GuestPublicNav } from "./GuestPublicNav";
 
 type Category = NewsCategoryKey;
 
@@ -28,7 +25,7 @@ const ui = {
     login: "Đăng nhập",
     news: "Tin tức",
     related: "Tin liên quan",
-    popular: "Tin đọc nhiều",
+    latest: "Tin mới nhất",
     share: "Chia sẻ",
     tags: "Từ khóa",
     actionCloses: "Hạn đăng ký",
@@ -55,7 +52,7 @@ const ui = {
     login: "Sign in",
     news: "News",
     related: "Related news",
-    popular: "Most read",
+    latest: "Latest news",
     share: "Share",
     tags: "Tags",
     actionCloses: "Registration closes",
@@ -82,7 +79,7 @@ const ui = {
     login: "Войти",
     news: "Новости",
     related: "Похожие материалы",
-    popular: "Популярное",
+    latest: "Последние новости",
     share: "Поделиться",
     tags: "Теги",
     actionCloses: "Регистрация до",
@@ -141,31 +138,22 @@ function ShareButton({ label }: { label: string }) {
 
 export function GuestNewsArticleV2({
   article,
-  articles,
+  related,
+  latest,
+  moreLatest,
 }: {
   article: OfficialNewsArticle;
-  articles: OfficialNewsArticle[];
+  related: OfficialNewsArticle[];
+  latest: OfficialNewsArticle[];
+  moreLatest: OfficialNewsArticle[];
 }) {
   const { locale } = useLocale();
   const t = ui[locale] ?? ui.vi;
   const contentType = article.contentType ?? "ARTICLE";
 
-  const related = articles
-    .filter(
-      (item) =>
-        item.id !== article.id &&
-        (item.category === article.category || item.category === "cooperation"),
-    )
-    .slice(0, 4);
-  const popular = articles.filter((item) => item.id !== article.id).slice(0, 5);
-  const bottomRelated = articles
-    .filter((item) => item.id !== article.id)
-    .slice(5, 9);
 
   return (
     <div className="min-h-screen bg-white text-slate-950">
-      <GuestPublicNav active="news" />
-
       <main className="mx-auto max-w-[1460px] px-4 py-9 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500">
           <Link href="/" className="hover:text-blue-600">
@@ -226,6 +214,7 @@ export function GuestNewsArticleV2({
                   const src = imgMatch[2];
                   return (
                     <figure key={`${article.id}-${index}`} className="my-6">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={src}
                         alt={alt || formatNewsTitle(article.title)}
@@ -329,10 +318,10 @@ export function GuestNewsArticleV2({
 
             <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-[0_6px_22px_rgba(37,99,235,.05)]">
               <h2 className="mb-4 text-lg font-black uppercase text-blue-600">
-                {t.popular}
+                {t.latest}
               </h2>
               <div className="divide-y divide-blue-100">
-                {popular.map((item) => (
+                {latest.map((item) => (
                   <Link
                     key={item.id}
                     href={newsArticleHref(item)}
@@ -356,7 +345,7 @@ export function GuestNewsArticleV2({
             <div className="h-px flex-1 bg-blue-100" />
           </div>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {bottomRelated.map((item) => (
+            {moreLatest.map((item) => (
               <Link
                 key={item.id}
                 href={newsArticleHref(item)}
@@ -382,8 +371,6 @@ export function GuestNewsArticleV2({
           </div>
         </section>
       </main>
-
-      <GuestPublicFooter copy={HOME_COPY[locale]} />
     </div>
   );
 }

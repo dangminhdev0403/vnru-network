@@ -24,7 +24,11 @@ describe('NewsService', () => {
 
     expect(prisma.newsArticle.findMany).toHaveBeenCalledWith({
       where: { isFeatured: true },
-      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
+      orderBy: [
+        { publishedAt: 'desc' },
+        { createdAt: 'desc' },
+        { id: 'desc' },
+      ],
       take: 4,
       skip: 0,
       select: expect.any(Object),
@@ -67,6 +71,26 @@ describe('NewsService', () => {
     );
     expect(prisma.newsArticle.count).toHaveBeenCalledWith({ where });
     expect(result).toEqual({ items: [], total: 7 });
+  });
+
+  it('excludes the current article in backend-owned related queries', async () => {
+    prisma.newsArticle.findMany.mockResolvedValue([]);
+    prisma.newsArticle.count.mockResolvedValue(0);
+
+    await service.listPublic({
+      limit: 4,
+      offset: 0,
+      category: 'cooperation',
+      excludeId: 'article-1',
+    });
+
+    expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { category: 'cooperation', NOT: { id: 'article-1' } },
+        take: 4,
+        skip: 0,
+      }),
+    );
   });
 
   it('loads an article by id', async () => {
@@ -130,7 +154,6 @@ describe('NewsService', () => {
       contentType: 'OPPORTUNITY',
       category: 'education',
       query: 'học bổng',
-      sort: 'updated-desc',
     });
 
     expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
@@ -147,7 +170,7 @@ describe('NewsService', () => {
             },
           },
         },
-        orderBy: { updatedAt: 'desc' },
+        orderBy: [{ updatedAt: 'desc' }, { id: 'desc' }],
         take: 10,
         skip: 0,
       }),

@@ -97,8 +97,8 @@ test("content administration reuses admin chrome with its own navigation", async
     (studio.match(/focus-within:border-blue-500/g) || []).length >= 1,
     true,
   );
-  assert.equal((studio.match(/appearance-none/g) || []).length >= 2, true);
-  assert.equal((studio.match(/expand_more/g) || []).length >= 2, true);
+  assert.equal((studio.match(/appearance-none/g) || []).length >= 1, true);
+  assert.doesNotMatch(studio, /Sắp xếp bài viết|Tiêu đề A-Z|Cũ nhất/);
   assert.doesNotMatch(studio, /localStorage|translate\.googleapis|mymemory/);
   assert.match(studio, /URL\.createObjectURL\(file\)/);
   assert.match(studio, /const submittedLocales = locales\.filter/);

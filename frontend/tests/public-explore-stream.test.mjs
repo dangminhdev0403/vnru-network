@@ -28,6 +28,10 @@ test("news pages share masthead while the listing keeps spotlight and featured s
     new URL("../app/news/page.tsx", import.meta.url),
     "utf8",
   );
+  const layoutSource = await readFile(
+    new URL("../app/news/layout.tsx", import.meta.url),
+    "utf8",
+  );
 
   assert.match(source, /const SPOTLIGHT_INTERVAL_MS = 5_000/);
   assert.match(source, /const latest = latestArticles/);
@@ -43,6 +47,12 @@ test("news pages share masthead while the listing keeps spotlight and featured s
   assert.match(filterSource, /params\.set\("category", category\)/);
   assert.match(pageSource, /isNewsCategory\(categoryValue\)/);
   assert.match(pageSource, /initialQuery=\{query\}/);
+  assert.match(source, /useRouter\(\)/);
+  assert.match(source, /router\.push\(/);
+  assert.doesNotMatch(source, /window\.location\.assign/);
+  assert.match(layoutSource, /<GuestPublicNav active="news" \/>/);
+  assert.match(layoutSource, /<GuestPublicFooter copy=\{HOME_COPY\[locale\]\} \/>/);
+  assert.doesNotMatch(source + articleSource, /<GuestPublicNav|<GuestPublicFooter/);
   assert.doesNotMatch(source, /vnru-infinity-loading/);
   const newsLoading = await readFile(
     new URL("../app/news/loading.tsx", import.meta.url),

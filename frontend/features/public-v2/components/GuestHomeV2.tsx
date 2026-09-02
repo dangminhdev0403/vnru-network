@@ -7,7 +7,7 @@ import { useLocale, type Locale } from "@/core/i18n/locale";
 import {
   formatNewsTitle,
   newsArticleHref,
-  OFFICIAL_NEWS,
+  type OfficialNewsArticle,
 } from "../data/official-news";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
@@ -1860,9 +1860,16 @@ function NetworkStatsInfographic({
 }
 
 export function GuestHomeV2({
+  events,
   isAuthenticated,
+  news,
   workspaceHref,
-}: Readonly<{ isAuthenticated: boolean; workspaceHref: string }>) {
+}: Readonly<{
+  events: OfficialNewsArticle[];
+  isAuthenticated: boolean;
+  news: OfficialNewsArticle[];
+  workspaceHref: string;
+}>) {
   const { locale } = useLocale();
   const t = HOME_COPY[locale] ?? HOME_COPY.vi;
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -1982,7 +1989,7 @@ export function GuestHomeV2({
 
             {/* News Cards Grid */}
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {OFFICIAL_NEWS.slice(0, 4).map((item) => {
+              {news.map((item) => {
                 return (
                   <Link
                     key={item.id}
@@ -2082,7 +2089,7 @@ export function GuestHomeV2({
 
             {/* Event articles */}
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {OFFICIAL_NEWS.slice(2, 6).map((item) => {
+              {events.map((item) => {
                 return (
                   <Link
                     key={item.id}

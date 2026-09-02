@@ -30,6 +30,12 @@ import {
 import { NewsService, type NewsLocale } from './news.service';
 
 const localeSchema = z.enum(['vi', 'en', 'ru']).default('vi');
+const categorySchema = z.enum([
+  'science-technology',
+  'economy-society',
+  'education',
+  'cooperation',
+]);
 const paginationSchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(20),
   offset: z.coerce.number().int().min(0).default(0),
@@ -40,7 +46,8 @@ const publicQuerySchema = paginationSchema.extend({
     .transform((value) => value === 'true')
     .optional(),
   locale: localeSchema,
-  category: z.string().optional(),
+  category: categorySchema.optional(),
+  excludeId: z.string().uuid().optional(),
   contentType: z
     .union([z.string(), z.array(z.string())])
     .transform((value) => (Array.isArray(value) ? value : [value]))
@@ -68,11 +75,8 @@ const adminQuerySchema = paginationSchema.extend({
       'PUBLICATION',
     ])
     .optional(),
-  category: z.string().optional(),
-  query: z.string().trim().optional(),
-  sort: z
-    .enum(['updated-desc', 'updated-asc', 'title-asc'])
-    .default('updated-desc'),
+  category: categorySchema.optional(),
+  query: z.string().trim().max(200).optional(),
   featured: z.preprocess((val) => {
     if (val === 'true' || val === true) return true;
     if (val === 'false' || val === false) return false;
@@ -88,12 +92,7 @@ const translationSchema = z
   })
   .strict();
 const articleFields = {
-  category: z.enum([
-    'science-technology',
-    'economy-society',
-    'education',
-    'cooperation',
-  ]),
+  category: categorySchema,
   coverImageUrl: z.url().max(2000).nullable().optional(),
   contentType: z
     .enum([
@@ -171,6 +170,7 @@ export class PublicNewsController {
     const input = parse(publicQuerySchema, query);
     return this.service.listPublic({
       featured: input.featured,
+      excludeId: input.excludeId,
       limit: input.limit,
       offset: input.offset,
       category: input.category,

@@ -135,7 +135,7 @@ test("public news uses the official DOCX-derived catalog", async () => {
       count,
     );
   }
-  assert.match(explore, /OFFICIAL_NEWS/);
+  assert.doesNotMatch(explore, /OFFICIAL_NEWS/);
   assert.match(explore, /const latest = latestArticles/);
   assert.match(explore, /const featured = featuredArticles/);
   assert.match(explore, /const spotlight = featuredArticles/);
@@ -162,7 +162,9 @@ test("public news uses the official DOCX-derived catalog", async () => {
   assert.match(explore, /formatNewsTitle\(item\.title\)/);
   assert.match(home, /formatNewsTitle\(item\.title\)/);
   assert.match(article, /formatNewsTitle\(article\.title\)/);
-  assert.match(article, /articles: OfficialNewsArticle\[\]/);
+  assert.match(article, /related: OfficialNewsArticle\[\]/);
+  assert.match(article, /latest: OfficialNewsArticle\[\]/);
+  assert.match(article, /moreLatest: OfficialNewsArticle\[\]/);
   assert.match(article, /article\.body\.map/);
   assert.match(
     article,
@@ -173,7 +175,8 @@ test("public news uses the official DOCX-derived catalog", async () => {
   assert.doesNotMatch(article, /actionClosed/);
   assert.match(article, /<Thumb item=\{item\}/);
   assert.match(article, /src=\{item\.image\}/);
-  assert.match(home, /OFFICIAL_NEWS\.slice\(0, 4\)/);
+  assert.match(home, /news\.map\(\(item\)/);
+  assert.doesNotMatch(home, /OFFICIAL_NEWS\.slice\(0, 4\)/);
   assert.doesNotMatch(explore, /picsum\.photos/);
   assert.doesNotMatch(article, /const articles:/);
 });

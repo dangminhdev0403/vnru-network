@@ -13,6 +13,7 @@ export type NewsContentType =
 
 export interface PublicListNewsInput {
   featured?: boolean;
+  excludeId?: string;
   limit: number;
   offset: number;
   locale?: NewsLocale;
@@ -47,7 +48,6 @@ export interface AdminListNewsInput {
   contentType?: NewsContentType;
   category?: string;
   query?: string;
-  sort?: 'updated-desc' | 'updated-asc' | 'title-asc';
   featured?: boolean;
 }
 
@@ -153,6 +153,7 @@ export class NewsService {
         }[input.scope]
       : undefined;
     const where = {
+      ...(input.excludeId ? { NOT: { id: input.excludeId } } : {}),
       ...(input.featured === undefined ? {} : { isFeatured: input.featured }),
       ...(input.category === undefined ? {} : { category: input.category }),
       ...(input.contentTypes?.length
@@ -171,10 +172,14 @@ export class NewsService {
     const [articles, total] = await Promise.all([
       this.prisma.newsArticle.findMany({
         where,
-      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
-      take: input.limit,
-      skip: input.offset,
-      select: articleSelect,
+        orderBy: [
+          { publishedAt: 'desc' },
+          { createdAt: 'desc' },
+          { id: 'desc' },
+        ],
+        take: input.limit,
+        skip: input.offset,
+        select: articleSelect,
       }),
       this.prisma.newsArticle.count({ where }),
     ]);
@@ -217,13 +222,6 @@ export class NewsService {
       };
     }
 
-    let orderBy: any = { updatedAt: 'desc' };
-    if (input.sort === 'updated-asc') {
-      orderBy = { updatedAt: 'asc' };
-    } else if (input.sort === 'title-asc') {
-      orderBy = { updatedAt: 'desc' };
-    }
-
     const countsWhere: Record<string, unknown> = {};
     if (input.contentType) countsWhere.contentType = input.contentType;
     if (input.category) countsWhere.category = input.category;
@@ -232,7 +230,7 @@ export class NewsService {
       await Promise.all([
         this.prisma.newsArticle.findMany({
           where,
-          orderBy,
+          orderBy: [{ updatedAt: 'desc' }, { id: 'desc' }],
           take: input.limit,
           skip: input.offset,
           select: adminArticleSelect,

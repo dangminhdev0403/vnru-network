@@ -1,24 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
 import {
   formatNewsTitle,
   newsArticleHref,
-  OFFICIAL_NEWS,
   type OfficialNewsArticle,
 } from "../data/official-news";
-import { GuestPublicFooter } from "./GuestPublicFooter";
-import { HOME_COPY } from "./GuestHomeV2";
 import {
   DEFAULT_NEWS_ADVANCED_FILTERS,
   NEWS_CATEGORIES,
   type NewsAdvancedFilters,
   type NewsCategory,
 } from "./GuestNewsFilterNav";
-
-import { GuestPublicNav } from "./GuestPublicNav";
 
 type NewsItem = OfficialNewsArticle;
 
@@ -181,7 +177,7 @@ function TextRow({ item }: { item: NewsItem }) {
 }
 
 export function GuestExploreV2({
-  initialArticles = OFFICIAL_NEWS,
+  initialArticles = [],
   latestArticles = [],
   featuredArticles = [],
   streamArticles = [],
@@ -208,6 +204,7 @@ export function GuestExploreV2({
   initialAdvancedFilters?: NewsAdvancedFilters;
 }) {
   const { locale } = useLocale();
+  const router = useRouter();
   const t = TEXT[locale] ?? TEXT.vi;
   const activeCategory = initialCategory;
   const advancedFilters = initialAdvancedFilters;
@@ -257,8 +254,6 @@ export function GuestExploreV2({
 
   return (
     <div className="min-h-screen bg-[#edf3f9] text-slate-900 font-sans selection:bg-blue-600 selection:text-white">
-      <GuestPublicNav active="news" />
-
       <main className="mx-auto max-w-[1460px] px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
         {!categoryMode ? (
           <>
@@ -403,11 +398,11 @@ export function GuestExploreV2({
                   <select
                     id="news-stream-category"
                     value={streamCategory}
-                    onChange={(event) => {
-                      window.location.assign(
+                    onChange={(event) =>
+                      router.push(
                         streamHref(1, event.target.value as NewsCategory),
-                      );
-                    }}
+                      )
+                    }
                     className="h-11 rounded-xl border border-blue-200 bg-white px-4 text-sm font-bold text-slate-700 outline-none focus-visible:ring-2 focus-visible:ring-blue-600 shadow-2xs"
                   >
                     {NEWS_CATEGORIES.map((category) => (
@@ -515,8 +510,6 @@ export function GuestExploreV2({
           </section>
         )}
       </main>
-
-      <GuestPublicFooter copy={HOME_COPY[locale]} />
     </div>
   );
 }

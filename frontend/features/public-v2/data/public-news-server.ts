@@ -1,11 +1,7 @@
 import "server-only";
 
 import { authServiceUrl } from "@/features/auth/server";
-import {
-  getOfficialNewsArticle,
-  type NewsCategoryKey,
-  type OfficialNewsArticle,
-} from "./official-news";
+import type { NewsCategoryKey, OfficialNewsArticle } from "./official-news";
 
 const categories: Record<string, NewsCategoryKey> = {
   "science-technology": "science",
@@ -39,6 +35,7 @@ export type PublicNewsQuery = {
   limit?: number;
   offset?: number;
   featured?: boolean;
+  excludeId?: string;
   category?: NewsCategoryKey | "all";
   contentTypes?: NonNullable<OfficialNewsArticle["contentType"]>[];
   query?: string;
@@ -76,6 +73,7 @@ export async function getPublicNews({
   limit = 20,
   offset = 0,
   featured,
+  excludeId,
   category,
   contentTypes = [],
   query,
@@ -88,6 +86,7 @@ export async function getPublicNews({
     offset: String(offset),
   });
   if (featured !== undefined) params.append("featured", String(featured));
+  if (excludeId) params.append("excludeId", excludeId);
   if (category && category !== "all")
     params.append("category", apiCategories[category] ?? category);
   contentTypes.forEach((type) => params.append("contentType", type));
@@ -115,16 +114,11 @@ export async function getPublicNewsArticle(
   id: string,
   locale: string,
 ): Promise<OfficialNewsArticle | undefined> {
-  try {
-    const response = await fetch(
-      authServiceUrl(
-        `api/v1/news/${encodeURIComponent(id)}?locale=${locale}`,
-      ),
-      { next: { revalidate: 60 } },
-    );
-    if (response.ok) return mapArticle((await response.json()) as ApiArticle);
-  } catch {
-    // Local fallback keeps the official catalog available before migration/import.
-  }
-  return getOfficialNewsArticle(id);
+  const response = await fetch(
+    authServiceUrl(`api/v1/news/${encodeURIComponent(id)}?locale=${locale}`),
+    { next: { revalidate: 60 } },
+  );
+  if (response.status === 404) return undefined;
+  if (!response.ok) throw new Error(`News API failed: ${response.status}`);
+  return mapArticle((await response.json()) as ApiArticle);
 }

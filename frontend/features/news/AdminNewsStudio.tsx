@@ -202,9 +202,6 @@ export function AdminNewsStudio() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [categoryFilter, setCategoryFilter] = useState<string>("ALL");
-  const [sortOrder, setSortOrder] = useState<
-    "updated-desc" | "updated-asc" | "title-asc"
-  >("updated-desc");
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -216,7 +213,7 @@ export function AdminNewsStudio() {
   useEffect(() => {
     setCurrentPage(1);
     setSelectedRowIds([]);
-  }, [view, categoryFilter, query, sortOrder, pageSize]);
+  }, [view, categoryFilter, query, pageSize]);
 
   if (view !== previousView) {
     setPreviousView(view);
@@ -242,7 +239,6 @@ export function AdminNewsStudio() {
     const filters: AdminNewsListFilters = {
       limit: pageSize,
       offset: (currentPage - 1) * pageSize,
-      sort: sortOrder,
     };
     if (
       [
@@ -267,7 +263,7 @@ export function AdminNewsStudio() {
       filters.query = query.trim();
     }
     return filters;
-  }, [pageSize, currentPage, sortOrder, view, categoryFilter, query]);
+  }, [pageSize, currentPage, view, categoryFilter, query]);
 
   const list = useQuery(news.queries.list.options(queryFilters));
 
@@ -639,12 +635,6 @@ export function AdminNewsStudio() {
     setSelectedRowIds((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
-  };
-
-  const resetAllFilters = () => {
-    setQuery("");
-    setCategoryFilter("ALL");
-    setSortOrder("updated-desc");
   };
 
   const renderTableContent = () => (
@@ -1160,36 +1150,13 @@ export function AdminNewsStudio() {
                 </span>
               </div>
 
-              {/* Sort Dropdown */}
-              <div className="relative min-w-[150px] rounded-xl border border-slate-200 bg-white transition hover:border-slate-300">
-                <select
-                  aria-label="Sắp xếp bài viết"
-                  value={sortOrder}
-                  onChange={(e) => setSortOrder(e.target.value as any)}
-                  className="h-10 w-full cursor-pointer appearance-none bg-transparent py-2 pl-3.5 pr-8 text-xs font-semibold text-slate-700 outline-none focus:outline-none hover:bg-slate-50/50 rounded-xl"
-                >
-                  <option value="updated-desc">Mới cập nhật</option>
-                  <option value="updated-asc">Cũ nhất</option>
-                  <option value="title-asc">Tiêu đề A-Z</option>
-                </select>
-                <span
-                  aria-hidden="true"
-                  className="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-lg text-slate-400"
-                >
-                  expand_more
-                </span>
-              </div>
-
               {/* Reset Active Filters Button */}
-              {query ||
-              categoryFilter !== "ALL" ||
-              sortOrder !== "updated-desc" ? (
+              {query || categoryFilter !== "ALL" ? (
                 <button
                   type="button"
                   onClick={() => {
                     setQuery("");
                     setCategoryFilter("ALL");
-                    setSortOrder("updated-desc");
                   }}
                   className="inline-flex h-10 items-center gap-1 rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 active:scale-95"
                   title="Đặt lại tất cả bộ lọc"

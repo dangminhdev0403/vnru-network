@@ -21,7 +21,6 @@ export const newsResource = createResource<void>()({
 
         filters?.category ?? "ALL",
         filters?.query ?? "",
-        filters?.sort ?? "updated-desc",
         filters?.featured ?? "ALL",
         filters?.limit ?? 10,
         filters?.offset ?? 0,
