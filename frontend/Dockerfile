@@ -16,7 +16,6 @@ RUN corepack enable
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN mkdir -p public
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
