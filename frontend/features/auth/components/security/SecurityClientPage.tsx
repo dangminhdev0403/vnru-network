@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { formatDateTime } from "@/core/i18n/date-format";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -288,23 +289,6 @@ export default function SecurityClientPage() {
     }
   };
 
-  const formatDate = (isoString: string) => {
-    try {
-      const d = new Date(isoString);
-      return d.toLocaleString(
-        locale === "ru" ? "ru-RU" : locale === "vi" ? "vi-VN" : "en-US",
-        {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        },
-      );
-    } catch {
-      return isoString;
-    }
-  };
 
   const maskSessionId = (id: string) => {
     if (id.length <= 12) return id;
@@ -511,10 +495,10 @@ export default function SecurityClientPage() {
                           : "—"}
                       </td>
                       <td className="px-5 py-4 text-sm text-text-secondary">
-                        {formatDate(session.createdAt)}
+                        {formatDateTime(session.createdAt, locale)}
                       </td>
                       <td className="px-5 py-4 text-sm text-text-secondary">
-                        {formatDate(session.expiresAt)}
+                        {formatDateTime(session.expiresAt, locale)}
                       </td>
                       <td className="px-5 py-4 text-right">
                         <button

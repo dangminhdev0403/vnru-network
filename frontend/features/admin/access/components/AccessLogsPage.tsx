@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { formatDateTime } from "@/core/i18n/date-format";
 
 const copy: Record<Locale, Record<string, string>> = {
   vi: {
@@ -156,7 +157,7 @@ export default function AccessLogsPage() {
                     </span>
                   </td>
                   <td className="px-5 py-4 font-mono text-xs text-text-secondary">
-                    {log.timestamp}
+                    {formatDateTime(log.timestamp, locale)}
                   </td>
                 </tr>
               ))}

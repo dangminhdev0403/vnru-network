@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLocale } from "@/core/i18n/locale";
+import { formatDate, formatDateTime } from "@/core/i18n/date-format";
 import {
   formatNewsTitle,
   newsArticleHref,
@@ -180,7 +181,7 @@ export function GuestNewsArticleV2({
               </p>
               <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-y border-blue-100 py-4">
                 <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
-                  <span>{article.date}</span>
+                  <span>{formatDate(article.date, locale)}</span>
                   <span>•</span>
                   <span>Mạng lưới RU-VN</span>
                 </div>
@@ -233,10 +234,7 @@ export function GuestNewsArticleV2({
               {article.actionClosesAt ? (
                 <p className="text-base font-semibold text-slate-600">
                   {t.actionCloses}:{" "}
-                  {new Intl.DateTimeFormat(locale, {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                  }).format(new Date(article.actionClosesAt))}
+                  {formatDateTime(article.actionClosesAt, locale)}
                 </p>
               ) : null}
               {article.actionUrl ? (

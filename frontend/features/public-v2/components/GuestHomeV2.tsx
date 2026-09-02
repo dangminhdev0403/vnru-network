@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { formatDate } from "@/core/i18n/date-format";
 import {
   formatNewsTitle,
   newsArticleHref,
@@ -2124,7 +2125,7 @@ export function GuestHomeV2({
                           <line x1="8" y1="2" x2="8" y2="6" />
                           <line x1="3" y1="10" x2="21" y2="10" />
                         </svg>
-                        <span>{item.date || "08/2026"}</span>
+                        <span>{formatDate(item.date, locale)}</span>
                       </div>
 
                       <h3 className="line-clamp-2 text-xs font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-sm">
