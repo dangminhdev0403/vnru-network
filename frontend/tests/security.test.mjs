@@ -72,7 +72,8 @@ test("Auth.js verifies credentials server-side and signs the backend exchange", 
   assert.match(auth, /timingSafeEqual/);
   assert.match(auth, /createHmac\("sha256", secret\)/);
   assert.match(auth, /ACCOUNT_CONFIG_PATH/);
-  assert.match(proxy, /request\.auth/);
+  assert.match(proxy, /request\.cookies\.has\(SESSION_COOKIE_NAME\)/);
+  assert.doesNotMatch(proxy, /request\.auth|from "\.\/auth"/);
   assert.match(proxy, /cookies\.delete\(SESSION_COOKIE_NAME\)/);
   assert.doesNotMatch(auth, /session\.accessToken|session\.refreshToken/);
 });

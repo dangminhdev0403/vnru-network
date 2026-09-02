@@ -58,7 +58,7 @@ export default function ProfileDialog({
         {state.profile.isFetching && profile ? <p role="status" className="text-sm text-blue-700">{labels[7]}</p> : null}
         <label className="block space-y-2 text-sm font-semibold text-text-primary">
           {labels[5]}
-          <input type="email" readOnly value={profile?.email ?? ""} aria-readonly="true" className="min-h-11 w-full cursor-text rounded-xl border border-card-border bg-card-surface-area px-3 font-normal text-text-secondary" />
+          <input type="email" readOnly value={profile?.email ?? ""} aria-readonly="true" className="min-h-11 w-full cursor-text rounded-xl border border-card-border bg-card-surface-area px-3 font-normal text-text-secondary outline-none focus:border-blue-600" />
         </label>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="space-y-2 text-sm font-semibold text-text-primary">{labels[1]}<input name="firstName" disabled={!profile || loading} defaultValue={profile?.firstName ?? ""} aria-invalid={Boolean(errors.firstName)} aria-describedby={errors.firstName ? "profile-first-name-error" : undefined} className="min-h-11 w-full rounded-xl border border-card-border bg-card-background px-3 font-normal outline-none focus:border-blue-600 aria-invalid:border-rose-500" />{errors.firstName && <span id="profile-first-name-error" role="alert" className="block text-xs text-rose-600 dark:text-rose-300">{errors.firstName}</span>}</label>

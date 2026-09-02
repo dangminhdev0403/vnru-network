@@ -1575,7 +1575,7 @@ export default function UserAdministration({
                       onChange={(event) => setNewPassword(event.target.value)}
                       aria-invalid={Boolean(passwordError)}
                       aria-describedby="password-reset-help"
-                      className="min-h-11 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 text-base font-normal"
+                      className="min-h-11 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 text-base font-normal outline-none focus:border-[var(--accent-primary)]"
                     />
                   </label>
                   <label className="grid gap-1.5 text-sm font-bold">
@@ -1589,7 +1589,7 @@ export default function UserAdministration({
                       }
                       aria-invalid={Boolean(passwordError)}
                       aria-describedby="password-reset-help"
-                      className="min-h-11 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 text-base font-normal"
+                      className="min-h-11 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 text-base font-normal outline-none focus:border-[var(--accent-primary)]"
                     />
                   </label>
                   <p

@@ -18,6 +18,7 @@ describe('NewsService', () => {
 
   it('lists featured articles for the home feed', async () => {
     prisma.newsArticle.findMany.mockResolvedValue([]);
+    prisma.newsArticle.count.mockResolvedValue(0);
 
     await service.listPublic({ featured: true, limit: 4, offset: 0 });
 
@@ -28,26 +29,44 @@ describe('NewsService', () => {
       skip: 0,
       select: expect.any(Object),
     });
+    expect(prisma.newsArticle.count).toHaveBeenCalledWith({
+      where: { isFeatured: true },
+    });
   });
 
-  it('filters public articles by category and contentType', async () => {
+  it('filters and paginates public articles before reading rows', async () => {
     prisma.newsArticle.findMany.mockResolvedValue([]);
+    prisma.newsArticle.count.mockResolvedValue(7);
+    const publishedAfter = new Date('2026-08-26T00:00:00.000Z');
 
-    await service.listPublic({
+    const result = await service.listPublic({
       limit: 10,
       offset: 0,
       category: 'science-technology',
-      contentType: 'EVENT',
+      contentTypes: ['EVENT', 'ARTICLE'],
+      query: 'photon',
+      publishedAfter,
     });
 
-    expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: {
-          category: 'science-technology',
-          contentType: 'EVENT',
+    const where = {
+      category: 'science-technology',
+      contentType: { in: ['EVENT', 'ARTICLE'] },
+      publishedAt: { gte: publishedAfter },
+      translations: {
+        some: {
+          OR: [
+            { title: { contains: 'photon', mode: 'insensitive' } },
+            { summary: { contains: 'photon', mode: 'insensitive' } },
+            { content: { contains: 'photon', mode: 'insensitive' } },
+          ],
         },
-      }),
+      },
+    };
+    expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({ where, take: 10, skip: 0 }),
     );
+    expect(prisma.newsArticle.count).toHaveBeenCalledWith({ where });
+    expect(result).toEqual({ items: [], total: 7 });
   });
 
   it('loads an article by id', async () => {

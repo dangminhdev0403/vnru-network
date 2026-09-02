@@ -1,5 +1,4 @@
-import { NextResponse } from "next/server";
-import { auth } from "./auth";
+import { NextResponse, type NextRequest } from "next/server";
 import {
   authServiceUrl,
   backendHeaders,
@@ -8,14 +7,14 @@ import {
   SESSION_COOKIE_NAME,
 } from "./features/auth/server";
 
-export default auth(async function proxy(request) {
-  if (
-    request.nextUrl.pathname.startsWith("/governance")
-  ) {
+export default async function proxy(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith("/governance")) {
     return NextResponse.next();
   }
 
-  const legacyRoutes: Record<string, string> = { "/admin/iam": "/admin/access" };
+  const legacyRoutes: Record<string, string> = {
+    "/admin/iam": "/admin/access",
+  };
   const canonicalTarget = legacyRoutes[request.nextUrl.pathname];
   if (canonicalTarget) {
     const target = new URL(canonicalTarget, request.nextUrl.origin);
@@ -32,17 +31,14 @@ export default auth(async function proxy(request) {
       cache: "no-store",
       headers: backendHeaders(request),
     }).catch(() => null);
-    if ((request.auth as typeof request.auth & { error?: string })?.error) {
-      const logout = new URL("/api/auth/logout", request.url);
-      logout.searchParams.set("returnTo", `${request.nextUrl.pathname}${request.nextUrl.search}`);
-      return NextResponse.redirect(logout);
-    }
-
     if (session?.ok) {
-      const isWorkspacePath = request.nextUrl.pathname === "/workspace"
-        || request.nextUrl.pathname.startsWith("/workspace/");
+      const isWorkspacePath =
+        request.nextUrl.pathname === "/workspace" ||
+        request.nextUrl.pathname.startsWith("/workspace/");
       if (isWorkspacePath) {
-        const me = (await session.json().catch(() => null)) as { capabilities?: string[] } | null;
+        const me = (await session.json().catch(() => null)) as {
+          capabilities?: string[];
+        } | null;
         const capabilities = me?.capabilities ?? [];
         if (isSystemAdministrator(capabilities)) {
           const target = request.nextUrl.clone();
@@ -62,8 +58,17 @@ export default auth(async function proxy(request) {
   const response = NextResponse.redirect(login);
   response.cookies.delete(SESSION_COOKIE_NAME);
   return response;
-});
+}
 
 export const config = {
-  matcher: ["/workspace/:path*", "/knowledge", "/experts", "/opportunities", "/admin/:path*", "/admin/iam", "/account", "/security"],
+  matcher: [
+    "/workspace/:path*",
+    "/knowledge",
+    "/experts",
+    "/opportunities",
+    "/admin/:path*",
+    "/admin/iam",
+    "/account",
+    "/security",
+  ],
 };

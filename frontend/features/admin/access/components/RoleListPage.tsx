@@ -902,7 +902,7 @@ export default function RoleListPage() {
                               );
                             }
                           }}
-                          className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"
+                          className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm outline-none focus:border-blue-600"
                         >
                           <option value="">{t.selectTemplate}</option>
                           {rawRoles.map((r) => (

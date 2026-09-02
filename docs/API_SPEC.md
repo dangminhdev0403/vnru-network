@@ -11,7 +11,7 @@ Implemented API families:
 - `/api/v1/admin/roles/*`: role and permission administration.
 - `/api/v1/admin/role-assignments/*`: assignment administration.
 - `POST /api/v1/membership-applications`: public membership application intake. Stores a normalized `PENDING` application; never creates a user or role assignment.
-- `GET /api/v1/news`: public news feed; supports bounded pagination, `locale`, and optional `featured`.
+- `GET /api/v1/news`: public news feed; returns `{ items, total }`; supports bounded `limit`/`offset`, `locale`, `featured`, `category`, repeated `contentType`, `q`, `scope`, and `period` filters. Filtering/search/sort happen before pagination in the backend.
 - `GET /api/v1/news/:id`: public article with VI fallback.
 - `/api/v1/admin/news/*`: authenticated article create/read/update/delete operations authorized by `content.article.*` capabilities; delete reuses `content.article.update`.
 - `GET /api/v1/admin/news`: bounded admin list; `GET /api/v1/admin/news/:id` returns all translations for editing.

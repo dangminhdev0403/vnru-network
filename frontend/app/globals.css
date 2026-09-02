@@ -382,12 +382,16 @@ main :where(small, span)[class~="text-sm"][class*="leading-"] {
   color: #fff;
 }
 
-:where(a, button, input, select, textarea):focus-visible {
+:where(a, button, input[type="checkbox"], input[type="radio"]):focus-visible {
   outline: 2px solid #1f63e9;
   outline-offset: 3px;
 }
 
-.auth-surface :where(input, textarea):focus-visible {
+:where(
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea
+):focus-visible {
   outline: none;
 }
 
@@ -575,8 +579,8 @@ textarea {
 }
 
 .swal2-icon {
-  margin: 8px auto 18px !important;
-  transform: scale(1.25) !important;
+  margin: 4px auto 14px !important;
+  transform: scale(1) !important;
 }
 
 .swal2-icon.swal2-question {
@@ -584,16 +588,21 @@ textarea {
   color: #2563eb !important;
 }
 
+.swal2-html-container {
+  overflow: visible !important;
+  max-width: 100% !important;
+}
+
 .vnru-swal-popup {
-  border-radius: 28px !important;
-  padding: 36px 44px !important;
+  border-radius: 20px !important;
+  padding: 24px 28px !important;
   background: #ffffff !important;
   border: 1px solid rgba(226, 232, 240, 0.9) !important;
-  box-shadow: 0 30px 80px -10px rgba(11, 28, 48, 0.4) !important;
+  box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.25) !important;
   font-family: var(--font-sans) !important;
-  max-width: 600px !important;
-  width: auto !important;
-  min-width: 480px !important;
+  max-width: 440px !important;
+  width: 92% !important;
+  min-width: 0 !important;
 }
 
 .vnru-swal-popup-dark {
@@ -602,15 +611,17 @@ textarea {
 }
 
 .vnru-swal-title {
-  font-size: 1.5rem !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.025em !important;
+  font-size: 1.1875rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
   color: #0f172a !important;
   padding: 0 !important;
-  margin-top: 10px !important;
-  margin-bottom: 14px !important;
-  line-height: 1.3 !important;
-  white-space: nowrap !important;
+  margin-top: 4px !important;
+  margin-bottom: 8px !important;
+  line-height: 1.35 !important;
+  white-space: normal !important;
+  text-align: center !important;
+  overflow-wrap: break-word !important;
 }
 
 .vnru-swal-popup-dark .vnru-swal-title {
@@ -618,20 +629,23 @@ textarea {
 }
 
 .vnru-swal-html {
-  font-size: 1.0625rem !important;
-  line-height: 1.65 !important;
-  color: #475569 !important;
-  font-weight: 500 !important;
-  margin-bottom: 24px !important;
-  white-space: nowrap !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  color: #64748b !important;
+  font-weight: 400 !important;
+  margin-bottom: 20px !important;
+  white-space: normal !important;
+  text-align: center !important;
+  overflow: visible !important;
+  overflow-wrap: break-word !important;
 }
 
 @media (max-width: 39.999rem) {
   .vnru-swal-popup {
     width: calc(100vw - 2rem) !important;
     min-width: 0 !important;
-    padding: 1.5rem 1.25rem !important;
-    border-radius: 1.25rem !important;
+    padding: 1.25rem 1rem !important;
+    border-radius: 1rem !important;
   }
 
   .vnru-swal-title,
@@ -656,59 +670,59 @@ textarea {
 }
 
 .vnru-swal-confirm-btn {
-  border-radius: 16px !important;
-  padding: 14px 36px !important;
-  font-size: 1rem !important;
-  font-weight: 800 !important;
+  border-radius: 12px !important;
+  padding: 9px 22px !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
   letter-spacing: -0.01em;
   background: #2563eb !important;
   color: #ffffff !important;
-  box-shadow: 0 10px 25px -4px rgba(37, 99, 235, 0.45) !important;
-  transition: all 0.2s ease !important;
-  min-height: 52px !important;
-  min-width: 140px !important;
+  box-shadow: 0 4px 14px -2px rgba(37, 99, 235, 0.4) !important;
+  transition: all 0.15s ease !important;
+  min-height: 40px !important;
+  min-width: 100px !important;
   cursor: pointer !important;
 }
 
 .vnru-swal-confirm-btn:hover {
   background: #1d4ed8 !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 14px 28px -4px rgba(37, 99, 235, 0.55) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 18px -2px rgba(37, 99, 235, 0.5) !important;
 }
 
 .vnru-swal-cancel-btn {
-  border-radius: 16px !important;
-  padding: 14px 32px !important;
-  font-size: 1rem !important;
-  font-weight: 700 !important;
-  background: #f1f5f9 !important;
+  border-radius: 12px !important;
+  padding: 9px 18px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  background: #f8fafc !important;
   color: #475569 !important;
   border: 1px solid #cbd5e1 !important;
-  transition: all 0.2s ease !important;
-  min-height: 52px !important;
-  min-width: 120px !important;
+  transition: all 0.15s ease !important;
+  min-height: 40px !important;
+  min-width: 80px !important;
   cursor: pointer !important;
 }
 
 .vnru-swal-cancel-btn:hover {
-  background: #e2e8f0 !important;
+  background: #f1f5f9 !important;
   color: #0f172a !important;
 }
 
 .vnru-swal-danger-btn {
   background: #dc2626 !important;
-  box-shadow: 0 10px 25px -4px rgba(220, 38, 38, 0.45) !important;
+  box-shadow: 0 4px 14px -2px rgba(220, 38, 38, 0.4) !important;
 }
 
 .vnru-swal-danger-btn:hover {
   background: #b91c1c !important;
-  box-shadow: 0 14px 28px -4px rgba(220, 38, 38, 0.55) !important;
+  box-shadow: 0 6px 18px -2px rgba(220, 38, 38, 0.5) !important;
 }
 
 .vnru-swal-toast {
-  border-radius: 16px !important;
-  padding: 12px 18px !important;
-  box-shadow: 0 10px 30px -5px rgba(11, 28, 48, 0.15) !important;
+  border-radius: 14px !important;
+  padding: 10px 16px !important;
+  box-shadow: 0 10px 25px -5px rgba(11, 28, 48, 0.12) !important;
   font-family: var(--font-sans) !important;
   font-size: 0.8125rem !important;
   font-weight: 600 !important;

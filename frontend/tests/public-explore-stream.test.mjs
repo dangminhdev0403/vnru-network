@@ -30,7 +30,8 @@ test("news pages share masthead while the listing keeps spotlight and featured s
   );
 
   assert.match(source, /const SPOTLIGHT_INTERVAL_MS = 5_000/);
-  assert.match(source, /const latest = initialArticles\.slice/);
+  assert.match(source, /const latest = latestArticles/);
+  assert.doesNotMatch(source, /initialArticles\.(?:slice|filter)/);
   assert.match(source, /window\.setInterval/);
   assert.doesNotMatch(
     source,

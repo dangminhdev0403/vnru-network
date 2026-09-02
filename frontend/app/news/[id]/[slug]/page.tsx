@@ -25,10 +25,10 @@ export default async function Page({ params }: PageProps) {
   const { id, slug } = await params;
   const [article, articles] = await Promise.all([
     getPublicNewsArticle(id, "vi"),
-    getPublicNews("vi"),
+    getPublicNews({ locale: "vi", limit: 6 }),
   ]);
   if (!article) notFound();
   const canonical = newsArticleHref(article);
   if (!canonical.endsWith(`/${slug}`)) permanentRedirect(canonical);
-  return <GuestNewsArticleV2 article={article} articles={articles} />;
+  return <GuestNewsArticleV2 article={article} articles={articles.items} />;
 }

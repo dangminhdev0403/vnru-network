@@ -141,17 +141,12 @@ test("auth flow keeps provider tokens out of the frontend", async () => {
   assert.match(source[3], /authServiceUrl\("api\/v1\/auth\/logout"\)/);
 });
 
-test("proxy logs out when provider refresh expires", async () => {
+test("backend session remains authoritative when Auth.js state is stale", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("./proxy.ts", import.meta.url), "utf8");
-  assert.ok(source.indexOf("request.auth") < source.indexOf("if (session?.ok)"));
-  assert.match(source, /new URL\("\/api\/auth\/logout"/);
-  assert.match(source, /logout\.searchParams\.set\("returnTo"/);
-  const logout = await readFile(new URL("./app/api/auth/logout/route.ts", import.meta.url), "utf8");
-  assert.match(logout, /export async function GET/);
-  assert.match(logout, /await signOut\(\{ redirect: false \}\)/);
-  assert.match(logout, /new URL\("\/api\/auth\/login"/);
-  assert.match(logout, /sanitizeReturnTo/);
+  assert.match(source, /request\.cookies\.has\(SESSION_COOKIE_NAME\)/);
+  assert.match(source, /if \(session\?\.ok\)/);
+  assert.doesNotMatch(source, /request\.auth|from "\.\/auth"|\/api\/auth\/logout/);
 });
 
 test("expired refresh skips the intermediate notice", async () => {

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
 import {
   formatNewsTitle,
@@ -180,76 +180,29 @@ function TextRow({ item }: { item: NewsItem }) {
   );
 }
 
-function matchesScope(article: OfficialNewsArticle, scope: string): boolean {
-  if (!scope || scope === "all") return true;
-  const content =
-    `${article.title} ${article.summary} ${article.body.join(" ")}`.toLowerCase();
-
-  if (scope === "vietnam") {
-    return (
-      content.includes("việt nam") ||
-      content.includes("hà nội") ||
-      content.includes("tp.hcm") ||
-      content.includes("thành phố hồ chí minh") ||
-      content.includes("đà nẵng") ||
-      content.includes("bình dương") ||
-      content.includes("quảng bình") ||
-      content.includes("vast") ||
-      content.includes("đhqg") ||
-      content.includes("quốc hội")
-    );
-  }
-  if (scope === "russia") {
-    return (
-      content.includes("nga") ||
-      content.includes("liên bang nga") ||
-      content.includes("moskva") ||
-      content.includes("saint petersburg") ||
-      content.includes("rosatom") ||
-      content.includes("bauman") ||
-      content.includes("herzen") ||
-      content.includes("rostov") ||
-      content.includes("stavropol") ||
-      content.includes("fefu")
-    );
-  }
-  if (scope === "bilateral") {
-    return (
-      content.includes("việt - nga") ||
-      content.includes("nga - việt") ||
-      content.includes("việt nam - liên bang nga") ||
-      content.includes("việt nam và nga") ||
-      content.includes("song phương") ||
-      content.includes("quỹ truyền thống và hữu nghị") ||
-      (content.includes("việt nam") && content.includes("nga"))
-    );
-  }
-  return true;
-}
-
-function matchesContentType(
-  article: OfficialNewsArticle,
-  contentTypes: string[],
-): boolean {
-  if (contentTypes.length === 0) return true;
-  return contentTypes.includes(article.contentType ?? "ARTICLE");
-}
-
-function matchesPeriod(article: OfficialNewsArticle, period: string): boolean {
-  if (!period || period === "newest") return true;
-  if (typeof article.id !== "number") return true;
-  if (period === "7days") return article.id >= 25;
-  if (period === "30days") return article.id >= 10;
-  return true;
-}
-
 export function GuestExploreV2({
   initialArticles = OFFICIAL_NEWS,
+  latestArticles = [],
+  featuredArticles = [],
+  streamArticles = [],
+  streamTotal = 0,
+  streamPage = 1,
+  streamCategory = "all",
+  filteredTotal = 0,
+  filteredPage = 1,
   initialCategory = "all",
   initialQuery = "",
   initialAdvancedFilters = DEFAULT_NEWS_ADVANCED_FILTERS,
 }: {
   initialArticles?: OfficialNewsArticle[];
+  latestArticles?: OfficialNewsArticle[];
+  featuredArticles?: OfficialNewsArticle[];
+  streamArticles?: OfficialNewsArticle[];
+  streamTotal?: number;
+  streamPage?: number;
+  streamCategory?: NewsCategory;
+  filteredTotal?: number;
+  filteredPage?: number;
   initialCategory?: NewsCategory;
   initialQuery?: string;
   initialAdvancedFilters?: NewsAdvancedFilters;
@@ -259,74 +212,18 @@ export function GuestExploreV2({
   const activeCategory = initialCategory;
   const advancedFilters = initialAdvancedFilters;
   const query = initialQuery;
-  const latest = initialArticles.slice(0, 4);
-  const featured = initialArticles.slice(4, 8);
-  const spotlight = featured;
-  const availableCategories = NEWS_CATEGORIES.filter(
-    (category) =>
-      category === "all" ||
-      initialArticles.some((article) => article.category === category),
-  );
-  const [streamCategory, setStreamCategory] = useState<NewsCategory>("all");
-  const streamArticles =
-    streamCategory === "all"
-      ? initialArticles
-      : initialArticles.filter(
-          (article) => article.category === streamCategory,
-        );
+  const latest = latestArticles;
+  const featured = featuredArticles;
+  const spotlight = featuredArticles;
   const [spotlightIndex, setSpotlightIndex] = useState(0);
-  const [isSliding, setIsSliding] = useState(false);
-  const slidingTimerRef = useRef<number | null>(null);
-  const [streamPage, setStreamPage] = useState(1);
-  const streamPageCount = Math.ceil(streamArticles.length / 10);
-  const paginatedStreamArticles = streamArticles.slice(
-    (streamPage - 1) * 10,
-    streamPage * 10,
-  );
+  const streamPageCount = Math.ceil(streamTotal / 10);
+  const filteredPageCount = Math.ceil(filteredTotal / 10);
 
   const changeSpotlight = (nextIndex: number | ((curr: number) => number)) => {
-    setIsSliding(true);
     setSpotlightIndex(nextIndex);
-    if (slidingTimerRef.current) {
-      window.clearTimeout(slidingTimerRef.current);
-    }
-    slidingTimerRef.current = window.setTimeout(() => {
-      setIsSliding(false);
-    }, 1200);
   };
 
-  const filtered = useMemo(() => {
-    let list =
-      activeCategory === "all"
-        ? initialArticles
-        : initialArticles.filter((item) => item.category === activeCategory);
-
-    const q = query.trim().toLocaleLowerCase(locale);
-    if (q) {
-      list = list.filter(
-        (item) =>
-          item.title.toLocaleLowerCase(locale).includes(q) ||
-          item.summary.toLocaleLowerCase(locale).includes(q) ||
-          item.body.some((p) => p.toLocaleLowerCase(locale).includes(q)),
-      );
-    }
-
-    if (advancedFilters.scope !== "all") {
-      list = list.filter((item) => matchesScope(item, advancedFilters.scope));
-    }
-
-    if (advancedFilters.contentTypes.length > 0) {
-      list = list.filter((item) =>
-        matchesContentType(item, advancedFilters.contentTypes),
-      );
-    }
-
-    if (advancedFilters.period !== "newest") {
-      list = list.filter((item) => matchesPeriod(item, advancedFilters.period));
-    }
-
-    return list;
-  }, [activeCategory, advancedFilters, initialArticles, locale, query]);
+  const filtered = initialArticles;
 
   const categoryMode =
     activeCategory !== "all" ||
@@ -334,7 +231,19 @@ export function GuestExploreV2({
     advancedFilters.scope !== "all" ||
     advancedFilters.contentTypes.length > 0 ||
     advancedFilters.period !== "newest";
-  const filteredHalf = Math.ceil(filtered.length / 2);
+  const streamHref = (page: number, category = streamCategory) => {
+    const params = new URLSearchParams();
+    if (category !== "all") params.set("streamCategory", category);
+    if (page > 1) params.set("streamPage", String(page));
+    const search = params.toString();
+    return `/news${search ? `?${search}` : ""}#news-stream`;
+  };
+  const filteredHref = (page: number) => {
+    const params = new URLSearchParams(window.location.search);
+    if (page > 1) params.set("page", String(page));
+    else params.delete("page");
+    return `/news?${params}`;
+  };
 
   useEffect(() => {
     const timer = window.setInterval(
@@ -343,7 +252,6 @@ export function GuestExploreV2({
     );
     return () => {
       window.clearInterval(timer);
-      if (slidingTimerRef.current) window.clearTimeout(slidingTimerRef.current);
     };
   }, [spotlight.length]);
 
@@ -365,7 +273,7 @@ export function GuestExploreV2({
                 aria-label={t.spotlight}
               >
                 <div
-                  className="absolute inset-0 flex transition-transform duration-[1500ms] ease-in-out motion-reduce:transition-none"
+                  className={`absolute inset-0 flex ease-in-out motion-reduce:transition-none ${spotlightIndex === 0 ? "" : "transition-transform duration-[1500ms]"}`}
                   style={{ transform: `translateX(-${spotlightIndex * 100}%)` }}
                 >
                   {spotlight.map((item, index) => (
@@ -496,12 +404,13 @@ export function GuestExploreV2({
                     id="news-stream-category"
                     value={streamCategory}
                     onChange={(event) => {
-                      setStreamCategory(event.target.value as NewsCategory);
-                      setStreamPage(1);
+                      window.location.assign(
+                        streamHref(1, event.target.value as NewsCategory),
+                      );
                     }}
                     className="h-11 rounded-xl border border-blue-200 bg-white px-4 text-sm font-bold text-slate-700 outline-none focus-visible:ring-2 focus-visible:ring-blue-600 shadow-2xs"
                   >
-                    {availableCategories.map((category) => (
+                    {NEWS_CATEGORIES.map((category) => (
                       <option key={category} value={category}>
                         {t.categories[category]}
                       </option>
@@ -521,7 +430,7 @@ export function GuestExploreV2({
 
               <div className="rounded-3xl border border-blue-200/90 bg-white p-6 shadow-xs sm:p-8">
                 <div className="grid gap-x-12 gap-y-2 lg:grid-cols-2">
-                  {paginatedStreamArticles.map((item) => (
+                  {streamArticles.map((item) => (
                     <TextRow key={item.id} item={item} />
                   ))}
                 </div>
@@ -531,25 +440,23 @@ export function GuestExploreV2({
                     aria-label="Phân trang tin tức"
                     className="mt-8 flex items-center justify-center gap-3 border-t border-slate-100 pt-6"
                   >
-                    <button
-                      type="button"
-                      disabled={streamPage === 1}
-                      onClick={() => setStreamPage((page) => page - 1)}
-                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-2xs transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                    <Link
+                      aria-disabled={streamPage === 1}
+                      href={streamPage === 1 ? "#news-stream" : streamHref(streamPage - 1)}
+                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-2xs transition hover:bg-slate-50 aria-disabled:pointer-events-none aria-disabled:opacity-40"
                     >
                       ‹ Trang trước
-                    </button>
+                    </Link>
                     <span className="text-sm font-semibold text-slate-600">
                       {streamPage} / {streamPageCount}
                     </span>
-                    <button
-                      type="button"
-                      disabled={streamPage === streamPageCount}
-                      onClick={() => setStreamPage((page) => page + 1)}
-                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-2xs transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                    <Link
+                      aria-disabled={streamPage === streamPageCount}
+                      href={streamPage === streamPageCount ? "#news-stream" : streamHref(streamPage + 1)}
+                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-2xs transition hover:bg-slate-50 aria-disabled:pointer-events-none aria-disabled:opacity-40"
                     >
                       Trang sau ›
-                    </button>
+                    </Link>
                   </nav>
                 ) : null}
               </div>
@@ -564,16 +471,42 @@ export function GuestExploreV2({
               <span className="h-px flex-1 bg-blue-200/70" />
             </div>
             {filtered.length ? (
-              <div className="grid gap-6 md:grid-cols-2">
-                {filtered.map((item, index) => (
-                  <div
-                    key={item.title}
-                    className="rounded-2xl border border-blue-200/90 bg-white p-4 shadow-xs"
+              <>
+                <div className="grid gap-6 md:grid-cols-2">
+                  {filtered.map((item) => (
+                    <div
+                      key={item.title}
+                      className="rounded-2xl border border-blue-200/90 bg-white p-4 shadow-xs"
+                    >
+                      <SmallRow item={item} />
+                    </div>
+                  ))}
+                </div>
+                {filteredPageCount > 1 ? (
+                  <nav
+                    aria-label="Phân trang kết quả"
+                    className="mt-8 flex items-center justify-center gap-3"
                   >
-                    <SmallRow item={item} />
-                  </div>
-                ))}
-              </div>
+                    <Link
+                      aria-disabled={filteredPage === 1}
+                      href={filteredPage === 1 ? "#" : filteredHref(filteredPage - 1)}
+                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold aria-disabled:pointer-events-none aria-disabled:opacity-40"
+                    >
+                      ‹ Trang trước
+                    </Link>
+                    <span className="text-sm font-semibold text-slate-600">
+                      {filteredPage} / {filteredPageCount}
+                    </span>
+                    <Link
+                      aria-disabled={filteredPage === filteredPageCount}
+                      href={filteredPage === filteredPageCount ? "#" : filteredHref(filteredPage + 1)}
+                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold aria-disabled:pointer-events-none aria-disabled:opacity-40"
+                    >
+                      Trang sau ›
+                    </Link>
+                  </nav>
+                ) : null}
+              </>
             ) : (
               <div className="rounded-3xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm font-semibold text-slate-500">
                 {t.noResults}

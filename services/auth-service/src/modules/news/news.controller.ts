@@ -38,15 +38,20 @@ const publicQuerySchema = paginationSchema.extend({
   locale: localeSchema,
   category: z.string().optional(),
   contentType: z
-    .enum([
+    .union([z.string(), z.array(z.string())])
+    .transform((value) => (Array.isArray(value) ? value : [value]))
+    .pipe(z.array(z.enum([
       'ARTICLE',
       'EVENT',
       'ANNOUNCEMENT',
       'PROJECT',
       'OPPORTUNITY',
       'PUBLICATION',
-    ])
+    ])))
     .optional(),
+  q: z.string().trim().max(200).optional(),
+  scope: z.enum(['vietnam', 'russia', 'bilateral']).optional(),
+  period: z.enum(['7days', '30days']).optional(),
 });
 const adminQuerySchema = paginationSchema.extend({
   contentType: z
@@ -107,11 +112,15 @@ const createSchema = z
     isFeatured: z.boolean().optional(),
     translations: z
       .object({
-        VI: translationSchema,
-        EN: translationSchema,
-        RU: translationSchema,
+        VI: translationSchema.optional(),
+        EN: translationSchema.optional(),
+        RU: translationSchema.optional(),
       })
-      .strict(),
+      .strict()
+      .refine(
+        (value) => Object.keys(value).length > 0,
+        'At least one translation is required',
+      ),
   })
   .strict();
 const updateSchema = z
@@ -158,7 +167,16 @@ export class PublicNewsController {
   list(@Query() query: Record<string, unknown>) {
     const input = parse(publicQuerySchema, query);
     return this.service.listPublic({
-      ...input,
+      featured: input.featured,
+      limit: input.limit,
+      offset: input.offset,
+      category: input.category,
+      contentTypes: input.contentType,
+      query: input.q,
+      scope: input.scope,
+      publishedAfter: input.period
+        ? new Date(Date.now() - Number.parseInt(input.period) * 86_400_000)
+        : undefined,
       locale: localeMap[input.locale],
     });
   }

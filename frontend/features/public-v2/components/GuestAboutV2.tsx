@@ -66,14 +66,7 @@ const PARTNER_COPY: Record<Locale, { title: string; ru: string; vi: string }> =
   };
 
 const PARTNERS = [
-  // ══════════════════ VỀ PHÍA NGA (13 ĐỐI TÁC ACTIVE) ══════════════════
-  {
-    name: "Học viện Tổng thống, khu vực Tây Bắc (Северо-Западный институт управления РАНХиГС)",
-    shortName: "СЗИУ РАНХиГС",
-    logo: "ranepa-northwest",
-    url: "https://sziu.ranepa.ru/",
-    country: "ru",
-  },
+  // ══════════════════ VỀ PHÍA NGA (12 ĐỐI TÁC ACTIVE) ══════════════════
   {
     name: "Tổ chức tư vấn khoa học giáo dục Kolaboratoria (Колаборатория / Co-laboratoria)",
     shortName: "Co-laboratoria",
@@ -184,6 +177,13 @@ const PARTNERS = [
 
   // ══════════════════ ĐỐI TÁC TẠM ẨN (PRESERVED / COMMENTED OUT) ══════════════════
   /*
+  {
+    name: "Học viện Tổng thống, khu vực Tây Bắc (Северо-Западный институт управления РАНХиГС)",
+    shortName: "СЗИУ РАНХиГС",
+    logo: "ranepa-northwest",
+    url: "https://sziu.ranepa.ru/",
+    country: "ru",
+  },
   {
     name: "Московский Политех",
     logo: "mospolytech",

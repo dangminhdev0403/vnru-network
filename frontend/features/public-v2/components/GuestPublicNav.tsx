@@ -48,7 +48,7 @@ const COPY: Record<
     contact: "Liên hệ",
     register: "Đăng ký",
     login: "Đăng nhập",
-    workspace: "Tài khoản",
+    workspace: "Vào không gian làm việc",
     menu: "Mở menu",
   },
   en: {
@@ -60,7 +60,7 @@ const COPY: Record<
     contact: "Contact",
     register: "Register",
     login: "Sign in",
-    workspace: "Account",
+    workspace: "Workspace",
     menu: "Open menu",
   },
   ru: {
@@ -72,7 +72,7 @@ const COPY: Record<
     contact: "Контакты",
     register: "Регистрация",
     login: "Войти",
-    workspace: "Аккаунт",
+    workspace: "Рабочее пространство",
     menu: "Открыть меню",
   },
 };

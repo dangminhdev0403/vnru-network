@@ -44,14 +44,17 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /\/images\/board\/tran-duc-tung\.webp/);
   assert.match(about, /const PARTNERS = \[/);
   const activePartners = about.split("ĐỐI TÁC TẠM ẨN", 1)[0];
-  assert.equal((activePartners.match(/country: "ru"/g) ?? []).length, 13);
+  assert.equal((activePartners.match(/country: "ru"/g) ?? []).length, 12);
   assert.equal((about.match(/country: "ru"/g) ?? []).length, 23);
   assert.equal((about.match(/country: "vi"/g) ?? []).length, 3);
   assert.match(about, /_blank/);
   assert.match(about, /noopener noreferrer/);
   assert.match(about, /hover:-translate-y-1/);
   assert.match(about, /title: "Các đối tác mong muốn tham gia Mạng lưới"/);
-  assert.match(about, /id="participating-partners"[\s\S]*PARTNER_COPY\[locale\]\.title/);
+  assert.match(
+    about,
+    /id="participating-partners"[\s\S]*PARTNER_COPY\[locale\]\.title/,
+  );
   assert.match(about, /partners: "Đối tác"/);
   assert.match(about, /partners: "participating-partners"/);
   assert.match(about, /\["overview", "ecosystem", "board", "partners"\]/g);

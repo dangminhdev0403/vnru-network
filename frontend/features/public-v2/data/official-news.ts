@@ -13,6 +13,7 @@ export type OfficialNewsArticle = {
   actionUrl?: string | null;
   actionClosesAt?: string | null;
   actionLabel?: string | null;
+  isFeatured?: boolean;
 };
 
 const NEWS_TITLE_NAMES = [

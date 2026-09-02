@@ -77,24 +77,46 @@ const categories: Record<string, string> = {
 const dateTimeValue = (value?: string | null) =>
   value ? new Date(value).toISOString().slice(0, 16) : "";
 
-const payload = (form: NewsInput): NewsInput => ({
-  ...form,
-  actionUrl: form.actionUrl?.trim() || null,
-  actionClosesAt: form.actionClosesAt
-    ? new Date(form.actionClosesAt).toISOString()
-    : null,
-  sourceUrls:
-    form.sourceUrls?.map((value) => value.trim()).filter(Boolean) ?? [],
-  translations: Object.fromEntries(
-    locales.map((item) => [
-      item,
-      {
-        ...form.translations[item],
-        actionLabel: form.translations[item].actionLabel?.trim() || null,
-      },
-    ]),
-  ) as NewsInput["translations"],
-});
+const hasTranslationInput = (
+  translation: NewsInput["translations"][NewsLocale],
+) =>
+  [
+    translation.title,
+    translation.summary,
+    translation.content,
+    translation.actionLabel,
+  ].some((value) => value?.trim());
+
+const payload = (form: NewsInput): NewsInput => {
+  const submittedLocales = locales.filter((item) =>
+    hasTranslationInput(form.translations[item]),
+  );
+  return {
+    ...form,
+    actionUrl: form.actionUrl?.trim() || null,
+    actionClosesAt: form.actionClosesAt
+      ? new Date(form.actionClosesAt).toISOString()
+      : null,
+    sourceUrls:
+      form.sourceUrls?.map((value) => value.trim()).filter(Boolean) ?? [],
+    translations: Object.fromEntries(
+      locales
+        .filter((item) => submittedLocales.includes(item))
+        .map((item) => {
+          const translation = form.translations[item];
+          return [
+            item,
+            {
+              title: translation.title,
+              summary: translation.summary,
+              content: translation.content,
+              actionLabel: translation.actionLabel?.trim() || null,
+            },
+          ];
+        }),
+    ) as NewsInput["translations"],
+  };
+};
 
 const VIEW_CONFIG: Record<string, { title: string; subtitle: string }> = {
   featured: {
@@ -343,9 +365,12 @@ export function AdminNewsStudio() {
   }, [rawArticles, view]);
 
   const totalCount = list.data?.total ?? 0;
-  const counts = list.data?.counts ?? {
+  const counts = {
     total: totalCount,
-    featured: 0,
+    published: rawArticles.filter((a) => Boolean(a.publishedAt)).length,
+    featured:
+      list.data?.counts?.featured ??
+      rawArticles.filter((a) => a.isFeatured).length,
   };
 
   const translation = form.translations[locale];
@@ -379,30 +404,37 @@ export function AdminNewsStudio() {
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
   const validateForm = () => {
-    const currentTranslation = form.translations[locale] || empty();
-    const result = newsFormSchema.safeParse({
-      category: form.category,
-      title: currentTranslation.title,
-      summary: currentTranslation.summary,
-      content: currentTranslation.content,
-    });
-
     const errors: Record<string, string> = {};
-    if (!result.success) {
-      for (const issue of result.error.issues) {
-        const field = issue.path[0] as string;
-        if (!errors[field]) {
-          errors[field] = issue.message;
+    let invalidLocale: NewsLocale | undefined;
+    const submittedLocales = locales.filter((item) =>
+      hasTranslationInput(form.translations[item]),
+    );
+    const validationLocales = submittedLocales.length
+      ? submittedLocales
+      : [locale];
+
+    for (const item of validationLocales) {
+      const translation = form.translations[item] || empty();
+      const result = newsFormSchema.safeParse({
+        category: form.category,
+        title: translation.title,
+        summary: translation.summary,
+        content: translation.content,
+      });
+      if (!result.success && !invalidLocale) {
+        invalidLocale = item;
+        for (const issue of result.error.issues) {
+          const field = issue.path[0] as string;
+          if (!errors[field]) errors[field] = issue.message;
         }
       }
     }
 
-    const effectiveCover =
-      coverPreviewUrl || form.coverImageUrl || pendingCoverFile;
-    if (!effectiveCover) {
+    if (!(coverPreviewUrl || form.coverImageUrl || pendingCoverFile)) {
       errors.coverImageUrl = "Vui lòng chọn hình ảnh đại diện bài viết";
     }
 
+    if (invalidLocale) setLocale(invalidLocale);
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -525,28 +557,30 @@ export function AdminNewsStudio() {
 
   const uploadPendingInlineImages = async (input: NewsInput) => {
     const referencedImages = pendingInlineImages.filter((image) =>
-      locales.some((item) => input.translations[item].content.includes(image.url)),
+      Object.values(input.translations).some((translation) =>
+        translation?.content.includes(image.url),
+      ),
     );
     if (!referencedImages.length) return input;
     const replacements = new Map(
       await Promise.all(
-        referencedImages.map(async (image) => [
-          image.url,
-          (await upload.mutateAsync(image.file)).url,
-        ] as const),
+        referencedImages.map(
+          async (image) =>
+            [image.url, (await upload.mutateAsync(image.file)).url] as const,
+        ),
       ),
     );
     return {
       ...input,
       translations: Object.fromEntries(
-        locales.map((item) => [
+        Object.entries(input.translations).map(([item, translation]) => [
           item,
           {
-            ...input.translations[item],
+            ...translation,
             content: pendingInlineImages.reduce(
               (content, image) =>
                 content.replaceAll(image.url, replacements.get(image.url)!),
-              input.translations[item].content,
+              translation.content,
             ),
           },
         ]),
@@ -641,11 +675,14 @@ export function AdminNewsStudio() {
               Trạng thái
             </th>
             <th scope="col" className="px-4 py-3.5 whitespace-nowrap">
+              Tin nổi bật
+            </th>
+            <th scope="col" className="px-4 py-3.5 whitespace-nowrap">
               Người tạo
             </th>
             <th
               scope="col"
-              className="px-4 py-3.5 text-center whitespace-nowrap"
+              className="w-20 px-4 py-3.5 text-center whitespace-nowrap"
             >
               Thao tác
             </th>
@@ -655,7 +692,7 @@ export function AdminNewsStudio() {
           {list.isLoading ? (
             <tr>
               <td
-                colSpan={5}
+                colSpan={6}
                 className="p-12 text-center text-base text-slate-500"
               >
                 <span className="material-symbols-outlined mr-2 animate-spin align-middle text-2xl text-blue-600">
@@ -668,7 +705,7 @@ export function AdminNewsStudio() {
 
           {list.isError ? (
             <tr>
-              <td colSpan={5} className="p-12 text-center">
+              <td colSpan={6} className="p-12 text-center">
                 <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-red-50 text-red-600">
                   <span className="material-symbols-outlined text-2xl">
                     error
@@ -686,7 +723,7 @@ export function AdminNewsStudio() {
 
           {!list.isLoading && !list.isError && articles.length === 0 ? (
             <tr>
-              <td colSpan={5} className="p-12 text-center">
+              <td colSpan={6} className="p-12 text-center">
                 <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-slate-100 text-slate-400">
                   <span className="material-symbols-outlined text-2xl">
                     feed
@@ -739,14 +776,6 @@ export function AdminNewsStudio() {
 
                   <td className="px-4 py-4 w-[280px] max-w-[280px]">
                     <div className="flex items-start gap-2.5">
-                      {article.isFeatured ? (
-                        <span
-                          className="mt-0.5 material-symbols-outlined text-amber-500 text-base shrink-0"
-                          title="Tin nổi bật"
-                        >
-                          star
-                        </span>
-                      ) : null}
                       <div className="min-w-0 flex-1">
                         <button
                           type="button"
@@ -766,27 +795,32 @@ export function AdminNewsStudio() {
                   </td>
 
                   <td className="px-4 py-4 whitespace-nowrap">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      {article.publishedAt ? (
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-                          <span className="size-1.5 rounded-full bg-emerald-500" />
-                          Đã xuất bản
+                    {article.publishedAt ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+                        <span className="size-1.5 rounded-full bg-emerald-500" />
+                        Đã xuất bản
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
+                        <span className="size-1.5 rounded-full bg-amber-500" />
+                        Bản nháp
+                      </span>
+                    )}
+                  </td>
+
+                  <td className="px-4 py-4 whitespace-nowrap">
+                    {article.isFeatured ? (
+                      <span className="inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-800 shadow-2xs">
+                        <span className="material-symbols-outlined text-sm text-amber-500">
+                          star
                         </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
-                          <span className="size-1.5 rounded-full bg-amber-500" />
-                          Bản nháp
-                        </span>
-                      )}
-                      {article.isFeatured ? (
-                        <span className="inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-100/60 px-2 py-0.5 text-[11px] font-bold text-amber-800">
-                          <span className="material-symbols-outlined text-xs">
-                            star
-                          </span>
-                          Nổi bật
-                        </span>
-                      ) : null}
-                    </div>
+                        Nổi bật
+                      </span>
+                    ) : (
+                      <span className="text-xs font-medium text-slate-300 pl-3">
+                        —
+                      </span>
+                    )}
                   </td>
 
                   <td className="px-4 py-4 whitespace-nowrap">
@@ -800,7 +834,7 @@ export function AdminNewsStudio() {
                     </div>
                   </td>
 
-                  <td className="relative px-4 py-4 text-center whitespace-nowrap">
+                  <td className="relative w-20 px-4 py-4 text-center whitespace-nowrap">
                     <button
                       type="button"
                       aria-label="Tùy chọn thao tác"
@@ -1022,7 +1056,7 @@ export function AdminNewsStudio() {
       {showOverview ? (
         <section
           aria-label="Tổng quan nội dung"
-          className="mb-6 grid grid-cols-1 gap-3.5 sm:grid-cols-2"
+          className="mb-6 grid grid-cols-1 gap-3.5 sm:grid-cols-3"
         >
           <div className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm">
             <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600">
@@ -1036,6 +1070,22 @@ export function AdminNewsStudio() {
               </span>
               <strong className="mt-0.5 block text-2xl font-bold text-slate-900">
                 {counts.total}
+              </strong>
+            </div>
+          </div>
+
+          <div className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm">
+            <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+              <span className="material-symbols-outlined text-2xl">
+                check_circle
+              </span>
+            </div>
+            <div>
+              <span className="block text-xs font-medium text-slate-500">
+                Đã xuất bản
+              </span>
+              <strong className="mt-0.5 block text-2xl font-bold text-slate-900">
+                {counts.published}
               </strong>
             </div>
           </div>
@@ -1276,15 +1326,11 @@ export function AdminNewsStudio() {
             }
 
             const actionTitle = selectedId
-              ? "Xác nhận lưu chỉnh sửa?"
-              : `Xác nhận tạo ${contentLabel.toLocaleLowerCase("vi")} mới?`;
-            const actionText = selectedId
-              ? "Bạn có chắc chắn muốn cập nhật nội dung không?"
-              : "Bạn có chắc chắn muốn tạo nội dung mới không?";
+              ? "Lưu chỉnh sửa?"
+              : `Tạo ${contentLabel.toLocaleLowerCase("vi")} mới?`;
 
             const confirmation = await confirmAction({
               title: actionTitle,
-              text: actionText,
               confirmButtonText: selectedId ? "Lưu chỉnh sửa" : "Tạo mới",
               icon: "question",
             });
@@ -1301,13 +1347,21 @@ export function AdminNewsStudio() {
                 ),
               ]);
               const input = { ...contentInput, coverImageUrl };
-              setForm(input);
-              setPendingCoverFile(null);
               if (selectedId) {
                 await update.mutateAsync({ id: selectedId, input });
               } else {
                 await create.mutateAsync(input);
               }
+              setForm({
+                ...form,
+                coverImageUrl,
+                translations: {
+                  ...form.translations,
+                  ...contentInput.translations,
+                },
+              });
+              setPendingCoverFile(null);
+              setCoverPreviewUrl(coverImageUrl ?? null);
               pendingInlineImages.forEach((image) =>
                 URL.revokeObjectURL(image.url),
               );
@@ -1878,9 +1932,9 @@ export function AdminNewsStudio() {
                     disabled={deleteArticle.isPending}
                     onClick={async () => {
                       const confirmation = await confirmAction({
-                        title: "Xóa nội dung này?",
-                        text: "Nội dung và toàn bộ bản dịch sẽ bị xóa vĩnh viễn khỏi hệ thống.",
-                        confirmButtonText: "Xóa vĩnh viễn",
+                        title: "Xóa nội dung?",
+                        text: "Không thể hoàn tác sau khi xóa.",
+                        confirmButtonText: "Xóa",
                         isDestructive: true,
                         icon: "warning",
                       });

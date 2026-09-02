@@ -11,6 +11,18 @@ export type NewsContentType =
   | 'OPPORTUNITY'
   | 'PUBLICATION';
 
+export interface PublicListNewsInput {
+  featured?: boolean;
+  limit: number;
+  offset: number;
+  locale?: NewsLocale;
+  category?: string;
+  contentTypes?: NewsContentType[];
+  query?: string;
+  publishedAfter?: Date;
+  scope?: 'vietnam' | 'russia' | 'bilateral';
+}
+
 export interface NewsTranslationInput {
   title: string;
   summary: string;
@@ -121,28 +133,55 @@ export class NewsService {
     private readonly media: NewsMediaService,
   ) {}
 
-  async listPublic(input: {
-    featured?: boolean;
-    limit: number;
-    offset: number;
-    locale?: NewsLocale;
-    category?: string;
-    contentType?: NewsContentType;
-  }) {
-    const articles = await this.prisma.newsArticle.findMany({
-      where: {
-        ...(input.featured === undefined ? {} : { isFeatured: input.featured }),
-        ...(input.category === undefined ? {} : { category: input.category }),
-        ...(input.contentType === undefined
-          ? {}
-          : { contentType: input.contentType }),
+  async listPublic(input: PublicListNewsInput) {
+    const query = input.query?.trim();
+    const searchable = (values: string[]) => ({
+      some: {
+        OR: values.flatMap((value) => [
+          { title: { contains: value, mode: 'insensitive' } },
+          { summary: { contains: value, mode: 'insensitive' } },
+          { content: { contains: value, mode: 'insensitive' } },
+        ]),
       },
+    });
+    // ponytail: keyword scope until NewsArticle gets canonical persisted geography.
+    const scopeTerms = input.scope
+      ? {
+          vietnam: ['Việt Nam', 'Hà Nội', 'TP.HCM', 'Đà Nẵng'],
+          russia: ['Liên bang Nga', 'Moskva', 'Rosatom'],
+          bilateral: ['Việt - Nga', 'Nga - Việt', 'song phương'],
+        }[input.scope]
+      : undefined;
+    const where = {
+      ...(input.featured === undefined ? {} : { isFeatured: input.featured }),
+      ...(input.category === undefined ? {} : { category: input.category }),
+      ...(input.contentTypes?.length
+        ? { contentType: { in: input.contentTypes } }
+        : {}),
+      ...(input.publishedAfter
+        ? { publishedAt: { gte: input.publishedAfter } }
+        : {}),
+      ...(query ? { translations: searchable([query]) } : {}),
+      ...(scopeTerms
+        ? query
+          ? { AND: [{ translations: searchable(scopeTerms) }] }
+          : { translations: searchable(scopeTerms) }
+        : {}),
+    };
+    const [articles, total] = await Promise.all([
+      this.prisma.newsArticle.findMany({
+        where,
       orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
       take: input.limit,
       skip: input.offset,
       select: articleSelect,
-    });
-    return articles.map((article) => localize(article, input.locale ?? 'VI'));
+      }),
+      this.prisma.newsArticle.count({ where }),
+    ]);
+    return {
+      items: articles.map((article) => localize(article, input.locale ?? 'VI')),
+      total,
+    };
   }
 
   async getPublic(id: string, locale: NewsLocale = 'VI') {
@@ -233,7 +272,7 @@ export class NewsService {
     sourceUrls?: string[];
     isFeatured?: boolean;
     authorId: string;
-    translations: Record<NewsLocale, NewsTranslationInput>;
+    translations: Partial<Record<NewsLocale, NewsTranslationInput>>;
   }) {
     const { translations, ...data } = input;
     return this.prisma.newsArticle.create({

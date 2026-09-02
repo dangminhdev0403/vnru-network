@@ -26,7 +26,6 @@ function parseAdvancedFilters(params: {
   type?: string | string[];
   period?: string | string[];
 }): NewsAdvancedFilters {
-
   const contentTypeValues = Array.isArray(params.type)
     ? params.type
     : [params.type];
@@ -53,27 +52,90 @@ export default async function Page({
 }: {
   searchParams: Promise<{
     category?: string | string[];
+    page?: string | string[];
     period?: string | string[];
     q?: string | string[];
     scope?: string | string[];
-
+    streamCategory?: string | string[];
+    streamPage?: string | string[];
     type?: string | string[];
   }>;
 }) {
   const params = await searchParams;
   const categoryValue =
     typeof params.category === "string" ? params.category : "all";
-  const query = typeof params.q === "string" ? params.q.trim().slice(0, 200) : "";
-  const articles = await getPublicNews("vi");
+  const category = isNewsCategory(categoryValue) ? categoryValue : "all";
+  const query =
+    typeof params.q === "string" ? params.q.trim().slice(0, 200) : "";
+  const filters = parseAdvancedFilters(params);
+  const filterPageValue =
+    typeof params.page === "string" ? Number.parseInt(params.page, 10) : 1;
+  const filterPage =
+    Number.isFinite(filterPageValue) && filterPageValue > 0
+      ? filterPageValue
+      : 1;
+  const categoryMode =
+    category !== "all" ||
+    Boolean(query) ||
+    filters.scope !== "all" ||
+    filters.contentTypes.length > 0 ||
+    filters.period !== "newest";
+
+  const streamCategoryValue =
+    typeof params.streamCategory === "string" ? params.streamCategory : "all";
+  const streamCategory = isNewsCategory(streamCategoryValue)
+    ? streamCategoryValue
+    : "all";
+  const requestedPage =
+    typeof params.streamPage === "string"
+      ? Number.parseInt(params.streamPage, 10)
+      : 1;
+  const streamPage = Number.isFinite(requestedPage) && requestedPage > 0
+    ? requestedPage
+    : 1;
+
+  if (categoryMode) {
+    const result = await getPublicNews({
+      locale: "vi",
+      limit: 10,
+      offset: (filterPage - 1) * 10,
+      category,
+      contentTypes: filters.contentTypes,
+      query: query || undefined,
+      scope: filters.scope === "all" ? undefined : filters.scope,
+      period: filters.period === "newest" ? undefined : filters.period,
+    });
+    return (
+      <GuestExploreV2
+        initialArticles={result.items}
+        initialCategory={category}
+        initialAdvancedFilters={filters}
+        initialQuery={query}
+        filteredTotal={result.total}
+        filteredPage={filterPage}
+      />
+    );
+  }
+
+  const [latest, featured, stream] = await Promise.all([
+    getPublicNews({ locale: "vi", limit: 4 }),
+    getPublicNews({ locale: "vi", limit: 4, featured: true }),
+    getPublicNews({
+      locale: "vi",
+      limit: 10,
+      offset: (streamPage - 1) * 10,
+      category: streamCategory,
+    }),
+  ]);
 
   return (
     <GuestExploreV2
-      initialArticles={articles}
-      initialCategory={
-        isNewsCategory(categoryValue) ? categoryValue : "all"
-      }
-      initialAdvancedFilters={parseAdvancedFilters(params)}
-      initialQuery={query}
+      latestArticles={latest.items}
+      featuredArticles={featured.items}
+      streamArticles={stream.items}
+      streamTotal={stream.total}
+      streamPage={streamPage}
+      streamCategory={streamCategory}
     />
   );
 }

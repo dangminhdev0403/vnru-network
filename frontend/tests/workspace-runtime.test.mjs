@@ -88,9 +88,9 @@ test("content administration reuses admin chrome with its own navigation", async
   assert.doesNotMatch(studio, /Viết bài mới|Tạo bài viết|Chỉnh sửa bài viết/);
   assert.doesNotMatch(studio, /BẢN NHÁP MỚI|Lưu bản nháp|Lưu thay đổi/);
   assert.match(studio, /Lưu chỉnh sửa/);
-  assert.doesNotMatch(studio, />\s*Loại\s*<\/th>|>\s*Cập nhật\s*<\/th>/);
   assert.match(studio, />\s*Trạng thái\s*<\/th>/);
-  assert.match(studio, /colSpan=\{5\}/);
+  assert.match(studio, />\s*Tin nổi bật\s*<\/th>/);
+  assert.match(studio, /colSpan=\{6\}/);
   assert.match(studio, /window\.Translator/);
   assert.match(studio, /sourceLanguage: "vi";?[\s\S]*targetLanguage: "ru"/);
   assert.equal(
@@ -101,9 +101,20 @@ test("content administration reuses admin chrome with its own navigation", async
   assert.equal((studio.match(/expand_more/g) || []).length >= 2, true);
   assert.doesNotMatch(studio, /localStorage|translate\.googleapis|mymemory/);
   assert.match(studio, /URL\.createObjectURL\(file\)/);
+  assert.match(studio, /const submittedLocales = locales\.filter/);
+  assert.match(studio, /submittedLocales\.length[\s\S]*\? submittedLocales[\s\S]*: \[locale\]/);
+  assert.match(studio, /translations: Object\.fromEntries\([\s\S]*\.filter\(\(item\) => submittedLocales\.includes\(item\)\)/);
+  assert.match(studio, /title: translation\.title[\s\S]*actionLabel: translation\.actionLabel/);
+  assert.doesNotMatch(studio, /\.\.\.form\.translations\[item\]/);
+  const newsController = await read("../services/auth-service/src/modules/news/news.controller.ts");
+  assert.match(newsController, /VI: translationSchema\.optional\(\)/);
+  assert.match(newsController, /EN: translationSchema\.optional\(\)/);
+  assert.match(newsController, /RU: translationSchema\.optional\(\)/);
+  assert.match(newsController, /Object\.keys\(value\)\.length > 0/);
   assert.match(studio, /pendingInlineImages/);
   assert.match(studio, /uploadPendingInlineImages/);
-  assert.match(studio, /pendingInlineImages\.filter[\s\S]*content\.includes\(image\.url\)/);
+  assert.match(studio, /Object\.values\(input\.translations\)[\s\S]*content\.includes\(image\.url\)/);
+  assert.match(studio, /Object\.entries\(input\.translations\)\.map/);
   assert.match(studio, /Promise\.all\([\s\S]*referencedImages\.map/);
   assert.match(studio, /Promise\.all\(\[[\s\S]*pendingCoverFile/);
   assert.doesNotMatch(
@@ -112,6 +123,23 @@ test("content administration reuses admin chrome with its own navigation", async
   );
   assert.doesNotMatch(iamLayout, /area="content"/);
   assert.doesNotMatch(iamSidebar, /\/workspace\/news/);
+});
+
+test("news spotlight uses the backend featured flag", async () => {
+  const [carousel, repository, page] = await Promise.all([
+    read("features/public-v2/components/GuestExploreV2.tsx"),
+    read("features/public-v2/data/public-news-server.ts"),
+    read("app/news/page.tsx"),
+  ]);
+  assert.doesNotMatch(carousel, /initialArticles\.filter|initialArticles\.slice/);
+  assert.doesNotMatch(carousel, /matchesScope|matchesContentType|matchesPeriod/);
+  assert.match(repository, /params\.append\("featured", String\(featured\)\)/);
+  assert.match(repository, /params\.append\("contentType", type\)/);
+  assert.match(repository, /isFeatured: article\.isFeatured/);
+  assert.match(page, /limit: 10/);
+  assert.doesNotMatch(page, /limit: 100/);
+  assert.match(carousel, /spotlightIndex === 0 \? "" : "transition-transform/);
+  assert.match(carousel, /const isActive = index === spotlightIndex/);
 });
 
 test("official news keeps cover images aligned with their article", async () => {

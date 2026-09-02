@@ -1,7 +1,11 @@
 import "server-only";
 
 import { authServiceUrl } from "@/features/auth/server";
-import { OFFICIAL_NEWS, getOfficialNewsArticle, type NewsCategoryKey, type OfficialNewsArticle } from "./official-news";
+import {
+  getOfficialNewsArticle,
+  type NewsCategoryKey,
+  type OfficialNewsArticle,
+} from "./official-news";
 
 const categories: Record<string, NewsCategoryKey> = {
   "science-technology": "science",
@@ -9,6 +13,10 @@ const categories: Record<string, NewsCategoryKey> = {
   education: "education",
   cooperation: "cooperation",
 };
+
+const apiCategories: Partial<Record<NewsCategoryKey, string>> = Object.fromEntries(
+  Object.entries(categories).map(([api, ui]) => [ui, api]),
+);
 
 type ApiArticle = {
   id: string;
@@ -23,6 +31,24 @@ type ApiArticle = {
   actionUrl: string | null;
   actionClosesAt: string | null;
   actionLabel: string | null;
+  isFeatured: boolean;
+};
+
+export type PublicNewsQuery = {
+  locale: string;
+  limit?: number;
+  offset?: number;
+  featured?: boolean;
+  category?: NewsCategoryKey | "all";
+  contentTypes?: NonNullable<OfficialNewsArticle["contentType"]>[];
+  query?: string;
+  scope?: "vietnam" | "russia" | "bilateral";
+  period?: "7days" | "30days";
+};
+
+export type PublicNewsResult = {
+  items: OfficialNewsArticle[];
+  total: number;
 };
 
 const mapArticle = (article: ApiArticle): OfficialNewsArticle | undefined => {
@@ -41,25 +67,62 @@ const mapArticle = (article: ApiArticle): OfficialNewsArticle | undefined => {
     actionUrl: article.actionUrl,
     actionClosesAt: article.actionClosesAt,
     actionLabel: article.actionLabel,
+    isFeatured: article.isFeatured,
   };
 };
 
-export async function getPublicNews(locale: string): Promise<OfficialNewsArticle[]> {
-  try {
-    const response = await fetch(authServiceUrl(`api/v1/news?limit=100&locale=${locale}`), { next: { revalidate: 60 } });
-    if (!response.ok) return OFFICIAL_NEWS;
-    const articles = await response.json() as ApiArticle[];
-    const mapped = articles.map(mapArticle).filter((article): article is OfficialNewsArticle => Boolean(article));
-    return mapped.length ? mapped : OFFICIAL_NEWS;
-  } catch {
-    return OFFICIAL_NEWS;
-  }
+export async function getPublicNews({
+  locale,
+  limit = 20,
+  offset = 0,
+  featured,
+  category,
+  contentTypes = [],
+  query,
+  scope,
+  period,
+}: PublicNewsQuery): Promise<PublicNewsResult> {
+  const params = new URLSearchParams({
+    locale,
+    limit: String(limit),
+    offset: String(offset),
+  });
+  if (featured !== undefined) params.append("featured", String(featured));
+  if (category && category !== "all")
+    params.append("category", apiCategories[category] ?? category);
+  contentTypes.forEach((type) => params.append("contentType", type));
+  if (query) params.append("q", query);
+  if (scope) params.append("scope", scope);
+  if (period) params.append("period", period);
+
+  const response = await fetch(authServiceUrl(`api/v1/news?${params}`), {
+    next: { revalidate: 60 },
+  });
+  if (!response.ok) throw new Error(`News API failed: ${response.status}`);
+  const result = (await response.json()) as {
+    items: ApiArticle[];
+    total: number;
+  };
+  return {
+    items: result.items
+      .map(mapArticle)
+      .filter((article): article is OfficialNewsArticle => Boolean(article)),
+    total: result.total,
+  };
 }
 
-export async function getPublicNewsArticle(id: string, locale: string): Promise<OfficialNewsArticle | undefined> {
+export async function getPublicNewsArticle(
+  id: string,
+  locale: string,
+): Promise<OfficialNewsArticle | undefined> {
   try {
-    const response = await fetch(authServiceUrl(`api/v1/news/${encodeURIComponent(id)}?locale=${locale}`), { next: { revalidate: 60 } });
-    if (response.ok) return mapArticle(await response.json() as ApiArticle);
+    const response = await fetch(
+      authServiceUrl(
+        `api/v1/news/${encodeURIComponent(id)}?locale=${locale}`,
+      ),
+      { next: { revalidate: 60 } },
+    );
+    if (response.ok) return mapArticle((await response.json()) as ApiArticle);
   } catch {
     // Local fallback keeps the official catalog available before migration/import.
   }

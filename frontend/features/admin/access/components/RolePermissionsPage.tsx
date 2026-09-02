@@ -611,7 +611,7 @@ export default function RolePermissionsPage() {
                   <select
                     value={moduleFilter}
                     onChange={(event) => setModuleFilter(event.target.value)}
-                    className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm"
+                    className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm outline-none focus:border-[var(--accent-primary)]"
                   >
                     <option value="">{t.allModules}</option>
                     {modules.map((module) => (
@@ -820,7 +820,7 @@ export default function RolePermissionsPage() {
                 onChange={(event) => setAssignUserId(event.target.value)}
                 aria-invalid={Boolean(assignError)}
                 aria-describedby={assignError ? "assign-user-error" : undefined}
-                className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"
+                className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm outline-none focus:border-[var(--accent-primary)]"
               >
                 <option value="">{t.selectUser}</option>
                 {users.map((user) => (
@@ -838,7 +838,7 @@ export default function RolePermissionsPage() {
               <select
                 value={assignContextType}
                 onChange={(event) => setAssignContextType(event.target.value)}
-                className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm"
+                className="mt-1.5 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2.5 text-sm outline-none focus:border-[var(--accent-primary)]"
               >
                 <option value="ORGANIZATION">ORGANIZATION</option>
                 <option value="REVIEW_BOARD">REVIEW_BOARD</option>
