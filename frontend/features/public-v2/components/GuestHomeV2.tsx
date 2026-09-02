@@ -33,9 +33,28 @@ const HERO_BANNERS = [
   },
 ] as const;
 
-const DEFAULT_FALLBACK_IMAGES = [
-  "/images/home-bilateral-gateway.jpg",
-];
+function NewsCardImage({ src, alt }: { src: string | null; alt: string }) {
+  if (!src)
+    return (
+      <div
+        role="img"
+        aria-label={alt}
+        className="grid size-full place-items-center bg-slate-100 text-slate-400"
+      >
+        <span className="material-symbols-outlined text-4xl">image</span>
+      </div>
+    );
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      unoptimized
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+      className="object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+  );
+}
 
 export const HOME_COPY: Record<
   Locale,
@@ -1963,12 +1982,7 @@ export function GuestHomeV2({
 
             {/* News Cards Grid */}
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {OFFICIAL_NEWS.slice(0, 4).map((item, index) => {
-                const imgSrc =
-                  item.image ||
-                  DEFAULT_FALLBACK_IMAGES[
-                    index % DEFAULT_FALLBACK_IMAGES.length
-                  ];
+              {OFFICIAL_NEWS.slice(0, 4).map((item) => {
                 return (
                   <Link
                     key={item.id}
@@ -1976,14 +1990,7 @@ export function GuestHomeV2({
                     className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md hover:shadow-blue-500/10"
                   >
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                      <Image
-                        src={imgSrc}
-                        alt={item.title}
-                        fill
-                        unoptimized
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                      <NewsCardImage src={item.image} alt={item.title} />
                     </div>
                     <div className="flex flex-1 flex-col justify-between p-3.5 sm:p-4">
                       <h3 className="line-clamp-2 text-xs font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-sm">
@@ -2075,12 +2082,7 @@ export function GuestHomeV2({
 
             {/* Event articles */}
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {OFFICIAL_NEWS.slice(2, 6).map((item, index) => {
-                const imgSrc =
-                  item.image ||
-                  DEFAULT_FALLBACK_IMAGES[
-                    index % DEFAULT_FALLBACK_IMAGES.length
-                  ];
+              {OFFICIAL_NEWS.slice(2, 6).map((item) => {
                 return (
                   <Link
                     key={item.id}
@@ -2088,14 +2090,7 @@ export function GuestHomeV2({
                     className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
                   >
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                      <Image
-                        src={imgSrc}
-                        alt={item.title}
-                        fill
-                        unoptimized
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                      <NewsCardImage src={item.image} alt={item.title} />
                     </div>
                     <div className="flex flex-1 flex-col justify-between p-3.5 sm:p-4">
                       {/* Calendar Date Badge */}

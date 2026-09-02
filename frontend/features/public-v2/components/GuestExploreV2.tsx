@@ -110,28 +110,29 @@ const TEXT = {
 
 const SPOTLIGHT_INTERVAL_MS = 5_000;
 
-const DEFAULT_FALLBACK_IMAGES = [
-  "/images/home-bilateral-gateway.jpg",
-];
-
 function NewsImage({
   className = "",
   src,
   label = "Ảnh",
-  fallbackIndex = 0,
 }: {
   className?: string;
   src?: string | null;
   label?: string;
-  fallbackIndex?: number;
 }) {
-  const fallbackSrc =
-    DEFAULT_FALLBACK_IMAGES[fallbackIndex % DEFAULT_FALLBACK_IMAGES.length];
-  const finalSrc = src || fallbackSrc;
+  if (!src)
+    return (
+      <div
+        role="img"
+        aria-label={label}
+        className={`grid place-items-center bg-slate-100 text-slate-400 ${className}`}
+      >
+        <span className="material-symbols-outlined text-3xl">image</span>
+      </div>
+    );
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
     <img
-      src={finalSrc}
+      src={src}
       alt={label}
       loading="lazy"
       className={`object-cover ${className}`}
@@ -139,7 +140,7 @@ function NewsImage({
   );
 }
 
-function SmallRow({ item, index = 0 }: { item: NewsItem; index?: number }) {
+function SmallRow({ item }: { item: NewsItem }) {
   return (
     <Link
       href={newsArticleHref(item)}
@@ -148,7 +149,6 @@ function SmallRow({ item, index = 0 }: { item: NewsItem; index?: number }) {
       <div className="relative h-[68px] w-[92px] shrink-0 overflow-hidden rounded-xl bg-slate-100 shadow-2xs sm:h-[74px] sm:w-[102px]">
         <NewsImage
           src={item.image ?? undefined}
-          fallbackIndex={index + 1}
           className="size-full transition duration-300 group-hover:scale-105"
         />
       </div>
@@ -379,7 +379,6 @@ export function GuestExploreV2({
                       <NewsImage
                         src={item.image ?? undefined}
                         label="Ảnh bài viết nổi bật"
-                        fallbackIndex={index}
                         className="absolute inset-0 h-full w-full rounded-none"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent" />
@@ -433,8 +432,8 @@ export function GuestExploreV2({
                   </h2>
                 </div>
                 <div className="flex flex-1 flex-col justify-between divide-y divide-slate-100 py-1">
-                  {latest.map((item, index) => (
-                    <SmallRow key={item.title} item={item} index={index} />
+                  {latest.map((item) => (
+                    <SmallRow key={item.title} item={item} />
                   ))}
                 </div>
               </aside>
@@ -451,7 +450,7 @@ export function GuestExploreV2({
                 <span className="h-px flex-1 bg-blue-200/70" />
               </div>
               <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                {featured.map((item, index) => (
+                {featured.map((item) => (
                   <Link
                     key={item.title}
                     href={newsArticleHref(item)}
@@ -462,7 +461,6 @@ export function GuestExploreV2({
                         <NewsImage
                           src={item.image ?? undefined}
                           label="Ảnh bài viết"
-                          fallbackIndex={index}
                           className="h-44 w-full"
                         />
                       </div>
@@ -572,7 +570,7 @@ export function GuestExploreV2({
                     key={item.title}
                     className="rounded-2xl border border-blue-200/90 bg-white p-4 shadow-xs"
                   >
-                    <SmallRow item={item} index={index} />
+                    <SmallRow item={item} />
                   </div>
                 ))}
               </div>
