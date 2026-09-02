@@ -1,0 +1,415 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: frontend/app/news/page.tsx, frontend/app/news/[id]/[slug]/page.tsx, frontend/features/public-v2/components/GuestExploreV2.tsx, frontend/features/public-v2/data/public-news-server.ts, frontend/tests/workspace-runtime.test.mjs, services/auth-service/src/modules/news/news.controller.ts, services/auth-service/src/modules/news/news.service.ts, services/auth-service/src/modules/news/news.service.spec.ts
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+frontend/
+  app/
+    news/
+      [id]/
+        [slug]/
+          page.tsx
+      page.tsx
+  features/
+    public-v2/
+      components/
+        GuestExploreV2.tsx
+      data/
+        public-news-server.ts
+  tests/
+    workspace-runtime.test.mjs
+services/
+  auth-service/
+    src/
+      modules/
+        news/
+          news.controller.ts
+          news.service.spec.ts
+          news.service.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="frontend/app/news/[id]/[slug]/page.tsx">
+import type { Metadata } from "next";
+import { notFound, permanentRedirect } from "next/navigation";
+import { GuestNewsArticleV2 } from "@/features/public-v2/components/GuestNewsArticleV2";
+import {
+  formatNewsTitle,
+  newsArticleHref,
+} from "@/features/public-v2/data/official-news";
+import { getPublicNews, getPublicNewsArticle } from "@/features/public-v2/data/public-news-server";
+⋮----
+type PageProps = {
+  params: Promise<{ id: string; slug: string }>;
+};
+⋮----
+export async function generateMetadata(
+⋮----
+export default async function Page(
+</file>
+
+<file path="frontend/features/public-v2/data/public-news-server.ts">
+import { authServiceUrl } from "@/features/auth/server";
+import {
+  getOfficialNewsArticle,
+  type NewsCategoryKey,
+  type OfficialNewsArticle,
+} from "./official-news";
+⋮----
+type ApiArticle = {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  category: string;
+  contentType: OfficialNewsArticle["contentType"];
+  coverImageUrl: string | null;
+  publishedAt: string | null;
+  sourceUrls: string[];
+  actionUrl: string | null;
+  actionClosesAt: string | null;
+  actionLabel: string | null;
+  isFeatured: boolean;
+};
+⋮----
+export type PublicNewsQuery = {
+  locale: string;
+  limit?: number;
+  offset?: number;
+  featured?: boolean;
+  category?: NewsCategoryKey | "all";
+  contentTypes?: NonNullable<OfficialNewsArticle["contentType"]>[];
+  query?: string;
+  scope?: "vietnam" | "russia" | "bilateral";
+  period?: "7days" | "30days";
+};
+⋮----
+export type PublicNewsResult = {
+  items: OfficialNewsArticle[];
+  total: number;
+};
+⋮----
+const mapArticle = (article: ApiArticle): OfficialNewsArticle | undefined =>
+⋮----
+export async function getPublicNews({
+  locale,
+  limit = 20,
+  offset = 0,
+  featured,
+  category,
+  contentTypes = [],
+  query,
+  scope,
+  period,
+}: PublicNewsQuery): Promise<PublicNewsResult>
+⋮----
+export async function getPublicNewsArticle(
+  id: string,
+  locale: string,
+): Promise<OfficialNewsArticle | undefined>
+⋮----
+// Local fallback keeps the official catalog available before migration/import.
+</file>
+
+<file path="services/auth-service/src/modules/news/news.controller.ts">
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UploadedFile,
+  UnauthorizedException,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { NewsMediaService, type NewsImageFile } from './news-media.service';
+import { z } from 'zod';
+import {
+  AuthenticatedRequestGuard,
+  RequireAnyPermission,
+  RequirePermission,
+  type AuthenticatedRequest,
+} from '../authentication/authenticated-request-context';
+import { NewsService, type NewsLocale } from './news.service';
+⋮----
+function parse<T>(schema: z.ZodType<T>, value: unknown): T
+⋮----
+export class PublicNewsController
+⋮----
+constructor(private readonly service: NewsService)
+⋮----
+list(@Query() query: Record<string, unknown>)
+⋮----
+get(@Param('id') id: string, @Query('locale') locale?: string)
+⋮----
+export class AdminNewsController
+⋮----
+constructor(
+⋮----
+uploadMedia(@UploadedFile() file?: NewsImageFile)
+⋮----
+get(@Param('id') id: string)
+⋮----
+create(@Body() body: unknown, @Req() request: AuthenticatedRequest)
+⋮----
+update(@Param('id') id: string, @Body() body: unknown)
+⋮----
+delete(@Param('id') id: string)
+</file>
+
+<file path="services/auth-service/src/modules/news/news.service.spec.ts">
+import { NewsService } from './news.service';
+⋮----
+.mockResolvedValueOnce(1) // total matching filter
+.mockResolvedValueOnce(1) // all count
+.mockResolvedValueOnce(0); // featured count
+</file>
+
+<file path="services/auth-service/src/modules/news/news.service.ts">
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { NewsMediaService } from './news-media.service';
+⋮----
+export type NewsLocale = 'VI' | 'EN' | 'RU';
+export type NewsContentType =
+  | 'ARTICLE'
+  | 'EVENT'
+  | 'ANNOUNCEMENT'
+  | 'PROJECT'
+  | 'OPPORTUNITY'
+  | 'PUBLICATION';
+⋮----
+export interface PublicListNewsInput {
+  featured?: boolean;
+  limit: number;
+  offset: number;
+  locale?: NewsLocale;
+  category?: string;
+  contentTypes?: NewsContentType[];
+  query?: string;
+  publishedAfter?: Date;
+  scope?: 'vietnam' | 'russia' | 'bilateral';
+}
+⋮----
+export interface NewsTranslationInput {
+  title: string;
+  summary: string;
+  content: string;
+  actionLabel?: string | null;
+}
+⋮----
+export interface NewsPrismaClient {
+  newsArticle: {
+    findMany: (args: Record<string, unknown>) => Promise<any[]>;
+    findFirst: (args: Record<string, unknown>) => Promise<any | null>;
+    create: (args: Record<string, unknown>) => Promise<any>;
+    update: (args: Record<string, unknown>) => Promise<any>;
+    delete: (args: Record<string, unknown>) => Promise<any>;
+    count: (args?: Record<string, unknown>) => Promise<number>;
+  };
+}
+⋮----
+export interface AdminListNewsInput {
+  limit: number;
+  offset: number;
+  contentType?: NewsContentType;
+  category?: string;
+  query?: string;
+  sort?: 'updated-desc' | 'updated-asc' | 'title-asc';
+  featured?: boolean;
+}
+⋮----
+export interface AdminNewsListResponse {
+  items: any[];
+  total: number;
+  counts: { total: number; featured: number };
+}
+⋮----
+function localize(article: any, locale: NewsLocale)
+⋮----
+function articleImageUrls(article: any)
+⋮----
+export class NewsService
+⋮----
+constructor(
+⋮----
+async listPublic(input: PublicListNewsInput)
+⋮----
+const searchable = (values: string[]) => (
+⋮----
+async getPublic(id: string, locale: NewsLocale = 'VI')
+⋮----
+async listAdmin(input: AdminListNewsInput): Promise<AdminNewsListResponse>
+⋮----
+async getAdmin(id: string)
+⋮----
+create(input: {
+    category: string;
+    contentType?: NewsContentType;
+    coverImageUrl: string;
+    actionUrl?: string | null;
+    actionClosesAt?: Date | null;
+    sourceUrls?: string[];
+    isFeatured?: boolean;
+    authorId: string;
+    translations: Partial<Record<NewsLocale, NewsTranslationInput>>;
+})
+⋮----
+async update(
+    id: string,
+    input: {
+      category?: string;
+      contentType?: NewsContentType;
+      coverImageUrl?: string | null;
+      actionUrl?: string | null;
+      actionClosesAt?: Date | null;
+      sourceUrls?: string[];
+      isFeatured?: boolean;
+      translations?: Partial<Record<NewsLocale, NewsTranslationInput>>;
+    },
+)
+⋮----
+async delete(id: string): Promise<
+</file>
+
+<file path="frontend/app/news/page.tsx">
+import type { Metadata } from "next";
+import { GuestExploreV2 } from "@/features/public-v2/components/GuestExploreV2";
+import { getPublicNews } from "@/features/public-v2/data/public-news-server";
+import {
+  DEFAULT_NEWS_ADVANCED_FILTERS,
+  NEWS_CATEGORIES,
+  NEWS_FILTER_CONTENT_TYPES,
+  NEWS_FILTER_PERIODS,
+  NEWS_FILTER_SCOPES,
+  type NewsAdvancedFilters,
+  type NewsCategory,
+} from "@/features/public-v2/components/GuestNewsFilterNav";
+⋮----
+function isNewsCategory(value: string): value is NewsCategory
+⋮----
+function parseAdvancedFilters(params: {
+  scope?: string | string[];
+  type?: string | string[];
+  period?: string | string[];
+}): NewsAdvancedFilters
+⋮----
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    category?: string | string[];
+    page?: string | string[];
+    period?: string | string[];
+    q?: string | string[];
+    scope?: string | string[];
+    streamCategory?: string | string[];
+    streamPage?: string | string[];
+    type?: string | string[];
+  }>;
+})
+</file>
+
+<file path="frontend/tests/workspace-runtime.test.mjs">
+const read = (path) => readFile(new URL(`../$
+</file>
+
+<file path="frontend/features/public-v2/components/GuestExploreV2.tsx">
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useLocale } from "@/core/i18n/locale";
+import {
+  formatNewsTitle,
+  newsArticleHref,
+  OFFICIAL_NEWS,
+  type OfficialNewsArticle,
+} from "../data/official-news";
+import { GuestPublicFooter } from "./GuestPublicFooter";
+import { HOME_COPY } from "./GuestHomeV2";
+import {
+  DEFAULT_NEWS_ADVANCED_FILTERS,
+  NEWS_CATEGORIES,
+  type NewsAdvancedFilters,
+  type NewsCategory,
+} from "./GuestNewsFilterNav";
+⋮----
+import { GuestPublicNav } from "./GuestPublicNav";
+⋮----
+type NewsItem = OfficialNewsArticle;
+⋮----
+/* eslint-disable-next-line @next/next/no-img-element */
+⋮----
+href=
+⋮----
+
+⋮----
+const streamHref = (page: number, category = streamCategory) =>
+⋮----
+{/* ════════════════════════════════════════════════════════════════
+                TOP HERO SECTION: SPOTLIGHT (LEFT) + LATEST (RIGHT)
+                ════════════════════════════════════════════════════════════════ */}
+⋮----
+{/* SPOTLIGHT CAROUSEL CARD */}
+⋮----
+{/* CAROUSEL INDICATOR DOTS */}
+⋮----
+{/* LATEST COLUMN */}
+⋮----
+{/* ════════════════════════════════════════════════════════════════
+                FEATURED ARTICLES (4 CARDS)
+                ════════════════════════════════════════════════════════════════ */}
+⋮----
+{/* ════════════════════════════════════════════════════════════════
+                NEWS STREAM & CATEGORY DROPDOWN
+                ════════════════════════════════════════════════════════════════ */}
+</file>
+
+</files>

@@ -169,7 +169,6 @@ describe('NewsService', () => {
 
     await service.create({
       category: 'education',
-      coverImageUrl: 'https://cdn/banner.webp',
       authorId: 'user-1',
       translations: {
         VI: { title: 'Tin', summary: 'Tóm tắt', content: 'Nội dung' },

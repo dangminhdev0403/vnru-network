@@ -2,6 +2,7 @@ import { AuthError } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { signIn } from "../../../../auth";
 import {
+  DEFAULT_LOGIN_DESTINATION,
   isSameOriginRequest,
   publicRequestUrl,
   sanitizeReturnTo,
@@ -11,7 +12,10 @@ export function GET(request: NextRequest) {
   const login = publicRequestUrl(request, "/login");
   login.searchParams.set(
     "returnTo",
-    sanitizeReturnTo(request.nextUrl.searchParams.get("returnTo")),
+    sanitizeReturnTo(
+      request.nextUrl.searchParams.get("returnTo"),
+      DEFAULT_LOGIN_DESTINATION,
+    ),
   );
   return NextResponse.redirect(login);
 }
@@ -24,7 +28,10 @@ export async function POST(request: NextRequest) {
     );
   }
   const form = await request.formData();
-  const returnTo = sanitizeReturnTo(form.get("returnTo")?.toString());
+  const returnTo = sanitizeReturnTo(
+    form.get("returnTo")?.toString(),
+    DEFAULT_LOGIN_DESTINATION,
+  );
   const account = form.get("account")?.toString()?.trim() || "";
   try {
     await signIn("credentials", {

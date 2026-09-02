@@ -430,10 +430,6 @@ export function AdminNewsStudio() {
       }
     }
 
-    if (!(coverPreviewUrl || form.coverImageUrl || pendingCoverFile)) {
-      errors.coverImageUrl = "Vui lòng chọn hình ảnh đại diện bài viết";
-    }
-
     if (invalidLocale) setLocale(invalidLocale);
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
@@ -1490,8 +1486,8 @@ export function AdminNewsStudio() {
                         Hình ảnh đại diện bài viết
                       </label>
                       <p className="mt-0.5 text-xs text-slate-500">
-                        Định dạng hỗ trợ: JPG, PNG, WEBP. Ảnh hiển thị tại tiêu
-                        điểm trang chủ và đầu bài viết.
+                        Định dạng hỗ trợ: JPG, PNG, WEBP, tối đa 20 MB. Ảnh hiển
+                        thị tại tiêu điểm trang chủ và đầu bài viết.
                       </p>
                     </div>
                     {displayUrl ? (

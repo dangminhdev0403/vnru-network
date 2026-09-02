@@ -2,6 +2,13 @@
 
 The stack is PostgreSQL, the `auth-service` modular monolith, frontend, and Nginx.
 
+## Browser URLs
+
+- Local Compose: `http://localhost:8082` unless `NGINX_HTTP_PORT` overrides the port.
+- Production VPS: `https://rvstin.com`.
+
+`0.0.0.0:3000` is the frontend container's bind address, not a browser URL.
+
 ## Local source development
 
 Use only the existing `postgres-local` container and `vnru_auth_local` database:

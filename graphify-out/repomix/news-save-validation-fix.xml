@@ -1,0 +1,356 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: frontend/features/news/AdminNewsStudio.tsx, frontend/features/news/repository.ts, frontend/features/news/resource.ts, frontend/tests/workspace-runtime.test.mjs, services/auth-service/src/modules/news/news.controller.ts
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+frontend/
+  features/
+    news/
+      AdminNewsStudio.tsx
+      repository.ts
+      resource.ts
+  tests/
+    workspace-runtime.test.mjs
+services/
+  auth-service/
+    src/
+      modules/
+        news/
+          news.controller.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="frontend/features/news/resource.ts">
+import {
+  createResource,
+  defineMutation,
+  defineQuery,
+} from "@dangminhdev04032005/query-resource";
+import { newsRepository } from "./repository";
+import type {
+  NewsArticle,
+  NewsInput,
+  AdminNewsListFilters,
+} from "./repository";
+</file>
+
+<file path="frontend/features/news/repository.ts">
+import { httpClient } from "@/lib/httpClient";
+⋮----
+export type NewsLocale = "VI" | "EN" | "RU";
+export type NewsContentType =
+  | "ARTICLE"
+  | "EVENT"
+  | "ANNOUNCEMENT"
+  | "PROJECT"
+  | "OPPORTUNITY"
+  | "PUBLICATION";
+export type NewsTranslation = {
+  locale?: NewsLocale;
+  title: string;
+  summary: string;
+  content: string;
+  actionLabel?: string | null;
+};
+export type NewsArticle = {
+  id: string;
+  category: string;
+  contentType: NewsContentType;
+  actionUrl: string | null;
+  actionClosesAt: string | null;
+  sourceUrls: string[];
+  coverImageUrl: string | null;
+  isFeatured: boolean;
+  publishedAt: string | null;
+  updatedAt: string;
+  translations: NewsTranslation[];
+};
+export type AdminNewsListFilters = {
+  limit?: number;
+  offset?: number;
+  contentType?: NewsContentType;
+  category?: string;
+  query?: string;
+  sort?: "updated-desc" | "updated-asc" | "title-asc";
+  featured?: boolean;
+};
+⋮----
+export type AdminNewsListItem = {
+  id: string;
+  category: string;
+  contentType: NewsContentType;
+  coverImageUrl: string | null;
+  isFeatured: boolean;
+  publishedAt: string | null;
+  updatedAt: string;
+  actionClosesAt: string | null;
+  author: {
+    id: string;
+    firstName: string | null;
+    lastName: string | null;
+  };
+  translations: Array<{
+    locale: NewsLocale;
+    title: string;
+    summary: string;
+  }>;
+};
+⋮----
+export type AdminNewsListResponse = {
+  items: AdminNewsListItem[];
+  total: number;
+  counts: { total: number; featured: number };
+};
+⋮----
+export type NewsInput = {
+  category: string;
+  contentType: NewsContentType;
+  actionUrl?: string | null;
+  actionClosesAt?: string | null;
+  sourceUrls?: string[];
+  coverImageUrl?: string | null;
+  isFeatured?: boolean;
+  translations: Record<NewsLocale, NewsTranslation>;
+};
+⋮----
+async function json<T>(path: string, init?: RequestInit): Promise<T>
+</file>
+
+<file path="services/auth-service/src/modules/news/news.controller.ts">
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UploadedFile,
+  UnauthorizedException,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { NewsMediaService, type NewsImageFile } from './news-media.service';
+import { z } from 'zod';
+import {
+  AuthenticatedRequestGuard,
+  RequireAnyPermission,
+  RequirePermission,
+  type AuthenticatedRequest,
+} from '../authentication/authenticated-request-context';
+import { NewsService, type NewsLocale } from './news.service';
+⋮----
+function parse<T>(schema: z.ZodType<T>, value: unknown): T
+⋮----
+export class PublicNewsController
+⋮----
+constructor(private readonly service: NewsService)
+⋮----
+list(@Query() query: Record<string, unknown>)
+⋮----
+get(@Param('id') id: string, @Query('locale') locale?: string)
+⋮----
+export class AdminNewsController
+⋮----
+constructor(
+⋮----
+uploadMedia(@UploadedFile() file?: NewsImageFile)
+⋮----
+get(@Param('id') id: string)
+⋮----
+create(@Body() body: unknown, @Req() request: AuthenticatedRequest)
+⋮----
+update(@Param('id') id: string, @Body() body: unknown)
+⋮----
+delete(@Param('id') id: string)
+</file>
+
+<file path="frontend/features/news/AdminNewsStudio.tsx">
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMemo, useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { confirmAction, showSuccess, showError } from "@/lib/alerts";
+import { z } from "zod";
+import { newsResource } from "./resource";
+import type {
+  NewsArticle,
+  NewsInput,
+  NewsLocale,
+  NewsContentType,
+  AdminNewsListItem,
+  AdminNewsListFilters,
+} from "./repository";
+⋮----
+interface Window {
+    Translator?: {
+      create(input: {
+        sourceLanguage: "vi";
+        targetLanguage: "ru";
+      }): Promise<{ translate(text: string): Promise<string> }>;
+    };
+  }
+⋮----
+create(input: {
+        sourceLanguage: "vi";
+        targetLanguage: "ru";
+}): Promise<
+⋮----
+}): Promise<
+⋮----
+const empty = () => (
+⋮----
+const dateTimeValue = (value?: string | null)
+⋮----
+const payload = (form: NewsInput): NewsInput => (
+⋮----
+function formatDate(isoString?: string | null)
+⋮----
+function formatAuthor(author?: {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+})
+⋮----
+const validateForm = () =>
+⋮----
+const reset = () =>
+⋮----
+const handleCoverFileChange = (file: File) =>
+⋮----
+const handleRemoveCover = () =>
+⋮----
+const open = (article: AdminNewsListItem | NewsArticle) =>
+⋮----
+const setTranslation = (patch: Partial<typeof translation>)
+⋮----
+const addInlineImage = (file: File, start?: number, end?: number) =>
+⋮----
+const handleContentPaste = (
+    event: React.ClipboardEvent<HTMLTextAreaElement>,
+) =>
+⋮----
+const handleContentDrop = (event: React.DragEvent<HTMLTextAreaElement>) =>
+⋮----
+const insertMarkdownSnippet = (before: string, after: string = "") =>
+⋮----
+const handleInlineImageSelect = (file: File)
+⋮----
+const uploadPendingInlineImages = async (input: NewsInput) =>
+⋮----
+const translateVietnameseToRussian = async () =>
+⋮----
+const toggleSelectAll = (checked: boolean) =>
+⋮----
+const toggleSelectRow = (id: string) =>
+⋮----
+const resetAllFilters = () =>
+⋮----
+setActionMenuId(null);
+setPreviewItem(article);
+⋮----
+{/* Page Size Selector */}
+⋮----
+{/* Current Page Summary & Controls */}
+⋮----
+onClick=
+⋮----
+{/* ═══════════════ HEADER BAR OR BACK BUTTON ═══════════════ */}
+⋮----
+setSelectedId(undefined);
+⋮----
+{/* ═══════════════ REAL SUMMARY CARDS ═══════════════ */}
+⋮----
+{/* ═══════════════ SEARCH & FILTER TOOLBAR, DATA GRID & PAGINATION ═══════════════ */}
+⋮----
+{/* Search Bar */}
+⋮----
+
+⋮----
+{/* Category Filter Dropdown */}
+⋮----
+{/* Sort Dropdown */}
+⋮----
+{/* Reset Active Filters Button */}
+⋮----
+setQuery("");
+setCategoryFilter("ALL");
+setSortOrder("updated-desc");
+⋮----
+{/* ═══════════════ CORE NEWS LIST & PAGINATION (UNIFIED CARD) ═══════════════ */}
+⋮----
+{/* ═══════════════ READ-ONLY PREVIEW MODAL / PANEL ═══════════════ */}
+⋮----
+setPreviewItem(null);
+open(target);
+⋮----
+{/* ═══════════════ EDITOR VIEW / FORM (WHEN CREATING OR EDITING) ═══════════════ */}
+⋮----
+onSubmit=
+event.preventDefault();
+⋮----
+{/* Đặt làm tin nổi bật */}
+⋮----
+{/* Hình ảnh đại diện bài viết (Cover/Featured Image with Preview) */}
+⋮----
+{/* Translation Fields */}
+⋮----
+{/* Markdown Formatting Toolbar */}
+⋮----
+setTranslation(
+if (fieldErrors.content)
+setFieldErrors((prev) => (
+⋮----
+{/* Form Actions Footer Bar */}
+</file>
+
+<file path="frontend/tests/workspace-runtime.test.mjs">
+const read = (path) => readFile(new URL(`../$
+</file>
+
+</files>

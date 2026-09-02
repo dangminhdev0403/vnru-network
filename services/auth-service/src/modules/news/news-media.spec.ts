@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import {
+  MAX_NEWS_IMAGE_BYTES,
   NewsMediaService,
   newsImagePublicId,
   validateNewsImage,
@@ -36,6 +37,24 @@ describe('news media', () => {
       }),
     ).toThrow(BadRequestException);
     expect(cloudinary.uploadFile).not.toHaveBeenCalled();
+  });
+
+  it('accepts images up to 20 MB and rejects larger files', () => {
+    expect(() =>
+      validateNewsImage({
+        buffer: Buffer.alloc(0),
+        mimetype: 'image/jpeg',
+        size: 20 * 1024 * 1024,
+      }),
+    ).not.toThrow();
+    expect(MAX_NEWS_IMAGE_BYTES).toBe(20 * 1024 * 1024);
+    expect(() =>
+      validateNewsImage({
+        buffer: Buffer.alloc(0),
+        mimetype: 'image/jpeg',
+        size: MAX_NEWS_IMAGE_BYTES + 1,
+      }),
+    ).toThrow('Image must not exceed 20 MB');
   });
 
   it('uploads a bounded news image and returns storage metadata', async () => {

@@ -8,6 +8,9 @@ services:
     ports: !reset []
 
   frontend:
+    environment:
+      AUTH_URL: https://rvstin.com
+      NEXTAUTH_URL: https://rvstin.com
     ports: !reset []
 
   nginx:

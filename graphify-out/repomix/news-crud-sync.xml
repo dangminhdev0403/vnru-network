@@ -1,0 +1,715 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: docs/API_SPEC.md, services/auth-service/prisma/schema.prisma, services/auth-service/src/modules/news/news.controller.ts, services/auth-service/src/modules/news/news.service.ts, services/auth-service/src/modules/news/news.service.spec.ts, frontend/app/api/admin/news/[[...path]]/route.ts, frontend/features/news/repository.ts, frontend/features/news/resource.ts, frontend/features/news/AdminNewsStudio.tsx, frontend/tests/workspace-runtime.test.mjs
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+docs/
+  API_SPEC.md
+frontend/
+  app/
+    api/
+      admin/
+        news/
+          [[...path]]/
+            route.ts
+  features/
+    news/
+      AdminNewsStudio.tsx
+      repository.ts
+      resource.ts
+  tests/
+    workspace-runtime.test.mjs
+services/
+  auth-service/
+    prisma/
+      schema.prisma
+    src/
+      modules/
+        news/
+          news.controller.ts
+          news.service.spec.ts
+          news.service.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="frontend/app/api/admin/news/[[...path]]/route.ts">
+import { NextRequest, NextResponse } from "next/server";
+import { authServiceUrl, backendHeaders } from "@/features/auth/server";
+⋮----
+async function proxy(
+  request: NextRequest,
+  context: { params: Promise<{ path?: string[] }> },
+)
+</file>
+
+<file path="frontend/features/news/resource.ts">
+import {
+  createResource,
+  defineMutation,
+  defineQuery,
+} from "@dangminhdev04032005/query-resource";
+import { newsRepository } from "./repository";
+import type {
+  NewsArticle,
+  NewsInput,
+  AdminNewsListFilters,
+} from "./repository";
+</file>
+
+<file path="frontend/features/news/repository.ts">
+import { httpClient } from "@/lib/httpClient";
+⋮----
+export type NewsStatus = "DRAFT" | "PUBLISHED";
+export type NewsLocale = "VI" | "EN" | "RU";
+export type NewsContentType =
+  | "ARTICLE"
+  | "EVENT"
+  | "ANNOUNCEMENT"
+  | "PROJECT"
+  | "OPPORTUNITY"
+  | "PUBLICATION";
+export type NewsTranslation = {
+  locale?: NewsLocale;
+  title: string;
+  summary: string;
+  content: string;
+  actionLabel?: string | null;
+};
+export type NewsArticle = {
+  id: string;
+  category: string;
+  contentType: NewsContentType;
+  actionUrl: string | null;
+  actionClosesAt: string | null;
+  sourceUrls: string[];
+  coverImageUrl: string | null;
+  status: NewsStatus;
+  isFeatured: boolean;
+  publishedAt: string | null;
+  updatedAt: string;
+  translations: NewsTranslation[];
+};
+export type AdminNewsListFilters = {
+  limit?: number;
+  offset?: number;
+  status?: NewsStatus;
+  contentType?: NewsContentType;
+  category?: string;
+  query?: string;
+  sort?: "updated-desc" | "updated-asc" | "title-asc";
+};
+⋮----
+export type AdminNewsListItem = {
+  id: string;
+  category: string;
+  contentType: NewsContentType;
+  coverImageUrl: string | null;
+  status: NewsStatus;
+  isFeatured: boolean;
+  publishedAt: string | null;
+  updatedAt: string;
+  actionClosesAt: string | null;
+  author: {
+    id: string;
+    firstName: string | null;
+    lastName: string | null;
+  };
+  translations: Array<{
+    locale: NewsLocale;
+    title: string;
+    summary: string;
+  }>;
+};
+⋮----
+export type AdminNewsListResponse = {
+  items: AdminNewsListItem[];
+  total: number;
+  counts: { total: number; draft: number; published: number };
+};
+⋮----
+export type NewsInput = {
+  category: string;
+  contentType: NewsContentType;
+  actionUrl?: string | null;
+  actionClosesAt?: string | null;
+  sourceUrls?: string[];
+  coverImageUrl?: string | null;
+  translations: Record<NewsLocale, NewsTranslation>;
+};
+⋮----
+async function json<T>(path: string, init?: RequestInit): Promise<T>
+</file>
+
+<file path="services/auth-service/src/modules/news/news.controller.ts">
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UploadedFile,
+  UnauthorizedException,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { NewsMediaService, type NewsImageFile } from './news-media.service';
+import { z } from 'zod';
+import {
+  AuthenticatedRequestGuard,
+  RequireAnyPermission,
+  RequirePermission,
+  type AuthenticatedRequest,
+} from '../authentication/authenticated-request-context';
+import { NewsService, type NewsLocale } from './news.service';
+⋮----
+function parse<T>(schema: z.ZodType<T>, value: unknown): T
+⋮----
+export class PublicNewsController
+⋮----
+constructor(private readonly service: NewsService)
+⋮----
+list(@Query() query: Record<string, unknown>)
+⋮----
+get(@Param('id') id: string, @Query('locale') locale?: string)
+⋮----
+export class AdminNewsController
+⋮----
+constructor(
+⋮----
+uploadMedia(@UploadedFile() file?: NewsImageFile)
+⋮----
+get(@Param('id') id: string)
+⋮----
+create(@Body() body: unknown, @Req() request: AuthenticatedRequest)
+⋮----
+update(@Param('id') id: string, @Body() body: unknown)
+⋮----
+delete(@Param('id') id: string)
+⋮----
+publish(@Param('id') id: string, @Body() body: unknown)
+⋮----
+unpublish(@Param('id') id: string)
+</file>
+
+<file path="services/auth-service/src/modules/news/news.service.spec.ts">
+import { NewsService } from './news.service';
+⋮----
+.mockResolvedValueOnce(1) // total matching filter
+.mockResolvedValueOnce(0) // draft count
+.mockResolvedValueOnce(1); // published count
+</file>
+
+<file path="services/auth-service/src/modules/news/news.service.ts">
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+⋮----
+export type NewsLocale = 'VI' | 'EN' | 'RU';
+export type NewsStatus = 'DRAFT' | 'PUBLISHED';
+export type NewsContentType =
+  | 'ARTICLE'
+  | 'EVENT'
+  | 'ANNOUNCEMENT'
+  | 'PROJECT'
+  | 'OPPORTUNITY'
+  | 'PUBLICATION';
+⋮----
+export interface NewsTranslationInput {
+  title: string;
+  summary: string;
+  content: string;
+  actionLabel?: string | null;
+}
+⋮----
+export interface NewsPrismaClient {
+  newsArticle: {
+    findMany: (args: Record<string, unknown>) => Promise<any[]>;
+    findFirst: (args: Record<string, unknown>) => Promise<any | null>;
+    create: (args: Record<string, unknown>) => Promise<any>;
+    update: (args: Record<string, unknown>) => Promise<any>;
+    delete: (args: Record<string, unknown>) => Promise<any>;
+    count: (args?: Record<string, unknown>) => Promise<number>;
+  };
+}
+⋮----
+export interface AdminListNewsInput {
+  limit: number;
+  offset: number;
+  status?: NewsStatus;
+  contentType?: NewsContentType;
+  category?: string;
+  query?: string;
+  sort?: 'updated-desc' | 'updated-asc' | 'title-asc';
+}
+⋮----
+export interface AdminNewsListResponse {
+  items: any[];
+  total: number;
+  counts: { total: number; draft: number; published: number };
+}
+⋮----
+function localize(article: any, locale: NewsLocale)
+⋮----
+export class NewsService
+⋮----
+constructor(@Inject(NEWS_PRISMA) private readonly prisma: NewsPrismaClient)
+⋮----
+async listPublic(input: {
+    featured?: boolean;
+    limit: number;
+    offset: number;
+    locale?: NewsLocale;
+    category?: string;
+    contentType?: NewsContentType;
+})
+⋮----
+async getPublic(id: string, locale: NewsLocale = 'VI')
+⋮----
+async listAdmin(input: AdminListNewsInput): Promise<AdminNewsListResponse>
+⋮----
+async getAdmin(id: string)
+⋮----
+create(input: {
+    category: string;
+    contentType?: NewsContentType;
+    coverImageUrl?: string | null;
+    actionUrl?: string | null;
+    actionClosesAt?: Date | null;
+    sourceUrls?: string[];
+    authorId: string;
+    translations: Record<NewsLocale, NewsTranslationInput>;
+})
+⋮----
+update(
+    id: string,
+    input: {
+      category?: string;
+      contentType?: NewsContentType;
+      coverImageUrl?: string | null;
+      actionUrl?: string | null;
+      actionClosesAt?: Date | null;
+      sourceUrls?: string[];
+      translations?: Partial<Record<NewsLocale, NewsTranslationInput>>;
+    },
+)
+⋮----
+async delete(id: string): Promise<
+⋮----
+async publish(id: string, isFeatured: boolean)
+⋮----
+unpublish(id: string)
+</file>
+
+<file path="docs/API_SPEC.md">
+# Module 1 API Contract Policy
+
+The current HTTP contract is owned by `auth-service`. Controllers and exported OpenAPI, when generated, are the runtime source of truth.
+
+Implemented API families:
+
+- `/api/v1/auth/*`: OIDC exchange, current session, logout and active-context switching.
+- `/api/v1/auth/profile`: application-owned member profile.
+- `/api/v1/auth/sessions/*`: session listing and revocation.
+- `/api/v1/admin/users/*`: identity administration.
+- `/api/v1/admin/roles/*`: role and permission administration.
+- `/api/v1/admin/role-assignments/*`: assignment administration.
+- `POST /api/v1/membership-applications`: public membership application intake. Stores a normalized `PENDING` application; never creates a user or role assignment.
+- `GET /api/v1/news`: public published-news feed; supports bounded pagination, `locale`, and optional `featured`.
+- `GET /api/v1/news/:id`: public published article with VI fallback.
+- `/api/v1/admin/news/*`: authenticated article create/read/update/delete/publish/unpublish operations authorized by `content.article.*` capabilities; delete reuses `content.article.update`.
+- `GET /api/v1/admin/news`: bounded admin list with optional `status=DRAFT|PUBLISHED`; `GET /api/v1/admin/news/:id` returns all translations for editing.
+- `POST /api/v1/admin/news/media`: authenticated multipart image upload (`file`, JPEG/PNG/WebP, max 5 MB) through `nestjs-cloudinary@1.0.7`; response returns Cloudinary URL and public ID for article/banner fields.
+
+News media is uploaded only through the backend. Upload accepts either `content.article.create` or `content.article.update`, so editors can replace an existing cover. Frontend code must not sign Cloudinary requests, hold Cloudinary secrets, transform image binaries, or implement a parallel storage path.
+
+Create/update is authoritative and returns without waiting for media. The client uploads media independently, then patches the returned Cloudinary URL onto that article. Upload failure leaves the article as a retryable draft; publishing is rejected until `coverImageUrl` exists. This temporary client-managed task does not survive tab close/reload; add a durable backend queue only when that behavior is required.
+
+Required backend runtime secrets: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`. Keep values only in ignored/runtime environment files; never commit or expose them to the browser.
+
+Membership application body:
+
+```json
+{
+  "fullName": "Nguyễn Văn An",
+  "email": "member@example.org",
+  "organization": "VAST",
+  "professionalRole": "Nhà nghiên cứu",
+  "interest": "Vật liệu mới và hợp tác khoa học"
+}
+```
+
+Responses: `201` accepted, `400` invalid body, `409` pending application already exists for the normalized email.
+
+Rules:
+
+- Validate all external input at the controller boundary.
+- Keep opaque session tokens in secure HttpOnly cookies.
+- Return `401` for missing/invalid authentication and `403` for insufficient capability or scope.
+- Frontend BFF routes forward the opaque session and never expose provider tokens.
+- Collection endpoints must be bounded.
+</file>
+
+<file path="frontend/features/news/AdminNewsStudio.tsx">
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMemo, useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { confirmAction, showToast } from "@/lib/alerts";
+import { newsResource } from "./resource";
+import type {
+  NewsArticle,
+  NewsInput,
+  NewsLocale,
+  NewsContentType,
+  AdminNewsListItem,
+  AdminNewsListFilters,
+} from "./repository";
+⋮----
+interface Window {
+    Translator?: {
+      create(input: {
+        sourceLanguage: "vi";
+        targetLanguage: "ru";
+      }): Promise<{ translate(text: string): Promise<string> }>;
+    };
+  }
+⋮----
+create(input: {
+        sourceLanguage: "vi";
+        targetLanguage: "ru";
+}): Promise<
+⋮----
+}): Promise<
+⋮----
+const empty = () => (
+⋮----
+const dateTimeValue = (value?: string | null)
+⋮----
+const payload = (form: NewsInput): NewsInput => (
+⋮----
+function formatDate(isoString?: string | null)
+⋮----
+function formatAuthor(author?: {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+})
+⋮----
+const reset = () =>
+⋮----
+const open = (article: AdminNewsListItem | NewsArticle) =>
+⋮----
+const setTranslation = (patch: Partial<typeof translation>)
+⋮----
+const translateVietnameseToRussian = async () =>
+⋮----
+const toggleSelectAll = (checked: boolean) =>
+⋮----
+const toggleSelectRow = (id: string) =>
+⋮----
+const resetAllFilters = () =>
+⋮----
+setActionMenuId(null);
+setPreviewItem(article);
+⋮----
+{/* ═══════════════ HEADER BAR OR BACK BUTTON ═══════════════ */}
+⋮----
+setSelectedId(undefined);
+⋮----
+{/* ═══════════════ 3 REAL SUMMARY STATUS CARDS (KPIs) ═══════════════ */}
+⋮----
+{/* Card 1: Tất cả */}
+⋮----
+{/* Card 2: Đã xuất bản */}
+⋮----
+{/* Card 3: Bản nháp */}
+⋮----
+{/* ═══════════════ SEARCH & FILTER TOOLBAR, DATA GRID & PAGINATION ═══════════════ */}
+⋮----
+{/* Search Input */}
+⋮----
+{/* Status Filter Dropdown */}
+⋮----
+{/* Category Filter Dropdown */}
+⋮----
+{/* Sort Dropdown */}
+⋮----
+{/* ═══════════════ CORE NEWS LIST (TABLE DATA GRID) ═══════════════ */}
+⋮----
+{/* Page Size Selector */}
+⋮----
+{/* Current Page Summary & Controls */}
+⋮----
+onClick=
+⋮----
+{/* ═══════════════ READ-ONLY PREVIEW MODAL / PANEL ═══════════════ */}
+⋮----
+setPreviewItem(null);
+open(target);
+⋮----
+{/* ═══════════════ EDITOR VIEW / FORM (WHEN CREATING OR EDITING) ═══════════════ */}
+⋮----
+event.preventDefault();
+const input = payload(form);
+if (selectedId) update.mutate(
+else create.mutate(input);
+⋮----
+publish.mutate(
+⋮----
+{/* Cover Image */}
+⋮----
+{/* Language Switcher for Editor */}
+⋮----
+{/* Translation Fields */}
+⋮----
+setTranslation(
+</file>
+
+<file path="services/auth-service/prisma/schema.prisma">
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum RoleAssignmentStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum AuthenticationLevel {
+  PASSWORD
+  MFA
+}
+
+enum MembershipApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum NewsStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum NewsLocale {
+  VI
+  EN
+  RU
+}
+
+enum NewsContentType {
+  ARTICLE
+  EVENT
+  ANNOUNCEMENT
+  PROJECT
+  OPPORTUNITY
+  PUBLICATION
+}
+
+model User {
+  id                 String             @id @default(uuid())
+  email              String?
+  firstName          String?
+  lastName           String?
+  status             UserStatus         @default(ACTIVE)
+  externalIdentities ExternalIdentity[]
+  sessions           Session[]
+  roleAssignments    RoleAssignment[]
+  credential         LocalCredential?
+  newsArticles       NewsArticle[]
+
+  @@unique([email])
+}
+
+model NewsArticle {
+  id             String                   @id @default(uuid())
+  category       String
+  contentType    NewsContentType          @default(ARTICLE)
+  actionUrl      String?
+  actionClosesAt DateTime?
+  sourceUrls     String[]                 @default([])
+  coverImageUrl  String?
+  status         NewsStatus               @default(DRAFT)
+  isFeatured     Boolean                  @default(false)
+  publishedAt    DateTime?
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
+  authorId       String
+  author         User                     @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  translations   NewsArticleTranslation[]
+
+  @@index([status, isFeatured, publishedAt])
+  @@index([status, contentType, publishedAt])
+}
+
+model NewsArticleTranslation {
+  id          String      @id @default(uuid())
+  articleId   String
+  locale      NewsLocale
+  title       String
+  summary     String
+  content     String
+  actionLabel String?
+  article     NewsArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, locale])
+}
+
+model LocalCredential {
+  userId       String @id
+  passwordHash String
+  salt         String
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ExternalIdentity {
+  id      String @id @default(uuid())
+  issuer  String
+  subject String
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([issuer, subject])
+}
+
+model Session {
+  id                  String              @id @default(uuid())
+  tokenDigest         String              @unique
+  userId              String
+  user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt           DateTime
+  revokedAt           DateTime?
+  createdAt           DateTime            @default(now())
+  activeContextType   String?
+  activeContextId     String?
+  authenticationLevel AuthenticationLevel @default(PASSWORD)
+
+  @@index([userId, revokedAt])
+}
+
+model Role {
+  id              String           @id @default(uuid())
+  name            String           @unique
+  permissions     RolePermission[]
+  roleAssignments RoleAssignment[]
+}
+
+model Permission {
+  id    String           @id @default(uuid())
+  key   String           @unique
+  roles RolePermission[]
+}
+
+model RolePermission {
+  id           String     @id @default(uuid())
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+}
+
+model RoleAssignment {
+  id          String               @id @default(uuid())
+  userId      String
+  roleId      String
+  contextType String
+  contextId   String
+  status      RoleAssignmentStatus @default(ACTIVE)
+  createdAt   DateTime             @default(now())
+  user        User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        Role                 @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId, contextType, contextId])
+  @@index([userId, contextType, contextId, status])
+}
+
+model SecurityAuditEvent {
+  id        String   @id @default(uuid())
+  event     String
+  actorId   String
+  targetId  String
+  context   Json
+  createdAt DateTime @default(now())
+}
+
+model MembershipApplication {
+  id               String                      @id @default(uuid())
+  fullName         String
+  email            String
+  organization     String
+  professionalRole String
+  interest         String
+  status           MembershipApplicationStatus @default(PENDING)
+  submittedAt      DateTime                    @default(now())
+  updatedAt        DateTime                    @updatedAt
+
+  @@index([email, status])
+}
+</file>
+
+<file path="frontend/tests/workspace-runtime.test.mjs">
+const read = (path) => readFile(new URL(`../$
+</file>
+
+</files>

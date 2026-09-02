@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { isSameOriginRequest, publicRequestUrl, resolveLandingPath, sanitizeLocale, sanitizeReturnTo } from "./features/auth/server.ts";
+import { DEFAULT_LOGIN_DESTINATION, isSameOriginRequest, publicRequestUrl, resolveLandingPath, sanitizeLocale, sanitizeReturnTo } from "./features/auth/server.ts";
 
 test("login origin uses the public forwarded origin behind a tunnel", () => {
   const request = new Request("https://public.example:3000/api/auth/login", {
@@ -39,6 +39,35 @@ test("auth redirects use the configured public URL instead of the container host
 test("reader login defaults to public home", () => {
   assert.equal(sanitizeReturnTo(undefined), "/");
   assert.equal(resolveLandingPath([]), "/");
+});
+
+test("login defaults to the capability-routed workspace", async () => {
+  assert.equal(DEFAULT_LOGIN_DESTINATION, "/workspace");
+  assert.equal(
+    sanitizeReturnTo(undefined, DEFAULT_LOGIN_DESTINATION),
+    "/workspace",
+  );
+  assert.equal(
+    sanitizeReturnTo("https://evil.example", DEFAULT_LOGIN_DESTINATION),
+    "/workspace",
+  );
+  assert.equal(
+    sanitizeReturnTo("/admin/audit", DEFAULT_LOGIN_DESTINATION),
+    "/admin/audit",
+  );
+  const { readFile } = await import("node:fs/promises");
+  const [page, route] = await Promise.all([
+    readFile(new URL("./app/login/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("./app/api/auth/login/route.ts", import.meta.url), "utf8"),
+  ]);
+  assert.match(
+    page,
+    /sanitizeReturnTo\(returnTo, DEFAULT_LOGIN_DESTINATION\)/,
+  );
+  assert.equal(
+    (route.match(/DEFAULT_LOGIN_DESTINATION/g) || []).length,
+    3,
+  );
 });
 
 test("return URL accepts only same-origin paths", () => {

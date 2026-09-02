@@ -45,8 +45,8 @@
     "semantic_hash": "fa439650fa28a1a7aa8c2b6d81c8cc20"
   },
   "services/auth-service/package.json": {
-    "mtime": 1788204200.1754994,
-    "ast_hash": "58bbc7b26712c4796540fb2e1c9ea18c",
+    "mtime": 1787998814.5497296,
+    "ast_hash": "11f13f7a78cbe7ceab56199a0997262c",
     "semantic_hash": ""
   },
   "services/auth-service/src/app.controller.spec.ts": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "docs/API_SPEC.md": {
-    "mtime": 1788167430.0430965,
-    "ast_hash": "ba9c4e0057684cf5aa15a582f7cfacfa",
+    "mtime": 1788117058.9127188,
+    "ast_hash": "9dc776b86800fb177be7c8ed95207395",
     "semantic_hash": ""
   },
   "docs/ARCHITECTURE.md": {
@@ -460,8 +460,8 @@
     "semantic_hash": "edc356ee8dcf4ea0522a603eee8ddbe1"
   },
   "frontend/auth-flow.test.mjs": {
-    "mtime": 1788167026.1658661,
-    "ast_hash": "d634c31207c5a46be1b130d253d6ef7b",
+    "mtime": 1788107638.904291,
+    "ast_hash": "6706b4f407e30c13d0a71a38be7f7646",
     "semantic_hash": ""
   },
   "frontend/components/shared/WorkspaceShell.tsx": {
@@ -480,8 +480,8 @@
     "semantic_hash": ""
   },
   "frontend/proxy.ts": {
-    "mtime": 1788167026.1648102,
-    "ast_hash": "7ce6052b49e59cd3acf75ea73a96a464",
+    "mtime": 1788120263.4092658,
+    "ast_hash": "967bf6e3c6da66cb79b0f1629b54d86b",
     "semantic_hash": ""
   },
   "frontend/tests/iam-admin.test.mjs": {
@@ -495,13 +495,13 @@
     "semantic_hash": ""
   },
   "frontend/tests/security.test.mjs": {
-    "mtime": 1788167026.1663938,
-    "ast_hash": "8e9a37784d1f7797936a578cb3c7fdb5",
+    "mtime": 1787758187.5507705,
+    "ast_hash": "32bd1c44504b96d5339191dc71d287e8",
     "semantic_hash": ""
   },
   "frontend/tests/workspace-runtime.test.mjs": {
-    "mtime": 1788349140.2788682,
-    "ast_hash": "e7c5c7035be2fb579d81a4b9ac32177a",
+    "mtime": 1788121037.5641766,
+    "ast_hash": "0c57610db006869606bc066fb9d829a4",
     "semantic_hash": ""
   },
   "services/auth-service/prisma/migrations/20260818120000_add_session_active_context/migration.sql": {
@@ -1005,8 +1005,8 @@
     "semantic_hash": ""
   },
   "frontend/tests/workspace-registry.test.mjs": {
-    "mtime": 1788167728.2946768,
-    "ast_hash": "42a5b93400193cea5af47c79eba374e9",
+    "mtime": 1787916847.5501485,
+    "ast_hash": "ee35a99552a7aad3bbfad1d49001032a",
     "semantic_hash": ""
   },
   "frontend/components/shared/SidebarFrame.tsx": {
@@ -1095,8 +1095,8 @@
     "semantic_hash": ""
   },
   "frontend/features/auth/components/security/SecurityClientPage.tsx": {
-    "mtime": 1788345784.8606248,
-    "ast_hash": "fab22c035e781e82557e68525b4700fe",
+    "mtime": 1788030201.6362605,
+    "ast_hash": "a31afb89ceb7154f879fee4af1be0728",
     "semantic_hash": ""
   },
   "frontend/features/auth/workspace-server.ts": {
@@ -1425,13 +1425,13 @@
     "semantic_hash": "11001fad5db2b4a2af6f6d5fa2c60186"
   },
   "frontend/features/public-v2/components/GuestHomeV2.tsx": {
-    "mtime": 1788309876.3090062,
-    "ast_hash": "96e44ee36154647d2f27b5793fc8ac67",
+    "mtime": 1788084883.290642,
+    "ast_hash": "7cc51946ca2229bc5cd35d1073accdf5",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicNav.tsx": {
-    "mtime": 1788202043.4772637,
-    "ast_hash": "84d2a5b0432d96c2f6ea9d826346da20",
+    "mtime": 1788067867.2208576,
+    "ast_hash": "f0e9a142fae585381f9d0eda68f1cc7d",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestKnowledgeV2.tsx": {
@@ -1700,18 +1700,18 @@
     "semantic_hash": "00a9f9365f86ad785ee2916a55057371"
   },
   "frontend/app/news/page.tsx": {
-    "mtime": 1788349210.189996,
-    "ast_hash": "c8a687c03e254c54d99aa846025925cd",
+    "mtime": 1788012599.464595,
+    "ast_hash": "8672a36f19587e1427125ca3cf951c0e",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestExploreV2.tsx": {
-    "mtime": 1788349252.5805054,
-    "ast_hash": "86370ca798fa193376f1591475fb034a",
+    "mtime": 1788084847.0709376,
+    "ast_hash": "a5c54d0c173b55e35ff80580ce2f1c78",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestNewsArticleV2.tsx": {
-    "mtime": 1788166617.160439,
-    "ast_hash": "8ed108c04d66b42245feb0f2a79eefe4",
+    "mtime": 1788085036.684612,
+    "ast_hash": "07214990cf600f19e0146d9c64e04ef7",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicFooter.tsx": {
@@ -1760,9 +1760,9 @@
     "semantic_hash": "4f157100e15ccffb5cf577ad80d55621"
   },
   "services/auth-service/src/backend-architecture.spec.ts": {
-    "mtime": 1788303776.9425406,
-    "ast_hash": "41e2171807574af2a19c2273a395db33",
-    "semantic_hash": ""
+    "mtime": 1787744928.166539,
+    "ast_hash": "55dcdb942630f38319b131ed1c2d59ad",
+    "semantic_hash": "55dcdb942630f38319b131ed1c2d59ad"
   },
   "services/auth-service/src/database/database.module.ts": {
     "mtime": 1787744872.7066367,
@@ -1860,8 +1860,8 @@
     "semantic_hash": ""
   },
   "frontend/features/admin/access/config/rbac-catalog.ts": {
-    "mtime": 1788167723.0510924,
-    "ast_hash": "ef11621d09d1d3c0444264e91d95322a",
+    "mtime": 1787761805.2688181,
+    "ast_hash": "d5499c8f06b427c7a8a480fc90d21956",
     "semantic_hash": ""
   },
   "frontend/features/admin/access/config/role-display.ts": {
@@ -1870,8 +1870,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestAboutV2.tsx": {
-    "mtime": 1788346048.4934688,
-    "ast_hash": "0a1144a5a0b9a2466c3bafa892c7d5f2",
+    "mtime": 1788090070.0039852,
+    "ast_hash": "dc1ff015b5ff8f13f9aa2d3ff1abf5ab",
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/ContentPublishStudio.tsx": {
@@ -1965,18 +1965,18 @@
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news-media.service.ts": {
-    "mtime": 1788204336.1863325,
-    "ast_hash": "b01116d0986e4a9fc1bbd3496fdec989",
+    "mtime": 1787861197.9410868,
+    "ast_hash": "a1476bd6bb453ac2483e7afce7f05d0c",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news-media.spec.ts": {
-    "mtime": 1788204532.6917055,
-    "ast_hash": "fea9e920f7d4a2ef292cdd5ecf1b73d8",
+    "mtime": 1787860915.6842334,
+    "ast_hash": "ee79b55cee0986d2b0023305856d165e",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news.controller.ts": {
-    "mtime": 1788348386.6809947,
-    "ast_hash": "dce9980178972fcb615f5ba2192e886e",
+    "mtime": 1788120812.6743176,
+    "ast_hash": "2aa78cd50975d3984684dde1e60e1229",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news.module.ts": {
@@ -1985,13 +1985,13 @@
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news.service.spec.ts": {
-    "mtime": 1788348418.3161154,
-    "ast_hash": "74195545553f8553572a8bb590b0efd3",
+    "mtime": 1788120812.6853187,
+    "ast_hash": "42ecb7f1901354ac8680bb602140d493",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news.service.ts": {
-    "mtime": 1788348381.5584116,
-    "ast_hash": "5904e44907545e49d2773e0685b1ddbb",
+    "mtime": 1788120812.7001505,
+    "ast_hash": "ed1e2672ace5dd1a2559cf59ff448ebe",
     "semantic_hash": ""
   },
   "frontend/public/images/about-network-hero.png": {
@@ -2040,8 +2040,8 @@
     "semantic_hash": ""
   },
   "frontend/features/news/AdminNewsStudio.tsx": {
-    "mtime": 1788347129.590856,
-    "ast_hash": "2fca1c4fb290d9e9decd5589e47329d2",
+    "mtime": 1788120965.4694371,
+    "ast_hash": "74305da24f4d579c24f133c098626aab",
     "semantic_hash": ""
   },
   "frontend/features/news/ContentAdminSidebar.tsx": {
@@ -2050,13 +2050,13 @@
     "semantic_hash": ""
   },
   "frontend/features/news/repository.ts": {
-    "mtime": 1788167353.3803535,
-    "ast_hash": "528edd07a79b84dec59fa62e23d7e4fc",
+    "mtime": 1788121037.5661757,
+    "ast_hash": "df454852418f5164d406a9a407baf644",
     "semantic_hash": ""
   },
   "frontend/features/news/resource.ts": {
-    "mtime": 1788167052.5921962,
-    "ast_hash": "8a37735bd06bdff65801ec041ab4057c",
+    "mtime": 1788121037.5760481,
+    "ast_hash": "a185d377e1207315667825902996383e",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-connect-bg.png": {
@@ -2070,8 +2070,8 @@
     "semantic_hash": ""
   },
   "frontend/app/news/[id]/[slug]/page.tsx": {
-    "mtime": 1788348749.3710415,
-    "ast_hash": "09fdd62d158e8324c0b7142eb27e2d3a",
+    "mtime": 1788085035.6820097,
+    "ast_hash": "52eae034d898e85f4ffd7d1b92771d95",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestNewsAdvancedFilters.tsx": {
@@ -2080,18 +2080,18 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/data/official-news.ts": {
-    "mtime": 1788347651.760905,
-    "ast_hash": "03a21180a142a6f1b6b569ca68893105",
+    "mtime": 1788084949.8169599,
+    "ast_hash": "7ca50ad2a76f45bd6d318ae15c21e3d2",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/data/public-news-server.ts": {
-    "mtime": 1788348841.6178472,
-    "ast_hash": "181270fa51367af05a6926bca455d74f",
+    "mtime": 1788018290.771458,
+    "ast_hash": "eaee21bd44f064be40d58e3aec839c18",
     "semantic_hash": ""
   },
   "frontend/tests/about-content.test.mjs": {
-    "mtime": 1788346048.371586,
-    "ast_hash": "8e7ac5fedba35ba73d3935265bb186cf",
+    "mtime": 1788090071.4018362,
+    "ast_hash": "ef1981d5054ffd4b8f82bd101d5b3f9f",
     "semantic_hash": ""
   },
   "frontend/tests/ecosystem-rvstin-content.test.mjs": {
@@ -2105,8 +2105,8 @@
     "semantic_hash": ""
   },
   "services/auth-service/prisma/import-official-news.ts": {
-    "mtime": 1788169313.1000297,
-    "ast_hash": "5cadac408099fc1834a3b299828f0fc3",
+    "mtime": 1788103887.615733,
+    "ast_hash": "eb32d550d18d713cc4e658d9b9508b0a",
     "semantic_hash": ""
   },
   "services/auth-service/prisma/migrations/20260829153000_extend_news_content_contract/migration.sql": {
@@ -2147,6 +2147,101 @@
   "frontend/public/images/home-bilateral-gateway.jpg": {
     "mtime": 1787947675.3230467,
     "ast_hash": "0c33d4467dcd099d08883f7feeae1dae",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-1.webp": {
+    "mtime": 1787947616.6122215,
+    "ast_hash": "5e0cd9801629018af6eb6d2c35f8779f",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-10.webp": {
+    "mtime": 1787947617.6755097,
+    "ast_hash": "c45d0936eddc3095167fb3e503a4238a",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-11.webp": {
+    "mtime": 1787947617.9793074,
+    "ast_hash": "351e7574893f20c23a7a6ce1c61442e2",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-12.webp": {
+    "mtime": 1787947618.1356387,
+    "ast_hash": "2ef825e478dff6d32079a5018dc3f44a",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-13.webp": {
+    "mtime": 1787947618.4049873,
+    "ast_hash": "717bdc2d7f3515b9a0b9e3497c89429f",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-14.webp": {
+    "mtime": 1787947618.4910116,
+    "ast_hash": "85c5fcf5092da3f8a2c93366bc3ff0d4",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-15.webp": {
+    "mtime": 1787947618.5692687,
+    "ast_hash": "08376dd4b79b47de1ef718ced57f4818",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-16.webp": {
+    "mtime": 1787947618.6401134,
+    "ast_hash": "06d171958a2027df209ef5a1101c30f6",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-17.webp": {
+    "mtime": 1787947618.783314,
+    "ast_hash": "a232b866a0757cc164b3bacace991471",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-18.webp": {
+    "mtime": 1787947618.930468,
+    "ast_hash": "73fe5aeceebe6e3339dd66a21a633ce9",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-19.webp": {
+    "mtime": 1787947618.9988213,
+    "ast_hash": "5d83fdf8a675da4acdbfaec78ec3016a",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-20.webp": {
+    "mtime": 1787947619.2122176,
+    "ast_hash": "34e4e31b818e38890a92ccac0c87d93d",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-31.webp": {
+    "mtime": 1787947619.431193,
+    "ast_hash": "23aa157cbee403552080a8adc82bf629",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-32.webp": {
+    "mtime": 1787947620.2082217,
+    "ast_hash": "66e39aa3761b5cbb17f15526ea16d54b",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-4.webp": {
+    "mtime": 1787947616.8435268,
+    "ast_hash": "708f97e0d7e5bc1aec65475a2740a1bb",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-5.webp": {
+    "mtime": 1787947617.1554859,
+    "ast_hash": "b60934a536604fb52680cca230cee69b",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-6.webp": {
+    "mtime": 1787947617.3237543,
+    "ast_hash": "059c72be004ee0c189e792a69b16ff27",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-7.webp": {
+    "mtime": 1787947617.4075031,
+    "ast_hash": "da81e88b180c44faab1131367c59bb4f",
+    "semantic_hash": ""
+  },
+  "frontend/public/images/news/article-9.webp": {
+    "mtime": 1787947617.5507712,
+    "ast_hash": "1bf1c87f2ea53168de5f63c1a194e666",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/cemi-ran.webp": {
@@ -2362,16 +2457,6 @@
   "frontend/tests/form-focus-outline.test.mjs": {
     "mtime": 1788121430.2027023,
     "ast_hash": "41b09d79737d58b6d08ed62ba4e8a205",
-    "semantic_hash": ""
-  },
-  "services/auth-service/prisma/migrations/20260831090000_remove_news_draft_workflow/migration.sql": {
-    "mtime": 1788167729.4646363,
-    "ast_hash": "22a36be999960a1d7153cf99cca2ef0f",
-    "semantic_hash": ""
-  },
-  "services/auth-service/prisma/migrations/20260901150000_fix_official_news_image_mapping/migration.sql": {
-    "mtime": 1788304213.4372878,
-    "ast_hash": "adff84e8f828948c2733b1ea39224d0a",
     "semantic_hash": ""
   }
 }

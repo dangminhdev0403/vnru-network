@@ -15,7 +15,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { NewsMediaService, type NewsImageFile } from './news-media.service';
+import {
+  MAX_NEWS_IMAGE_BYTES,
+  NewsMediaService,
+  type NewsImageFile,
+} from './news-media.service';
 import { z } from 'zod';
 import {
   AuthenticatedRequestGuard,
@@ -108,7 +112,6 @@ const articleFields = {
 const createSchema = z
   .object({
     ...articleFields,
-    coverImageUrl: z.url().max(2000),
     isFeatured: z.boolean().optional(),
     translations: z
       .object({
@@ -202,7 +205,7 @@ export class AdminNewsController {
   @Post('media')
   @RequireAnyPermission('content.article.create', 'content.article.update')
   @UseInterceptors(
-    FileInterceptor('file', { limits: { fileSize: 5 * 1024 * 1024 } }),
+    FileInterceptor('file', { limits: { fileSize: MAX_NEWS_IMAGE_BYTES } }),
   )
   uploadMedia(@UploadedFile() file?: NewsImageFile) {
     return this.media.upload(file as NewsImageFile);

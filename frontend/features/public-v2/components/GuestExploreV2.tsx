@@ -253,7 +253,7 @@ export function GuestExploreV2({
     return () => {
       window.clearInterval(timer);
     };
-  }, [spotlight.length]);
+  }, [spotlight.length, spotlightIndex]);
 
   return (
     <div className="min-h-screen bg-[#edf3f9] text-slate-900 font-sans selection:bg-blue-600 selection:text-white">

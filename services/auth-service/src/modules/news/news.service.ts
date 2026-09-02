@@ -266,7 +266,7 @@ export class NewsService {
   create(input: {
     category: string;
     contentType?: NewsContentType;
-    coverImageUrl: string;
+    coverImageUrl?: string | null;
     actionUrl?: string | null;
     actionClosesAt?: Date | null;
     sourceUrls?: string[];

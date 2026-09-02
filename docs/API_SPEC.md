@@ -15,11 +15,11 @@ Implemented API families:
 - `GET /api/v1/news/:id`: public article with VI fallback.
 - `/api/v1/admin/news/*`: authenticated article create/read/update/delete operations authorized by `content.article.*` capabilities; delete reuses `content.article.update`.
 - `GET /api/v1/admin/news`: bounded admin list; `GET /api/v1/admin/news/:id` returns all translations for editing.
-- `POST /api/v1/admin/news/media`: authenticated multipart image upload (`file`, JPEG/PNG/WebP, max 5 MB) through `nestjs-cloudinary@1.0.7`; response returns Cloudinary URL and public ID for article/banner fields.
+- `POST /api/v1/admin/news/media`: authenticated multipart image upload (`file`, JPEG/PNG/WebP, max 20 MB) through `nestjs-cloudinary@1.0.7`; response returns Cloudinary URL and public ID for article/banner fields.
 
 News media is uploaded only through the backend. Upload accepts either `content.article.create` or `content.article.update`, so editors can replace an existing cover. Frontend code must not sign Cloudinary requests, hold Cloudinary secrets, transform image binaries, or implement a parallel storage path.
 
-Create requires an uploaded `coverImageUrl` and makes the article public immediately. Update edits the same public article. The client uploads media before create/update; upload failure leaves no new article.
+Create accepts an optional `coverImageUrl` and makes the article public immediately. Update edits the same public article. When an image is selected, the client uploads it before create/update; upload failure leaves no new article.
 
 Required backend runtime secrets: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`. Keep values only in ignored/runtime environment files; never commit or expose them to the browser.
 

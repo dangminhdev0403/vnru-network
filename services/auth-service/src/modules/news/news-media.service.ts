@@ -3,7 +3,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryService } from 'nestjs-cloudinary';
 import { validateConfig } from '../../config';
 
-export const MAX_NEWS_IMAGE_BYTES = 5 * 1024 * 1024;
+export const MAX_NEWS_IMAGE_BYTES = 20 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 export interface NewsImageFile {
@@ -18,7 +18,7 @@ export function validateNewsImage(file?: NewsImageFile): asserts file is NewsIma
   if (!ALLOWED_IMAGE_TYPES.has(file.mimetype))
     throw new BadRequestException('Only JPEG, PNG and WebP images are allowed');
   if (file.size > MAX_NEWS_IMAGE_BYTES)
-    throw new BadRequestException('Image must not exceed 5 MB');
+    throw new BadRequestException('Image must not exceed 20 MB');
 }
 
 export function newsImagePublicId(url: string, cloudName: string) {

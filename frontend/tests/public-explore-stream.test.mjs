@@ -33,6 +33,7 @@ test("news pages share masthead while the listing keeps spotlight and featured s
   assert.match(source, /const latest = latestArticles/);
   assert.doesNotMatch(source, /initialArticles\.(?:slice|filter)/);
   assert.match(source, /window\.setInterval/);
+  assert.match(source, /\}, \[spotlight\.length, spotlightIndex\]\);/);
   assert.doesNotMatch(
     source,
     /matchMedia\("\(prefers-reduced-motion: reduce\)"\)\.matches\) return/,

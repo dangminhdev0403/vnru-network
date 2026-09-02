@@ -1,6 +1,7 @@
 export const SESSION_COOKIE_NAME = "vnru_session";
 export const RETURN_TO_COOKIE_NAME = "vnru_return_to";
 export const LOCALE_COOKIE_NAME = "vnru_locale";
+export const DEFAULT_LOGIN_DESTINATION = "/workspace";
 
 export function sanitizeLocale(
   value: string | null | undefined,
@@ -8,8 +9,11 @@ export function sanitizeLocale(
   return value === "en" || value === "ru" ? value : "vi";
 }
 
-export function sanitizeReturnTo(value: string | null | undefined): string {
-  return value?.startsWith("/") && !value.startsWith("//") ? value : "/";
+export function sanitizeReturnTo(
+  value: string | null | undefined,
+  fallback = "/",
+): string {
+  return value?.startsWith("/") && !value.startsWith("//") ? value : fallback;
 }
 
 export function isSameOriginRequest(request: Request): boolean {

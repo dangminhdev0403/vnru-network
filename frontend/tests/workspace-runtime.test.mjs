@@ -111,12 +111,14 @@ test("content administration reuses admin chrome with its own navigation", async
   assert.match(newsController, /EN: translationSchema\.optional\(\)/);
   assert.match(newsController, /RU: translationSchema\.optional\(\)/);
   assert.match(newsController, /Object\.keys\(value\)\.length > 0/);
+  assert.doesNotMatch(newsController, /coverImageUrl: z\.url\(\)\.max\(2000\),/);
   assert.match(studio, /pendingInlineImages/);
   assert.match(studio, /uploadPendingInlineImages/);
   assert.match(studio, /Object\.values\(input\.translations\)[\s\S]*content\.includes\(image\.url\)/);
   assert.match(studio, /Object\.entries\(input\.translations\)\.map/);
   assert.match(studio, /Promise\.all\([\s\S]*referencedImages\.map/);
   assert.match(studio, /Promise\.all\(\[[\s\S]*pendingCoverFile/);
+  assert.doesNotMatch(studio, /Vui lòng chọn hình ảnh đại diện bài viết/);
   assert.doesNotMatch(
     studio,
     /handleInlineImageSelect[\s\S]*?upload\.mutateAsync\(file\)/,

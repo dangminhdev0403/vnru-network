@@ -3,6 +3,7 @@ import Image from "next/image";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
+  DEFAULT_LOGIN_DESTINATION,
   getCurrentSession,
   sanitizeReturnTo,
   SESSION_COOKIE_NAME,
@@ -99,7 +100,7 @@ export default async function LoginPage({
   }>;
 }>) {
   const { returnTo, error, account } = await searchParams;
-  const destination = sanitizeReturnTo(returnTo);
+  const destination = sanitizeReturnTo(returnTo, DEFAULT_LOGIN_DESTINATION);
   const cookieStore = await cookies();
   const session = await getCurrentSession(
     cookieStore.get(SESSION_COOKIE_NAME)?.value,
