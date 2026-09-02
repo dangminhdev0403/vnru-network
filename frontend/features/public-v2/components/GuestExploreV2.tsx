@@ -15,6 +15,7 @@ import {
   type NewsAdvancedFilters,
   type NewsCategory,
 } from "./GuestNewsFilterNav";
+import { Reveal } from "@/components/shared/Reveal";
 
 type NewsItem = OfficialNewsArticle;
 
@@ -267,15 +268,16 @@ export function GuestExploreV2({
                 aria-roledescription="carousel"
                 aria-label={t.spotlight}
               >
-                <div
-                  className={`absolute inset-0 flex ease-in-out motion-reduce:transition-none ${spotlightIndex === 0 ? "" : "transition-transform duration-[1500ms]"}`}
-                  style={{ transform: `translateX(-${spotlightIndex * 100}%)` }}
-                >
+                <div className="absolute inset-0">
                   {spotlight.map((item, index) => (
                     <Link
                       key={item.title}
                       href={newsArticleHref(item)}
-                      className="relative min-w-full"
+                      className={`absolute inset-0 transition-opacity duration-300 motion-reduce:transition-none ${
+                        index === spotlightIndex
+                          ? "z-10 opacity-100"
+                          : "pointer-events-none opacity-0"
+                      }`}
                       aria-hidden={index !== spotlightIndex}
                       tabIndex={index === spotlightIndex ? 0 : -1}
                     >
@@ -346,37 +348,38 @@ export function GuestExploreV2({
                 FEATURED ARTICLES (4 CARDS)
                 ════════════════════════════════════════════════════════════════ */}
             <section className="mt-12">
-              <div className="mb-5 flex items-center gap-4">
+              <Reveal y={10} className="mb-5 flex items-center gap-4">
                 <h2 className="shrink-0 font-serif text-xl font-bold text-[#082352] sm:text-2xl">
                   {t.featured}
                 </h2>
                 <span className="h-px flex-1 bg-blue-200/70" />
-              </div>
+              </Reveal>
               <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                {featured.map((item) => (
-                  <Link
-                    key={item.title}
-                    href={newsArticleHref(item)}
-                    className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-blue-200/90 bg-white shadow-xs transition duration-150 hover:-translate-y-1 hover:border-blue-400 hover:shadow-md"
-                  >
-                    <div>
-                      <div className="overflow-hidden bg-slate-100">
-                        <NewsImage
-                          src={item.image ?? undefined}
-                          label="Ảnh bài viết"
-                          className="h-44 w-full"
-                        />
+                {featured.map((item, index) => (
+                  <Reveal key={item.title} y={12} delay={index * 0.05}>
+                    <Link
+                      href={newsArticleHref(item)}
+                      className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-blue-200/90 bg-white shadow-xs transition duration-150 hover:-translate-y-1 hover:border-blue-400 hover:shadow-md"
+                    >
+                      <div>
+                        <div className="overflow-hidden bg-slate-100">
+                          <NewsImage
+                            src={item.image ?? undefined}
+                            label="Ảnh bài viết"
+                            className="h-44 w-full"
+                          />
+                        </div>
+                        <div className="p-5">
+                          <h3 className="line-clamp-2 font-serif text-base font-bold leading-snug text-[#082352] transition group-hover:text-blue-600">
+                            {formatNewsTitle(item.title)}
+                          </h3>
+                          <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                            {item.summary}
+                          </p>
+                        </div>
                       </div>
-                      <div className="p-5">
-                        <h3 className="line-clamp-2 font-serif text-base font-bold leading-snug text-[#082352] transition group-hover:text-blue-600">
-                          {formatNewsTitle(item.title)}
-                        </h3>
-                        <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                          {item.summary}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
+                    </Link>
+                  </Reveal>
                 ))}
               </div>
             </section>
@@ -385,7 +388,10 @@ export function GuestExploreV2({
                 NEWS STREAM & CATEGORY DROPDOWN
                 ════════════════════════════════════════════════════════════════ */}
             <section id="news-stream" className="mt-14 scroll-mt-24">
-              <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <Reveal
+                y={10}
+                className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+              >
                 <div>
                   <h2 className="font-serif text-2xl font-bold text-[#082352] sm:text-3xl">
                     {t.stream}
@@ -421,9 +427,12 @@ export function GuestExploreV2({
                     ↑ {t.top}
                   </a>
                 </div>
-              </div>
+              </Reveal>
 
-              <div className="rounded-3xl border border-blue-200/90 bg-white p-6 shadow-xs sm:p-8">
+              <Reveal
+                y={12}
+                className="rounded-3xl border border-blue-200/90 bg-white p-6 shadow-xs sm:p-8"
+              >
                 <div className="grid gap-x-12 gap-y-2 lg:grid-cols-2">
                   {streamArticles.map((item) => (
                     <TextRow key={item.id} item={item} />
@@ -437,7 +446,11 @@ export function GuestExploreV2({
                   >
                     <Link
                       aria-disabled={streamPage === 1}
-                      href={streamPage === 1 ? "#news-stream" : streamHref(streamPage - 1)}
+                      href={
+                        streamPage === 1
+                          ? "#news-stream"
+                          : streamHref(streamPage - 1)
+                      }
                       className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-2xs transition hover:bg-slate-50 aria-disabled:pointer-events-none aria-disabled:opacity-40"
                     >
                       ‹ Trang trước
@@ -447,14 +460,18 @@ export function GuestExploreV2({
                     </span>
                     <Link
                       aria-disabled={streamPage === streamPageCount}
-                      href={streamPage === streamPageCount ? "#news-stream" : streamHref(streamPage + 1)}
+                      href={
+                        streamPage === streamPageCount
+                          ? "#news-stream"
+                          : streamHref(streamPage + 1)
+                      }
                       className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-2xs transition hover:bg-slate-50 aria-disabled:pointer-events-none aria-disabled:opacity-40"
                     >
                       Trang sau ›
                     </Link>
                   </nav>
                 ) : null}
-              </div>
+              </Reveal>
             </section>
           </>
         ) : (
@@ -484,7 +501,11 @@ export function GuestExploreV2({
                   >
                     <Link
                       aria-disabled={filteredPage === 1}
-                      href={filteredPage === 1 ? "#" : filteredHref(filteredPage - 1)}
+                      href={
+                        filteredPage === 1
+                          ? "#"
+                          : filteredHref(filteredPage - 1)
+                      }
                       className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold aria-disabled:pointer-events-none aria-disabled:opacity-40"
                     >
                       ‹ Trang trước
@@ -494,7 +515,11 @@ export function GuestExploreV2({
                     </span>
                     <Link
                       aria-disabled={filteredPage === filteredPageCount}
-                      href={filteredPage === filteredPageCount ? "#" : filteredHref(filteredPage + 1)}
+                      href={
+                        filteredPage === filteredPageCount
+                          ? "#"
+                          : filteredHref(filteredPage + 1)
+                      }
                       className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold aria-disabled:pointer-events-none aria-disabled:opacity-40"
                     >
                       Trang sau ›

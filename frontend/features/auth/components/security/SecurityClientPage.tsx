@@ -1,10 +1,11 @@
 "use client";
 
 import { useLocale, type Locale } from "@/core/i18n/locale";
-import { formatDateTime } from "@/core/i18n/date-format";
+import { formatDate } from "@/core/i18n/date-format";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "motion/react";
 import { confirmAction, showToast, showError } from "@/lib/alerts";
 import { useSessions } from "@/features/iam/hooks";
 import type { IamSession as Session } from "@/features/iam/repository";
@@ -289,7 +290,6 @@ export default function SecurityClientPage() {
     }
   };
 
-
   const maskSessionId = (id: string) => {
     if (id.length <= 12) return id;
     return `${id.slice(0, 6)}••••${id.slice(-6)}`;
@@ -495,10 +495,10 @@ export default function SecurityClientPage() {
                           : "—"}
                       </td>
                       <td className="px-5 py-4 text-sm text-text-secondary">
-                        {formatDateTime(session.createdAt, locale)}
+                        {formatDate(session.createdAt)}
                       </td>
                       <td className="px-5 py-4 text-sm text-text-secondary">
-                        {formatDateTime(session.expiresAt, locale)}
+                        {formatDate(session.expiresAt)}
                       </td>
                       <td className="px-5 py-4 text-right">
                         <button
@@ -548,110 +548,134 @@ export default function SecurityClientPage() {
       )}
 
       {/* Revoke Single Session Modal */}
-      {showRevokeDialog && sessionToRevoke && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="revoke-single-title"
-          className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-        >
-          <div className="w-full max-w-md space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-6 text-text-primary shadow-[var(--shadow-soft)] sm:p-8">
-            <div className="w-12 h-12 rounded-2xl bg-error-container text-on-error-container flex items-center justify-center">
-              <span className="material-symbols-outlined text-[24px] text-error">
-                logout
-              </span>
-            </div>
-            <h3
-              id="revoke-single-title"
-              className="font-serif font-bold text-xl text-primary"
+      <AnimatePresence>
+        {showRevokeDialog && sessionToRevoke && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="revoke-single-title"
+            className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97, y: 6 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.97, y: 6 }}
+              transition={{ duration: 0.15 }}
+              className="w-full max-w-md space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-6 text-text-primary shadow-[var(--shadow-soft)] sm:p-8"
             >
-              {sessionToRevoke.current
-                ? t.modalSignOutTitle
-                : t.modalRevokeTitle}
-            </h3>
-            <p className="text-xs text-on-surface-variant leading-relaxed">
-              {sessionToRevoke.current ? t.modalSignOutDesc : t.modalRevokeDesc}
-            </p>
-            <div className="flex justify-end gap-3 pt-2">
-              <button
-                type="button"
-                disabled={actionLoading}
-                onClick={() => setShowRevokeDialog(false)}
-                className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface cursor-pointer"
-              >
-                {t.cancelBtn}
-              </button>
-              <button
-                type="button"
-                disabled={actionLoading}
-                onClick={() => handleRevokeSession()}
-                className="px-5 py-2 rounded-xl bg-error text-white text-xs font-semibold hover:bg-error/90 transition-all flex items-center gap-2 cursor-pointer"
-              >
-                {actionLoading && (
-                  <span className="material-symbols-outlined text-[16px] animate-spin">
-                    progress_activity
-                  </span>
-                )}
-                <span>
-                  {sessionToRevoke.current
-                    ? t.confirmSignOutBtn
-                    : t.confirmRevokeBtn}
+              <div className="w-12 h-12 rounded-2xl bg-error-container text-on-error-container flex items-center justify-center">
+                <span className="material-symbols-outlined text-[24px] text-error">
+                  logout
                 </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+              </div>
+              <h3
+                id="revoke-single-title"
+                className="font-serif font-bold text-xl text-primary"
+              >
+                {sessionToRevoke.current
+                  ? t.modalSignOutTitle
+                  : t.modalRevokeTitle}
+              </h3>
+              <p className="text-xs text-on-surface-variant leading-relaxed">
+                {sessionToRevoke.current
+                  ? t.modalSignOutDesc
+                  : t.modalRevokeDesc}
+              </p>
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  disabled={actionLoading}
+                  onClick={() => setShowRevokeDialog(false)}
+                  className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface cursor-pointer"
+                >
+                  {t.cancelBtn}
+                </button>
+                <button
+                  type="button"
+                  disabled={actionLoading}
+                  onClick={() => handleRevokeSession()}
+                  className="px-5 py-2 rounded-xl bg-error text-white text-xs font-semibold hover:bg-error/90 transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  {actionLoading && (
+                    <span className="material-symbols-outlined text-[16px] animate-spin">
+                      progress_activity
+                    </span>
+                  )}
+                  <span>
+                    {sessionToRevoke.current
+                      ? t.confirmSignOutBtn
+                      : t.confirmRevokeBtn}
+                  </span>
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Revoke Others Modal */}
-      {showRevokeOthersDialog && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="revoke-others-title"
-          className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-        >
-          <div className="w-full max-w-md space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-6 text-text-primary shadow-[var(--shadow-soft)] sm:p-8">
-            <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center">
-              <span className="material-symbols-outlined text-[24px]">
-                power_settings_new
-              </span>
-            </div>
-            <h3
-              id="revoke-others-title"
-              className="font-serif font-bold text-xl text-primary"
+      <AnimatePresence>
+        {showRevokeOthersDialog && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="revoke-others-title"
+            className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97, y: 6 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.97, y: 6 }}
+              transition={{ duration: 0.15 }}
+              className="w-full max-w-md space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-6 text-text-primary shadow-[var(--shadow-soft)] sm:p-8"
             >
-              {t.modalOthersTitle}
-            </h3>
-            <p className="text-xs text-on-surface-variant leading-relaxed">
-              {t.modalOthersDesc}
-            </p>
-            <div className="flex justify-end gap-3 pt-2">
-              <button
-                type="button"
-                disabled={actionLoading}
-                onClick={() => setShowRevokeOthersDialog(false)}
-                className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface cursor-pointer"
+              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center">
+                <span className="material-symbols-outlined text-[24px]">
+                  power_settings_new
+                </span>
+              </div>
+              <h3
+                id="revoke-others-title"
+                className="font-serif font-bold text-xl text-primary"
               >
-                {t.cancelBtn}
-              </button>
-              <button
-                type="button"
-                disabled={actionLoading}
-                onClick={handleRevokeOthers}
-                className="px-5 py-2 rounded-xl bg-error text-white text-xs font-semibold hover:bg-error/90 transition-all flex items-center gap-2 cursor-pointer"
-              >
-                {actionLoading && (
-                  <span className="material-symbols-outlined text-[16px] animate-spin">
-                    progress_activity
-                  </span>
-                )}
-                <span>{t.confirmRevokeOthersBtn}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+                {t.modalOthersTitle}
+              </h3>
+              <p className="text-xs text-on-surface-variant leading-relaxed">
+                {t.modalOthersDesc}
+              </p>
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  disabled={actionLoading}
+                  onClick={() => setShowRevokeOthersDialog(false)}
+                  className="px-4 py-2 rounded-xl border border-outline-variant text-xs font-semibold hover:bg-surface cursor-pointer"
+                >
+                  {t.cancelBtn}
+                </button>
+                <button
+                  type="button"
+                  disabled={actionLoading}
+                  onClick={handleRevokeOthers}
+                  className="px-5 py-2 rounded-xl bg-error text-white text-xs font-semibold hover:bg-error/90 transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  {actionLoading && (
+                    <span className="material-symbols-outlined text-[16px] animate-spin">
+                      progress_activity
+                    </span>
+                  )}
+                  <span>{t.confirmRevokeOthersBtn}</span>
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

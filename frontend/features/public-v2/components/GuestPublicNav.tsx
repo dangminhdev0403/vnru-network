@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { BrandMark } from "@/components/shared/BrandMark";
@@ -172,9 +173,24 @@ export function GuestPublicNav({
                   href={item.href}
                   onClick={() => setClickedKey(item.key)}
                   aria-current={selected ? "page" : undefined}
-                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2 py-1.5 text-center text-xs font-bold uppercase leading-tight transition-all duration-150 xl:px-3 xl:py-1.5 xl:text-sm 2xl:px-4 2xl:py-2 2xl:text-base ${selected ? "bg-blue-600 font-extrabold text-white shadow-2xs" : "text-blue-950 hover:bg-white/70 hover:text-blue-700"}`}
+                  className={`relative inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2 py-1.5 text-center text-xs font-bold uppercase leading-tight transition-colors duration-150 xl:px-3 xl:py-1.5 xl:text-sm 2xl:px-4 2xl:py-2 2xl:text-base ${
+                    selected
+                      ? "text-white"
+                      : "text-blue-950 hover:bg-white/70 hover:text-blue-700"
+                  }`}
                 >
-                  {item.label}
+                  {selected && (
+                    <motion.span
+                      layoutId="public-nav-indicator"
+                      transition={{
+                        type: "spring",
+                        stiffness: 450,
+                        damping: 35,
+                      }}
+                      className="absolute inset-0 rounded-lg bg-blue-600 shadow-2xs"
+                    />
+                  )}
+                  <span className="relative z-10">{item.label}</span>
                 </Link>
               );
             })}

@@ -3,6 +3,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useMemo, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { motion, AnimatePresence } from "motion/react";
 import { confirmAction, showSuccess, showError } from "@/lib/alerts";
 import { z } from "zod";
 import { newsResource } from "./resource";
@@ -1044,7 +1045,13 @@ export function AdminNewsStudio() {
           aria-label="Tổng quan nội dung"
           className="mb-6 grid grid-cols-1 gap-3.5 sm:grid-cols-3"
         >
-          <div className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.25 }}
+            className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"
+          >
             <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600">
               <span className="material-symbols-outlined text-2xl">
                 description
@@ -1058,9 +1065,15 @@ export function AdminNewsStudio() {
                 {counts.total}
               </strong>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.25, delay: 0.05 }}
+            className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"
+          >
             <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
               <span className="material-symbols-outlined text-2xl">
                 check_circle
@@ -1074,9 +1087,15 @@ export function AdminNewsStudio() {
                 {counts.published}
               </strong>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.25, delay: 0.1 }}
+            className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"
+          >
             <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-amber-100/70 text-amber-600">
               <span className="material-symbols-outlined text-2xl">star</span>
             </div>
@@ -1088,7 +1107,7 @@ export function AdminNewsStudio() {
                 {counts.featured ?? 0}
               </strong>
             </div>
-          </div>
+          </motion.div>
         </section>
       ) : null}
 
@@ -1570,22 +1589,36 @@ export function AdminNewsStudio() {
               role="tablist"
               aria-label="Ngôn ngữ bài viết"
             >
-              {locales.map((item) => (
-                <button
-                  key={item}
-                  type="button"
-                  role="tab"
-                  aria-selected={locale === item}
-                  onClick={() => setLocale(item)}
-                  className={`min-h-10 rounded-xl px-4 text-xs font-bold transition ${
-                    locale === item
-                      ? "bg-blue-600 text-white shadow-xs"
-                      : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
-                  }`}
-                >
-                  {localeNames[item]}
-                </button>
-              ))}
+              {locales.map((item) => {
+                const isSelected = locale === item;
+                return (
+                  <button
+                    key={item}
+                    type="button"
+                    role="tab"
+                    aria-selected={isSelected}
+                    onClick={() => setLocale(item)}
+                    className={`relative min-h-10 rounded-xl px-4 text-xs font-bold transition-colors ${
+                      isSelected
+                        ? "text-white"
+                        : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                    }`}
+                  >
+                    {isSelected && (
+                      <motion.span
+                        layoutId="news-locale-tab-indicator"
+                        transition={{
+                          type: "spring",
+                          stiffness: 450,
+                          damping: 35,
+                        }}
+                        className="absolute inset-0 rounded-xl bg-blue-600 shadow-xs"
+                      />
+                    )}
+                    <span className="relative z-10">{localeNames[item]}</span>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Translation Fields */}
@@ -1655,30 +1688,52 @@ export function AdminNewsStudio() {
                     <button
                       type="button"
                       onClick={() => setContentTab("write")}
-                      className={`inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition ${
+                      className={`relative inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
                         contentTab === "write"
-                          ? "bg-white text-blue-600 shadow-xs"
+                          ? "text-blue-600"
                           : "text-slate-600 hover:text-slate-900"
                       }`}
                     >
-                      <span className="material-symbols-outlined text-sm">
+                      {contentTab === "write" && (
+                        <motion.span
+                          layoutId="news-content-tab-pill"
+                          transition={{
+                            type: "spring",
+                            stiffness: 450,
+                            damping: 35,
+                          }}
+                          className="absolute inset-0 rounded-md bg-white shadow-xs"
+                        />
+                      )}
+                      <span className="relative z-10 material-symbols-outlined text-sm">
                         edit_note
                       </span>
-                      Soạn thảo
+                      <span className="relative z-10">Soạn thảo</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setContentTab("preview")}
-                      className={`inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition ${
+                      className={`relative inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
                         contentTab === "preview"
-                          ? "bg-white text-blue-600 shadow-xs"
+                          ? "text-blue-600"
                           : "text-slate-600 hover:text-slate-900"
                       }`}
                     >
-                      <span className="material-symbols-outlined text-sm">
+                      {contentTab === "preview" && (
+                        <motion.span
+                          layoutId="news-content-tab-pill"
+                          transition={{
+                            type: "spring",
+                            stiffness: 450,
+                            damping: 35,
+                          }}
+                          className="absolute inset-0 rounded-md bg-white shadow-xs"
+                        />
+                      )}
+                      <span className="relative z-10 material-symbols-outlined text-sm">
                         visibility
                       </span>
-                      Xem trước
+                      <span className="relative z-10">Xem trước</span>
                     </button>
                   </div>
                 </div>

@@ -140,7 +140,9 @@ test("news spotlight uses the backend featured flag", async () => {
   assert.match(repository, /isFeatured: article\.isFeatured/);
   assert.match(page, /limit: 10/);
   assert.doesNotMatch(page, /limit: 100/);
-  assert.match(carousel, /spotlightIndex === 0 \? "" : "transition-transform/);
+  assert.doesNotMatch(carousel, /translateX|transition-transform/);
+  assert.match(carousel, /absolute inset-0 transition-opacity duration-300/);
+  assert.match(carousel, /pointer-events-none opacity-0/);
   assert.match(carousel, /const isActive = index === spotlightIndex/);
 });
 

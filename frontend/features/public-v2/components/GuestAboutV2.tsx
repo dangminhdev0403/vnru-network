@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { HOME_COPY } from "./GuestHomeV2";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
+import { Reveal } from "@/components/shared/Reveal";
 
 type AboutSection = {
   title: string;
@@ -1047,19 +1049,32 @@ export function GuestAboutV2() {
                     key={tabId}
                     type="button"
                     onClick={() => scrollToSection(SECTION_IDS[tabId], tabId)}
-                    className={`inline-flex min-h-9 items-center gap-2 rounded-lg px-4 py-1.5 text-sm font-bold whitespace-nowrap transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
+                    className={`relative inline-flex min-h-9 items-center gap-2 rounded-lg px-4 py-1.5 text-sm font-bold whitespace-nowrap transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
                       isActive
-                        ? "bg-blue-600 text-white shadow-xs shadow-blue-600/20"
+                        ? "text-white"
                         : "text-slate-700 hover:bg-blue-50/70 hover:text-blue-900"
                     }`}
                   >
+                    {isActive && (
+                      <motion.span
+                        layoutId="about-tab-indicator"
+                        transition={{
+                          type: "spring",
+                          stiffness: 450,
+                          damping: 35,
+                        }}
+                        className="absolute inset-0 rounded-lg bg-blue-600 shadow-xs shadow-blue-600/20"
+                      />
+                    )}
                     <span
-                      className={`size-1.5 rounded-full ${
+                      className={`relative z-10 size-1.5 rounded-full ${
                         isActive ? "bg-white" : "bg-slate-300"
                       }`}
                       aria-hidden="true"
                     />
-                    {TAB_LABELS[locale]?.[tabId] ?? TAB_LABELS.vi[tabId]}
+                    <span className="relative z-10">
+                      {TAB_LABELS[locale]?.[tabId] ?? TAB_LABELS.vi[tabId]}
+                    </span>
                   </button>
                 );
               },
@@ -1232,83 +1247,82 @@ export function GuestAboutV2() {
 
         {/* ═══════════ 3. BAN ĐIỀU HÀNH (BOARD MEMBERS) ═══════════ */}
         <section id="board" className="scroll-mt-36 pt-4 pb-8 sm:pt-6 sm:pb-10">
-          <div className="mx-auto mb-4 max-w-4xl text-center sm:mb-5">
+          <Reveal y={10} className="mx-auto mb-4 max-w-4xl text-center sm:mb-5">
             <h2 className="font-serif text-lg font-bold tracking-tight text-[#082352] sm:text-xl">
               {t.boardTitle}
             </h2>
-          </div>
+          </Reveal>
           <div className="mx-auto grid max-w-5xl gap-5 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
             {BOARD_MEMBERS.map((member, index) => (
-              <article
-                key={member.name}
-                className="relative flex flex-col justify-between overflow-hidden rounded-2xl border border-blue-200 bg-white/95 p-5 shadow-sm backdrop-blur-xs transition duration-200 hover:-translate-y-1 hover:border-blue-400 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none sm:p-6"
-              >
-                <div>
-                  {/* 1. Name at the top */}
-                  <h3 className="font-serif text-lg font-bold tracking-tight text-[#082352] sm:text-xl">
-                    {member.name}
-                  </h3>
+              <Reveal key={member.name} y={12} delay={index * 0.05}>
+                <article className="relative flex flex-col justify-between overflow-hidden rounded-2xl border border-blue-200 bg-white/95 p-5 shadow-sm backdrop-blur-xs transition duration-200 hover:-translate-y-1 hover:border-blue-400 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none sm:p-6">
+                  <div>
+                    {/* 1. Name at the top */}
+                    <h3 className="font-serif text-lg font-bold tracking-tight text-[#082352] sm:text-xl">
+                      {member.name}
+                    </h3>
 
-                  {/* 2. Role / Position Badge */}
-                  <div className="mt-2">
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-100/80 px-3 py-1 text-xs font-bold text-blue-800">
-                      <span
-                        className="size-1.5 rounded-full bg-blue-600"
-                        aria-hidden="true"
-                      />
-                      {t.boardRoles[index]}
-                    </span>
-                  </div>
-
-                  {/* 3. Clean divider */}
-                  <div
-                    className="my-4 h-px w-full bg-slate-200"
-                    aria-hidden="true"
-                  />
-
-                  {/* 4. Avatar & Contact Channels */}
-                  <div className="flex items-center gap-4 sm:gap-5">
-                    <div className="relative size-16 shrink-0 overflow-hidden rounded-full border-2 border-blue-200 bg-gradient-to-b from-blue-50 to-slate-100 shadow-xs ring-2 ring-blue-50 sm:size-20">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        sizes="80px"
-                        className="object-cover object-top"
-                      />
+                    {/* 2. Role / Position Badge */}
+                    <div className="mt-2">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-100/80 px-3 py-1 text-xs font-bold text-blue-800">
+                        <span
+                          className="size-1.5 rounded-full bg-blue-600"
+                          aria-hidden="true"
+                        />
+                        {t.boardRoles[index]}
+                      </span>
                     </div>
 
-                    <div className="flex flex-1 flex-col">
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                        {t.contactLabel}:
-                      </span>
-                      <div className="mt-2 flex flex-wrap items-center gap-2.5">
-                        {member.contacts.map((contact) => (
-                          <a
-                            key={contact.label}
-                            href={contact.href}
-                            target={
-                              contact.href.startsWith("http")
-                                ? "_blank"
-                                : undefined
-                            }
-                            rel={
-                              contact.href.startsWith("http")
-                                ? "noopener noreferrer"
-                                : undefined
-                            }
-                            aria-label={`${contact.label}: ${member.name}`}
-                            title={contact.label}
-                            className="grid size-10 place-items-center rounded-xl border border-blue-200 bg-blue-50/80 text-blue-700 shadow-2xs transition hover:-translate-y-0.5 hover:border-blue-400 hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transform-none motion-reduce:transition-none sm:size-11"
-                          >
-                            <BoardContactIcon icon={contact.icon} />
-                          </a>
-                        ))}
+                    {/* 3. Clean divider */}
+                    <div
+                      className="my-4 h-px w-full bg-slate-200"
+                      aria-hidden="true"
+                    />
+
+                    {/* 4. Avatar & Contact Channels */}
+                    <div className="flex items-center gap-4 sm:gap-5">
+                      <div className="relative size-16 shrink-0 overflow-hidden rounded-full border-2 border-blue-200 bg-gradient-to-b from-blue-50 to-slate-100 shadow-xs ring-2 ring-blue-50 sm:size-20">
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          sizes="80px"
+                          className="object-cover object-top"
+                        />
+                      </div>
+
+                      <div className="flex flex-1 flex-col">
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                          {t.contactLabel}:
+                        </span>
+                        <div className="mt-2 flex flex-wrap items-center gap-2.5">
+                          {member.contacts.map((contact) => (
+                            <a
+                              key={contact.label}
+                              href={contact.href}
+                              target={
+                                contact.href.startsWith("http")
+                                  ? "_blank"
+                                  : undefined
+                              }
+                              rel={
+                                contact.href.startsWith("http")
+                                  ? "noopener noreferrer"
+                                  : undefined
+                              }
+                              aria-label={`${contact.label}: ${member.name}`}
+                              title={contact.label}
+                              className="grid size-10 place-items-center rounded-xl border border-blue-200 bg-blue-50/80 text-blue-700 shadow-2xs transition hover:-translate-y-0.5 hover:border-blue-400 hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transform-none motion-reduce:transition-none sm:size-11"
+                            >
+                              <BoardContactIcon icon={contact.icon} />
+                            </a>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </Reveal>
             ))}
           </div>
         </section>

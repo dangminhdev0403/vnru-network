@@ -3,11 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
 import { z } from "zod";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { HOME_COPY } from "./GuestHomeV2";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
+import { Reveal } from "@/components/shared/Reveal";
 
 type EcosystemTabId = "opportunities" | "members" | "projects" | "library";
 
@@ -532,19 +534,32 @@ export function GuestEcosystemV2({
                     key={tabId}
                     type="button"
                     onClick={() => scrollToSection(SECTION_IDS[tabId], tabId)}
-                    className={`inline-flex min-h-11 items-center gap-2 rounded-lg px-5 py-2 text-base font-bold whitespace-nowrap transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
+                    className={`relative inline-flex min-h-11 items-center gap-2 rounded-lg px-5 py-2 text-base font-bold whitespace-nowrap transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
                       isActive
-                        ? "bg-blue-600 text-white shadow-sm shadow-blue-600/20"
+                        ? "text-white"
                         : "text-slate-700 hover:bg-blue-50/70 hover:text-blue-900"
                     }`}
                   >
+                    {isActive && (
+                      <motion.span
+                        layoutId="ecosystem-tab-indicator"
+                        transition={{
+                          type: "spring",
+                          stiffness: 450,
+                          damping: 35,
+                        }}
+                        className="absolute inset-0 rounded-lg bg-blue-600 shadow-sm shadow-blue-600/20"
+                      />
+                    )}
                     <span
-                      className={`size-2 rounded-full ${
+                      className={`relative z-10 size-2 rounded-full ${
                         isActive ? "bg-white" : "bg-slate-300"
                       }`}
                       aria-hidden="true"
                     />
-                    {TAB_LABELS[locale]?.[tabId] ?? TAB_LABELS.vi[tabId]}
+                    <span className="relative z-10">
+                      {TAB_LABELS[locale]?.[tabId] ?? TAB_LABELS.vi[tabId]}
+                    </span>
                   </button>
                 );
               },
@@ -563,11 +578,11 @@ export function GuestEcosystemV2({
         >
           <div className="mx-auto max-w-[1460px]">
             {/* Header section */}
-            <div className="text-center mb-4 sm:mb-5">
+            <Reveal y={10} className="text-center mb-4 sm:mb-5">
               <h2 className="font-serif text-2xl font-black tracking-tight text-[#082352] sm:text-3xl">
                 Cơ hội hợp tác
               </h2>
-            </div>
+            </Reveal>
 
             {/* Inner Sub-tab Switcher: Kết nối | Công bố | Tài trợ */}
             <div className="mx-auto mb-6 sm:mb-8 max-w-2xl">
@@ -1026,11 +1041,11 @@ export function GuestEcosystemV2({
           className="scroll-mt-32 border-t border-blue-200/50 bg-[#e7f0fa] px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14"
         >
           <div id="network-directory" className="mx-auto max-w-[1460px]">
-            <div className="text-center mb-4 sm:mb-5">
+            <Reveal y={10} className="text-center mb-4 sm:mb-5">
               <h2 className="font-serif text-2xl font-black tracking-tight text-[#082352] sm:text-3xl">
                 Thành viên mạng lưới
               </h2>
-            </div>
+            </Reveal>
 
             {/* Sub-tab Switcher: Chuyên gia | Tổ chức */}
             <div className="mx-auto mb-6 sm:mb-8 max-w-2xl">
@@ -1134,11 +1149,11 @@ export function GuestEcosystemV2({
           className="scroll-mt-32 px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14"
         >
           <div className="mx-auto max-w-[1460px]">
-            <div className="text-center mb-6 sm:mb-8">
+            <Reveal y={10} className="text-center mb-6 sm:mb-8">
               <h2 className="font-serif text-2xl font-black tracking-tight text-[#082352] sm:text-3xl">
                 Dự án & Kết quả
               </h2>
-            </div>
+            </Reveal>
 
             <div className="space-y-4 max-w-5xl mx-auto">
               {/* DỰ ÁN 1: HỌC BỔNG KHAI SÁNG */}
@@ -1269,11 +1284,11 @@ export function GuestEcosystemV2({
           className="scroll-mt-32 border-t border-blue-200/50 bg-[#e7f0fa] px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14"
         >
           <div className="mx-auto max-w-[1460px]">
-            <div className="text-center mb-4 sm:mb-5">
+            <Reveal y={10} className="text-center mb-4 sm:mb-5">
               <h2 className="font-serif text-2xl font-black tracking-tight text-[#082352] sm:text-3xl">
                 Thư viện tri thức
               </h2>
-            </div>
+            </Reveal>
 
             {/* Sub-tab Switcher: Bài báo | Tạp chí | Sở hữu trí tuệ */}
             <div className="mx-auto mb-6 sm:mb-8 max-w-2xl">

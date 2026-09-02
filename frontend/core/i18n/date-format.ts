@@ -15,7 +15,10 @@ function parseDate(value?: string | null) {
   return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
-export function formatDate(value: string | null | undefined, locale: Locale) {
+export function formatDate(
+  value: string | null | undefined,
+  locale: Locale = "vi",
+) {
   const date = parseDate(value);
   return date
     ? new Intl.DateTimeFormat(localeNames[locale], {

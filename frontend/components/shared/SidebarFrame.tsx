@@ -6,6 +6,7 @@ import { cn } from "@/lib/cn";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
+import { motion } from "motion/react";
 import { BrandMark } from "@/components/shared/BrandMark";
 
 export interface NavItem {
@@ -225,16 +226,27 @@ export default function SidebarFrame({
                     href={item.href}
                     onClick={onItemClick}
                     className={cn(
-                      "relative flex min-h-11 w-full items-center rounded-xl text-sm font-semibold transition-colors before:absolute before:inset-y-2 before:left-0 before:w-[3px] before:rounded-r-full before:bg-transparent",
+                      "relative flex min-h-11 w-full items-center rounded-xl text-sm font-semibold transition-colors",
                       isSidebarOpen ? "gap-3 px-3" : "justify-center px-0",
                       active
-                        ? "bg-[#eaf2ff] text-[#155bd7] before:bg-[#1769ff] dark:bg-[#182b43] dark:text-[#73a5ff] dark:before:bg-[#4c8dff]"
+                        ? "text-[#155bd7] dark:text-[#73a5ff]"
                         : "text-[#25364e] hover:bg-[#f0f4f9] hover:text-[#155bd7] dark:text-[#d4deea] dark:hover:bg-[#162432] dark:hover:text-white",
                     )}
                   >
+                    {active && (
+                      <motion.span
+                        layoutId="sidebar-active-pill"
+                        transition={{
+                          type: "spring",
+                          stiffness: 450,
+                          damping: 35,
+                        }}
+                        className="absolute inset-0 rounded-xl bg-[#eaf2ff] dark:bg-[#182b43] before:absolute before:inset-y-2 before:left-0 before:w-[3px] before:rounded-r-full before:bg-[#1769ff] dark:before:bg-[#4c8dff]"
+                      />
+                    )}
                     <span
                       className={cn(
-                        "material-symbols-outlined text-xl",
+                        "relative z-10 material-symbols-outlined text-xl",
                         active
                           ? "text-[#1769ff] dark:text-[#5f95ff]"
                           : "text-[#6f8097] dark:text-[#8fa2b8]",
@@ -243,7 +255,9 @@ export default function SidebarFrame({
                       {item.icon}
                     </span>
                     {isSidebarOpen && (
-                      <span className="min-w-0 truncate">{item.label}</span>
+                      <span className="relative z-10 min-w-0 truncate">
+                        {item.label}
+                      </span>
                     )}
                   </Link>
                 );
