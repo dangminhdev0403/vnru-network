@@ -3,6 +3,7 @@ import { signOut } from "../../../../auth";
 import {
   authServiceUrl,
   backendHeaders,
+  publicRequestUrl,
   sanitizeReturnTo,
   SESSION_COOKIE_NAME,
 } from "../../../../features/auth/server";
@@ -19,7 +20,7 @@ export async function POST(request: Request) {
   await signOut({ redirect: false });
   const response = NextResponse.json({
     ok: true,
-    logoutUrl: new URL("/", request.url).href,
+    logoutUrl: publicRequestUrl(request, "/").href,
   });
   response.cookies.delete(SESSION_COOKIE_NAME);
   return response;
@@ -32,7 +33,7 @@ export async function GET(request: Request) {
   }).catch(() => null);
   await signOut({ redirect: false });
   const returnTo = sanitizeReturnTo(new URL(request.url).searchParams.get("returnTo"));
-  const login = new URL("/api/auth/login", request.url);
+  const login = publicRequestUrl(request, "/api/auth/login");
   login.searchParams.set("returnTo", returnTo);
   const response = NextResponse.redirect(login);
   response.cookies.delete(SESSION_COOKIE_NAME);

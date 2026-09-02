@@ -36,6 +36,17 @@ test("auth redirects use the configured public URL instead of the container host
   }
 });
 
+test("logout redirects use the configured public origin", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const route = await readFile(
+    new URL("./app/api/auth/logout/route.ts", import.meta.url),
+    "utf8",
+  );
+  assert.match(route, /logoutUrl: publicRequestUrl\(request, "\/"\)\.href/);
+  assert.match(route, /const login = publicRequestUrl\(request, "\/api\/auth\/login"\)/);
+  assert.doesNotMatch(route, /new URL\("\/(?:api\/auth\/login)?", request\.url\)/);
+});
+
 test("reader login defaults to public home", () => {
   assert.equal(sanitizeReturnTo(undefined), "/");
   assert.equal(resolveLandingPath([]), "/");
