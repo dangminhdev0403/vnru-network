@@ -109,37 +109,9 @@ type ExpertItem = {
 
 const EXPERTS_RAW: ExpertItem[] = [
   {
-    name: "Bùi Bảo Thiện",
-    role: "Trợ lý Nghiên cứu",
-  },
-  {
-    name: "Denis Avetisyan",
-    role: "Cố vấn Trưởng",
-  },
-  {
-    name: "Elena Kurchatova",
-    role: "Viện sĩ",
-  },
-  {
-    name: "Lê Thị Mai",
-    role: "Trưởng PTN Viễn thám",
-  },
-  {
-    name: "Mikhail Sokolov",
-    role: "Viện sĩ thông tấn RAS",
-  },
-  {
     name: "Nguyễn Quốc Hùng",
     role: "Chủ tịch Hội đồng điều phối",
     image: "/images/board/nguyen-quoc-hung.webp",
-  },
-  {
-    name: "Nguyễn Văn An",
-    role: "Viện sĩ Viện KH Vật liệu",
-  },
-  {
-    name: "Phạm Quốc Phòng",
-    role: "Kỹ sư Điều khiển",
   },
   {
     name: "Trần Đức Tùng",
@@ -148,9 +120,9 @@ const EXPERTS_RAW: ExpertItem[] = [
   },
 ];
 
-const EXPERTS_LIST: ExpertItem[] = [...EXPERTS_RAW].sort((a, b) =>
-  a.name.localeCompare(b.name, "vi"),
-);
+const EXPERTS_LIST: ExpertItem[] = [...EXPERTS_RAW]
+  .filter((expert) => Boolean(expert.image))
+  .sort((a, b) => a.name.localeCompare(b.name, "vi"));
 
 // ══════════════════ DATA: TỔ CHỨC ══════════════════
 type OrganizationItem = {
@@ -1079,7 +1051,7 @@ export function GuestEcosystemV2({
 
             {/* TAB 1: CHUYÊN GIA (ẢNH, TÊN, CHỨC VỤ) */}
             {memberSubTab === "experts" && (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mx-auto grid max-w-4xl gap-4 sm:grid-cols-2">
                 {EXPERTS_LIST.map((expert) => (
                   <article
                     key={expert.name}

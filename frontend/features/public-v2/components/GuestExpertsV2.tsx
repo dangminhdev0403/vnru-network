@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { EXPERTS, type Expert } from "@/features/public-discovery/mock-data";
+import { HOME_COPY } from "./GuestHomeV2";
+import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
 
 const COPY: Record<
@@ -33,6 +35,12 @@ const COPY: Record<
     ctaTitle: string;
     ctaDesc: string;
     ctaBtn: string;
+    stats: readonly string[];
+    vietnameseResearcher: string;
+    russianProfessor: string;
+    joinKicker: string;
+    opportunitiesBtn: string;
+    publicationMeta: string;
   }
 > = {
   vi: {
@@ -63,6 +71,12 @@ const COPY: Record<
     ctaDesc:
       "Gia nhập mạng lưới để kết nối, hợp tác đề tài và chia sẻ công trình với cộng đồng khoa học song phương Nga – Việt.",
     ctaBtn: "Gia nhập mạng lưới chuyên gia →",
+    stats: ["520+ Chuyên gia", "150+ Viện & Đại học", "20+ Lĩnh vực khoa học", "Xác thực VAST – RAS"],
+    vietnameseResearcher: "Nhà nghiên cứu · Việt Nam",
+    russianProfessor: "Giáo sư · Liên bang Nga",
+    joinKicker: "Tham gia mạng lưới",
+    opportunitiesBtn: "Khám phá cơ hội hợp tác",
+    publicationMeta: "Tạp chí khoa học quốc tế uy tín · Đồng tác giả song phương",
   },
   en: {
     brandTitle: "Russia - Vietnam Knowledge Network",
@@ -92,6 +106,12 @@ const COPY: Record<
     ctaDesc:
       "Join the network to collaborate on research calls, share data, and partner with the bilateral scientific community.",
     ctaBtn: "Join the Expert Directory →",
+    stats: ["520+ Experts", "150+ Institutes & Universities", "20+ Scientific Fields", "Verified by VAST – RAS"],
+    vietnameseResearcher: "Researcher · Vietnam",
+    russianProfessor: "Professor · Russian Federation",
+    joinKicker: "Join the network",
+    opportunitiesBtn: "Explore collaboration opportunities",
+    publicationMeta: "Leading international scientific journal · Bilateral co-authors",
   },
   ru: {
     brandTitle: "РОССИЙСКО-ВЬЕТНАМСКАЯ ИНТЕЛЛЕКТУАЛЬНАЯ СЕТЬ",
@@ -121,12 +141,19 @@ const COPY: Record<
     ctaDesc:
       "Вступайте в сеть для поиска партнеров, участия в совместных конкурсах и обмена научными данными.",
     ctaBtn: "Присоединиться к экспертам →",
+    stats: ["520+ экспертов", "150+ институтов и университетов", "20+ научных направлений", "Верификация ВАНТ – РАН"],
+    vietnameseResearcher: "Исследователь · Вьетнам",
+    russianProfessor: "Профессор · Российская Федерация",
+    joinKicker: "Присоединиться к сети",
+    opportunitiesBtn: "Возможности сотрудничества",
+    publicationMeta: "Ведущий международный научный журнал · Двустороннее соавторство",
   },
 };
 
 export function GuestExpertsV2() {
   const { locale } = useLocale();
   const t = COPY[locale];
+  const homeCopy = HOME_COPY[locale] ?? HOME_COPY.vi;
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState<"all" | "VN" | "RU">("all");
   const [selectedExpert, setSelectedExpert] = useState<Expert | null>(null);
@@ -208,21 +235,11 @@ export function GuestExpertsV2() {
 
               {/* Quick stats pills */}
               <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm md:text-[15px] font-bold text-slate-700">
-                <span className="inline-flex items-center gap-2">
-                  <b className="text-base text-blue-600">◉</b> 520+ Chuyên gia
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <b className="text-base text-blue-600">◎</b> 150+ Viện & Đại
-                  học
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <b className="text-base text-blue-600">◇</b> 20+ Lĩnh vực khoa
-                  học
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <b className="text-base text-blue-600">✦</b> Xác thực VAST –
-                  RAS
-                </span>
+                {t.stats.map((stat, index) => (
+                  <span key={stat} className="inline-flex items-center gap-2">
+                    <b className="text-base text-blue-600">{["◉", "◎", "◇", "✦"][index]}</b> {stat}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -284,8 +301,8 @@ export function GuestExpertsV2() {
                           </div>
                           <p className="mt-1 text-xs sm:text-sm font-bold text-blue-700">
                             {expert.country === "VN"
-                              ? "Nhà nghiên cứu · Việt Nam"
-                              : "Giáo sư · Liên bang Nga"}
+                              ? t.vietnameseResearcher
+                              : t.russianProfessor}
                           </p>
                           <p className="mt-0.5 line-clamp-1 text-xs text-slate-500 font-medium">
                             {expert.institution}
@@ -348,7 +365,7 @@ export function GuestExpertsV2() {
             <div className="mt-14 rounded-3xl border border-blue-300 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 p-8 sm:p-12 text-white shadow-[0_24px_50px_-24px_rgba(37,99,235,.8)]">
               <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
                 <span className="rounded-full border border-blue-300/40 bg-white/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-blue-100">
-                  ✦ Tham gia mạng lưới
+                  ✦ {t.joinKicker}
                 </span>
                 <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
                   {t.ctaTitle}
@@ -367,7 +384,7 @@ export function GuestExpertsV2() {
                     href="/opportunities"
                     className="inline-flex min-h-12 items-center rounded-xl border border-white/30 bg-white/10 px-6 text-sm sm:text-base font-bold text-white transition hover:bg-white/20"
                   >
-                    Khám phá cơ hội hợp tác
+                    {t.opportunitiesBtn}
                   </Link>
                 </div>
               </div>
@@ -492,8 +509,7 @@ export function GuestExpertsV2() {
                           {pub}
                         </strong>
                         <span className="mt-0.5 block text-xs text-slate-500">
-                          Tạp chí khoa học quốc tế uy tín · Đồng tác giả song
-                          phương
+                          {t.publicationMeta}
                         </span>
                       </div>
                     </div>
@@ -542,161 +558,7 @@ export function GuestExpertsV2() {
         </div>
       )}
 
-      {/* Institutional 4-Column Footer */}
-      <footer
-        id="contact"
-        className="scroll-mt-24 border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700"
-      >
-        <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-12">
-            <div className="xl:col-span-4">
-              <Link
-                href="/"
-                className="inline-flex items-center gap-3.5"
-                aria-label={t.brandTitle}
-              >
-                <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-blue-200 bg-white shadow-xs">
-                  <span className="absolute inset-y-0 left-0 w-[62%] -skew-x-12 bg-blue-600" />
-                  <span className="absolute inset-y-0 right-0 w-[46%] -skew-x-12 bg-rose-500" />
-                </span>
-                <span>
-                  <strong className="block text-base sm:text-lg font-black tracking-tight text-slate-950">
-                    {t.brandTitle}
-                  </strong>
-                </span>
-              </Link>
-              <p className="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-slate-600">
-                Cổng thông tin & điều phối hợp tác khoa học công nghệ độc lập
-                giữa các viện nghiên cứu, trường đại học trọng điểm của Việt Nam
-                và Liên bang Nga.
-              </p>
-            </div>
-
-            <div className="xl:col-span-3">
-              <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">
-                Khám phá hệ sinh thái
-              </h4>
-              <ul className="mt-4 space-y-2.5 text-xs sm:text-sm font-semibold text-slate-600">
-                <li>
-                  <Link
-                    href="/opportunities"
-                    className="transition hover:text-blue-700 hover:underline"
-                  >
-                    Chương trình & Cơ hội nghiên cứu
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/experts"
-                    className="transition hover:text-blue-700 hover:underline"
-                  >
-                    Mạng lưới Chuyên gia xác thực
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/knowledge"
-                    className="transition hover:text-blue-700 hover:underline"
-                  >
-                    Kho tri thức & Báo cáo KH & CN
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/#about"
-                    className="transition hover:text-blue-700 hover:underline"
-                  >
-                    Viện & Đại học đối tác liên kết
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/#events"
-                    className="transition hover:text-blue-700 hover:underline"
-                  >
-                    Hội thảo & Diễn đàn khoa học
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="xl:col-span-2">
-              <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">
-                Hướng trọng điểm
-              </h4>
-              <ul className="mt-4 space-y-2.5 text-xs sm:text-sm font-semibold text-slate-600">
-                <li>
-                  <span className="text-slate-700">
-                    Trí tuệ nhân tạo & Dữ liệu
-                  </span>
-                </li>
-                <li>
-                  <span className="text-slate-700">
-                    Khoa học Biển & Hải dương
-                  </span>
-                </li>
-                <li>
-                  <span className="text-slate-700">Vật liệu mới & Nano</span>
-                </li>
-                <li>
-                  <span className="text-slate-700">
-                    Năng lượng sạch & Nguyên tử
-                  </span>
-                </li>
-                <li>
-                  <span className="text-slate-700">
-                    Công nghệ sinh học biển
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="xl:col-span-3">
-              <h4 className="text-sm font-black uppercase tracking-wider text-slate-950">
-                Điều phối & Liên hệ
-              </h4>
-              <div className="mt-4 space-y-3 text-xs sm:text-sm text-slate-600">
-                <div>
-                  <strong className="block font-bold text-slate-900">
-                    Quỹ Truyền thống và Hữu nghị:
-                  </strong>
-                  <span>
-                    125047, Moskva, Đường Tverskaya-Yamskaya số 1, Tòa nhà 30,
-                    Văn phòng 01B, Liên bang Nga
-                  </span>
-                </div>
-                <div className="pt-1">
-                  <span className="block font-medium">Email:</span>
-                  <a
-                    href="mailto:info@fonddruzhba.ru"
-                    className="font-bold text-blue-700 transition hover:underline"
-                  >
-                    info@fonddruzhba.ru
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-blue-200/80 pt-8 text-xs sm:text-sm font-medium text-slate-600 md:flex-row">
-            <p>© 2026 Mạng lưới tri thức Nga - Việt. Bảo lưu mọi quyền.</p>
-            <div className="flex flex-wrap gap-5 font-semibold text-slate-600">
-              <Link href="/#about" className="hover:text-blue-700">
-                Điều khoản hợp tác
-              </Link>
-              <Link href="/#about" className="hover:text-blue-700">
-                Chính sách bảo mật
-              </Link>
-              <Link href="/#about" className="hover:text-blue-700">
-                Chuẩn mực đạo đức nghiên cứu
-              </Link>
-              <Link href="/#about" className="hover:text-blue-700">
-                Dữ liệu mở song phương
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <GuestPublicFooter copy={homeCopy} />
     </div>
   );
 }

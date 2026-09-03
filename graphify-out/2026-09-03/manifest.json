@@ -5,8 +5,8 @@
     "semantic_hash": ""
   },
   "frontend/app/page.tsx": {
-    "mtime": 1788364764.0201077,
-    "ast_hash": "aef939c329963d71f1606b30963cd26a",
+    "mtime": 1787916846.4586718,
+    "ast_hash": "feae35a3ee54cea1ec16f060af82ddec",
     "semantic_hash": ""
   },
   "frontend/eslint.config.mjs": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "docs/API_SPEC.md": {
-    "mtime": 1788358794.169359,
-    "ast_hash": "6ae11df59e84b38d6e6c5b6bfb05df18",
+    "mtime": 1788167430.0430965,
+    "ast_hash": "ba9c4e0057684cf5aa15a582f7cfacfa",
     "semantic_hash": ""
   },
   "docs/ARCHITECTURE.md": {
@@ -245,8 +245,8 @@
     "semantic_hash": ""
   },
   "docs/DEPLOYMENT.md": {
-    "mtime": 1788357258.1284356,
-    "ast_hash": "ffb6f732daa5ee014bc2b9c398ae7154",
+    "mtime": 1788004295.1880848,
+    "ast_hash": "a16ce8fb03d6e2830076732caf96c208",
     "semantic_hash": ""
   },
   "docs/RBAC_ARCHITECTURE.md": {
@@ -370,27 +370,27 @@
     "semantic_hash": ""
   },
   "frontend/public/file.svg": {
-    "mtime": 1788353375.8739917,
+    "mtime": 1786216984.0973535,
     "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
     "semantic_hash": ""
   },
   "frontend/public/globe.svg": {
-    "mtime": 1788353375.874993,
+    "mtime": 1786216984.0993538,
     "ast_hash": "2aaafa6a49b6563925fe440891e32717",
     "semantic_hash": ""
   },
   "frontend/public/next.svg": {
-    "mtime": 1788353376.2386532,
+    "mtime": 1786216984.10035,
     "ast_hash": "8e061864f388b47f33a1c3780831193e",
     "semantic_hash": ""
   },
   "frontend/public/vercel.svg": {
-    "mtime": 1788353376.2396517,
+    "mtime": 1786216984.1023493,
     "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
     "semantic_hash": ""
   },
   "frontend/public/window.svg": {
-    "mtime": 1788353376.2396517,
+    "mtime": 1786216984.1043499,
     "ast_hash": "a2760511c65806022ad20adf74370ff3",
     "semantic_hash": ""
   },
@@ -425,14 +425,14 @@
     "semantic_hash": "a19049fafa3bc8ad5e855528c665bcc1"
   },
   "frontend/app/api/auth/login/route.ts": {
-    "mtime": 1788358568.411853,
-    "ast_hash": "8cc16416793b31ee0714d28de4c56c5f",
+    "mtime": 1788081760.5987816,
+    "ast_hash": "cea71504f803c069a55b28b23fb02660",
     "semantic_hash": ""
   },
   "frontend/app/api/auth/logout/route.ts": {
-    "mtime": 1788359884.1537356,
-    "ast_hash": "c349dd2ecb789820704a5c48d6565605",
-    "semantic_hash": ""
+    "mtime": 1787401103.399966,
+    "ast_hash": "6d234293810b4320fed737e022ca6167",
+    "semantic_hash": "6d234293810b4320fed737e022ca6167"
   },
   "frontend/app/api/auth/me/route.ts": {
     "mtime": 1787058514.040327,
@@ -450,8 +450,8 @@
     "semantic_hash": "10f56d43b38a1c5f225aeb1f18385323"
   },
   "frontend/app/login/page.tsx": {
-    "mtime": 1788358568.4098501,
-    "ast_hash": "549cc112c778fbf05ca01ee670da5066",
+    "mtime": 1788082173.9266398,
+    "ast_hash": "64e0487b5b312ac195652b34b9898c93",
     "semantic_hash": ""
   },
   "frontend/app/not-found.tsx": {
@@ -460,8 +460,8 @@
     "semantic_hash": "edc356ee8dcf4ea0522a603eee8ddbe1"
   },
   "frontend/auth-flow.test.mjs": {
-    "mtime": 1788359891.737859,
-    "ast_hash": "d8c9e91738ffb6790635ac0dd2b02473",
+    "mtime": 1788167026.1658661,
+    "ast_hash": "d634c31207c5a46be1b130d253d6ef7b",
     "semantic_hash": ""
   },
   "frontend/components/shared/WorkspaceShell.tsx": {
@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "frontend/features/auth/server.ts": {
-    "mtime": 1788358568.4078436,
-    "ast_hash": "52ceca175a2b29ff1ca81d69b7a9fe9e",
+    "mtime": 1788014980.2020943,
+    "ast_hash": "a3f6bb47bef45ccbcd22a752cee2eb2e",
     "semantic_hash": ""
   },
   "frontend/home-i18n.test.mjs": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "frontend/tests/workspace-runtime.test.mjs": {
-    "mtime": 1788374758.1588452,
-    "ast_hash": "023e1c4258d0419f9157e942b0895906",
+    "mtime": 1788349140.2788682,
+    "ast_hash": "e7c5c7035be2fb579d81a4b9ac32177a",
     "semantic_hash": ""
   },
   "services/auth-service/prisma/migrations/20260818120000_add_session_active_context/migration.sql": {
@@ -565,7 +565,7 @@
     "semantic_hash": ""
   },
   "frontend/public/images/login-library-bg.jpg": {
-    "mtime": 1788353376.1164377,
+    "mtime": 1787125656.7237992,
     "ast_hash": "1eab5b6297db840e9cfa94ec55d892dc",
     "semantic_hash": ""
   },
@@ -1010,8 +1010,8 @@
     "semantic_hash": ""
   },
   "frontend/components/shared/SidebarFrame.tsx": {
-    "mtime": 1788374783.5206075,
-    "ast_hash": "302e7f9c6db3df50ecff4cda8ca26d4b",
+    "mtime": 1788030159.821095,
+    "ast_hash": "d14b013af2f0850288aad5805f556a96",
     "semantic_hash": ""
   },
   "frontend/features/admin/access/components/RolePermissionsPage.tsx": {
@@ -1095,8 +1095,8 @@
     "semantic_hash": ""
   },
   "frontend/features/auth/components/security/SecurityClientPage.tsx": {
-    "mtime": 1788374784.9952168,
-    "ast_hash": "1984e4dd3076e63604acfbd2ed11c387",
+    "mtime": 1788345784.8606248,
+    "ast_hash": "fab22c035e781e82557e68525b4700fe",
     "semantic_hash": ""
   },
   "frontend/features/auth/workspace-server.ts": {
@@ -1410,13 +1410,13 @@
     "semantic_hash": ""
   },
   "frontend/public/images/vn-ru-knowledge-network.png": {
-    "mtime": 1788353376.2376535,
+    "mtime": 1787516041.5565073,
     "ast_hash": "708f706f82d13bc9e4257acc3ae23025",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestExpertsV2.tsx": {
-    "mtime": 1788409158.2441015,
-    "ast_hash": "ff9ffb0c86429218109e6294f138db0f",
+    "mtime": 1788030159.8370495,
+    "ast_hash": "6f0579db67ed7a49fc1f188310c294ca",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestExploreMedia.tsx": {
@@ -1425,13 +1425,13 @@
     "semantic_hash": "11001fad5db2b4a2af6f6d5fa2c60186"
   },
   "frontend/features/public-v2/components/GuestHomeV2.tsx": {
-    "mtime": 1788375463.8696404,
-    "ast_hash": "fb51f1f1a4231ed1a771688a54f206e5",
+    "mtime": 1788309876.3090062,
+    "ast_hash": "96e44ee36154647d2f27b5793fc8ac67",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicNav.tsx": {
-    "mtime": 1788374784.2323618,
-    "ast_hash": "8257ab4ef4e82b595bf166cd4d6d038d",
+    "mtime": 1788202043.4772637,
+    "ast_hash": "84d2a5b0432d96c2f6ea9d826346da20",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestKnowledgeV2.tsx": {
@@ -1440,13 +1440,13 @@
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/UnifiedWorkspaceDashboard.tsx": {
-    "mtime": 1788375554.7176437,
-    "ast_hash": "48be34be7278e736ba5207f54025f0e4",
-    "semantic_hash": ""
+    "mtime": 1787741053.829646,
+    "ast_hash": "4def0d3e0abd307c2063c34eada5ac44",
+    "semantic_hash": "4def0d3e0abd307c2063c34eada5ac44"
   },
   "docker-compose.prod.yml": {
-    "mtime": 1788357258.126432,
-    "ast_hash": "2582cf8f4f183ade4118bc3fbbdede77",
+    "mtime": 1787998548.9408698,
+    "ast_hash": "0a35b1d463d06ba2a57106b4dd2037a4",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestOpportunitiesV2.tsx": {
@@ -1625,52 +1625,52 @@
     "semantic_hash": ""
   },
   "frontend/public/brand/vnru-logo.png": {
-    "mtime": 1788353375.7932854,
+    "mtime": 1787649966.87097,
     "ast_hash": "23464e096807225e60703c7d3fd07994",
     "semantic_hash": ""
   },
   "frontend/public/brand/vnru-network-banner-2026.png": {
-    "mtime": 1788353375.850706,
+    "mtime": 1787598542.574988,
     "ast_hash": "7bc22612a5f9341f3e9364880f05d774",
     "semantic_hash": ""
   },
   "frontend/public/favicon.png": {
-    "mtime": 1788353375.86999,
+    "mtime": 1787650251.9734178,
     "ast_hash": "16ec81462d1564bbbc432d8089d1dcf6",
     "semantic_hash": ""
   },
   "frontend/public/brand/vnru-hero-slide-2.jpg": {
-    "mtime": 1788353375.7752788,
+    "mtime": 1787637468.8597739,
     "ast_hash": "6adcab02492ff11937503c3cbd67aa95",
     "semantic_hash": ""
   },
   "frontend/public/brand/vnru-hero-slide-3.jpg": {
-    "mtime": 1788353375.7782803,
+    "mtime": 1787637468.8613584,
     "ast_hash": "457fd507cf2b1a4adde3225e2eaac927",
     "semantic_hash": ""
   },
   "frontend/public/images/login-vnru-bg.png": {
-    "mtime": 1788353376.1294403,
+    "mtime": 1787649601.4776282,
     "ast_hash": "5d89e95191df49f2f95995b1ac42a216",
     "semantic_hash": ""
   },
   "frontend/public/images/register-vnru-bg.png": {
-    "mtime": 1788353376.223653,
+    "mtime": 1787650457.1212125,
     "ast_hash": "00c3391187c945dc4b84b5d0f53745cb",
     "semantic_hash": ""
   },
   "frontend/app/apple-icon.png": {
-    "mtime": 1788353375.767768,
+    "mtime": 1787650251.9734178,
     "ast_hash": "16ec81462d1564bbbc432d8089d1dcf6",
     "semantic_hash": ""
   },
   "frontend/app/icon.png": {
-    "mtime": 1788353375.7712827,
+    "mtime": 1787650251.9734178,
     "ast_hash": "16ec81462d1564bbbc432d8089d1dcf6",
     "semantic_hash": ""
   },
   "frontend/public/brand/vnru-logo-2026.png": {
-    "mtime": 1788353375.788282,
+    "mtime": 1787649966.87097,
     "ast_hash": "23464e096807225e60703c7d3fd07994",
     "semantic_hash": ""
   },
@@ -1690,8 +1690,8 @@
     "semantic_hash": "c0219fd4c3490e0cc94fa57049b33ffb"
   },
   "frontend/app/news/[id]/page.tsx": {
-    "mtime": 1788364842.7608323,
-    "ast_hash": "be986d83c29e88e6d83b6a34cb2df9bf",
+    "mtime": 1788013263.7391238,
+    "ast_hash": "45a963d587539ecbc88ccf811f9a4474",
     "semantic_hash": ""
   },
   "frontend/app/news/loading.tsx": {
@@ -1705,13 +1705,13 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestExploreV2.tsx": {
-    "mtime": 1788375463.9316409,
-    "ast_hash": "1eba11ac4b7cd5729e855bd4513488f2",
+    "mtime": 1788349252.5805054,
+    "ast_hash": "86370ca798fa193376f1591475fb034a",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestNewsArticleV2.tsx": {
-    "mtime": 1788370158.5685825,
-    "ast_hash": "76ddf87fa2e8e46987f0d5250221758b",
+    "mtime": 1788166617.160439,
+    "ast_hash": "8ed108c04d66b42245feb0f2a79eefe4",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestPublicFooter.tsx": {
@@ -1720,13 +1720,13 @@
     "semantic_hash": ""
   },
   "frontend/tests/public-explore-stream.test.mjs": {
-    "mtime": 1788363716.563234,
-    "ast_hash": "62427518b49a2906e972d431c126774a",
+    "mtime": 1788065710.2496674,
+    "ast_hash": "ceabd428c408283297ff5f39fd8e24a5",
     "semantic_hash": ""
   },
   "frontend/tests/public-news-routing.test.mjs": {
-    "mtime": 1788367100.7156472,
-    "ast_hash": "f6c3b4bacde7a78f847165c91dbaa5de",
+    "mtime": 1788085037.7140446,
+    "ast_hash": "55642e636fbbb98083b70e636d81de50",
     "semantic_hash": ""
   },
   "frontend/app/experts/page.tsx": {
@@ -1835,8 +1835,8 @@
     "semantic_hash": ""
   },
   "frontend/features/admin/access/components/AccessLogsPage.tsx": {
-    "mtime": 1788370162.6843326,
-    "ast_hash": "ca628e7d98cafe538e7033165f63aacd",
+    "mtime": 1787761118.7765071,
+    "ast_hash": "66f4f1074c8f5ea35b22a8952fe8f424",
     "semantic_hash": ""
   },
   "frontend/features/admin/access/components/AccessOverviewDashboard.tsx": {
@@ -1870,8 +1870,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestAboutV2.tsx": {
-    "mtime": 1788375463.6696484,
-    "ast_hash": "5d87abfd57553650dd0e0bd001c4c3fc",
+    "mtime": 1788346048.4934688,
+    "ast_hash": "0a1144a5a0b9a2466c3bafa892c7d5f2",
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/ContentPublishStudio.tsx": {
@@ -1930,22 +1930,22 @@
     "semantic_hash": ""
   },
   "frontend/public/images/dashboard-network-bg.png": {
-    "mtime": 1788353376.0079894,
+    "mtime": 1787756670.4638808,
     "ast_hash": "b4ae0b27afae2979e0bc97c867781a22",
     "semantic_hash": ""
   },
   "vn-ru-portal/background.png": {
-    "mtime": 1788353376.2506537,
+    "mtime": 1787756670.4638808,
     "ast_hash": "b4ae0b27afae2979e0bc97c867781a22",
     "semantic_hash": ""
   },
   "vn-ru-portal/memmer-potal.png": {
-    "mtime": 1788353376.32964,
+    "mtime": 1787760324.578515,
     "ast_hash": "baad6479e730d04ad5896086372979eb",
     "semantic_hash": ""
   },
   "vn-ru-portal/rbac.png": {
-    "mtime": 1788353376.358167,
+    "mtime": 1787760396.7818182,
     "ast_hash": "73b8ef95af88e7394e34613dad0a738a",
     "semantic_hash": ""
   },
@@ -1965,18 +1965,18 @@
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news-media.service.ts": {
-    "mtime": 1788358405.5371218,
-    "ast_hash": "6a26dbae40ae1e7f765d9484b14a1a21",
+    "mtime": 1788204336.1863325,
+    "ast_hash": "b01116d0986e4a9fc1bbd3496fdec989",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news-media.spec.ts": {
-    "mtime": 1788358352.689509,
-    "ast_hash": "145a0ad65d3bb52d8f55449ea094c6dc",
+    "mtime": 1788204532.6917055,
+    "ast_hash": "fea9e920f7d4a2ef292cdd5ecf1b73d8",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news.controller.ts": {
-    "mtime": 1788365777.3703158,
-    "ast_hash": "ee4251c2ff63b22349f5f7dca21be821",
+    "mtime": 1788348386.6809947,
+    "ast_hash": "dce9980178972fcb615f5ba2192e886e",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news.module.ts": {
@@ -1985,22 +1985,22 @@
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news.service.spec.ts": {
-    "mtime": 1788365853.0265133,
-    "ast_hash": "5201016f59b1efba7c741059af9580aa",
+    "mtime": 1788348418.3161154,
+    "ast_hash": "74195545553f8553572a8bb590b0efd3",
     "semantic_hash": ""
   },
   "services/auth-service/src/modules/news/news.service.ts": {
-    "mtime": 1788365847.4581695,
-    "ast_hash": "935bd4ff883fd31af2076d24df8fb60e",
+    "mtime": 1788348381.5584116,
+    "ast_hash": "5904e44907545e49d2773e0685b1ddbb",
     "semantic_hash": ""
   },
   "frontend/public/images/about-network-hero.png": {
-    "mtime": 1788353375.9569924,
+    "mtime": 1787857580.8347228,
     "ast_hash": "90f328fa3cbe912c16bd5060eb226832",
     "semantic_hash": ""
   },
   "frontend/public/images/network-stats-bg.png": {
-    "mtime": 1788353376.165575,
+    "mtime": 1787862932.649467,
     "ast_hash": "89f96178703b51be9f755acb168e52b3",
     "semantic_hash": ""
   },
@@ -2010,12 +2010,12 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestEcosystemV2.tsx": {
-    "mtime": 1788409809.905972,
-    "ast_hash": "b1d0269137a0414afc3a778b70ecce32",
+    "mtime": 1788081283.6852446,
+    "ast_hash": "375417e1f1a8e52f889646e223404e53",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-hero-bg.jpg": {
-    "mtime": 1788353376.0249884,
+    "mtime": 1788018538.0303726,
     "ast_hash": "540f5e783271d27f268b29bfe90bf61b",
     "semantic_hash": ""
   },
@@ -2040,8 +2040,8 @@
     "semantic_hash": ""
   },
   "frontend/features/news/AdminNewsStudio.tsx": {
-    "mtime": 1788375554.6484487,
-    "ast_hash": "eed907e576b933050c121990986e0238",
+    "mtime": 1788347129.590856,
+    "ast_hash": "2fca1c4fb290d9e9decd5589e47329d2",
     "semantic_hash": ""
   },
   "frontend/features/news/ContentAdminSidebar.tsx": {
@@ -2050,28 +2050,28 @@
     "semantic_hash": ""
   },
   "frontend/features/news/repository.ts": {
-    "mtime": 1788365841.2481923,
-    "ast_hash": "13a2b7c44f10a48cb75c7b060ee6b115",
+    "mtime": 1788167353.3803535,
+    "ast_hash": "528edd07a79b84dec59fa62e23d7e4fc",
     "semantic_hash": ""
   },
   "frontend/features/news/resource.ts": {
-    "mtime": 1788365771.3043501,
-    "ast_hash": "ae1396281af1a772bfdb64a8b24d3b61",
+    "mtime": 1788167052.5921962,
+    "ast_hash": "8a37735bd06bdff65801ec041ab4057c",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-connect-bg.png": {
-    "mtime": 1788353376.01799,
+    "mtime": 1787931018.0685432,
     "ast_hash": "584b48cf079725da754a9fca49678e72",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-join-bg.jpg": {
-    "mtime": 1788353376.0784352,
+    "mtime": 1787931018.067467,
     "ast_hash": "edf1c1c3cdc5b2b0414d93010496bfed",
     "semantic_hash": ""
   },
   "frontend/app/news/[id]/[slug]/page.tsx": {
-    "mtime": 1788364841.7369103,
-    "ast_hash": "55c7129d1461f76f24e8e0578f36b6ca",
+    "mtime": 1788348749.3710415,
+    "ast_hash": "09fdd62d158e8324c0b7142eb27e2d3a",
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestNewsAdvancedFilters.tsx": {
@@ -2085,8 +2085,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/data/public-news-server.ts": {
-    "mtime": 1788364767.5233724,
-    "ast_hash": "5d55909bafbadc3c2ebc47d9cfa2ecb3",
+    "mtime": 1788348841.6178472,
+    "ast_hash": "181270fa51367af05a6926bca455d74f",
     "semantic_hash": ""
   },
   "frontend/tests/about-content.test.mjs": {
@@ -2100,8 +2100,8 @@
     "semantic_hash": ""
   },
   "frontend/tests/home-bilateral-gateway.test.mjs": {
-    "mtime": 1788367043.1929862,
-    "ast_hash": "c69acb05df13520c5b018ec9fb3d7d9b",
+    "mtime": 1788079733.6158502,
+    "ast_hash": "d2c48ff442ea8a5d476b207c2966cff7",
     "semantic_hash": ""
   },
   "services/auth-service/prisma/import-official-news.ts": {
@@ -2120,162 +2120,162 @@
     "semantic_hash": ""
   },
   "frontend/public/images/about-light-hero-v2.png": {
-    "mtime": 1788353375.9149911,
+    "mtime": 1787976366.7132785,
     "ast_hash": "2a73b903f8e6bc4c72cf5208951d3aee",
     "semantic_hash": ""
   },
   "frontend/public/images/about-light-hero.png": {
-    "mtime": 1788353375.927994,
+    "mtime": 1787976366.7132785,
     "ast_hash": "2a73b903f8e6bc4c72cf5208951d3aee",
     "semantic_hash": ""
   },
   "frontend/public/images/board/nguyen-quoc-hung.webp": {
-    "mtime": 1788353375.968989,
+    "mtime": 1787943900.6604545,
     "ast_hash": "7b042ca705d5711a5c12ceef9fa5ddc0",
     "semantic_hash": ""
   },
   "frontend/public/images/board/tran-duc-tung.webp": {
-    "mtime": 1788353375.9749901,
+    "mtime": 1787943900.6893892,
     "ast_hash": "675a16efc7dd8c98570548874fd15831",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-hero-bg.png": {
-    "mtime": 1788353376.03799,
+    "mtime": 1787992720.8734105,
     "ast_hash": "41e2efcfc85c59dde8a44f4764df6d91",
     "semantic_hash": ""
   },
   "frontend/public/images/home-bilateral-gateway.jpg": {
-    "mtime": 1788353376.0914388,
+    "mtime": 1787947675.3230467,
     "ast_hash": "0c33d4467dcd099d08883f7feeae1dae",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/cemi-ran.webp": {
-    "mtime": 1788353376.1756167,
+    "mtime": 1787944095.282651,
     "ast_hash": "69533d1b140bfc21c8545dfd4c01fe44",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/co-laboratoria.webp": {
-    "mtime": 1788353376.1766183,
+    "mtime": 1787944096.1137533,
     "ast_hash": "583f63166270d9aea4bac7138ca3e8e8",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/financial-university.webp": {
-    "mtime": 1788353376.1776166,
+    "mtime": 1787944095.7138226,
     "ast_hash": "1958fbc198e1329abed4e238f48cc5c9",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/herzen.webp": {
-    "mtime": 1788353376.1786158,
+    "mtime": 1787944095.8749905,
     "ast_hash": "96d22b592e6d6462d959cd5a54012b73",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/inecon-ran.webp": {
-    "mtime": 1788353376.1806185,
+    "mtime": 1787944095.463255,
     "ast_hash": "2eed5c1fd3de9c9b792c3283e91cb85a",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/isuct.webp": {
-    "mtime": 1788353376.1816182,
+    "mtime": 1787944095.9445515,
     "ast_hash": "8b503956bf58e4a6cefa18000ba3e98b",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/leti.webp": {
-    "mtime": 1788353376.1826146,
+    "mtime": 1787944095.498301,
     "ast_hash": "339ed6cc19615f20049d9c3d27c90a80",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/mospolytech.webp": {
-    "mtime": 1788353376.1836169,
+    "mtime": 1787944095.2344697,
     "ast_hash": "cdd485282ea7cdd22aaf45aeb245c9ed",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/mpgu.webp": {
-    "mtime": 1788353376.1846192,
+    "mtime": 1787944096.0633132,
     "ast_hash": "53d58c324707e11463263ed451d2d410",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/mse-msu.webp": {
-    "mtime": 1788353376.1856163,
+    "mtime": 1787944095.9579017,
     "ast_hash": "bdf5d60674b5b9af1468ceaf292fe081",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/mslu.webp": {
-    "mtime": 1788353376.187616,
+    "mtime": 1787944096.0829134,
     "ast_hash": "86a0f99ac679cb9dfb5e3afae0f6ccb5",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/perm-polytech.webp": {
-    "mtime": 1788353376.1896164,
+    "mtime": 1787944095.7698588,
     "ast_hash": "5788faf11e56ee97f91ab8ce10332965",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/plekhanov.webp": {
-    "mtime": 1788353376.191615,
+    "mtime": 1787944095.5425842,
     "ast_hash": "a8bb0f20a80f83f6f2fa9426b536917e",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/ptit.webp": {
-    "mtime": 1788353376.1946554,
+    "mtime": 1787944096.1847165,
     "ast_hash": "5e5fe4a2f25decb242b591b252408326",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/ranepa-northwest.webp": {
-    "mtime": 1788353376.1946554,
+    "mtime": 1787944095.4510505,
     "ast_hash": "b813289ab1011f7b3253f50c8295c254",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/rshu.webp": {
-    "mtime": 1788353376.1956537,
+    "mtime": 1787944095.9256952,
     "ast_hash": "864dd4cdc4c7b729cdefeb1822736522",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/rsuh.webp": {
-    "mtime": 1788353376.1966548,
+    "mtime": 1787944095.79563,
     "ast_hash": "34691ca50e2bf2b85af16a8914d836a7",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/rudn.webp": {
-    "mtime": 1788353376.1966548,
+    "mtime": 1787944095.7428732,
     "ast_hash": "9d33d152bf029da0d07401ca9044b66b",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/rut-miit.webp": {
-    "mtime": 1788353376.197653,
+    "mtime": 1787944095.8183877,
     "ast_hash": "11ec5cfcee9ca156422e27ef50abb01e",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/spbu.webp": {
-    "mtime": 1788353376.198655,
+    "mtime": 1787944095.682671,
     "ast_hash": "58a0b5aab920a5dc16a7d306091c53b5",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/spbume.webp": {
-    "mtime": 1788353376.2006555,
+    "mtime": 1787944095.2528467,
     "ast_hash": "66df13f854a9d3e2e839e26ca8fda312",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/sut.webp": {
-    "mtime": 1788353376.2016537,
+    "mtime": 1787944095.4367185,
     "ast_hash": "36b6a59f992f0f1bf19223a708405821",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/unecon.webp": {
-    "mtime": 1788353376.2026536,
+    "mtime": 1787944096.0053196,
     "ast_hash": "ea94f2ba60c9a1a96bfbb0d0d4cb8b1d",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/uneti.webp": {
-    "mtime": 1788353376.2026536,
+    "mtime": 1787944096.2217884,
     "ast_hash": "92a37593b1d0eeef7e24229aaaaa669f",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/usue.webp": {
-    "mtime": 1788353376.2036517,
+    "mtime": 1787944095.9703536,
     "ast_hash": "929e8e80060f4c354345d8e0022aed5f",
     "semantic_hash": ""
   },
   "frontend/public/images/partners/vnu.webp": {
-    "mtime": 1788353376.2046528,
+    "mtime": 1787944096.1548495,
     "ast_hash": "9cb72b5b985981ea09156ae38d6ad080",
     "semantic_hash": ""
   },
@@ -2300,42 +2300,42 @@
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-icons/knowledge.png": {
-    "mtime": 1788353376.044991,
+    "mtime": 1788068696.167013,
     "ast_hash": "88e82db700d06fa6435c49f0ab1419bb",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-icons/knowledge.webp": {
-    "mtime": 1788353376.045988,
+    "mtime": 1788068696.2356348,
     "ast_hash": "b17f98512fdfb19016bedc4443130d35",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-icons/members.png": {
-    "mtime": 1788353376.0559912,
+    "mtime": 1788068695.9434383,
     "ast_hash": "386b98e857fed27dcc1d0e0361d8ab50",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-icons/members.webp": {
-    "mtime": 1788353376.0579906,
+    "mtime": 1788068696.013958,
     "ast_hash": "bc80cf3d2b69cbd2ffacf48eb8a676a7",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-icons/opportunities.png": {
-    "mtime": 1788353376.0635176,
+    "mtime": 1788068695.8053524,
     "ast_hash": "3ca76ff7ca300be765c4cd5ef2fb947e",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-icons/opportunities.webp": {
-    "mtime": 1788353376.0665102,
+    "mtime": 1788068695.8982615,
     "ast_hash": "e1db774f5a11b5f17a71a198014b3e92",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-icons/projects.png": {
-    "mtime": 1788353376.0694385,
+    "mtime": 1788068696.0572948,
     "ast_hash": "a09de27abae8262845db18218dd99d5d",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-icons/projects.webp": {
-    "mtime": 1788353376.0714393,
+    "mtime": 1788068696.1231182,
     "ast_hash": "ca7dad0e8a111920d076aa80f6c79338",
     "semantic_hash": ""
   },
@@ -2345,17 +2345,17 @@
     "semantic_hash": ""
   },
   "frontend/public/images/opportunities/interussia-gorchakov.webp": {
-    "mtime": 1788353376.1695726,
+    "mtime": 1788080538.7744057,
     "ast_hash": "dba06be436830104cd3c9c4db6c51505",
     "semantic_hash": ""
   },
   "frontend/public/images/opportunities/interussia-ir.webp": {
-    "mtime": 1788353376.170635,
+    "mtime": 1788080309.4467647,
     "ast_hash": "938b4be331213afcd4455c390ffdf3cd",
     "semantic_hash": ""
   },
   "frontend/public/images/opportunities/interussia-nuclear.webp": {
-    "mtime": 1788353376.1716144,
+    "mtime": 1788080309.4257207,
     "ast_hash": "f3c02b12666b11d9deadddc8947dfdeb",
     "semantic_hash": ""
   },
@@ -2372,26 +2372,6 @@
   "services/auth-service/prisma/migrations/20260901150000_fix_official_news_image_mapping/migration.sql": {
     "mtime": 1788304213.4372878,
     "ast_hash": "adff84e8f828948c2733b1ea39224d0a",
-    "semantic_hash": ""
-  },
-  "frontend/app/news/layout.tsx": {
-    "mtime": 1788363716.5582302,
-    "ast_hash": "616b899585d1d1b0017f35f49916946b",
-    "semantic_hash": ""
-  },
-  "frontend/components/shared/Reveal.tsx": {
-    "mtime": 1788375554.6504486,
-    "ast_hash": "bb20546813956bc5e9a7242bf88bed94",
-    "semantic_hash": ""
-  },
-  "frontend/core/i18n/date-format.test.mjs": {
-    "mtime": 1788370262.8940952,
-    "ast_hash": "4f89d87d780c4d07bce558bec388c62d",
-    "semantic_hash": ""
-  },
-  "frontend/core/i18n/date-format.ts": {
-    "mtime": 1788374783.4191556,
-    "ast_hash": "2f58e49f1a6f9caa089823f64d319ab4",
     "semantic_hash": ""
   }
 }
