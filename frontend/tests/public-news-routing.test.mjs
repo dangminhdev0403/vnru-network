@@ -76,6 +76,10 @@ test("news is canonical and legacy explore redirects", async () => {
   assert.match(advancedFilter, />\s*Áp dụng bộ lọc\s*<\/button>/);
   const page = await readFile("app/news/page.tsx", "utf8");
   assert.match(page, /getPublicNews/);
+  assert.match(page, /cookies\(\)/);
+  assert.match(page, /sanitizeLocale/);
+  assert.match(page, /getPublicNews\(\{[\s\S]*?locale,/);
+  assert.doesNotMatch(page, /locale:\s*"vi"/);
   assert.match(page, /initialArticles=\{result\.items\}/);
   assert.match(page, /initialAdvancedFilters=\{filters\}/);
 

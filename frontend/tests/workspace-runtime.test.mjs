@@ -21,10 +21,18 @@ test("workspace root renders the unified member dashboard while legacy IAM route
 });
 
 test("content administration reuses admin chrome with its own navigation", async () => {
-  const [contentLayout, contentSidebar, studio, iamLayout, iamSidebar] =
+  const [
+    contentLayout,
+    contentSidebar,
+    sidebarFrame,
+    studio,
+    iamLayout,
+    iamSidebar,
+  ] =
     await Promise.all([
       read("app/(content-admin)/layout.tsx"),
       read("features/news/ContentAdminSidebar.tsx"),
+      read("components/shared/SidebarFrame.tsx"),
       read("features/news/AdminNewsStudio.tsx"),
       read("app/(admin)/layout.tsx"),
       read("features/admin/components/AdminSidebar.tsx"),
@@ -33,6 +41,15 @@ test("content administration reuses admin chrome with its own navigation", async
   assert.match(contentSidebar, /href: "\/workspace\/news"/);
   assert.match(contentSidebar, /view=ARTICLE/);
   assert.doesNotMatch(contentSidebar, /view=all/);
+  assert.match(
+    contentSidebar,
+    /view === "new"[\s\S]*searchParams\.get\("type"\)[\s\S]*activeHref=\{/,
+  );
+  assert.match(sidebarFrame, /activeHrefOverride \?\?/);
+  assert.match(
+    sidebarFrame,
+    /aria-current=\{active \? "page" : undefined\}/,
+  );
   assert.match(studio, /view === "all" \? "ARTICLE" : view/);
   for (const view of ["ANNOUNCEMENT", "EVENT", "PROJECT", "OPPORTUNITY"]) {
     assert.match(contentSidebar, new RegExp(`view=${view}`));

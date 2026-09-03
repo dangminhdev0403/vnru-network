@@ -3,6 +3,7 @@
 import SidebarFrame from "@/components/shared/SidebarFrame";
 import { useLocale } from "@/core/i18n/locale";
 import { useCurrentUser } from "@/features/auth/server-state";
+import { useSearchParams } from "next/navigation";
 
 const labels = {
   vi: {
@@ -61,9 +62,22 @@ export default function ContentAdminSidebar({
   const t = labels[locale] ?? labels.vi;
   const currentUser = useCurrentUser();
   const context = currentUser.data?.activeContext;
+  const searchParams = useSearchParams();
+  const view = searchParams.get("view");
+  const activeView =
+    view === "new"
+      ? (searchParams.get("type") ?? "ARTICLE")
+      : view === "all"
+        ? "ARTICLE"
+        : view;
 
   return (
     <SidebarFrame
+      activeHref={
+        activeView
+          ? `/workspace/news?view=${activeView}`
+          : "/workspace/news"
+      }
       sections={[
         {
           label: t.section,

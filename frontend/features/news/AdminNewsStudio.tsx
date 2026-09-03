@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { confirmAction, showSuccess, showError } from "@/lib/alerts";
 import { z } from "zod";
 import { newsResource } from "./resource";
+import { useLocale } from "@/core/i18n/locale";
 import type {
   NewsArticle,
   NewsInput,
@@ -179,6 +180,8 @@ function formatAuthor(author?: {
 export function AdminNewsStudio() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const uiLocale = useLocale((state) => state.locale);
+  const listLocale = uiLocale.toUpperCase() as NewsLocale;
   const view = searchParams.get("view");
   const requestedContentType = searchParams.get("type");
   const [selectedId, setSelectedId] = useState<string>();
@@ -190,7 +193,7 @@ export function AdminNewsStudio() {
         : "ARTICLE",
   }));
   const [featured, setFeatured] = useState(false);
-  const [locale, setLocale] = useState<NewsLocale>("VI");
+  const [locale, setLocale] = useState<NewsLocale>("RU");
   const [query, setQuery] = useState("");
   const [isTranslating, setIsTranslating] = useState(false);
   const [previousView, setPreviousView] = useState(view);
@@ -231,13 +234,14 @@ export function AdminNewsStudio() {
             : "ARTICLE",
       });
       setFeatured(false);
-      setLocale("VI");
+      setLocale("RU");
     }
   }
 
   const queryFilters: AdminNewsListFilters = useMemo(() => {
     const contentView = view === "all" ? "ARTICLE" : view;
     const filters: AdminNewsListFilters = {
+      locale: listLocale,
       limit: pageSize,
       offset: (currentPage - 1) * pageSize,
     };
@@ -264,7 +268,7 @@ export function AdminNewsStudio() {
       filters.query = query.trim();
     }
     return filters;
-  }, [pageSize, currentPage, view, categoryFilter, query]);
+  }, [pageSize, currentPage, view, categoryFilter, query, listLocale]);
 
   const list = useQuery(news.queries.list.options(queryFilters));
 
@@ -441,7 +445,7 @@ export function AdminNewsStudio() {
     setFieldErrors({});
     setForm({ ...initial, contentType: navContentType });
     setFeatured(false);
-    setLocale("VI");
+    setLocale("RU");
     router.push(`/workspace/news?view=new&type=${navContentType}`);
   };
 
@@ -469,6 +473,11 @@ export function AdminNewsStudio() {
   const open = (article: AdminNewsListItem | NewsArticle) => {
     setSelectedId(article.id);
     setFeatured(article.isFeatured);
+    setLocale(
+      article.translations.some((item) => item.locale === "RU")
+        ? "RU"
+        : article.translations[0]?.locale ?? "RU",
+    );
     setFieldErrors({});
   };
 
@@ -729,14 +738,8 @@ export function AdminNewsStudio() {
           {!list.isLoading &&
             !list.isError &&
             articles.map((article) => {
-              const titleVi =
-                article.translations.find((t) => t.locale === "VI")?.title ||
-                article.translations[0]?.title ||
-                article.id;
-              const summaryVi =
-                article.translations.find((t) => t.locale === "VI")?.summary ||
-                article.translations[0]?.summary ||
-                "";
+              const title = article.translations[0]?.title || article.id;
+              const summary = article.translations[0]?.summary || "";
               const isSelected = selectedRowIds.includes(article.id);
               const authorInfo = formatAuthor(article.author);
 
@@ -754,7 +757,7 @@ export function AdminNewsStudio() {
                   <td className="px-4 py-4 text-center">
                     <input
                       type="checkbox"
-                      aria-label={`Chọn bài viết ${titleVi}`}
+                      aria-label={`Chọn bài viết ${title}`}
                       checked={isSelected}
                       onChange={() => toggleSelectRow(article.id)}
                       className="size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
@@ -767,14 +770,14 @@ export function AdminNewsStudio() {
                         <button
                           type="button"
                           onClick={() => open(article)}
-                          title={titleVi}
+                          title={title}
                           className="block w-full max-w-[250px] truncate text-left font-bold text-slate-900 transition hover:text-blue-600"
                         >
-                          {titleVi}
+                          {title}
                         </button>
-                        {summaryVi ? (
+                        {summary ? (
                           <p className="mt-0.5 line-clamp-2 text-xs text-slate-500 leading-snug">
-                            {summaryVi}
+                            {summary}
                           </p>
                         ) : null}
                       </div>
@@ -1220,10 +1223,7 @@ export function AdminNewsStudio() {
                   {contentTypes[previewItem.contentType]}
                 </span>
                 <h3 className="mt-2 text-xl font-bold text-slate-900">
-                  {previewItem.translations.find((t) => t.locale === "VI")
-                    ?.title ||
-                    previewItem.translations[0]?.title ||
-                    previewItem.id}
+                  {previewItem.translations[0]?.title || previewItem.id}
                 </h3>
               </div>
               <button
@@ -1241,10 +1241,7 @@ export function AdminNewsStudio() {
                   Tóm tắt
                 </strong>
                 <p className="mt-1 leading-relaxed text-slate-800">
-                  {previewItem.translations.find((t) => t.locale === "VI")
-                    ?.summary ||
-                    previewItem.translations[0]?.summary ||
-                    "Chưa có tóm tắt tiếng Việt."}
+                  {previewItem.translations[0]?.summary || "Chưa có tóm tắt."}
                 </p>
               </div>
 

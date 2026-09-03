@@ -9,6 +9,10 @@ import { useLocale, type Locale } from "@/core/i18n/locale";
 import { localizeReactNode } from "@/core/i18n/localize-react-node";
 import { HOME_COPY } from "./GuestHomeV2";
 import { ECOSYSTEM_TRANSLATIONS } from "./GuestEcosystemV2.copy";
+import {
+  DOCUMENT_PARTNERS,
+  type EcosystemPartner,
+} from "./GuestEcosystemPartners";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
 import { Reveal } from "@/components/shared/Reveal";
@@ -32,7 +36,7 @@ type ConnectField = keyof z.infer<ReturnType<typeof connectFormSchema>>;
 const TAB_LABELS: Record<Locale, Record<EcosystemTabId, string>> = {
   vi: {
     opportunities: "Cơ hội hợp tác",
-    members: "Thành viên",
+    members: "Đối tác",
     projects: "Dự án & Kết quả",
     library: "Thư viện tri thức",
   },
@@ -44,7 +48,7 @@ const TAB_LABELS: Record<Locale, Record<EcosystemTabId, string>> = {
   },
   en: {
     opportunities: "Opportunities",
-    members: "Members & Directory",
+    members: "Network partners",
     projects: "Projects & Results",
     library: "Knowledge Library",
   },
@@ -132,11 +136,10 @@ const EXPERTS_LIST: ExpertItem[] = [...EXPERTS_RAW]
   .sort((a, b) => a.name.localeCompare(b.name, "vi"));
 
 // ══════════════════ DATA: TỔ CHỨC ══════════════════
-type OrganizationItem = {
-  name: string;
-  fullName: string;
+type OrganizationItem = Omit<EcosystemPartner, "country" | "website"> & {
   location: string;
-  logo: string;
+  country?: EcosystemPartner["country"];
+  website?: string;
 };
 
 const ORGANIZATIONS_RAW: OrganizationItem[] = [
@@ -145,58 +148,74 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
     fullName: "Đại học Kỹ thuật Quốc gia Moskva mang tên N.E. Bauman",
     location: "Moskva, LB Nga",
     logo: "/images/partners/ecosystem-bmstu.webp",
+    country: "russia",
   },
   {
     name: "JINR Dubna",
     fullName: "Viện Nghiên cứu Hạt nhân Liên hiệp Dubna",
     location: "Dubna, LB Nga",
     logo: "/images/partners/ecosystem-jinr.webp",
+    country: "russia",
   },
   {
     name: "Lomonosov MSU",
     fullName: "Đại học Quốc gia Moskva mang tên M.V. Lomonosov",
     location: "Moskva, LB Nga",
     logo: "/images/partners/ecosystem-msu.webp",
+    country: "russia",
   },
   {
     name: "MAI",
     fullName: "Đại học Hàng không Moskva (Viện Nghiên cứu Quốc gia)",
     location: "Moskva, LB Nga",
     logo: "/images/partners/ecosystem-mai.webp",
+    country: "russia",
   },
   {
     name: "Quỹ Truyền thống và Hữu nghị",
     fullName: "Quỹ Thúc đẩy Hợp tác Nga - Việt “Truyền thống và Hữu nghị”",
     location: "Moskva & Hà Nội",
     logo: "/images/partners/ecosystem-traditions-friendship.webp",
+    country: "russia",
   },
   {
     name: "RAS",
     fullName: "Viện Hàn lâm Khoa học Liên bang Nga (Российская академия наук)",
     location: "Liên bang Nga",
     logo: "/images/partners/ecosystem-ras.webp",
+    country: "russia",
   },
   {
     name: "SPbPU",
     fullName: "Đại học Bách khoa Saint Petersburg Đại đế",
     location: "Saint Petersburg, LB Nga",
     logo: "/images/partners/ecosystem-spbpu.webp",
+    country: "russia",
   },
   {
     name: "VAST",
     fullName: "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
     location: "Hà Nội, Việt Nam",
     logo: "/images/partners/ecosystem-vast.webp",
+    country: "vietnam",
   },
   {
     name: "VNU Hanoi",
     fullName: "Đại học Quốc gia Hà Nội",
     location: "Hà Nội, Việt Nam",
     logo: "/images/partners/ecosystem-vnu-hanoi.webp",
+    country: "vietnam",
+    website: "https://vnu.edu.vn/",
   },
 ];
 
-const ORGANIZATIONS_LIST: OrganizationItem[] = [...ORGANIZATIONS_RAW].sort(
+const ORGANIZATIONS_LIST: OrganizationItem[] = [
+  ...ORGANIZATIONS_RAW,
+  ...DOCUMENT_PARTNERS.map((partner) => ({
+    ...partner,
+    location: partner.country === "russia" ? "Liên bang Nga" : "Việt Nam",
+  })),
+].sort(
   (a, b) => a.name.localeCompare(b.name, "vi"),
 );
 
@@ -1032,7 +1051,7 @@ export function GuestEcosystemV2({
           <div id="network-directory" className="mx-auto max-w-[1460px]">
             <Reveal y={10} className="text-center mb-4 sm:mb-5">
               <h2 className="font-serif text-2xl font-black tracking-tight text-[#082352] sm:text-3xl">
-                Thành viên mạng lưới
+                Đối tác mạng lưới
               </h2>
             </Reveal>
 
@@ -1061,7 +1080,7 @@ export function GuestEcosystemV2({
                       : "text-slate-700 hover:text-blue-900"
                   }`}
                 >
-                  Tổ chức
+                  Đối tác
                 </button>
               </div>
             </div>
@@ -1103,33 +1122,64 @@ export function GuestEcosystemV2({
               </div>
             )}
 
-            {/* TAB 2: TỔ CHỨC */}
+            {/* TAB 2: ĐỐI TÁC */}
             {memberSubTab === "organizations" && (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {ORGANIZATIONS_LIST.map((org) => (
-                  <article
-                    key={org.name}
-                    className="flex items-center gap-4 rounded-2xl border border-blue-200/90 bg-white p-4.5 shadow-xs transition duration-150 hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md"
-                  >
-                    <div className="relative size-14 shrink-0 overflow-hidden rounded-2xl border border-blue-200 bg-white shadow-2xs">
-                      <Image
-                        src={org.logo}
-                        alt=""
-                        fill
-                        sizes="56px"
-                        className="object-contain p-2"
-                      />
-                    </div>
+              <div className="space-y-8">
+                <p className="text-center text-sm font-semibold text-slate-600 sm:text-base">
+                  Các đối tác mong muốn tham gia Mạng lưới
+                </p>
+                {(["russia", "vietnam"] as const).map((country) => (
+                  <section key={country}>
+                    <h3 className="mb-4 font-serif text-xl font-black text-[#082352]">
+                      {country === "russia" ? "Về phía Nga" : "Về phía Việt Nam"}
+                    </h3>
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {ORGANIZATIONS_LIST.filter(
+                        (org) => org.country === country,
+                      ).map((org) => {
+                        const content = (
+                          <>
+                            <div className="relative size-14 shrink-0 overflow-hidden rounded-2xl border border-blue-200 bg-white shadow-2xs">
+                              <Image
+                                src={org.logo}
+                                alt=""
+                                fill
+                                sizes="56px"
+                                className="object-contain p-2"
+                              />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <h4 className="font-serif text-lg font-bold text-[#082352]">
+                                {org.name}
+                              </h4>
+                              <div className="mt-0.5 text-xs text-slate-600">
+                                {org.fullName}
+                              </div>
+                            </div>
+                          </>
+                        );
+                        const className =
+                          "flex items-center gap-4 rounded-2xl border border-blue-200/90 bg-white p-4.5 shadow-xs transition duration-150 hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600";
 
-                    <div className="min-w-0 flex-1">
-                      <h3 className="truncate font-serif text-lg font-bold text-[#082352]">
-                        {org.name}
-                      </h3>
-                      <div className="mt-0.5 truncate text-xs text-slate-600">
-                        {org.fullName}
-                      </div>
+                        return org.website ? (
+                          <a
+                            key={org.name}
+                            href={org.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${org.name} — Trang web`}
+                            className={className}
+                          >
+                            {content}
+                          </a>
+                        ) : (
+                          <article key={org.name} className={className}>
+                            {content}
+                          </article>
+                        );
+                      })}
                     </div>
-                  </article>
+                  </section>
                 ))}
               </div>
             )}

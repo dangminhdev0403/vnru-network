@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { GuestExploreV2 } from "@/features/public-v2/components/GuestExploreV2";
 import { getPublicNews } from "@/features/public-v2/data/public-news-server";
+import { LOCALE_COOKIE_NAME, sanitizeLocale } from "@/features/auth/server";
 import {
   DEFAULT_NEWS_ADVANCED_FILTERS,
   NEWS_CATEGORIES,
@@ -61,7 +63,8 @@ export default async function Page({
     type?: string | string[];
   }>;
 }) {
-  const params = await searchParams;
+  const [params, cookieStore] = await Promise.all([searchParams, cookies()]);
+  const locale = sanitizeLocale(cookieStore.get(LOCALE_COOKIE_NAME)?.value);
   const categoryValue =
     typeof params.category === "string" ? params.category : "all";
   const category = isNewsCategory(categoryValue) ? categoryValue : "all";
@@ -96,7 +99,7 @@ export default async function Page({
 
   if (categoryMode) {
     const result = await getPublicNews({
-      locale: "vi",
+      locale,
       limit: 10,
       offset: (filterPage - 1) * 10,
       category,
@@ -118,10 +121,10 @@ export default async function Page({
   }
 
   const [latest, featured, stream] = await Promise.all([
-    getPublicNews({ locale: "vi", limit: 4 }),
-    getPublicNews({ locale: "vi", limit: 4, featured: true }),
+    getPublicNews({ locale, limit: 4 }),
+    getPublicNews({ locale, limit: 4, featured: true }),
     getPublicNews({
-      locale: "vi",
+      locale,
       limit: 10,
       offset: (streamPage - 1) * 10,
       category: streamCategory,

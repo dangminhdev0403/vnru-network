@@ -1,11 +1,23 @@
-import { cloneElement, isValidElement, type ReactElement, type ReactNode } from "react";
+import {
+  cloneElement,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 import type { Locale } from "./locale";
 
-export type TranslationMap = Record<Exclude<Locale, "vi">, Record<string, string>>;
+export type TranslationMap = Record<
+  Exclude<Locale, "vi">,
+  Record<string, string>
+>;
 
 const LOCALIZED_PROPS = ["aria-label", "alt", "placeholder", "title"] as const;
 
-function translate(value: string, locale: Locale, translations: TranslationMap) {
+function translate(
+  value: string,
+  locale: Locale,
+  translations: TranslationMap,
+) {
   if (locale === "vi") return value;
   const dictionary = translations[locale];
   const trimmed = value.trim();
@@ -24,9 +36,18 @@ export function localizeReactNode(
   locale: Locale,
   translations: TranslationMap,
 ): ReactNode {
+  if (locale === "vi") return node;
   if (typeof node === "string") return translate(node, locale, translations);
   if (Array.isArray(node)) {
-    return node.map((child) => localizeReactNode(child, locale, translations));
+    return node.map((child, index) => {
+      const localized = localizeReactNode(child, locale, translations);
+      if (isValidElement(localized) && localized.key == null) {
+        return cloneElement(localized, {
+          key: isValidElement(child) && child.key != null ? child.key : index,
+        });
+      }
+      return localized;
+    });
   }
   if (!isValidElement(node)) return node;
 
@@ -38,7 +59,11 @@ export function localizeReactNode(
     }
   }
   if ("children" in props) {
-    props.children = localizeReactNode(props.children as ReactNode, locale, translations);
+    props.children = localizeReactNode(
+      props.children as ReactNode,
+      locale,
+      translations,
+    );
   }
   return cloneElement(element, props);
 }

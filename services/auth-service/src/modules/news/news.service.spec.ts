@@ -107,7 +107,16 @@ describe('NewsService', () => {
   });
 
   it('returns all translations for admin editing', async () => {
-    prisma.newsArticle.findMany.mockResolvedValue([]);
+    prisma.newsArticle.findMany.mockResolvedValue([
+      {
+        id: 'article-1',
+        translations: [
+          { locale: 'VI', title: 'Tin thử' },
+          { locale: 'RU', title: 'Тестовая новость' },
+          { locale: 'EN', title: 'Test news' },
+        ],
+      },
+    ]);
     prisma.newsArticle.count.mockResolvedValue(0);
     prisma.newsArticle.findFirst.mockResolvedValue({
       id: 'article-1',
@@ -117,13 +126,13 @@ describe('NewsService', () => {
     const res = await service.listAdmin({
       limit: 20,
       offset: 0,
-
+      locale: 'RU',
     });
-    expect(res).toEqual({
-      items: [],
-      total: 0,
-      counts: { total: 0, featured: 0 },
-    });
+    expect(res.items[0].translations.map((item: any) => item.locale)).toEqual([
+      'RU',
+      'VI',
+      'EN',
+    ]);
     await expect(service.getAdmin('article-1')).resolves.toMatchObject({
       id: 'article-1',
       translations: [{ locale: 'VI', title: 'Tin thử' }],

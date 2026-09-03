@@ -29,6 +29,7 @@ export type NewsArticle = {
   translations: NewsTranslation[];
 };
 export type AdminNewsListFilters = {
+  locale?: NewsLocale;
   limit?: number;
   offset?: number;
   contentType?: NewsContentType;
@@ -89,6 +90,7 @@ async function json<T>(path: string, init?: RequestInit): Promise<T> {
 export const newsRepository = {
   list: (filters?: AdminNewsListFilters, signal?: AbortSignal) => {
     const params = new URLSearchParams();
+    if (filters?.locale) params.set("locale", filters.locale);
     if (filters?.limit) params.set("limit", String(filters.limit));
     if (filters?.offset !== undefined)
       params.set("offset", String(filters.offset));

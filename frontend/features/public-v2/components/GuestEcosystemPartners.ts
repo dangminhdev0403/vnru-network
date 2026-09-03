@@ -1,0 +1,150 @@
+export type EcosystemPartner = {
+  name: string;
+  fullName: string;
+  country: "russia" | "vietnam";
+  website: string;
+  logo: string;
+};
+
+export const DOCUMENT_PARTNERS: EcosystemPartner[] = [
+  {
+    name: "ЦЭМИ РАН",
+    fullName: "Viện Toán - Kinh tế Trung ương, Viện Hàn lâm Khoa học Nga",
+    country: "russia",
+    website: "https://www.cemi.rssi.ru/",
+    logo: "/images/partners/ecosystem-cemi-ran.webp",
+  },
+  {
+    name: "Колаборатория",
+    fullName: "Tổ chức tư vấn khoa học giáo dục Kolaboratoria (Co-laboratoria)",
+    country: "russia",
+    website: "https://co-laboratoria.ru/",
+    logo: "/images/partners/ecosystem-co-laboratoria.webp",
+  },
+  {
+    name: "СПбУТУиЭ",
+    fullName: "Đại học Công nghệ Quản lý và Kinh tế Saint Petersburg",
+    country: "russia",
+    website: "https://www.spbume.ru/",
+    logo: "/images/partners/ecosystem-spbume.webp",
+  },
+  {
+    name: "СПбГУТ",
+    fullName: "Đại học Viễn thông Quốc gia Saint Petersburg mang tên M.A. Bonch-Bruevich",
+    country: "russia",
+    website: "https://www.sut.ru/",
+    logo: "/images/partners/ecosystem-sut.webp",
+  },
+  {
+    name: "ЛЭТИ - СПбГЭТУ",
+    fullName: "Đại học Kỹ thuật Điện Quốc gia Saint Petersburg",
+    country: "russia",
+    website: "https://etu.ru/",
+    logo: "/images/partners/ecosystem-leti.webp",
+  },
+  {
+    name: "РЭУ им. Г.В. Плеханова",
+    fullName: "Đại học Kinh tế Nga Plekhanov",
+    country: "russia",
+    website: "https://рэу.рф/",
+    logo: "/images/partners/ecosystem-plekhanov.webp",
+  },
+  {
+    name: "РГГУ",
+    fullName: "Đại học Nhân văn Quốc gia Nga",
+    country: "russia",
+    website: "https://www.rsuh.ru/",
+    logo: "/images/partners/ecosystem-rsuh.webp",
+  },
+  {
+    name: "РГПУ им. А. И. Герцена",
+    fullName: "Đại học Sư phạm Quốc gia Nga mang tên Herzen",
+    country: "russia",
+    website: "https://www.herzen.spb.ru/",
+    logo: "/images/partners/ecosystem-herzen.webp",
+  },
+  {
+    name: "РГГМУ",
+    fullName: "Đại học Khí tượng Thủy văn Saint Petersburg",
+    country: "russia",
+    website: "https://www.rshu.ru/",
+    logo: "/images/partners/ecosystem-rshu.webp",
+  },
+  {
+    name: "МШЭ МГУ",
+    fullName: "Trường Kinh tế Moskva, Đại học Quốc gia Moskva",
+    country: "russia",
+    website: "https://mse-msu.ru/",
+    logo: "/images/partners/ecosystem-mse-msu.webp",
+  },
+  {
+    name: "СПбГЭУ",
+    fullName: "Đại học Kinh tế Quốc gia Saint Petersburg",
+    country: "russia",
+    website: "https://unecon.ru/",
+    logo: "/images/partners/ecosystem-unecon.webp",
+  },
+  {
+    name: "Positive Technologies",
+    fullName: "Компания Positive Technologies",
+    country: "russia",
+    website: "https://ptsecurity.com/",
+    logo: "/images/partners/ecosystem-positive-technologies.webp",
+  },
+  {
+    name: "Комитет по внешним связям Санкт-Петербурга",
+    fullName: "Ủy ban Đối ngoại Saint Petersburg",
+    country: "russia",
+    website: "https://kvs.gov.spb.ru/",
+    logo: "/images/partners/ecosystem-spb-external-relations.webp",
+  },
+  {
+    name: "Học viện Công nghệ Bưu chính Viễn thông",
+    fullName: "Институт технологий почты и телекоммуникаций",
+    country: "vietnam",
+    website: "https://ptit.edu.vn/",
+    logo: "/images/partners/ecosystem-ptit.webp",
+  },
+  {
+    name: "Đại học Kinh tế - Kỹ thuật Công nghiệp",
+    fullName: "Университет экономики и промышленных технологий",
+    country: "vietnam",
+    website: "https://uneti.edu.vn/",
+    logo: "/images/partners/ecosystem-uneti.webp",
+  },
+  {
+    name: "Viện Khoa học Vật liệu",
+    fullName: "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    country: "vietnam",
+    website: "https://ims.ac.vn/",
+    logo: "/images/partners/ecosystem-ims.webp",
+  },
+  {
+    name: "Trường Đại học Kinh tế - Đại học Quốc gia Hà Nội",
+    fullName: "Университет экономики и бизнеса Вьетнамского национального университета в Ханое",
+    country: "vietnam",
+    website: "https://ueb.edu.vn/",
+    logo: "/images/partners/ecosystem-ueb-vnu.webp",
+  },
+  {
+    name: "Đại học Tài chính - Marketing",
+    fullName: "Университет финансов и маркетинга при Министерстве финансов Вьетнама",
+    country: "vietnam",
+    website: "https://ufm.edu.vn/",
+    logo: "/images/partners/ecosystem-ufm.webp",
+  },
+  {
+    name: "Viện Nghiên cứu Châu Âu và Châu Mỹ",
+    fullName: "Viện Hàn lâm Khoa học Xã hội Việt Nam",
+    country: "vietnam",
+    website: "https://ieas.vass.gov.vn/",
+    logo: "/images/partners/ecosystem-ieas.webp",
+  },
+  {
+    name: "Trường Công nghệ Thông tin Phenikaa",
+    fullName: "Школа информационных технологий Университета Феникаа",
+    country: "vietnam",
+    website: "https://psc.phenikaa-uni.edu.vn/vi",
+    logo: "/images/partners/ecosystem-phenikaa-it.webp",
+  },
+];

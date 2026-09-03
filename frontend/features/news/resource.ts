@@ -17,6 +17,7 @@ export const newsResource = createResource<void>()({
   queries: {
     list: defineQuery({
       inputKey: (filters?: AdminNewsListFilters) => [
+        filters?.locale ?? "RU",
         filters?.contentType ?? "ALL",
 
         filters?.category ?? "ALL",

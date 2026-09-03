@@ -3,13 +3,22 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 test("ecosystem page renders comprehensive network gateways, interactive form, A-Z directories, Khai Sang results, and knowledge library", async () => {
-  const ecosystem = await readFile(
-    new URL(
-      "../features/public-v2/components/GuestEcosystemV2.tsx",
-      import.meta.url,
+  const [ecosystem, partners] = await Promise.all([
+    readFile(
+      new URL(
+        "../features/public-v2/components/GuestEcosystemV2.tsx",
+        import.meta.url,
+      ),
+      "utf8",
     ),
-    "utf8",
-  );
+    readFile(
+      new URL(
+        "../features/public-v2/components/GuestEcosystemPartners.ts",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  ]);
 
   // 1. Must contain 4 main section anchors
   assert.match(ecosystem, /id="opportunities"/);
@@ -20,7 +29,8 @@ test("ecosystem page renders comprehensive network gateways, interactive form, A
 
   // 2. Must contain the 4 network sections and sticky subnav
   assert.match(ecosystem, /Cơ hội hợp tác/);
-  assert.match(ecosystem, /Thành viên mạng lưới/);
+  assert.match(ecosystem, /Đối tác mạng lưới/);
+  assert.doesNotMatch(ecosystem, /Thành viên mạng lưới/);
   assert.match(ecosystem, /Dự án & Kết quả/);
   assert.match(ecosystem, /Thư viện tri thức/);
 
@@ -60,6 +70,41 @@ test("ecosystem page renders comprehensive network gateways, interactive form, A
     );
   }
   assert.match(ecosystem, /src=\{org\.logo\}/);
+  assert.match(ecosystem, /href=\{org\.website\}/);
+  assert.equal((partners.match(/^    country: "russia"/gm) ?? []).length, 13);
+  assert.equal((partners.match(/^    country: "vietnam"/gm) ?? []).length, 7);
+  const documentLogos = [...partners.matchAll(/logo: "([^\"]+)"/g)].map(
+    ([, logo]) => logo,
+  );
+  assert.equal(documentLogos.length, 20);
+  for (const logo of documentLogos) {
+    assert.ok(
+      (await readFile(new URL(`../public${logo}`, import.meta.url))).byteLength >
+        1_000,
+    );
+  }
+  for (const organization of [
+    "ЦЭМИ РАН",
+    "Колаборатория",
+    "СПбУТУиЭ",
+    "СПбГУТ",
+    "СПбГЭТУ",
+    "РЭУ им. Г.В. Плеханова",
+    "РГГУ",
+    "РГПУ им. А. И. Герцена",
+    "РГГМУ",
+    "МШЭ МГУ",
+    "СПбГЭУ",
+    "Positive Technologies",
+    "Комитет по внешним связям Санкт-Петербурга",
+    "Học viện Công nghệ Bưu chính Viễn thông",
+    "Đại học Kinh tế - Kỹ thuật Công nghiệp",
+    "Viện Khoa học Vật liệu",
+    "Trường Đại học Kinh tế - Đại học Quốc gia Hà Nội",
+    "Đại học Tài chính - Marketing",
+    "Viện Nghiên cứu Châu Âu và Châu Mỹ",
+    "Trường Công nghệ Thông tin Phenikaa",
+  ]) assert.ok(partners.includes(organization));
   assert.doesNotMatch(ecosystem, /🏛️/);
 
   // 5. Section 3 (Projects): Khai Sang Scholarship & Results Lookup

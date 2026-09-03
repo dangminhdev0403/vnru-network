@@ -24,6 +24,7 @@ export interface SidebarFrameProps {
   sections: NavSection[];
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
+  activeHref?: string;
   isMobile?: boolean;
   onItemClick?: () => void;
   badgeText?: string;
@@ -81,6 +82,7 @@ export default function SidebarFrame({
   sections,
   isSidebarOpen,
   toggleSidebar,
+  activeHref: activeHrefOverride,
   isMobile = false,
   onItemClick,
   contextLabel,
@@ -100,10 +102,12 @@ export default function SidebarFrame({
     }
     return pathname === path || pathname.startsWith(path + "/");
   };
-  const activeHref = sections
-    .flatMap((section) => section.items.map((item) => item.href))
-    .filter(matches)
-    .sort((a, b) => b.length - a.length)[0];
+  const activeHref =
+    activeHrefOverride ??
+    sections
+      .flatMap((section) => section.items.map((item) => item.href))
+      .filter(matches)
+      .sort((a, b) => b.length - a.length)[0];
 
   return (
     <aside className="relative isolate flex h-full w-full flex-col overflow-hidden border-r border-[#dfe6ef] bg-[#fbfdff] px-3 py-4 text-[#10213a] dark:border-[#253445] dark:bg-[var(--nav-bg)] dark:text-[#f4f7fb]">
@@ -225,6 +229,7 @@ export default function SidebarFrame({
                   <Link
                     href={item.href}
                     onClick={onItemClick}
+                    aria-current={active ? "page" : undefined}
                     className={cn(
                       "relative flex min-h-11 w-full items-center rounded-xl text-sm font-semibold transition-colors",
                       isSidebarOpen ? "gap-3 px-3" : "justify-center px-0",

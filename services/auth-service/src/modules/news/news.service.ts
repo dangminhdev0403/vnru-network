@@ -45,6 +45,7 @@ export interface NewsPrismaClient {
 export interface AdminListNewsInput {
   limit: number;
   offset: number;
+  locale?: NewsLocale;
   contentType?: NewsContentType;
   category?: string;
   query?: string;
@@ -55,6 +56,21 @@ export interface AdminNewsListResponse {
   items: any[];
   total: number;
   counts: { total: number; featured: number };
+}
+
+const localePriority = (locale: NewsLocale) =>
+  [locale, 'RU', 'VI', 'EN'].filter(
+    (item, index, values) => values.indexOf(item) === index,
+  );
+
+function prioritizeTranslations(article: any, locale: NewsLocale) {
+  const priority = localePriority(locale);
+  return {
+    ...article,
+    translations: [...(article.translations ?? [])].sort(
+      (a, b) => priority.indexOf(a.locale) - priority.indexOf(b.locale),
+    ),
+  };
 }
 
 const articleSelect = {
@@ -200,6 +216,7 @@ export class NewsService {
 
   async listAdmin(input: AdminListNewsInput): Promise<AdminNewsListResponse> {
     const where: Record<string, unknown> = {};
+    const locale = input.locale ?? 'RU';
 
     if (input.contentType) {
       where.contentType = input.contentType;
@@ -243,7 +260,7 @@ export class NewsService {
       ]);
 
     return {
-      items,
+      items: items.map((article) => prioritizeTranslations(article, locale)),
       total,
       counts: {
         total: allCount,

@@ -65,6 +65,7 @@ const publicQuerySchema = paginationSchema.extend({
   period: z.enum(['7days', '30days']).optional(),
 });
 const adminQuerySchema = paginationSchema.extend({
+  locale: z.enum(['VI', 'EN', 'RU']).default('RU'),
   contentType: z
     .enum([
       'ARTICLE',
