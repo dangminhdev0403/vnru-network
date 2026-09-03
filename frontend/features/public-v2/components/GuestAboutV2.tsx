@@ -254,6 +254,15 @@ const PARTNERS = [
   */
 ] as const;
 
+const TEMPORARILY_HIDDEN_PARTNER_NAMES = new Set([
+  "Bauman MSTU",
+  "JINR Dubna",
+  "Lomonosov MSU",
+  "MAI",
+  "Quỹ Truyền thống và Hữu nghị",
+  "RAS",
+]);
+
 const PARTICIPATING_PARTNERS = [
   ...PARTNERS,
   ...DOCUMENT_PARTNERS.map((partner) => ({
@@ -263,10 +272,16 @@ const PARTICIPATING_PARTNERS = [
     url: partner.website,
     country: partner.country === "russia" ? ("ru" as const) : ("vi" as const),
   })),
-].filter(
-  (partner, index, partners) =>
-    partners.findIndex((candidate) => candidate.url === partner.url) === index,
-);
+]
+  .filter(
+    (partner, index, partners) =>
+      partners.findIndex((candidate) => candidate.url === partner.url) === index,
+  )
+  .filter(
+    (partner) =>
+      !TEMPORARILY_HIDDEN_PARTNER_NAMES.has(partner.name) &&
+      !TEMPORARILY_HIDDEN_PARTNER_NAMES.has(partner.shortName),
+  );
 
 type OperationMechanism = {
   title: string;

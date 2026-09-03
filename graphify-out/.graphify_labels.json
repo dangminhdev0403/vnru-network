@@ -219,8 +219,11 @@
   "217": "public-i18n-runtime.test.mjs",
   "218": "admin-news-locale.test.mjs",
   "219": "publish/page.tsx",
+  "220": "eslint-plugin-prettier",
+  "221": "jest",
   "222": "@designcodeio/threeui",
   "223": "knowledge/page.tsx",
+  "224": "@nestjs/schematics",
   "225": "opportunities/page.tsx",
   "226": "login-submit-feedback.test.mjs",
   "227": "motion",
@@ -228,6 +231,15 @@
   "229": "about-content.test.mjs",
   "230": "ecosystem-rvstin-content.test.mjs",
   "231": "home-bilateral-gateway.test.mjs",
+  "232": "@nestjs/testing",
+  "233": "prisma",
+  "234": "source-map-support",
   "235": "form-focus-outline.test.mjs",
-  "236": "next-auth"
+  "236": "next-auth",
+  "237": "ts-jest",
+  "238": "ts-loader",
+  "239": "ts-node",
+  "240": "tsconfig-paths",
+  "241": "@types/jest",
+  "242": "typescript"
 }

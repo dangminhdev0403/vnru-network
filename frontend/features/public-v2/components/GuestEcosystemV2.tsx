@@ -255,8 +255,19 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
   },
 ];
 
+const TEMPORARILY_HIDDEN_ORGANIZATIONS = new Set([
+  "Bauman MSTU",
+  "JINR Dubna",
+  "Lomonosov MSU",
+  "MAI",
+  "Quỹ Truyền thống và Hữu nghị",
+  "RAS",
+]);
+
 const ORGANIZATIONS_LIST: OrganizationItem[] = [
-  ...ORGANIZATIONS_RAW,
+  ...ORGANIZATIONS_RAW.filter(
+    (org) => !TEMPORARILY_HIDDEN_ORGANIZATIONS.has(org.name),
+  ),
   ...DOCUMENT_PARTNERS.map((partner) => ({
     ...partner,
     location: partner.country === "russia" ? "Liên bang Nga" : "Việt Nam",
