@@ -30,7 +30,8 @@ export const DOCUMENT_PARTNERS: EcosystemPartner[] = [
   },
   {
     name: "СПбГУТ",
-    fullName: "Đại học Viễn thông Quốc gia Saint Petersburg mang tên M.A. Bonch-Bruevich",
+    fullName:
+      "Đại học Viễn thông Quốc gia Saint Petersburg mang tên M.A. Bonch-Bruevich",
     country: "russia",
     website: "https://www.sut.ru/",
     logo: "/images/partners/ecosystem-sut.webp",

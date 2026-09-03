@@ -24,10 +24,49 @@ const connectFormSchema = (locale: Locale) => {
     locale === "ru" ? ru : locale === "en" ? en : vi;
 
   return z.object({
-    fullName: z.string().trim().min(2, message("Vui lòng nhập họ và tên.", "Please enter your full name.", "Введите имя и фамилию.")),
-    organization: z.string().trim().min(2, message("Vui lòng nhập cơ quan hoặc trường.", "Please enter your institution.", "Укажите организацию или университет.")),
-    email: z.string().trim().email(message("Email không hợp lệ.", "Invalid email address.", "Некорректный адрес электронной почты.")),
-    message: z.string().trim().min(10, message("Nội dung cần ít nhất 10 ký tự.", "The message must contain at least 10 characters.", "Сообщение должно содержать не менее 10 символов.")),
+    fullName: z
+      .string()
+      .trim()
+      .min(
+        2,
+        message(
+          "Vui lòng nhập họ và tên.",
+          "Please enter your full name.",
+          "Введите имя и фамилию.",
+        ),
+      ),
+    organization: z
+      .string()
+      .trim()
+      .min(
+        2,
+        message(
+          "Vui lòng nhập cơ quan hoặc trường.",
+          "Please enter your institution.",
+          "Укажите организацию или университет.",
+        ),
+      ),
+    email: z
+      .string()
+      .trim()
+      .email(
+        message(
+          "Email không hợp lệ.",
+          "Invalid email address.",
+          "Некорректный адрес электронной почты.",
+        ),
+      ),
+    message: z
+      .string()
+      .trim()
+      .min(
+        10,
+        message(
+          "Nội dung cần ít nhất 10 ký tự.",
+          "The message must contain at least 10 characters.",
+          "Сообщение должно содержать не менее 10 символов.",
+        ),
+      ),
   });
 };
 
@@ -222,9 +261,7 @@ const ORGANIZATIONS_LIST: OrganizationItem[] = [
     ...partner,
     location: partner.country === "russia" ? "Liên bang Nga" : "Việt Nam",
   })),
-].sort(
-  (a, b) => a.name.localeCompare(b.name, "vi"),
-);
+].sort((a, b) => a.name.localeCompare(b.name, "vi"));
 
 // ══════════════════ DATA: TÀI TRỢ / FELLOWSHIPS & GRANTS (INTERUSSIA) ══════════════════
 const GRANTS_ITEMS = [
@@ -1135,7 +1172,9 @@ export function GuestEcosystemV2({
                 {(["russia", "vietnam"] as const).map((country) => (
                   <section key={country}>
                     <h3 className="mb-4 font-serif text-xl font-black text-[#082352]">
-                      {country === "russia" ? "Về phía Nga" : "Về phía Việt Nam"}
+                      {country === "russia"
+                        ? "Về phía Nga"
+                        : "Về phía Việt Nam"}
                     </h3>
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                       {ORGANIZATIONS_LIST.filter(
