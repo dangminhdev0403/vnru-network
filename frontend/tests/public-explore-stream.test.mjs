@@ -39,6 +39,13 @@ test("news pages share masthead while the listing keeps spotlight and featured s
     ),
     "utf8",
   );
+  const serverSource = await readFile(
+    new URL(
+      "../features/public-v2/data/public-news-server.ts",
+      import.meta.url,
+    ),
+    "utf8",
+  );
 
   assert.match(source, /const SPOTLIGHT_INTERVAL_MS = 5_000/);
   assert.match(source, /const latest = latestArticles/);
@@ -70,6 +77,10 @@ test("news pages share masthead while the listing keeps spotlight and featured s
   );
   assert.doesNotMatch(source + articleSource, /<GuestPublicNav|<GuestPublicFooter/);
   assert.doesNotMatch(source, /vnru-infinity-loading/);
+  assert.match(
+    serverSource,
+    /article\.content\?\.split\(\/\\n\{2,\}\/\)\.filter\(Boolean\) \?\? \[\]/,
+  );
   const newsLoading = await readFile(
     new URL("../app/news/loading.tsx", import.meta.url),
     "utf8",

@@ -18,7 +18,7 @@ type ApiArticle = {
   id: string;
   title: string;
   summary: string;
-  content: string;
+  content?: string;
   category: string;
   contentType: OfficialNewsArticle["contentType"];
   coverImageUrl: string | null;
@@ -58,7 +58,7 @@ const mapArticle = (article: ApiArticle): OfficialNewsArticle | undefined => {
     category,
     date: article.publishedAt ?? "",
     image: article.coverImageUrl,
-    body: article.content.split(/\n{2,}/).filter(Boolean),
+    body: article.content?.split(/\n{2,}/).filter(Boolean) ?? [],
     sources: article.sourceUrls,
     contentType: article.contentType,
     actionUrl: article.actionUrl,
