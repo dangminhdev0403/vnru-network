@@ -368,12 +368,17 @@ export function AdminNewsStudio() {
   }, [rawArticles, view]);
 
   const totalCount = list.data?.total ?? 0;
+  const systemTotal = list.data?.counts?.total ?? totalCount;
+  const isSearchActive = Boolean(
+    query.trim() || (categoryFilter && categoryFilter !== "ALL"),
+  );
   const counts = {
-    total: totalCount,
+    total: isSearchActive ? totalCount : systemTotal,
     published: rawArticles.filter((a) => Boolean(a.publishedAt)).length,
-    featured:
-      list.data?.counts?.featured ??
-      rawArticles.filter((a) => a.isFeatured).length,
+    featured: isSearchActive
+      ? rawArticles.filter((a) => a.isFeatured).length
+      : (list.data?.counts?.featured ??
+        rawArticles.filter((a) => a.isFeatured).length),
   };
 
   const translation = form.translations[locale];
@@ -647,9 +652,9 @@ export function AdminNewsStudio() {
 
   const renderTableContent = () => (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[700px] border-collapse text-left text-sm">
+      <table className="w-full min-w-[760px] border-collapse text-left text-sm">
         <thead>
-          <tr className="border-b border-slate-200/80 bg-slate-50/70 text-xs font-semibold text-slate-500">
+          <tr className="border-b border-slate-200/80 bg-slate-50/80 text-xs font-semibold uppercase tracking-wider text-slate-500">
             <th scope="col" className="w-12 px-4 py-3.5 text-center">
               <input
                 type="checkbox"
@@ -662,13 +667,13 @@ export function AdminNewsStudio() {
                 className="size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
               />
             </th>
-            <th scope="col" className="px-4 py-3.5 w-[300px] max-w-[300px]">
+            <th scope="col" className="min-w-[300px] px-5 py-3.5">
               Bài viết / Nội dung
             </th>
             <th scope="col" className="px-4 py-3.5 whitespace-nowrap">
               Trạng thái
             </th>
-            <th scope="col" className="px-4 py-3.5 whitespace-nowrap">
+            <th scope="col" className="px-4 py-3.5 whitespace-nowrap text-center">
               Tin nổi bật
             </th>
             <th scope="col" className="px-4 py-3.5 whitespace-nowrap">
@@ -676,7 +681,7 @@ export function AdminNewsStudio() {
             </th>
             <th
               scope="col"
-              className="w-20 px-4 py-3.5 text-center whitespace-nowrap"
+              className="w-36 px-5 py-3.5 text-right whitespace-nowrap"
             >
               Thao tác
             </th>
@@ -740,6 +745,7 @@ export function AdminNewsStudio() {
               const summary = article.translations[0]?.summary || "";
               const isSelected = selectedRowIds.includes(article.id);
               const authorInfo = formatAuthor(article.author);
+              const dateInfo = formatDate(article.publishedAt || article.updatedAt);
 
               return (
                 <tr
@@ -752,41 +758,47 @@ export function AdminNewsStudio() {
                         : ""
                   }`}
                 >
-                  <td className="px-4 py-4 text-center">
+                  <td className="px-4 py-4 text-center align-top">
                     <input
                       type="checkbox"
                       aria-label={`Chọn bài viết ${title}`}
                       checked={isSelected}
                       onChange={() => toggleSelectRow(article.id)}
-                      className="size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                      className="mt-1 size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                     />
                   </td>
 
-                  <td className="px-4 py-4 w-[280px] max-w-[280px]">
-                    <div className="flex items-start gap-2.5">
-                      <div className="min-w-0 flex-1">
-                        <button
-                          data-no-localize
-                          type="button"
-                          onClick={() => open(article)}
-                          title={title}
-                          className="block w-full max-w-[250px] truncate text-left font-bold text-slate-900 transition hover:text-blue-600"
-                        >
-                          {title}
-                        </button>
-                        {summary ? (
-                          <p
-                            data-no-localize
-                            className="mt-0.5 line-clamp-2 text-xs text-slate-500 leading-snug"
-                          >
-                            {summary}
-                          </p>
-                        ) : null}
+                  <td className="px-5 py-4 align-top">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700">
+                          {categories[article.category] || article.category}
+                        </span>
+                        <span className="text-[11px] text-slate-400 font-medium">
+                          {dateInfo.date}
+                        </span>
                       </div>
+                      <button
+                        data-no-localize
+                        type="button"
+                        onClick={() => open(article)}
+                        title={title}
+                        className="block text-left text-sm font-bold text-slate-900 leading-snug transition hover:text-blue-600 line-clamp-2 break-words"
+                      >
+                        {title}
+                      </button>
+                      {summary ? (
+                        <p
+                          data-no-localize
+                          className="mt-0.5 line-clamp-1 text-xs text-slate-500 leading-normal"
+                        >
+                          {summary}
+                        </p>
+                      ) : null}
                     </div>
                   </td>
 
-                  <td className="px-4 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4 align-top whitespace-nowrap">
                     {article.publishedAt ? (
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
                         <span className="size-1.5 rounded-full bg-emerald-500" />
@@ -800,105 +812,98 @@ export function AdminNewsStudio() {
                     )}
                   </td>
 
-                  <td className="px-4 py-4 whitespace-nowrap">
-                    {article.isFeatured ? (
-                      <span className="inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-800 shadow-2xs">
-                        <span className="material-symbols-outlined text-sm text-amber-500">
-                          star
-                        </span>
-                        Nổi bật
+                  <td className="px-4 py-4 align-top whitespace-nowrap text-center">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        update.mutate({
+                          id: article.id,
+                          input: { isFeatured: !article.isFeatured },
+                        });
+                      }}
+                      title={
+                        article.isFeatured
+                          ? "Bỏ đánh dấu nổi bật"
+                          : "Đánh dấu tin nổi bật"
+                      }
+                      aria-label={
+                        article.isFeatured
+                          ? "Bỏ đánh dấu nổi bật"
+                          : "Đánh dấu tin nổi bật"
+                      }
+                      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold transition active:scale-95 ${
+                        article.isFeatured
+                          ? "border border-amber-300 bg-amber-50 text-amber-800 shadow-2xs hover:bg-amber-100"
+                          : "border border-slate-200 bg-white text-slate-400 hover:border-amber-300 hover:text-amber-600"
+                      }`}
+                    >
+                      <span className="material-symbols-outlined text-sm leading-none text-amber-500">
+                        {article.isFeatured ? "star" : "star_outline"}
                       </span>
-                    ) : (
-                      <span className="text-xs font-medium text-slate-300 pl-3">
-                        —
-                      </span>
-                    )}
+                      <span>{article.isFeatured ? "Nổi bật" : "Thường"}</span>
+                    </button>
                   </td>
 
-                  <td className="px-4 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4 align-top whitespace-nowrap">
                     <div className="flex items-center gap-2">
                       <div className="grid size-7 shrink-0 place-items-center rounded-full bg-blue-600 text-xs font-bold text-white shadow-xs">
                         {authorInfo.initial}
                       </div>
-                      <span className="text-xs font-semibold text-slate-700">
+                      <span
+                        className="max-w-[140px] truncate text-xs font-semibold text-slate-700"
+                        title={authorInfo.name}
+                      >
                         {authorInfo.name}
                       </span>
                     </div>
                   </td>
 
-                  <td className="relative w-20 px-4 py-4 text-center whitespace-nowrap">
-                    <button
-                      type="button"
-                      aria-label="Tùy chọn thao tác"
-                      onClick={() =>
-                        setActionMenuId(
-                          actionMenuId === article.id ? null : article.id,
-                        )
-                      }
-                      className="grid size-8 place-items-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 active:scale-95"
-                    >
-                      <span className="material-symbols-outlined text-xl">
-                        more_vert
-                      </span>
-                    </button>
-
-                    {actionMenuId === article.id ? (
-                      <>
-                        <div
-                          className="fixed inset-0 z-10"
-                          onClick={() => setActionMenuId(null)}
-                        />
-                        <div className="absolute right-4 top-12 z-20 w-44 rounded-xl border border-slate-200 bg-white p-1.5 text-left text-xs font-medium shadow-lg">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setActionMenuId(null);
-                              setPreviewItem(article);
-                            }}
-                            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-50"
-                          >
-                            <span className="material-symbols-outlined text-base">
-                              visibility
-                            </span>
-                            <span>Xem trước</span>
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setActionMenuId(null);
-                              open(article);
-                            }}
-                            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-600"
-                          >
-                            <span className="material-symbols-outlined text-base">
-                              edit
-                            </span>
-                            <span>Chỉnh sửa</span>
-                          </button>
-                          <button
-                            type="button"
-                            onClick={async () => {
-                              setActionMenuId(null);
-                              const confirmation = await confirmAction({
-                                title: "Xóa bài viết?",
-                                text: "Bài viết và toàn bộ bản dịch sẽ bị xóa vĩnh viễn.",
-                                confirmButtonText: "Xóa",
-                                isDestructive: true,
-                              });
-                              if (confirmation.isConfirmed) {
-                                deleteArticle.mutate(article.id);
-                              }
-                            }}
-                            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-red-700 hover:bg-red-50"
-                          >
-                            <span className="material-symbols-outlined text-base">
-                              delete
-                            </span>
-                            <span>Xóa bài viết</span>
-                          </button>
-                        </div>
-                      </>
-                    ) : null}
+                  <td className="px-5 py-4 align-top text-right whitespace-nowrap">
+                    <div className="flex items-center justify-end gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => setPreviewItem(article)}
+                        title="Xem trước"
+                        aria-label={`Xem trước ${title}`}
+                        className="grid size-8 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600"
+                      >
+                        <span className="material-symbols-outlined text-lg leading-none">
+                          visibility
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => open(article)}
+                        title="Chỉnh sửa"
+                        aria-label={`Chỉnh sửa ${title}`}
+                        className="grid size-8 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600"
+                      >
+                        <span className="material-symbols-outlined text-lg leading-none">
+                          edit
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          const confirmation = await confirmAction({
+                            title: "Xóa?",
+                            text: "Bài viết và toàn bộ bản dịch sẽ bị xóa vĩnh viễn.",
+                            confirmButtonText: "Xóa",
+                            isDestructive: true,
+                          });
+                          if (confirmation.isConfirmed) {
+                            deleteArticle.mutate(article.id);
+                          }
+                        }}
+                        title="Xóa"
+                        aria-label={`Xóa ${title}`}
+                        className="grid size-8 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-rose-600"
+                      >
+                        <span className="material-symbols-outlined text-lg leading-none">
+                          delete
+                        </span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );
@@ -1056,20 +1061,27 @@ export function AdminNewsStudio() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.25 }}
-            className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"
+            className="flex min-h-[88px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-xs backdrop-blur-xs transition hover:shadow-sm"
           >
-            <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600">
+            <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 shadow-2xs">
               <span className="material-symbols-outlined text-2xl">
                 description
               </span>
             </div>
             <div>
-              <span className="block text-xs font-medium text-slate-500">
-                Tổng bài viết
+              <span className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
+                {isSearchActive ? "Kết quả tìm kiếm" : "Tổng bài viết"}
               </span>
-              <strong className="mt-0.5 block text-2xl font-bold text-slate-900">
-                {counts.total}
-              </strong>
+              <div className="mt-0.5 flex items-baseline gap-2">
+                <strong className="block text-2xl font-extrabold tracking-tight text-slate-900">
+                  {counts.total}
+                </strong>
+                {isSearchActive && systemTotal > totalCount ? (
+                  <span className="text-xs font-medium text-slate-400">
+                    / {systemTotal} tổng số
+                  </span>
+                ) : null}
+              </div>
             </div>
           </motion.div>
 
@@ -1078,18 +1090,18 @@ export function AdminNewsStudio() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.25, delay: 0.05 }}
-            className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"
+            className="flex min-h-[88px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-xs backdrop-blur-xs transition hover:shadow-sm"
           >
-            <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+            <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600 shadow-2xs">
               <span className="material-symbols-outlined text-2xl">
                 check_circle
               </span>
             </div>
             <div>
-              <span className="block text-xs font-medium text-slate-500">
+              <span className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
                 Đã xuất bản
               </span>
-              <strong className="mt-0.5 block text-2xl font-bold text-slate-900">
+              <strong className="mt-0.5 block text-2xl font-extrabold tracking-tight text-slate-900">
                 {counts.published}
               </strong>
             </div>
@@ -1100,16 +1112,16 @@ export function AdminNewsStudio() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.25, delay: 0.1 }}
-            className="flex min-h-[84px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"
+            className="flex min-h-[88px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-xs backdrop-blur-xs transition hover:shadow-sm"
           >
-            <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-amber-100/70 text-amber-600">
+            <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-amber-50 text-amber-600 shadow-2xs">
               <span className="material-symbols-outlined text-2xl">star</span>
             </div>
             <div>
-              <span className="block text-xs font-medium text-slate-500">
+              <span className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
                 Tin nổi bật
               </span>
-              <strong className="mt-0.5 block text-2xl font-bold text-slate-900">
+              <strong className="mt-0.5 block text-2xl font-extrabold tracking-tight text-slate-900">
                 {counts.featured ?? 0}
               </strong>
             </div>
@@ -1122,12 +1134,12 @@ export function AdminNewsStudio() {
         <>
           <section
             aria-label="Thanh tìm kiếm và bộ lọc"
-            className="mb-6 rounded-2xl border border-slate-200/90 bg-white p-3 shadow-xs"
+            className="mb-5 rounded-2xl border border-slate-200/90 bg-white p-3.5 shadow-xs"
           >
-            <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               {/* Search Bar */}
-              <div className="relative flex h-10 flex-1 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50/70 px-3 transition focus-within:border-blue-500">
-                <span className="material-symbols-outlined shrink-0 text-lg text-slate-400">
+              <div className="relative flex h-11 flex-1 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 transition focus-within:border-blue-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-500/10">
+                <span className="material-symbols-outlined shrink-0 text-xl text-slate-400">
                   search
                 </span>
                 <input
@@ -1135,17 +1147,17 @@ export function AdminNewsStudio() {
                   aria-label="Tìm bài viết"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Tìm tiêu đề, tóm tắt bài viết..."
-                  className="w-full bg-transparent text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                  placeholder="Tìm theo tiêu đề hoặc nội dung bài viết..."
+                  className="w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
                 />
                 {query ? (
                   <button
                     type="button"
                     onClick={() => setQuery("")}
                     aria-label="Xóa từ khóa tìm kiếm"
-                    className="grid size-5 place-items-center rounded-full text-slate-400 hover:bg-slate-200 hover:text-slate-600"
+                    className="grid size-6 place-items-center rounded-full text-slate-400 hover:bg-slate-200 hover:text-slate-600 transition active:scale-95"
                   >
-                    <span className="material-symbols-outlined text-sm">
+                    <span className="material-symbols-outlined text-base">
                       close
                     </span>
                   </button>
@@ -1153,12 +1165,12 @@ export function AdminNewsStudio() {
               </div>
 
               {/* Category Filter Dropdown */}
-              <div className="relative min-w-[160px] rounded-xl border border-slate-200 bg-white transition hover:border-slate-300">
+              <div className="relative min-w-[200px] rounded-xl border border-slate-200 bg-white transition hover:border-slate-300">
                 <select
                   aria-label="Lọc danh mục"
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="h-10 w-full cursor-pointer appearance-none bg-transparent py-2 pl-3.5 pr-8 text-xs font-semibold text-slate-700 outline-none focus:outline-none hover:bg-slate-50/50 rounded-xl"
+                  className="h-11 w-full cursor-pointer appearance-none bg-transparent py-2 pl-3.5 pr-9 text-xs font-semibold text-slate-700 outline-none focus:outline-none hover:bg-slate-50/50 rounded-xl"
                 >
                   <option value="ALL">Tất cả danh mục</option>
                   {Object.entries(categories).map(([val, label]) => (
@@ -1169,30 +1181,66 @@ export function AdminNewsStudio() {
                 </select>
                 <span
                   aria-hidden="true"
-                  className="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-lg text-slate-400"
+                  className="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-lg text-slate-400"
                 >
                   expand_more
                 </span>
               </div>
 
               {/* Reset Active Filters Button */}
-              {query || categoryFilter !== "ALL" ? (
+              {isSearchActive ? (
                 <button
                   type="button"
                   onClick={() => {
                     setQuery("");
                     setCategoryFilter("ALL");
                   }}
-                  className="inline-flex h-10 items-center gap-1 rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 active:scale-95"
+                  className="inline-flex h-11 items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50/60 px-3.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-100/80 active:scale-95 focus-visible:outline-2 focus-visible:outline-rose-500"
                   title="Đặt lại tất cả bộ lọc"
                 >
                   <span className="material-symbols-outlined text-base">
                     filter_alt_off
                   </span>
-                  <span className="hidden sm:inline">Đặt lại</span>
+                  <span>Đặt lại</span>
                 </button>
               ) : null}
             </div>
+
+            {/* Active search filter indicator chip */}
+            {isSearchActive ? (
+              <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-2.5 text-xs text-slate-500">
+                <span className="font-medium text-slate-400">Đang lọc theo:</span>
+                {query.trim() ? (
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+                    <span className="truncate max-w-[280px]">Từ khóa: &ldquo;{query}&rdquo;</span>
+                    <button
+                      type="button"
+                      onClick={() => setQuery("")}
+                      aria-label="Xóa từ khóa tìm kiếm"
+                      className="hover:text-blue-900"
+                    >
+                      <span className="material-symbols-outlined text-sm leading-none">close</span>
+                    </button>
+                  </span>
+                ) : null}
+                {categoryFilter !== "ALL" ? (
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-700">
+                    <span>{categories[categoryFilter] || categoryFilter}</span>
+                    <button
+                      type="button"
+                      onClick={() => setCategoryFilter("ALL")}
+                      aria-label="Xóa bộ lọc danh mục"
+                      className="hover:text-indigo-900"
+                    >
+                      <span className="material-symbols-outlined text-sm leading-none">close</span>
+                    </button>
+                  </span>
+                ) : null}
+                <span className="ml-auto text-xs font-medium text-slate-400">
+                  {totalCount > 0 ? `Tìm thấy ${totalCount} kết quả` : "Không có kết quả"}
+                </span>
+              </div>
+            ) : null}
           </section>
 
           {/* ═══════════════ CORE NEWS LIST & PAGINATION (UNIFIED CARD) ═══════════════ */}

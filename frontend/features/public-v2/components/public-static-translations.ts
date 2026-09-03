@@ -61,7 +61,8 @@ export const PUBLIC_STATIC_TRANSLATIONS: TranslationMap = {
     "Viện Hàn lâm, Trường ĐH & Doanh nghiệp": "Academies, Universities & Businesses",
     "Thỏa thuận song phương trực tiếp": "Direct bilateral agreements",
     "Đại học Sư phạm Thành phố Hồ Chí Minh": "Ho Chi Minh City University of Education",
-    "Trung tâm tiếng Nga mang tên A. S. Pushkin": "A. S. Pushkin Russian Language Center"
+    "Trung tâm tiếng Nga mang tên A. S. Pushkin": "A. S. Pushkin Russian Language Center",
+    "Viện Nghiên cứu Chiến lược Kinh tế": "Institute for Economic Strategy Studies"
   },
   ru: {
     "520+ Chuyên gia": "520+ экспертов",
@@ -125,6 +126,7 @@ export const PUBLIC_STATIC_TRANSLATIONS: TranslationMap = {
     "Trần Đức Tùng": "Чан Дык Тунг",
     "Thỏa thuận song phương trực tiếp": "Прямые двусторонние соглашения",
     "Đại học Sư phạm Thành phố Hồ Chí Minh": "Педагогический университет города Хошимина",
-    "Trung tâm tiếng Nga mang tên A. S. Pushkin": "Центр русского языка им. А. С. Пушкина во Вьетнаме"
+    "Trung tâm tiếng Nga mang tên A. S. Pushkin": "Центр русского языка им. А. С. Пушкина во Вьетнаме",
+    "Viện Nghiên cứu Chiến lược Kinh tế": "Институт исследований экономической стратегии"
   }
 };

@@ -1,16 +1,16 @@
-# Graph Report - vnru-network  (2026-09-04)
+# Graph Report - vnru-network  (2026-09-03)
 
 ## Corpus Check
-- 361 files · ~1,262,821 words
+- 361 files · ~1,258,376 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2514 nodes · 3598 edges · 237 communities (185 shown, 52 thin omitted)
+- 2514 nodes · 3597 edges · 243 communities (191 shown, 52 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 12 edges (avg confidence: 0.6)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `958dff61`
+- Built from commit: `c8b4b718`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -30,6 +30,8 @@
 - Workflow Commands
 - Hooks
 - MOCK_DATA_AGENT_GUIDE.md
+- AdminNewsController
+- confirmAction
 - GuestEcosystemV2.tsx
 - AuthenticatedRequest
 - identity.module.ts
@@ -168,13 +170,16 @@
 - frontend/README.md
 - copilot-instructions.md
 - VN-RU Monorepo Rules
+- news.controller.ts
 - VN-RU Monorepo Architecture
+- 7. DIAL DEFINITIONS (Technical Reference)
 - Cancel Nodes
 - VN-RU Module Map
 - services/AGENTS.md
 - Deployment and Local Operation
 - Loop Group Nodes
 - GUIDES.md
+- NewsService
 - news.service.ts
 - news-media.service.ts
 - backend-architecture.spec.ts
@@ -184,6 +189,7 @@
 - deploy-script.test.sh
 - { GET, POST }
 - server.ts
+- auth.ts
 - page.tsx
 - 1. THE THREE DIALS (Core Configuration)
 - react-aria-components
@@ -242,7 +248,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (237 total, 52 thin omitted)
+## Communities (243 total, 52 thin omitted)
 
 ### Community 0 - "authServiceUrl"
 Cohesion: 0.05
@@ -253,8 +259,8 @@ Cohesion: 0.14
 Nodes (11): PageProps, copy, PermissionCatalogPage(), copy, GrantFilter, isSystemRole(), RoleDetailPageProps, AccessScope (+3 more)
 
 ### Community 2 - "SessionService"
-Cohesion: 0.40
-Nodes (4): Browser URLs, Deployment and Local Operation, Local source development, Production Compose deployment
+Cohesion: 0.23
+Nodes (11): AccessControlPrismaClient, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord, RolePermissionRecord, RoleRecord, CreateSessionInput, CreateSessionResult (+3 more)
 
 ### Community 3 - "dependencies"
 Cohesion: 0.12
@@ -300,13 +306,21 @@ Nodes (30): `archon chat <message>`, Archon CLI Command Reference, `archon compl
 Cohesion: 0.07
 Nodes (29): Advanced Features: Hooks, MCP, Skills, Retry, Sessions, Typed Artifacts, Automatic Tool Wildcards, Claude vs Codex: How Each Gets MCP and Skills, Combining Skills with MCP, Common Patterns, Config File Format, Environment Variable Expansion, Error Classification (+21 more)
 
+### Community 15 - "AdminNewsController"
+Cohesion: 0.22
+Nodes (6): AdminNewsController, Body, Patch, Post, Req, UseGuards
+
+### Community 16 - "confirmAction"
+Cohesion: 0.21
+Nodes (12): IamAdminController, Body, Controller, Get, Param, Patch, Post, Query (+4 more)
+
 ### Community 17 - "GuestEcosystemV2.tsx"
 Cohesion: 0.09
-Nodes (22): Optional, AccessControlModule, Module, AccessControlPrismaClient, AccessControlService, PermissionRecord, ResolveCapabilitiesInput, RoleAssignmentRecord (+14 more)
+Nodes (9): Optional, AccessControlService, Inject, Injectable, AuthenticationService, Injectable, SessionService, Inject (+1 more)
 
 ### Community 18 - "AuthenticatedRequest"
-Cohesion: 0.11
-Nodes (12): Res, RequestWithCookies, AuthenticationController, Body, Controller, Delete, Get, Param (+4 more)
+Cohesion: 0.17
+Nodes (14): Res, AuthenticatedRequest, RequestWithCookies, AuthenticationController, Body, Controller, Delete, Get (+6 more)
 
 ### Community 19 - "identity.module.ts"
 Cohesion: 0.11
@@ -381,12 +395,12 @@ Cohesion: 0.11
 Nodes (17): Accordion, Choreography Rules, Coordinated Sequences, Counter-Motion, Dashboard Widgets, Drag and Drop, Grid Cards, Group Rules (+9 more)
 
 ### Community 37 - "3.4 Full"
-Cohesion: 0.11
-Nodes (17): 1. Command dispatch, 2. Common verification rules, 3.1 Quick, 3.2 Integration, 3.3 Browser UI, 3.4 Full, 3. Profile definitions, 4. Module-aware test selection (+9 more)
+Cohesion: 0.18
+Nodes (11): 3.1 Quick, 3.2 Integration, 3.3 Browser UI, 3.4 Full, 3. Profile definitions, Gate A — Repository/static, Gate B — Backend/runtime, Gate C — Integration (+3 more)
 
 ### Community 38 - "iam-admin.service.ts"
-Cohesion: 0.09
-Nodes (33): IamAdminController, paginationSchema, passwordResetSchema, roleAssignmentSchema, rolePermissionsSchema, Body, Controller, Get (+25 more)
+Cohesion: 0.18
+Nodes (14): create(), createMany(), deleteMany(), findMany(), findUnique(), IamAdminPrismaClient, IamAdminService, isSuperAdminRole() (+6 more)
 
 ### Community 39 - "WorkspaceShell.tsx"
 Cohesion: 0.17
@@ -549,12 +563,12 @@ Cohesion: 0.20
 Nodes (10): 13. OUT OF SCOPE, 14. FINAL PRE-FLIGHT CHECK, 1.A Dial Inference (design read → dial values), 1.B Use-Case Presets, 1.C How the Dials Drive Output, 1. THE THREE DIALS (Core Configuration), 2.A When to reach for a real design system (use official packages), 2.B When the brief is an aesthetic, not a system (+2 more)
 
 ### Community 80 - "Frontend Runtime and UI Guide"
-Cohesion: 0.20
+Cohesion: 0.18
 Nodes (10): Component Ownership, Frontend Runtime and UI Guide, Loading, Error, and Standard UI States `[DESIGN]`, Multilingual Support & AI Translation `[SOURCE]`, Purpose, Realtime, Server and Client Components, State Ownership (+2 more)
 
 ### Community 81 - "authenticated-request-context.ts"
 Cohesion: 0.15
-Nodes (16): AuthenticatedRequestGuard, extractSessionCookie(), isRecord(), RequireAnyPermission(), RequireMfa(), RequirePermission(), context(), Injectable (+8 more)
+Nodes (16): paginationSchema, passwordResetSchema, roleAssignmentSchema, rolePermissionsSchema, userStatusSchema, uuidSchema, AuthenticatedRequestGuard, extractSessionCookie() (+8 more)
 
 ### Community 82 - "style.md"
 Cohesion: 0.20
@@ -585,8 +599,8 @@ Cohesion: 0.18
 Nodes (9): Badge(), BadgeProps, badgeStyles, BreadcrumbItem, Breadcrumbs(), BreadcrumbsProps, Button(), ButtonProps (+1 more)
 
 ### Community 89 - "authentication.service.ts"
-Cohesion: 0.27
-Nodes (6): configSchema, validateConfig(), DatabaseClient, DatabaseModule, Injectable, Module
+Cohesion: 0.11
+Nodes (20): AppModule, Module, configSchema, validateConfig(), DatabaseClient, DatabaseModule, Injectable, Module (+12 more)
 
 ### Community 90 - "Product"
 Cohesion: 0.22
@@ -621,8 +635,8 @@ Cohesion: 0.25
 Nodes (7): Brand & Style, Colors, Components, Elevation & Depth, Layout & Spacing, Shapes, Typography
 
 ### Community 98 - "Frontend Rules"
-Cohesion: 0.17
-Nodes (9): Frontend Architecture, Archived Pre-Test Prompt, Before code, Boundaries, Completion, Frontend Rules, Server state, State (+1 more)
+Cohesion: 0.25
+Nodes (7): Before code, Boundaries, Completion, Frontend Rules, Server state, State, UI Quality & Impeccable Gate
 
 ### Community 99 - "Backend Modular Monolith Rules"
 Cohesion: 0.25
@@ -749,8 +763,8 @@ Cohesion: 0.25
 Nodes (5): Documentation Index, Development, Documentation, Kept runtime, VN–RU Network Portal
 
 ### Community 132 - "app.module.ts"
-Cohesion: 0.15
-Nodes (12): AppController, Controller, Get, AppModule, Module, AppService, Injectable, bootstrap() (+4 more)
+Cohesion: 0.29
+Nodes (5): AppController, Controller, Get, AppService, Injectable
 
 ### Community 133 - "workspace-server.ts"
 Cohesion: 0.22
@@ -761,16 +775,16 @@ Cohesion: 0.50
 Nodes (3): Access model, Current product boundary, Portal Foundation Decisions
 
 ### Community 135 - "PublicNewsController"
-Cohesion: 0.15
-Nodes (13): AdminNewsController, parse(), PublicNewsController, Body, Controller, Delete, Get, Param (+5 more)
+Cohesion: 0.20
+Nodes (8): parse(), PublicNewsController, Controller, Delete, Get, Param, Query, localize()
 
 ### Community 136 - "Synthetic IAM Workflow Fixtures"
 Cohesion: 0.50
 Nodes (3): Critical notice, Synthetic IAM Workflow Fixtures, Usage
 
 ### Community 144 - "VN-RU Architecture Hub"
-Cohesion: 0.15
-Nodes (9): Canonical detailed docs, Read order, Runtime model, Task routing, VN-RU Architecture Hub, Module 1 API Contract Policy, Module 1 RBAC Architecture, Product access classes (+1 more)
+Cohesion: 0.18
+Nodes (6): Module 1 API Contract Policy, Module 1 RBAC Architecture, Product access classes, Frontend Architecture, Archived Pre-Test Prompt, Backend Architecture
 
 ### Community 145 - "frontend/package.json"
 Cohesion: 0.20
@@ -788,16 +802,24 @@ Nodes (7): dist, **/*spec.ts, test, ./tsconfig.json, exclude, extends, node_modu
 Cohesion: 0.29
 Nodes (6): Documentation, Implementation, Non-goals, Source precedence, VN-RU Monorepo Rules, Workspace boundaries
 
+### Community 165 - "news.controller.ts"
+Cohesion: 0.17
+Nodes (11): adminQuerySchema, articleFields, categorySchema, createSchema, localeMap, localeSchema, paginationSchema, publicQuerySchema (+3 more)
+
 ### Community 166 - "VN-RU Monorepo Architecture"
 Cohesion: 0.33
 Nodes (5): Decision, Dependency direction, Extraction policy, Repository shape, VN-RU Monorepo Architecture
+
+### Community 167 - "7. DIAL DEFINITIONS (Technical Reference)"
+Cohesion: 0.29
+Nodes (6): 1. Command dispatch, 2. Common verification rules, 4. Module-aware test selection, 5. Evidence standard, 6. Examples, Pro-Max Verification Guide — Selectable Test Profiles
 
 ### Community 168 - "Cancel Nodes"
 Cohesion: 0.40
 Nodes (5): Cancel Nodes, Configuration, Fields, Typical Patterns, When to use `cancel` vs failing a `bash:` check
 
 ### Community 169 - "VN-RU Module Map"
-Cohesion: 0.33
+Cohesion: 0.40
 Nodes (5): Current backend modules, Frontend ownership, Future modules, Ownership rules, VN-RU Module Map
 
 ### Community 171 - "Deployment and Local Operation"
@@ -809,16 +831,20 @@ Cohesion: 0.50
 Nodes (4): Body Semantics, Configuration, Loop Group Nodes, When to use `loop:` vs `loop_group:`
 
 ### Community 173 - "GUIDES.md"
-Cohesion: 0.17
-Nodes (5): Task Guide Router, Frontend Module Guide, Database Migration Guide, Multilingual Backend Plan, Backend Module Guide
+Cohesion: 0.12
+Nodes (9): Task Guide Router, Browser URLs, Deployment and Local Operation, Local source development, Production Compose deployment, Frontend Module Guide, Database Migration Guide, Multilingual Backend Plan (+1 more)
+
+### Community 174 - "NewsService"
+Cohesion: 0.33
+Nodes (4): articleImageUrls(), NewsService, Inject, Injectable
 
 ### Community 175 - "news.service.ts"
-Cohesion: 0.12
-Nodes (15): adminArticleSelect, AdminListNewsInput, AdminNewsListResponse, articleImageUrls(), articleSelect, localePriority(), localize(), NewsContentType (+7 more)
+Cohesion: 0.15
+Nodes (11): adminArticleSelect, AdminListNewsInput, AdminNewsListResponse, articleSelect, localePriority(), NewsContentType, NewsLocale, NewsPrismaClient (+3 more)
 
 ### Community 176 - "news-media.service.ts"
-Cohesion: 0.10
-Nodes (20): adminQuerySchema, articleFields, categorySchema, createSchema, localeMap, localeSchema, paginationSchema, publicQuerySchema (+12 more)
+Cohesion: 0.23
+Nodes (8): ALLOWED_IMAGE_TYPES, NewsImageFile, newsImagePublicId(), NewsMediaService, Injectable, validateNewsImage(), UploadedFile, UseInterceptors
 
 ### Community 177 - "backend-architecture.spec.ts"
 Cohesion: 0.40
@@ -827,6 +853,10 @@ Nodes (4): DEMO_OPPORTUNITIES, DetailedOpportunity, getOpportunityById(), Opport
 ### Community 178 - "SidebarFrame.tsx"
 Cohesion: 0.09
 Nodes (22): copy, RegisterPage(), createRegistrationSchema(), isRegistrationField(), RegistrationField, RegistrationValidationCopy, Header(), headerCopy (+14 more)
+
+### Community 202 - "auth.ts"
+Cohesion: 0.40
+Nodes (5): Canonical detailed docs, Read order, Runtime model, Task routing, VN-RU Architecture Hub
 
 ### Community 203 - "page.tsx"
 Cohesion: 0.50

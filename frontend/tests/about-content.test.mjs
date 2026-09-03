@@ -81,11 +81,11 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.equal(
     [...participatingPartners.values()].filter((country) => country === "vi")
       .length,
-    10,
+    11,
   );
   assert.match(
     about,
-    /TEMPORARILY_HIDDEN_PARTNER_NAMES[\s\S]*"SPbPU"[\s\S]*"Пермский Политех"[\s\S]*"СПбГУ"/,
+    /TEMPORARILY_HIDDEN_PARTNER_NAMES[\s\S]*"SPbPU"[\s\S]*"VAST"[\s\S]*"Пермский Политех"[\s\S]*"СПбГУ"/,
   );
   assert.match(about, /_blank/);
   assert.match(about, /noopener noreferrer/);

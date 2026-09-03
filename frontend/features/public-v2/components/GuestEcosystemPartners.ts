@@ -170,6 +170,13 @@ export const DOCUMENT_PARTNERS: EcosystemPartner[] = [
     logo: "/images/partners/ecosystem-ieas.webp",
   },
   {
+    name: "IESS",
+    fullName: "Viện Nghiên cứu Chiến lược Kinh tế",
+    country: "vietnam",
+    website: "https://iess.ac.vn/",
+    logo: "/images/partners/ecosystem-iess.webp",
+  },
+  {
     name: "Trường Công nghệ Thông tin Phenikaa",
     fullName: "Trường Công nghệ Thông tin - Đại học Phenikaa",
     country: "vietnam",

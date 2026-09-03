@@ -83,13 +83,13 @@ test("ecosystem page renders comprehensive network gateways, interactive form, A
     /href=\{org\.website\}[\s\S]{0,200}target="_blank"[\s\S]{0,200}rel="noopener noreferrer"/,
   );
   assert.equal((partners.match(/^    country: "russia"/gm) ?? []).length, 15);
-  assert.equal((partners.match(/^    country: "vietnam"/gm) ?? []).length, 9);
+  assert.equal((partners.match(/^    country: "vietnam"/gm) ?? []).length, 10);
   const vietnamPartners = partners.slice(partners.indexOf('name: "Học viện Công nghệ'));
   assert.doesNotMatch(vietnamPartners, /fullName: "[^"]*[А-Яа-яЁё]/);
   const documentLogos = [...partners.matchAll(/logo: "([^\"]+)"/g)].map(
     ([, logo]) => logo,
   );
-  assert.equal(documentLogos.length, 24);
+  assert.equal(documentLogos.length, 25);
   for (const logo of documentLogos) {
     assert.ok(
       (await readFile(new URL(`../public${logo}`, import.meta.url))).byteLength >
@@ -120,9 +120,13 @@ test("ecosystem page renders comprehensive network gateways, interactive form, A
     "Trường Đại học Kinh tế - Đại học Quốc gia Hà Nội",
     "Đại học Tài chính - Marketing",
     "Viện Nghiên cứu Châu Âu và Châu Mỹ",
+    "Viện Nghiên cứu Chiến lược Kinh tế",
     "Trường Công nghệ Thông tin Phenikaa",
   ]) assert.ok(partners.includes(organization));
-  assert.match(ecosystem, /TEMPORARILY_HIDDEN_ORGANIZATIONS[\s\S]*"SPbPU"/);
+  assert.match(
+    ecosystem,
+    /TEMPORARILY_HIDDEN_ORGANIZATIONS[\s\S]*"SPbPU"[\s\S]*"VAST"/,
+  );
   assert.doesNotMatch(ecosystem, /🏛️/);
 
   // 5. Section 3 (Projects): Khai Sang Scholarship & Results Lookup

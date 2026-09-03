@@ -262,6 +262,7 @@ const TEMPORARILY_HIDDEN_PARTNER_NAMES = new Set([
   "Quỹ Truyền thống và Hữu nghị",
   "RAS",
   "SPbPU",
+  "VAST",
   "Пермский Политех",
   "СПбГУ",
 ]);
