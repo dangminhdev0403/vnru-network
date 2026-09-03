@@ -32,6 +32,13 @@ test("news pages share masthead while the listing keeps spotlight and featured s
     new URL("../app/news/layout.tsx", import.meta.url),
     "utf8",
   );
+  const navSource = await readFile(
+    new URL(
+      "../features/public-v2/components/GuestPublicNav.tsx",
+      import.meta.url,
+    ),
+    "utf8",
+  );
 
   assert.match(source, /const SPOTLIGHT_INTERVAL_MS = 5_000/);
   assert.match(source, /const latest = latestArticles/);
@@ -47,11 +54,20 @@ test("news pages share masthead while the listing keeps spotlight and featured s
   assert.match(filterSource, /params\.set\("category", category\)/);
   assert.match(pageSource, /isNewsCategory\(categoryValue\)/);
   assert.match(pageSource, /initialQuery=\{query\}/);
+  assert.match(pageSource, /export async function generateMetadata/);
+  assert.match(
+    pageSource,
+    /Новости \| Российско-вьетнамская сеть знаний/,
+  );
   assert.match(source, /useRouter\(\)/);
   assert.match(source, /router\.push\(/);
   assert.doesNotMatch(source, /window\.location\.assign/);
   assert.match(layoutSource, /<GuestPublicNav active="news" \/>/);
   assert.match(layoutSource, /<GuestPublicFooter copy=\{HOME_COPY\[locale\]\} \/>/);
+  assert.match(
+    navSource,
+    /<LanguageSwitcher variant="light" compact refreshOnChange \/>/,
+  );
   assert.doesNotMatch(source + articleSource, /<GuestPublicNav|<GuestPublicFooter/);
   assert.doesNotMatch(source, /vnru-infinity-loading/);
   const newsLoading = await readFile(

@@ -198,7 +198,7 @@ export function GuestPublicNav({
         </div>
 
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 xl:gap-3">
-          <LanguageSwitcher variant="light" compact />
+          <LanguageSwitcher variant="light" compact refreshOnChange />
 
           {!isAuthenticated ? (
             <Link

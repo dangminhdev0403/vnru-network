@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import type { Locale } from "@/core/i18n/locale";
 import { GuestExploreV2 } from "@/features/public-v2/components/GuestExploreV2";
 import { getPublicNews } from "@/features/public-v2/data/public-news-server";
 import { LOCALE_COOKIE_NAME, sanitizeLocale } from "@/features/auth/server";
@@ -13,11 +14,30 @@ import {
   type NewsCategory,
 } from "@/features/public-v2/components/GuestNewsFilterNav";
 
-export const metadata: Metadata = {
-  title: "Tin tức | Mạng lưới tri thức Nga - Việt",
-  description:
-    "Tin Khoa học - Công nghệ, Kinh tế - Xã hội, Giáo dục đào tạo và Hợp tác Nga - Việt.",
+const NEWS_METADATA: Record<Locale, Metadata> = {
+  vi: {
+    title: "Tin tức | Mạng lưới tri thức Nga - Việt",
+    description:
+      "Tin Khoa học - Công nghệ, Kinh tế - Xã hội, Giáo dục đào tạo và Hợp tác Nga - Việt.",
+  },
+  en: {
+    title: "News | Russia-Vietnam Knowledge Network",
+    description:
+      "News on science and technology, economy and society, education, and Russia-Vietnam cooperation.",
+  },
+  ru: {
+    title: "Новости | Российско-вьетнамская сеть знаний",
+    description:
+      "Новости науки и технологий, экономики и общества, образования и российско-вьетнамского сотрудничества.",
+  },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = sanitizeLocale(
+    (await cookies()).get(LOCALE_COOKIE_NAME)?.value,
+  );
+  return NEWS_METADATA[locale];
+}
 
 function isNewsCategory(value: string): value is NewsCategory {
   return NEWS_CATEGORIES.some((category) => category === value);
