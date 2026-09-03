@@ -123,11 +123,13 @@ const adminArticleSelect = {
 };
 
 function localize(article: any, locale: NewsLocale) {
-  const translation =
-    article.translations?.find((item: any) => item.locale === locale) ??
-    article.translations?.find((item: any) => item.locale === 'VI');
+  const translation = localePriority(locale)
+    .map((candidate) =>
+      article.translations?.find((item: any) => item.locale === candidate),
+    )
+    .find(Boolean);
   const { translations: _translations, ...rest } = article;
-  return { ...rest, ...translation, locale: translation?.locale ?? 'VI' };
+  return { ...rest, ...translation, locale: translation?.locale ?? locale };
 }
 
 function articleImageUrls(article: any) {

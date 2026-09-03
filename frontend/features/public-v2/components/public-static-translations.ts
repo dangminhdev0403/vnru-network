@@ -59,7 +59,9 @@ export const PUBLIC_STATIC_TRANSLATIONS: TranslationMap = {
     "Xem tất cả →": "View all →",
     "ОГРН / Mã số đăng ký: 1207700294020": "OGRN / Registration number: 1207700294020",
     "Viện Hàn lâm, Trường ĐH & Doanh nghiệp": "Academies, Universities & Businesses",
-    "Thỏa thuận song phương trực tiếp": "Direct bilateral agreements"
+    "Thỏa thuận song phương trực tiếp": "Direct bilateral agreements",
+    "Đại học Sư phạm Thành phố Hồ Chí Minh": "Ho Chi Minh City University of Education",
+    "Trung tâm tiếng Nga mang tên A. S. Pushkin": "A. S. Pushkin Russian Language Center"
   },
   ru: {
     "520+ Chuyên gia": "520+ экспертов",
@@ -121,6 +123,8 @@ export const PUBLIC_STATIC_TRANSLATIONS: TranslationMap = {
     "Viện Hàn lâm, Trường ĐH & Doanh nghiệp": "Академии, вузы и бизнес",
     "Nguyễn Quốc Hùng": "Нгуен Куок Хунг",
     "Trần Đức Tùng": "Чан Дык Тунг",
-    "Thỏa thuận song phương trực tiếp": "Прямые двусторонние соглашения"
+    "Thỏa thuận song phương trực tiếp": "Прямые двусторонние соглашения",
+    "Đại học Sư phạm Thành phố Hồ Chí Minh": "Педагогический университет города Хошимина",
+    "Trung tâm tiếng Nga mang tên A. S. Pushkin": "Центр русского языка им. А. С. Пушкина во Вьетнаме"
   }
 };

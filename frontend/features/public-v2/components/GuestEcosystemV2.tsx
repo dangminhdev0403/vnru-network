@@ -262,6 +262,7 @@ const TEMPORARILY_HIDDEN_ORGANIZATIONS = new Set([
   "MAI",
   "Quỹ Truyền thống và Hữu nghị",
   "RAS",
+  "SPbPU",
 ]);
 
 const ORGANIZATIONS_LIST: OrganizationItem[] = [

@@ -261,6 +261,9 @@ const TEMPORARILY_HIDDEN_PARTNER_NAMES = new Set([
   "MAI",
   "Quỹ Truyền thống và Hữu nghị",
   "RAS",
+  "SPbPU",
+  "Пермский Политех",
+  "СПбГУ",
 ]);
 
 const PARTICIPATING_PARTNERS = [

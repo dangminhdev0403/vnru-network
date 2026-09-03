@@ -93,12 +93,19 @@ describe('NewsService', () => {
     );
   });
 
-  it('loads an article by id', async () => {
+  it('loads an article by id using an available locale when the requested one is missing', async () => {
     prisma.newsArticle.findFirst.mockResolvedValue({
       id: 'article-1',
-      translations: [],
+      translations: [
+        { locale: 'RU', title: 'Новость', summary: 'Кратко', content: 'Текст' },
+      ],
     });
-    await service.getPublic('article-1');
+
+    await expect(service.getPublic('article-1', 'EN')).resolves.toMatchObject({
+      id: 'article-1',
+      locale: 'RU',
+      title: 'Новость',
+    });
     expect(prisma.newsArticle.findFirst).toHaveBeenCalledWith(
       expect.objectContaining({
         where: { id: 'article-1' },

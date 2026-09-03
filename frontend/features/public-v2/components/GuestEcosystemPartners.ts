@@ -8,6 +8,20 @@ export type EcosystemPartner = {
 
 export const DOCUMENT_PARTNERS: EcosystemPartner[] = [
   {
+    name: "ИГХТУ",
+    fullName: "Đại học Công nghệ Hóa học Ivanovo",
+    country: "russia",
+    website: "https://www.isuct.ru/",
+    logo: "/images/partners/ecosystem-isuct.webp",
+  },
+  {
+    name: "ООО «Смартекс Групп»",
+    fullName: "Công ty TNHH Smartex Group",
+    country: "russia",
+    website: "https://smartex-group.com/",
+    logo: "/images/partners/ecosystem-smartex.webp",
+  },
+  {
     name: "ЦЭМИ РАН",
     fullName: "Viện Toán - Kinh tế Trung ương, Viện Hàn lâm Khoa học Nga",
     country: "russia",
@@ -105,6 +119,20 @@ export const DOCUMENT_PARTNERS: EcosystemPartner[] = [
     country: "vietnam",
     website: "https://ptit.edu.vn/",
     logo: "/images/partners/ecosystem-ptit.webp",
+  },
+  {
+    name: "Đại học Sư phạm Thành phố Hồ Chí Minh",
+    fullName: "Trường Đại học Sư phạm Thành phố Hồ Chí Minh",
+    country: "vietnam",
+    website: "https://hcmue.edu.vn/vi/",
+    logo: "/images/partners/ecosystem-hcmue.webp",
+  },
+  {
+    name: "Trung tâm tiếng Nga mang tên A. S. Pushkin",
+    fullName: "Trung tâm tiếng Nga mang tên A. S. Pushkin, Bộ Giáo dục và Đào tạo Việt Nam",
+    country: "vietnam",
+    website: "https://puskinhn.edu.vn/",
+    logo: "/images/partners/ecosystem-pushkin-center.webp",
   },
   {
     name: "Đại học Kinh tế - Kỹ thuật Công nghiệp",
