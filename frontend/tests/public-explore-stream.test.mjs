@@ -81,6 +81,8 @@ test("news pages share masthead while the listing keeps spotlight and featured s
     serverSource,
     /article\.content\?\.split\(\/\\n\{2,\}\/\)\.filter\(Boolean\) \?\? \[\]/,
   );
+  assert.match(serverSource, /title: article\.title \?\? ""/);
+  assert.match(serverSource, /summary: article\.summary \?\? ""/);
   const newsLoading = await readFile(
     new URL("../app/news/loading.tsx", import.meta.url),
     "utf8",

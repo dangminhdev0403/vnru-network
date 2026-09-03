@@ -16,8 +16,8 @@ const apiCategories: Partial<Record<NewsCategoryKey, string>> = Object.fromEntri
 
 type ApiArticle = {
   id: string;
-  title: string;
-  summary: string;
+  title?: string;
+  summary?: string;
   content?: string;
   category: string;
   contentType: OfficialNewsArticle["contentType"];
@@ -53,8 +53,8 @@ const mapArticle = (article: ApiArticle): OfficialNewsArticle | undefined => {
   if (!category) return undefined;
   return {
     id: article.id,
-    title: article.title,
-    summary: article.summary,
+    title: article.title ?? "",
+    summary: article.summary ?? "",
     category,
     date: article.publishedAt ?? "",
     image: article.coverImageUrl,
