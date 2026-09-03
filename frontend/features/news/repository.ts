@@ -7,6 +7,7 @@ export type NewsContentType =
   | "ANNOUNCEMENT"
   | "PROJECT"
   | "OPPORTUNITY"
+  | "KNOWLEDGE"
   | "PUBLICATION";
 export type NewsTranslation = {
   locale?: NewsLocale;
@@ -36,6 +37,7 @@ export type AdminNewsListFilters = {
   category?: string;
   query?: string;
   featured?: boolean;
+  published?: boolean;
 };
 
 export type AdminNewsListItem = {
@@ -62,7 +64,7 @@ export type AdminNewsListItem = {
 export type AdminNewsListResponse = {
   items: AdminNewsListItem[];
   total: number;
-  counts: { total: number; featured: number };
+  counts: { total: number; published: number; featured: number };
 };
 
 export type NewsInput = {
@@ -73,6 +75,7 @@ export type NewsInput = {
   sourceUrls?: string[];
   coverImageUrl?: string | null;
   isFeatured?: boolean;
+  publishedAt?: string | null;
   translations: Record<NewsLocale, NewsTranslation>;
 };
 
@@ -100,6 +103,9 @@ export const newsRepository = {
     if (filters?.query) params.set("query", filters.query);
     if (filters?.featured !== undefined)
       params.set("featured", String(filters.featured));
+    if (filters?.published !== undefined)
+      params.set("published", String(filters.published));
+
     const queryString = params.toString();
     return json<AdminNewsListResponse>(
       `/api/admin/news${queryString ? `?${queryString}` : ""}`,

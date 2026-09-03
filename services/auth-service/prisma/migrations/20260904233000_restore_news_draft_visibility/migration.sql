@@ -1,0 +1,2 @@
+ALTER TABLE "NewsArticle"
+ALTER COLUMN "publishedAt" DROP NOT NULL;

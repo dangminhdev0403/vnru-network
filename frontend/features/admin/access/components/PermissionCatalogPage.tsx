@@ -17,6 +17,10 @@ const copy: Record<Locale, Record<string, string>> = {
     searchPlaceholder: "Tìm theo mã quyền, tài nguyên hoặc thao tác…",
     allModules: "Tất cả module",
     allScopes: "Tất cả phạm vi",
+    moduleIam: "Quản trị danh tính (IAM)",
+    moduleContent: "Nội dung & Portal",
+    moduleCollaboration: "Hợp tác & Đề xuất",
+    moduleKnowledge: "Tri thức & Ấn phẩm",
     colKey: "Mã quyền hạn (Key)",
     colModule: "Phân hệ",
     colResource: "Tài nguyên",
@@ -34,6 +38,10 @@ const copy: Record<Locale, Record<string, string>> = {
     searchPlaceholder: "Search by permission key, resource, or action...",
     allModules: "All modules",
     allScopes: "All scopes",
+    moduleIam: "Identity administration (IAM)",
+    moduleContent: "Content & Portal",
+    moduleCollaboration: "Collaboration & Proposals",
+    moduleKnowledge: "Knowledge & Publications",
     colKey: "Permission Key",
     colModule: "Module",
     colResource: "Resource",
@@ -51,6 +59,10 @@ const copy: Record<Locale, Record<string, string>> = {
     searchPlaceholder: "Поиск по ключу, ресурсу или действию...",
     allModules: "Все модули",
     allScopes: "Все области",
+    moduleIam: "Управление идентификацией (IAM)",
+    moduleContent: "Контент и портал",
+    moduleCollaboration: "Сотрудничество и предложения",
+    moduleKnowledge: "Знания и публикации",
     colKey: "Ключ права",
     colModule: "Модуль",
     colResource: "Ресурс",
@@ -138,10 +150,10 @@ export default function PermissionCatalogPage() {
             className="w-full max-w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-semibold text-text-primary outline-none sm:w-auto"
           >
             <option value="">{t.allModules}</option>
-            <option value="iam">Quản trị danh tính (IAM)</option>
-            <option value="content">Nội dung & Portal</option>
-            <option value="collab">Hợp tác & Đề xuất</option>
-            <option value="knowledge">Tri thức & Ấn phẩm</option>
+            <option value="iam">{t.moduleIam}</option>
+            <option value="content">{t.moduleContent}</option>
+            <option value="collab">{t.moduleCollaboration}</option>
+            <option value="knowledge">{t.moduleKnowledge}</option>
           </select>
 
           <select
@@ -150,10 +162,13 @@ export default function PermissionCatalogPage() {
             className="w-full max-w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-semibold text-text-primary outline-none sm:w-auto"
           >
             <option value="">{t.allScopes}</option>
-            <option value="Own">Own Scope</option>
-            <option value="Organization">Organization Scope</option>
-            <option value="Portal">Portal Scope</option>
-            <option value="Global">Global Scope</option>
+            {(["Own", "Organization", "Portal", "Global"] as AccessScope[]).map(
+              (scope) => (
+                <option key={scope} value={scope}>
+                  {SCOPE_DESCRIPTIONS[scope].label[locale] ?? scope}
+                </option>
+              ),
+            )}
           </select>
         </div>
       </div>

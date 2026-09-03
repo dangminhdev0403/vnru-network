@@ -63,7 +63,6 @@ export default async function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     "/workspace/:path*",
-    "/knowledge",
     "/experts",
     "/opportunities",
     "/admin/:path*",

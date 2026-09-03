@@ -8,8 +8,12 @@ import { confirmAction, showSuccess, showError } from "@/lib/alerts";
 import { z } from "zod";
 import { newsResource } from "./resource";
 import { useLocale } from "@/core/i18n/locale";
-import { localizeReactNode } from "@/core/i18n/localize-react-node";
+import {
+  localizeReactNode,
+  localizeText,
+} from "@/core/i18n/localize-react-node";
 import { ADMIN_NEWS_TRANSLATIONS } from "./admin-news-translations";
+import { ContentOverviewDashboard } from "./ContentOverviewDashboard";
 import type {
   NewsArticle,
   NewsInput,
@@ -52,6 +56,12 @@ const localeNames: Record<NewsLocale, string> = {
   EN: "English",
   RU: "Русский",
 };
+const editorPlaceholders: Record<NewsLocale, { image: string; text: string }> =
+  {
+    VI: { image: "Hình ảnh", text: "văn bản" },
+    EN: { image: "Image", text: "text" },
+    RU: { image: "Изображение", text: "текст" },
+  };
 const empty = () => ({ title: "", summary: "", content: "", actionLabel: "" });
 const initial: NewsInput = {
   category: "science-technology",
@@ -68,6 +78,7 @@ const contentTypes: Record<NewsContentType, string> = {
   ANNOUNCEMENT: "Công bố",
   PROJECT: "Dự án",
   OPPORTUNITY: "Cơ hội",
+  KNOWLEDGE: "Tri thức",
   PUBLICATION: "Ấn phẩm",
 };
 
@@ -77,6 +88,12 @@ const categories: Record<string, string> = {
   education: "Giáo dục",
   cooperation: "Hợp tác",
 };
+const knowledgeCategories: Record<string, string> = {
+  "knowledge-article": "Bài báo",
+  "knowledge-journal": "Tạp chí",
+  "knowledge-invention": "Sáng chế",
+};
+const allCategories = { ...categories, ...knowledgeCategories };
 
 const dateTimeValue = (value?: string | null) =>
   value ? new Date(value).toISOString().slice(0, 16) : "";
@@ -148,6 +165,10 @@ const VIEW_CONFIG: Record<string, { title: string; subtitle: string }> = {
     subtitle:
       "Quản lý các chương trình tài trợ nghiên cứu, học bổng và cơ hội trao đổi quốc tế.",
   },
+  KNOWLEDGE: {
+    title: "Quản lý tri thức",
+    subtitle: "Quản lý và cập nhật nội dung trong thư viện tri thức.",
+  },
   ARTICLE: {
     title: "Quản lý tin tức",
     subtitle: "Quản lý và cập nhật toàn bộ bài viết, tin tức trên hệ thống.",
@@ -164,21 +185,6 @@ function formatDate(isoString?: string | null) {
   };
 }
 
-function formatAuthor(author?: {
-  id: string;
-  firstName: string | null;
-  lastName: string | null;
-}) {
-  if (!author) return { name: "Hệ thống", initial: "H" };
-  const fullName = [author.firstName, author.lastName]
-    .filter(Boolean)
-    .join(" ");
-  if (fullName) {
-    return { name: fullName, initial: fullName.charAt(0).toUpperCase() };
-  }
-  return { name: `Tác giả ${author.id.slice(0, 6)}`, initial: "T" };
-}
-
 export function AdminNewsStudio() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -189,6 +195,10 @@ export function AdminNewsStudio() {
   const [selectedId, setSelectedId] = useState<string>();
   const [form, setForm] = useState<NewsInput>(() => ({
     ...initial,
+    category:
+      requestedContentType === "KNOWLEDGE"
+        ? "knowledge-article"
+        : initial.category,
     contentType:
       requestedContentType && requestedContentType in contentTypes
         ? (requestedContentType as NewsContentType)
@@ -208,21 +218,21 @@ export function AdminNewsStudio() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [categoryFilter, setCategoryFilter] = useState<string>("ALL");
-  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
+  const [statusFilter, setStatusFilter] = useState<
+    "all" | "published" | "featured"
+  >("all");
   const [pageSize, setPageSize] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [actionMenuId, setActionMenuId] = useState<string | null>(null);
-  const [previewItem, setPreviewItem] = useState<AdminNewsListItem | null>(
-    null,
-  );
 
   useEffect(() => {
     setCurrentPage(1);
-    setSelectedRowIds([]);
-  }, [view, categoryFilter, query, pageSize]);
+  }, [view, categoryFilter, statusFilter, query, pageSize]);
 
   if (view !== previousView) {
     setPreviousView(view);
+    setCategoryFilter("ALL");
+    setStatusFilter("all");
     setSelectedId(undefined);
     setPendingCoverFile(null);
     setCoverPreviewUrl(null);
@@ -230,6 +240,10 @@ export function AdminNewsStudio() {
     if (view === "new") {
       setForm({
         ...initial,
+        category:
+          requestedContentType === "KNOWLEDGE"
+            ? "knowledge-article"
+            : initial.category,
         contentType:
           requestedContentType && requestedContentType in contentTypes
             ? (requestedContentType as NewsContentType)
@@ -253,6 +267,7 @@ export function AdminNewsStudio() {
         "EVENT",
         "PROJECT",
         "OPPORTUNITY",
+        "KNOWLEDGE",
         "ARTICLE",
         "PUBLICATION",
       ].includes(contentView ?? "")
@@ -263,14 +278,26 @@ export function AdminNewsStudio() {
     if (categoryFilter !== "ALL") {
       filters.category = categoryFilter;
     }
-    if (view === "featured") {
+    if (view === "featured" || statusFilter === "featured") {
       filters.featured = true;
     }
+    if (statusFilter === "published") {
+      filters.published = true;
+    }
+
     if (query.trim()) {
       filters.query = query.trim();
     }
     return filters;
-  }, [pageSize, currentPage, view, categoryFilter, query, listLocale]);
+  }, [
+    pageSize,
+    currentPage,
+    view,
+    categoryFilter,
+    statusFilter,
+    query,
+    listLocale,
+  ]);
 
   const list = useQuery(news.queries.list.options(queryFilters));
 
@@ -309,16 +336,10 @@ export function AdminNewsStudio() {
       onSuccess: ({ client, data, cache }) => {
         cache.queries.list.invalidateAll(client);
         setSelectedId(data.id);
-        showSuccess(
-          "Tạo thành công",
-          `Đã tạo ${contentLabel.toLocaleLowerCase("vi")} mới.`,
-        );
+        showSuccess(t("Tạo thành công"), t("Đã tạo nội dung mới."));
       },
-      onError: (err: any) => {
-        showError(
-          "Không thể tạo mới",
-          err instanceof Error ? err.message : "Đã xảy ra lỗi khi tạo mới",
-        );
+      onError: () => {
+        showError(t("Không thể tạo mới"), t("Đã xảy ra lỗi khi tạo mới"));
       },
     }),
   );
@@ -328,15 +349,12 @@ export function AdminNewsStudio() {
       onSuccess: ({ client, cache }) => {
         cache.queries.list.invalidateAll(client);
         showSuccess(
-          "Đã lưu chỉnh sửa",
-          "Nội dung đã được cập nhật thành công.",
+          t("Đã lưu chỉnh sửa"),
+          t("Nội dung đã được cập nhật thành công."),
         );
       },
-      onError: (err: any) => {
-        showError(
-          "Không thể lưu",
-          err instanceof Error ? err.message : "Đã xảy ra lỗi khi lưu",
-        );
+      onError: () => {
+        showError(t("Không thể lưu"), t("Đã xảy ra lỗi khi lưu"));
       },
     }),
   );
@@ -346,13 +364,10 @@ export function AdminNewsStudio() {
       onSuccess: ({ client, cache }) => {
         cache.queries.list.invalidateAll(client);
         setSelectedId(undefined);
-        showSuccess("Đã xóa", "Nội dung đã được xóa khỏi hệ thống.");
+        showSuccess(t("Đã xóa"), t("Nội dung đã được xóa khỏi hệ thống."));
       },
-      onError: (err: any) => {
-        showError(
-          "Không thể xóa",
-          err instanceof Error ? err.message : "Đã xảy ra lỗi khi xóa",
-        );
+      onError: () => {
+        showError(t("Không thể xóa"), t("Đã xảy ra lỗi khi xóa"));
       },
     }),
   );
@@ -370,20 +385,20 @@ export function AdminNewsStudio() {
   const totalCount = list.data?.total ?? 0;
   const systemTotal = list.data?.counts?.total ?? totalCount;
   const isSearchActive = Boolean(
-    query.trim() || (categoryFilter && categoryFilter !== "ALL"),
+    query.trim() ||
+    (categoryFilter && categoryFilter !== "ALL") ||
+    statusFilter !== "all",
   );
   const counts = {
-    total: isSearchActive ? totalCount : systemTotal,
-    published: rawArticles.filter((a) => Boolean(a.publishedAt)).length,
-    featured: isSearchActive
-      ? rawArticles.filter((a) => a.isFeatured).length
-      : (list.data?.counts?.featured ??
-        rawArticles.filter((a) => a.isFeatured).length),
+    total: systemTotal,
+    published: list.data?.counts?.published ?? 0,
+    featured: list.data?.counts?.featured ?? 0,
   };
 
   const translation = form.translations[locale];
   const showOverview = !view;
   const showList = Boolean(view && view !== "new" && !selectedId);
+  const showSummary = showList;
   const showEditor = view === "new" || Boolean(selectedId);
   const navContentType =
     view && view in contentTypes
@@ -391,8 +406,16 @@ export function AdminNewsStudio() {
       : requestedContentType && requestedContentType in contentTypes
         ? (requestedContentType as NewsContentType)
         : "ARTICLE";
-  const contentLabel =
-    contentTypes[showEditor ? form.contentType : navContentType];
+  const activeCategories =
+    (showEditor ? form.contentType : navContentType) === "KNOWLEDGE"
+      ? knowledgeCategories
+      : categories;
+  const listHref =
+    navContentType === "KNOWLEDGE"
+      ? "/workspace/news?view=KNOWLEDGE"
+      : "/workspace/news";
+  const t = (value: string) =>
+    localizeText(value, uiLocale, ADMIN_NEWS_TRANSLATIONS);
   const error = [
     list.error,
     create.error,
@@ -450,7 +473,12 @@ export function AdminNewsStudio() {
     setPendingCoverFile(null);
     setCoverPreviewUrl(null);
     setFieldErrors({});
-    setForm({ ...initial, contentType: navContentType });
+    setForm({
+      ...initial,
+      category:
+        navContentType === "KNOWLEDGE" ? "knowledge-article" : initial.category,
+      contentType: navContentType,
+    });
     setFeatured(false);
     setLocale("RU");
     router.push(`/workspace/news?view=new&type=${navContentType}`);
@@ -496,7 +524,7 @@ export function AdminNewsStudio() {
   const addInlineImage = (file: File, start?: number, end?: number) => {
     const url = URL.createObjectURL(file);
     const content = translation.content || "";
-    const imageMarkdown = `\n![Hình ảnh](${url})\n`;
+    const imageMarkdown = `\n![${editorPlaceholders[locale].image}](${url})\n`;
     setPendingInlineImages((current) => [...current, { url, file }]);
     setTranslation({
       content:
@@ -543,7 +571,8 @@ export function AdminNewsStudio() {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selected = textarea.value.substring(start, end);
-    const replacement = before + (selected || "văn bản") + after;
+    const placeholder = editorPlaceholders[locale].text;
+    const replacement = before + (selected || placeholder) + after;
     const newContent =
       textarea.value.substring(0, start) +
       replacement +
@@ -553,7 +582,9 @@ export function AdminNewsStudio() {
       textarea.focus();
       textarea.setSelectionRange(
         start + before.length,
-        start + before.length + (selected ? selected.length : "văn bản".length),
+        start +
+          before.length +
+          (selected ? selected.length : placeholder.length),
       );
     }, 0);
   };
@@ -597,8 +628,8 @@ export function AdminNewsStudio() {
     const Translator = window.Translator;
     if (!Translator) {
       showError(
-        "Không thể dịch tự động",
-        "Trình duyệt chưa hỗ trợ API dịch tự động.",
+        t("Không thể dịch tự động"),
+        t("Trình duyệt chưa hỗ trợ API dịch tự động."),
       );
       return;
     }
@@ -623,65 +654,48 @@ export function AdminNewsStudio() {
         },
       }));
       showSuccess(
-        "Đã dịch sang tiếng Nga",
-        "Nội dung bản dịch tiếng Nga đã được điền tự động.",
+        t("Đã dịch sang tiếng Nga"),
+        t("Nội dung bản dịch tiếng Nga đã được điền tự động."),
       );
     } catch {
       showError(
-        "Không thể dịch tự động",
-        "Đã xảy ra lỗi trong quá trình dịch thuật tự động.",
+        t("Không thể dịch tự động"),
+        t("Đã xảy ra lỗi trong quá trình dịch thuật tự động."),
       );
     } finally {
       setIsTranslating(false);
     }
   };
 
-  const toggleSelectAll = (checked: boolean) => {
-    if (checked) {
-      setSelectedRowIds(articles.map((a) => a.id));
-    } else {
-      setSelectedRowIds([]);
-    }
-  };
-
-  const toggleSelectRow = (id: string) => {
-    setSelectedRowIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
-    );
-  };
-
   const renderTableContent = () => (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[760px] border-collapse text-left text-sm">
+      <table className="w-full min-w-[900px] table-fixed border-collapse text-left text-sm">
         <thead>
           <tr className="border-b border-slate-200/80 bg-slate-50/80 text-xs font-semibold uppercase tracking-wider text-slate-500">
-            <th scope="col" className="w-12 px-4 py-3.5 text-center">
-              <input
-                type="checkbox"
-                aria-label="Chọn tất cả bài viết"
-                checked={
-                  articles.length > 0 &&
-                  selectedRowIds.length === articles.length
-                }
-                onChange={(e) => toggleSelectAll(e.target.checked)}
-                className="size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-              />
-            </th>
-            <th scope="col" className="min-w-[300px] px-5 py-3.5">
+            <th scope="col" className="w-[38%] px-5 py-3.5">
               Bài viết / Nội dung
-            </th>
-            <th scope="col" className="px-4 py-3.5 whitespace-nowrap">
-              Trạng thái
-            </th>
-            <th scope="col" className="px-4 py-3.5 whitespace-nowrap text-center">
-              Tin nổi bật
-            </th>
-            <th scope="col" className="px-4 py-3.5 whitespace-nowrap">
-              Người tạo
             </th>
             <th
               scope="col"
-              className="w-36 px-5 py-3.5 text-right whitespace-nowrap"
+              className="px-4 py-3.5 text-center whitespace-nowrap"
+            >
+              Danh mục
+            </th>
+            <th
+              scope="col"
+              className="px-4 py-3.5 text-center whitespace-nowrap"
+            >
+              Trạng thái
+            </th>
+            <th
+              scope="col"
+              className="px-4 py-3.5 whitespace-nowrap text-center"
+            >
+              Tin nổi bật
+            </th>
+            <th
+              scope="col"
+              className="w-52 px-5 py-3.5 text-center whitespace-nowrap"
             >
               Thao tác
             </th>
@@ -691,7 +705,7 @@ export function AdminNewsStudio() {
           {list.isLoading ? (
             <tr>
               <td
-                colSpan={6}
+                colSpan={5}
                 className="p-12 text-center text-base text-slate-500"
               >
                 <span className="material-symbols-outlined mr-2 animate-spin align-middle text-2xl text-blue-600">
@@ -704,7 +718,7 @@ export function AdminNewsStudio() {
 
           {list.isError ? (
             <tr>
-              <td colSpan={6} className="p-12 text-center">
+              <td colSpan={5} className="p-12 text-center">
                 <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-red-50 text-red-600">
                   <span className="material-symbols-outlined text-2xl">
                     error
@@ -714,7 +728,7 @@ export function AdminNewsStudio() {
                   Không thể tải danh sách nội dung
                 </p>
                 <p className="mt-1 text-xs text-red-600">
-                  {list.error?.message || "Đã xảy ra lỗi khi kết nối máy chủ."}
+                  Đã xảy ra lỗi khi kết nối máy chủ.
                 </p>
               </td>
             </tr>
@@ -722,7 +736,7 @@ export function AdminNewsStudio() {
 
           {!list.isLoading && !list.isError && articles.length === 0 ? (
             <tr>
-              <td colSpan={6} className="p-12 text-center">
+              <td colSpan={5} className="p-12 text-center">
                 <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-slate-100 text-slate-400">
                   <span className="material-symbols-outlined text-2xl">
                     feed
@@ -743,41 +757,20 @@ export function AdminNewsStudio() {
             articles.map((article) => {
               const title = article.translations[0]?.title || article.id;
               const summary = article.translations[0]?.summary || "";
-              const isSelected = selectedRowIds.includes(article.id);
-              const authorInfo = formatAuthor(article.author);
-              const dateInfo = formatDate(article.publishedAt || article.updatedAt);
+              const dateInfo = formatDate(
+                article.publishedAt || article.updatedAt,
+              );
 
               return (
                 <tr
                   key={article.id}
-                  className={`group transition hover:bg-slate-50/80 ${
-                    selectedId === article.id
-                      ? "bg-blue-50/40"
-                      : isSelected
-                        ? "bg-blue-50/20"
-                        : ""
-                  }`}
+                  className={`group transition hover:bg-slate-50/80 ${selectedId === article.id ? "bg-blue-50/40" : ""}`}
                 >
-                  <td className="px-4 py-4 text-center align-top">
-                    <input
-                      type="checkbox"
-                      aria-label={`Chọn bài viết ${title}`}
-                      checked={isSelected}
-                      onChange={() => toggleSelectRow(article.id)}
-                      className="mt-1 size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                    />
-                  </td>
-
                   <td className="px-5 py-4 align-top">
                     <div className="flex flex-col gap-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700">
-                          {categories[article.category] || article.category}
-                        </span>
-                        <span className="text-[11px] text-slate-400 font-medium">
-                          {dateInfo.date}
-                        </span>
-                      </div>
+                      <span className="text-sm font-medium text-slate-400">
+                        {dateInfo.date}
+                      </span>
                       <button
                         data-no-localize
                         type="button"
@@ -798,7 +791,13 @@ export function AdminNewsStudio() {
                     </div>
                   </td>
 
-                  <td className="px-4 py-4 align-top whitespace-nowrap">
+                  <td className="px-4 py-4 text-center align-middle whitespace-nowrap">
+                    <span className="inline-flex rounded-md bg-blue-50 px-2.5 py-1 text-sm font-semibold text-blue-700">
+                      {allCategories[article.category] || article.category}
+                    </span>
+                  </td>
+
+                  <td className="px-4 py-4 text-center align-middle whitespace-nowrap">
                     {article.publishedAt ? (
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
                         <span className="size-1.5 rounded-full bg-emerald-500" />
@@ -812,7 +811,7 @@ export function AdminNewsStudio() {
                     )}
                   </td>
 
-                  <td className="px-4 py-4 align-top whitespace-nowrap text-center">
+                  <td className="px-4 py-4 align-middle whitespace-nowrap text-center">
                     <button
                       type="button"
                       onClick={() => {
@@ -844,31 +843,32 @@ export function AdminNewsStudio() {
                     </button>
                   </td>
 
-                  <td className="px-4 py-4 align-top whitespace-nowrap">
-                    <div className="flex items-center gap-2">
-                      <div className="grid size-7 shrink-0 place-items-center rounded-full bg-blue-600 text-xs font-bold text-white shadow-xs">
-                        {authorInfo.initial}
-                      </div>
-                      <span
-                        className="max-w-[140px] truncate text-xs font-semibold text-slate-700"
-                        title={authorInfo.name}
-                      >
-                        {authorInfo.name}
-                      </span>
-                    </div>
-                  </td>
-
-                  <td className="px-5 py-4 align-top text-right whitespace-nowrap">
-                    <div className="flex items-center justify-end gap-1.5">
+                  <td className="px-5 py-4 align-middle text-center whitespace-nowrap">
+                    <div className="flex items-center justify-center gap-2">
                       <button
                         type="button"
-                        onClick={() => setPreviewItem(article)}
-                        title="Xem trước"
-                        aria-label={`Xem trước ${title}`}
-                        className="grid size-8 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600"
+                        disabled={update.isPending}
+                        onClick={() =>
+                          update.mutate({
+                            id: article.id,
+                            input: {
+                              publishedAt: article.publishedAt
+                                ? null
+                                : new Date().toISOString(),
+                            },
+                          })
+                        }
+                        title={article.publishedAt ? "Ẩn tin" : "Hiện tin"}
+                        aria-label={`${article.publishedAt ? "Ẩn tin" : "Hiện tin"} ${title}`}
+                        className="inline-flex min-h-10 min-w-20 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-600 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         <span className="material-symbols-outlined text-lg leading-none">
-                          visibility
+                          {article.publishedAt
+                            ? "visibility_off"
+                            : "visibility"}
+                        </span>
+                        <span>
+                          {article.publishedAt ? "Ẩn tin" : "Hiện tin"}
                         </span>
                       </button>
                       <button
@@ -876,7 +876,7 @@ export function AdminNewsStudio() {
                         onClick={() => open(article)}
                         title="Chỉnh sửa"
                         aria-label={`Chỉnh sửa ${title}`}
-                        className="grid size-8 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600"
+                        className="grid size-10 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600"
                       >
                         <span className="material-symbols-outlined text-lg leading-none">
                           edit
@@ -886,9 +886,11 @@ export function AdminNewsStudio() {
                         type="button"
                         onClick={async () => {
                           const confirmation = await confirmAction({
-                            title: "Xóa?",
-                            text: "Bài viết và toàn bộ bản dịch sẽ bị xóa vĩnh viễn.",
-                            confirmButtonText: "Xóa",
+                            title: t("Xóa?"),
+                            text: t(
+                              "Bài viết và toàn bộ bản dịch sẽ bị xóa vĩnh viễn.",
+                            ),
+                            confirmButtonText: t("Xóa"),
                             isDestructive: true,
                           });
                           if (confirmation.isConfirmed) {
@@ -897,7 +899,7 @@ export function AdminNewsStudio() {
                         }}
                         title="Xóa"
                         aria-label={`Xóa ${title}`}
-                        className="grid size-8 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-rose-600"
+                        className="grid size-10 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-rose-600"
                       >
                         <span className="material-symbols-outlined text-lg leading-none">
                           delete
@@ -1003,8 +1005,7 @@ export function AdminNewsStudio() {
   );
 
   return localizeReactNode(
-    (
-      <div className="mx-auto max-w-[1700px] px-4 py-6 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-[1700px] px-4 py-6 sm:px-6 lg:px-8">
       {/* ═══════════════ HEADER BAR OR BACK BUTTON ═══════════════ */}
       {showEditor ? (
         <div className="mb-5 flex items-center justify-between">
@@ -1012,19 +1013,17 @@ export function AdminNewsStudio() {
             type="button"
             onClick={() => {
               setSelectedId(undefined);
-              router.push("/workspace/news");
+              router.push(listHref);
             }}
             className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-xs transition hover:bg-slate-50 hover:text-blue-600 active:scale-95"
           >
             <span className="material-symbols-outlined text-base">
               arrow_back
             </span>
-            <span>
-              Quay lại danh sách {contentLabel.toLocaleLowerCase("vi")}
-            </span>
+            <span>{t("Quay lại danh sách")}</span>
           </button>
         </div>
-      ) : (
+      ) : !showOverview ? (
         <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-blue-700">
@@ -1037,31 +1036,36 @@ export function AdminNewsStudio() {
               {currentViewMeta.subtitle}
             </p>
           </div>
-          <button
-            type="button"
-            onClick={reset}
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-          >
-            <span className="material-symbols-outlined text-lg leading-none font-bold">
-              add
-            </span>
-            <span>Tạo {contentLabel.toLocaleLowerCase("vi")} mới</span>
-          </button>
+          {!showOverview ? (
+            <button
+              type="button"
+              onClick={reset}
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            >
+              <span className="material-symbols-outlined text-lg leading-none font-bold">
+                add
+              </span>
+              <span>{t("Tạo nội dung mới")}</span>
+            </button>
+          ) : null}
         </header>
-      )}
+      ) : null}
 
       {/* ═══════════════ REAL SUMMARY CARDS ═══════════════ */}
-      {showOverview ? (
+      {showSummary ? (
         <section
           aria-label="Tổng quan nội dung"
           className="mb-6 grid grid-cols-1 gap-3.5 sm:grid-cols-3"
         >
-          <motion.div
+          <motion.button
+            type="button"
+            onClick={() => setStatusFilter("all")}
+            aria-pressed={statusFilter === "all"}
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.25 }}
-            className="flex min-h-[88px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-xs backdrop-blur-xs transition hover:shadow-sm"
+            className={`flex min-h-[88px] items-center gap-3.5 rounded-2xl border bg-white/95 p-4 text-left shadow-xs transition hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${statusFilter === "all" ? "border-blue-400 ring-2 ring-blue-100" : "border-slate-200/90"}`}
           >
             <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 shadow-2xs">
               <span className="material-symbols-outlined text-2xl">
@@ -1083,14 +1087,17 @@ export function AdminNewsStudio() {
                 ) : null}
               </div>
             </div>
-          </motion.div>
+          </motion.button>
 
-          <motion.div
+          <motion.button
+            type="button"
+            onClick={() => setStatusFilter("published")}
+            aria-pressed={statusFilter === "published"}
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.25, delay: 0.05 }}
-            className="flex min-h-[88px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-xs backdrop-blur-xs transition hover:shadow-sm"
+            className={`flex min-h-[88px] items-center gap-3.5 rounded-2xl border bg-white/95 p-4 text-left shadow-xs transition hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 ${statusFilter === "published" ? "border-emerald-400 ring-2 ring-emerald-100" : "border-slate-200/90"}`}
           >
             <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600 shadow-2xs">
               <span className="material-symbols-outlined text-2xl">
@@ -1105,14 +1112,17 @@ export function AdminNewsStudio() {
                 {counts.published}
               </strong>
             </div>
-          </motion.div>
+          </motion.button>
 
-          <motion.div
+          <motion.button
+            type="button"
+            onClick={() => setStatusFilter("featured")}
+            aria-pressed={statusFilter === "featured"}
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.25, delay: 0.1 }}
-            className="flex min-h-[88px] items-center gap-3.5 rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-xs backdrop-blur-xs transition hover:shadow-sm"
+            className={`flex min-h-[88px] items-center gap-3.5 rounded-2xl border bg-white/95 p-4 text-left shadow-xs transition hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 ${statusFilter === "featured" ? "border-amber-400 ring-2 ring-amber-100" : "border-slate-200/90"}`}
           >
             <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-amber-50 text-amber-600 shadow-2xs">
               <span className="material-symbols-outlined text-2xl">star</span>
@@ -1125,12 +1135,19 @@ export function AdminNewsStudio() {
                 {counts.featured ?? 0}
               </strong>
             </div>
-          </motion.div>
+          </motion.button>
         </section>
       ) : null}
 
+      {showOverview ? (
+        <ContentOverviewDashboard
+          onSelectArticle={(article) => open(article)}
+          onResetForNew={reset}
+        />
+      ) : null}
+
       {/* ═══════════════ SEARCH & FILTER TOOLBAR, DATA GRID & PAGINATION ═══════════════ */}
-      {!showEditor ? (
+      {!showEditor && !showOverview ? (
         <>
           <section
             aria-label="Thanh tìm kiếm và bộ lọc"
@@ -1173,7 +1190,7 @@ export function AdminNewsStudio() {
                   className="h-11 w-full cursor-pointer appearance-none bg-transparent py-2 pl-3.5 pr-9 text-xs font-semibold text-slate-700 outline-none focus:outline-none hover:bg-slate-50/50 rounded-xl"
                 >
                   <option value="ALL">Tất cả danh mục</option>
-                  {Object.entries(categories).map(([val, label]) => (
+                  {Object.entries(activeCategories).map(([val, label]) => (
                     <option key={val} value={val}>
                       {label}
                     </option>
@@ -1194,6 +1211,7 @@ export function AdminNewsStudio() {
                   onClick={() => {
                     setQuery("");
                     setCategoryFilter("ALL");
+                    setStatusFilter("all");
                   }}
                   className="inline-flex h-11 items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50/60 px-3.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-100/80 active:scale-95 focus-visible:outline-2 focus-visible:outline-rose-500"
                   title="Đặt lại tất cả bộ lọc"
@@ -1209,35 +1227,66 @@ export function AdminNewsStudio() {
             {/* Active search filter indicator chip */}
             {isSearchActive ? (
               <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-2.5 text-xs text-slate-500">
-                <span className="font-medium text-slate-400">Đang lọc theo:</span>
+                <span className="font-medium text-slate-400">
+                  Đang lọc theo:
+                </span>
                 {query.trim() ? (
                   <span className="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
-                    <span className="truncate max-w-[280px]">Từ khóa: &ldquo;{query}&rdquo;</span>
+                    <span className="truncate max-w-[280px]">
+                      Từ khóa: &ldquo;{query}&rdquo;
+                    </span>
                     <button
                       type="button"
                       onClick={() => setQuery("")}
                       aria-label="Xóa từ khóa tìm kiếm"
                       className="hover:text-blue-900"
                     >
-                      <span className="material-symbols-outlined text-sm leading-none">close</span>
+                      <span className="material-symbols-outlined text-sm leading-none">
+                        close
+                      </span>
                     </button>
                   </span>
                 ) : null}
                 {categoryFilter !== "ALL" ? (
                   <span className="inline-flex items-center gap-1 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-700">
-                    <span>{categories[categoryFilter] || categoryFilter}</span>
+                    <span>
+                      {allCategories[categoryFilter] || categoryFilter}
+                    </span>
                     <button
                       type="button"
                       onClick={() => setCategoryFilter("ALL")}
                       aria-label="Xóa bộ lọc danh mục"
                       className="hover:text-indigo-900"
                     >
-                      <span className="material-symbols-outlined text-sm leading-none">close</span>
+                      <span className="material-symbols-outlined text-sm leading-none">
+                        close
+                      </span>
+                    </button>
+                  </span>
+                ) : null}
+                {statusFilter !== "all" ? (
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+                    <span>
+                      {statusFilter === "published"
+                        ? "Đã xuất bản"
+                        : "Tin nổi bật"}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setStatusFilter("all")}
+                      aria-label="Xóa bộ lọc trạng thái"
+                      className="hover:text-emerald-900"
+                    >
+                      <span className="material-symbols-outlined text-sm leading-none">
+                        close
+                      </span>
                     </button>
                   </span>
                 ) : null}
                 <span className="ml-auto text-xs font-medium text-slate-400">
-                  {totalCount > 0 ? `Tìm thấy ${totalCount} kết quả` : "Không có kết quả"}
+                  {totalCount > 0
+                    ? `Tìm thấy ${totalCount} kết quả`
+                    : "Không có kết quả"}
                 </span>
               </div>
             ) : null}
@@ -1252,107 +1301,10 @@ export function AdminNewsStudio() {
               {renderTableContent()}
               {renderPaginationFooter()}
             </section>
-          ) : showOverview ? (
-            <section
-              aria-label="Danh sách bài viết"
-              className="mb-8 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm"
-            >
-              {renderTableContent()}
-              {renderPaginationFooter()}
-            </section>
           ) : null}
         </>
       ) : null}
 
-      {/* ═══════════════ READ-ONLY PREVIEW MODAL / PANEL ═══════════════ */}
-      {previewItem ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs">
-          <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
-            <div className="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
-              <div>
-                <span className="inline-flex items-center rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700">
-                  {contentTypes[previewItem.contentType]}
-                </span>
-                <h3
-                  data-no-localize
-                  className="mt-2 text-xl font-bold text-slate-900"
-                >
-                  {previewItem.translations[0]?.title || previewItem.id}
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setPreviewItem(null)}
-                className="grid size-8 place-items-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-              >
-                <span className="material-symbols-outlined text-xl">close</span>
-              </button>
-            </div>
-
-            <div className="mt-4 space-y-4 text-sm text-slate-600">
-              <div>
-                <strong className="block text-xs font-semibold text-slate-400 uppercase">
-                  Tóm tắt
-                </strong>
-                <p
-                  data-no-localize
-                  className="mt-1 leading-relaxed text-slate-800"
-                >
-                  {previewItem.translations[0]?.summary || "Chưa có tóm tắt."}
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 rounded-xl bg-slate-50 p-3.5 text-xs">
-                <div>
-                  <span className="text-slate-400">Danh mục: </span>
-                  <strong className="text-slate-800">
-                    {categories[previewItem.category] ?? previewItem.category}
-                  </strong>
-                </div>
-
-                <div>
-                  <span className="text-slate-400">Người tạo: </span>
-                  <strong className="text-slate-800">
-                    {formatAuthor(previewItem.author).name}
-                  </strong>
-                </div>
-                <div>
-                  <span className="text-slate-400">Cập nhật: </span>
-                  <strong className="text-slate-800">
-                    {formatDate(previewItem.updatedAt).date}
-                  </strong>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 flex justify-end gap-2 border-t border-slate-100 pt-4">
-              <button
-                type="button"
-                onClick={() => {
-                  const target = previewItem;
-                  setPreviewItem(null);
-                  open(target);
-                }}
-                className="inline-flex min-h-9 items-center gap-1.5 rounded-xl bg-blue-600 px-4 text-xs font-bold text-white shadow-xs hover:bg-blue-700"
-              >
-                <span className="material-symbols-outlined text-base">
-                  edit
-                </span>
-                <span>Chỉnh sửa {contentLabel.toLocaleLowerCase("vi")}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setPreviewItem(null)}
-                className="min-h-9 rounded-xl border border-slate-200 px-4 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-              >
-                Đóng
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      {/* ═══════════════ EDITOR VIEW / FORM (WHEN CREATING OR EDITING) ═══════════════ */}
       {showEditor ? (
         <form
           onSubmit={async (event) => {
@@ -1362,12 +1314,12 @@ export function AdminNewsStudio() {
             }
 
             const actionTitle = selectedId
-              ? "Lưu chỉnh sửa?"
-              : `Tạo ${contentLabel.toLocaleLowerCase("vi")} mới?`;
+              ? t("Lưu chỉnh sửa?")
+              : t("Tạo nội dung mới?");
 
             const confirmation = await confirmAction({
               title: actionTitle,
-              confirmButtonText: selectedId ? "Lưu chỉnh sửa" : "Tạo mới",
+              confirmButtonText: t(selectedId ? "Lưu chỉnh sửa" : "Tạo mới"),
               icon: "question",
             });
 
@@ -1402,13 +1354,8 @@ export function AdminNewsStudio() {
                 URL.revokeObjectURL(image.url),
               );
               setPendingInlineImages([]);
-            } catch (error: unknown) {
-              showError(
-                "Không thể lưu",
-                error instanceof Error
-                  ? error.message
-                  : "Thất bại khi lưu nội dung",
-              );
+            } catch {
+              showError(t("Không thể lưu"), t("Thất bại khi lưu nội dung"));
             }
           }}
           className="mb-8 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-lg"
@@ -1421,8 +1368,7 @@ export function AdminNewsStudio() {
                 </p>
               ) : null}
               <h2 className="mt-1 text-2xl font-black text-slate-950">
-                {selectedId ? "Chỉnh sửa" : "Tạo"}{" "}
-                {contentLabel.toLocaleLowerCase("vi")}
+                {selectedId ? t("Chỉnh sửa nội dung") : t("Tạo nội dung")}
               </h2>
             </div>
             <div className="flex items-center gap-2">
@@ -1430,7 +1376,7 @@ export function AdminNewsStudio() {
                 type="button"
                 onClick={() => {
                   setSelectedId(undefined);
-                  router.push("/workspace/news");
+                  router.push(listHref);
                 }}
                 className="grid size-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition shadow-2xs"
                 title="Đóng trình soạn thảo"
@@ -1451,7 +1397,7 @@ export function AdminNewsStudio() {
                 role="alert"
                 className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-800"
               >
-                {error.message}
+                {t("Yêu cầu không thể hoàn tất. Vui lòng thử lại.")}
               </p>
             ) : null}
 
@@ -1472,7 +1418,7 @@ export function AdminNewsStudio() {
                       : "border-slate-300 bg-white"
                   } px-3 font-normal outline-none focus:outline-none focus:border-blue-500 transition`}
                 >
-                  {Object.entries(categories).map(([value, label]) => (
+                  {Object.entries(activeCategories).map(([value, label]) => (
                     <option key={value} value={value}>
                       {label}
                     </option>
@@ -1738,58 +1684,23 @@ export function AdminNewsStudio() {
                   >
                     Nội dung bài viết
                   </label>
-                  <div className="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-0.5">
-                    <button
-                      type="button"
-                      onClick={() => setContentTab("write")}
-                      className={`relative inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
-                        contentTab === "write"
-                          ? "text-blue-600"
-                          : "text-slate-600 hover:text-slate-900"
-                      }`}
-                    >
-                      {contentTab === "write" && (
-                        <motion.span
-                          layoutId="news-content-tab-pill"
-                          transition={{
-                            type: "spring",
-                            stiffness: 450,
-                            damping: 35,
-                          }}
-                          className="absolute inset-0 rounded-md bg-white shadow-xs"
-                        />
-                      )}
-                      <span className="relative z-10 material-symbols-outlined text-sm">
-                        edit_note
-                      </span>
-                      <span className="relative z-10">Soạn thảo</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setContentTab("preview")}
-                      className={`relative inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
-                        contentTab === "preview"
-                          ? "text-blue-600"
-                          : "text-slate-600 hover:text-slate-900"
-                      }`}
-                    >
-                      {contentTab === "preview" && (
-                        <motion.span
-                          layoutId="news-content-tab-pill"
-                          transition={{
-                            type: "spring",
-                            stiffness: 450,
-                            damping: 35,
-                          }}
-                          className="absolute inset-0 rounded-md bg-white shadow-xs"
-                        />
-                      )}
-                      <span className="relative z-10 material-symbols-outlined text-sm">
-                        visibility
-                      </span>
-                      <span className="relative z-10">Xem trước</span>
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setContentTab(
+                        contentTab === "preview" ? "write" : "preview",
+                      )
+                    }
+                    aria-pressed={contentTab === "preview"}
+                    className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-base font-semibold text-slate-700 transition-colors hover:border-blue-300 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                  >
+                    <span className="material-symbols-outlined text-lg">
+                      {contentTab === "preview"
+                        ? "visibility_off"
+                        : "visibility"}
+                    </span>
+                    <span>{contentTab === "preview" ? "Ẩn" : "Hiện"}</span>
+                  </button>
                 </div>
 
                 {contentTab === "write" ? (
@@ -1921,12 +1832,13 @@ export function AdminNewsStudio() {
                                 >
                                   <img
                                     src={src}
-                                    alt={alt || "Ảnh minh họa"}
+                                    alt={alt || t("Ảnh minh họa")}
                                     className="max-h-96 w-full rounded-xl border border-slate-200 object-cover shadow-xs"
                                   />
                                   {alt &&
-                                  alt !== "Hình ảnh" &&
-                                  alt !== "image" ? (
+                                  !Object.values(editorPlaceholders).some(
+                                    (placeholder) => placeholder.image === alt,
+                                  ) ? (
                                     <figcaption className="mt-1.5 text-center text-xs italic text-slate-500">
                                       {alt}
                                     </figcaption>
@@ -1992,7 +1904,7 @@ export function AdminNewsStudio() {
                   type="button"
                   onClick={() => {
                     setSelectedId(undefined);
-                    router.push("/workspace/news");
+                    router.push(listHref);
                   }}
                   className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 shadow-xs hover:bg-slate-50 active:scale-95 transition"
                 >
@@ -2001,15 +1913,15 @@ export function AdminNewsStudio() {
                   </span>
                   <span>Hủy bỏ</span>
                 </button>
-                {selectedId ? (
+                {selectedId && view !== "new" ? (
                   <button
                     type="button"
                     disabled={deleteArticle.isPending}
                     onClick={async () => {
                       const confirmation = await confirmAction({
-                        title: "Xóa nội dung?",
-                        text: "Không thể hoàn tác sau khi xóa.",
-                        confirmButtonText: "Xóa",
+                        title: t("Xóa nội dung?"),
+                        text: t("Không thể hoàn tác sau khi xóa."),
+                        confirmButtonText: t("Xóa"),
                         isDestructive: true,
                         icon: "warning",
                       });
@@ -2047,7 +1959,7 @@ export function AdminNewsStudio() {
                         ? "Đang lưu..."
                         : selectedId
                           ? "Lưu chỉnh sửa"
-                          : `Tạo ${contentLabel.toLocaleLowerCase("vi")} mới`}
+                          : "Tạo nội dung mới"}
                   </span>
                 </button>
               </div>
@@ -2055,8 +1967,7 @@ export function AdminNewsStudio() {
           </div>
         </form>
       ) : null}
-      </div>
-    ),
+    </div>,
     uiLocale,
     ADMIN_NEWS_TRANSLATIONS,
   );

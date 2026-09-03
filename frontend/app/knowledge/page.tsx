@@ -1,8 +1,20 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { GuestKnowledgeV2 } from "@/features/public-v2/components/GuestKnowledgeV2";
+import { getPublicNews } from "@/features/public-v2/data/public-news-server";
+import { LOCALE_COOKIE_NAME, sanitizeLocale } from "@/features/auth/server";
 
-export const metadata: Metadata = { title: "Ấn phẩm · RU-VN Network" };
+export const metadata: Metadata = { title: "Tri thức · RU-VN Network" };
 
-export default function Page() {
-  redirect("/news?type=PUBLICATION");
+export default async function Page() {
+  const locale = sanitizeLocale(
+    (await cookies()).get(LOCALE_COOKIE_NAME)?.value,
+  );
+  const result = await getPublicNews({
+    locale,
+    limit: 100,
+    contentTypes: ["KNOWLEDGE"],
+  });
+
+  return <GuestKnowledgeV2 articles={result.items} total={result.total} />;
 }

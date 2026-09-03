@@ -10,7 +10,10 @@ test("home page renders streamlined news and event sections", async () => {
 
   assert.doesNotMatch(home, /id="about-gateway"/);
   assert.match(home, /href="\/news"[\s\S]*?t\.news\.viewAll/);
-  assert.match(home, /href="\/news\?type=EVENT"[\s\S]*?t\.events\.viewAll/);
+  assert.doesNotMatch(home, /href="\/ecosystem"/);
+  assert.doesNotMatch(home, /href="\/news\?type=EVENT"/);
+  assert.match(home, /aria-disabled="true"[\s\S]{0,250}?t\.ecosystem\.cardCta/);
+  assert.match(home, /aria-disabled="true"[\s\S]{0,250}?t\.events\.viewAll/);
   assert.match(page, /getPublicNews\(\{ locale, limit: 4, contentTypes: \["ARTICLE"\] \}\)/);
   assert.match(page, /getPublicNews\(\{ locale, limit: 4, contentTypes: \["EVENT"\] \}\)/);
   assert.match(page, /news=\{news\}/);
@@ -18,6 +21,11 @@ test("home page renders streamlined news and event sections", async () => {
   assert.doesNotMatch(home, /OFFICIAL_NEWS\.slice\(0, 4\)/);
   assert.match(home, /events\.map\(\(item\)/);
   assert.match(home, /href=\{newsArticleHref\(item\)\}/);
+  assert.match(home, /<article[\s\S]*?<Link\s+href=\{card\.href\}/);
+  assert.doesNotMatch(
+    home,
+    /<Link\s+href=\{card\.href\}\s+className="group flex/,
+  );
   assert.doesNotMatch(
     home,
     /displayedEvents|setEventTab|\/opportunities\?event=/,

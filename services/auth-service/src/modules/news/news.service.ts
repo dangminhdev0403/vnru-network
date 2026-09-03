@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { NewsMediaService } from './news-media.service';
 
 export const NEWS_PRISMA = 'NEWS_PRISMA';
@@ -9,7 +14,20 @@ export type NewsContentType =
   | 'ANNOUNCEMENT'
   | 'PROJECT'
   | 'OPPORTUNITY'
+  | 'KNOWLEDGE'
   | 'PUBLICATION';
+
+const KNOWLEDGE_CATEGORIES = new Set([
+  'knowledge-article',
+  'knowledge-journal',
+  'knowledge-invention',
+]);
+
+function validateCategory(contentType: NewsContentType, category: string) {
+  if ((contentType === 'KNOWLEDGE') !== KNOWLEDGE_CATEGORIES.has(category)) {
+    throw new BadRequestException(`Invalid category for ${contentType}`);
+  }
+}
 
 export interface PublicListNewsInput {
   featured?: boolean;
@@ -50,12 +68,13 @@ export interface AdminListNewsInput {
   category?: string;
   query?: string;
   featured?: boolean;
+  published?: boolean;
 }
 
 export interface AdminNewsListResponse {
   items: any[];
   total: number;
-  counts: { total: number; featured: number };
+  counts: { total: number; published: number; featured: number };
 }
 
 const localePriority = (locale: NewsLocale) =>
@@ -176,10 +195,10 @@ export class NewsService {
       ...(input.category === undefined ? {} : { category: input.category }),
       ...(input.contentTypes?.length
         ? { contentType: { in: input.contentTypes } }
-        : {}),
+        : { contentType: { not: 'KNOWLEDGE' } }),
       ...(input.publishedAfter
-        ? { publishedAt: { gte: input.publishedAfter } }
-        : {}),
+        ? { publishedAt: { not: null, gte: input.publishedAfter } }
+        : { publishedAt: { not: null } }),
       ...(query ? { translations: searchable([query]) } : {}),
       ...(scopeTerms
         ? query
@@ -209,7 +228,7 @@ export class NewsService {
 
   async getPublic(id: string, locale: NewsLocale = 'VI') {
     const article = await this.prisma.newsArticle.findFirst({
-      where: { id },
+      where: { id, publishedAt: { not: null } },
       select: articleSelect,
     });
     if (!article) throw new NotFoundException('News article not found');
@@ -229,6 +248,10 @@ export class NewsService {
     if (input.featured !== undefined) {
       where.isFeatured = input.featured;
     }
+    if (input.published !== undefined) {
+      where.publishedAt = input.published ? { not: null } : null;
+    }
+
     if (input.query && input.query.trim()) {
       const q = input.query.trim();
       where.translations = {
@@ -245,7 +268,7 @@ export class NewsService {
     if (input.contentType) countsWhere.contentType = input.contentType;
     if (input.category) countsWhere.category = input.category;
 
-    const [items, total, allCount, featuredCount] =
+    const [items, total, allCount, publishedCount, featuredCount] =
       await Promise.all([
         this.prisma.newsArticle.findMany({
           where,
@@ -257,6 +280,9 @@ export class NewsService {
         this.prisma.newsArticle.count({ where }),
         this.prisma.newsArticle.count({ where: countsWhere }),
         this.prisma.newsArticle.count({
+          where: { ...countsWhere, publishedAt: { not: null } },
+        }),
+        this.prisma.newsArticle.count({
           where: { ...countsWhere, isFeatured: true },
         }),
       ]);
@@ -266,6 +292,7 @@ export class NewsService {
       total,
       counts: {
         total: allCount,
+        published: publishedCount,
         featured: featuredCount,
       },
     };
@@ -291,6 +318,7 @@ export class NewsService {
     authorId: string;
     translations: Partial<Record<NewsLocale, NewsTranslationInput>>;
   }) {
+    validateCategory(input.contentType ?? 'ARTICLE', input.category);
     const { translations, ...data } = input;
     return this.prisma.newsArticle.create({
       data: {
@@ -317,10 +345,15 @@ export class NewsService {
       actionClosesAt?: Date | null;
       sourceUrls?: string[];
       isFeatured?: boolean;
+      publishedAt?: Date | null;
       translations?: Partial<Record<NewsLocale, NewsTranslationInput>>;
     },
   ) {
     const previous = await this.getAdmin(id);
+    validateCategory(
+      input.contentType ?? previous.contentType,
+      input.category ?? previous.category,
+    );
     const { translations, ...fields } = input;
     const updated = await this.prisma.newsArticle.update({
       where: { id },

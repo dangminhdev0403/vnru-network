@@ -35,6 +35,9 @@ const categorySchema = z.enum([
   'economy-society',
   'education',
   'cooperation',
+  'knowledge-article',
+  'knowledge-journal',
+  'knowledge-invention',
 ]);
 const paginationSchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(20),
@@ -57,6 +60,7 @@ const publicQuerySchema = paginationSchema.extend({
       'ANNOUNCEMENT',
       'PROJECT',
       'OPPORTUNITY',
+      'KNOWLEDGE',
       'PUBLICATION',
     ])))
     .optional(),
@@ -73,11 +77,17 @@ const adminQuerySchema = paginationSchema.extend({
       'ANNOUNCEMENT',
       'PROJECT',
       'OPPORTUNITY',
+      'KNOWLEDGE',
       'PUBLICATION',
     ])
     .optional(),
   category: categorySchema.optional(),
   query: z.string().trim().max(200).optional(),
+  published: z.preprocess((val) => {
+    if (val === 'true' || val === true) return true;
+    if (val === 'false' || val === false) return false;
+    return undefined;
+  }, z.boolean().optional()),
   featured: z.preprocess((val) => {
     if (val === 'true' || val === true) return true;
     if (val === 'false' || val === false) return false;
@@ -102,6 +112,7 @@ const articleFields = {
       'ANNOUNCEMENT',
       'PROJECT',
       'OPPORTUNITY',
+      'KNOWLEDGE',
       'PUBLICATION',
     ])
     .optional(),
@@ -135,6 +146,7 @@ const updateSchema = z
       ]),
     ),
     isFeatured: z.boolean().optional(),
+    publishedAt: z.coerce.date().nullable().optional(),
     translations: z
       .object({
         VI: translationSchema.optional(),

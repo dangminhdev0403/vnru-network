@@ -19,6 +19,9 @@ const categoryLabels: Record<Category, string> = {
   society: "Kinh tế - Xã hội",
   education: "Giáo dục đào tạo",
   cooperation: "Hợp tác",
+  "knowledge-article": "Bài báo",
+  "knowledge-journal": "Tạp chí",
+  "knowledge-invention": "Sáng chế",
 };
 
 const ui = {
@@ -38,6 +41,7 @@ const ui = {
       ANNOUNCEMENT: "Công bố",
       PROJECT: "Dự án",
       OPPORTUNITY: "Cơ hội",
+      KNOWLEDGE: "Tri thức",
       PUBLICATION: "Ấn phẩm",
     },
     actions: {
@@ -46,6 +50,7 @@ const ui = {
       ANNOUNCEMENT: "Xem công bố",
       PROJECT: "Xem dự án",
       OPPORTUNITY: "Đăng ký",
+      KNOWLEDGE: "Xem nội dung",
       PUBLICATION: "Đọc ấn phẩm",
     },
   },
@@ -65,6 +70,7 @@ const ui = {
       ANNOUNCEMENT: "Announcement",
       PROJECT: "Project",
       OPPORTUNITY: "Opportunity",
+      KNOWLEDGE: "Knowledge",
       PUBLICATION: "Publication",
     },
     actions: {
@@ -73,6 +79,7 @@ const ui = {
       ANNOUNCEMENT: "View announcement",
       PROJECT: "View project",
       OPPORTUNITY: "Apply",
+      KNOWLEDGE: "View content",
       PUBLICATION: "Read publication",
     },
   },
@@ -92,6 +99,7 @@ const ui = {
       ANNOUNCEMENT: "Объявление",
       PROJECT: "Проект",
       OPPORTUNITY: "Возможность",
+      KNOWLEDGE: "Знания",
       PUBLICATION: "Публикация",
     },
     actions: {
@@ -100,6 +108,7 @@ const ui = {
       ANNOUNCEMENT: "Открыть объявление",
       PROJECT: "Открыть проект",
       OPPORTUNITY: "Подать заявку",
+      KNOWLEDGE: "Открыть материал",
       PUBLICATION: "Читать публикацию",
     },
   },
@@ -153,6 +162,7 @@ export function GuestNewsArticleV2({
   const { locale } = useLocale();
   const t = ui[locale] ?? ui.vi;
   const contentType = article.contentType ?? "ARTICLE";
+  const listingHref = contentType === "KNOWLEDGE" ? "/knowledge" : "/news";
 
 
   return localizeReactNode(
@@ -163,8 +173,8 @@ export function GuestNewsArticleV2({
             {t.home}
           </Link>
           <span>›</span>
-          <Link href="/news" className="hover:text-blue-600">
-            {t.news}
+          <Link href={listingHref} className="hover:text-blue-600">
+            {contentType === "KNOWLEDGE" ? t.actions.KNOWLEDGE : t.news}
           </Link>
           <span>›</span>
           <span className="text-blue-600">

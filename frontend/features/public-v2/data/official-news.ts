@@ -1,4 +1,11 @@
-export type NewsCategoryKey = "science" | "cooperation" | "education" | "society";
+export type NewsCategoryKey =
+  | "science"
+  | "cooperation"
+  | "education"
+  | "society"
+  | "knowledge-article"
+  | "knowledge-journal"
+  | "knowledge-invention";
 
 export type OfficialNewsArticle = {
   id: number | string;
@@ -9,7 +16,7 @@ export type OfficialNewsArticle = {
   image: string | null;
   body: string[];
   sources: string[];
-  contentType?: "ARTICLE" | "EVENT" | "ANNOUNCEMENT" | "PROJECT" | "OPPORTUNITY" | "PUBLICATION";
+  contentType?: "ARTICLE" | "EVENT" | "ANNOUNCEMENT" | "PROJECT" | "OPPORTUNITY" | "KNOWLEDGE" | "PUBLICATION";
   actionUrl?: string | null;
   actionClosesAt?: string | null;
   actionLabel?: string | null;

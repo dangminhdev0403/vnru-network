@@ -8,6 +8,9 @@ const categories: Record<string, NewsCategoryKey> = {
   "economy-society": "society",
   education: "education",
   cooperation: "cooperation",
+  "knowledge-article": "knowledge-article",
+  "knowledge-journal": "knowledge-journal",
+  "knowledge-invention": "knowledge-invention",
 };
 
 const apiCategories: Partial<Record<NewsCategoryKey, string>> = Object.fromEntries(

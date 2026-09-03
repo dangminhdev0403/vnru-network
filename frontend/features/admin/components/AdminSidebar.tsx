@@ -43,7 +43,7 @@ const labels: Record<Locale, Record<string, string>> = {
     access: "УПРАВЛЕНИЕ ДОСТУПОМ",
     overview: "Обзор",
     users: "Управление пользователями",
-    roles: "Роли và права",
+    roles: "Роли и права",
     permissions: "Каталог прав",
     logs: "Журнал доступа",
     accountSection: "УЧЁТНАЯ ЗАПИСЬ",

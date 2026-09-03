@@ -2031,22 +2031,19 @@ export function GuestHomeV2({
                   {t.ecosystem.eyebrow}
                 </h2>
               </div>
-              <Link
-                href="/ecosystem"
-                className="group/link inline-flex items-center gap-1 text-xs font-bold text-blue-600 transition hover:text-blue-800 sm:text-sm"
+              <span
+                aria-disabled="true"
+                className="inline-flex cursor-default items-center gap-1 text-xs font-bold text-blue-600 opacity-60 sm:text-sm"
               >
                 <span>{t.ecosystem.cardCta}</span>
-              </Link>
+              </span>
             </Reveal>
 
             {/* 4 Ecosystem Cards Grid */}
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {t.ecosystem.cards.map((card) => (
                 <Reveal key={card.title} y={12}>
-                  <Link
-                    href={card.href}
-                    className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-                  >
+                  <article className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/10">
                     <div>
                       {/* Top: Circular Orbiting Icon Orb */}
                       <div className="flex items-center">
@@ -2068,10 +2065,14 @@ export function GuestHomeV2({
                     </div>
 
                     {/* Bottom CTA Link */}
-                    <div className="mt-4 flex items-center gap-1 text-[11px] font-bold text-blue-600 transition group-hover:text-blue-800">
+                    <Link
+                      href={card.href}
+                      className="mt-4 inline-flex min-h-11 items-center gap-1 self-start text-base font-bold text-blue-600 transition hover:text-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                    >
                       <span>{t.ecosystem.cardCta}</span>
-                    </div>
-                  </Link>
+                      <span className="sr-only"> {card.title}</span>
+                    </Link>
+                  </article>
                 </Reveal>
               ))}
             </div>
@@ -2092,12 +2093,12 @@ export function GuestHomeV2({
                   {t.events.title}
                 </h2>
               </div>
-              <Link
-                href="/news?type=EVENT"
-                className="group/link inline-flex items-center gap-1 text-xs font-bold text-blue-600 transition hover:text-blue-800 sm:text-sm"
+              <span
+                aria-disabled="true"
+                className="inline-flex cursor-default items-center gap-1 text-xs font-bold text-blue-600 opacity-60 sm:text-sm"
               >
                 <span>{t.events.viewAll}</span>
-              </Link>
+              </span>
             </Reveal>
 
             {/* Event articles */}

@@ -49,6 +49,9 @@ const TEXT = {
       society: "Kinh tế - Xã hội",
       education: "Giáo dục đào tạo",
       cooperation: "Hợp tác",
+      "knowledge-article": "Bài báo",
+      "knowledge-journal": "Tạp chí",
+      "knowledge-invention": "Sáng chế",
     },
   },
   en: {
@@ -76,6 +79,9 @@ const TEXT = {
       society: "Economy - Society",
       education: "Education and Training",
       cooperation: "Cooperation",
+      "knowledge-article": "Article",
+      "knowledge-journal": "Journal",
+      "knowledge-invention": "Invention",
     },
   },
   ru: {
@@ -103,6 +109,9 @@ const TEXT = {
       society: "Экономика - Общество",
       education: "Образование и подготовка",
       cooperation: "Сотрудничество",
+      "knowledge-article": "Статья",
+      "knowledge-journal": "Журнал",
+      "knowledge-invention": "Изобретение",
     },
   },
 } as const;

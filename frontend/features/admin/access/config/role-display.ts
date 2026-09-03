@@ -5,16 +5,19 @@ const roleLabels: Record<Locale, Record<string, string>> = {
     READER: "Bạn đọc",
     PORTAL_MEMBER: "Thành viên Portal",
     SYSTEM_ADMIN: "Quản trị hệ thống",
+    CONTENT_EDITOR: "Biên tập viên nội dung",
   },
   en: {
     READER: "Reader",
     PORTAL_MEMBER: "Portal Member",
     SYSTEM_ADMIN: "System Administrator",
+    CONTENT_EDITOR: "Content Editor",
   },
   ru: {
     READER: "Читатель",
     PORTAL_MEMBER: "Участник портала",
     SYSTEM_ADMIN: "Системный администратор",
+    CONTENT_EDITOR: "Редактор контента",
   },
 };
 

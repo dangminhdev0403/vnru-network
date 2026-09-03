@@ -35,6 +35,10 @@ const copy: Record<Locale, Record<string, string>> = {
     filterAll: "Tất cả module",
     filterGranted: "Đã cấp",
     filterNotGranted: "Chưa cấp",
+    moduleIam: "Quản trị danh tính (IAM)",
+    moduleContent: "Nội dung & Portal",
+    moduleCollaboration: "Hợp tác & Đề xuất",
+    moduleKnowledge: "Tri thức & Ấn phẩm",
     searchPermissions: "Tìm quyền hạn...",
     granted: "được cấp",
     selectAll: "Chọn tất cả",
@@ -65,6 +69,8 @@ const copy: Record<Locale, Record<string, string>> = {
     customMutable: "Tùy chỉnh",
     statusLabel: "Trạng thái:",
     loadingRole: "Đang tải thông tin vai trò...",
+    cloneSuccess: "Đã nhân bản cấu hình {role}",
+    requestFailed: "Thao tác thất bại",
   },
   en: {
     backToRoles: "Back to Roles",
@@ -89,6 +95,10 @@ const copy: Record<Locale, Record<string, string>> = {
     filterAll: "All Modules",
     filterGranted: "Granted",
     filterNotGranted: "Not Granted",
+    moduleIam: "Identity administration (IAM)",
+    moduleContent: "Content & Portal",
+    moduleCollaboration: "Collaboration & Proposals",
+    moduleKnowledge: "Knowledge & Publications",
     searchPermissions: "Search permissions...",
     granted: "granted",
     selectAll: "Select All",
@@ -119,6 +129,8 @@ const copy: Record<Locale, Record<string, string>> = {
     customMutable: "Custom",
     statusLabel: "Status:",
     loadingRole: "Loading role...",
+    cloneSuccess: "Cloned configuration for {role}",
+    requestFailed: "Action failed",
   },
   ru: {
     backToRoles: "К списку ролей",
@@ -140,10 +152,14 @@ const copy: Record<Locale, Record<string, string>> = {
     usersCount: "пользователей",
     scopeSection: "Область доступа (Access Scope)",
     scopeDesc:
-      "Определяет границы данных và авторизации для назначенных полномочий.",
+      "Определяет границы данных и авторизации для назначенных полномочий.",
     filterAll: "Все модули",
     filterGranted: "Назначено",
     filterNotGranted: "Не назначено",
+    moduleIam: "Управление идентификацией (IAM)",
+    moduleContent: "Контент и портал",
+    moduleCollaboration: "Сотрудничество и предложения",
+    moduleKnowledge: "Знания и публикации",
     searchPermissions: "Поиск полномочий...",
     granted: "назначено",
     selectAll: "Выбрать все",
@@ -174,6 +190,8 @@ const copy: Record<Locale, Record<string, string>> = {
     customMutable: "Пользовательская",
     statusLabel: "Статус:",
     loadingRole: "Загрузка роли...",
+    cloneSuccess: "Конфигурация роли {role} клонирована",
+    requestFailed: "Не удалось выполнить действие",
   },
 };
 
@@ -320,7 +338,7 @@ export default function RoleDetailPage({ roleId }: RoleDetailPageProps) {
     } catch (cause) {
       showError(
         t.modalReviewTitle,
-        cause instanceof Error ? cause.message : "Thao tác thất bại",
+        cause instanceof Error ? cause.message : t.requestFailed,
       );
     }
   };
@@ -446,7 +464,7 @@ export default function RoleDetailPage({ roleId }: RoleDetailPageProps) {
               type="button"
               onClick={() => {
                 showToast({
-                  title: `Đã nhân bản cấu hình ${selectedRoleLabel}`,
+                  title: t.cloneSuccess.replace("{role}", selectedRoleLabel),
                   icon: "success",
                 });
               }}
@@ -498,10 +516,10 @@ export default function RoleDetailPage({ roleId }: RoleDetailPageProps) {
               className="w-full max-w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-semibold text-text-primary outline-none sm:w-auto"
             >
               <option value="">{t.allModules}</option>
-              <option value="iam">Quản trị danh tính (IAM)</option>
-              <option value="content">Nội dung & Portal</option>
-              <option value="collab">Hợp tác & Đề xuất</option>
-              <option value="knowledge">Tri thức & Ấn phẩm</option>
+              <option value="iam">{t.moduleIam}</option>
+              <option value="content">{t.moduleContent}</option>
+              <option value="collab">{t.moduleCollaboration}</option>
+              <option value="knowledge">{t.moduleKnowledge}</option>
             </select>
 
             <select

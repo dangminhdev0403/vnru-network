@@ -2,8 +2,9 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-test("ecosystem page renders comprehensive network gateways, interactive form, A-Z directories, Khai Sang results, and knowledge library", async () => {
-  const [ecosystem, partners] = await Promise.all([
+test("ecosystem page renders comprehensive network gateways, interactive form, A-Z directories, Khai Sang results, and backend knowledge", async () => {
+  const [page, ecosystem, partners] = await Promise.all([
+    readFile(new URL("../app/ecosystem/page.tsx", import.meta.url), "utf8"),
     readFile(
       new URL(
         "../features/public-v2/components/GuestEcosystemV2.tsx",
@@ -138,6 +139,15 @@ test("ecosystem page renders comprehensive network gateways, interactive form, A
   assert.match(ecosystem, />\s*Bài báo\s*<\/button>/);
   assert.match(ecosystem, />\s*Tạp chí\s*<\/button>/);
   assert.match(ecosystem, />\s*Sáng chế\s*<\/button>/);
+  assert.match(page, /getPublicNews/);
+  assert.match(page, /contentTypes: \["KNOWLEDGE"\]/);
+  assert.match(page, /knowledgeArticles=\{knowledge\.items\}/);
+  assert.match(ecosystem, /knowledgeArticles[\s\S]*LIBRARY_CATEGORIES/);
+  assert.match(ecosystem, /href=\{newsArticleHref\(article\)\}/);
+  assert.doesNotMatch(
+    ecosystem,
+    /Functional composites|Multisource remote sensing|Quantum computing algorithms|RU2789124|VN-GPHI-2026-089/,
+  );
 
   // 7. Must have multilingual structure with RU and EN support
   assert.match(ecosystem, /vi:\s*\{/);

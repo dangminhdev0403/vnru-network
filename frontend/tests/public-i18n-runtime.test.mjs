@@ -73,6 +73,15 @@ test("public static UI localizes for EN/RU", async () => {
   );
   assert.doesNotMatch(contact, /Đóng \/ Закрыть/);
 
+  const knowledge = await read(
+    "features/public-v2/components/GuestKnowledgeV2.tsx",
+  );
+  assert.doesNotMatch(knowledge, /DEMO_KNOWLEDGE_RESOURCES|350\+|VAST & RAS/);
+  assert.match(knowledge, /articles\.map/);
+  for (const category of ["Bài báo", "Tạp chí", "Sáng chế"]) {
+    assert.match(knowledge, new RegExp(category));
+  }
+
   const localizeSource = await read("core/i18n/localize-react-node.tsx");
   assert.match(localizeSource, /if\s*\(locale\s*===\s*"vi"\)\s*return\s*node/);
   assert.match(localizeSource, /localized\.key\s*==\s*null/);

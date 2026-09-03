@@ -23,6 +23,7 @@ export const newsResource = createResource<void>()({
         filters?.category ?? "ALL",
         filters?.query ?? "",
         filters?.featured ?? "ALL",
+        filters?.published ?? "ALL",
         filters?.limit ?? 10,
         filters?.offset ?? 0,
       ],

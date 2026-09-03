@@ -51,11 +51,37 @@ test("content administration reuses admin chrome with its own navigation", async
     /aria-current=\{active \? "page" : undefined\}/,
   );
   assert.match(studio, /view === "all" \? "ARTICLE" : view/);
-  for (const view of ["ANNOUNCEMENT", "EVENT", "PROJECT", "OPPORTUNITY"]) {
+  for (const view of [
+    "ANNOUNCEMENT",
+    "EVENT",
+    "PROJECT",
+    "OPPORTUNITY",
+    "KNOWLEDGE",
+  ]) {
     assert.match(contentSidebar, new RegExp(`view=${view}`));
   }
+  assert.match(contentSidebar, /knowledge: "Tri thức"/);
+  assert.match(studio, /KNOWLEDGE: "Tri thức"/);
+  for (const category of ["Bài báo", "Tạp chí", "Sáng chế"]) {
+    assert.match(studio, new RegExp(category));
+  }
+  assert.match(studio, /form\.contentType : navContentType\) === "KNOWLEDGE"/);
   assert.match(studio, /searchParams\.get\("view"\)/);
   assert.match(studio, /const showOverview = !view/);
+  assert.match(studio, /const showSummary = showList/);
+  assert.match(studio, /setStatusFilter\("published"\)/);
+  assert.match(studio, /setStatusFilter\("featured"\)/);
+  assert.match(studio, /filters\.published = true/);
+  assert.doesNotMatch(studio, />\s*Người tạo\s*<\/th>/);
+  assert.doesNotMatch(studio, /selectedRowIds|toggleSelectAll|toggleSelectRow/);
+  assert.doesNotMatch(studio, /Chọn tất cả bài viết|Chọn bài viết/);
+  assert.match(studio, /w-\[38%\]/);
+  assert.doesNotMatch(studio, /setPreviewItem|READ-ONLY PREVIEW/);
+  assert.match(
+    studio,
+    /publishedAt:\s*article\.publishedAt\s*\?\s*null\s*:\s*new Date\(\)\.toISOString\(\)/,
+  );
+  assert.match(studio, /article\.publishedAt \? "Ẩn tin" : "Hiện tin"/);
   assert.match(
     studio,
     /const showList = Boolean\(view && view !== "new" && !selectedId\)/,
@@ -64,7 +90,9 @@ test("content administration reuses admin chrome with its own navigation", async
     studio,
     /const showEditor = view === "new" \|\| Boolean\(selectedId\)/,
   );
-  assert.match(studio, /showOverview \? \([\s\S]*Tổng quan nội dung/);
+  assert.match(studio, /showSummary \? \([\s\S]*Tổng quan nội dung/);
+  assert.match(studio, /showOverview \? \([\s\S]*ContentOverviewDashboard/);
+  assert.match(studio, /!showEditor && !showOverview/);
   assert.match(studio, /showList \? \([\s\S]*Danh sách bài viết/);
   assert.match(studio, /showEditor \? \([\s\S]*onSubmit/);
   assert.doesNotMatch(contentSidebar, /\/admin\/access/);
@@ -101,13 +129,25 @@ test("content administration reuses admin chrome with its own navigation", async
     assert.doesNotMatch(studio, new RegExp(`>\\s*${label}\\s*<`));
   }
   assert.match(studio, /view=new&type=\$\{navContentType\}/);
-  assert.match(studio, /Tạo \{contentLabel\.toLocaleLowerCase\("vi"\)\} mới/);
+  assert.match(
+    studio,
+    /const listHref =\s*navContentType === "KNOWLEDGE"[\s\S]*"\/workspace\/news\?view=KNOWLEDGE"/,
+  );
+  assert.match(studio, /router\.push\(listHref\)/);
+  assert.match(studio, /selectedId && view !== "new"/);
+  assert.match(
+    studio,
+    /setContentTab\(\s*contentTab === "preview" \? "write" : "preview",?\s*\)/,
+  );
+  assert.match(studio, /contentTab === "preview" \? "Ẩn" : "Hiện"/);
+  assert.doesNotMatch(studio, />\s*Xem trước\s*<\/span>/);
   assert.doesNotMatch(studio, /Viết bài mới|Tạo bài viết|Chỉnh sửa bài viết/);
   assert.doesNotMatch(studio, /BẢN NHÁP MỚI|Lưu bản nháp|Lưu thay đổi/);
   assert.match(studio, /Lưu chỉnh sửa/);
+  assert.match(studio, />\s*Danh mục\s*<\/th>/);
   assert.match(studio, />\s*Trạng thái\s*<\/th>/);
   assert.match(studio, />\s*Tin nổi bật\s*<\/th>/);
-  assert.match(studio, /colSpan=\{6\}/);
+  assert.match(studio, /colSpan=\{5\}/);
   assert.match(studio, /window\.Translator/);
   assert.match(studio, /sourceLanguage: "vi";?[\s\S]*targetLanguage: "ru"/);
   assert.equal(
@@ -219,7 +259,7 @@ test("unified workspace links canonical public content without fake workflow sta
   for (const href of ["/news", "/knowledge", "/experts", "/opportunities"]) {
     assert.match(dashboard, new RegExp(`href: "${href}"`));
   }
-  assert.match(knowledge, /redirect\("\/news\?type=PUBLICATION"\)/);
+  assert.match(knowledge, /contentTypes: \["KNOWLEDGE"\]/);
   assert.match(opportunities, /redirect\("\/news\?type=OPPORTUNITY"\)/);
   assert.match(experts, /requireMemberSession\("\/experts"\)/);
 });

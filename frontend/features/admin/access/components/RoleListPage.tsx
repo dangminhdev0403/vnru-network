@@ -31,6 +31,11 @@ const copy: Record<Locale, Record<string, string>> = {
     typeFilter: "Loại vai trò",
     statusFilter: "Trạng thái",
     moduleFilter: "Phân hệ",
+    moduleIam: "Quản trị IAM",
+    modulePortal: "Cổng thành viên",
+    moduleContent: "Nội dung",
+    moduleCollaboration: "Hợp tác",
+    moduleKnowledge: "Kho tri thức",
     all: "Tất cả",
     system: "Hệ thống",
     custom: "Tùy chỉnh",
@@ -77,6 +82,19 @@ const copy: Record<Locale, Record<string, string>> = {
     codePlaceholder: "Ví dụ: PEER_REVIEWER",
     descPlaceholder:
       "Mô tả trách nhiệm và nhiệm vụ của vai trò này trong hệ thống…",
+    roleCodeRequired: "Mã vai trò không được để trống.",
+    rolePrepared:
+      "Đã chuẩn bị vai trò {role}. Phân quyền sẽ áp dụng trên ma trận.",
+    disableConfirm: "Bạn có chắc chắn muốn tạm dừng vai trò {role}?",
+    disableSuccess: "Đã tạm dừng vai trò",
+    permissionsUnit: "quyền",
+    selectPermissionsHelp:
+      "Chọn các quyền hạn chức năng từ danh mục hệ thống cấp cho vai trò này:",
+    summaryTitle: "Tóm tắt cấu hình vai trò",
+    summaryRoleName: "Tên vai trò:",
+    summaryRoleCode: "Mã định danh:",
+    summaryPermissions: "Quyền hạn đã chọn:",
+    summaryScope: "Phạm vi:",
   },
   en: {
     title: "Roles & Permissions",
@@ -90,6 +108,11 @@ const copy: Record<Locale, Record<string, string>> = {
     typeFilter: "Role Type",
     statusFilter: "Status",
     moduleFilter: "Module",
+    moduleIam: "IAM administration",
+    modulePortal: "Member portal",
+    moduleContent: "Content",
+    moduleCollaboration: "Collaboration",
+    moduleKnowledge: "Knowledge base",
     all: "All",
     system: "System",
     custom: "Custom",
@@ -136,9 +159,22 @@ const copy: Record<Locale, Record<string, string>> = {
     codePlaceholder: "e.g. PEER_REVIEWER",
     descPlaceholder:
       "Describe responsibilities and authorities for this role...",
+    roleCodeRequired: "Role code is required.",
+    rolePrepared:
+      "Role {role} is ready. Permissions will be applied through the matrix.",
+    disableConfirm: "Disable role {role}?",
+    disableSuccess: "Role disabled",
+    permissionsUnit: "permissions",
+    selectPermissionsHelp:
+      "Select the system capabilities to grant to this role:",
+    summaryTitle: "Role configuration summary",
+    summaryRoleName: "Role name:",
+    summaryRoleCode: "Role code:",
+    summaryPermissions: "Selected permissions:",
+    summaryScope: "Scope:",
   },
   ru: {
-    title: "Роли và права",
+    title: "Роли и права",
     desc: "Управление ролями, полномочиями и областями доступа в системе.",
     createRoleBtn: "Создать роль",
     totalRoles: "Всего ролей",
@@ -149,6 +185,11 @@ const copy: Record<Locale, Record<string, string>> = {
     typeFilter: "Тип роли",
     statusFilter: "Статус",
     moduleFilter: "Модуль",
+    moduleIam: "Управление IAM",
+    modulePortal: "Портал участников",
+    moduleContent: "Контент",
+    moduleCollaboration: "Сотрудничество",
+    moduleKnowledge: "База знаний",
     all: "Все",
     system: "Системные",
     custom: "Пользовательские",
@@ -194,6 +235,19 @@ const copy: Record<Locale, Record<string, string>> = {
     namePlaceholder: "Например: Рецензент",
     codePlaceholder: "Например: PEER_REVIEWER",
     descPlaceholder: "Опишите обязанности и полномочия роли...",
+    roleCodeRequired: "Укажите код роли.",
+    rolePrepared:
+      "Роль {role} подготовлена. Права будут применены через матрицу.",
+    disableConfirm: "Приостановить роль {role}?",
+    disableSuccess: "Роль приостановлена",
+    permissionsUnit: "прав",
+    selectPermissionsHelp:
+      "Выберите системные полномочия для этой роли:",
+    summaryTitle: "Сводка конфигурации роли",
+    summaryRoleName: "Название роли:",
+    summaryRoleCode: "Код роли:",
+    summaryPermissions: "Выбранные права:",
+    summaryScope: "Область:",
   },
 };
 
@@ -356,11 +410,11 @@ export default function RoleListPage() {
 
   const handleCreateSubmit = async () => {
     if (!newRoleCode.trim()) {
-      showError(t.createModalTitle, "Mã vai trò không được để trống.");
+      showError(t.createModalTitle, t.roleCodeRequired);
       return;
     }
     showToast({
-      title: `Đã chuẩn bị vai trò ${newRoleCode}. Phân quyền sẽ áp dụng trên ma trận!`,
+      title: t.rolePrepared.replace("{role}", newRoleCode),
       icon: "success",
     });
     setIsCreateModalOpen(false);
@@ -490,11 +544,11 @@ export default function RoleListPage() {
             <option value="">
               {t.moduleFilter}: {t.all}
             </option>
-            <option value="iam">Quản trị IAM</option>
-            <option value="portal">Cổng thành viên</option>
-            <option value="content">Nội dung</option>
-            <option value="collab">Hợp tác</option>
-            <option value="knowledge">Kho tri thức</option>
+            <option value="iam">{t.moduleIam}</option>
+            <option value="portal">{t.modulePortal}</option>
+            <option value="content">{t.moduleContent}</option>
+            <option value="collab">{t.moduleCollaboration}</option>
+            <option value="knowledge">{t.moduleKnowledge}</option>
           </select>
 
           {/* Quick Filter Pills */}
@@ -710,11 +764,14 @@ export default function RoleListPage() {
                                 setActionMenuRoleId(null);
                                 const confirm = await confirmAction({
                                   title: t.disableRole,
-                                  text: `Bạn có chắc chắn muốn tạm dừng vai trò ${formatRoleName(role.name, locale)}?`,
+                                  text: t.disableConfirm.replace(
+                                    "{role}",
+                                    formatRoleName(role.name, locale),
+                                  ),
                                 });
                                 if (confirm.isConfirmed) {
                                   showToast({
-                                    title: "Đã tạm dừng vai trò",
+                                    title: t.disableSuccess,
                                     icon: "success",
                                   });
                                 }
@@ -817,10 +874,11 @@ export default function RoleListPage() {
               }}
               className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-text-primary outline-none"
             >
-              <option value={10}>10 / page</option>
-              <option value={20}>20 / page</option>
-              <option value={50}>50 / page</option>
-              <option value={100}>100 / page</option>
+              {[10, 20, 50, 100].map((size) => (
+                <option key={size} value={size}>
+                  {size} · {t.rowsPerPage}
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -908,7 +966,7 @@ export default function RoleListPage() {
                           {rawRoles.map((r) => (
                             <option key={r.id} value={r.id}>
                               {formatRoleName(r.name, locale)} (
-                              {r.permissions?.length ?? 0} quyền)
+                              {r.permissions?.length ?? 0} {t.permissionsUnit})
                             </option>
                           ))}
                         </select>
@@ -966,8 +1024,7 @@ export default function RoleListPage() {
                   {createStep === 2 && (
                     <div className="space-y-3">
                       <p className="text-xs text-text-secondary">
-                        Chọn các quyền hạn chức năng từ danh mục hệ thống cấp
-                        cho vai trò này:
+                        {t.selectPermissionsHelp}
                       </p>
                       <div className="space-y-2">
                         {PERMISSION_CATALOG.map((perm) => {
@@ -1042,7 +1099,7 @@ export default function RoleListPage() {
                               }`}
                             >
                               <span className="block text-sm font-bold">
-                                {sc}
+                                {SCOPE_DESCRIPTIONS[sc].label[locale] ?? sc}
                               </span>
                             </button>
                           ))}
@@ -1051,18 +1108,18 @@ export default function RoleListPage() {
 
                       <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-secondary)] p-4">
                         <h4 className="text-xs font-bold uppercase tracking-wider text-text-secondary">
-                          Tóm tắt cấu hình vai trò
+                          {t.summaryTitle}
                         </h4>
                         <dl className="mt-3 space-y-2 text-xs">
                           <div className="flex justify-between">
                             <dt className="text-text-secondary">
-                              Tên vai trò:
+                              {t.summaryRoleName}
                             </dt>
                             <dd className="font-bold">{newRoleName || "—"}</dd>
                           </div>
                           <div className="flex justify-between">
                             <dt className="text-text-secondary">
-                              Mã định danh:
+                              {t.summaryRoleCode}
                             </dt>
                             <dd className="font-mono font-bold text-blue-600">
                               {newRoleCode || "—"}
@@ -1070,15 +1127,19 @@ export default function RoleListPage() {
                           </div>
                           <div className="flex justify-between">
                             <dt className="text-text-secondary">
-                              Quyền hạn đã chọn:
+                              {t.summaryPermissions}
                             </dt>
                             <dd className="font-bold">
-                              {newRolePermissions.size} quyền
+                              {newRolePermissions.size} {t.permissionsUnit}
                             </dd>
                           </div>
                           <div className="flex justify-between">
-                            <dt className="text-text-secondary">Phạm vi:</dt>
-                            <dd className="font-bold">{newRoleScope}</dd>
+                            <dt className="text-text-secondary">
+                              {t.summaryScope}
+                            </dt>
+                            <dd className="font-bold">
+                              {SCOPE_DESCRIPTIONS[newRoleScope].label[locale]}
+                            </dd>
                           </div>
                         </dl>
                       </div>

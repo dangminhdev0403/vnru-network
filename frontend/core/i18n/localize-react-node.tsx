@@ -13,7 +13,7 @@ export type TranslationMap = Record<
 
 const LOCALIZED_PROPS = ["aria-label", "alt", "placeholder", "title"] as const;
 
-function translate(
+export function localizeText(
   value: string,
   locale: Locale,
   translations: TranslationMap,
@@ -37,7 +37,7 @@ export function localizeReactNode(
   translations: TranslationMap,
 ): ReactNode {
   if (locale === "vi") return node;
-  if (typeof node === "string") return translate(node, locale, translations);
+  if (typeof node === "string") return localizeText(node, locale, translations);
   if (Array.isArray(node)) {
     return node.map((child, index) => {
       const localized = localizeReactNode(child, locale, translations);
@@ -56,7 +56,7 @@ export function localizeReactNode(
   if (props["data-no-localize"] !== undefined) return element;
   for (const name of LOCALIZED_PROPS) {
     if (typeof props[name] === "string") {
-      props[name] = translate(props[name], locale, translations);
+      props[name] = localizeText(props[name], locale, translations);
     }
   }
   if ("children" in props) {

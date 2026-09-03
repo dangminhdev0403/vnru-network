@@ -948,32 +948,63 @@ export function GuestAboutV2() {
       { id: "participating-partners", tab: "partners" },
     ];
 
-    const observer = new IntersectionObserver(
-      (entries) => {
+    let rafId: number | null = null;
+
+    const handleScroll = () => {
+      if (isScrollingRef.current) return;
+      if (rafId !== null) return;
+
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
         if (isScrollingRef.current) return;
-        const visibleEntries = entries.filter((e) => e.isIntersecting);
-        if (visibleEntries.length > 0) {
-          const matched = sectionIds.find(
-            (s) => s.id === visibleEntries[0].target.id,
-          );
-          if (matched) {
-            setActiveSection(matched.tab);
+
+        // 1. Near page top
+        if (window.scrollY < 80) {
+          setActiveSection(sectionIds[0].tab);
+          return;
+        }
+
+        // 2. Near page bottom
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = window.innerHeight;
+        if (window.scrollY + clientHeight >= scrollHeight - 60) {
+          setActiveSection(sectionIds[sectionIds.length - 1].tab);
+          return;
+        }
+
+        // 3. Dynamic reading line based on sticky subnav bottom
+        const navEl = document.querySelector(
+          'nav[aria-label="About navigation"]',
+        );
+        const threshold = navEl
+          ? navEl.getBoundingClientRect().bottom + 40
+          : 160;
+
+        for (let i = sectionIds.length - 1; i >= 0; i--) {
+          const el = document.getElementById(sectionIds[i].id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= threshold) {
+              setActiveSection(sectionIds[i].tab);
+              return;
+            }
           }
         }
-      },
-      {
-        rootMargin: "-130px 0px -50% 0px",
-        threshold: [0, 0.1, 0.25],
-      },
-    );
 
-    sectionIds.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+        setActiveSection(sectionIds[0].tab);
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+
+    // Initial check
+    handleScroll();
 
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
     };
   }, []);

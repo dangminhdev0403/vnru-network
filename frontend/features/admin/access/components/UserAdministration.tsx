@@ -97,6 +97,17 @@ const iamAdminCopy: Record<
     submitting: string;
     dialogLockTitle: string;
     dialogUnlockTitle: string;
+    dialogLockText: (email: string) => string;
+    dialogUnlockText: (email: string) => string;
+    lockSuccess: string;
+    unlockSuccess: string;
+    updateFailed: string;
+    tryAgain: string;
+    assignRoleRequired: string;
+    assignConfirm: (role: string) => string;
+    assignSuccess: string;
+    assignFailed: string;
+    resetPasswordConfirm: (email: string) => string;
     cancel: string;
     confirm: string;
   }
@@ -189,6 +200,20 @@ const iamAdminCopy: Record<
     submitting: "Đang xử lý…",
     dialogLockTitle: "Khóa tài khoản?",
     dialogUnlockTitle: "Kích hoạt tài khoản?",
+    dialogLockText: (email) =>
+      `Khóa tài khoản "${email}"? Người dùng sẽ tạm thời bị vô hiệu hóa quyền truy cập hệ thống.`,
+    dialogUnlockText: (email) =>
+      `Kích hoạt lại tài khoản "${email}"? Người dùng sẽ có thể đăng nhập vào hệ thống.`,
+    lockSuccess: "Đã khóa tài khoản thành công",
+    unlockSuccess: "Đã kích hoạt tài khoản thành công",
+    updateFailed: "Cập nhật thất bại",
+    tryAgain: "Vui lòng thử lại.",
+    assignRoleRequired: "Chọn vai trò để gán.",
+    assignConfirm: (role) => `Gán vai trò "${role}" cho tài khoản này?`,
+    assignSuccess: "Đã gán vai trò thành công",
+    assignFailed: "Gán vai trò thất bại",
+    resetPasswordConfirm: (email) =>
+      `Cấp lại mật khẩu mới cho tài khoản "${email}"? Toàn bộ phiên đăng nhập hiện tại sẽ bị thu hồi.`,
     cancel: "Hủy",
     confirm: "Xác nhận",
   },
@@ -285,6 +310,20 @@ const iamAdminCopy: Record<
     submitting: "Processing…",
     dialogLockTitle: "Lock account?",
     dialogUnlockTitle: "Activate account?",
+    dialogLockText: (email) =>
+      `Lock account "${email}"? The user will temporarily lose access to the system.`,
+    dialogUnlockText: (email) =>
+      `Reactivate account "${email}"? The user will be able to sign in again.`,
+    lockSuccess: "Account locked",
+    unlockSuccess: "Account activated",
+    updateFailed: "Update failed",
+    tryAgain: "Please try again.",
+    assignRoleRequired: "Select a role to assign.",
+    assignConfirm: (role) => `Assign role "${role}" to this account?`,
+    assignSuccess: "Role assigned",
+    assignFailed: "Role assignment failed",
+    resetPasswordConfirm: (email) =>
+      `Reset the password for account "${email}"? All current sessions will be revoked.`,
     cancel: "Cancel",
     confirm: "Confirm",
   },
@@ -377,6 +416,20 @@ const iamAdminCopy: Record<
     submitting: "Обработка…",
     dialogLockTitle: "Заблокировать аккаунт?",
     dialogUnlockTitle: "Активировать аккаунт?",
+    dialogLockText: (email) =>
+      `Заблокировать аккаунт "${email}"? Пользователь временно потеряет доступ к системе.`,
+    dialogUnlockText: (email) =>
+      `Активировать аккаунт "${email}"? Пользователь снова сможет войти в систему.`,
+    lockSuccess: "Аккаунт заблокирован",
+    unlockSuccess: "Аккаунт активирован",
+    updateFailed: "Не удалось обновить данные",
+    tryAgain: "Повторите попытку.",
+    assignRoleRequired: "Выберите роль для назначения.",
+    assignConfirm: (role) => `Назначить роль "${role}" этому аккаунту?`,
+    assignSuccess: "Роль назначена",
+    assignFailed: "Не удалось назначить роль",
+    resetPasswordConfirm: (email) =>
+      `Сбросить пароль аккаунта "${email}"? Все текущие сеансы будут отозваны.`,
     cancel: "Отмена",
     confirm: "Подтвердить",
   },
@@ -556,8 +609,8 @@ export default function UserAdministration({
     const confirm = await confirmAction({
       title: isLocking ? t.dialogLockTitle : t.dialogUnlockTitle,
       text: isLocking
-        ? `Khóa tài khoản "${user.email || ""}"? Người dùng sẽ tạm thời bị vô hiệu hóa quyền truy cập hệ thống.`
-        : `Kích hoạt lại tài khoản "${user.email || ""}"? Người dùng sẽ có thể đăng nhập vào hệ thống.`,
+        ? t.dialogLockText(user.email || "")
+        : t.dialogUnlockText(user.email || ""),
       confirmButtonText: isLocking ? t.lockBtn : t.unlockBtn,
       cancelButtonText: t.cancel,
       isDestructive: isLocking,
@@ -573,15 +626,13 @@ export default function UserAdministration({
         status: newStatus,
       });
       showToast({
-        title: isLocking
-          ? "Đã khóa tài khoản thành công"
-          : "Đã kích hoạt tài khoản thành công",
+        title: isLocking ? t.lockSuccess : t.unlockSuccess,
         icon: "success",
       });
     } catch (cause) {
       showError(
-        "Cập nhật thất bại",
-        cause instanceof Error ? cause.message : "Vui lòng thử lại.",
+        t.updateFailed,
+        cause instanceof Error ? cause.message : t.tryAgain,
       );
     }
   };
@@ -594,7 +645,7 @@ export default function UserAdministration({
         roleId: z.string().trim().min(1),
       })
       .safeParse({ userId: assignUserId, roleId: assignRoleId });
-    if (!parsed.success) return setAssignError("Chọn vai trò để gán.");
+    if (!parsed.success) return setAssignError(t.assignRoleRequired);
     setAssignError("");
 
     const targetRole = roles.find((r) => r.id === assignRoleId);
@@ -602,7 +653,7 @@ export default function UserAdministration({
 
     const confirm = await confirmAction({
       title: t.submitAssign,
-      text: `Gán vai trò "${roleTitle}" cho tài khoản này?`,
+      text: t.assignConfirm(roleTitle),
       confirmButtonText: t.confirm,
       cancelButtonText: t.cancel,
       icon: "question",
@@ -616,11 +667,11 @@ export default function UserAdministration({
         roleId: parsed.data.roleId,
       });
       setAssignRoleId("");
-      showToast({ title: "Đã gán vai trò thành công", icon: "success" });
+      showToast({ title: t.assignSuccess, icon: "success" });
     } catch (cause) {
       showError(
-        "Gán vai trò thất bại",
-        cause instanceof Error ? cause.message : "Vui lòng thử lại.",
+        t.assignFailed,
+        cause instanceof Error ? cause.message : t.tryAgain,
       );
     }
   };
@@ -654,7 +705,7 @@ export default function UserAdministration({
 
     const confirm = await confirmAction({
       title: t.resetPasswordTitle,
-      text: `Cấp lại mật khẩu mới cho tài khoản "${passwordTarget.email || ""}"? Toàn bộ phiên đăng nhập hiện tại sẽ bị thu hồi.`,
+      text: t.resetPasswordConfirm(passwordTarget.email || ""),
       confirmButtonText: t.resetPasswordSubmit,
       cancelButtonText: t.cancel,
       isDestructive: true,
@@ -673,7 +724,7 @@ export default function UserAdministration({
     } catch (cause) {
       showError(
         t.resetPasswordFailed,
-        cause instanceof Error ? cause.message : "Vui lòng thử lại.",
+        cause instanceof Error ? cause.message : t.tryAgain,
       );
     }
   };
@@ -1067,10 +1118,11 @@ export default function UserAdministration({
                   }}
                   className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-text-primary outline-none"
                 >
-                  <option value={5}>5 / page</option>
-                  <option value={10}>10 / page</option>
-                  <option value={20}>20 / page</option>
-                  <option value={50}>50 / page</option>
+                  {[5, 10, 20, 50].map((size) => (
+                    <option key={size} value={size}>
+                      {size} · {t.rowsPerPage}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

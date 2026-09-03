@@ -29,11 +29,11 @@ test("news is canonical and legacy explore redirects", async () => {
     readFile("app/knowledge/page.tsx", "utf8"),
   ]);
   assert.match(opportunities, /redirect\("\/news\?type=OPPORTUNITY"\)/);
-  assert.match(knowledge, /redirect\("\/news\?type=PUBLICATION"\)/);
-  assert.doesNotMatch(
-    opportunities + knowledge,
-    /requireMemberSession|Guest(?:Opportunities|Knowledge)V2/,
-  );
+  assert.match(knowledge, /getPublicNews/);
+  assert.match(knowledge, /contentTypes: \["KNOWLEDGE"\]/);
+  assert.match(knowledge, /<GuestKnowledgeV2/);
+  assert.doesNotMatch(knowledge, /redirect/);
+  assert.doesNotMatch(opportunities, /requireMemberSession|GuestOpportunitiesV2/);
 
   const article = await readFile(
     "features/public-v2/components/GuestNewsArticleV2.tsx",
@@ -65,6 +65,7 @@ test("news is canonical and legacy explore redirects", async () => {
   assert.doesNotMatch(filter, /topics|params\.append\("topic"/);
   const proxy = await readFile("proxy.ts", "utf8");
   assert.doesNotMatch(proxy, /matcher:[^\n]*\/news/);
+  assert.doesNotMatch(proxy, /"\/knowledge"/);
   const advancedFilter = await readFile(
     "features/public-v2/components/GuestNewsAdvancedFilters.tsx",
     "utf8",

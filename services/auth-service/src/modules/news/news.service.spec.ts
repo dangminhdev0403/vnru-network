@@ -23,7 +23,11 @@ describe('NewsService', () => {
     await service.listPublic({ featured: true, limit: 4, offset: 0 });
 
     expect(prisma.newsArticle.findMany).toHaveBeenCalledWith({
-      where: { isFeatured: true },
+      where: {
+        isFeatured: true,
+        contentType: { not: 'KNOWLEDGE' },
+        publishedAt: { not: null },
+      },
       orderBy: [
         { publishedAt: 'desc' },
         { createdAt: 'desc' },
@@ -34,7 +38,11 @@ describe('NewsService', () => {
       select: expect.any(Object),
     });
     expect(prisma.newsArticle.count).toHaveBeenCalledWith({
-      where: { isFeatured: true },
+      where: {
+        isFeatured: true,
+        contentType: { not: 'KNOWLEDGE' },
+        publishedAt: { not: null },
+      },
     });
   });
 
@@ -55,7 +63,7 @@ describe('NewsService', () => {
     const where = {
       category: 'science-technology',
       contentType: { in: ['EVENT', 'ARTICLE'] },
-      publishedAt: { gte: publishedAfter },
+      publishedAt: { not: null, gte: publishedAfter },
       translations: {
         some: {
           OR: [
@@ -86,7 +94,12 @@ describe('NewsService', () => {
 
     expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { category: 'cooperation', NOT: { id: 'article-1' } },
+        where: {
+          category: 'cooperation',
+          contentType: { not: 'KNOWLEDGE' },
+          publishedAt: { not: null },
+          NOT: { id: 'article-1' },
+        },
         take: 4,
         skip: 0,
       }),
@@ -108,7 +121,7 @@ describe('NewsService', () => {
     });
     expect(prisma.newsArticle.findFirst).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { id: 'article-1' },
+        where: { id: 'article-1', publishedAt: { not: null } },
       }),
     );
   });
@@ -162,6 +175,7 @@ describe('NewsService', () => {
     prisma.newsArticle.count
       .mockResolvedValueOnce(1) // total matching filter
       .mockResolvedValueOnce(1) // all count
+      .mockResolvedValueOnce(1) // published count
       .mockResolvedValueOnce(0); // featured count
 
     const res = await service.listAdmin({
@@ -194,6 +208,7 @@ describe('NewsService', () => {
     expect(res.total).toBe(1);
     expect(res.counts).toEqual({
       total: 1,
+      published: 1,
       featured: 0,
     });
     expect(res.items[0].author).toEqual({
@@ -201,6 +216,62 @@ describe('NewsService', () => {
       firstName: 'Minh',
       lastName: 'Dang',
     });
+  });
+
+
+  it('filters draft admin articles before pagination', async () => {
+    prisma.newsArticle.findMany.mockResolvedValue([]);
+    prisma.newsArticle.count.mockResolvedValue(0);
+
+    await service.listAdmin({ limit: 10, offset: 0, published: false });
+
+    expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { publishedAt: null } }),
+    );
+  });
+
+  it('filters knowledge content through the existing admin list', async () => {
+    prisma.newsArticle.findMany.mockResolvedValue([]);
+    prisma.newsArticle.count.mockResolvedValue(0);
+
+    await service.listAdmin({
+      limit: 10,
+      offset: 0,
+      contentType: 'KNOWLEDGE',
+    });
+
+    expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { contentType: 'KNOWLEDGE' } }),
+    );
+  });
+
+  it('rejects a news category for knowledge content', () => {
+    expect(() =>
+      service.create({
+        category: 'education',
+        contentType: 'KNOWLEDGE',
+        authorId: 'user-1',
+        translations: {
+          VI: { title: 'Bài báo', summary: 'Tóm tắt', content: 'Nội dung' },
+        },
+      }),
+    ).toThrow('Invalid category for KNOWLEDGE');
+  });
+
+  it('keeps knowledge content out of the public news feed', async () => {
+    prisma.newsArticle.findMany.mockResolvedValue([]);
+    prisma.newsArticle.count.mockResolvedValue(0);
+
+    await service.listPublic({ limit: 10, offset: 0 });
+
+    expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          contentType: { not: 'KNOWLEDGE' },
+          publishedAt: { not: null },
+        },
+      }),
+    );
   });
 
   it('creates a public article with a server timestamp', async () => {

@@ -40,6 +40,7 @@ enum NewsContentType {
   ANNOUNCEMENT
   PROJECT
   OPPORTUNITY
+  KNOWLEDGE
   PUBLICATION
 }
 
@@ -67,7 +68,7 @@ model NewsArticle {
   sourceUrls     String[]                 @default([])
   coverImageUrl  String?
   isFeatured     Boolean                  @default(false)
-  publishedAt    DateTime                  @default(now())
+  publishedAt    DateTime?                 @default(now())
   createdAt      DateTime                 @default(now())
   updatedAt      DateTime                 @updatedAt
   authorId       String

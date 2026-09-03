@@ -82,27 +82,7 @@ export const ECOSYSTEM_TRANSLATIONS: TranslationMap = {
     "Bài báo": "Articles",
     "Tạp chí": "Journals",
     "Sáng chế": "Patents",
-    "Tác giả:": "Authors:",
-    "Nghiên cứu cấu trúc composite nền gốm chịu nhiệt độ cực cao ứng dụng trong động cơ đẩy và vỏ bọc bảo vệ nhiệt thế hệ mới.": "Research on ultra-high-temperature ceramic-matrix composites for next-generation propulsion and thermal-protection systems.",
-    "Tích hợp dữ liệu viễn thám radar và quang học kết hợp mạng nơ-ron học sâu để dự báo xâm nhập mặn và biến động rạn san hô ven bờ.": "Integration of radar and optical remote-sensing data with deep neural networks to forecast salinity intrusion and coastal coral-reef change.",
-    "Khung mô phỏng tính toán lượng tử hỗ trợ phát triển thuốc sinh học và giải mã các cấu trúc phân tử phức tạp.": "A quantum-computing simulation framework supporting biopharmaceutical development and analysis of complex molecular structures.",
     "Xem chi tiết →": "View details →",
-    "Tạp chí Khoa học & Công nghệ Song phương Nga – Việt": "Russia–Vietnam Bilateral Science & Technology Journal",
-    "Ấn phẩm học thuật quốc tế xuất bản 4 số/năm bằng tiếng Anh và tiếng Nga, giới thiệu các kết quả nghiên cứu hợp tác mới nhất giữa hai nước.": "An international academic journal published quarterly in English and Russian, presenting the latest bilateral research results.",
-    "ISSN: 2831-9042 · Chỉ mục Scopus": "ISSN: 2831-9042 · Indexed in Scopus",
-    "Kỷ yếu Diễn đàn Khoa học Quốc tế VAST – RAS": "Proceedings of the VAST–RAS International Scientific Forum",
-    "Tổng hợp toàn văn các báo cáo khoa học của các nhà khoa học hai nước trong các kỳ hội nghị song phương thường niên.": "Full proceedings of scientific reports presented by researchers from both countries at annual bilateral conferences.",
-    "Bản tin Đổi mới Sáng tạo & Chuyển giao Tri thức": "Innovation & Knowledge Transfer Bulletin",
-    "Bản tin phân tích xu hướng công nghệ cao của Nga, chính sách khoa học và cơ hội chuyển giao công nghệ cho doanh nghiệp Việt Nam.": "A bulletin analysing Russian high-technology trends, science policy, and technology-transfer opportunities for Vietnamese businesses.",
-    "Phát hành hàng tháng": "Published monthly",
-    "Quy trình tổng hợp vật liệu composite gốm nền cacbua siêu chịu nhiệt": "Process for synthesizing ultra-high-temperature carbide ceramic composites",
-    "Mã bằng:": "Patent No.:",
-    "Mã đăng ký:": "Application No.:",
-    "Chủ sở hữu:": "Owners:",
-    "Trạng thái: Đang bảo hộ hiệu lực": "Status: Patent in force",
-    "Thiết bị bay không người lái tự hành thu thập mẫu nước biển tầng nông": "Autonomous UAV for shallow-seawater sample collection",
-    "Trạng thái: Đã cấp bằng": "Status: Granted",
-    "Thuật toán giải mã tín hiệu quang học cho cảm biến lượng tử độ nhạy cao": "Optical-signal decoding algorithm for high-sensitivity quantum sensors",
     "DỮ LIỆU CÔNG BỐ CHÍNH THỨC": "OFFICIALLY PUBLISHED DATA",
     "Kết quả Xét duyệt Học bổng & Đề tài “Khai sáng”": "“Khai sáng” Fellowship & Research Proposal Results",
     "Đóng cửa sổ": "Close dialog",
@@ -136,9 +116,6 @@ export const ECOSYSTEM_TRANSLATIONS: TranslationMap = {
     ,"Mô hình hóa động lực học biển và biến đổi môi trường sinh thái vịnh Bắc Bộ": "Marine dynamics and ecological change modelling in the Gulf of Tonkin"
     ,"Thiết kế vật liệu composite chịu nhiệt cho tuabin khí thế hệ mới": "Heat-resistant composite materials for next-generation gas turbines"
     ,"Ứng dụng chùm tia ion năng lượng cao trong phân tích cấu trúc vi mô": "High-energy ion beams for microstructural analysis"
-    ,"Chủ sở hữu: Viện Hàn lâm KHCN Việt Nam & Đại học Bauman. Bảo hộ độc quyền quy trình thiêu kết áp suất cao cho linh kiện hàng không.": "Owners: Vietnam Academy of Science and Technology & Bauman University. Exclusive protection for high-pressure sintering of aerospace components."
-    ,"Tác giả: Nhóm nghiên cứu NCS Phạm Quốc Phòng & Viện Hải dương học. Thiết kế cơ cấu thả mẫu tự cân bằng trong điều kiện sóng cấp 4.": "Authors: Phạm Quốc Phòng doctoral research group & Institute of Oceanography. A self-balancing sample-release mechanism for sea state 4."
-    ,"Chủ sở hữu: Rosatom Quantum JV & Trường ĐH Khoa học Tự nhiên ĐHQGHN. Ứng dụng trong thiết bị đo địa từ trường và địa chất ngầm.": "Owners: Rosatom Quantum JV & VNU University of Science. Applications in geomagnetic and subsurface geological instruments."
   },
   ru: {
     "Cơ hội hợp tác": "Возможности сотрудничества",
@@ -223,27 +200,7 @@ export const ECOSYSTEM_TRANSLATIONS: TranslationMap = {
     "Bài báo": "Научная статья",
     "Tạp chí": "Научный журнал",
     "Sáng chế": "Патенты",
-    "Tác giả:": "Авторы:",
-    "Nghiên cứu cấu trúc composite nền gốm chịu nhiệt độ cực cao ứng dụng trong động cơ đẩy và vỏ bọc bảo vệ nhiệt thế hệ mới.": "Исследование сверхвысокотемпературных керамических композитов для двигателей и теплозащиты нового поколения.",
-    "Tích hợp dữ liệu viễn thám radar và quang học kết hợp mạng nơ-ron học sâu để dự báo xâm nhập mặn và biến động rạn san hô ven bờ.": "Интеграция радиолокационных и оптических данных с глубокими нейросетями для прогноза засоления и изменений прибрежных коралловых рифов.",
-    "Khung mô phỏng tính toán lượng tử hỗ trợ phát triển thuốc sinh học và giải mã các cấu trúc phân tử phức tạp.": "Среда квантового моделирования для разработки биофармацевтических препаратов и анализа сложных молекулярных структур.",
     "Xem chi tiết →": "Подробнее →",
-    "Tạp chí Khoa học & Công nghệ Song phương Nga – Việt": "Российско-вьетнамский журнал науки и технологий",
-    "Ấn phẩm học thuật quốc tế xuất bản 4 số/năm bằng tiếng Anh và tiếng Nga, giới thiệu các kết quả nghiên cứu hợp tác mới nhất giữa hai nước.": "Международный академический журнал выходит четыре раза в год на английском и русском языках и публикует результаты совместных исследований.",
-    "ISSN: 2831-9042 · Chỉ mục Scopus": "ISSN: 2831-9042 · Индексируется в Scopus",
-    "Kỷ yếu Diễn đàn Khoa học Quốc tế VAST – RAS": "Труды Международного научного форума ВАНТ–РАН",
-    "Tổng hợp toàn văn các báo cáo khoa học của các nhà khoa học hai nước trong các kỳ hội nghị song phương thường niên.": "Полные тексты докладов учёных двух стран на ежегодных двусторонних конференциях.",
-    "Bản tin Đổi mới Sáng tạo & Chuyển giao Tri thức": "Бюллетень инноваций и трансфера знаний",
-    "Bản tin phân tích xu hướng công nghệ cao của Nga, chính sách khoa học và cơ hội chuyển giao công nghệ cho doanh nghiệp Việt Nam.": "Аналитика российских высоких технологий, научной политики и возможностей трансфера технологий для вьетнамских компаний.",
-    "Phát hành hàng tháng": "Ежемесячный выпуск",
-    "Quy trình tổng hợp vật liệu composite gốm nền cacbua siêu chịu nhiệt": "Способ синтеза сверхвысокотемпературного карбидного керамического композита",
-    "Mã bằng:": "Патент:",
-    "Mã đăng ký:": "Заявка:",
-    "Chủ sở hữu:": "Правообладатели:",
-    "Trạng thái: Đang bảo hộ hiệu lực": "Статус: патент действует",
-    "Thiết bị bay không người lái tự hành thu thập mẫu nước biển tầng nông": "Автономный БПЛА для отбора проб морской воды на мелководье",
-    "Trạng thái: Đã cấp bằng": "Статус: патент выдан",
-    "Thuật toán giải mã tín hiệu quang học cho cảm biến lượng tử độ nhạy cao": "Алгоритм декодирования оптического сигнала для высокочувствительных квантовых датчиков",
     "DỮ LIỆU CÔNG BỐ CHÍNH THỨC": "ОФИЦИАЛЬНО ОПУБЛИКОВАННЫЕ ДАННЫЕ",
     "Kết quả Xét duyệt Học bổng & Đề tài “Khai sáng”": "Результаты отбора стипендий и проектов «Khai sáng»",
     "Đóng cửa sổ": "Закрыть окно",
@@ -277,8 +234,5 @@ export const ECOSYSTEM_TRANSLATIONS: TranslationMap = {
     ,"Mô hình hóa động lực học biển và biến đổi môi trường sinh thái vịnh Bắc Bộ": "Моделирование морской динамики и экологических изменений в Тонкинском заливе"
     ,"Thiết kế vật liệu composite chịu nhiệt cho tuabin khí thế hệ mới": "Термостойкие композиты для газовых турбин нового поколения"
     ,"Ứng dụng chùm tia ion năng lượng cao trong phân tích cấu trúc vi mô": "Применение пучков высокоэнергетических ионов для анализа микроструктуры"
-    ,"Chủ sở hữu: Viện Hàn lâm KHCN Việt Nam & Đại học Bauman. Bảo hộ độc quyền quy trình thiêu kết áp suất cao cho linh kiện hàng không.": "Правообладатели: Вьетнамская академия наук и технологий и МГТУ им. Баумана. Исключительная охрана высокобарического спекания авиационных компонентов."
-    ,"Tác giả: Nhóm nghiên cứu NCS Phạm Quốc Phòng & Viện Hải dương học. Thiết kế cơ cấu thả mẫu tự cân bằng trong điều kiện sóng cấp 4.": "Авторы: аспирантская группа Фам Куок Фонга и Институт океанографии. Самобалансирующийся механизм отбора проб при волнении до 4 баллов."
-    ,"Chủ sở hữu: Rosatom Quantum JV & Trường ĐH Khoa học Tự nhiên ĐHQGHN. Ứng dụng trong thiết bị đo địa từ trường và địa chất ngầm.": "Правообладатели: Rosatom Quantum JV и Университет естественных наук VNU. Применение в геомагнитных и подземных геологических приборах."
   }
 };

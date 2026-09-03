@@ -11,10 +11,10 @@ Implemented API families:
 - `/api/v1/admin/roles/*`: role and permission administration.
 - `/api/v1/admin/role-assignments/*`: assignment administration.
 - `POST /api/v1/membership-applications`: public membership application intake. Stores a normalized `PENDING` application; never creates a user or role assignment.
-- `GET /api/v1/news`: public news feed; returns `{ items, total }`; supports bounded `limit`/`offset`, `locale`, `featured`, `category`, repeated `contentType`, `q`, `scope`, and `period` filters. Filtering/search/sort happen before pagination in the backend.
-- `GET /api/v1/news/:id`: public article with VI fallback.
-- `/api/v1/admin/news/*`: authenticated article create/read/update/delete operations authorized by `content.article.*` capabilities; delete reuses `content.article.update`.
-- `GET /api/v1/admin/news`: bounded admin list; accepts `locale=VI|EN|RU` (default `RU`) and returns all translations with the requested locale first, then RU/VI/EN fallback order; `GET /api/v1/admin/news/:id` returns all translations for editing.
+- `GET /api/v1/news`: public news feed; returns `{ items, total }`; supports bounded `limit`/`offset`, `locale`, `featured`, `category`, repeated news `contentType`, `q`, `scope`, and `period` filters. Filtering/search/sort happen before pagination in the backend; `KNOWLEDGE` is managed separately and excluded from this feed.
+- `GET /api/v1/news/:id`: public published article with VI fallback; drafts are not exposed.
+- `/api/v1/admin/news/*`: authenticated content create/read/update/delete operations authorized by `content.article.*` capabilities; the shared lifecycle includes `KNOWLEDGE`; delete reuses `content.article.update`.
+- `GET /api/v1/admin/news`: bounded admin list; accepts `locale=VI|EN|RU` (default `RU`) and optional `published=true|false`, and returns all translations with the requested locale first, then RU/VI/EN fallback order; `GET /api/v1/admin/news/:id` returns all translations for editing. `PATCH /api/v1/admin/news/:id` sets `publishedAt` to a timestamp to show content or `null` to hide it as a draft.
 - `POST /api/v1/admin/news/media`: authenticated multipart image upload (`file`, JPEG/PNG/WebP, max 20 MB) through `nestjs-cloudinary@1.0.7`; response returns Cloudinary URL and public ID for article/banner fields.
 
 News media is uploaded only through the backend. Upload accepts either `content.article.create` or `content.article.update`, so editors can replace an existing cover. Frontend code must not sign Cloudinary requests, hold Cloudinary secrets, transform image binaries, or implement a parallel storage path.

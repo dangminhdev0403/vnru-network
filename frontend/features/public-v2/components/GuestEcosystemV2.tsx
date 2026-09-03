@@ -5,10 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { z } from "zod";
+import { formatDate } from "@/core/i18n/date-format";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { localizeReactNode } from "@/core/i18n/localize-react-node";
 import { HOME_COPY } from "./GuestHomeV2";
 import { ECOSYSTEM_TRANSLATIONS } from "./GuestEcosystemV2.copy";
+import {
+  formatNewsTitle,
+  newsArticleHref,
+  type OfficialNewsArticle,
+} from "../data/official-news";
 import {
   DOCUMENT_PARTNERS,
   type EcosystemPartner,
@@ -18,6 +24,19 @@ import { GuestPublicNav } from "./GuestPublicNav";
 import { Reveal } from "@/components/shared/Reveal";
 
 type EcosystemTabId = "opportunities" | "members" | "projects" | "library";
+type LibraryTabId = "articles" | "journals" | "patents";
+
+const LIBRARY_CATEGORIES = {
+  articles: "knowledge-article",
+  journals: "knowledge-journal",
+  patents: "knowledge-invention",
+} as const;
+
+const LIBRARY_EMPTY: Record<Locale, string> = {
+  vi: "Chưa có nội dung trong chuyên mục này.",
+  en: "No content in this category yet.",
+  ru: "В этой категории пока нет материалов.",
+};
 
 const connectFormSchema = (locale: Locale) => {
   const message = (vi: string, en: string, ru: string) =>
@@ -388,8 +407,13 @@ const KHAISANG_RESULTS = [
 
 export function GuestEcosystemV2({
   isAuthenticated,
+  knowledgeArticles,
   workspaceHref,
-}: Readonly<{ isAuthenticated: boolean; workspaceHref: string }>) {
+}: Readonly<{
+  isAuthenticated: boolean;
+  knowledgeArticles: OfficialNewsArticle[];
+  workspaceHref: string;
+}>) {
   const { locale } = useLocale();
   const homeCopy = HOME_COPY[locale] ?? HOME_COPY.vi;
 
@@ -408,9 +432,7 @@ export function GuestEcosystemV2({
     "experts",
   );
   // Sub-tabs for Library
-  const [libSubTab, setLibSubTab] = useState<
-    "articles" | "journals" | "patents"
-  >("articles");
+  const [libSubTab, setLibSubTab] = useState<LibraryTabId>("articles");
 
   // State for Connect Form
   const [connectForm, setConnectForm] = useState({
@@ -438,32 +460,63 @@ export function GuestEcosystemV2({
       { id: "knowledge-library", tab: "library" },
     ];
 
-    const observer = new IntersectionObserver(
-      (entries) => {
+    let rafId: number | null = null;
+
+    const handleScroll = () => {
+      if (isScrollingRef.current) return;
+      if (rafId !== null) return;
+
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
         if (isScrollingRef.current) return;
-        const visibleEntries = entries.filter((e) => e.isIntersecting);
-        if (visibleEntries.length > 0) {
-          const matched = sectionIds.find(
-            (s) => s.id === visibleEntries[0].target.id,
-          );
-          if (matched) {
-            setActiveSection(matched.tab);
+
+        // 1. Near page top
+        if (window.scrollY < 80) {
+          setActiveSection(sectionIds[0].tab);
+          return;
+        }
+
+        // 2. Near page bottom
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = window.innerHeight;
+        if (window.scrollY + clientHeight >= scrollHeight - 60) {
+          setActiveSection(sectionIds[sectionIds.length - 1].tab);
+          return;
+        }
+
+        // 3. Dynamic reading line based on sticky subnav bottom
+        const navEl = document.querySelector(
+          'nav[aria-label="Ecosystem navigation"]',
+        );
+        const threshold = navEl
+          ? navEl.getBoundingClientRect().bottom + 40
+          : 180;
+
+        for (let i = sectionIds.length - 1; i >= 0; i--) {
+          const el = document.getElementById(sectionIds[i].id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= threshold) {
+              setActiveSection(sectionIds[i].tab);
+              return;
+            }
           }
         }
-      },
-      {
-        rootMargin: "-120px 0px -50% 0px",
-        threshold: [0, 0.1, 0.25],
-      },
-    );
 
-    sectionIds.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+        setActiveSection(sectionIds[0].tab);
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+
+    // Initial check
+    handleScroll();
 
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
     };
   }, []);
@@ -534,6 +587,9 @@ export function GuestEcosystemV2({
       item.host.toLowerCase().includes(searchResultQuery.toLowerCase()) ||
       item.topic.toLowerCase().includes(searchResultQuery.toLowerCase()),
   );
+  const visibleKnowledge = knowledgeArticles
+    .filter((article) => article.category === LIBRARY_CATEGORIES[libSubTab])
+    .slice(0, 3);
 
   return localizeReactNode(
     <div className="min-h-screen bg-[#edf3f9] text-slate-900 font-sans selection:bg-blue-600 selection:text-white">
@@ -1433,212 +1489,45 @@ export function GuestEcosystemV2({
               </div>
             </div>
 
-            {/* SUBTAB 1: BÀI BÁO (Articles) */}
-            {libSubTab === "articles" && (
+            {visibleKnowledge.length ? (
               <div className="grid gap-6 md:grid-cols-3">
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-lg font-bold leading-snug text-[#082352]">
-                      Functional composites and surface engineering for extreme
-                      thermal environments
-                    </h3>
-                    <div className="mt-2 text-xs font-medium text-slate-500">
-                      Tác giả: GS.TS Nguyễn Văn An, Prof. Elena Kurchatova
+                {visibleKnowledge.map((article) => (
+                  <article
+                    key={article.id}
+                    className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none"
+                  >
+                    <div>
+                      <p className="text-sm font-semibold text-blue-700">
+                        {formatDate(article.date, locale)}
+                      </p>
+                      <h3 className="mt-2 font-serif text-xl font-bold leading-snug text-[#082352]">
+                        {formatNewsTitle(article.title)}
+                      </h3>
+                      {article.summary ? (
+                        <p className="mt-3 line-clamp-3 text-base leading-relaxed text-slate-600">
+                          {article.summary}
+                        </p>
+                      ) : null}
                     </div>
-                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Nghiên cứu cấu trúc composite nền gốm chịu nhiệt độ cực
-                      cao ứng dụng trong động cơ đẩy và vỏ bọc bảo vệ nhiệt thế
-                      hệ mới.
-                    </p>
-                  </div>
-                  <div className="mt-5 border-t border-slate-100 pt-3">
-                    <Link
-                      href="/news/1/mang-tri-thuc-tro-ve"
-                      className="text-xs font-extrabold text-blue-600 hover:text-blue-800"
-                    >
-                      Xem chi tiết →
-                    </Link>
-                  </div>
-                </article>
-
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-lg font-bold leading-snug text-[#082352]">
-                      Multisource remote sensing and machine learning for marine
-                      environmental observation
-                    </h3>
-                    <div className="mt-2 text-xs font-medium text-slate-500">
-                      Tác giả: PGS.TS Bùi Bảo Thiện, PGS.TS Lê Thị Mai
+                    <div className="mt-5 border-t border-slate-100 pt-3">
+                      <Link
+                        href={newsArticleHref(article)}
+                        className="inline-flex min-h-11 items-center text-base font-extrabold text-blue-600 hover:text-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                      >
+                        Xem chi tiết →
+                      </Link>
                     </div>
-                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Tích hợp dữ liệu viễn thám radar và quang học kết hợp mạng
-                      nơ-ron học sâu để dự báo xâm nhập mặn và biến động rạn san
-                      hô ven bờ.
-                    </p>
-                  </div>
-                  <div className="mt-5 border-t border-slate-100 pt-3">
-                    <Link
-                      href="/news/5/truong-dai-hoc-khoa-hoc-tu-nhien-va-rosatom-quantum-thuc-day-hop-tac-trong-linh-vuc-cong-nghe-luong-tu"
-                      className="text-xs font-extrabold text-blue-600 hover:text-blue-800"
-                    >
-                      Xem chi tiết →
-                    </Link>
-                  </div>
-                </article>
-
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-lg font-bold leading-snug text-[#082352]">
-                      Quantum computing algorithms and simulation frameworks for
-                      bilateral research
-                    </h3>
-                    <div className="mt-2 text-xs font-medium text-slate-500">
-                      Tác giả: Denis Avetisyan, PGS.TS Ngạc An Bang
-                    </div>
-                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Khung mô phỏng tính toán lượng tử hỗ trợ phát triển thuốc
-                      sinh học và giải mã các cấu trúc phân tử phức tạp.
-                    </p>
-                  </div>
-                  <div className="mt-5 border-t border-slate-100 pt-3">
-                    <Link
-                      href="/news/5/truong-dai-hoc-khoa-hoc-tu-nhien-va-rosatom-quantum-thuc-day-hop-tac-trong-linh-vuc-cong-nghe-luong-tu"
-                      className="text-xs font-extrabold text-blue-600 hover:text-blue-800"
-                    >
-                      Xem chi tiết →
-                    </Link>
-                  </div>
-                </article>
+                  </article>
+                ))}
               </div>
-            )}
-
-            {/* SUBTAB 2: TẠP CHÍ (Journals) */}
-            {libSubTab === "journals" && (
-              <div className="grid gap-6 md:grid-cols-3">
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
-                      Tạp chí Khoa học & Công nghệ Song phương Nga – Việt
-                    </h3>
-                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Ấn phẩm học thuật quốc tế xuất bản 4 số/năm bằng tiếng Anh
-                      và tiếng Nga, giới thiệu các kết quả nghiên cứu hợp tác
-                      mới nhất giữa hai nước.
-                    </p>
-                  </div>
-                  <div className="mt-5 border-t border-slate-100 pt-3">
-                    <span className="text-xs font-extrabold text-slate-500">
-                      ISSN: 2831-9042 · Chỉ mục Scopus
-                    </span>
-                  </div>
-                </article>
-
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
-                      Kỷ yếu Diễn đàn Khoa học Quốc tế VAST – RAS
-                    </h3>
-                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Tổng hợp toàn văn các báo cáo khoa học của các nhà khoa
-                      học hai nước trong các kỳ hội nghị song phương thường
-                      niên.
-                    </p>
-                  </div>
-                  <div className="mt-5 border-t border-slate-100 pt-3">
-                    <span className="text-xs font-extrabold text-slate-500">
-                      ISBN: 978-604-913-882-1
-                    </span>
-                  </div>
-                </article>
-
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
-                      Bản tin Đổi mới Sáng tạo & Chuyển giao Tri thức
-                    </h3>
-                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Bản tin phân tích xu hướng công nghệ cao của Nga, chính
-                      sách khoa học và cơ hội chuyển giao công nghệ cho doanh
-                      nghiệp Việt Nam.
-                    </p>
-                  </div>
-                  <div className="mt-5 border-t border-slate-100 pt-3">
-                    <span className="text-xs font-extrabold text-slate-500">
-                      Phát hành hàng tháng
-                    </span>
-                  </div>
-                </article>
-              </div>
-            )}
-
-            {/* SUBTAB 3: SỞ HỮU TRÍ TUỆ / SÁNG CHẾ (Patents) */}
-            {libSubTab === "patents" && (
-              <div className="grid gap-6 md:grid-cols-3">
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
-                      Quy trình tổng hợp vật liệu composite gốm nền cacbua siêu
-                      chịu nhiệt
-                    </h3>
-                    <div className="mt-2 text-xs font-extrabold text-blue-700">
-                      Mã bằng: RU2789124 / VN-45892
-                    </div>
-                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Chủ sở hữu: Viện Hàn lâm KHCN Việt Nam & Đại học Bauman.
-                      Bảo hộ độc quyền quy trình thiêu kết áp suất cao cho linh
-                      kiện hàng không.
-                    </p>
-                  </div>
-                  <div className="mt-5 border-t border-slate-100 pt-3">
-                    <span className="text-xs font-bold text-emerald-700">
-                      Trạng thái: Đang bảo hộ hiệu lực
-                    </span>
-                  </div>
-                </article>
-
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
-                      Thiết bị bay không người lái tự hành thu thập mẫu nước
-                      biển tầng nông
-                    </h3>
-                    <div className="mt-2 text-xs font-extrabold text-blue-700">
-                      Mã đăng ký: VN-GPHI-2026-089
-                    </div>
-                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Tác giả: Nhóm nghiên cứu NCS Phạm Quốc Phòng & Viện Hải
-                      dương học. Thiết kế cơ cấu thả mẫu tự cân bằng trong điều
-                      kiện sóng cấp 4.
-                    </p>
-                  </div>
-                  <div className="mt-5 border-t border-slate-100 pt-3">
-                    <span className="text-xs font-bold text-blue-700">
-                      Trạng thái: Đã cấp bằng
-                    </span>
-                  </div>
-                </article>
-
-                <article className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold leading-snug text-[#082352]">
-                      Thuật toán giải mã tín hiệu quang học cho cảm biến lượng
-                      tử độ nhạy cao
-                    </h3>
-                    <div className="mt-2 text-xs font-extrabold text-blue-700">
-                      Mã bằng: RU2801452-C1
-                    </div>
-                    <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Chủ sở hữu: Rosatom Quantum JV & Trường ĐH Khoa học Tự
-                      nhiên ĐHQGHN. Ứng dụng trong thiết bị đo địa từ trường và
-                      địa chất ngầm.
-                    </p>
-                  </div>
-                  <div className="mt-5 border-t border-slate-100 pt-3">
-                    <span className="text-xs font-bold text-purple-700">
-                      Trạng thái: Đang bảo hộ hiệu lực
-                    </span>
-                  </div>
-                </article>
+            ) : (
+              <div
+                className="rounded-2xl border border-dashed border-blue-300 bg-white/70 px-6 py-12 text-center"
+                role="status"
+              >
+                <p className="text-base font-semibold text-slate-600">
+                  {LIBRARY_EMPTY[locale]}
+                </p>
               </div>
             )}
           </div>
