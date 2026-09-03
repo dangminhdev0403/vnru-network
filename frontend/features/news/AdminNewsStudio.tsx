@@ -8,6 +8,8 @@ import { confirmAction, showSuccess, showError } from "@/lib/alerts";
 import { z } from "zod";
 import { newsResource } from "./resource";
 import { useLocale } from "@/core/i18n/locale";
+import { localizeReactNode } from "@/core/i18n/localize-react-node";
+import { ADMIN_NEWS_TRANSLATIONS } from "./admin-news-translations";
 import type {
   NewsArticle,
   NewsInput,
@@ -473,11 +475,7 @@ export function AdminNewsStudio() {
   const open = (article: AdminNewsListItem | NewsArticle) => {
     setSelectedId(article.id);
     setFeatured(article.isFeatured);
-    setLocale(
-      article.translations.some((item) => item.locale === "RU")
-        ? "RU"
-        : article.translations[0]?.locale ?? "RU",
-    );
+    setLocale("RU");
     setFieldErrors({});
   };
 
@@ -768,6 +766,7 @@ export function AdminNewsStudio() {
                     <div className="flex items-start gap-2.5">
                       <div className="min-w-0 flex-1">
                         <button
+                          data-no-localize
                           type="button"
                           onClick={() => open(article)}
                           title={title}
@@ -776,7 +775,10 @@ export function AdminNewsStudio() {
                           {title}
                         </button>
                         {summary ? (
-                          <p className="mt-0.5 line-clamp-2 text-xs text-slate-500 leading-snug">
+                          <p
+                            data-no-localize
+                            className="mt-0.5 line-clamp-2 text-xs text-slate-500 leading-snug"
+                          >
                             {summary}
                           </p>
                         ) : null}
@@ -995,8 +997,9 @@ export function AdminNewsStudio() {
     </div>
   );
 
-  return (
-    <div className="mx-auto max-w-[1700px] px-4 py-6 sm:px-6 lg:px-8">
+  return localizeReactNode(
+    (
+      <div className="mx-auto max-w-[1700px] px-4 py-6 sm:px-6 lg:px-8">
       {/* ═══════════════ HEADER BAR OR BACK BUTTON ═══════════════ */}
       {showEditor ? (
         <div className="mb-5 flex items-center justify-between">
@@ -1222,7 +1225,10 @@ export function AdminNewsStudio() {
                 <span className="inline-flex items-center rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700">
                   {contentTypes[previewItem.contentType]}
                 </span>
-                <h3 className="mt-2 text-xl font-bold text-slate-900">
+                <h3
+                  data-no-localize
+                  className="mt-2 text-xl font-bold text-slate-900"
+                >
                   {previewItem.translations[0]?.title || previewItem.id}
                 </h3>
               </div>
@@ -1240,7 +1246,10 @@ export function AdminNewsStudio() {
                 <strong className="block text-xs font-semibold text-slate-400 uppercase">
                   Tóm tắt
                 </strong>
-                <p className="mt-1 leading-relaxed text-slate-800">
+                <p
+                  data-no-localize
+                  className="mt-1 leading-relaxed text-slate-800"
+                >
                   {previewItem.translations[0]?.summary || "Chưa có tóm tắt."}
                 </p>
               </div>
@@ -1843,7 +1852,10 @@ export function AdminNewsStudio() {
                 ) : (
                   <div className="min-h-72 rounded-xl border border-slate-200 bg-slate-50/30 p-5">
                     {translation.content.trim() ? (
-                      <div className="space-y-4 text-sm leading-relaxed text-slate-800 sm:text-base">
+                      <div
+                        data-no-localize
+                        className="space-y-4 text-sm leading-relaxed text-slate-800 sm:text-base"
+                      >
                         {translation.content
                           .split(/\n{2,}/)
                           .filter(Boolean)
@@ -1995,6 +2007,9 @@ export function AdminNewsStudio() {
           </div>
         </form>
       ) : null}
-    </div>
+      </div>
+    ),
+    uiLocale,
+    ADMIN_NEWS_TRANSLATIONS,
   );
 }

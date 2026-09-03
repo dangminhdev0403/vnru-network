@@ -53,6 +53,7 @@ export function localizeReactNode(
 
   const element = node as ReactElement<Record<string, unknown>>;
   const props = { ...element.props };
+  if (props["data-no-localize"] !== undefined) return element;
   for (const name of LOCALIZED_PROPS) {
     if (typeof props[name] === "string") {
       props[name] = translate(props[name], locale, translations);
