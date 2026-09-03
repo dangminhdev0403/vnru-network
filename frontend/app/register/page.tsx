@@ -260,9 +260,29 @@ export default function RegisterPage() {
           <div className="mt-28 max-w-[620px]">
             <Link
               href="/"
-              className="mb-5 inline-flex min-h-11 items-center text-base font-bold text-blue-700 underline decoration-2 underline-offset-4 transition-colors hover:text-blue-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+              className="group mb-5 inline-flex min-h-11 items-center gap-2.5 text-base font-bold text-blue-700 transition-colors hover:text-blue-900 focus-visible:rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
             >
-              {t.home}
+              <span
+                aria-hidden="true"
+                className="grid size-8 shrink-0 place-items-center rounded-full border border-blue-200 bg-white/90 text-blue-700 shadow-xs backdrop-blur-xs transition-all duration-200 group-hover:-translate-x-1 group-hover:border-blue-600 group-hover:bg-blue-600 group-hover:text-white motion-reduce:transform-none"
+              >
+                <svg
+                  className="size-4 transition-transform duration-200 group-hover:-translate-x-0.5 motion-reduce:transform-none"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
+              </span>
+              <span className="underline decoration-blue-300 decoration-2 underline-offset-4 transition-colors group-hover:decoration-blue-900">
+                {t.home}
+              </span>
             </Link>
             <h2
               id="register-story-title"
