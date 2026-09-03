@@ -118,7 +118,9 @@ export const PUBLIC_STATIC_TRANSLATIONS: TranslationMap = {
     "Nguồn:": "Источник:",
     "Xem tất cả →": "Все материалы →",
     "ОГРН / Mã số đăng ký: 1207700294020": "ОГРН / Регистрационный номер: 1207700294020",
-    "Viện Hàn lâm, Trường ĐH & Doanh nghiệp": "Академии, университеты и предприятия",
+    "Viện Hàn lâm, Trường ĐH & Doanh nghiệp": "Академии, вузы и бизнес",
+    "Nguyễn Quốc Hùng": "Нгуен Куок Хунг",
+    "Trần Đức Tùng": "Чан Дык Тунг",
     "Thỏa thuận song phương trực tiếp": "Прямые двусторонние соглашения"
   }
 };

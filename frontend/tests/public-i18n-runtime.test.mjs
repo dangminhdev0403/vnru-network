@@ -28,8 +28,28 @@ test("public static UI localizes for EN/RU", async () => {
     "Collaboration opportunities",
     "Register for bilateral collaboration",
     "Возможности сотрудничества",
-    "Заявка на двустороннее сотрудничество",
+    "Регистрация для подключения к двустороннему партнёрству",
   ]) assert.match(ecosystemCopy, new RegExp(text));
+  for (const [source, translation] of [
+    ["Kết nối", "Установление контактов"],
+    ["Công bố", "Публикация"],
+    ["Họ và tên", "ФИО"],
+    ["Chuyên gia", "Специалист"],
+    ["Tổ chức", "Организация"],
+    ["Dự án & Kết quả", "Проекты & результаты"],
+    ["Tra cứu Kết quả", "Проверить результаты"],
+    ["Bài báo", "Научная статья"],
+    ["Tạp chí", "Научный журнал"],
+  ]) {
+    assert.ok(ecosystemCopy.includes(`"${source}": "${translation}"`));
+  }
+  for (const [source, translation] of [
+    ["Viện Hàn lâm, Trường ĐH & Doanh nghiệp", "Академии, вузы и бизнес"],
+    ["Nguyễn Quốc Hùng", "Нгуен Куок Хунг"],
+    ["Trần Đức Tùng", "Чан Дык Тунг"],
+  ]) {
+    assert.ok(sharedCopy.includes(`"${source}": "${translation}"`));
+  }
   for (const text of ["Previous page", "Предыдущая", "Privacy policy", "Политика конфиденциальности"]) {
     assert.match(sharedCopy, new RegExp(text));
   }

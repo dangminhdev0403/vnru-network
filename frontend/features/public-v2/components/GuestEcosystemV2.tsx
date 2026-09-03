@@ -39,7 +39,7 @@ const TAB_LABELS: Record<Locale, Record<EcosystemTabId, string>> = {
   ru: {
     opportunities: "Возможности",
     members: "Участники сети",
-    projects: "Проекты и результаты",
+    projects: "Проекты & результаты",
     library: "Библиотека знаний",
   },
   en: {
