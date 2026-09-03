@@ -26,7 +26,7 @@ test("ecosystem page renders comprehensive network gateways, interactive form, A
 
   // 3. Section 1 (Opportunities): Form kết nối, InteRussia, Fond Gorchakov
   assert.match(ecosystem, /Đăng ký Kết nối Hợp tác Song phương/);
-  assert.match(ecosystem, /connectFormSchema\.safeParse/);
+  assert.match(ecosystem, /connectFormSchema\(locale\)\.safeParse/);
   const connectForm = ecosystem.match(
     /<form\s+noValidate\s+onSubmit=\{handleConnectSubmit\}[\s\S]*?<\/form>/,
   )?.[0];
@@ -41,6 +41,26 @@ test("ecosystem page renders comprehensive network gateways, interactive form, A
   assert.match(ecosystem, /ORGANIZATIONS_LIST/);
   assert.match(ecosystem, /Bauman MSTU/);
   assert.match(ecosystem, /VAST/);
+  const organizationLogos = [
+    "/images/partners/ecosystem-bmstu.webp",
+    "/images/partners/ecosystem-jinr.webp",
+    "/images/partners/ecosystem-msu.webp",
+    "/images/partners/ecosystem-mai.webp",
+    "/images/partners/ecosystem-traditions-friendship.webp",
+    "/images/partners/ecosystem-ras.webp",
+    "/images/partners/ecosystem-spbpu.webp",
+    "/images/partners/ecosystem-vast.webp",
+    "/images/partners/ecosystem-vnu-hanoi.webp",
+  ];
+  for (const logo of organizationLogos) {
+    assert.ok(ecosystem.includes(`logo: "${logo}"`));
+    assert.ok(
+      (await readFile(new URL(`../public${logo}`, import.meta.url))).byteLength >
+        1_000,
+    );
+  }
+  assert.match(ecosystem, /src=\{org\.logo\}/);
+  assert.doesNotMatch(ecosystem, /🏛️/);
 
   // 5. Section 3 (Projects): Khai Sang Scholarship & Results Lookup
   assert.match(ecosystem, /Khai sáng/);

@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { localizeReactNode } from "@/core/i18n/localize-react-node";
+import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
 import { EXPERTS, type Expert } from "@/features/public-discovery/mock-data";
 import { HOME_COPY } from "./GuestHomeV2";
 import { GuestPublicFooter } from "./GuestPublicFooter";
@@ -179,7 +181,7 @@ export function GuestExpertsV2() {
     });
   }, [country, locale, query]);
 
-  return (
+  return localizeReactNode(
     <div className="min-h-screen bg-[#ebf4ff] text-slate-950">
       <GuestPublicNav active="experts" />
 
@@ -559,6 +561,8 @@ export function GuestExpertsV2() {
       )}
 
       <GuestPublicFooter copy={homeCopy} />
-    </div>
+    </div>,
+    locale,
+    PUBLIC_STATIC_TRANSLATIONS,
   );
 }

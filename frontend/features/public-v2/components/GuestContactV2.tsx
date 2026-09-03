@@ -152,7 +152,7 @@ export function GuestContactV2() {
             : "Chúng tôi đã tiếp nhận thông tin và sẽ phản hồi trong 01–02 ngày làm việc.",
       confirmButtonColor: "#2563eb",
       confirmButtonText:
-        locale === "ru" ? "Đóng / Закрыть" : locale === "en" ? "Close" : "Đóng",
+        locale === "ru" ? "Закрыть" : locale === "en" ? "Close" : "Đóng",
     });
 
     // Reset Form

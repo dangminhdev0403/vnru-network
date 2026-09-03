@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { localizeReactNode } from "@/core/i18n/localize-react-node";
+import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
 import {
   DEMO_KNOWLEDGE_RESOURCES,
   type KnowledgeType,
@@ -235,7 +237,7 @@ export function GuestKnowledgeV2() {
     });
   }, [query, selectedTopic, selectedType, selectedAccess, topicFilters]);
 
-  return (
+  return localizeReactNode(
     <div className="min-h-screen bg-[#ebf4ff] text-slate-950">
       <GuestPublicNav active="knowledge" />
 
@@ -739,6 +741,8 @@ export function GuestKnowledgeV2() {
           </div>
         </div>
       </footer>
-    </div>
+    </div>,
+    locale,
+    PUBLIC_STATIC_TRANSLATIONS,
   );
 }

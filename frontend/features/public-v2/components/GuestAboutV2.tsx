@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { localizeReactNode } from "@/core/i18n/localize-react-node";
+import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
 import { HOME_COPY } from "./GuestHomeV2";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
@@ -987,7 +989,7 @@ export function GuestAboutV2() {
     }
   };
 
-  return (
+  return localizeReactNode(
     <div className="min-h-screen bg-[#f0f4f9] text-slate-950 font-sans">
       <GuestPublicNav active="about" />
 
@@ -1422,6 +1424,8 @@ export function GuestAboutV2() {
         </section>
       </main>
       <GuestPublicFooter copy={homeCopy} />
-    </div>
+    </div>,
+    locale,
+    PUBLIC_STATIC_TRANSLATIONS,
   );
 }

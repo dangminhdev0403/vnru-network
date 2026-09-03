@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { localizeReactNode } from "@/core/i18n/localize-react-node";
+import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
 import { DEMO_OPPORTUNITIES } from "@/features/workspace/mock-data/opportunities";
 import { GuestPublicNav } from "./GuestPublicNav";
 
@@ -248,7 +250,7 @@ export function GuestOpportunitiesV2() {
     });
   }, [fieldFilters, query, selectedField, selectedStatus]);
 
-  return (
+  return localizeReactNode(
     <div className="min-h-screen bg-[#ebf4ff] text-slate-950">
       <GuestPublicNav active="opportunities" />
 
@@ -703,6 +705,8 @@ export function GuestOpportunitiesV2() {
           </div>
         </div>
       </footer>
-    </div>
+    </div>,
+    locale,
+    PUBLIC_STATIC_TRANSLATIONS,
   );
 }

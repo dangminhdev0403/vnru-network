@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useLocale } from "@/core/i18n/locale";
+import { localizeReactNode } from "@/core/i18n/localize-react-node";
+import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
 import { formatDate, formatDateTime } from "@/core/i18n/date-format";
 import {
   formatNewsTitle,
@@ -153,7 +155,7 @@ export function GuestNewsArticleV2({
   const contentType = article.contentType ?? "ARTICLE";
 
 
-  return (
+  return localizeReactNode(
     <div className="min-h-screen bg-white text-slate-950">
       <main className="mx-auto max-w-[1460px] px-4 py-9 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500">
@@ -369,6 +371,8 @@ export function GuestNewsArticleV2({
           </div>
         </section>
       </main>
-    </div>
+    </div>,
+    locale,
+    PUBLIC_STATIC_TRANSLATIONS,
   );
 }

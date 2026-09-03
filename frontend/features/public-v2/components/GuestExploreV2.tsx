@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
+import { localizeReactNode } from "@/core/i18n/localize-react-node";
+import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
 import {
   formatNewsTitle,
   newsArticleHref,
@@ -253,7 +255,7 @@ export function GuestExploreV2({
     };
   }, [spotlight.length, spotlightIndex]);
 
-  return (
+  return localizeReactNode(
     <div className="min-h-screen bg-[#edf3f9] text-slate-900 font-sans selection:bg-blue-600 selection:text-white">
       <main className="mx-auto max-w-[1460px] px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
         {!categoryMode ? (
@@ -535,6 +537,8 @@ export function GuestExploreV2({
           </section>
         )}
       </main>
-    </div>
+    </div>,
+    locale,
+    PUBLIC_STATIC_TRANSLATIONS,
   );
 }

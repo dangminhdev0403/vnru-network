@@ -6,21 +6,28 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { z } from "zod";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { localizeReactNode } from "@/core/i18n/localize-react-node";
 import { HOME_COPY } from "./GuestHomeV2";
+import { ECOSYSTEM_TRANSLATIONS } from "./GuestEcosystemV2.copy";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
 import { Reveal } from "@/components/shared/Reveal";
 
 type EcosystemTabId = "opportunities" | "members" | "projects" | "library";
 
-const connectFormSchema = z.object({
-  fullName: z.string().trim().min(2, "Vui lòng nhập họ và tên."),
-  organization: z.string().trim().min(2, "Vui lòng nhập cơ quan hoặc trường."),
-  email: z.string().trim().email("Email không hợp lệ."),
-  message: z.string().trim().min(10, "Nội dung cần ít nhất 10 ký tự."),
-});
+const connectFormSchema = (locale: Locale) => {
+  const message = (vi: string, en: string, ru: string) =>
+    locale === "ru" ? ru : locale === "en" ? en : vi;
 
-type ConnectField = keyof z.infer<typeof connectFormSchema>;
+  return z.object({
+    fullName: z.string().trim().min(2, message("Vui lòng nhập họ và tên.", "Please enter your full name.", "Введите имя и фамилию.")),
+    organization: z.string().trim().min(2, message("Vui lòng nhập cơ quan hoặc trường.", "Please enter your institution.", "Укажите организацию или университет.")),
+    email: z.string().trim().email(message("Email không hợp lệ.", "Invalid email address.", "Некорректный адрес электронной почты.")),
+    message: z.string().trim().min(10, message("Nội dung cần ít nhất 10 ký tự.", "The message must contain at least 10 characters.", "Сообщение должно содержать не менее 10 символов.")),
+  });
+};
+
+type ConnectField = keyof z.infer<ReturnType<typeof connectFormSchema>>;
 
 const TAB_LABELS: Record<Locale, Record<EcosystemTabId, string>> = {
   vi: {
@@ -129,6 +136,7 @@ type OrganizationItem = {
   name: string;
   fullName: string;
   location: string;
+  logo: string;
 };
 
 const ORGANIZATIONS_RAW: OrganizationItem[] = [
@@ -136,46 +144,55 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
     name: "Bauman MSTU",
     fullName: "Đại học Kỹ thuật Quốc gia Moskva mang tên N.E. Bauman",
     location: "Moskva, LB Nga",
+    logo: "/images/partners/ecosystem-bmstu.webp",
   },
   {
     name: "JINR Dubna",
     fullName: "Viện Nghiên cứu Hạt nhân Liên hiệp Dubna",
     location: "Dubna, LB Nga",
+    logo: "/images/partners/ecosystem-jinr.webp",
   },
   {
     name: "Lomonosov MSU",
     fullName: "Đại học Quốc gia Moskva mang tên M.V. Lomonosov",
     location: "Moskva, LB Nga",
+    logo: "/images/partners/ecosystem-msu.webp",
   },
   {
     name: "MAI",
     fullName: "Đại học Hàng không Moskva (Viện Nghiên cứu Quốc gia)",
     location: "Moskva, LB Nga",
+    logo: "/images/partners/ecosystem-mai.webp",
   },
   {
     name: "Quỹ Truyền thống và Hữu nghị",
     fullName: "Quỹ Thúc đẩy Hợp tác Nga - Việt “Truyền thống và Hữu nghị”",
     location: "Moskva & Hà Nội",
+    logo: "/images/partners/ecosystem-traditions-friendship.webp",
   },
   {
     name: "RAS",
     fullName: "Viện Hàn lâm Khoa học Liên bang Nga (Российская академия наук)",
     location: "Liên bang Nga",
+    logo: "/images/partners/ecosystem-ras.webp",
   },
   {
     name: "SPbPU",
     fullName: "Đại học Bách khoa Saint Petersburg Đại đế",
     location: "Saint Petersburg, LB Nga",
+    logo: "/images/partners/ecosystem-spbpu.webp",
   },
   {
     name: "VAST",
     fullName: "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
     location: "Hà Nội, Việt Nam",
+    logo: "/images/partners/ecosystem-vast.webp",
   },
   {
     name: "VNU Hanoi",
     fullName: "Đại học Quốc gia Hà Nội",
     location: "Hà Nội, Việt Nam",
+    logo: "/images/partners/ecosystem-vnu-hanoi.webp",
   },
 ];
 
@@ -421,7 +438,7 @@ export function GuestEcosystemV2({
 
   const handleConnectSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = connectFormSchema.safeParse(connectForm);
+    const result = connectFormSchema(locale).safeParse(connectForm);
     if (!result.success) {
       const errors: Partial<Record<ConnectField, string>> = {};
       for (const issue of result.error.issues) {
@@ -442,7 +459,7 @@ export function GuestEcosystemV2({
       item.topic.toLowerCase().includes(searchResultQuery.toLowerCase()),
   );
 
-  return (
+  return localizeReactNode(
     <div className="min-h-screen bg-[#edf3f9] text-slate-900 font-sans selection:bg-blue-600 selection:text-white">
       <GuestPublicNav
         active="ecosystem"
@@ -1094,8 +1111,14 @@ export function GuestEcosystemV2({
                     key={org.name}
                     className="flex items-center gap-4 rounded-2xl border border-blue-200/90 bg-white p-4.5 shadow-xs transition duration-150 hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md"
                   >
-                    <div className="grid size-14 shrink-0 place-items-center rounded-2xl border border-blue-200 bg-blue-50 text-xl font-bold text-blue-800 shadow-2xs">
-                      🏛️
+                    <div className="relative size-14 shrink-0 overflow-hidden rounded-2xl border border-blue-200 bg-white shadow-2xs">
+                      <Image
+                        src={org.logo}
+                        alt=""
+                        fill
+                        sizes="56px"
+                        className="object-contain p-2"
+                      />
                     </div>
 
                     <div className="min-w-0 flex-1">
@@ -1604,6 +1627,8 @@ export function GuestEcosystemV2({
       )}
 
       <GuestPublicFooter copy={homeCopy} />
-    </div>
+    </div>,
+    locale,
+    ECOSYSTEM_TRANSLATIONS,
   );
 }
