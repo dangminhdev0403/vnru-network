@@ -8,6 +8,7 @@ import { useLocale, type Locale } from "@/core/i18n/locale";
 import { localizeReactNode } from "@/core/i18n/localize-react-node";
 import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
 import { HOME_COPY } from "./GuestHomeV2";
+import { DOCUMENT_PARTNERS } from "./GuestEcosystemPartners";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
 import { Reveal } from "@/components/shared/Reveal";
@@ -53,17 +54,17 @@ const BOARD_MEMBERS = [
 const PARTNER_COPY: Record<Locale, { title: string; ru: string; vi: string }> =
   {
     vi: {
-      title: "Các đối tác mong muốn tham gia Mạng lưới",
+      title: "Đối tác mạng lưới",
       ru: "Về phía Nga",
       vi: "Về phía Việt Nam",
     },
     en: {
-      title: "Partners Wishing to Join the Network",
+      title: "Network partners",
       ru: "Russian Partners",
       vi: "Vietnamese Partners",
     },
     ru: {
-      title: "Партнёры, желающие вступить в Сеть",
+      title: "Участники сети",
       ru: "С российской стороны",
       vi: "С вьетнамской стороны",
     },
@@ -252,6 +253,20 @@ const PARTNERS = [
 
   */
 ] as const;
+
+const PARTICIPATING_PARTNERS = [
+  ...PARTNERS,
+  ...DOCUMENT_PARTNERS.map((partner) => ({
+    name: partner.name,
+    shortName: partner.name,
+    logo: partner.logo,
+    url: partner.website,
+    country: partner.country === "russia" ? ("ru" as const) : ("vi" as const),
+  })),
+].filter(
+  (partner, index, partners) =>
+    partners.findIndex((candidate) => candidate.url === partner.url) === index,
+);
 
 type OperationMechanism = {
   title: string;
@@ -1395,7 +1410,7 @@ export function GuestAboutV2() {
                   </h3>
                 </div>
                 <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                  {PARTNERS.filter(
+                  {PARTICIPATING_PARTNERS.filter(
                     (partner) => partner.country === country,
                   ).map((partner) => (
                     <li key={partner.url}>
@@ -1408,7 +1423,11 @@ export function GuestAboutV2() {
                         className="group flex min-h-36 items-center justify-center rounded-3xl border border-blue-100 bg-white p-5 shadow-xs transition duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transform-none motion-reduce:transition-none"
                       >
                         <Image
-                          src={`/images/partners/${partner.logo}.webp`}
+                          src={
+                            partner.logo.startsWith("/")
+                              ? partner.logo
+                              : `/images/partners/${partner.logo}.webp`
+                          }
                           alt={partner.name}
                           width={180}
                           height={100}

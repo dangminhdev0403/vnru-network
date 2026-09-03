@@ -3,13 +3,22 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 test("about page renders the official VI profile with EN/RU parity", async () => {
-  const about = await readFile(
-    new URL(
-      "../features/public-v2/components/GuestAboutV2.tsx",
-      import.meta.url,
+  const [about, documentPartners] = await Promise.all([
+    readFile(
+      new URL(
+        "../features/public-v2/components/GuestAboutV2.tsx",
+        import.meta.url,
+      ),
+      "utf8",
     ),
-    "utf8",
-  );
+    readFile(
+      new URL(
+        "../features/public-v2/components/GuestEcosystemPartners.ts",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  ]);
 
   for (const heading of [
     "Mục tiêu cốt lõi",
@@ -43,14 +52,43 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /\/images\/board\/nguyen-quoc-hung\.webp/);
   assert.match(about, /\/images\/board\/tran-duc-tung\.webp/);
   assert.match(about, /const PARTNERS = \[/);
+  assert.match(
+    about,
+    /const PARTICIPATING_PARTNERS = \[[\s\S]*\.\.\.DOCUMENT_PARTNERS\.map/,
+  );
   const activePartners = about.split("ĐỐI TÁC TẠM ẨN", 1)[0];
   assert.equal((activePartners.match(/country: "ru"/g) ?? []).length, 12);
   assert.equal((about.match(/country: "ru"/g) ?? []).length, 23);
   assert.equal((about.match(/country: "vi"/g) ?? []).length, 3);
+  const participatingPartners = new Map([
+    ...[...activePartners.matchAll(/url: "([^"]+)",\s+country: "(ru|vi)"/g)].map(
+      ([, url, country]) => [url, country],
+    ),
+    ...[
+      ...documentPartners.matchAll(
+        /country: "(russia|vietnam)",\s+website: "([^"]+)"/g,
+      ),
+    ].map(([, country, url]) => [
+      url,
+      country === "russia" ? "ru" : "vi",
+    ]),
+  ]);
+  assert.equal(
+    [...participatingPartners.values()].filter((country) => country === "ru")
+      .length,
+    15,
+  );
+  assert.equal(
+    [...participatingPartners.values()].filter((country) => country === "vi")
+      .length,
+    8,
+  );
   assert.match(about, /_blank/);
   assert.match(about, /noopener noreferrer/);
   assert.match(about, /hover:-translate-y-1/);
-  assert.match(about, /title: "Các đối tác mong muốn tham gia Mạng lưới"/);
+  assert.match(about, /title: "Đối tác mạng lưới"/);
+  assert.match(about, /title: "Network partners"/);
+  assert.match(about, /title: "Участники сети"/);
   assert.match(
     about,
     /id="participating-partners"[\s\S]*PARTNER_COPY\[locale\]\.title/,
@@ -58,7 +96,11 @@ test("about page renders the official VI profile with EN/RU parity", async () =>
   assert.match(about, /partners: "Đối tác"/);
   assert.match(about, /partners: "participating-partners"/);
   assert.match(about, /\["overview", "ecosystem", "board", "partners"\]/g);
-  assert.match(about, /PARTNERS\.filter\([\s\S]*partner\.country === country/);
+  assert.match(
+    about,
+    /PARTICIPATING_PARTNERS\.filter\([\s\S]*partner\.country === country/,
+  );
+  assert.match(about, /partner\.logo\.startsWith\("\/"\)/);
   assert.doesNotMatch(about, /PARTNERS - TẠM ẨN/);
   assert.match(about, /tel:\+79856905856/);
   assert.match(about, /https:\/\/t\.me\/\+79856905856/);

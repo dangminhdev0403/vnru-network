@@ -70,9 +70,22 @@ test("ecosystem page renders comprehensive network gateways, interactive form, A
     );
   }
   assert.match(ecosystem, /src=\{org\.logo\}/);
-  assert.match(ecosystem, /href=\{org\.website\}/);
+  const organizationsRaw = ecosystem.match(
+    /const ORGANIZATIONS_RAW:[\s\S]*?\n];/,
+  )?.[0];
+  assert.ok(organizationsRaw);
+  assert.equal(
+    (organizationsRaw.match(/website: "https?:\/\//g) ?? []).length,
+    9,
+  );
+  assert.match(
+    ecosystem,
+    /href=\{org\.website\}[\s\S]{0,200}target="_blank"[\s\S]{0,200}rel="noopener noreferrer"/,
+  );
   assert.equal((partners.match(/^    country: "russia"/gm) ?? []).length, 13);
   assert.equal((partners.match(/^    country: "vietnam"/gm) ?? []).length, 7);
+  const vietnamPartners = partners.slice(partners.indexOf('name: "Học viện Công nghệ'));
+  assert.doesNotMatch(vietnamPartners, /fullName: "[^"]*[А-Яа-яЁё]/);
   const documentLogos = [...partners.matchAll(/logo: "([^\"]+)"/g)].map(
     ([, logo]) => logo,
   );

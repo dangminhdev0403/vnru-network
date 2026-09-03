@@ -136,10 +136,9 @@ const EXPERTS_LIST: ExpertItem[] = [...EXPERTS_RAW]
   .sort((a, b) => a.name.localeCompare(b.name, "vi"));
 
 // ══════════════════ DATA: TỔ CHỨC ══════════════════
-type OrganizationItem = Omit<EcosystemPartner, "country" | "website"> & {
+type OrganizationItem = Omit<EcosystemPartner, "country"> & {
   location: string;
   country?: EcosystemPartner["country"];
-  website?: string;
 };
 
 const ORGANIZATIONS_RAW: OrganizationItem[] = [
@@ -149,6 +148,7 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
     location: "Moskva, LB Nga",
     logo: "/images/partners/ecosystem-bmstu.webp",
     country: "russia",
+    website: "https://bmstu.ru/",
   },
   {
     name: "JINR Dubna",
@@ -156,6 +156,7 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
     location: "Dubna, LB Nga",
     logo: "/images/partners/ecosystem-jinr.webp",
     country: "russia",
+    website: "https://www.jinr.ru/",
   },
   {
     name: "Lomonosov MSU",
@@ -163,6 +164,7 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
     location: "Moskva, LB Nga",
     logo: "/images/partners/ecosystem-msu.webp",
     country: "russia",
+    website: "https://www.msu.ru/",
   },
   {
     name: "MAI",
@@ -170,6 +172,7 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
     location: "Moskva, LB Nga",
     logo: "/images/partners/ecosystem-mai.webp",
     country: "russia",
+    website: "https://mai.ru/",
   },
   {
     name: "Quỹ Truyền thống và Hữu nghị",
@@ -177,6 +180,7 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
     location: "Moskva & Hà Nội",
     logo: "/images/partners/ecosystem-traditions-friendship.webp",
     country: "russia",
+    website: "https://fonddruzhba.ru/",
   },
   {
     name: "RAS",
@@ -184,6 +188,7 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
     location: "Liên bang Nga",
     logo: "/images/partners/ecosystem-ras.webp",
     country: "russia",
+    website: "https://new.ras.ru/",
   },
   {
     name: "SPbPU",
@@ -191,6 +196,7 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
     location: "Saint Petersburg, LB Nga",
     logo: "/images/partners/ecosystem-spbpu.webp",
     country: "russia",
+    website: "https://www.spbstu.ru/",
   },
   {
     name: "VAST",
@@ -198,6 +204,7 @@ const ORGANIZATIONS_RAW: OrganizationItem[] = [
     location: "Hà Nội, Việt Nam",
     logo: "/images/partners/ecosystem-vast.webp",
     country: "vietnam",
+    website: "https://vast.gov.vn/",
   },
   {
     name: "VNU Hanoi",
@@ -1125,9 +1132,6 @@ export function GuestEcosystemV2({
             {/* TAB 2: ĐỐI TÁC */}
             {memberSubTab === "organizations" && (
               <div className="space-y-8">
-                <p className="text-center text-sm font-semibold text-slate-600 sm:text-base">
-                  Các đối tác mong muốn tham gia Mạng lưới
-                </p>
                 {(["russia", "vietnam"] as const).map((country) => (
                   <section key={country}>
                     <h3 className="mb-4 font-serif text-xl font-black text-[#082352]">

@@ -100,14 +100,14 @@ export const DOCUMENT_PARTNERS: EcosystemPartner[] = [
   },
   {
     name: "Học viện Công nghệ Bưu chính Viễn thông",
-    fullName: "Институт технологий почты и телекоммуникаций",
+    fullName: "Học viện Công nghệ Bưu chính Viễn thông",
     country: "vietnam",
     website: "https://ptit.edu.vn/",
     logo: "/images/partners/ecosystem-ptit.webp",
   },
   {
     name: "Đại học Kinh tế - Kỹ thuật Công nghiệp",
-    fullName: "Университет экономики и промышленных технологий",
+    fullName: "Trường Đại học Kinh tế - Kỹ thuật Công nghiệp",
     country: "vietnam",
     website: "https://uneti.edu.vn/",
     logo: "/images/partners/ecosystem-uneti.webp",
@@ -121,14 +121,14 @@ export const DOCUMENT_PARTNERS: EcosystemPartner[] = [
   },
   {
     name: "Trường Đại học Kinh tế - Đại học Quốc gia Hà Nội",
-    fullName: "Университет экономики и бизнеса Вьетнамского национального университета в Ханое",
+    fullName: "Trường Đại học Kinh tế - Đại học Quốc gia Hà Nội",
     country: "vietnam",
     website: "https://ueb.edu.vn/",
     logo: "/images/partners/ecosystem-ueb-vnu.webp",
   },
   {
     name: "Đại học Tài chính - Marketing",
-    fullName: "Университет финансов и маркетинга при Министерстве финансов Вьетнама",
+    fullName: "Trường Đại học Tài chính - Marketing",
     country: "vietnam",
     website: "https://ufm.edu.vn/",
     logo: "/images/partners/ecosystem-ufm.webp",
@@ -142,7 +142,7 @@ export const DOCUMENT_PARTNERS: EcosystemPartner[] = [
   },
   {
     name: "Trường Công nghệ Thông tin Phenikaa",
-    fullName: "Школа информационных технологий Университета Феникаа",
+    fullName: "Trường Công nghệ Thông tin - Đại học Phenikaa",
     country: "vietnam",
     website: "https://psc.phenikaa-uni.edu.vn/vi",
     logo: "/images/partners/ecosystem-phenikaa-it.webp",
