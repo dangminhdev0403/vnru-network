@@ -8,6 +8,7 @@ import {
 } from "@/features/public-v2/data/official-news";
 import { getPublicNews, getPublicNewsArticle } from "@/features/public-v2/data/public-news-server";
 import { LOCALE_COOKIE_NAME, sanitizeLocale } from "@/features/auth/server";
+import { PORTAL_NAME } from "@/core/i18n/metadata";
 
 type PageProps = {
   params: Promise<{ id: string; slug: string }>;
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const article = await getPublicNewsArticle(id, locale);
   if (!article) notFound();
   return {
-    title: `${formatNewsTitle(article.title)} | Mạng lưới RU-VN`,
+    title: `${formatNewsTitle(article.title)} | ${PORTAL_NAME[locale]}`,
     description: article.summary,
   };
 }

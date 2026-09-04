@@ -3,8 +3,10 @@
 import React, { useMemo, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { motion } from "motion/react";
 import { useQuery, useQueries } from "@tanstack/react-query";
 import { newsResource } from "./resource";
+import { AnimatedNumber } from "./AnimatedNumber";
 import { useLocale } from "@/core/i18n/locale";
 import {
   localizeReactNode,
@@ -383,7 +385,12 @@ export function ContentOverviewDashboard({
   };
 
   return localizeReactNode(
-    <div className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+      className="space-y-6"
+    >
       {/* ═══════════════ 1. PAGE HEADER & GLOBAL CREATE ACTION ═══════════════ */}
       <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200/80 pb-5">
         <div>
@@ -460,7 +467,10 @@ export function ContentOverviewDashboard({
       </header>
 
       {/* ═══════════════ 2. TOP SUMMARY METRICS (3 FOCUSED KPIS) ═══════════════ */}
-      <section
+      <motion.section
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
         aria-label={t("Tổng quan nội dung")}
         className="grid grid-cols-1 gap-4 sm:grid-cols-3"
       >
@@ -480,7 +490,7 @@ export function ContentOverviewDashboard({
             </div>
           </div>
           <strong className="mt-3 block text-3xl font-extrabold tracking-tight text-slate-900">
-            {isLoading ? "—" : totalAllCount}
+            {isLoading ? "—" : <AnimatedNumber value={totalAllCount} duration={1300} />}
           </strong>
           <span className="mt-1 block text-sm text-slate-500">
             {t("Phân bổ trên 6 phân hệ")}
@@ -503,7 +513,7 @@ export function ContentOverviewDashboard({
             </div>
           </div>
           <strong className="mt-3 block text-3xl font-extrabold tracking-tight text-slate-900">
-            {isLoading ? "—" : publishedCount}
+            {isLoading ? "—" : <AnimatedNumber value={publishedCount} duration={1300} />}
           </strong>
           <span className="mt-1 block text-sm text-slate-500">
             {totalAllCount > 0
@@ -528,16 +538,19 @@ export function ContentOverviewDashboard({
             </div>
           </div>
           <strong className="mt-3 block text-3xl font-extrabold tracking-tight text-slate-900">
-            {isLoading ? "—" : draftCount}
+            {isLoading ? "—" : <AnimatedNumber value={draftCount} duration={1300} />}
           </strong>
           <span className="mt-1 block text-sm text-slate-500">
             {draftCount > 0 ? t("Chờ duyệt xuất bản") : t("Tất cả đã xuất bản")}
           </span>
         </article>
-      </section>
+      </motion.section>
 
       {/* ═══════════════ 3. TWO PRIMARY VISUALIZATIONS SIDE-BY-SIDE ═══════════════ */}
-      <section
+      <motion.section
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         aria-label="Phân tích trực quan nội dung"
         className="grid grid-cols-1 gap-6 lg:grid-cols-2"
       >
@@ -556,7 +569,7 @@ export function ContentOverviewDashboard({
                 </p>
               </div>
               <span className="inline-flex rounded-md bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700">
-                {totalAllCount} {t("nội dung")}
+                {isLoading ? "—" : <AnimatedNumber value={totalAllCount} duration={1300} />} {t("nội dung")}
               </span>
             </div>
 
@@ -573,7 +586,7 @@ export function ContentOverviewDashboard({
                 domain.count > 0 ? (
                   <div
                     key={domain.type}
-                    className={`h-full transition-all duration-300 ${domain.tone.bar}`}
+                    className={`h-full transition-all duration-700 ${domain.tone.bar}`}
                     style={{ width: `${Math.max(2, domain.percentage)}%` }}
                     title={`${t(domain.label)}: ${domain.count} (${Math.round(domain.percentage)}%)`}
                   />
@@ -600,10 +613,10 @@ export function ContentOverviewDashboard({
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-sm font-bold text-slate-800">
-                        {domain.count}
+                        <AnimatedNumber value={domain.count} duration={1200} />
                       </span>
                       <span className="text-xs font-medium text-slate-600">
-                        ({Math.round(domain.percentage)}%)
+                        (<AnimatedNumber value={Math.round(domain.percentage)} duration={1200} />%)
                       </span>
                       <span
                         className="material-symbols-outlined text-sm text-slate-400 opacity-0 group-hover:opacity-100 transition"
@@ -800,10 +813,15 @@ export function ContentOverviewDashboard({
             </span>
           </div>
         </article>
-      </section>
+      </motion.section>
 
       {/* ═══════════════ 4. CONTENT-DOMAIN OVERVIEW (6 COMPACT NAVIGATION CARDS) ═══════════════ */}
-      <section aria-label={t("Các phân hệ nội dung")}>
+      <motion.section
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+        aria-label={t("Các phân hệ nội dung")}
+      >
         <h2 className="text-lg font-bold tracking-tight text-slate-900 mb-3.5">
           {t("Các phân hệ nội dung")}
         </h2>
@@ -825,14 +843,14 @@ export function ContentOverviewDashboard({
                     </span>
                   </span>
                   <span className="font-mono text-base font-extrabold text-slate-900 group-hover:text-blue-600 transition">
-                    {domain.count}
+                    <AnimatedNumber value={domain.count} duration={1200} />
                   </span>
                 </div>
                 <h3 className="mt-2.5 text-sm font-bold text-slate-900 group-hover:text-blue-700 transition line-clamp-1">
                   {t(domain.label)}
                 </h3>
                 <p className="mt-0.5 text-xs text-slate-500">
-                  {domain.published} {t("Đã xuất bản")}
+                  <AnimatedNumber value={domain.published} duration={1200} /> {t("Đã xuất bản")}
                 </p>
               </div>
 
@@ -848,10 +866,13 @@ export function ContentOverviewDashboard({
             </Link>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* ═══════════════ 5. RECENT ACTIVITY & OPERATIONAL STATE ═══════════════ */}
-      <section
+      <motion.section
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
         aria-label={t("Hoạt động gần đây")}
         className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs"
       >
@@ -1028,8 +1049,8 @@ export function ContentOverviewDashboard({
             </span>
           </Link>
         </div>
-      </section>
-    </div>,
+      </motion.section>
+    </motion.div>,
     uiLocale,
     ADMIN_NEWS_TRANSLATIONS,
   );

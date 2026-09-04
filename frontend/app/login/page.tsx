@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
@@ -11,12 +12,20 @@ import {
 import { LOCALE_COOKIE_NAME, sanitizeLocale } from "../../features/auth/server";
 import { BrandMark } from "@/components/shared/BrandMark";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import {
+  getRouteMetadata,
+  PORTAL_NAME,
+} from "@/core/i18n/metadata";
 import { LoginForm } from "./LoginForm";
+
+export function generateMetadata(): Promise<Metadata> {
+  return getRouteMetadata("login");
+}
 
 const copy = {
   vi: {
-    brand: "Mạng lưới tri thức Nga - Việt",
-    brandLabel: "Mạng lưới tri thức Nga - Việt",
+    brand: PORTAL_NAME.vi,
+    brandLabel: PORTAL_NAME.vi,
     storyTitle: "Kết nối tri thức",
     storyAccent: "Kiến tạo tương lai",
     storyBody:
@@ -40,12 +49,12 @@ const copy = {
     register: "Đăng ký thành viên",
   },
   ru: {
-    brand: "Mạng lưới tri thức Nga - Việt",
-    brandLabel: "Mạng lưới tri thức Nga - Việt",
+    brand: PORTAL_NAME.ru,
+    brandLabel: PORTAL_NAME.ru,
     storyTitle: "Объединяем знания",
     storyAccent: "Создаём будущее",
     storyBody:
-      "Пространство научно-технологического сотрудничества России и Вьетнама для обмена знаниями, инноваций và устойчивого развития.",
+      "Пространство научно-технологического сотрудничества России и Вьетнама для обмена знаниями, инноваций и устойчивого развития.",
     eyebrow: "Портал участника",
     title: "Вход",
     description:
@@ -65,8 +74,8 @@ const copy = {
     register: "Подать заявку",
   },
   en: {
-    brand: "Mạng lưới tri thức Nga - Việt",
-    brandLabel: "Mạng lưới tri thức Nga - Việt",
+    brand: PORTAL_NAME.en,
+    brandLabel: PORTAL_NAME.en,
     storyTitle: "Connecting knowledge",
     storyAccent: "Creating the future",
     storyBody:

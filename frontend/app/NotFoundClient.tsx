@@ -11,6 +11,7 @@ type Copy = {
   explore: string;
   russia: string;
   vietnam: string;
+  connection: string;
 };
 
 const COPY: Record<Locale, Copy> = {
@@ -22,6 +23,7 @@ const COPY: Record<Locale, Copy> = {
     explore: "Khám phá nội dung",
     russia: "NGA",
     vietnam: "VIỆT NAM",
+    connection: "Kết nối Nga - Việt",
   },
   en: {
     title: "We could not find that page",
@@ -31,6 +33,7 @@ const COPY: Record<Locale, Copy> = {
     explore: "Explore content",
     russia: "RUSSIA",
     vietnam: "VIETNAM",
+    connection: "Russia - Vietnam connection",
   },
   ru: {
     title: "Не удалось найти нужную страницу",
@@ -40,6 +43,7 @@ const COPY: Record<Locale, Copy> = {
     explore: "Перейти к материалам",
     russia: "РОССИЯ",
     vietnam: "ВЬЕТНАМ",
+    connection: "Связь России и Вьетнама",
   },
 };
 
@@ -47,7 +51,7 @@ function RouteMap({ t }: { t: Copy }) {
   return (
     <div className="relative min-h-[360px] overflow-hidden bg-[#071a33] text-white lg:min-h-screen">
       <div className="absolute inset-0 opacity-60 [background-image:linear-gradient(rgba(147,197,253,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(147,197,253,.08)_1px,transparent_1px)] [background-size:56px_56px]" aria-hidden="true" />
-      <svg viewBox="0 0 720 760" className="absolute inset-0 h-full w-full" role="img" aria-label="Kết nối Nga - Việt">
+      <svg viewBox="0 0 720 760" className="absolute inset-0 h-full w-full" role="img" aria-label={t.connection}>
         <g fill="none" stroke="#31557c" strokeWidth="1">
           <ellipse cx="378" cy="366" rx="278" ry="278" />
           <ellipse cx="378" cy="366" rx="278" ry="104" />

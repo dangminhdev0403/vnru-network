@@ -73,8 +73,7 @@ test("content administration reuses admin chrome with its own navigation", async
   assert.match(studio, /setStatusFilter\("featured"\)/);
   assert.match(studio, /filters\.published = true/);
   assert.doesNotMatch(studio, />\s*Người tạo\s*<\/th>/);
-  assert.doesNotMatch(studio, /selectedRowIds|toggleSelectAll|toggleSelectRow/);
-  assert.doesNotMatch(studio, /Chọn tất cả bài viết|Chọn bài viết/);
+  assert.match(studio, /selectedRowIds/);
   assert.match(studio, /w-\[38%\]/);
   assert.doesNotMatch(studio, /setPreviewItem|READ-ONLY PREVIEW/);
   assert.match(
@@ -144,10 +143,10 @@ test("content administration reuses admin chrome with its own navigation", async
   assert.doesNotMatch(studio, /Viết bài mới|Tạo bài viết|Chỉnh sửa bài viết/);
   assert.doesNotMatch(studio, /BẢN NHÁP MỚI|Lưu bản nháp|Lưu thay đổi/);
   assert.match(studio, /Lưu chỉnh sửa/);
-  assert.match(studio, />\s*Danh mục\s*<\/th>/);
-  assert.match(studio, />\s*Trạng thái\s*<\/th>/);
-  assert.match(studio, />\s*Tin nổi bật\s*<\/th>/);
-  assert.match(studio, /colSpan=\{5\}/);
+  assert.match(studio, /Danh mục[\s\S]*?<\/th>/);
+  assert.match(studio, /Trạng thái[\s\S]*?<\/th>/);
+  assert.match(studio, /Tin nổi bật[\s\S]*?<\/th>/);
+  assert.match(studio, /colSpan=\{6\}/);
   assert.match(studio, /window\.Translator/);
   assert.match(studio, /sourceLanguage: "vi";?[\s\S]*targetLanguage: "ru"/);
   assert.equal(
@@ -155,7 +154,7 @@ test("content administration reuses admin chrome with its own navigation", async
     true,
   );
   assert.equal((studio.match(/appearance-none/g) || []).length >= 1, true);
-  assert.doesNotMatch(studio, /Sắp xếp bài viết|Tiêu đề A-Z|Cũ nhất/);
+  assert.doesNotMatch(studio, /Sắp xếp bài viết|Tiêu đề A-Z/);
   assert.doesNotMatch(studio, /localStorage|translate\.googleapis|mymemory/);
   assert.match(studio, /URL\.createObjectURL\(file\)/);
   assert.match(studio, /const submittedLocales = locales\.filter/);

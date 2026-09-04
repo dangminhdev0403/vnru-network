@@ -55,7 +55,7 @@ const TEXT = {
     },
   },
   en: {
-    brand: "Mạng lưới tri thức Nga - Việt",
+    brand: "Russia-Vietnam Knowledge Network",
     home: "Home",
     about: "About",
     explore: "Explore",
@@ -85,7 +85,7 @@ const TEXT = {
     },
   },
   ru: {
-    brand: "Mạng lưới tri thức Nga - Việt",
+    brand: "Российско-вьетнамская сеть знаний",
     home: "Главная",
     about: "О сети",
     explore: "Обзор",

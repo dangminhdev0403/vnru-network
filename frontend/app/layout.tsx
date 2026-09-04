@@ -3,6 +3,7 @@ import { Be_Vietnam_Pro, Noto_Sans, Noto_Serif } from "next/font/google";
 import Script from "next/script";
 import QueryProvider from "../components/providers/QueryProvider";
 import { cookies } from "next/headers";
+import { getRouteMetadata } from "@/core/i18n/metadata";
 import "@designcodeio/threeui/style.css";
 import "./globals.css";
 
@@ -27,18 +28,19 @@ const serif = Noto_Serif({
   weight: ["500", "600", "700", "800"],
 });
 
-export const metadata: Metadata = {
-  title: "Mạng lưới tri thức Nga - Việt",
-  description: "Independent Vietnam–Russia knowledge and collaboration portal.",
-  icons: {
-    icon: [
-      { url: "/favicon.png", type: "image/png" },
-      { url: "/favicon.ico" },
-    ],
-    apple: "/favicon.png",
-    shortcut: "/favicon.png",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    ...(await getRouteMetadata("root")),
+    icons: {
+      icon: [
+        { url: "/favicon.png", type: "image/png" },
+        { url: "/favicon.ico" },
+      ],
+      apple: "/favicon.png",
+      shortcut: "/favicon.png",
+    },
+  };
+}
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const savedLocale = (await cookies()).get("vnru_locale")?.value;

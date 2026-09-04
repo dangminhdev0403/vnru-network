@@ -38,6 +38,7 @@ const COPY: Record<
     login: string;
     workspace: string;
     menu: string;
+    navigation: string;
   }
 > = {
   vi: {
@@ -51,6 +52,7 @@ const COPY: Record<
     login: "Đăng nhập",
     workspace: "Vào không gian làm việc",
     menu: "Mở menu",
+    navigation: "Điều hướng công khai",
   },
   en: {
     brandTitle: "Russia - Vietnam Knowledge Network",
@@ -63,6 +65,7 @@ const COPY: Record<
     login: "Sign in",
     workspace: "Workspace",
     menu: "Open menu",
+    navigation: "Public navigation",
   },
   ru: {
     brandTitle: "Российско-вьетнамская сеть знаний",
@@ -75,6 +78,7 @@ const COPY: Record<
     login: "Войти",
     workspace: "Рабочее пространство",
     menu: "Открыть меню",
+    navigation: "Публичная навигация",
   },
 };
 
@@ -163,7 +167,7 @@ export function GuestPublicNav({
         <div className="hidden items-center justify-center lg:flex">
           <nav
             className="flex items-center justify-center rounded-xl border border-blue-200/80 bg-blue-100/70 p-1 shadow-2xs"
-            aria-label="Điều hướng công khai"
+            aria-label={t.navigation}
           >
             {items.map((item) => {
               const selected = item.key === activeKey;

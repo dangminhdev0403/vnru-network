@@ -91,7 +91,7 @@ export function GuestContactV2() {
             : "Xác nhận gửi liên hệ?",
       text:
         locale === "ru"
-          ? "Вы хотите отправить обращение в Бан координации?"
+          ? "Вы хотите отправить обращение в Координационный совет?"
           : locale === "en"
             ? "Do you want to submit this inquiry to the Coordination Board?"
             : "Bạn có chắc chắn muốn gửi thông tin liên hệ này?",

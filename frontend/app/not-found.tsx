@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
+import { getRouteMetadata } from "@/core/i18n/metadata";
 import { NotFoundClient } from "./NotFoundClient";
 
-export const metadata: Metadata = {
-  title: "404 - Trang không tìm thấy | Mạng lưới tri thức Nga - Việt",
-  description:
-    "Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển trên Cổng thông tin Mạng lưới tri thức Nga – Việt.",
-};
+export function generateMetadata(): Promise<Metadata> {
+  return getRouteMetadata("notFound");
+}
 
 export default function NotFound() {
   return <NotFoundClient />;

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { getRouteMetadata } from "@/core/i18n/metadata";
 import { requireMemberSession } from "@/features/auth/workspace-server";
 import { UnifiedWorkspaceDashboard } from "@/features/workspace/components/UnifiedWorkspaceDashboard";
 
-export const metadata: Metadata = {
-  title: "Không gian thành viên · RU-VN Network",
-  description: "Tin tức, tri thức, chuyên gia và thông tin tuyển chọn đề tài dành cho thành viên mạng lưới.",
-};
+export function generateMetadata(): Promise<Metadata> {
+  return getRouteMetadata("workspace");
+}
 
 export default async function Page() {
   await requireMemberSession("/workspace");

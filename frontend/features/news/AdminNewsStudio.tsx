@@ -1,9 +1,9 @@
 "use client";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { confirmAction, showSuccess, showError } from "@/lib/alerts";
 import { z } from "zod";
 import { newsResource } from "./resource";
@@ -14,6 +14,7 @@ import {
 } from "@/core/i18n/localize-react-node";
 import { ADMIN_NEWS_TRANSLATIONS } from "./admin-news-translations";
 import { ContentOverviewDashboard } from "./ContentOverviewDashboard";
+import { AnimatedNumber } from "./AnimatedNumber";
 import type {
   NewsArticle,
   NewsInput,
@@ -219,21 +220,34 @@ export function AdminNewsStudio() {
 
   const [categoryFilter, setCategoryFilter] = useState<string>("ALL");
   const [statusFilter, setStatusFilter] = useState<
-    "all" | "published" | "featured"
+    "all" | "published" | "draft" | "featured"
   >("all");
   const [pageSize, setPageSize] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [actionMenuId, setActionMenuId] = useState<string | null>(null);
+  const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
+  const [sortField, setSortField] = useState<
+    "date" | "title" | "category" | "status" | "featured"
+  >("date");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [tableDensity, setTableDensity] = useState<"comfortable" | "compact">(
+    "comfortable",
+  );
+  const [isBatchProcessing, setIsBatchProcessing] = useState(false);
 
-  useEffect(() => {
+  const [prevFilterKey, setPrevFilterKey] = useState("");
+  const currentFilterKey = `${view}_${categoryFilter}_${statusFilter}_${query}_${pageSize}`;
+  if (currentFilterKey !== prevFilterKey) {
+    setPrevFilterKey(currentFilterKey);
     setCurrentPage(1);
-  }, [view, categoryFilter, statusFilter, query, pageSize]);
+    setSelectedRowIds(new Set());
+  }
 
   if (view !== previousView) {
     setPreviousView(view);
     setCategoryFilter("ALL");
     setStatusFilter("all");
     setSelectedId(undefined);
+    setSelectedRowIds(new Set());
     setPendingCoverFile(null);
     setCoverPreviewUrl(null);
     setFieldErrors({});
@@ -284,6 +298,9 @@ export function AdminNewsStudio() {
     if (statusFilter === "published") {
       filters.published = true;
     }
+    if (statusFilter === "draft") {
+      filters.published = false;
+    }
 
     if (query.trim()) {
       filters.query = query.trim();
@@ -306,30 +323,32 @@ export function AdminNewsStudio() {
     enabled: Boolean(selectedId),
   });
 
-  useEffect(() => {
-    if (detail.data && selectedId) {
-      const article = detail.data;
-      setFeatured(article.isFeatured);
-      setPendingCoverFile(null);
-      setCoverPreviewUrl(article.coverImageUrl);
-      setFieldErrors({});
-      setForm({
-        category: article.category,
-        contentType: article.contentType,
-        actionUrl: article.actionUrl,
-        actionClosesAt: dateTimeValue(article.actionClosesAt),
-        sourceUrls: article.sourceUrls,
-        coverImageUrl: article.coverImageUrl,
-        translations: Object.fromEntries(
-          locales.map((item) => [
-            item,
-            article.translations.find((value) => value.locale === item) ??
-              empty(),
-          ]),
-        ) as NewsInput["translations"],
-      });
-    }
-  }, [detail.data, selectedId]);
+  const [syncedDetailKey, setSyncedDetailKey] = useState<string | null>(null);
+  const currentDetailKey =
+    detail.data && selectedId ? `${selectedId}_${detail.data.updatedAt}` : null;
+  if (detail.data && selectedId && currentDetailKey !== syncedDetailKey) {
+    setSyncedDetailKey(currentDetailKey);
+    const article = detail.data;
+    setFeatured(article.isFeatured);
+    setPendingCoverFile(null);
+    setCoverPreviewUrl(article.coverImageUrl);
+    setFieldErrors({});
+    setForm({
+      category: article.category,
+      contentType: article.contentType,
+      actionUrl: article.actionUrl,
+      actionClosesAt: dateTimeValue(article.actionClosesAt),
+      sourceUrls: article.sourceUrls,
+      coverImageUrl: article.coverImageUrl,
+      translations: Object.fromEntries(
+        locales.map((item) => [
+          item,
+          article.translations.find((value) => value.locale === item) ??
+            empty(),
+        ]),
+      ) as NewsInput["translations"],
+    });
+  }
 
   const create = useMutation(
     news.mutations.create.options({
@@ -371,16 +390,41 @@ export function AdminNewsStudio() {
       },
     }),
   );
-
   const upload = useMutation(news.mutations.upload.options());
 
-  const rawArticles = list.data?.items ?? [];
   const articles = useMemo(() => {
+    const rawArticles = list.data?.items ?? [];
+    let filtered = rawArticles;
     if (view === "featured") {
-      return rawArticles.filter((a) => a.isFeatured);
+      filtered = rawArticles.filter((a) => a.isFeatured);
     }
-    return rawArticles;
-  }, [rawArticles, view]);
+    const sorted = [...filtered].sort((a, b) => {
+      let result = 0;
+      if (sortField === "date") {
+        const dateA = new Date(a.publishedAt || a.updatedAt).getTime();
+        const dateB = new Date(b.publishedAt || b.updatedAt).getTime();
+        result = dateA - dateB;
+      } else if (sortField === "title") {
+        const titleA = a.translations[0]?.title || a.id;
+        const titleB = b.translations[0]?.title || b.id;
+        result = titleA.localeCompare(titleB, "vi");
+      } else if (sortField === "category") {
+        const catA = allCategories[a.category] || a.category;
+        const catB = allCategories[b.category] || b.category;
+        result = catA.localeCompare(catB, "vi");
+      } else if (sortField === "status") {
+        const pubA = a.publishedAt ? 1 : 0;
+        const pubB = b.publishedAt ? 1 : 0;
+        result = pubA - pubB;
+      } else if (sortField === "featured") {
+        const featA = a.isFeatured ? 1 : 0;
+        const featB = b.isFeatured ? 1 : 0;
+        result = featA - featB;
+      }
+      return sortOrder === "asc" ? result : -result;
+    });
+    return sorted;
+  }, [list.data?.items, view, sortField, sortOrder]);
 
   const totalCount = list.data?.total ?? 0;
   const systemTotal = list.data?.counts?.total ?? totalCount;
@@ -393,6 +437,158 @@ export function AdminNewsStudio() {
     total: systemTotal,
     published: list.data?.counts?.published ?? 0,
     featured: list.data?.counts?.featured ?? 0,
+  };
+
+  const handleSort = (field: typeof sortField) => {
+    if (sortField === field) {
+      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortField(field);
+      setSortOrder(field === "title" || field === "category" ? "asc" : "desc");
+    }
+  };
+
+  const handleBatchPublish = async () => {
+    const ids = Array.from(selectedRowIds);
+    if (ids.length === 0) return;
+    setIsBatchProcessing(true);
+    try {
+      const now = new Date().toISOString();
+      await Promise.all(
+        ids.map((id) =>
+          update.mutateAsync({ id, input: { publishedAt: now } }),
+        ),
+      );
+      setSelectedRowIds(new Set());
+      showSuccess(
+        t("Thành công"),
+        t(`Đã xuất bản ${ids.length} bài viết thành công.`),
+      );
+    } catch {
+      showError(t("Lỗi"), t("Không thể xuất bản một số bài viết được chọn."));
+    } finally {
+      setIsBatchProcessing(false);
+    }
+  };
+
+  const handleBatchUnpublish = async () => {
+    const ids = Array.from(selectedRowIds);
+    if (ids.length === 0) return;
+    setIsBatchProcessing(true);
+    try {
+      await Promise.all(
+        ids.map((id) =>
+          update.mutateAsync({ id, input: { publishedAt: null } }),
+        ),
+      );
+      setSelectedRowIds(new Set());
+      showSuccess(
+        t("Thành công"),
+        t(`Đã ẩn ${ids.length} bài viết thành công.`),
+      );
+    } catch {
+      showError(t("Lỗi"), t("Không thể ẩn một số bài viết được chọn."));
+    } finally {
+      setIsBatchProcessing(false);
+    }
+  };
+
+  const handleBatchFeature = async (featureState: boolean) => {
+    const ids = Array.from(selectedRowIds);
+    if (ids.length === 0) return;
+    setIsBatchProcessing(true);
+    try {
+      await Promise.all(
+        ids.map((id) =>
+          update.mutateAsync({ id, input: { isFeatured: featureState } }),
+        ),
+      );
+      setSelectedRowIds(new Set());
+      showSuccess(
+        t("Thành công"),
+        featureState
+          ? t(`Đã ghim nổi bật ${ids.length} bài viết.`)
+          : t(`Đã bỏ ghim nổi bật ${ids.length} bài viết.`),
+      );
+    } catch {
+      showError(
+        t("Lỗi"),
+        t("Không thể cập nhật trạng thái nổi bật cho các bài viết."),
+      );
+    } finally {
+      setIsBatchProcessing(false);
+    }
+  };
+
+  const handleBatchDelete = async () => {
+    const ids = Array.from(selectedRowIds);
+    if (ids.length === 0) return;
+    const confirmation = await confirmAction({
+      title: t(`Xóa ${ids.length} bài viết đã chọn?`),
+      text: t(
+        "Các bài viết và toàn bộ bản dịch sẽ bị xóa vĩnh viễn khỏi hệ thống.",
+      ),
+      confirmButtonText: t("Xóa tất cả"),
+      isDestructive: true,
+    });
+    if (confirmation.isConfirmed) {
+      setIsBatchProcessing(true);
+      try {
+        await Promise.all(ids.map((id) => deleteArticle.mutateAsync(id)));
+        setSelectedRowIds(new Set());
+        showSuccess(
+          t("Đã xóa"),
+          t(`Đã xóa ${ids.length} bài viết thành công.`),
+        );
+      } catch {
+        showError(t("Lỗi"), t("Không thể xóa một số bài viết được chọn."));
+      } finally {
+        setIsBatchProcessing(false);
+      }
+    }
+  };
+
+  const exportToCSV = () => {
+    const targetList =
+      selectedRowIds.size > 0
+        ? articles.filter((a) => selectedRowIds.has(a.id))
+        : articles;
+    if (targetList.length === 0) return;
+
+    const headers = [
+      "ID",
+      "Tiêu đề",
+      "Loại hình",
+      "Danh mục",
+      "Trạng thái",
+      "Tin nổi bật",
+      "Ngày cập nhật",
+      "Độ phủ ngôn ngữ",
+    ];
+    const rows = targetList.map((a) => {
+      const title = (a.translations[0]?.title || a.id).replace(/"/g, '""');
+      const type = a.contentType;
+      const cat = (allCategories[a.category] || a.category).replace(/"/g, '""');
+      const status = a.publishedAt ? "Đã xuất bản" : "Bản nháp";
+      const feat = a.isFeatured ? "Nổi bật" : "Thường";
+      const date = a.publishedAt || a.updatedAt;
+      const trs = a.translations.map((tr) => tr.locale).join("; ");
+      return `"${a.id}","${title}","${type}","${cat}","${status}","${feat}","${date}","${trs}"`;
+    });
+
+    const csvContent = "\uFEFF" + [headers.join(","), ...rows].join("\r\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute(
+      "download",
+      `vnru_content_${new Date().toISOString().slice(0, 10)}.csv`,
+    );
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   const translation = form.translations[locale];
@@ -667,253 +863,573 @@ export function AdminNewsStudio() {
     }
   };
 
-  const renderTableContent = () => (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-[900px] table-fixed border-collapse text-left text-sm">
-        <thead>
-          <tr className="border-b border-slate-200/80 bg-slate-50/80 text-xs font-semibold uppercase tracking-wider text-slate-500">
-            <th scope="col" className="w-[38%] px-5 py-3.5">
-              Bài viết / Nội dung
-            </th>
-            <th
-              scope="col"
-              className="px-4 py-3.5 text-center whitespace-nowrap"
-            >
-              Danh mục
-            </th>
-            <th
-              scope="col"
-              className="px-4 py-3.5 text-center whitespace-nowrap"
-            >
-              Trạng thái
-            </th>
-            <th
-              scope="col"
-              className="px-4 py-3.5 whitespace-nowrap text-center"
-            >
-              Tin nổi bật
-            </th>
-            <th
-              scope="col"
-              className="w-52 px-5 py-3.5 text-center whitespace-nowrap"
-            >
-              Thao tác
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-100">
-          {list.isLoading ? (
-            <tr>
-              <td
-                colSpan={5}
-                className="p-12 text-center text-base text-slate-500"
+  const renderTableContent = () => {
+    const allOnPageSelected =
+      articles.length > 0 && articles.every((a) => selectedRowIds.has(a.id));
+    const isSomeOnPageSelected =
+      articles.some((a) => selectedRowIds.has(a.id)) && !allOnPageSelected;
+
+    return (
+      <div className="overflow-x-auto">
+        {/* ═══════════════ FLOATING BATCH ACTION BAR ═══════════════ */}
+        {selectedRowIds.size > 0 ? (
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-blue-200 bg-blue-50/95 px-5 py-2.5 backdrop-blur-xs transition-all">
+            <div className="flex items-center gap-2.5 text-xs font-bold text-blue-900">
+              <span className="grid size-6 place-items-center rounded-full bg-blue-600 text-xs font-black text-white shadow-2xs">
+                {selectedRowIds.size}
+              </span>
+              <span>
+                {t("Đã chọn")} {selectedRowIds.size} {t("bài viết đã chọn")}
+              </span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                disabled={isBatchProcessing}
+                onClick={handleBatchPublish}
+                className="inline-flex min-h-8 items-center gap-1.5 rounded-lg border border-emerald-300 bg-white px-3 py-1 text-xs font-bold text-emerald-700 shadow-2xs transition hover:bg-emerald-50 active:scale-95 disabled:opacity-50"
               >
-                <span className="material-symbols-outlined mr-2 animate-spin align-middle text-2xl text-blue-600">
-                  progress_activity
+                <span className="material-symbols-outlined text-base leading-none">
+                  visibility
                 </span>
-                Đang tải dữ liệu thực tế…
-              </td>
-            </tr>
-          ) : null}
+                <span>{t("Xuất bản hàng loạt")}</span>
+              </button>
+              <button
+                type="button"
+                disabled={isBatchProcessing}
+                onClick={handleBatchUnpublish}
+                className="inline-flex min-h-8 items-center gap-1.5 rounded-lg border border-amber-300 bg-white px-3 py-1 text-xs font-bold text-amber-700 shadow-2xs transition hover:bg-amber-50 active:scale-95 disabled:opacity-50"
+              >
+                <span className="material-symbols-outlined text-base leading-none">
+                  visibility_off
+                </span>
+                <span>{t("Ẩn hàng loạt")}</span>
+              </button>
+              <button
+                type="button"
+                disabled={isBatchProcessing}
+                onClick={() => handleBatchFeature(true)}
+                className="inline-flex min-h-8 items-center gap-1.5 rounded-lg border border-indigo-300 bg-white px-3 py-1 text-xs font-bold text-indigo-700 shadow-2xs transition hover:bg-indigo-50 active:scale-95 disabled:opacity-50"
+              >
+                <span className="material-symbols-outlined text-base leading-none text-amber-500">
+                  star
+                </span>
+                <span>{t("Ghim nổi bật")}</span>
+              </button>
+              <button
+                type="button"
+                disabled={isBatchProcessing}
+                onClick={() => handleBatchFeature(false)}
+                className="inline-flex min-h-8 items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1 text-xs font-bold text-slate-700 shadow-2xs transition hover:bg-slate-50 active:scale-95 disabled:opacity-50"
+              >
+                <span className="material-symbols-outlined text-base leading-none text-slate-400">
+                  star_border
+                </span>
+                <span>{t("Bỏ ghim nổi bật")}</span>
+              </button>
+              <button
+                type="button"
+                disabled={isBatchProcessing}
+                onClick={handleBatchDelete}
+                className="inline-flex min-h-8 items-center gap-1.5 rounded-lg border border-rose-300 bg-white px-3 py-1 text-xs font-bold text-rose-700 shadow-2xs transition hover:bg-rose-50 active:scale-95 disabled:opacity-50"
+              >
+                <span className="material-symbols-outlined text-base leading-none">
+                  delete
+                </span>
+                <span>{t("Xóa hàng loạt")}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedRowIds(new Set())}
+                className="inline-flex min-h-8 items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-500 transition hover:bg-blue-100/60 hover:text-slate-800"
+              >
+                <span className="material-symbols-outlined text-base leading-none">
+                  close
+                </span>
+                <span>{t("Bỏ chọn")}</span>
+              </button>
+            </div>
+          </div>
+        ) : null}
 
-          {list.isError ? (
+        <table className="w-full min-w-[960px] table-fixed border-collapse text-left text-sm">
+          <thead className="sticky top-0 z-10 border-b border-slate-200/90 bg-slate-50/95 backdrop-blur-xs text-xs font-semibold uppercase tracking-wider text-slate-500">
             <tr>
-              <td colSpan={5} className="p-12 text-center">
-                <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-red-50 text-red-600">
-                  <span className="material-symbols-outlined text-2xl">
-                    error
-                  </span>
-                </div>
-                <p className="mt-3 text-base font-semibold text-red-800">
-                  Không thể tải danh sách nội dung
-                </p>
-                <p className="mt-1 text-xs text-red-600">
-                  Đã xảy ra lỗi khi kết nối máy chủ.
-                </p>
-              </td>
-            </tr>
-          ) : null}
+              {/* Checkbox Column */}
+              <th scope="col" className="w-12 px-4 py-3.5 text-center">
+                <input
+                  type="checkbox"
+                  aria-label={t("Chọn tất cả bài viết")}
+                  checked={allOnPageSelected}
+                  ref={(el) => {
+                    if (el) el.indeterminate = isSomeOnPageSelected;
+                  }}
+                  onChange={(e) => {
+                    const next = new Set(selectedRowIds);
+                    if (e.target.checked) {
+                      articles.forEach((a) => next.add(a.id));
+                    } else {
+                      articles.forEach((a) => next.delete(a.id));
+                    }
+                    setSelectedRowIds(next);
+                  }}
+                  className="size-4.5 rounded border-slate-300 text-blue-600 transition focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+                />
+              </th>
 
-          {!list.isLoading && !list.isError && articles.length === 0 ? (
-            <tr>
-              <td colSpan={5} className="p-12 text-center">
-                <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-slate-100 text-slate-400">
-                  <span className="material-symbols-outlined text-2xl">
-                    feed
-                  </span>
-                </div>
-                <p className="mt-3 text-base font-semibold text-slate-800">
-                  Chưa có nội dung phù hợp
-                </p>
-                <p className="mt-1 text-xs text-slate-500">
-                  Hãy thử thay đổi từ khóa hoặc bộ lọc tìm kiếm.
-                </p>
-              </td>
-            </tr>
-          ) : null}
-
-          {!list.isLoading &&
-            !list.isError &&
-            articles.map((article) => {
-              const title = article.translations[0]?.title || article.id;
-              const summary = article.translations[0]?.summary || "";
-              const dateInfo = formatDate(
-                article.publishedAt || article.updatedAt,
-              );
-
-              return (
-                <tr
-                  key={article.id}
-                  className={`group transition hover:bg-slate-50/80 ${selectedId === article.id ? "bg-blue-50/40" : ""}`}
-                >
-                  <td className="px-5 py-4 align-top">
-                    <div className="flex flex-col gap-1">
-                      <span className="text-sm font-medium text-slate-400">
-                        {dateInfo.date}
-                      </span>
-                      <button
-                        data-no-localize
-                        type="button"
-                        onClick={() => open(article)}
-                        title={title}
-                        className="block text-left text-sm font-bold text-slate-900 leading-snug transition hover:text-blue-600 line-clamp-2 break-words"
-                      >
-                        {title}
-                      </button>
-                      {summary ? (
-                        <p
-                          data-no-localize
-                          className="mt-0.5 line-clamp-1 text-xs text-slate-500 leading-normal"
-                        >
-                          {summary}
-                        </p>
-                      ) : null}
-                    </div>
-                  </td>
-
-                  <td className="px-4 py-4 text-center align-middle whitespace-nowrap">
-                    <span className="inline-flex rounded-md bg-blue-50 px-2.5 py-1 text-sm font-semibold text-blue-700">
-                      {allCategories[article.category] || article.category}
-                    </span>
-                  </td>
-
-                  <td className="px-4 py-4 text-center align-middle whitespace-nowrap">
-                    {article.publishedAt ? (
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-                        <span className="size-1.5 rounded-full bg-emerald-500" />
-                        Đã xuất bản
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
-                        <span className="size-1.5 rounded-full bg-amber-500" />
-                        Bản nháp
-                      </span>
-                    )}
-                  </td>
-
-                  <td className="px-4 py-4 align-middle whitespace-nowrap text-center">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        update.mutate({
-                          id: article.id,
-                          input: { isFeatured: !article.isFeatured },
-                        });
-                      }}
-                      title={
-                        article.isFeatured
-                          ? "Bỏ đánh dấu nổi bật"
-                          : "Đánh dấu tin nổi bật"
-                      }
-                      aria-label={
-                        article.isFeatured
-                          ? "Bỏ đánh dấu nổi bật"
-                          : "Đánh dấu tin nổi bật"
-                      }
-                      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold transition active:scale-95 ${
-                        article.isFeatured
-                          ? "border border-amber-300 bg-amber-50 text-amber-800 shadow-2xs hover:bg-amber-100"
-                          : "border border-slate-200 bg-white text-slate-400 hover:border-amber-300 hover:text-amber-600"
+              {/* Title & Date Column (Sortable) */}
+              <th scope="col" className="w-[38%] px-5 py-3.5">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleSort("title")}
+                    className="group inline-flex items-center gap-1.5 font-semibold uppercase tracking-wider text-slate-600 hover:text-blue-700 transition"
+                  >
+                    <span>{t("Bài viết / Nội dung")}</span>
+                    <span
+                      className={`material-symbols-outlined text-base transition ${
+                        sortField === "title"
+                          ? "text-blue-600"
+                          : "text-slate-300 group-hover:text-slate-500"
                       }`}
                     >
-                      <span className="material-symbols-outlined text-sm leading-none text-amber-500">
-                        {article.isFeatured ? "star" : "star_outline"}
-                      </span>
-                      <span>{article.isFeatured ? "Nổi bật" : "Thường"}</span>
-                    </button>
-                  </td>
+                      {sortField === "title"
+                        ? sortOrder === "asc"
+                          ? "arrow_upward"
+                          : "arrow_downward"
+                        : "unfold_more"}
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSort("date")}
+                    title={t("Sắp xếp theo thời gian")}
+                    className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-semibold transition ${
+                      sortField === "date"
+                        ? "bg-blue-100 text-blue-700"
+                        : "text-slate-400 hover:bg-slate-200/60 hover:text-slate-700"
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-xs">
+                      schedule
+                    </span>
+                    <span>
+                      {sortField === "date"
+                        ? sortOrder === "desc"
+                          ? t("Mới nhất")
+                          : t("Cũ nhất")
+                        : t("Thời gian")}
+                    </span>
+                  </button>
+                </div>
+              </th>
 
-                  <td className="px-5 py-4 align-middle text-center whitespace-nowrap">
-                    <div className="flex items-center justify-center gap-2">
+              {/* Category Column (Sortable) */}
+              <th
+                scope="col"
+                className="w-44 px-4 py-3.5 text-center whitespace-nowrap"
+              >
+                <button
+                  type="button"
+                  onClick={() => handleSort("category")}
+                  className="group inline-flex items-center justify-center gap-1.5 font-semibold uppercase tracking-wider text-slate-600 hover:text-blue-700 transition"
+                >
+                  <span>{t("Danh mục")}</span>
+                  <span
+                    className={`material-symbols-outlined text-base transition ${
+                      sortField === "category"
+                        ? "text-blue-600"
+                        : "text-slate-300 group-hover:text-slate-500"
+                    }`}
+                  >
+                    {sortField === "category"
+                      ? sortOrder === "asc"
+                        ? "arrow_upward"
+                        : "arrow_downward"
+                      : "unfold_more"}
+                  </span>
+                </button>
+              </th>
+
+              {/* Status Column (Sortable) */}
+              <th
+                scope="col"
+                className="w-36 px-4 py-3.5 text-center whitespace-nowrap"
+              >
+                <button
+                  type="button"
+                  onClick={() => handleSort("status")}
+                  className="group inline-flex items-center justify-center gap-1.5 font-semibold uppercase tracking-wider text-slate-600 hover:text-blue-700 transition"
+                >
+                  <span>{t("Trạng thái")}</span>
+                  <span
+                    className={`material-symbols-outlined text-base transition ${
+                      sortField === "status"
+                        ? "text-blue-600"
+                        : "text-slate-300 group-hover:text-slate-500"
+                    }`}
+                  >
+                    {sortField === "status"
+                      ? sortOrder === "asc"
+                        ? "arrow_upward"
+                        : "arrow_downward"
+                      : "unfold_more"}
+                  </span>
+                </button>
+              </th>
+
+              {/* Featured Column (Sortable) */}
+              <th
+                scope="col"
+                className="w-32 px-4 py-3.5 whitespace-nowrap text-center"
+              >
+                <button
+                  type="button"
+                  onClick={() => handleSort("featured")}
+                  className="group inline-flex items-center justify-center gap-1.5 font-semibold uppercase tracking-wider text-slate-600 hover:text-blue-700 transition"
+                >
+                  <span>{t("Tin nổi bật")}</span>
+                  <span
+                    className={`material-symbols-outlined text-base transition ${
+                      sortField === "featured"
+                        ? "text-blue-600"
+                        : "text-slate-300 group-hover:text-slate-500"
+                    }`}
+                  >
+                    {sortField === "featured"
+                      ? sortOrder === "asc"
+                        ? "arrow_upward"
+                        : "arrow_downward"
+                      : "unfold_more"}
+                  </span>
+                </button>
+              </th>
+
+              {/* Actions Column */}
+              <th
+                scope="col"
+                className="w-48 px-4 py-3.5 text-center whitespace-nowrap"
+              >
+                {t("Thao tác")}
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {/* Skeleton Loading Rows */}
+            {list.isLoading
+              ? Array.from({ length: 5 }).map((_, idx) => (
+                  <tr key={idx} className="animate-pulse">
+                    <td className="px-4 py-3 text-center align-middle">
+                      <div className="mx-auto size-4.5 rounded bg-slate-200" />
+                    </td>
+                    <td className="px-5 py-3 align-middle">
+                      <div className="space-y-1.5 max-w-md">
+                        <div className="h-4 w-3/4 rounded bg-slate-200" />
+                        <div className="h-3 w-36 rounded bg-slate-200" />
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-center align-middle">
+                      <div className="mx-auto h-6 w-24 rounded bg-slate-200" />
+                    </td>
+                    <td className="px-4 py-3 text-center align-middle">
+                      <div className="mx-auto h-6 w-20 rounded bg-slate-200" />
+                    </td>
+                    <td className="px-4 py-3 text-center align-middle">
+                      <div className="mx-auto h-6 w-16 rounded bg-slate-200" />
+                    </td>
+                    <td className="px-4 py-3 text-center align-middle">
+                      <div className="mx-auto h-8 w-28 rounded bg-slate-200" />
+                    </td>
+                  </tr>
+                ))
+              : null}
+
+            {list.isError ? (
+              <tr>
+                <td colSpan={6} className="p-12 text-center">
+                  <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-red-50 text-red-600">
+                    <span className="material-symbols-outlined text-2xl">
+                      error
+                    </span>
+                  </div>
+                  <p className="mt-3 text-base font-semibold text-red-800">
+                    {t("Không thể tải danh sách nội dung")}
+                  </p>
+                  <p className="mt-1 text-xs text-red-600">
+                    {t("Đã xảy ra lỗi khi kết nối máy chủ.")}
+                  </p>
+                </td>
+              </tr>
+            ) : null}
+
+            {!list.isLoading && !list.isError && articles.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="p-12 text-center">
+                  <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-slate-100 text-slate-400">
+                    <span className="material-symbols-outlined text-2xl">
+                      feed
+                    </span>
+                  </div>
+                  <p className="mt-3 text-base font-semibold text-slate-800">
+                    {t("Chưa có nội dung phù hợp")}
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    {t("Hãy thử thay đổi từ khóa hoặc bộ lọc tìm kiếm.")}
+                  </p>
+                </td>
+              </tr>
+            ) : null}
+
+            {!list.isLoading &&
+              !list.isError &&
+              articles.map((article) => {
+                const title = article.translations[0]?.title || article.id;
+                const dateInfo = formatDate(
+                  article.publishedAt || article.updatedAt,
+                );
+                const isSelected = selectedRowIds.has(article.id);
+
+                return (
+                  <tr
+                    key={article.id}
+                    className={`group transition hover:bg-slate-50/80 ${
+                      isSelected
+                        ? "bg-blue-50/50"
+                        : selectedId === article.id
+                          ? "bg-blue-50/25"
+                          : ""
+                    }`}
+                  >
+                    {/* Checkbox Cell */}
+                    <td
+                      className={`px-4 text-center align-middle ${
+                        tableDensity === "compact" ? "py-2" : "py-3"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        aria-label={`${t("Chọn bài viết")}: ${title}`}
+                        checked={isSelected}
+                        onChange={(e) => {
+                          const next = new Set(selectedRowIds);
+                          if (e.target.checked) {
+                            next.add(article.id);
+                          } else {
+                            next.delete(article.id);
+                          }
+                          setSelectedRowIds(next);
+                        }}
+                        className="size-4.5 rounded border-slate-300 text-blue-600 transition focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+                      />
+                    </td>
+
+                    {/* Content / Article Cell (Clean Enterprise Format) */}
+                    <td
+                      className={`px-5 align-middle ${
+                        tableDensity === "compact" ? "py-2" : "py-3"
+                      }`}
+                    >
+                      <div className="flex flex-col justify-center gap-1 min-w-0 max-w-xl">
+                        <button
+                          data-no-localize
+                          type="button"
+                          onClick={() => open(article)}
+                          title={title}
+                          className={`block text-left font-semibold text-slate-900 leading-snug transition hover:text-blue-600 line-clamp-1 truncate break-words focus-visible:outline-2 focus-visible:outline-blue-600 ${
+                            tableDensity === "compact" ? "text-xs" : "text-sm"
+                          }`}
+                        >
+                          {title}
+                        </button>
+
+                        <div className="flex items-center gap-2 text-xs text-slate-400">
+                          <span className="font-medium text-slate-500">
+                            {dateInfo.date}
+                          </span>
+                          <span className="text-slate-300">•</span>
+                          {/* Multilingual Status Badges (VI, RU, EN) */}
+                          <div
+                            className="flex items-center gap-1"
+                            title={t("Độ phủ dịch thuật")}
+                          >
+                            {locales.map((loc) => {
+                              const hasTranslation =
+                                article.translations.some(
+                                  (tr) =>
+                                    tr.locale === loc && tr.title?.trim(),
+                                );
+                              return (
+                                <span
+                                  key={loc}
+                                  className={`rounded px-1.5 py-0.2 text-[10px] font-bold tracking-wider ${
+                                    hasTranslation
+                                      ? "bg-blue-100/90 text-blue-700"
+                                      : "border border-dashed border-slate-300 text-slate-300"
+                                  }`}
+                                  title={
+                                    hasTranslation
+                                      ? `${loc}: ${t("Đã dịch")}`
+                                      : `${loc}: ${t("Chưa có")}`
+                                  }
+                                >
+                                  {loc}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Category Cell */}
+                    <td
+                      className={`px-4 text-center align-middle whitespace-nowrap ${
+                        tableDensity === "compact" ? "py-2" : "py-3"
+                      }`}
+                    >
+                      <span className="inline-flex rounded-md bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+                        {allCategories[article.category] || article.category}
+                      </span>
+                    </td>
+
+                    {/* Status Cell */}
+                    <td
+                      className={`px-4 text-center align-middle whitespace-nowrap ${
+                        tableDensity === "compact" ? "py-2" : "py-3"
+                      }`}
+                    >
+                      {article.publishedAt ? (
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+                          <span className="size-1.5 rounded-full bg-emerald-500" />
+                          {t("Đã xuất bản")}
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
+                          <span className="size-1.5 rounded-full bg-amber-500" />
+                          {t("Bản nháp")}
+                        </span>
+                      )}
+                    </td>
+
+                    {/* Featured Toggle Cell */}
+                    <td
+                      className={`px-4 align-middle whitespace-nowrap text-center ${
+                        tableDensity === "compact" ? "py-2" : "py-3"
+                      }`}
+                    >
                       <button
                         type="button"
-                        disabled={update.isPending}
-                        onClick={() =>
+                        onClick={() => {
                           update.mutate({
                             id: article.id,
-                            input: {
-                              publishedAt: article.publishedAt
-                                ? null
-                                : new Date().toISOString(),
-                            },
-                          })
+                            input: { isFeatured: !article.isFeatured },
+                          });
+                        }}
+                        title={
+                          article.isFeatured
+                            ? t("Bỏ đánh dấu nổi bật")
+                            : t("Đánh dấu tin nổi bật")
                         }
-                        title={article.publishedAt ? "Ẩn tin" : "Hiện tin"}
-                        aria-label={`${article.publishedAt ? "Ẩn tin" : "Hiện tin"} ${title}`}
-                        className="inline-flex min-h-10 min-w-20 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-600 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
+                        aria-label={
+                          article.isFeatured
+                            ? t("Bỏ đánh dấu nổi bật")
+                            : t("Đánh dấu tin nổi bật")
+                        }
+                        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold transition active:scale-95 ${
+                          article.isFeatured
+                            ? "border border-amber-300 bg-amber-50 text-amber-800 shadow-2xs hover:bg-amber-100"
+                            : "border border-slate-200 bg-white text-slate-400 hover:border-amber-300 hover:text-amber-600"
+                        }`}
                       >
-                        <span className="material-symbols-outlined text-lg leading-none">
-                          {article.publishedAt
-                            ? "visibility_off"
-                            : "visibility"}
+                        <span className="material-symbols-outlined text-sm leading-none text-amber-500">
+                          {article.isFeatured ? "star" : "star_outline"}
                         </span>
                         <span>
-                          {article.publishedAt ? "Ẩn tin" : "Hiện tin"}
+                          {article.isFeatured ? t("Nổi bật") : t("Thường")}
                         </span>
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => open(article)}
-                        title="Chỉnh sửa"
-                        aria-label={`Chỉnh sửa ${title}`}
-                        className="grid size-10 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600"
-                      >
-                        <span className="material-symbols-outlined text-lg leading-none">
-                          edit
-                        </span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={async () => {
-                          const confirmation = await confirmAction({
-                            title: t("Xóa?"),
-                            text: t(
-                              "Bài viết và toàn bộ bản dịch sẽ bị xóa vĩnh viễn.",
-                            ),
-                            confirmButtonText: t("Xóa"),
-                            isDestructive: true,
-                          });
-                          if (confirmation.isConfirmed) {
-                            deleteArticle.mutate(article.id);
+                    </td>
+
+                    {/* Action Buttons Cell */}
+                    <td
+                      className={`px-4 align-middle text-center whitespace-nowrap ${
+                        tableDensity === "compact" ? "py-2" : "py-3"
+                      }`}
+                    >
+                      <div className="flex items-center justify-center gap-1.5">
+                        <button
+                          type="button"
+                          disabled={update.isPending}
+                          onClick={() =>
+                            update.mutate({
+                              id: article.id,
+                              input: {
+                                publishedAt: article.publishedAt
+                                  ? null
+                                  : new Date().toISOString(),
+                              },
+                            })
                           }
-                        }}
-                        title="Xóa"
-                        aria-label={`Xóa ${title}`}
-                        className="grid size-10 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-rose-600"
-                      >
-                        <span className="material-symbols-outlined text-lg leading-none">
-                          delete
-                        </span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
-    </div>
-  );
+                          title={
+                            article.publishedAt ? "Ẩn tin" : "Hiện tin"
+                          }
+                          aria-label={`${article.publishedAt ? "Ẩn tin" : "Hiện tin"} ${title}`}
+                          className="inline-flex min-h-9 min-w-18 items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 text-xs font-semibold text-slate-600 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          <span className="material-symbols-outlined text-base leading-none">
+                            {article.publishedAt
+                              ? "visibility_off"
+                              : "visibility"}
+                          </span>
+                          <span>
+                            {article.publishedAt ? "Ẩn tin" : "Hiện tin"}
+                          </span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => open(article)}
+                          title={t("Chỉnh sửa")}
+                          aria-label={`${t("Chỉnh sửa")} ${title}`}
+                          className="grid size-9 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600"
+                        >
+                          <span className="material-symbols-outlined text-base leading-none">
+                            edit
+                          </span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const confirmation = await confirmAction({
+                              title: t("Xóa?"),
+                              text: t(
+                                "Bài viết và toàn bộ bản dịch sẽ bị xóa vĩnh viễn.",
+                              ),
+                              confirmButtonText: t("Xóa"),
+                              isDestructive: true,
+                            });
+                            if (confirmation.isConfirmed) {
+                              deleteArticle.mutate(article.id);
+                            }
+                          }}
+                          title={t("Xóa bài viết")}
+                          aria-label={`${t("Xóa bài viết")} ${title}`}
+                          className="grid size-9 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-2xs transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-rose-600"
+                        >
+                          <span className="material-symbols-outlined text-base leading-none">
+                            delete
+                          </span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
 
   const renderPaginationFooter = () => (
     <div className="flex flex-col items-center justify-between gap-3.5 border-t border-slate-200/80 bg-slate-50/50 px-4 py-3 text-xs text-slate-600 sm:flex-row sm:px-6">
@@ -1061,10 +1577,10 @@ export function AdminNewsStudio() {
             type="button"
             onClick={() => setStatusFilter("all")}
             aria-pressed={statusFilter === "all"}
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
             className={`flex min-h-[88px] items-center gap-3.5 rounded-2xl border bg-white/95 p-4 text-left shadow-xs transition hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${statusFilter === "all" ? "border-blue-400 ring-2 ring-blue-100" : "border-slate-200/90"}`}
           >
             <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 shadow-2xs">
@@ -1078,7 +1594,7 @@ export function AdminNewsStudio() {
               </span>
               <div className="mt-0.5 flex items-baseline gap-2">
                 <strong className="block text-2xl font-extrabold tracking-tight text-slate-900">
-                  {counts.total}
+                  <AnimatedNumber value={counts.total} duration={1200} />
                 </strong>
                 {isSearchActive && systemTotal > totalCount ? (
                   <span className="text-xs font-medium text-slate-400">
@@ -1093,10 +1609,10 @@ export function AdminNewsStudio() {
             type="button"
             onClick={() => setStatusFilter("published")}
             aria-pressed={statusFilter === "published"}
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.25, delay: 0.05 }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
             className={`flex min-h-[88px] items-center gap-3.5 rounded-2xl border bg-white/95 p-4 text-left shadow-xs transition hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 ${statusFilter === "published" ? "border-emerald-400 ring-2 ring-emerald-100" : "border-slate-200/90"}`}
           >
             <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600 shadow-2xs">
@@ -1109,7 +1625,7 @@ export function AdminNewsStudio() {
                 Đã xuất bản
               </span>
               <strong className="mt-0.5 block text-2xl font-extrabold tracking-tight text-slate-900">
-                {counts.published}
+                <AnimatedNumber value={counts.published} duration={1200} />
               </strong>
             </div>
           </motion.button>
@@ -1118,10 +1634,10 @@ export function AdminNewsStudio() {
             type="button"
             onClick={() => setStatusFilter("featured")}
             aria-pressed={statusFilter === "featured"}
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.25, delay: 0.1 }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             className={`flex min-h-[88px] items-center gap-3.5 rounded-2xl border bg-white/95 p-4 text-left shadow-xs transition hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 ${statusFilter === "featured" ? "border-amber-400 ring-2 ring-amber-100" : "border-slate-200/90"}`}
           >
             <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-amber-50 text-amber-600 shadow-2xs">
@@ -1132,7 +1648,7 @@ export function AdminNewsStudio() {
                 Tin nổi bật
               </span>
               <strong className="mt-0.5 block text-2xl font-extrabold tracking-tight text-slate-900">
-                {counts.featured ?? 0}
+                <AnimatedNumber value={counts.featured ?? 0} duration={1200} />
               </strong>
             </div>
           </motion.button>
@@ -1151,8 +1667,171 @@ export function AdminNewsStudio() {
         <>
           <section
             aria-label="Thanh tìm kiếm và bộ lọc"
-            className="mb-5 rounded-2xl border border-slate-200/90 bg-white p-3.5 shadow-xs"
+            className="mb-5 space-y-3 rounded-2xl border border-slate-200/90 bg-white p-3.5 shadow-xs"
           >
+            {/* Top Toolbar Row: Status Tabs + Density Switcher + Export CSV */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+              {/* Quick Status Segmented Tabs */}
+              <div
+                role="tablist"
+                aria-label={t("Lọc trạng thái")}
+                className="flex flex-wrap items-center gap-1 rounded-xl bg-slate-100/90 p-1 border border-slate-200/70"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={statusFilter === "all"}
+                  onClick={() => setStatusFilter("all")}
+                  className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-bold transition active:scale-95 ${
+                    statusFilter === "all"
+                      ? "bg-white text-blue-700 shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  <span>{t("Tất cả")}</span>
+                  <span
+                    className={`rounded-full px-1.5 py-0.2 text-[10px] font-bold ${
+                      statusFilter === "all"
+                        ? "bg-blue-100 text-blue-700"
+                        : "bg-slate-200/80 text-slate-600"
+                    }`}
+                  >
+                    {counts.total}
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={statusFilter === "published"}
+                  onClick={() => setStatusFilter("published")}
+                  className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition active:scale-95 ${
+                    statusFilter === "published"
+                      ? "bg-white text-emerald-700 shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  <span className="size-1.5 rounded-full bg-emerald-500" />
+                  <span>{t("Đã xuất bản")}</span>
+                  <span
+                    className={`rounded-full px-1.5 py-0.2 text-[10px] font-bold ${
+                      statusFilter === "published"
+                        ? "bg-emerald-100 text-emerald-700"
+                        : "bg-slate-200/80 text-slate-600"
+                    }`}
+                  >
+                    {counts.published}
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={statusFilter === "draft"}
+                  onClick={() => setStatusFilter("draft")}
+                  className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition active:scale-95 ${
+                    statusFilter === "draft"
+                      ? "bg-white text-amber-700 shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  <span className="size-1.5 rounded-full bg-amber-500" />
+                  <span>{t("Bản nháp")}</span>
+                  <span
+                    className={`rounded-full px-1.5 py-0.2 text-[10px] font-bold ${
+                      statusFilter === "draft"
+                        ? "bg-amber-100 text-amber-700"
+                        : "bg-slate-200/80 text-slate-600"
+                    }`}
+                  >
+                    {Math.max(0, counts.total - counts.published)}
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={statusFilter === "featured"}
+                  onClick={() => setStatusFilter("featured")}
+                  className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition active:scale-95 ${
+                    statusFilter === "featured"
+                      ? "bg-white text-indigo-700 shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-sm leading-none text-amber-500">
+                    star
+                  </span>
+                  <span>{t("Tin nổi bật")}</span>
+                  <span
+                    className={`rounded-full px-1.5 py-0.2 text-[10px] font-bold ${
+                      statusFilter === "featured"
+                        ? "bg-indigo-100 text-indigo-700"
+                        : "bg-slate-200/80 text-slate-600"
+                    }`}
+                  >
+                    {counts.featured}
+                  </span>
+                </button>
+              </div>
+
+              {/* Utility Tools: Density Toggle + Export CSV */}
+              <div className="flex items-center gap-2">
+                {/* Density Switcher */}
+                <div
+                  className="flex items-center rounded-xl border border-slate-200 bg-slate-50/80 p-0.5 text-slate-600"
+                  title={t("Mật độ")}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setTableDensity("comfortable")}
+                    title={t("Thư thái")}
+                    aria-label={t("Thư thái")}
+                    className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
+                      tableDensity === "comfortable"
+                        ? "bg-white text-blue-700 shadow-2xs font-bold"
+                        : "text-slate-500 hover:text-slate-800"
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-base">
+                      view_headline
+                    </span>
+                    <span className="hidden sm:inline">{t("Thư thái")}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTableDensity("compact")}
+                    title={t("Gọn gàng")}
+                    aria-label={t("Gọn gàng")}
+                    className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
+                      tableDensity === "compact"
+                        ? "bg-white text-blue-700 shadow-2xs font-bold"
+                        : "text-slate-500 hover:text-slate-800"
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-base">
+                      density_medium
+                    </span>
+                    <span className="hidden sm:inline">{t("Gọn gàng")}</span>
+                  </button>
+                </div>
+
+                {/* Export CSV Button */}
+                <button
+                  type="button"
+                  onClick={exportToCSV}
+                  title={t("Xuất CSV")}
+                  className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600"
+                >
+                  <span className="material-symbols-outlined text-base text-slate-500">
+                    download
+                  </span>
+                  <span>{t("Xuất CSV")}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Bottom Toolbar Row: Search Bar + Category Dropdown + Reset */}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               {/* Search Bar */}
               <div className="relative flex h-11 flex-1 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 transition focus-within:border-blue-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-500/10">
@@ -1161,17 +1840,17 @@ export function AdminNewsStudio() {
                 </span>
                 <input
                   type="search"
-                  aria-label="Tìm bài viết"
+                  aria-label={t("Tìm bài viết")}
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Tìm theo tiêu đề hoặc nội dung bài viết..."
+                  placeholder={t("Tìm theo tiêu đề hoặc nội dung bài viết...")}
                   className="w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
                 />
                 {query ? (
                   <button
                     type="button"
                     onClick={() => setQuery("")}
-                    aria-label="Xóa từ khóa tìm kiếm"
+                    aria-label={t("Xóa từ khóa tìm kiếm")}
                     className="grid size-6 place-items-center rounded-full text-slate-400 hover:bg-slate-200 hover:text-slate-600 transition active:scale-95"
                   >
                     <span className="material-symbols-outlined text-base">
@@ -1184,12 +1863,12 @@ export function AdminNewsStudio() {
               {/* Category Filter Dropdown */}
               <div className="relative min-w-[200px] rounded-xl border border-slate-200 bg-white transition hover:border-slate-300">
                 <select
-                  aria-label="Lọc danh mục"
+                  aria-label={t("Lọc danh mục")}
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
                   className="h-11 w-full cursor-pointer appearance-none bg-transparent py-2 pl-3.5 pr-9 text-xs font-semibold text-slate-700 outline-none focus:outline-none hover:bg-slate-50/50 rounded-xl"
                 >
-                  <option value="ALL">Tất cả danh mục</option>
+                  <option value="ALL">{t("Tất cả danh mục")}</option>
                   {Object.entries(activeCategories).map(([val, label]) => (
                     <option key={val} value={val}>
                       {label}
@@ -1214,31 +1893,31 @@ export function AdminNewsStudio() {
                     setStatusFilter("all");
                   }}
                   className="inline-flex h-11 items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50/60 px-3.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-100/80 active:scale-95 focus-visible:outline-2 focus-visible:outline-rose-500"
-                  title="Đặt lại tất cả bộ lọc"
+                  title={t("Đặt lại tất cả bộ lọc")}
                 >
                   <span className="material-symbols-outlined text-base">
                     filter_alt_off
                   </span>
-                  <span>Đặt lại</span>
+                  <span>{t("Đặt lại")}</span>
                 </button>
               ) : null}
             </div>
 
-            {/* Active search filter indicator chip */}
+            {/* Active search filter indicator chips */}
             {isSearchActive ? (
-              <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-2.5 text-xs text-slate-500">
+              <div className="flex flex-wrap items-center gap-2 border-t border-slate-100 pt-2.5 text-xs text-slate-500">
                 <span className="font-medium text-slate-400">
-                  Đang lọc theo:
+                  {t("Đang lọc theo:")}
                 </span>
                 {query.trim() ? (
                   <span className="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
                     <span className="truncate max-w-[280px]">
-                      Từ khóa: &ldquo;{query}&rdquo;
+                      {t("Từ khóa:")} &ldquo;{query}&rdquo;
                     </span>
                     <button
                       type="button"
                       onClick={() => setQuery("")}
-                      aria-label="Xóa từ khóa tìm kiếm"
+                      aria-label={t("Xóa từ khóa tìm kiếm")}
                       className="hover:text-blue-900"
                     >
                       <span className="material-symbols-outlined text-sm leading-none">
@@ -1255,7 +1934,7 @@ export function AdminNewsStudio() {
                     <button
                       type="button"
                       onClick={() => setCategoryFilter("ALL")}
-                      aria-label="Xóa bộ lọc danh mục"
+                      aria-label={t("Xóa bộ lọc danh mục")}
                       className="hover:text-indigo-900"
                     >
                       <span className="material-symbols-outlined text-sm leading-none">
@@ -1268,13 +1947,15 @@ export function AdminNewsStudio() {
                   <span className="inline-flex items-center gap-1 rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
                     <span>
                       {statusFilter === "published"
-                        ? "Đã xuất bản"
-                        : "Tin nổi bật"}
+                        ? t("Đã xuất bản")
+                        : statusFilter === "draft"
+                          ? t("Bản nháp")
+                          : t("Tin nổi bật")}
                     </span>
                     <button
                       type="button"
                       onClick={() => setStatusFilter("all")}
-                      aria-label="Xóa bộ lọc trạng thái"
+                      aria-label={t("Xóa bộ lọc trạng thái")}
                       className="hover:text-emerald-900"
                     >
                       <span className="material-symbols-outlined text-sm leading-none">
@@ -1285,8 +1966,8 @@ export function AdminNewsStudio() {
                 ) : null}
                 <span className="ml-auto text-xs font-medium text-slate-400">
                   {totalCount > 0
-                    ? `Tìm thấy ${totalCount} kết quả`
-                    : "Không có kết quả"}
+                    ? `${t("Tìm thấy")} ${totalCount} ${t("kết quả")}`
+                    : t("Không có kết quả")}
                 </span>
               </div>
             ) : null}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import { getRouteMetadata } from "@/core/i18n/metadata";
 import { GuestEcosystemV2 } from "@/features/public-v2/components/GuestEcosystemV2";
 import { getPublicNews } from "@/features/public-v2/data/public-news-server";
 import {
@@ -10,11 +11,9 @@ import {
   SESSION_COOKIE_NAME,
 } from "@/features/auth/server";
 
-export const metadata: Metadata = {
-  title: "Hệ sinh thái | Mạng lưới RU-VN",
-  description:
-    "Chương trình tài trợ khoa học, dự án Khai sáng và thư viện tri thức song phương Việt Nam – Liên bang Nga.",
-};
+export function generateMetadata(): Promise<Metadata> {
+  return getRouteMetadata("ecosystem");
+}
 
 export default async function Page() {
   const cookieStore = await cookies();

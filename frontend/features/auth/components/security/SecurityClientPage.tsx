@@ -138,7 +138,7 @@ const securityCopy: Record<
     modalSignOutDesc:
       "You will be redirected to the sign-in portal and your session will be invalidated immediately.",
     modalRevokeDesc:
-      "This device will be immediately disconnected from Mạng lưới tri thức Nga - Việt.",
+      "This device will be immediately disconnected from the Russia-Vietnam Knowledge Network.",
     cancelBtn: "Cancel",
     confirmSignOutBtn: "Confirm Sign Out",
     confirmRevokeBtn: "Confirm Revoke",
