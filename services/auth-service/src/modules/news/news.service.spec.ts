@@ -29,7 +29,7 @@ describe('NewsService', () => {
         publishedAt: { not: null },
       },
       orderBy: [
-        { publishedAt: 'desc' },
+        { updatedAt: 'desc' },
         { createdAt: 'desc' },
         { id: 'desc' },
       ],

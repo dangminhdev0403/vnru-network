@@ -209,11 +209,18 @@ export class NewsService {
     const [articles, total] = await Promise.all([
       this.prisma.newsArticle.findMany({
         where,
-        orderBy: [
-          { publishedAt: 'desc' },
-          { createdAt: 'desc' },
-          { id: 'desc' },
-        ],
+        orderBy:
+          input.featured === true
+            ? [
+                { updatedAt: 'desc' },
+                { createdAt: 'desc' },
+                { id: 'desc' },
+              ]
+            : [
+                { publishedAt: 'desc' },
+                { createdAt: 'desc' },
+                { id: 'desc' },
+              ],
         take: input.limit,
         skip: input.offset,
         select: articleSelect,
