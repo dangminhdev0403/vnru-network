@@ -13,7 +13,7 @@ type LocalizedMetadata = Readonly<Record<Locale, Metadata>>;
 export const PORTAL_NAME: Readonly<Record<Locale, string>> = {
   vi: "Mạng lưới tri thức Nga - Việt",
   en: "Russia-Vietnam Knowledge Network",
-  ru: "Российско-вьетнамская сеть знаний",
+  ru: "Российско-вьетнамская интеллектуальная Сеть",
 };
 
 const ROUTE_METADATA = {

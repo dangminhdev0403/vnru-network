@@ -26,7 +26,7 @@ const NEWS_METADATA: Record<Locale, Metadata> = {
       "News on science and technology, economy and society, education, and Russia-Vietnam cooperation.",
   },
   ru: {
-    title: "Новости | Российско-вьетнамская сеть знаний",
+    title: "Новости | Российско-вьетнамская интеллектуальная Сеть",
     description:
       "Новости науки и технологий, экономики и общества, образования и российско-вьетнамского сотрудничества.",
   },

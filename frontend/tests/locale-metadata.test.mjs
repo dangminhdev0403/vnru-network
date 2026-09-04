@@ -7,7 +7,7 @@ const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 test("route metadata and shared copy follow the selected locale", async () => {
   const metadata = await read("core/i18n/metadata.ts");
   assert.match(metadata, /cookies\(\)/);
-  assert.match(metadata, /Российско-вьетнамская сеть знаний/);
+  assert.match(metadata, /Российско-вьетнамская интеллектуальная Сеть/);
   assert.match(metadata, /Russia-Vietnam Knowledge Network/);
 
   for (const path of [

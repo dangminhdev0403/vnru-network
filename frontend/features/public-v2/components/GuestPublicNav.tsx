@@ -68,7 +68,7 @@ const COPY: Record<
     navigation: "Public navigation",
   },
   ru: {
-    brandTitle: "Российско-вьетнамская сеть знаний",
+    brandTitle: "Российско-вьетнамская интеллектуальная Сеть",
     home: "Главная",
     about: "О сети",
     ecosystem: "Экосистема",
@@ -92,8 +92,8 @@ const BRAND_TITLE: Record<Locale, { line1: string; line2: string }> = {
     line2: "Russia - Vietnam",
   },
   ru: {
-    line1: "Российско-Вьетнамская",
-    line2: "сеть знаний",
+    line1: "Российско-вьетнамская",
+    line2: "интеллектуальная Сеть",
   },
 };
 

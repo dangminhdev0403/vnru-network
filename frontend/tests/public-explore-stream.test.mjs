@@ -64,7 +64,7 @@ test("news pages share masthead while the listing keeps spotlight and featured s
   assert.match(pageSource, /export async function generateMetadata/);
   assert.match(
     pageSource,
-    /Новости \| Российско-вьетнамская сеть знаний/,
+    /Новости \| Российско-вьетнамская интеллектуальная Сеть/,
   );
   assert.match(source, /useRouter\(\)/);
   assert.match(source, /router\.push\(/);
