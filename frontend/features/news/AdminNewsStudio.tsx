@@ -193,17 +193,24 @@ export function AdminNewsStudio() {
   const listLocale = uiLocale.toUpperCase() as NewsLocale;
   const view = searchParams.get("view");
   const requestedContentType = searchParams.get("type");
+  const navContentType =
+    view && view in contentTypes
+      ? (view as NewsContentType)
+      : requestedContentType && requestedContentType in contentTypes
+        ? (requestedContentType as NewsContentType)
+        : "ARTICLE";
+  const listHref =
+    navContentType === "KNOWLEDGE"
+      ? "/workspace/news?view=KNOWLEDGE"
+      : `/workspace/news?view=${navContentType}`;
+  const t = (value: string) =>
+    localizeText(value, uiLocale, ADMIN_NEWS_TRANSLATIONS);
   const [selectedId, setSelectedId] = useState<string>();
   const [form, setForm] = useState<NewsInput>(() => ({
     ...initial,
     category:
-      requestedContentType === "KNOWLEDGE"
-        ? "knowledge-article"
-        : initial.category,
-    contentType:
-      requestedContentType && requestedContentType in contentTypes
-        ? (requestedContentType as NewsContentType)
-        : "ARTICLE",
+      navContentType === "KNOWLEDGE" ? "knowledge-article" : initial.category,
+    contentType: navContentType,
   }));
   const [featured, setFeatured] = useState(false);
   const [locale, setLocale] = useState<NewsLocale>("RU");
@@ -354,7 +361,16 @@ export function AdminNewsStudio() {
     news.mutations.create.options({
       onSuccess: ({ client, data, cache }) => {
         cache.queries.list.invalidateAll(client);
-        setSelectedId(data.id);
+        setSelectedId(undefined);
+        const targetType =
+          data.contentType && data.contentType in contentTypes
+            ? data.contentType
+            : navContentType;
+        const targetHref =
+          targetType === "KNOWLEDGE"
+            ? "/workspace/news?view=KNOWLEDGE"
+            : `/workspace/news?view=${targetType}`;
+        router.push(targetHref);
         showSuccess(t("Tạo thành công"), t("Đã tạo nội dung mới."));
       },
       onError: () => {
@@ -596,22 +612,10 @@ export function AdminNewsStudio() {
   const showList = Boolean(view && view !== "new" && !selectedId);
   const showSummary = showList;
   const showEditor = view === "new" || Boolean(selectedId);
-  const navContentType =
-    view && view in contentTypes
-      ? (view as NewsContentType)
-      : requestedContentType && requestedContentType in contentTypes
-        ? (requestedContentType as NewsContentType)
-        : "ARTICLE";
   const activeCategories =
     (showEditor ? form.contentType : navContentType) === "KNOWLEDGE"
       ? knowledgeCategories
       : categories;
-  const listHref =
-    navContentType === "KNOWLEDGE"
-      ? "/workspace/news?view=KNOWLEDGE"
-      : "/workspace/news";
-  const t = (value: string) =>
-    localizeText(value, uiLocale, ADMIN_NEWS_TRANSLATIONS);
   const error = [
     list.error,
     create.error,
@@ -2014,23 +2018,29 @@ export function AdminNewsStudio() {
               const input = { ...contentInput, coverImageUrl };
               if (selectedId) {
                 await update.mutateAsync({ id: selectedId, input });
+                setForm({
+                  ...form,
+                  coverImageUrl,
+                  translations: {
+                    ...form.translations,
+                    ...contentInput.translations,
+                  },
+                });
+                setPendingCoverFile(null);
+                setCoverPreviewUrl(coverImageUrl ?? null);
+                pendingInlineImages.forEach((image) =>
+                  URL.revokeObjectURL(image.url),
+                );
+                setPendingInlineImages([]);
               } else {
                 await create.mutateAsync(input);
+                pendingInlineImages.forEach((image) =>
+                  URL.revokeObjectURL(image.url),
+                );
+                setPendingInlineImages([]);
+                setPendingCoverFile(null);
+                setCoverPreviewUrl(null);
               }
-              setForm({
-                ...form,
-                coverImageUrl,
-                translations: {
-                  ...form.translations,
-                  ...contentInput.translations,
-                },
-              });
-              setPendingCoverFile(null);
-              setCoverPreviewUrl(coverImageUrl ?? null);
-              pendingInlineImages.forEach((image) =>
-                URL.revokeObjectURL(image.url),
-              );
-              setPendingInlineImages([]);
             } catch {
               showError(t("Không thể lưu"), t("Thất bại khi lưu nội dung"));
             }

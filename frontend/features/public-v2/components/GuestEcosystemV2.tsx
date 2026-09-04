@@ -431,8 +431,9 @@ export function GuestEcosystemV2({
   const [memberSubTab, setMemberSubTab] = useState<"experts" | "organizations">(
     "experts",
   );
-  // Sub-tabs for Library
+  // Sub-tabs for Library (tạm thời chưa cho switch tab)
   const [libSubTab, setLibSubTab] = useState<LibraryTabId>("articles");
+  void setLibSubTab;
 
   // State for Connect Form
   const [connectForm, setConnectForm] = useState({
@@ -1329,23 +1330,24 @@ export function GuestEcosystemV2({
                 <div className="flex shrink-0 flex-wrap sm:flex-nowrap items-center gap-3 lg:justify-end">
                   <button
                     type="button"
-                    onClick={() => setShowResultsModal(true)}
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs transition hover:bg-emerald-700"
+                    disabled
+                    onClick={(e) => {
+                      e.preventDefault();
+                      /* showResultsModal */
+                    }}
+                    aria-disabled="true"
+                    title="Tính năng đang hoàn thiện"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
                   >
                     <span>Tra cứu Kết quả</span>
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      scrollToSection("opportunities", "opportunities");
-                      setOppSubTab("connect");
-                      setConnectForm((prev) => ({
-                        ...prev,
-                        message:
-                          "Tôi muốn tìm hiểu thông tin và nộp hồ sơ xin xét duyệt Chương trình Học bổng Khai sáng.",
-                      }));
-                    }}
-                    className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs transition hover:bg-blue-700"
+                    disabled
+                    onClick={(e) => e.preventDefault()}
+                    aria-disabled="true"
+                    title="Tính năng đang hoàn thiện"
+                    className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
                   >
                     <span>Đăng ký tham gia</span>
                   </button>
@@ -1368,23 +1370,21 @@ export function GuestEcosystemV2({
                 <div className="flex shrink-0 flex-wrap sm:flex-nowrap items-center gap-3 lg:justify-end">
                   <Link
                     href="/news/1/mang-tri-thuc-tro-ve"
-                    className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-slate-50 px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100"
+                    onClick={(e) => e.preventDefault()}
+                    aria-disabled="true"
+                    tabIndex={-1}
+                    title="Tính năng đang hoàn thiện"
+                    className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-slate-50 px-5 py-2.5 text-sm font-bold text-slate-700 cursor-not-allowed opacity-90"
                   >
                     <span>Xem chi tiết</span>
                   </Link>
                   <button
                     type="button"
-                    onClick={() => {
-                      scrollToSection("opportunities", "opportunities");
-                      setOppSubTab("connect");
-                      setConnectForm((prev) => ({
-                        ...prev,
-                        field: "Vật liệu tiên tiến & Năng lượng",
-                        message:
-                          "Tôi quan tâm đến Gói tài trợ Đề tài Năng lượng Sạch & Pin thế hệ mới và muốn đăng ký tham gia.",
-                      }));
-                    }}
-                    className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs transition hover:bg-blue-700"
+                    disabled
+                    onClick={(e) => e.preventDefault()}
+                    aria-disabled="true"
+                    title="Tính năng đang hoàn thiện"
+                    className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
                   >
                     <span>Đăng ký tham gia</span>
                   </button>
@@ -1407,23 +1407,21 @@ export function GuestEcosystemV2({
                 <div className="flex shrink-0 flex-wrap sm:flex-nowrap items-center gap-3 lg:justify-end">
                   <Link
                     href="/news/5/truong-dai-hoc-khoa-hoc-tu-nhien-va-rosatom-quantum-thuc-day-hop-tac-trong-linh-vuc-cong-nghe-luong-tu"
-                    className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-slate-50 px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100"
+                    onClick={(e) => e.preventDefault()}
+                    aria-disabled="true"
+                    tabIndex={-1}
+                    title="Tính năng đang hoàn thiện"
+                    className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-slate-50 px-5 py-2.5 text-sm font-bold text-slate-700 cursor-not-allowed opacity-90"
                   >
                     <span>Xem chi tiết</span>
                   </Link>
                   <button
                     type="button"
-                    onClick={() => {
-                      scrollToSection("opportunities", "opportunities");
-                      setOppSubTab("connect");
-                      setConnectForm((prev) => ({
-                        ...prev,
-                        field: "Trí tuệ nhân tạo & Dữ liệu lớn",
-                        message:
-                          "Tôi muốn tham gia Nhóm nghiên cứu thuộc Dự án Trung tâm Đổi mới AI & Xử lý Dữ liệu lớn.",
-                      }));
-                    }}
-                    className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs transition hover:bg-blue-700"
+                    disabled
+                    onClick={(e) => e.preventDefault()}
+                    aria-disabled="true"
+                    title="Tính năng đang hoàn thiện"
+                    className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
                   >
                     <span>Đăng ký tham gia</span>
                   </button>
@@ -1452,36 +1450,45 @@ export function GuestEcosystemV2({
               <div className="grid grid-cols-3 rounded-xl border border-blue-200 bg-white p-1 shadow-xs">
                 <button
                   type="button"
-                  onClick={() => setLibSubTab("articles")}
+                  disabled
+                  onClick={(e) => e.preventDefault()}
                   aria-pressed={libSubTab === "articles"}
-                  className={`min-h-11 rounded-lg px-2 py-2 text-base font-bold transition-colors sm:px-4 ${
+                  aria-disabled="true"
+                  title="Tính năng đang hoàn thiện"
+                  className={`min-h-11 rounded-lg px-2 py-2 text-base font-bold transition-colors sm:px-4 cursor-not-allowed ${
                     libSubTab === "articles"
                       ? "bg-blue-600 text-white shadow-xs"
-                      : "text-slate-700 hover:text-blue-900"
+                      : "text-slate-700"
                   }`}
                 >
                   Bài báo
                 </button>
                 <button
                   type="button"
-                  onClick={() => setLibSubTab("journals")}
+                  disabled
+                  onClick={(e) => e.preventDefault()}
                   aria-pressed={libSubTab === "journals"}
-                  className={`min-h-11 rounded-lg px-2 py-2 text-base font-bold transition-colors sm:px-4 ${
+                  aria-disabled="true"
+                  title="Tính năng đang hoàn thiện"
+                  className={`min-h-11 rounded-lg px-2 py-2 text-base font-bold transition-colors sm:px-4 cursor-not-allowed ${
                     libSubTab === "journals"
                       ? "bg-blue-600 text-white shadow-xs"
-                      : "text-slate-700 hover:text-blue-900"
+                      : "text-slate-700"
                   }`}
                 >
                   Tạp chí
                 </button>
                 <button
                   type="button"
-                  onClick={() => setLibSubTab("patents")}
+                  disabled
+                  onClick={(e) => e.preventDefault()}
                   aria-pressed={libSubTab === "patents"}
-                  className={`min-h-11 rounded-lg px-2 py-2 text-base font-bold transition-colors sm:px-4 ${
+                  aria-disabled="true"
+                  title="Tính năng đang hoàn thiện"
+                  className={`min-h-11 rounded-lg px-2 py-2 text-base font-bold transition-colors sm:px-4 cursor-not-allowed ${
                     libSubTab === "patents"
                       ? "bg-blue-600 text-white shadow-xs"
-                      : "text-slate-700 hover:text-blue-900"
+                      : "text-slate-700"
                   }`}
                 >
                   Sáng chế
@@ -1512,7 +1519,11 @@ export function GuestEcosystemV2({
                     <div className="mt-5 border-t border-slate-100 pt-3">
                       <Link
                         href={newsArticleHref(article)}
-                        className="inline-flex min-h-11 items-center text-base font-extrabold text-blue-600 hover:text-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                        onClick={(e) => e.preventDefault()}
+                        aria-disabled="true"
+                        tabIndex={-1}
+                        title="Tính năng đang hoàn thiện"
+                        className="inline-flex min-h-11 items-center text-base font-extrabold text-blue-600 cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
                       >
                         Xem chi tiết →
                       </Link>
