@@ -28,15 +28,14 @@ test("content administration reuses admin chrome with its own navigation", async
     studio,
     iamLayout,
     iamSidebar,
-  ] =
-    await Promise.all([
-      read("app/(content-admin)/layout.tsx"),
-      read("features/news/ContentAdminSidebar.tsx"),
-      read("components/shared/SidebarFrame.tsx"),
-      read("features/news/AdminNewsStudio.tsx"),
-      read("app/(admin)/layout.tsx"),
-      read("features/admin/components/AdminSidebar.tsx"),
-    ]);
+  ] = await Promise.all([
+    read("app/(content-admin)/layout.tsx"),
+    read("features/news/ContentAdminSidebar.tsx"),
+    read("components/shared/SidebarFrame.tsx"),
+    read("features/news/AdminNewsStudio.tsx"),
+    read("app/(admin)/layout.tsx"),
+    read("features/admin/components/AdminSidebar.tsx"),
+  ]);
   assert.match(contentLayout, /AdminShell area="content"/);
   assert.match(contentSidebar, /href: "\/workspace\/news"/);
   assert.match(contentSidebar, /view=ARTICLE/);
@@ -46,10 +45,7 @@ test("content administration reuses admin chrome with its own navigation", async
     /view === "new"[\s\S]*searchParams\.get\("type"\)[\s\S]*activeHref=\{/,
   );
   assert.match(sidebarFrame, /activeHrefOverride \?\?/);
-  assert.match(
-    sidebarFrame,
-    /aria-current=\{active \? "page" : undefined\}/,
-  );
+  assert.match(sidebarFrame, /aria-current=\{active \? "page" : undefined\}/);
   assert.match(studio, /view === "all" \? "ARTICLE" : view/);
   for (const view of [
     "ANNOUNCEMENT",
@@ -158,19 +154,36 @@ test("content administration reuses admin chrome with its own navigation", async
   assert.doesNotMatch(studio, /localStorage|translate\.googleapis|mymemory/);
   assert.match(studio, /URL\.createObjectURL\(file\)/);
   assert.match(studio, /const submittedLocales = locales\.filter/);
-  assert.match(studio, /submittedLocales\.length[\s\S]*\? submittedLocales[\s\S]*: \[locale\]/);
-  assert.match(studio, /translations: Object\.fromEntries\([\s\S]*\.filter\(\(item\) => submittedLocales\.includes\(item\)\)/);
-  assert.match(studio, /title: translation\.title[\s\S]*actionLabel: translation\.actionLabel/);
+  assert.match(
+    studio,
+    /submittedLocales\.length[\s\S]*\? submittedLocales[\s\S]*: \[locale\]/,
+  );
+  assert.match(
+    studio,
+    /translations: Object\.fromEntries\([\s\S]*\.filter\(\(item\) => submittedLocales\.includes\(item\)\)/,
+  );
+  assert.match(
+    studio,
+    /title: translation\.title[\s\S]*actionLabel: translation\.actionLabel/,
+  );
   assert.doesNotMatch(studio, /\.\.\.form\.translations\[item\]/);
-  const newsController = await read("../services/auth-service/src/modules/news/news.controller.ts");
+  const newsController = await read(
+    "../services/auth-service/src/modules/news/news.controller.ts",
+  );
   assert.match(newsController, /VI: translationSchema\.optional\(\)/);
   assert.match(newsController, /EN: translationSchema\.optional\(\)/);
   assert.match(newsController, /RU: translationSchema\.optional\(\)/);
   assert.match(newsController, /Object\.keys\(value\)\.length > 0/);
-  assert.doesNotMatch(newsController, /coverImageUrl: z\.url\(\)\.max\(2000\),/);
+  assert.doesNotMatch(
+    newsController,
+    /coverImageUrl: z\.url\(\)\.max\(2000\),/,
+  );
   assert.match(studio, /pendingInlineImages/);
   assert.match(studio, /uploadPendingInlineImages/);
-  assert.match(studio, /Object\.values\(input\.translations\)[\s\S]*content\.includes\(image\.url\)/);
+  assert.match(
+    studio,
+    /Object\.values\(input\.translations\)[\s\S]*content\.includes\(image\.url\)/,
+  );
   assert.match(studio, /Object\.entries\(input\.translations\)\.map/);
   assert.match(studio, /Promise\.all\([\s\S]*referencedImages\.map/);
   assert.match(studio, /Promise\.all\(\[[\s\S]*pendingCoverFile/);
@@ -189,8 +202,14 @@ test("news spotlight uses the backend featured flag", async () => {
     read("features/public-v2/data/public-news-server.ts"),
     read("app/news/page.tsx"),
   ]);
-  assert.doesNotMatch(carousel, /initialArticles\.filter|initialArticles\.slice/);
-  assert.doesNotMatch(carousel, /matchesScope|matchesContentType|matchesPeriod/);
+  assert.doesNotMatch(
+    carousel,
+    /initialArticles\.filter|initialArticles\.slice/,
+  );
+  assert.doesNotMatch(
+    carousel,
+    /matchesScope|matchesContentType|matchesPeriod/,
+  );
   assert.match(repository, /params\.append\("featured", String\(featured\)\)/);
   assert.match(repository, /params\.append\("contentType", type\)/);
   assert.match(repository, /isFeatured: article\.isFeatured/);

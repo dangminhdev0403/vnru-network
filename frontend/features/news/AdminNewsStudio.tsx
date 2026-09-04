@@ -1254,11 +1254,9 @@ export function AdminNewsStudio() {
                             title={t("Độ phủ dịch thuật")}
                           >
                             {locales.map((loc) => {
-                              const hasTranslation =
-                                article.translations.some(
-                                  (tr) =>
-                                    tr.locale === loc && tr.title?.trim(),
-                                );
+                              const hasTranslation = article.translations.some(
+                                (tr) => tr.locale === loc && tr.title?.trim(),
+                              );
                               return (
                                 <span
                                   key={loc}
@@ -1371,9 +1369,7 @@ export function AdminNewsStudio() {
                               },
                             })
                           }
-                          title={
-                            article.publishedAt ? "Ẩn tin" : "Hiện tin"
-                          }
+                          title={article.publishedAt ? "Ẩn tin" : "Hiện tin"}
                           aria-label={`${article.publishedAt ? "Ẩn tin" : "Hiện tin"} ${title}`}
                           className="inline-flex min-h-9 min-w-18 items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 text-xs font-semibold text-slate-600 shadow-2xs transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 active:scale-95 focus-visible:outline-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
                         >

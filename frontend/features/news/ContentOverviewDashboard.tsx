@@ -490,7 +490,11 @@ export function ContentOverviewDashboard({
             </div>
           </div>
           <strong className="mt-3 block text-3xl font-extrabold tracking-tight text-slate-900">
-            {isLoading ? "—" : <AnimatedNumber value={totalAllCount} duration={1300} />}
+            {isLoading ? (
+              "—"
+            ) : (
+              <AnimatedNumber value={totalAllCount} duration={1300} />
+            )}
           </strong>
           <span className="mt-1 block text-sm text-slate-500">
             {t("Phân bổ trên 6 phân hệ")}
@@ -513,7 +517,11 @@ export function ContentOverviewDashboard({
             </div>
           </div>
           <strong className="mt-3 block text-3xl font-extrabold tracking-tight text-slate-900">
-            {isLoading ? "—" : <AnimatedNumber value={publishedCount} duration={1300} />}
+            {isLoading ? (
+              "—"
+            ) : (
+              <AnimatedNumber value={publishedCount} duration={1300} />
+            )}
           </strong>
           <span className="mt-1 block text-sm text-slate-500">
             {totalAllCount > 0
@@ -538,7 +546,11 @@ export function ContentOverviewDashboard({
             </div>
           </div>
           <strong className="mt-3 block text-3xl font-extrabold tracking-tight text-slate-900">
-            {isLoading ? "—" : <AnimatedNumber value={draftCount} duration={1300} />}
+            {isLoading ? (
+              "—"
+            ) : (
+              <AnimatedNumber value={draftCount} duration={1300} />
+            )}
           </strong>
           <span className="mt-1 block text-sm text-slate-500">
             {draftCount > 0 ? t("Chờ duyệt xuất bản") : t("Tất cả đã xuất bản")}
@@ -569,7 +581,12 @@ export function ContentOverviewDashboard({
                 </p>
               </div>
               <span className="inline-flex rounded-md bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700">
-                {isLoading ? "—" : <AnimatedNumber value={totalAllCount} duration={1300} />} {t("nội dung")}
+                {isLoading ? (
+                  "—"
+                ) : (
+                  <AnimatedNumber value={totalAllCount} duration={1300} />
+                )}{" "}
+                {t("nội dung")}
               </span>
             </div>
 
@@ -616,7 +633,12 @@ export function ContentOverviewDashboard({
                         <AnimatedNumber value={domain.count} duration={1200} />
                       </span>
                       <span className="text-xs font-medium text-slate-600">
-                        (<AnimatedNumber value={Math.round(domain.percentage)} duration={1200} />%)
+                        (
+                        <AnimatedNumber
+                          value={Math.round(domain.percentage)}
+                          duration={1200}
+                        />
+                        %)
                       </span>
                       <span
                         className="material-symbols-outlined text-sm text-slate-400 opacity-0 group-hover:opacity-100 transition"
@@ -850,7 +872,8 @@ export function ContentOverviewDashboard({
                   {t(domain.label)}
                 </h3>
                 <p className="mt-0.5 text-xs text-slate-500">
-                  <AnimatedNumber value={domain.published} duration={1200} /> {t("Đã xuất bản")}
+                  <AnimatedNumber value={domain.published} duration={1200} />{" "}
+                  {t("Đã xuất bản")}
                 </p>
               </div>
 
