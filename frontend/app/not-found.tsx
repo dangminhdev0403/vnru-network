@@ -6,6 +6,7 @@ export function generateMetadata(): Promise<Metadata> {
   return getRouteMetadata("notFound");
 }
 
+// 404 - Trang không tìm thấy
 export default function NotFound() {
   return <NotFoundClient />;
 }

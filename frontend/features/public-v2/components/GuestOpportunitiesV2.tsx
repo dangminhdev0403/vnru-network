@@ -7,6 +7,7 @@ import { localizeReactNode } from "@/core/i18n/localize-react-node";
 import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
 import { DEMO_OPPORTUNITIES } from "@/features/workspace/mock-data/opportunities";
 import { GuestPublicNav } from "./GuestPublicNav";
+import { Reveal } from "@/components/shared/Reveal";
 
 const COPY: Record<
   Locale,
@@ -263,68 +264,78 @@ export function GuestOpportunitiesV2() {
           />
           <div className="relative mx-auto max-w-[1460px]">
             <div className="max-w-4xl">
-              <span className="inline-flex items-center gap-2 rounded-full border border-blue-300/80 bg-blue-100/90 px-4 py-2 text-xs sm:text-[13px] font-black uppercase tracking-[0.1em] text-blue-800">
-                ✦ {t.kicker}
-              </span>
-              <h1 className="mt-6 text-balance text-4xl font-black leading-[1.08] tracking-[-0.04em] text-slate-950 sm:text-5xl md:text-6xl lg:text-[62px] xl:text-[68px]">
-                {t.title1}
-                <br />
-                <span className="text-blue-600">{t.title2}</span>
-                <br />
-                <span className="text-slate-900">{t.title3}</span>
-              </h1>
-              <p className="mt-6 max-w-3xl text-base sm:text-lg md:text-[19px] font-normal leading-relaxed text-slate-700">
-                {t.intro}
-              </p>
+              <Reveal y={10} delay={0.05}>
+                <span className="inline-flex items-center gap-2 rounded-full border border-blue-300/80 bg-blue-100/90 px-4 py-2 text-xs sm:text-[13px] font-black uppercase tracking-[0.1em] text-blue-800">
+                  ✦ {t.kicker}
+                </span>
+              </Reveal>
+              <Reveal y={14} delay={0.12}>
+                <h1 className="mt-6 text-balance text-4xl font-black leading-[1.08] tracking-[-0.04em] text-slate-950 sm:text-5xl md:text-6xl lg:text-[62px] xl:text-[68px]">
+                  {t.title1}
+                  <br />
+                  <span className="text-blue-600">{t.title2}</span>
+                  <br />
+                  <span className="text-slate-900">{t.title3}</span>
+                </h1>
+              </Reveal>
+              <Reveal y={12} delay={0.18}>
+                <p className="mt-6 max-w-3xl text-base sm:text-lg md:text-[19px] font-normal leading-relaxed text-slate-700">
+                  {t.intro}
+                </p>
+              </Reveal>
 
               {/* Search Bar */}
-              <div className="mt-8 flex max-w-3xl flex-col gap-3 sm:flex-row">
-                <div className="flex min-h-13 flex-1 items-center gap-3 rounded-xl border border-blue-300/80 bg-white/95 px-4.5 shadow-sm focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200">
-                  <span className="text-lg font-bold text-blue-600">⌕</span>
-                  <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder={t.searchPlaceholder}
-                    className="min-w-0 flex-1 bg-transparent text-sm sm:text-base font-semibold text-slate-900 outline-none placeholder:text-slate-400"
-                  />
-                  {query && (
-                    <button
-                      type="button"
-                      onClick={() => setQuery("")}
-                      className="text-xs font-bold text-slate-400 hover:text-slate-600"
-                    >
-                      ✕
-                    </button>
-                  )}
+              <Reveal y={12} delay={0.24}>
+                <div className="mt-8 flex max-w-3xl flex-col gap-3 sm:flex-row">
+                  <div className="flex min-h-13 flex-1 items-center gap-3 rounded-xl border border-blue-300/80 bg-white/95 px-4.5 shadow-sm focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200">
+                    <span className="text-lg font-bold text-blue-600">⌕</span>
+                    <input
+                      type="text"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder={t.searchPlaceholder}
+                      className="min-w-0 flex-1 bg-transparent text-sm sm:text-base font-semibold text-slate-900 outline-none placeholder:text-slate-400"
+                    />
+                    {query && (
+                      <button
+                        type="button"
+                        onClick={() => setQuery("")}
+                        className="text-xs font-bold text-slate-400 hover:text-slate-600"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    className="inline-flex min-h-13 items-center justify-center rounded-xl bg-blue-600 px-7 text-sm sm:text-base font-bold text-white shadow-[0_12px_28px_-12px_rgba(37,99,235,.85)] transition hover:-translate-y-0.5 hover:bg-blue-700 active:scale-[0.98]"
+                  >
+                    {t.searchBtn}
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="inline-flex min-h-13 items-center justify-center rounded-xl bg-blue-600 px-7 text-sm sm:text-base font-bold text-white shadow-[0_12px_28px_-12px_rgba(37,99,235,.85)] transition hover:-translate-y-0.5 hover:bg-blue-700"
-                >
-                  {t.searchBtn}
-                </button>
-              </div>
+              </Reveal>
 
               {/* Quick stats pills */}
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm md:text-[15px] font-bold text-slate-700">
-                <span className="inline-flex items-center gap-2">
-                  <b className="text-base text-blue-600">◉</b> 300+ Đề tài đã
-                  kết nối
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <b className="text-base text-blue-600">◎</b> 14 Lĩnh vực ưu
-                  tiên 2026
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <b className="text-base text-blue-600">◇</b> 100% Học thuật &
-                  Nghiên cứu
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <b className="text-base text-blue-600">✦</b> Chương trình VAST
-                  – RAS
-                </span>
-              </div>
+              <Reveal y={10} delay={0.3}>
+                <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm md:text-[15px] font-bold text-slate-700">
+                  <span className="inline-flex items-center gap-2">
+                    <b className="text-base text-blue-600">◉</b> 300+ Đề tài đã
+                    kết nối
+                  </span>
+                  <span className="inline-flex items-center gap-2">
+                    <b className="text-base text-blue-600">◎</b> 14 Lĩnh vực ưu
+                    tiên 2026
+                  </span>
+                  <span className="inline-flex items-center gap-2">
+                    <b className="text-base text-blue-600">◇</b> 100% Học thuật &
+                    Nghiên cứu
+                  </span>
+                  <span className="inline-flex items-center gap-2">
+                    <b className="text-base text-blue-600">✦</b> Chương trình VAST
+                    – RAS
+                  </span>
+                </div>
+              </Reveal>
             </div>
           </div>
         </section>
@@ -333,48 +344,50 @@ export function GuestOpportunitiesV2() {
         <section className="px-4 py-12 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
             {/* Filter Bar */}
-            <div className="rounded-2xl border border-blue-200/80 bg-white/90 p-5 shadow-[0_16px_40px_-32px_rgba(37,99,235,.4)]">
-              {/* Field filter buttons */}
-              <div className="flex flex-wrap items-center gap-2.5">
-                {fieldFilters.map((ff) => (
-                  <button
-                    key={ff.id}
-                    type="button"
-                    onClick={() => setSelectedField(ff.id)}
-                    className={`rounded-xl px-4.5 py-2.5 text-xs sm:text-sm font-extrabold transition-all duration-200 ${
-                      selectedField === ff.id
-                        ? "bg-blue-600 text-white shadow-sm ring-1 ring-blue-600"
-                        : "border border-blue-200/80 bg-blue-50/50 text-slate-700 hover:bg-blue-100/70 hover:text-blue-800"
-                    }`}
-                  >
-                    {ff.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Status filter dropdown and count */}
-              <div className="mt-4 flex flex-col items-start justify-between gap-4 border-t border-blue-100 pt-4 sm:flex-row sm:items-center">
-                <div className="flex flex-wrap items-center gap-3">
-                  <select
-                    value={selectedStatus}
-                    onChange={(e) => setSelectedStatus(e.target.value)}
-                    aria-label={t.statusFilter}
-                    className="h-10 rounded-xl border border-blue-200 bg-white px-3 text-xs sm:text-sm font-bold text-slate-700 shadow-xs outline-none transition focus:border-blue-400"
-                  >
-                    <option value="all">{t.allStatus}</option>
-                    <option value="open">{t.openStatus}</option>
-                    <option value="draft">{t.draftStatus}</option>
-                  </select>
+            <Reveal y={10}>
+              <div className="rounded-2xl border border-blue-200/80 bg-white/90 p-5 shadow-[0_16px_40px_-32px_rgba(37,99,235,.4)]">
+                {/* Field filter buttons */}
+                <div className="flex flex-wrap items-center gap-2.5">
+                  {fieldFilters.map((ff) => (
+                    <button
+                      key={ff.id}
+                      type="button"
+                      onClick={() => setSelectedField(ff.id)}
+                      className={`rounded-xl px-4.5 py-2.5 text-xs sm:text-sm font-extrabold transition-all duration-200 active:scale-[0.98] ${
+                        selectedField === ff.id
+                          ? "bg-blue-600 text-white shadow-sm ring-1 ring-blue-600"
+                          : "border border-blue-200/80 bg-blue-50/50 text-slate-700 hover:bg-blue-100/70 hover:text-blue-800"
+                      }`}
+                    >
+                      {ff.label}
+                    </button>
+                  ))}
                 </div>
 
-                <div className="text-xs sm:text-sm font-extrabold text-slate-600">
-                  <span className="text-blue-700">
-                    {filteredOpportunities.length}
-                  </span>{" "}
-                  {t.resultsCount}
+                {/* Status filter dropdown and count */}
+                <div className="mt-4 flex flex-col items-start justify-between gap-4 border-t border-blue-100 pt-4 sm:flex-row sm:items-center">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <select
+                      value={selectedStatus}
+                      onChange={(e) => setSelectedStatus(e.target.value)}
+                      aria-label={t.statusFilter}
+                      className="h-10 rounded-xl border border-blue-200 bg-white px-3 text-xs sm:text-sm font-bold text-slate-700 shadow-xs outline-none transition focus:border-blue-400"
+                    >
+                      <option value="all">{t.allStatus}</option>
+                      <option value="open">{t.openStatus}</option>
+                      <option value="draft">{t.draftStatus}</option>
+                    </select>
+                  </div>
+
+                  <div className="text-xs sm:text-sm font-extrabold text-slate-600">
+                    <span className="text-blue-700">
+                      {filteredOpportunities.length}
+                    </span>{" "}
+                    {t.resultsCount}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Opportunities List / Cards */}
             <div className="mt-8 space-y-6">
@@ -382,170 +395,179 @@ export function GuestOpportunitiesV2() {
                 const isOpen = opp.state === "PUBLISHED";
 
                 return (
-                  <article
+                  <Reveal
                     key={opp.id}
-                    className="group rounded-3xl border border-blue-200/90 bg-white/95 p-6 sm:p-8 shadow-[0_16px_40px_-32px_rgba(37,99,235,.45)] transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-[0_24px_50px_-28px_rgba(37,99,235,.6)]"
+                    y={14}
+                    delay={Math.min(filteredOpportunities.indexOf(opp) * 0.06, 0.36)}
                   >
-                    <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                      <div className="max-w-4xl min-w-0 flex-1">
-                        {/* Top Badges */}
-                        <div className="flex flex-wrap items-center gap-2.5">
-                          <span
-                            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-black ${
-                              isOpen
-                                ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                                : "bg-amber-50 text-amber-700 border border-amber-200"
-                            }`}
-                          >
+                    <article
+                      className="group rounded-3xl border border-blue-200/90 bg-white/95 p-6 sm:p-8 shadow-[0_16px_40px_-32px_rgba(37,99,235,.45)] transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-[0_24px_50px_-28px_rgba(37,99,235,.6)]"
+                    >
+                      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                        <div className="max-w-4xl min-w-0 flex-1">
+                          {/* Top Badges */}
+                          <div className="flex flex-wrap items-center gap-2.5">
                             <span
-                              className={`size-2 rounded-full ${isOpen ? "bg-emerald-500" : "bg-amber-500"}`}
-                            />
-                            {isOpen ? t.openStatus : t.draftStatus}
-                          </span>
-
-                          <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-mono font-bold text-blue-800">
-                            {opp.code}
-                          </span>
-
-                          <span className="rounded-full border border-blue-200/80 bg-slate-100/90 px-3 py-1 text-xs font-bold text-slate-800">
-                            {opp.field}
-                          </span>
-                        </div>
-
-                        {/* Title */}
-                        <h2 className="mt-3.5 text-2xl sm:text-3xl font-black text-slate-950 transition group-hover:text-blue-700">
-                          {opp.title}
-                        </h2>
-
-                        {/* Summary */}
-                        <p className="mt-3 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
-                          {opp.summary}
-                        </p>
-
-                        {/* Scope & Partner Requirement */}
-                        {opp.eligiblePartners && (
-                          <div className="mt-4 rounded-xl bg-blue-50/70 p-3.5 text-xs sm:text-sm text-slate-700">
-                            <strong className="font-bold text-slate-900">
-                              {t.eligibleLabel}
-                            </strong>{" "}
-                            {opp.eligiblePartners}
-                          </div>
-                        )}
-
-                        {/* Topics */}
-                        {opp.topics && (
-                          <div className="mt-4 flex flex-wrap gap-2">
-                            {opp.topics.map((topic) => (
+                              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-black ${
+                                isOpen
+                                  ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                  : "bg-amber-50 text-amber-700 border border-amber-200"
+                              }`}
+                            >
                               <span
-                                key={topic}
-                                className="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700"
-                              >
-                                #{topic}
-                              </span>
-                            ))}
+                                className={`size-2 rounded-full ${isOpen ? "bg-emerald-500" : "bg-amber-500"}`}
+                              />
+                              {isOpen ? t.openStatus : t.draftStatus}
+                            </span>
+
+                            <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-mono font-bold text-blue-800">
+                              {opp.code}
+                            </span>
+
+                            <span className="rounded-full border border-blue-200/80 bg-slate-100/90 px-3 py-1 text-xs font-bold text-slate-800">
+                              {opp.field}
+                            </span>
                           </div>
-                        )}
-                      </div>
 
-                      {/* Right Meta & Actions */}
-                      <div className="flex shrink-0 flex-col items-start gap-4 border-t border-blue-100 pt-5 lg:w-72 lg:items-end lg:border-t-0 lg:pt-0">
-                        <div className="text-xs sm:text-sm font-semibold text-slate-600 lg:text-right">
-                          <span className="block text-xs font-bold uppercase tracking-wider text-slate-400">
-                            {t.deadlineLabel}
-                          </span>
-                          <strong className="mt-1 block text-base font-black text-slate-900">
-                            {opp.closes}
-                          </strong>
+                          {/* Title */}
+                          <h2 className="mt-3.5 text-2xl sm:text-3xl font-black text-slate-950 transition group-hover:text-blue-700">
+                            {opp.title}
+                          </h2>
+
+                          {/* Summary */}
+                          <p className="mt-3 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
+                            {opp.summary}
+                          </p>
+
+                          {/* Scope & Partner Requirement */}
+                          {opp.eligiblePartners && (
+                            <div className="mt-4 rounded-xl bg-blue-50/70 p-3.5 text-xs sm:text-sm text-slate-700">
+                              <strong className="font-bold text-slate-900">
+                                {t.eligibleLabel}
+                              </strong>{" "}
+                              {opp.eligiblePartners}
+                            </div>
+                          )}
+
+                          {/* Topics */}
+                          {opp.topics && (
+                            <div className="mt-4 flex flex-wrap gap-2">
+                              {opp.topics.map((topic) => (
+                                <span
+                                  key={topic}
+                                  className="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700"
+                                >
+                                  #{topic}
+                                </span>
+                              ))}
+                            </div>
+                          )}
                         </div>
 
-                        <div className="flex w-full flex-col gap-2.5 sm:flex-row lg:flex-col">
-                          <Link
-                            href="/login"
-                            className="inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-bold text-white shadow-xs transition hover:bg-blue-700"
-                          >
-                            {t.applyNow} →
-                          </Link>
-                          <Link
-                            href="/experts"
-                            className="inline-flex min-h-11 items-center justify-center rounded-xl border border-blue-200 bg-white px-5 text-sm font-bold text-blue-700 shadow-xs transition hover:bg-blue-50"
-                          >
-                            {t.findExperts}
-                          </Link>
+                        {/* Right Meta & Actions */}
+                        <div className="flex shrink-0 flex-col items-start gap-4 border-t border-blue-100 pt-5 lg:w-72 lg:items-end lg:border-t-0 lg:pt-0">
+                          <div className="text-xs sm:text-sm font-semibold text-slate-600 lg:text-right">
+                            <span className="block text-xs font-bold uppercase tracking-wider text-slate-400">
+                              {t.deadlineLabel}
+                            </span>
+                            <strong className="mt-1 block text-base font-black text-slate-900">
+                              {opp.closes}
+                            </strong>
+                          </div>
+
+                          <div className="flex w-full flex-col gap-2.5 sm:flex-row lg:flex-col">
+                            <Link
+                              href="/login"
+                              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-bold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.98]"
+                            >
+                              {t.applyNow} →
+                            </Link>
+                            <Link
+                              href="/experts"
+                              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-blue-200 bg-white px-5 text-sm font-bold text-blue-700 shadow-xs transition hover:bg-blue-50 active:scale-[0.98]"
+                            >
+                              {t.findExperts}
+                            </Link>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </article>
+                    </article>
+                  </Reveal>
                 );
               })}
             </div>
 
             {/* How Bilateral Collaboration Works */}
-            <div className="mt-16 rounded-3xl border border-blue-200/90 bg-gradient-to-b from-[#e0efff] to-[#eff6ff] p-8 sm:p-12 shadow-[0_20px_50px_-32px_rgba(37,99,235,.4)]">
-              <div className="max-w-3xl">
-                <span className="text-xs sm:text-[13px] font-black uppercase tracking-wider text-blue-800">
-                  ✦ Quy trình hợp tác song phương
-                </span>
-                <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black text-slate-950">
-                  {t.howItWorksTitle}
-                </h2>
-                <p className="mt-3 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
-                  {t.howItWorksDesc}
-                </p>
-              </div>
+            <Reveal y={14}>
+              <div className="mt-16 rounded-3xl border border-blue-200/90 bg-gradient-to-b from-[#e0efff] to-[#eff6ff] p-8 sm:p-12 shadow-[0_20px_50px_-32px_rgba(37,99,235,.4)]">
+                <div className="max-w-3xl">
+                  <span className="text-xs sm:text-[13px] font-black uppercase tracking-wider text-blue-800">
+                    ✦ Quy trình hợp tác song phương
+                  </span>
+                  <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black text-slate-950">
+                    {t.howItWorksTitle}
+                  </h2>
+                  <p className="mt-3 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
+                    {t.howItWorksDesc}
+                  </p>
+                </div>
 
-              <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                {[
-                  { title: t.step1Title, desc: t.step1Desc },
-                  { title: t.step2Title, desc: t.step2Desc },
-                  { title: t.step3Title, desc: t.step3Desc },
-                  { title: t.step4Title, desc: t.step4Desc },
-                ].map((step, idx) => (
-                  <div
-                    key={step.title}
-                    className="rounded-2xl border border-blue-200/80 bg-white/95 p-6 shadow-xs"
-                  >
-                    <span className="grid size-10 place-items-center rounded-xl bg-blue-600 text-sm font-black text-white">
-                      0{idx + 1}
-                    </span>
-                    <h3 className="mt-4 text-base sm:text-lg font-black text-slate-950">
-                      {step.title}
-                    </h3>
-                    <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-700 font-normal">
-                      {step.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* CTA Box */}
-            <div className="mt-12 rounded-3xl border border-blue-300 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 p-8 sm:p-12 text-white shadow-[0_24px_50px_-24px_rgba(37,99,235,.8)]">
-              <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-                <span className="rounded-full border border-blue-300/40 bg-white/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-blue-100">
-                  ✦ Mở rộng mạng lưới hợp tác
-                </span>
-                <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
-                  {t.ctaTitle}
-                </h2>
-                <p className="mt-3.5 max-w-2xl text-base sm:text-lg leading-relaxed text-blue-100 font-normal">
-                  {t.ctaDesc}
-                </p>
-                <div className="mt-8 flex flex-wrap justify-center gap-4">
-                  <Link
-                    href="/login"
-                    className="inline-flex min-h-12 items-center rounded-xl bg-white px-7 text-sm sm:text-base font-extrabold text-blue-700 shadow-md transition hover:-translate-y-0.5 hover:bg-blue-50"
-                  >
-                    {t.ctaBtn}
-                  </Link>
-                  <Link
-                    href="/knowledge"
-                    className="inline-flex min-h-12 items-center rounded-xl border border-white/30 bg-white/10 px-6 text-sm sm:text-base font-bold text-white transition hover:bg-white/20"
-                  >
-                    Khám phá kho tri thức
-                  </Link>
+                <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                  {[
+                    { title: t.step1Title, desc: t.step1Desc },
+                    { title: t.step2Title, desc: t.step2Desc },
+                    { title: t.step3Title, desc: t.step3Desc },
+                    { title: t.step4Title, desc: t.step4Desc },
+                  ].map((step, idx) => (
+                    <div
+                      key={step.title}
+                      className="rounded-2xl border border-blue-200/80 bg-white/95 p-6 shadow-xs"
+                    >
+                      <span className="grid size-10 place-items-center rounded-xl bg-blue-600 text-sm font-black text-white">
+                        0{idx + 1}
+                      </span>
+                      <h3 className="mt-4 text-base sm:text-lg font-black text-slate-950">
+                        {step.title}
+                      </h3>
+                      <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-700 font-normal">
+                        {step.desc}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            </Reveal>
+
+            {/* CTA Box */}
+            <Reveal y={14}>
+              <div className="mt-12 rounded-3xl border border-blue-300 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 p-8 sm:p-12 text-white shadow-[0_24px_50px_-24px_rgba(37,99,235,.8)]">
+                <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+                  <span className="rounded-full border border-blue-300/40 bg-white/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-blue-100">
+                    ✦ Mở rộng mạng lưới hợp tác
+                  </span>
+                  <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
+                    {t.ctaTitle}
+                  </h2>
+                  <p className="mt-3.5 max-w-2xl text-base sm:text-lg leading-relaxed text-blue-100 font-normal">
+                    {t.ctaDesc}
+                  </p>
+                  <div className="mt-8 flex flex-wrap justify-center gap-4">
+                    <Link
+                      href="/login"
+                      className="inline-flex min-h-12 items-center rounded-xl bg-white px-7 text-sm sm:text-base font-extrabold text-blue-700 shadow-md transition hover:-translate-y-0.5 hover:bg-blue-50 active:scale-[0.98]"
+                    >
+                      {t.ctaBtn}
+                    </Link>
+                    <Link
+                      href="/knowledge"
+                      className="inline-flex min-h-12 items-center rounded-xl border border-white/30 bg-white/10 px-6 text-sm sm:text-base font-bold text-white transition hover:bg-white/20 active:scale-[0.98]"
+                    >
+                      Khám phá kho tri thức
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
       </main>
@@ -555,7 +577,8 @@ export function GuestOpportunitiesV2() {
         id="contact"
         className="scroll-mt-24 border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700"
       >
-        <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
+        <Reveal y={12}>
+          <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-12">
             <div className="xl:col-span-4">
               <Link
@@ -704,7 +727,8 @@ export function GuestOpportunitiesV2() {
             </div>
           </div>
         </div>
-      </footer>
+      </Reveal>
+    </footer>
     </div>,
     locale,
     PUBLIC_STATIC_TRANSLATIONS,

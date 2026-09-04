@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useLocale, type Locale } from "@/core/i18n/locale";
+import { Reveal } from "@/components/shared/Reveal";
 
 const MEDIA_COPY: Record<
   Locale,
@@ -296,38 +296,11 @@ function RevealItem({
   className?: string;
   delay?: number;
 }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [ref, setRef] = useState<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!ref) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -20px 0px" },
-    );
-
-    observer.observe(ref);
-    return () => observer.disconnect();
-  }, [ref]);
-
+  const delaySec = delay > 1 ? delay / 1000 : delay;
   return (
-    <div
-      ref={setRef}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-out ${
-        isVisible
-          ? "opacity-100 translate-y-0 scale-100"
-          : "opacity-0 translate-y-6 scale-[0.98]"
-      } ${className}`}
-    >
+    <Reveal delay={delaySec} className={className} y={24} duration={0.75}>
       {children}
-    </div>
+    </Reveal>
   );
 }
 

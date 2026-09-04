@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { BrandMark } from "@/components/shared/BrandMark";
+import { Reveal } from "@/components/shared/Reveal";
 
 const SUPPORT_EMAIL = "info@fonddruzhba.ru";
 
@@ -40,7 +41,7 @@ export function GuestPublicFooter({
 }: Readonly<{ copy: GuestPublicFooterCopy }>) {
   return (
     <footer className="border-t border-blue-200/90 bg-[#e3eefc] pt-14 pb-10 text-slate-700">
-      <div className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
+      <Reveal y={12} className="mx-auto max-w-[1460px] px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-12">
           <div className="xl:col-span-4">
             <Link
@@ -171,7 +172,7 @@ export function GuestPublicFooter({
             </Link>
           </div>
         </div>
-      </div>
+      </Reveal>
     </footer>
   );
 }

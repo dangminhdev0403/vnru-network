@@ -9,6 +9,7 @@ import { EXPERTS, type Expert } from "@/features/public-discovery/mock-data";
 import { HOME_COPY } from "./GuestHomeV2";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
+import { Reveal } from "@/components/shared/Reveal";
 
 const COPY: Record<
   Locale,
@@ -194,55 +195,65 @@ export function GuestExpertsV2() {
           />
           <div className="relative mx-auto max-w-[1460px]">
             <div className="max-w-4xl">
-              <span className="inline-flex items-center gap-2 rounded-full border border-blue-300/80 bg-blue-100/90 px-4 py-2 text-xs sm:text-[13px] font-black uppercase tracking-[0.1em] text-blue-800">
-                ✦ {t.kicker}
-              </span>
-              <h1 className="mt-6 text-balance text-4xl font-black leading-[1.08] tracking-[-0.04em] text-slate-950 sm:text-5xl md:text-6xl lg:text-[62px] xl:text-[68px]">
-                {t.title1}
-                <br />
-                <span className="text-blue-600">{t.title2}</span>
-              </h1>
-              <p className="mt-6 max-w-3xl text-base sm:text-lg md:text-[19px] font-normal leading-relaxed text-slate-700">
-                {t.intro}
-              </p>
+              <Reveal y={10} delay={0.05}>
+                <span className="inline-flex items-center gap-2 rounded-full border border-blue-300/80 bg-blue-100/90 px-4 py-2 text-xs sm:text-[13px] font-black uppercase tracking-[0.1em] text-blue-800">
+                  ✦ {t.kicker}
+                </span>
+              </Reveal>
+              <Reveal y={14} delay={0.12}>
+                <h1 className="mt-6 text-balance text-4xl font-black leading-[1.08] tracking-[-0.04em] text-slate-950 sm:text-5xl md:text-6xl lg:text-[62px] xl:text-[68px]">
+                  {t.title1}
+                  <br />
+                  <span className="text-blue-600">{t.title2}</span>
+                </h1>
+              </Reveal>
+              <Reveal y={12} delay={0.18}>
+                <p className="mt-6 max-w-3xl text-base sm:text-lg md:text-[19px] font-normal leading-relaxed text-slate-700">
+                  {t.intro}
+                </p>
+              </Reveal>
 
               {/* Search Bar */}
-              <div className="mt-8 flex max-w-3xl flex-col gap-3 sm:flex-row">
-                <div className="flex min-h-13 flex-1 items-center gap-3 rounded-xl border border-blue-300/80 bg-white/95 px-4.5 shadow-sm focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200">
-                  <span className="text-lg font-bold text-blue-600">⌕</span>
-                  <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder={t.searchPlaceholder}
-                    className="min-w-0 flex-1 bg-transparent text-sm sm:text-base font-semibold text-slate-900 outline-none placeholder:text-slate-400"
-                  />
-                  {query && (
-                    <button
-                      type="button"
-                      onClick={() => setQuery("")}
-                      className="text-xs font-bold text-slate-400 hover:text-slate-600"
-                    >
-                      ✕
-                    </button>
-                  )}
+              <Reveal y={12} delay={0.24}>
+                <div className="mt-8 flex max-w-3xl flex-col gap-3 sm:flex-row">
+                  <div className="flex min-h-13 flex-1 items-center gap-3 rounded-xl border border-blue-300/80 bg-white/95 px-4.5 shadow-sm focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200">
+                    <span className="text-lg font-bold text-blue-600">⌕</span>
+                    <input
+                      type="text"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder={t.searchPlaceholder}
+                      className="min-w-0 flex-1 bg-transparent text-sm sm:text-base font-semibold text-slate-900 outline-none placeholder:text-slate-400"
+                    />
+                    {query && (
+                      <button
+                        type="button"
+                        onClick={() => setQuery("")}
+                        className="text-xs font-bold text-slate-400 hover:text-slate-600"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    className="inline-flex min-h-13 items-center justify-center rounded-xl bg-blue-600 px-7 text-sm sm:text-base font-bold text-white shadow-[0_12px_28px_-12px_rgba(37,99,235,.85)] transition hover:-translate-y-0.5 hover:bg-blue-700 active:scale-[0.98]"
+                  >
+                    {t.searchBtn}
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="inline-flex min-h-13 items-center justify-center rounded-xl bg-blue-600 px-7 text-sm sm:text-base font-bold text-white shadow-[0_12px_28px_-12px_rgba(37,99,235,.85)] transition hover:-translate-y-0.5 hover:bg-blue-700"
-                >
-                  {t.searchBtn}
-                </button>
-              </div>
+              </Reveal>
 
               {/* Quick stats pills */}
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm md:text-[15px] font-bold text-slate-700">
-                {t.stats.map((stat, index) => (
-                  <span key={stat} className="inline-flex items-center gap-2">
-                    <b className="text-base text-blue-600">{["◉", "◎", "◇", "✦"][index]}</b> {stat}
-                  </span>
-                ))}
-              </div>
+              <Reveal y={10} delay={0.3}>
+                <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm md:text-[15px] font-bold text-slate-700">
+                  {t.stats.map((stat, index) => (
+                    <span key={stat} className="inline-flex items-center gap-2">
+                      <b className="text-base text-blue-600">{["◉", "◎", "◇", "✦"][index]}</b> {stat}
+                    </span>
+                  ))}
+                </div>
+              </Reveal>
             </div>
           </div>
         </section>
@@ -251,146 +262,158 @@ export function GuestExpertsV2() {
         <section className="px-4 py-12 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1460px]">
             {/* Filter Bar */}
-            <div className="flex flex-col gap-4 rounded-2xl border border-blue-200/80 bg-white/90 p-4.5 shadow-[0_16px_40px_-32px_rgba(37,99,235,.4)] sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex flex-wrap gap-2.5">
-                {[
-                  ["all", t.allCountries],
-                  ["VN", t.vietnam],
-                  ["RU", t.russia],
-                ].map(([id, label]) => (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => setCountry(id as "all" | "VN" | "RU")}
-                    className={`rounded-xl px-5 py-2.5 text-xs sm:text-sm font-extrabold transition-all duration-200 ${
-                      country === id
-                        ? "bg-blue-600 text-white shadow-sm ring-1 ring-blue-600"
-                        : "border border-blue-200/80 bg-blue-50/50 text-slate-700 hover:bg-blue-100/70 hover:text-blue-800"
-                    }`}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
+            <Reveal y={10}>
+              <div className="flex flex-col gap-4 rounded-2xl border border-blue-200/80 bg-white/90 p-4.5 shadow-[0_16px_40px_-32px_rgba(37,99,235,.4)] sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-wrap gap-2.5">
+                  {[
+                    ["all", t.allCountries],
+                    ["VN", t.vietnam],
+                    ["RU", t.russia],
+                  ].map(([id, label]) => (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => setCountry(id as "all" | "VN" | "RU")}
+                      className={`rounded-xl px-5 py-2.5 text-xs sm:text-sm font-extrabold transition-all duration-200 active:scale-[0.98] ${
+                        country === id
+                          ? "bg-blue-600 text-white shadow-sm ring-1 ring-blue-600"
+                          : "border border-blue-200/80 bg-blue-50/50 text-slate-700 hover:bg-blue-100/70 hover:text-blue-800"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
 
-              <div className="text-xs sm:text-sm font-extrabold text-slate-600">
-                <span className="text-blue-700">{filtered.length}</span>{" "}
-                {t.resultsCount}
+                <div className="text-xs sm:text-sm font-extrabold text-slate-600">
+                  <span className="text-blue-700">{filtered.length}</span>{" "}
+                  {t.resultsCount}
+                </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Experts Grid */}
             <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {filtered.map((expert) => {
                 const copy = expert.copy[locale];
                 return (
-                  <article
+                  <Reveal
                     key={expert.id}
-                    className="group flex flex-col justify-between rounded-3xl border border-blue-200/90 bg-white/95 p-6 sm:p-7 shadow-[0_16px_40px_-32px_rgba(37,99,235,.45)] transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-[0_24px_50px_-28px_rgba(37,99,235,.6)]"
+                    y={14}
+                    delay={Math.min(filtered.indexOf(expert) * 0.06, 0.36)}
+                    className="h-full"
                   >
-                    <div>
-                      {/* Avatar & Header */}
-                      <div className="flex items-start gap-4">
-                        <div className="grid size-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-blue-100 to-blue-300 text-base font-black text-blue-800 shadow-xs ring-4 ring-blue-50">
-                          {expert.initials}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-1.5">
-                            <h2 className="truncate text-lg sm:text-xl font-black text-slate-950 transition group-hover:text-blue-700">
-                              {expert.name}
-                            </h2>
-                            <span className="text-blue-600">●</span>
+                    <article
+                      className="group flex h-full flex-col justify-between rounded-3xl border border-blue-200/90 bg-white/95 p-6 sm:p-7 shadow-[0_16px_40px_-32px_rgba(37,99,235,.45)] transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-[0_24px_50px_-28px_rgba(37,99,235,.6)]"
+                    >
+                      <div>
+                        {/* Avatar & Header */}
+                        <div className="flex items-start gap-4">
+                          <div className="grid size-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-blue-100 to-blue-300 text-base font-black text-blue-800 shadow-xs ring-4 ring-blue-50">
+                            {expert.initials}
                           </div>
-                          <p className="mt-1 text-xs sm:text-sm font-bold text-blue-700">
-                            {expert.country === "VN"
-                              ? t.vietnameseResearcher
-                              : t.russianProfessor}
-                          </p>
-                          <p className="mt-0.5 line-clamp-1 text-xs text-slate-500 font-medium">
-                            {expert.institution}
-                          </p>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-1.5">
+                              <h2 className="truncate text-lg sm:text-xl font-black text-slate-950 transition group-hover:text-blue-700">
+                                {expert.name}
+                              </h2>
+                              <span className="text-blue-600">●</span>
+                            </div>
+                            <p className="mt-1 text-xs sm:text-sm font-bold text-blue-700">
+                              {expert.country === "VN"
+                                ? t.vietnameseResearcher
+                                : t.russianProfessor}
+                            </p>
+                            <p className="mt-0.5 line-clamp-1 text-xs text-slate-500 font-medium">
+                              {expert.institution}
+                            </p>
+                          </div>
                         </div>
+
+                        {/* Topic Tags */}
+                        <div className="mt-4 flex flex-wrap gap-1.5">
+                          {expert.topics.slice(0, 3).map((topic) => (
+                            <span
+                              key={topic}
+                              className="rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-slate-700"
+                            >
+                              #{topic}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Bio snippet */}
+                        <p className="mt-4 line-clamp-3 text-sm sm:text-base leading-relaxed text-slate-700 font-normal">
+                          {copy.bio}
+                        </p>
                       </div>
 
-                      {/* Topic Tags */}
-                      <div className="mt-4 flex flex-wrap gap-1.5">
-                        {expert.topics.slice(0, 3).map((topic) => (
-                          <span
-                            key={topic}
-                            className="rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-slate-700"
-                          >
-                            #{topic}
+                      <div>
+                        {/* Meta stats */}
+                        <div className="mt-5 grid grid-cols-2 gap-2 border-y border-blue-100 py-3 text-xs font-extrabold text-slate-600">
+                          <span>
+                            ▣ {18 + expert.publications.length * 4}{" "}
+                            {t.projectsCount}
                           </span>
-                        ))}
+                          <span>
+                            □ {expert.publications.length * 16 + 24}{" "}
+                            {t.publicationsCount}
+                          </span>
+                        </div>
+
+                        {/* View Profile Button (Opens Modal) */}
+                        <button
+                          type="button"
+                          onClick={() => setSelectedExpert(expert)}
+                          className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-blue-600 text-xs sm:text-sm font-extrabold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.98]"
+                        >
+                          {t.viewProfile}
+                        </button>
                       </div>
-
-                      {/* Bio snippet */}
-                      <p className="mt-4 line-clamp-3 text-sm sm:text-base leading-relaxed text-slate-700 font-normal">
-                        {copy.bio}
-                      </p>
-                    </div>
-
-                    <div>
-                      {/* Meta stats */}
-                      <div className="mt-5 grid grid-cols-2 gap-2 border-y border-blue-100 py-3 text-xs font-extrabold text-slate-600">
-                        <span>
-                          ▣ {18 + expert.publications.length * 4}{" "}
-                          {t.projectsCount}
-                        </span>
-                        <span>
-                          □ {expert.publications.length * 16 + 24}{" "}
-                          {t.publicationsCount}
-                        </span>
-                      </div>
-
-                      {/* View Profile Button (Opens Modal) */}
-                      <button
-                        type="button"
-                        onClick={() => setSelectedExpert(expert)}
-                        className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-blue-600 text-xs sm:text-sm font-extrabold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.99]"
-                      >
-                        {t.viewProfile}
-                      </button>
-                    </div>
-                  </article>
+                    </article>
+                  </Reveal>
                 );
               })}
             </div>
 
             {filtered.length === 0 && (
-              <div className="mt-8 rounded-3xl border border-dashed border-blue-300 bg-white/90 p-12 text-center text-sm sm:text-base font-semibold text-slate-600">
-                {t.noResults}
-              </div>
+              <Reveal y={12}>
+                <div className="mt-8 rounded-3xl border border-dashed border-blue-300 bg-white/90 p-12 text-center text-sm sm:text-base font-semibold text-slate-600">
+                  {t.noResults}
+                </div>
+              </Reveal>
             )}
 
             {/* CTA Box */}
-            <div className="mt-14 rounded-3xl border border-blue-300 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 p-8 sm:p-12 text-white shadow-[0_24px_50px_-24px_rgba(37,99,235,.8)]">
-              <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-                <span className="rounded-full border border-blue-300/40 bg-white/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-blue-100">
-                  ✦ {t.joinKicker}
-                </span>
-                <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
-                  {t.ctaTitle}
-                </h2>
-                <p className="mt-3.5 max-w-2xl text-base sm:text-lg leading-relaxed text-blue-100 font-normal">
-                  {t.ctaDesc}
-                </p>
-                <div className="mt-8 flex flex-wrap justify-center gap-4">
-                  <Link
-                    href="/login"
-                    className="inline-flex min-h-12 items-center rounded-xl bg-white px-7 text-sm sm:text-base font-extrabold text-blue-700 shadow-md transition hover:-translate-y-0.5 hover:bg-blue-50"
-                  >
-                    {t.ctaBtn}
-                  </Link>
-                  <Link
-                    href="/opportunities"
-                    className="inline-flex min-h-12 items-center rounded-xl border border-white/30 bg-white/10 px-6 text-sm sm:text-base font-bold text-white transition hover:bg-white/20"
-                  >
-                    {t.opportunitiesBtn}
-                  </Link>
+            <Reveal y={14}>
+              <div className="mt-14 rounded-3xl border border-blue-300 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 p-8 sm:p-12 text-white shadow-[0_24px_50px_-24px_rgba(37,99,235,.8)]">
+                <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+                  <span className="rounded-full border border-blue-300/40 bg-white/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-blue-100">
+                    ✦ {t.joinKicker}
+                  </span>
+                  <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
+                    {t.ctaTitle}
+                  </h2>
+                  <p className="mt-3.5 max-w-2xl text-base sm:text-lg leading-relaxed text-blue-100 font-normal">
+                    {t.ctaDesc}
+                  </p>
+                  <div className="mt-8 flex flex-wrap justify-center gap-4">
+                    <Link
+                      href="/login"
+                      className="inline-flex min-h-12 items-center rounded-xl bg-white px-7 text-sm sm:text-base font-extrabold text-blue-700 shadow-md transition hover:-translate-y-0.5 hover:bg-blue-50 active:scale-[0.98]"
+                    >
+                      {t.ctaBtn}
+                    </Link>
+                    <Link
+                      href="/opportunities"
+                      className="inline-flex min-h-12 items-center rounded-xl border border-white/30 bg-white/10 px-6 text-sm sm:text-base font-bold text-white transition hover:bg-white/20 active:scale-[0.98]"
+                    >
+                      {t.opportunitiesBtn}
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
       </main>

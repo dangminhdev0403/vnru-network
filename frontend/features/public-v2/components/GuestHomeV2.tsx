@@ -1920,52 +1920,56 @@ export function GuestHomeV2({
           />
           <div className="mx-auto flex min-h-[560px] max-w-[1460px] items-center px-4 py-12 sm:min-h-[620px] sm:px-6 sm:py-16 lg:px-8">
             <div className="mr-auto w-full max-w-[760px] text-left">
-              <div className="mb-4 inline-flex max-w-full items-center gap-2 rounded-full border border-amber-400/80 bg-black/20 px-3.5 py-1.5 text-xs font-bold text-amber-300 sm:mb-5 sm:px-4 sm:text-sm">
-                <span
-                  className="size-2 shrink-0 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)]"
-                  aria-hidden="true"
-                />
-                <span>{t.eyebrow}</span>
-              </div>
+              <Reveal y={28} delay={0.05} duration={0.9}>
+                <div className="mb-4 inline-flex max-w-full items-center gap-2 rounded-full border border-amber-400/80 bg-black/20 px-3.5 py-1.5 text-xs font-bold text-amber-300 sm:mb-5 sm:px-4 sm:text-sm">
+                  <span
+                    className="size-2 shrink-0 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)]"
+                    aria-hidden="true"
+                  />
+                  <span>{t.eyebrow}</span>
+                </div>
+              </Reveal>
 
-              <h1
-                aria-label={`${t.titleMain} ${t.country1} ${t.hyphen} ${t.country2}`}
-                className="overflow-visible font-sans font-extrabold leading-[1.15] text-slate-200 drop-shadow-[0_3px_12px_rgba(0,0,0,0.38)]"
-              >
-                {locale === "ru" ? (
-                  <>
-                    <span className="block bg-gradient-to-r from-white via-blue-300 to-red-500 bg-clip-text text-2xl text-transparent sm:text-4xl lg:text-[44px]">
-                      РОССИЙСКО-
-                    </span>
-                    <span className="block bg-gradient-to-r from-red-500 via-red-400 to-amber-300 bg-clip-text text-2xl text-transparent sm:text-4xl lg:text-[44px]">
-                      ВЬЕТНАМСКАЯ
-                    </span>
-                    <span className="block text-2xl sm:text-4xl lg:text-[44px]">
-                      ИНТЕЛЛЕКТУАЛЬНАЯ
-                    </span>
-                    <span className="block text-2xl sm:text-4xl lg:text-[44px]">
-                      СЕТЬ
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <span className="block text-2xl sm:text-4xl lg:text-[44px]">
-                      {t.titleMain}
-                    </span>
-                    <span className="flex w-fit items-center justify-start gap-x-3 overflow-visible pb-1 pt-0 text-3xl leading-[1.15] sm:gap-x-5 sm:text-5xl lg:text-[68px]">
-                      <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text pb-1 pt-0 leading-[1.2] text-transparent">
-                        {t.country1}
+              <Reveal y={44} delay={0.18} duration={1.0}>
+                <h1
+                  aria-label={`${t.titleMain} ${t.country1} ${t.hyphen} ${t.country2}`}
+                  className="overflow-visible font-sans font-extrabold leading-[1.15] text-slate-200 drop-shadow-[0_3px_12px_rgba(0,0,0,0.38)]"
+                >
+                  {locale === "ru" ? (
+                    <>
+                      <span className="block bg-gradient-to-r from-white via-blue-300 to-red-500 bg-clip-text text-2xl text-transparent sm:text-4xl lg:text-[44px]">
+                        РОССИЙСКО-
                       </span>
-                      <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-medium text-transparent">
-                        {t.hyphen}
+                      <span className="block bg-gradient-to-r from-red-500 via-red-400 to-amber-300 bg-clip-text text-2xl text-transparent sm:text-4xl lg:text-[44px]">
+                        ВЬЕТНАМСКАЯ
                       </span>
-                      <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text pb-1 pt-0 leading-[1.2] text-transparent">
-                        {t.country2}
+                      <span className="block text-2xl sm:text-4xl lg:text-[44px]">
+                        ИНТЕЛЛЕКТУАЛЬНАЯ
                       </span>
-                    </span>
-                  </>
-                )}
-              </h1>
+                      <span className="block text-2xl sm:text-4xl lg:text-[44px]">
+                        СЕТЬ
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="block text-2xl sm:text-4xl lg:text-[44px]">
+                        {t.titleMain}
+                      </span>
+                      <span className="flex w-fit items-center justify-start gap-x-3 overflow-visible pb-1 pt-0 text-3xl leading-[1.15] sm:gap-x-5 sm:text-5xl lg:text-[68px]">
+                        <span className="inline-block bg-gradient-to-b from-slate-200 via-blue-300 to-blue-600 bg-clip-text pb-1 pt-0 leading-[1.2] text-transparent">
+                          {t.country1}
+                        </span>
+                        <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-medium text-transparent">
+                          {t.hyphen}
+                        </span>
+                        <span className="inline-block bg-gradient-to-b from-slate-200 via-red-300 to-red-600 bg-clip-text pb-1 pt-0 leading-[1.2] text-transparent">
+                          {t.country2}
+                        </span>
+                      </span>
+                    </>
+                  )}
+                </h1>
+              </Reveal>
             </div>
           </div>
         </section>
@@ -1975,7 +1979,8 @@ export function GuestHomeV2({
           <div className="mx-auto max-w-[1460px]">
             {/* Section Header */}
             <Reveal
-              y={10}
+              y={32}
+              duration={0.85}
               className="relative mb-5 flex flex-col items-center justify-between gap-3 sm:mb-6 sm:flex-row"
             >
               <div className="inline-flex items-center gap-2">
@@ -1996,10 +2001,15 @@ export function GuestHomeV2({
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {news.map((item) => {
                 return (
-                  <Reveal key={item.id} y={12}>
+                  <Reveal
+                    key={item.id}
+                    y={54}
+                    delay={news.indexOf(item) * 0.12}
+                    duration={0.95}
+                  >
                     <Link
                       href={newsArticleHref(item)}
-                      className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md hover:shadow-blue-500/10"
+                      className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10"
                     >
                       <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                         <NewsCardImage src={item.image} alt={item.title} />
@@ -2022,7 +2032,8 @@ export function GuestHomeV2({
           <div className="mx-auto max-w-[1460px]">
             {/* Section Header */}
             <Reveal
-              y={10}
+              y={32}
+              duration={0.85}
               className="relative mb-5 flex flex-col items-center justify-between gap-3 sm:mb-6 sm:flex-row"
             >
               <div className="inline-flex items-center gap-2">
@@ -2041,9 +2052,14 @@ export function GuestHomeV2({
 
             {/* 4 Ecosystem Cards Grid */}
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {t.ecosystem.cards.map((card) => (
-                <Reveal key={card.title} y={12}>
-                  <article className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/10">
+              {t.ecosystem.cards.map((card, index) => (
+                <Reveal
+                  key={card.title}
+                  y={54}
+                  delay={index * 0.12}
+                  duration={0.95}
+                >
+                  <article className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10">
                     <div>
                       {/* Top: Circular Orbiting Icon Orb */}
                       <div className="flex items-center">
@@ -2084,7 +2100,8 @@ export function GuestHomeV2({
           <div className="mx-auto max-w-[1460px]">
             {/* Section Header */}
             <Reveal
-              y={10}
+              y={32}
+              duration={0.85}
               className="relative mb-5 flex flex-col items-center justify-between gap-3 sm:flex-row"
             >
               <div className="inline-flex items-center gap-2">
@@ -2105,10 +2122,15 @@ export function GuestHomeV2({
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {events.map((item) => {
                 return (
-                  <Reveal key={item.id} y={12}>
+                  <Reveal
+                    key={item.id}
+                    y={54}
+                    delay={events.indexOf(item) * 0.12}
+                    duration={0.95}
+                  >
                     <Link
                       href={newsArticleHref(item)}
-                      className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                      className="group flex flex-col overflow-hidden rounded-2xl border border-blue-200/80 bg-white/95 shadow-xs transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
                     >
                       <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                         <NewsCardImage src={item.image} alt={item.title} />

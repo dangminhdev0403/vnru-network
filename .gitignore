@@ -49,6 +49,8 @@ graphify-out/cache/
 **/.agy-supervisor/
 .hermes/
 **/.hermes/
+.aider-desk/
+**/.aider-desk/
 __pycache__/
 **/__pycache__/
 *.py[cod]

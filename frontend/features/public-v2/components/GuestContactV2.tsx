@@ -7,6 +7,7 @@ import { useLocale } from "@/core/i18n/locale";
 import { HOME_COPY } from "./GuestHomeV2";
 import { GuestPublicFooter } from "./GuestPublicFooter";
 import { GuestPublicNav } from "./GuestPublicNav";
+import { Reveal } from "@/components/shared/Reveal";
 
 const getContactSchema = (locale: string) => {
   if (locale === "ru") {
@@ -168,202 +169,208 @@ export function GuestContactV2() {
       <main className="flex-1 px-4 pt-10 pb-16 sm:px-6 sm:pt-14 sm:pb-20 lg:px-8">
         <div className="mx-auto max-w-[1460px]">
           {/* Section Header */}
-          <div className="mb-10 text-center sm:mb-12">
-            <div className="inline-flex items-center gap-2.5">
-              <span className="h-1 w-8 rounded-full bg-blue-600" />
-              <h1 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
-                {copy.title}
-              </h1>
-              <span className="h-1 w-8 rounded-full bg-blue-600" />
+          <Reveal y={10}>
+            <div className="mb-10 text-center sm:mb-12">
+              <div className="inline-flex items-center gap-2.5">
+                <span className="h-1 w-8 rounded-full bg-blue-600" />
+                <h1 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+                  {copy.title}
+                </h1>
+                <span className="h-1 w-8 rounded-full bg-blue-600" />
+              </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* 2-Column Grid */}
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Left Column: Contact Information */}
-            <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
-              <div>
-                {/* Card Header */}
+            <Reveal y={14} delay={0.06} className="h-full">
+              <div className="flex h-full flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
                 <div>
-                  <h2 className="text-xl font-black text-slate-900 sm:text-2xl">
-                    {copy.infoTitle}
-                  </h2>
-                  <div className="mt-1.5 h-0.5 w-8 rounded-full bg-blue-600" />
+                  {/* Card Header */}
+                  <div>
+                    <h2 className="text-xl font-black text-slate-900 sm:text-2xl">
+                      {copy.infoTitle}
+                    </h2>
+                    <div className="mt-1.5 h-0.5 w-8 rounded-full bg-blue-600" />
+                  </div>
+
+                  {/* Info Items List */}
+                  <div className="mt-6 flex flex-col justify-between gap-4.5 sm:gap-5">
+                    <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
+                      <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
+                        <span className="material-symbols-outlined text-2xl">
+                          groups
+                        </span>
+                      </span>
+                      <div>
+                        <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
+                          {copy.coordinatorLabel}
+                        </span>
+                        <strong className="mt-1 block text-base font-bold text-slate-900 sm:text-lg">
+                          {copy.coordinatorValue}
+                        </strong>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
+                      <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
+                        <span className="material-symbols-outlined text-2xl">
+                          pin_drop
+                        </span>
+                      </span>
+                      <div>
+                        <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
+                          {copy.addressLabel}
+                        </span>
+                        <span className="mt-1 block text-sm font-semibold leading-relaxed text-slate-800 sm:text-base">
+                          {copy.addressValue}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
+                      <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
+                        <span className="material-symbols-outlined text-2xl">
+                          mail
+                        </span>
+                      </span>
+                      <div>
+                        <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
+                          {copy.supportLabel}
+                        </span>
+                        <a
+                          href={`mailto:${copy.supportValue}`}
+                          className="mt-1 block text-base font-bold text-blue-600 transition hover:text-blue-700 hover:underline sm:text-lg"
+                        >
+                          {copy.supportValue}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
+            </Reveal>
 
-                {/* Info Items List */}
-                <div className="mt-6 flex flex-col justify-between gap-4.5 sm:gap-5">
-                  <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
-                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
-                      <span className="material-symbols-outlined text-2xl">
-                        groups
-                      </span>
-                    </span>
-                    <div>
-                      <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
-                        {copy.coordinatorLabel}
-                      </span>
-                      <strong className="mt-1 block text-base font-bold text-slate-900 sm:text-lg">
-                        {copy.coordinatorValue}
-                      </strong>
-                    </div>
+            {/* Right Column: Contact Form */}
+            <Reveal y={14} delay={0.12} className="h-full">
+              <div className="flex h-full flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
+                <div>
+                  {/* Card Header */}
+                  <div>
+                    <h2 className="text-xl font-black text-slate-900 sm:text-2xl">
+                      {copy.formTitle}
+                    </h2>
+                    <div className="mt-1.5 h-0.5 w-8 rounded-full bg-blue-600" />
                   </div>
 
-                  <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
-                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
-                      <span className="material-symbols-outlined text-2xl">
-                        pin_drop
-                      </span>
-                    </span>
-                    <div>
-                      <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
-                        {copy.addressLabel}
-                      </span>
-                      <span className="mt-1 block text-sm font-semibold leading-relaxed text-slate-800 sm:text-base">
-                        {copy.addressValue}
-                      </span>
+                  {/* Form */}
+                  <form
+                    noValidate
+                    onSubmit={handleSubmit}
+                    className="mt-6 flex flex-col justify-between gap-4"
+                  >
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="block text-sm font-bold text-slate-800 sm:text-base">
+                          {copy.nameLabel}
+                        </label>
+                        <input
+                          type="text"
+                          value={name}
+                          onChange={(e) => {
+                            setName(e.target.value);
+                            if (errors.name) {
+                              setErrors((prev) => ({ ...prev, name: undefined }));
+                            }
+                          }}
+                          placeholder={copy.namePlaceholder}
+                          className={`mt-1.5 w-full rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 focus:bg-white ${
+                            errors.name
+                              ? "border-red-500 bg-red-50/20 focus:border-red-600"
+                              : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
+                          }`}
+                        />
+                        {errors.name ? (
+                          <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
+                            {errors.name}
+                          </p>
+                        ) : null}
+                      </div>
+                      <div>
+                        <label className="block text-sm font-bold text-slate-800 sm:text-base">
+                          {copy.emailLabel}
+                        </label>
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (errors.email) {
+                              setErrors((prev) => ({ ...prev, email: undefined }));
+                            }
+                          }}
+                          placeholder={copy.emailPlaceholder}
+                          className={`mt-1.5 w-full rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 focus:bg-white ${
+                            errors.email
+                              ? "border-red-500 bg-red-50/20 focus:border-red-600"
+                              : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
+                          }`}
+                        />
+                        {errors.email ? (
+                          <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
+                            {errors.email}
+                          </p>
+                        ) : null}
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-start gap-4 rounded-xl bg-blue-50/60 p-4.5 sm:p-5">
-                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-100 text-blue-600 sm:size-12">
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <label className="block text-sm font-bold text-slate-800 sm:text-base">
+                          {copy.messageLabel}
+                        </label>
+                        <span className="text-xs font-semibold text-slate-400">
+                          {message.length}/1000
+                        </span>
+                      </div>
+                      <textarea
+                        rows={6}
+                        maxLength={1000}
+                        value={message}
+                        onChange={(e) => {
+                          setMessage(e.target.value);
+                          if (errors.message) {
+                            setErrors((prev) => ({ ...prev, message: undefined }));
+                          }
+                        }}
+                        placeholder={copy.messagePlaceholder}
+                        className={`mt-1.5 min-h-[160px] w-full resize-y rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 focus:bg-white ${
+                          errors.message
+                            ? "border-red-500 bg-red-50/20 focus:border-red-600"
+                            : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
+                        }`}
+                      />
+                      {errors.message ? (
+                        <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
+                          {errors.message}
+                        </p>
+                      ) : null}
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="mt-1 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 text-base font-bold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.98] sm:py-4 sm:text-lg"
+                    >
                       <span className="material-symbols-outlined text-2xl">
                         mail
                       </span>
-                    </span>
-                    <div>
-                      <span className="block text-xs font-black uppercase tracking-wider text-slate-500 sm:text-[13px]">
-                        {copy.supportLabel}
-                      </span>
-                      <a
-                        href={`mailto:${copy.supportValue}`}
-                        className="mt-1 block text-base font-bold text-blue-600 transition hover:text-blue-700 hover:underline sm:text-lg"
-                      >
-                        {copy.supportValue}
-                      </a>
-                    </div>
-                  </div>
+                      <span>{copy.sendBtn}</span>
+                    </button>
+                  </form>
                 </div>
               </div>
-            </div>
-
-            {/* Right Column: Contact Form */}
-            <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-white/95 p-7 shadow-xs sm:p-9">
-              <div>
-                {/* Card Header */}
-                <div>
-                  <h2 className="text-xl font-black text-slate-900 sm:text-2xl">
-                    {copy.formTitle}
-                  </h2>
-                  <div className="mt-1.5 h-0.5 w-8 rounded-full bg-blue-600" />
-                </div>
-
-                {/* Form */}
-                <form
-                  noValidate
-                  onSubmit={handleSubmit}
-                  className="mt-6 flex flex-col justify-between gap-4"
-                >
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label className="block text-sm font-bold text-slate-800 sm:text-base">
-                        {copy.nameLabel}
-                      </label>
-                      <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => {
-                          setName(e.target.value);
-                          if (errors.name) {
-                            setErrors((prev) => ({ ...prev, name: undefined }));
-                          }
-                        }}
-                        placeholder={copy.namePlaceholder}
-                        className={`mt-1.5 w-full rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 focus:bg-white ${
-                          errors.name
-                            ? "border-red-500 bg-red-50/20 focus:border-red-600"
-                            : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
-                        }`}
-                      />
-                      {errors.name ? (
-                        <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
-                          {errors.name}
-                        </p>
-                      ) : null}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-bold text-slate-800 sm:text-base">
-                        {copy.emailLabel}
-                      </label>
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                          if (errors.email) {
-                            setErrors((prev) => ({ ...prev, email: undefined }));
-                          }
-                        }}
-                        placeholder={copy.emailPlaceholder}
-                        className={`mt-1.5 w-full rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 focus:bg-white ${
-                          errors.email
-                            ? "border-red-500 bg-red-50/20 focus:border-red-600"
-                            : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
-                        }`}
-                      />
-                      {errors.email ? (
-                        <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
-                          {errors.email}
-                        </p>
-                      ) : null}
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <label className="block text-sm font-bold text-slate-800 sm:text-base">
-                        {copy.messageLabel}
-                      </label>
-                      <span className="text-xs font-semibold text-slate-400">
-                        {message.length}/1000
-                      </span>
-                    </div>
-                    <textarea
-                      rows={6}
-                      maxLength={1000}
-                      value={message}
-                      onChange={(e) => {
-                        setMessage(e.target.value);
-                        if (errors.message) {
-                          setErrors((prev) => ({ ...prev, message: undefined }));
-                        }
-                      }}
-                      placeholder={copy.messagePlaceholder}
-                      className={`mt-1.5 min-h-[160px] w-full resize-y rounded-xl border-2 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-colors duration-150 focus:bg-white ${
-                        errors.message
-                          ? "border-red-500 bg-red-50/20 focus:border-red-600"
-                          : "border-slate-200 bg-slate-50/60 focus:border-blue-600"
-                      }`}
-                    />
-                    {errors.message ? (
-                      <p className="mt-1.5 truncate text-xs font-semibold text-red-600">
-                        {errors.message}
-                      </p>
-                    ) : null}
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="mt-1 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 text-base font-bold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.99] sm:py-4 sm:text-lg"
-                  >
-                    <span className="material-symbols-outlined text-2xl">
-                      mail
-                    </span>
-                    <span>{copy.sendBtn}</span>
-                  </button>
-                </form>
-              </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </main>

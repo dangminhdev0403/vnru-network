@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/core/i18n/locale";
 import { localizeReactNode } from "@/core/i18n/localize-react-node";
 import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
@@ -161,7 +161,7 @@ function SmallRow({ item }: { item: NewsItem }) {
         />
       </div>
       <div className="min-w-0 flex-1">
-        <h3 className="line-clamp-2 font-serif text-sm font-bold leading-snug text-[#082352] transition-colors group-hover:text-blue-600 sm:text-[15px]">
+        <h3 className="line-clamp-2 font-serif text-sm font-bold leading-snug text-[#082352] transition-colors group-hover:text-blue-600 sm:text-base">
           {formatNewsTitle(item.title)}
         </h3>
         <p className="mt-0.5 line-clamp-1 text-xs text-slate-500">
@@ -225,6 +225,7 @@ export function GuestExploreV2({
   const featured = featuredArticles;
   const spotlight = featuredArticles;
   const [spotlightIndex, setSpotlightIndex] = useState(0);
+  const isHoveredRef = useRef(false);
   const streamPageCount = Math.ceil(streamTotal / 10);
   const filteredPageCount = Math.ceil(filteredTotal / 10);
 
@@ -255,17 +256,19 @@ export function GuestExploreV2({
   };
 
   useEffect(() => {
-    const timer = window.setInterval(
-      () => changeSpotlight((current) => (current + 1) % spotlight.length),
-      SPOTLIGHT_INTERVAL_MS,
-    );
+    if (spotlight.length <= 1) return;
+    const timer = window.setInterval(() => {
+      if (!isHoveredRef.current) {
+        changeSpotlight((current) => (current + 1) % spotlight.length);
+      }
+    }, SPOTLIGHT_INTERVAL_MS);
     return () => {
       window.clearInterval(timer);
     };
   }, [spotlight.length, spotlightIndex]);
 
   return localizeReactNode(
-    <div className="min-h-screen bg-[#edf3f9] text-slate-900 font-sans selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-[#edf3f9] text-slate-900 font-sans">
       <main className="mx-auto max-w-[1460px] px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
         {!categoryMode ? (
           <>
@@ -274,85 +277,99 @@ export function GuestExploreV2({
                 ════════════════════════════════════════════════════════════════ */}
             <section className="grid gap-6 lg:grid-cols-[1.35fr_.92fr]">
               {/* SPOTLIGHT CAROUSEL CARD */}
-              <article
-                className="relative h-[380px] overflow-hidden rounded-3xl border border-blue-200/90 bg-slate-950 text-white shadow-sm sm:h-[440px] lg:h-[490px]"
-                aria-roledescription="carousel"
-                aria-label={t.spotlight}
-              >
-                <div className="absolute inset-0">
-                  {spotlight.map((item, index) => (
-                    <Link
-                      key={item.title}
-                      href={newsArticleHref(item)}
-                      className={`absolute inset-0 transition-opacity duration-300 motion-reduce:transition-none ${
-                        index === spotlightIndex
-                          ? "z-10 opacity-100"
-                          : "pointer-events-none opacity-0"
-                      }`}
-                      aria-hidden={index !== spotlightIndex}
-                      tabIndex={index === spotlightIndex ? 0 : -1}
-                    >
-                      <NewsImage
-                        src={item.image ?? undefined}
-                        label="Ảnh bài viết nổi bật"
-                        className="absolute inset-0 h-full w-full rounded-none"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent" />
-                      <div className="absolute inset-x-0 bottom-0 z-10 p-6 pb-12 sm:p-8 sm:pb-14">
-                        <div className="text-xs font-bold text-blue-300 mb-2">
-                          {t.categories[item.category] ?? item.category}
-                        </div>
-                        <h2 className="max-w-4xl font-serif text-xl font-bold leading-snug text-white transition hover:text-blue-200 sm:text-2xl lg:text-3xl">
-                          {formatNewsTitle(item.title)}
-                        </h2>
-                        <p className="mt-2.5 line-clamp-2 max-w-3xl text-xs leading-relaxed text-slate-200 sm:text-sm sm:leading-normal">
-                          {item.summary}
-                        </p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-
-                {/* CAROUSEL INDICATOR DOTS */}
-                <div className="absolute bottom-4 right-6 z-20 flex items-center gap-1.5 rounded-full bg-slate-950/50 px-2.5 py-1 backdrop-blur-xs">
-                  {spotlight.map((item, index) => {
-                    const isActive = index === spotlightIndex;
-                    return (
-                      <button
+              <Reveal y={14}>
+                <article
+                  className="relative h-[380px] overflow-hidden rounded-3xl border border-blue-200/90 bg-slate-950 text-white shadow-sm sm:h-[440px] lg:h-[490px]"
+                  aria-roledescription="carousel"
+                  aria-label={t.spotlight}
+                  onMouseEnter={() => {
+                    isHoveredRef.current = true;
+                  }}
+                  onMouseLeave={() => {
+                    isHoveredRef.current = false;
+                  }}
+                >
+                  <div className="absolute inset-0">
+                    {spotlight.map((item, index) => (
+                      <Link
                         key={item.title}
-                        type="button"
-                        onClick={() => changeSpotlight(index)}
-                        aria-label={`${index + 1} / ${spotlight.length}`}
-                        aria-current={isActive ? "true" : undefined}
-                        className="group grid h-5 w-5 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-white"
+                        href={newsArticleHref(item)}
+                        className={`absolute inset-0 transition-opacity duration-300 motion-reduce:transition-none ${
+                          index === spotlightIndex
+                            ? "z-10 opacity-100"
+                            : "pointer-events-none opacity-0"
+                        }`}
+                        aria-hidden={index !== spotlightIndex}
+                        tabIndex={index === spotlightIndex ? 0 : -1}
                       >
-                        <span
-                          className={`h-1.5 rounded-full transition-all duration-300 ${
-                            isActive
-                              ? "w-5 bg-white"
-                              : "w-1.5 bg-white/40 group-hover:bg-white/75"
-                          }`}
-                          aria-hidden="true"
+                        <NewsImage
+                          src={item.image ?? undefined}
+                          label="Ảnh bài viết nổi bật"
+                          className="absolute inset-0 h-full w-full rounded-none"
                         />
-                      </button>
-                    );
-                  })}
-                </div>
-              </article>
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent" />
+                        <div className="absolute inset-x-0 bottom-0 z-10 p-6 pb-12 sm:p-8 sm:pb-14">
+                          <div className="text-xs font-bold text-blue-300 mb-2">
+                            {t.categories[item.category] ?? item.category}
+                          </div>
+                          <h2 className="max-w-4xl font-serif text-xl font-bold leading-snug text-white transition hover:text-blue-200 sm:text-2xl lg:text-3xl">
+                            {formatNewsTitle(item.title)}
+                          </h2>
+                          <p className="mt-2.5 line-clamp-2 max-w-3xl text-xs leading-relaxed text-slate-200 sm:text-sm sm:leading-normal">
+                            {item.summary}
+                          </p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+
+                  {/* CAROUSEL INDICATOR DOTS */}
+                  <div
+                    className="absolute bottom-4 right-6 z-20 flex items-center gap-2 rounded-full border border-white/15 bg-slate-950/60 px-3 py-1.5 backdrop-blur-md shadow-xs"
+                    role="tablist"
+                    aria-label="Chuyển slide tiêu điểm"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {spotlight.map((item, index) => {
+                      const isActive = index === spotlightIndex;
+                      return (
+                        <button
+                          key={item.id ?? item.title ?? index}
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            changeSpotlight(index);
+                          }}
+                          aria-label={`${index + 1} / ${spotlight.length}`}
+                          aria-current={isActive ? "true" : undefined}
+                          className={`relative size-2 rounded-full transition-all duration-200 before:absolute before:-inset-2 before:content-[''] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+                            isActive
+                              ? "bg-white shadow-xs ring-2 ring-white/50"
+                              : "bg-white/40 hover:bg-white/80"
+                          }`}
+                        />
+                      );
+                    })}
+                  </div>
+                </article>
+              </Reveal>
 
               {/* LATEST COLUMN */}
-              <aside className="flex h-[380px] flex-col justify-between rounded-3xl border border-blue-200/90 bg-white p-5 shadow-xs sm:h-[440px] sm:p-6 lg:h-[490px]">
-                <div className="mb-1">
-                  <h2 className="font-serif text-lg font-bold text-[#082352] sm:text-xl">
-                    {t.latest}
-                  </h2>
-                </div>
-                <div className="flex flex-1 flex-col justify-between divide-y divide-slate-100 py-1">
-                  {latest.map((item) => (
-                    <SmallRow key={item.title} item={item} />
-                  ))}
-                </div>
-              </aside>
+              <Reveal y={14} delay={0.08}>
+                <aside className="flex h-[380px] flex-col justify-between rounded-3xl border border-blue-200/90 bg-white p-5 shadow-xs sm:h-[440px] sm:p-6 lg:h-[490px]">
+                  <div className="mb-1">
+                    <h2 className="font-serif text-lg font-bold text-[#082352] sm:text-xl">
+                      {t.latest}
+                    </h2>
+                  </div>
+                  <div className="flex flex-1 flex-col justify-between divide-y divide-slate-100 py-1">
+                    {latest.map((item) => (
+                      <SmallRow key={item.title} item={item} />
+                    ))}
+                  </div>
+                </aside>
+              </Reveal>
             </section>
 
             {/* ════════════════════════════════════════════════════════════════

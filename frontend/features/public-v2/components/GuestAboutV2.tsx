@@ -279,7 +279,8 @@ const PARTICIPATING_PARTNERS = [
 ]
   .filter(
     (partner, index, partners) =>
-      partners.findIndex((candidate) => candidate.url === partner.url) === index,
+      partners.findIndex((candidate) => candidate.url === partner.url) ===
+      index,
   )
   .filter(
     (partner) =>
@@ -1157,11 +1158,13 @@ export function GuestAboutV2() {
         >
           <article className="rounded-2xl border border-blue-100/80 bg-white px-5 py-6 shadow-xs sm:px-8 sm:py-8 lg:px-10">
             {/* ═══════════ HEADER ═══════════ */}
-            <div className="mb-2 text-center sm:mb-3">
-              <h1 className="font-serif text-xl font-bold tracking-tight text-[#082352] sm:text-2xl">
-                {t.eyebrow}
-              </h1>
-            </div>
+            <Reveal y={10}>
+              <div className="mb-2 text-center sm:mb-3">
+                <h1 className="font-serif text-xl font-bold tracking-tight text-[#082352] sm:text-2xl">
+                  {t.eyebrow}
+                </h1>
+              </div>
+            </Reveal>
 
             <div
               className="my-3 h-px w-full bg-slate-200/80 sm:my-4"
@@ -1170,33 +1173,37 @@ export function GuestAboutV2() {
 
             {/* ═══════════ 1. GIỚI THIỆU CHUNG (OVERVIEW) ═══════════ */}
             <div className="space-y-5 text-xs leading-normal text-slate-700 sm:space-y-6 sm:text-sm sm:leading-relaxed">
-              <section id="about-intro">
-                <h2 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
-                  {t.overviewTitle}
-                </h2>
-                <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">
-                  {t.overview}
-                </p>
-              </section>
+              <Reveal y={12}>
+                <section id="about-intro">
+                  <h2 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
+                    {t.overviewTitle}
+                  </h2>
+                  <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">
+                    {t.overview}
+                  </p>
+                </section>
+              </Reveal>
 
-              <section id="mission">
-                <h2 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
-                  {t.missionTitle}
-                </h2>
-                <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">
-                  {t.missionSubtitle}
-                </p>
-                <ul className="mt-2 list-disc space-y-1.5 pl-5 text-xs leading-normal sm:text-sm sm:leading-relaxed">
-                  {t.highlights.map((item) => (
-                    <li key={item.title}>
-                      <strong className="font-bold text-slate-900">
-                        {item.title}:
-                      </strong>{" "}
-                      {item.description}
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              <Reveal y={12}>
+                <section id="mission">
+                  <h2 className="font-serif text-base font-bold text-[#082352] sm:text-lg">
+                    {t.missionTitle}
+                  </h2>
+                  <p className="mt-2 text-xs leading-normal sm:text-sm sm:leading-relaxed">
+                    {t.missionSubtitle}
+                  </p>
+                  <ul className="mt-2 list-disc space-y-1.5 pl-5 text-xs leading-normal sm:text-sm sm:leading-relaxed">
+                    {t.highlights.map((item) => (
+                      <li key={item.title}>
+                        <strong className="font-bold text-slate-900">
+                          {item.title}:
+                        </strong>{" "}
+                        {item.description}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              </Reveal>
 
               {t.sections.map((section, index) => (
                 <section key={section.title} id={`about-section-${index}`}>
@@ -1272,40 +1279,49 @@ export function GuestAboutV2() {
                   ECOSYSTEM_ORB_IMAGES[card.icon] ??
                   "/images/ecosystem-icons/opportunities.webp";
                 return (
-                  <Link
+                  <Reveal
                     key={card.title}
-                    href={card.href}
-                    className="group flex flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                    y={12}
+                    delay={Math.min(
+                      homeCopy.ecosystem.cards.indexOf(card) * 0.06,
+                      0.24,
+                    )}
+                    className="h-full"
                   >
-                    <div>
-                      <div className="flex items-center">
-                        <div className="relative flex size-14 items-center justify-center sm:size-16">
-                          <Image
-                            src={iconSrc}
-                            alt=""
-                            width={64}
-                            height={64}
-                            unoptimized
-                            className="size-full object-contain drop-shadow-[0_4px_12px_rgba(37,99,235,0.18)] transition-transform duration-300 group-hover:scale-105"
-                          />
+                    <Link
+                      href={card.href}
+                      className="group flex h-full flex-col justify-between rounded-2xl border border-blue-200/80 bg-white/95 p-5 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                    >
+                      <div>
+                        <div className="flex items-center">
+                          <div className="relative flex size-14 items-center justify-center sm:size-16">
+                            <Image
+                              src={iconSrc}
+                              alt=""
+                              width={64}
+                              height={64}
+                              unoptimized
+                              className="size-full object-contain drop-shadow-[0_4px_12px_rgba(37,99,235,0.18)] transition-transform duration-300 group-hover:scale-105"
+                            />
+                          </div>
                         </div>
+
+                        <h3 className="mt-4 text-sm font-bold uppercase tracking-tight text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-base">
+                          {card.title}
+                        </h3>
+
+                        <span className="mt-2 block h-0.5 w-5 rounded-full bg-blue-600" />
+
+                        <p className="mt-2.5 line-clamp-3 text-xs leading-relaxed text-slate-600">
+                          {card.desc}
+                        </p>
                       </div>
 
-                      <h3 className="mt-4 text-sm font-bold uppercase tracking-tight text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-base">
-                        {card.title}
-                      </h3>
-
-                      <span className="mt-2 block h-0.5 w-5 rounded-full bg-blue-600" />
-
-                      <p className="mt-2.5 line-clamp-3 text-xs leading-relaxed text-slate-600">
-                        {card.desc}
-                      </p>
-                    </div>
-
-                    <div className="mt-4 flex items-center gap-1 text-[11px] font-bold text-blue-600 transition group-hover:text-blue-800">
-                      <span>{homeCopy.ecosystem.cardCta}</span>
-                    </div>
-                  </Link>
+                      <div className="mt-4 flex items-center gap-1 text-[11px] font-bold text-blue-600 transition group-hover:text-blue-800">
+                        <span>{homeCopy.ecosystem.cardCta}</span>
+                      </div>
+                    </Link>
+                  </Reveal>
                 );
               })}
             </div>
@@ -1321,7 +1337,12 @@ export function GuestAboutV2() {
           </Reveal>
           <div className="mx-auto grid max-w-5xl gap-5 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
             {BOARD_MEMBERS.map((member, index) => (
-              <Reveal key={member.name} y={12} delay={index * 0.05}>
+              <Reveal
+                key={member.name}
+                y={24}
+                delay={index * 0.1}
+                duration={0.75}
+              >
                 <article className="relative flex flex-col justify-between overflow-hidden rounded-2xl border border-blue-200 bg-white/95 p-5 shadow-sm backdrop-blur-xs transition duration-200 hover:-translate-y-1 hover:border-blue-400 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none sm:p-6">
                   <div>
                     {/* 1. Name at the top */}
@@ -1396,48 +1417,50 @@ export function GuestAboutV2() {
 
         {/* ═══════════ CTA BANNER ═══════════ */}
         <section className="px-4 pb-8 sm:px-6 lg:px-8 lg:pb-10">
-          <div className="relative mx-auto flex max-w-[1460px] flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl border border-blue-200 bg-gradient-to-br from-white via-blue-50/70 to-blue-100/50 p-6 text-slate-900 shadow-lg shadow-blue-900/5 sm:p-8 lg:flex-row lg:items-center lg:p-10">
-            <div
-              className="pointer-events-none absolute -bottom-10 -right-10 size-80 rounded-full bg-blue-400/15 blur-3xl"
-              aria-hidden="true"
-            />
+          <Reveal y={14}>
+            <div className="relative mx-auto flex max-w-[1460px] flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl border border-blue-200 bg-gradient-to-br from-white via-blue-50/70 to-blue-100/50 p-6 text-slate-900 shadow-lg shadow-blue-900/5 sm:p-8 lg:flex-row lg:items-center lg:p-10">
+              <div
+                className="pointer-events-none absolute -bottom-10 -right-10 size-80 rounded-full bg-blue-400/15 blur-3xl"
+                aria-hidden="true"
+              />
 
-            <div className="relative z-10 max-w-3xl">
-              <h2 className="font-serif text-xl font-bold leading-snug tracking-tight text-[#071936] sm:text-2xl lg:text-3xl">
-                {t.ctaTitle}
-              </h2>
-              <p className="mt-3 text-xs font-normal leading-relaxed text-slate-600 sm:text-sm lg:text-base">
-                {t.ctaDescription}
-              </p>
+              <div className="relative z-10 max-w-3xl">
+                <h2 className="font-serif text-xl font-bold leading-snug tracking-tight text-[#071936] sm:text-2xl lg:text-3xl">
+                  {t.ctaTitle}
+                </h2>
+                <p className="mt-3 text-xs font-normal leading-relaxed text-slate-600 sm:text-sm lg:text-base">
+                  {t.ctaDescription}
+                </p>
 
-              <div className="mt-4 flex flex-wrap items-center gap-2.5 text-xs font-bold text-slate-700">
-                <span className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200/80 bg-white/90 px-3 py-1.5 text-blue-900 shadow-2xs">
-                  <span
-                    className="size-1.5 rounded-full bg-blue-600"
-                    aria-hidden="true"
-                  />
-                  Viện Hàn lâm, Trường ĐH & Doanh nghiệp
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200/80 bg-white/90 px-3 py-1.5 text-blue-900 shadow-2xs">
-                  <span
-                    className="size-1.5 rounded-full bg-blue-600"
-                    aria-hidden="true"
-                  />
-                  Thỏa thuận song phương trực tiếp
-                </span>
+                <div className="mt-4 flex flex-wrap items-center gap-2.5 text-xs font-bold text-slate-700">
+                  <span className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200/80 bg-white/90 px-3 py-1.5 text-blue-900 shadow-2xs">
+                    <span
+                      className="size-1.5 rounded-full bg-blue-600"
+                      aria-hidden="true"
+                    />
+                    Viện Hàn lâm, Trường ĐH & Doanh nghiệp
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200/80 bg-white/90 px-3 py-1.5 text-blue-900 shadow-2xs">
+                    <span
+                      className="size-1.5 rounded-full bg-blue-600"
+                      aria-hidden="true"
+                    />
+                    Thỏa thuận song phương trực tiếp
+                  </span>
+                </div>
+              </div>
+
+              <div className="relative z-10 shrink-0">
+                <Link
+                  href="/register"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-md shadow-blue-600/25 transition duration-150 hover:-translate-y-0.5 hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:text-base"
+                >
+                  <span>{t.cta}</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
               </div>
             </div>
-
-            <div className="relative z-10 shrink-0">
-              <Link
-                href="/register"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-md shadow-blue-600/25 transition duration-150 hover:-translate-y-0.5 hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:text-base"
-              >
-                <span>{t.cta}</span>
-                <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-          </div>
+          </Reveal>
         </section>
 
         {/* ═══════════ 4. ĐỐI TÁC ═══════════ */}

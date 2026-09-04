@@ -5,6 +5,7 @@ import { useLocale } from "@/core/i18n/locale";
 import { localizeReactNode } from "@/core/i18n/localize-react-node";
 import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
 import { formatDate, formatDateTime } from "@/core/i18n/date-format";
+import { Reveal } from "@/components/shared/Reveal";
 import {
   formatNewsTitle,
   newsArticleHref,
@@ -141,7 +142,7 @@ function ShareButton({ label }: { label: string }) {
   return (
     <button
       type="button"
-      className="grid size-9 place-items-center rounded-full border border-blue-100 bg-blue-50 text-xs font-black text-blue-600 transition hover:border-blue-300 hover:bg-blue-100"
+      className="grid size-9 place-items-center rounded-full border border-blue-100 bg-blue-50 text-xs font-black text-blue-600 transition hover:border-blue-300 hover:bg-blue-100 active:scale-95"
     >
       {label}
     </button>
@@ -168,218 +169,239 @@ export function GuestNewsArticleV2({
   return localizeReactNode(
     <div className="min-h-screen bg-white text-slate-950">
       <main className="mx-auto max-w-[1460px] px-4 py-9 sm:px-6 lg:px-8">
-        <div className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500">
-          <Link href="/" className="hover:text-blue-600">
-            {t.home}
-          </Link>
-          <span>›</span>
-          <Link href={listingHref} className="hover:text-blue-600">
-            {contentType === "KNOWLEDGE" ? t.actions.KNOWLEDGE : t.news}
-          </Link>
-          <span>›</span>
-          <span className="text-blue-600">
-            {categoryLabels[article.category]}
-          </span>
-        </div>
+        <Reveal y={10}>
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500">
+            <Link href="/" className="hover:text-blue-600">
+              {t.home}
+            </Link>
+            <span>›</span>
+            <Link href={listingHref} className="hover:text-blue-600">
+              {contentType === "KNOWLEDGE" ? t.actions.KNOWLEDGE : t.news}
+            </Link>
+            <span>›</span>
+            <span className="text-blue-600">
+              {categoryLabels[article.category]}
+            </span>
+          </div>
+        </Reveal>
 
         <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_340px]">
           <article className="min-w-0">
             <header>
-              <h2 className="max-w-5xl text-2xl font-black leading-tight tracking-[-0.025em] text-slate-950 sm:text-3xl lg:text-4xl">
-                {formatNewsTitle(article.title)}
-              </h2>
-              <p className="mt-5 max-w-4xl text-base leading-7 text-slate-600 sm:text-lg">
-                {article.summary}
-              </p>
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-y border-blue-100 py-4">
-                <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
-                  <span>{formatDate(article.date, locale)}</span>
-                  <span>•</span>
-                  <span>Mạng lưới RU-VN</span>
+              <Reveal y={14} delay={0.06}>
+                <h2 className="max-w-5xl text-2xl font-black leading-tight tracking-[-0.025em] text-slate-950 sm:text-3xl lg:text-4xl">
+                  {formatNewsTitle(article.title)}
+                </h2>
+              </Reveal>
+              <Reveal y={12} delay={0.12}>
+                <p className="mt-5 max-w-4xl text-base leading-7 text-slate-600 sm:text-lg">
+                  {article.summary}
+                </p>
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-y border-blue-100 py-4">
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
+                    <span>{formatDate(article.date, locale)}</span>
+                    <span>•</span>
+                    <span>Mạng lưới RU-VN</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="mr-1 text-sm text-slate-500">
+                      {t.share}:
+                    </span>
+                    <ShareButton label="f" />
+                    <ShareButton label="Z" />
+                    <ShareButton label="↗" />
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="mr-1 text-sm text-slate-500">
-                    {t.share}:
-                  </span>
-                  <ShareButton label="f" />
-                  <ShareButton label="Z" />
-                  <ShareButton label="↗" />
-                </div>
-              </div>
+              </Reveal>
             </header>
 
             {article.image ? (
-              <div className="mt-7">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={article.image}
-                  alt={formatNewsTitle(article.title)}
-                  className="max-h-[640px] w-full rounded-2xl object-cover"
-                />
-              </div>
+              <Reveal y={14} delay={0.16}>
+                <div className="mt-7">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={article.image}
+                    alt={formatNewsTitle(article.title)}
+                    className="max-h-[640px] w-full rounded-2xl object-cover"
+                  />
+                </div>
+              </Reveal>
             ) : null}
 
-            <div className="mt-8 space-y-6 text-lg leading-8 text-slate-800">
-              {article.body.map((paragraph, index) => {
-                const imgMatch = paragraph.match(/^!\[(.*?)\]\((.*?)\)$/);
-                if (imgMatch) {
-                  const alt = imgMatch[1];
-                  const src = imgMatch[2];
-                  return (
-                    <figure key={`${article.id}-${index}`} className="my-6">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={src}
-                        alt={alt || formatNewsTitle(article.title)}
-                        className="max-h-[540px] w-full rounded-2xl object-cover border border-slate-100 shadow-sm"
-                      />
-                      {alt && alt !== "Hình ảnh" && alt !== "image" ? (
-                        <figcaption className="mt-2 text-center text-sm text-slate-500 italic">
-                          {alt}
-                        </figcaption>
-                      ) : null}
-                    </figure>
-                  );
-                }
-                return <p key={`${article.id}-${index}`}>{paragraph}</p>;
-              })}
-              {article.actionClosesAt ? (
-                <p className="text-base font-semibold text-slate-600">
-                  {t.actionCloses}:{" "}
-                  {formatDateTime(article.actionClosesAt, locale)}
-                </p>
-              ) : null}
-              {article.actionUrl ? (
-                <a
-                  href={article.actionUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center rounded-xl bg-blue-700 px-5 font-bold text-white hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-                >
-                  {article.actionLabel || t.actions[contentType]}
-                </a>
-              ) : null}
-              {article.sources.length > 0 && (
-                <div className="border-t border-blue-100 pt-5 text-sm text-slate-600">
-                  <span className="font-bold">Nguồn: </span>
-                  {article.sources.map((source) => (
-                    <a
-                      key={source}
-                      href={source}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block break-all text-blue-700 hover:underline"
-                    >
-                      {source}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
+            <Reveal y={12} delay={0.2}>
+              <div className="mt-8 space-y-6 text-lg leading-8 text-slate-800">
+                {article.body.map((paragraph, index) => {
+                  const imgMatch = paragraph.match(/^!\[(.*?)\]\((.*?)\)$/);
+                  if (imgMatch) {
+                    const alt = imgMatch[1];
+                    const src = imgMatch[2];
+                    return (
+                      <figure key={`${article.id}-${index}`} className="my-6">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={src}
+                          alt={alt || formatNewsTitle(article.title)}
+                          className="max-h-[540px] w-full rounded-2xl object-cover border border-slate-100 shadow-sm"
+                        />
+                        {alt && alt !== "Hình ảnh" && alt !== "image" ? (
+                          <figcaption className="mt-2 text-center text-sm text-slate-500 italic">
+                            {alt}
+                          </figcaption>
+                        ) : null}
+                      </figure>
+                    );
+                  }
+                  return <p key={`${article.id}-${index}`}>{paragraph}</p>;
+                })}
+                {article.actionClosesAt ? (
+                  <p className="text-base font-semibold text-slate-600">
+                    {t.actionCloses}:{" "}
+                    {formatDateTime(article.actionClosesAt, locale)}
+                  </p>
+                ) : null}
+                {article.actionUrl ? (
+                  <a
+                    href={article.actionUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center rounded-xl bg-blue-700 px-5 font-bold text-white hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                  >
+                    {article.actionLabel || t.actions[contentType]}
+                  </a>
+                ) : null}
+                {article.sources.length > 0 && (
+                  <div className="border-t border-blue-100 pt-5 text-sm text-slate-600">
+                    <span className="font-bold">Nguồn: </span>
+                    {article.sources.map((source) => (
+                      <a
+                        key={source}
+                        href={source}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block break-all text-blue-700 hover:underline"
+                      >
+                        {source}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-blue-100 pt-6">
-              <span className="mr-2 text-sm font-black text-slate-700">
-                {t.tags}:
-              </span>
-              {[
-                "Việt Nam - Nga",
-                categoryLabels[article.category],
-                "hợp tác khoa học",
-                "đổi mới sáng tạo",
-                "công nghệ cao",
-              ].map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700"
-                >
-                  {tag}
+              <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-blue-100 pt-6">
+                <span className="mr-2 text-sm font-black text-slate-700">
+                  {t.tags}:
                 </span>
-              ))}
-            </div>
+                {[
+                  "Việt Nam - Nga",
+                  categoryLabels[article.category],
+                  "hợp tác khoa học",
+                  "đổi mới sáng tạo",
+                  "công nghệ cao",
+                ].map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </Reveal>
           </article>
 
           <aside className="space-y-6">
-            <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-[0_6px_22px_rgba(37,99,235,.05)]">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <h2 className="text-lg font-black uppercase text-blue-600">
-                  {t.related}
+            <Reveal y={12} delay={0.1}>
+              <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-[0_6px_22px_rgba(37,99,235,.05)]">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <h2 className="text-lg font-black uppercase text-blue-600">
+                    {t.related}
+                  </h2>
+                  <Link href="/news" className="text-xs font-black text-blue-600">
+                    Xem tất cả →
+                  </Link>
+                </div>
+                <div className="grid gap-4">
+                  {related.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={newsArticleHref(item)}
+                      className="flex gap-3 border-b border-blue-50 pb-4 last:border-0 last:pb-0"
+                    >
+                      <Thumb item={item} />
+                      <div className="min-w-0">
+                        <h3 className="line-clamp-2 text-base font-extrabold leading-6 text-slate-900">
+                          {formatNewsTitle(item.title)}
+                        </h3>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
+
+            <Reveal y={12} delay={0.16}>
+              <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-[0_6px_22px_rgba(37,99,235,.05)]">
+                <h2 className="mb-4 text-lg font-black uppercase text-blue-600">
+                  {t.latest}
                 </h2>
-                <Link href="/news" className="text-xs font-black text-blue-600">
-                  Xem tất cả →
-                </Link>
-              </div>
-              <div className="grid gap-4">
-                {related.map((item) => (
+                <div className="divide-y divide-blue-100">
+                  {latest.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={newsArticleHref(item)}
+                      className="group block py-4 first:pt-0 last:pb-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    >
+                      <span className="line-clamp-2 block text-base font-bold leading-6 text-slate-800 transition-colors group-hover:text-blue-700">
+                        {formatNewsTitle(item.title)}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
+          </aside>
+        </div>
+
+        <Reveal y={12} delay={0.1}>
+          <section className="mt-12 border-t border-blue-100 pt-8">
+            <div className="mb-5 flex items-center gap-4">
+              <h2 className="shrink-0 text-xl font-black uppercase text-blue-600">
+                {t.related}
+              </h2>
+              <div className="h-px flex-1 bg-blue-100" />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {moreLatest.map((item) => (
+                <Reveal
+                  key={item.id}
+                  y={12}
+                  delay={Math.min(moreLatest.indexOf(item) * 0.06, 0.24)}
+                >
                   <Link
-                    key={item.id}
                     href={newsArticleHref(item)}
-                    className="flex gap-3 border-b border-blue-50 pb-4 last:border-0 last:pb-0"
+                    className="block overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-[0_5px_18px_rgba(37,99,235,.05)] transition hover:-translate-y-1 hover:border-blue-200"
                   >
-                    <Thumb item={item} />
-                    <div className="min-w-0">
-                      <h3 className="line-clamp-2 text-base font-extrabold leading-6 text-slate-900">
+                    {item.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={item.image}
+                        alt=""
+                        className="h-36 w-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-36 bg-[linear-gradient(135deg,#104a9c,#3c7acb_55%,#143d76)]" />
+                    )}
+                    <div className="p-4">
+                      <h3 className="line-clamp-2 text-base font-extrabold leading-6">
                         {formatNewsTitle(item.title)}
                       </h3>
                     </div>
                   </Link>
-                ))}
-              </div>
-            </section>
-
-            <section className="rounded-2xl border border-blue-100 bg-white p-5 shadow-[0_6px_22px_rgba(37,99,235,.05)]">
-              <h2 className="mb-4 text-lg font-black uppercase text-blue-600">
-                {t.latest}
-              </h2>
-              <div className="divide-y divide-blue-100">
-                {latest.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={newsArticleHref(item)}
-                    className="group block py-4 first:pt-0 last:pb-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                  >
-                    <span className="line-clamp-2 block text-base font-bold leading-6 text-slate-800 transition-colors group-hover:text-blue-700">
-                      {formatNewsTitle(item.title)}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          </aside>
-        </div>
-
-        <section className="mt-12 border-t border-blue-100 pt-8">
-          <div className="mb-5 flex items-center gap-4">
-            <h2 className="shrink-0 text-xl font-black uppercase text-blue-600">
-              {t.related}
-            </h2>
-            <div className="h-px flex-1 bg-blue-100" />
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {moreLatest.map((item) => (
-              <Link
-                key={item.id}
-                href={newsArticleHref(item)}
-                className="overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-[0_5px_18px_rgba(37,99,235,.05)] transition hover:-translate-y-1 hover:border-blue-200"
-              >
-                {item.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={item.image}
-                    alt=""
-                    className="h-36 w-full object-cover"
-                  />
-                ) : (
-                  <div className="h-36 bg-[linear-gradient(135deg,#104a9c,#3c7acb_55%,#143d76)]" />
-                )}
-                <div className="p-4">
-                  <h3 className="line-clamp-2 text-base font-extrabold leading-6">
-                    {formatNewsTitle(item.title)}
-                  </h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        </Reveal>
       </main>
     </div>,
     locale,

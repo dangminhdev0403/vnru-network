@@ -750,7 +750,10 @@ export function GuestEcosystemV2({
 
             {/* SUBTAB 1: KẾT NỐI (Interactive Form) */}
             {oppSubTab === "connect" && (
-              <div className="mx-auto max-w-4xl rounded-3xl border border-blue-200/90 bg-white p-8 shadow-md sm:p-12">
+              <Reveal
+                y={12}
+                className="mx-auto max-w-4xl rounded-3xl border border-blue-200/90 bg-white p-8 shadow-md sm:p-12"
+              >
                 <div className="mb-8 text-center sm:text-left">
                   <h3 className="font-serif text-2xl font-bold text-[#082352] sm:text-3xl">
                     Đăng ký Kết nối Hợp tác Song phương
@@ -1003,7 +1006,7 @@ export function GuestEcosystemV2({
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-8 py-3.5 text-base font-black text-white shadow-md shadow-blue-600/25 transition duration-150 hover:-translate-y-0.5 hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                        className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-8 py-3.5 text-base font-black text-white shadow-md shadow-blue-600/25 transition duration-150 hover:-translate-y-0.5 hover:bg-blue-700 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
                       >
                         <span>Gửi yêu cầu kết nối</span>
                         <span aria-hidden="true">→</span>
@@ -1011,144 +1014,154 @@ export function GuestEcosystemV2({
                     </div>
                   </form>
                 )}
-              </div>
+              </Reveal>
             )}
 
             {/* SUBTAB 2: CÔNG BỐ */}
             {oppSubTab === "call-for-papers" && (
               <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-3">
-                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md sm:p-5">
-                  <div>
-                    <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
-                      Chương trình Học bổng Nghiên cứu InteRussia Fellowships
-                      2026
-                    </h3>
-                    <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Chương trình học bổng uy tín dành cho các nhà khoa học,
-                      chuyên gia trẻ quốc tế sang nghiên cứu trực tiếp tại các
-                      viện và trường ĐH hàng đầu của Nga. Tài trợ toàn phần vé
-                      máy bay, chỗ ở tại Moskva và sinh hoạt phí.
-                    </p>
-                  </div>
-                  <div className="mt-4 border-t border-slate-100 pt-3">
-                    <a
-                      href="https://interussia.com/announce_en"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 sm:text-sm"
-                    >
-                      <span>Xem thông báo chính thức</span>
-                      <span aria-hidden="true">↗</span>
-                    </a>
-                  </div>
-                </article>
+                <Reveal y={12} delay={0} className="h-full">
+                  <article className="h-full flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md sm:p-5">
+                    <div>
+                      <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
+                        Chương trình Học bổng Nghiên cứu InteRussia Fellowships
+                        2026
+                      </h3>
+                      <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
+                        Chương trình học bổng uy tín dành cho các nhà khoa học,
+                        chuyên gia trẻ quốc tế sang nghiên cứu trực tiếp tại các
+                        viện và trường ĐH hàng đầu của Nga. Tài trợ toàn phần vé
+                        máy bay, chỗ ở tại Moskva và sinh hoạt phí.
+                      </p>
+                    </div>
+                    <div className="mt-4 border-t border-slate-100 pt-3">
+                      <a
+                        href="https://interussia.com/announce_en"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 sm:text-sm"
+                      >
+                        <span>Xem thông báo chính thức</span>
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    </div>
+                  </article>
+                </Reveal>
 
-                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md sm:p-5">
-                  <div>
-                    <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
-                      Hội nghị Khoa học Quốc tế Song phương VAST – RAS (Nga –
-                      Việt)
-                    </h3>
-                    <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Kêu gọi gửi bài báo tham luận khoa học cho Hội thảo khoa
-                      học quốc tế thường niên giữa Viện Hàn lâm KHCN Việt Nam và
-                      Viện Hàn lâm Khoa học Nga trong các lĩnh vực vật liệu,
-                      công nghệ sinh học và chuyển đổi số.
-                    </p>
-                  </div>
-                  <div className="mt-4 border-t border-slate-100 pt-3">
-                    <Link
-                      href="/news/3/meet-global-mice-congress-2026-du-kien-dien-ra-tai-moskva"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 sm:text-sm"
-                    >
-                      <span>Xem chi tiết</span>
-                      <span aria-hidden="true">→</span>
-                    </Link>
-                  </div>
-                </article>
+                <Reveal y={12} delay={0.08} className="h-full">
+                  <article className="h-full flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md sm:p-5">
+                    <div>
+                      <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
+                        Hội nghị Khoa học Quốc tế Song phương VAST – RAS (Nga –
+                        Việt)
+                      </h3>
+                      <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
+                        Kêu gọi gửi bài báo tham luận khoa học cho Hội thảo khoa
+                        học quốc tế thường niên giữa Viện Hàn lâm KHCN Việt Nam
+                        và Viện Hàn lâm Khoa học Nga trong các lĩnh vực vật
+                        liệu, công nghệ sinh học và chuyển đổi số.
+                      </p>
+                    </div>
+                    <div className="mt-4 border-t border-slate-100 pt-3">
+                      <Link
+                        href="/news/3/meet-global-mice-congress-2026-du-kien-dien-ra-tai-moskva"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 sm:text-sm"
+                      >
+                        <span>Xem chi tiết</span>
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    </div>
+                  </article>
+                </Reveal>
 
-                <article className="flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md sm:p-5">
-                  <div>
-                    <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
-                      Chuyên san Hợp tác Khoa học Song phương Việt Nam – Liên
-                      bang Nga
-                    </h3>
-                    <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
-                      Đợt tiếp nhận công trình nghiên cứu gốc từ các nhóm tác
-                      giả liên kết hai nước đăng trên chuyên san đặc biệt của
-                      các tạp chí khoa học quốc tế uy tín thuộc hệ thống RAS &
-                      VAST.
-                    </p>
-                  </div>
-                  <div className="mt-4 border-t border-slate-100 pt-3">
-                    <Link
-                      href="/news"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 sm:text-sm"
-                    >
-                      <span>Xem chi tiết</span>
-                      <span aria-hidden="true">→</span>
-                    </Link>
-                  </div>
-                </article>
+                <Reveal y={12} delay={0.16} className="h-full">
+                  <article className="h-full flex flex-col justify-between rounded-2xl border border-blue-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md sm:p-5">
+                    <div>
+                      <h3 className="font-serif line-clamp-2 min-h-[44px] text-base font-bold leading-snug text-[#082352] sm:text-lg">
+                        Chuyên san Hợp tác Khoa học Song phương Việt Nam – Liên
+                        bang Nga
+                      </h3>
+                      <p className="mt-2 line-clamp-3 min-h-[48px] text-xs leading-relaxed text-slate-600 sm:text-sm">
+                        Đợt tiếp nhận công trình nghiên cứu gốc từ các nhóm tác
+                        giả liên kết hai nước đăng trên chuyên san đặc biệt của
+                        các tạp chí khoa học quốc tế uy tín thuộc hệ thống RAS &
+                        VAST.
+                      </p>
+                    </div>
+                    <div className="mt-4 border-t border-slate-100 pt-3">
+                      <Link
+                        href="/news"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 sm:text-sm"
+                      >
+                        <span>Xem chi tiết</span>
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    </div>
+                  </article>
+                </Reveal>
               </div>
             )}
 
             {/* SUBTAB 3: TÀI TRỢ */}
             {oppSubTab === "grants" && (
               <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-3">
-                {GRANTS_ITEMS.map((item) => (
-                  <article
+                {GRANTS_ITEMS.map((item, index) => (
+                  <Reveal
                     key={item.id}
-                    className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-xs transition duration-200 hover:-translate-y-1 hover:border-rose-300 hover:shadow-md sm:p-4"
+                    y={12}
+                    delay={Math.min(index * 0.08, 0.24)}
+                    className="h-full"
                   >
-                    <div>
-                      {/* Scaled Proportional Banner */}
-                      <div className="relative aspect-[418/235] w-full overflow-hidden rounded-xl bg-[#5a0d1e] shadow-xs">
-                        <Image
-                          src={item.image}
-                          alt={item.title[locale] ?? item.title.vi}
-                          fill
-                          unoptimized
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          className="object-contain transition-transform duration-500 group-hover:scale-105"
-                        />
+                    <article className="group h-full flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-xs transition duration-200 hover:-translate-y-1 hover:border-rose-300 hover:shadow-md sm:p-4">
+                      <div>
+                        {/* Scaled Proportional Banner */}
+                        <div className="relative aspect-[418/235] w-full overflow-hidden rounded-xl bg-[#5a0d1e] shadow-xs">
+                          <Image
+                            src={item.image}
+                            alt={item.title[locale] ?? item.title.vi}
+                            fill
+                            unoptimized
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className="object-contain transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+
+                        {/* Date Meta */}
+                        <div className="mt-2.5 text-[11px] font-medium text-slate-500">
+                          {item.date}
+                        </div>
+
+                        {/* Title */}
+                        <h3 className="mt-1 line-clamp-2 min-h-[38px] text-xs font-bold leading-snug text-[#781428] transition-colors group-hover:text-[#5a0d1e] sm:text-sm">
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:underline"
+                          >
+                            {item.title[locale] ?? item.title.vi}
+                          </a>
+                        </h3>
+
+                        {/* Description */}
+                        <p className="mt-1 line-clamp-2 min-h-[32px] text-[11px] leading-relaxed text-slate-600 sm:text-xs">
+                          {item.desc[locale] ?? item.desc.vi}
+                        </p>
                       </div>
 
-                      {/* Date Meta */}
-                      <div className="mt-2.5 text-[11px] font-medium text-slate-500">
-                        {item.date}
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="mt-1 line-clamp-2 min-h-[38px] text-xs font-bold leading-snug text-[#781428] transition-colors group-hover:text-[#5a0d1e] sm:text-sm">
+                      {/* Bottom Read More CTA */}
+                      <div className="mt-2 pt-1">
                         <a
                           href={item.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="hover:underline"
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-[#781428] transition hover:text-[#5a0d1e] hover:underline"
                         >
-                          {item.title[locale] ?? item.title.vi}
+                          <span>{item.cta[locale] ?? item.cta.vi}</span>
                         </a>
-                      </h3>
-
-                      {/* Description */}
-                      <p className="mt-1 line-clamp-2 min-h-[32px] text-[11px] leading-relaxed text-slate-600 sm:text-xs">
-                        {item.desc[locale] ?? item.desc.vi}
-                      </p>
-                    </div>
-
-                    {/* Bottom Read More CTA */}
-                    <div className="mt-2 pt-1">
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-semibold text-[#781428] transition hover:text-[#5a0d1e] hover:underline"
-                      >
-                        <span>{item.cta[locale] ?? item.cta.vi}</span>
-                      </a>
-                    </div>
-                  </article>
+                      </div>
+                    </article>
+                  </Reveal>
                 ))}
               </div>
             )}
@@ -1202,36 +1215,39 @@ export function GuestEcosystemV2({
             {/* TAB 1: CHUYÊN GIA (ẢNH, TÊN, CHỨC VỤ) */}
             {memberSubTab === "experts" && (
               <div className="mx-auto grid max-w-4xl gap-4 sm:grid-cols-2">
-                {EXPERTS_LIST.map((expert) => (
-                  <article
+                {EXPERTS_LIST.map((expert, index) => (
+                  <Reveal
                     key={expert.name}
-                    className="flex items-center gap-4 rounded-2xl border border-blue-200/90 bg-white p-4.5 shadow-xs transition duration-150 hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md"
+                    y={12}
+                    delay={Math.min(index * 0.04, 0.32)}
                   >
-                    <div className="relative size-14 shrink-0 overflow-hidden rounded-full border-2 border-blue-200 bg-gradient-to-br from-blue-100 to-slate-200 shadow-xs">
-                      {expert.image ? (
-                        <Image
-                          src={expert.image}
-                          alt={expert.name}
-                          fill
-                          sizes="56px"
-                          className="object-cover object-top"
-                        />
-                      ) : (
-                        <div className="flex size-full items-center justify-center font-serif text-lg font-black text-blue-900">
-                          {expert.name.split(" ").slice(-1)[0][0]}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-                      <h3 className="truncate font-serif text-lg font-bold text-[#082352] sm:text-xl">
-                        {expert.name}
-                      </h3>
-                      <div className="mt-0.5 text-sm font-bold text-blue-700">
-                        {expert.role}
+                    <article className="flex items-center gap-4 rounded-2xl border border-blue-200/90 bg-white p-4.5 shadow-xs transition duration-150 hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md">
+                      <div className="relative size-14 shrink-0 overflow-hidden rounded-full border-2 border-blue-200 bg-gradient-to-br from-blue-100 to-slate-200 shadow-xs">
+                        {expert.image ? (
+                          <Image
+                            src={expert.image}
+                            alt={expert.name}
+                            fill
+                            sizes="56px"
+                            className="object-cover object-top"
+                          />
+                        ) : (
+                          <div className="flex size-full items-center justify-center font-serif text-lg font-black text-blue-900">
+                            {expert.name.split(" ").slice(-1)[0][0]}
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  </article>
+
+                      <div className="min-w-0 flex-1">
+                        <h3 className="truncate font-serif text-lg font-bold text-[#082352] sm:text-xl">
+                          {expert.name}
+                        </h3>
+                        <div className="mt-0.5 text-sm font-bold text-blue-700">
+                          {expert.role}
+                        </div>
+                      </div>
+                    </article>
+                  </Reveal>
                 ))}
               </div>
             )}
@@ -1249,7 +1265,7 @@ export function GuestEcosystemV2({
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                       {ORGANIZATIONS_LIST.filter(
                         (org) => org.country === country,
-                      ).map((org) => {
+                      ).map((org, index) => {
                         const content = (
                           <>
                             <div className="relative size-14 shrink-0 overflow-hidden rounded-2xl border border-blue-200 bg-white shadow-2xs">
@@ -1272,23 +1288,29 @@ export function GuestEcosystemV2({
                           </>
                         );
                         const className =
-                          "flex items-center gap-4 rounded-2xl border border-blue-200/90 bg-white p-4.5 shadow-xs transition duration-150 hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600";
+                          "flex h-full items-center gap-4 rounded-2xl border border-blue-200/90 bg-white p-4.5 shadow-xs transition duration-150 hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600";
 
-                        return org.website ? (
-                          <a
+                        return (
+                          <Reveal
                             key={org.name}
-                            href={org.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`${org.name} — Trang web`}
-                            className={className}
+                            y={12}
+                            delay={Math.min(index * 0.04, 0.32)}
+                            className="h-full"
                           >
-                            {content}
-                          </a>
-                        ) : (
-                          <article key={org.name} className={className}>
-                            {content}
-                          </article>
+                            {org.website ? (
+                              <a
+                                href={org.website}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`${org.name} — Trang web`}
+                                className={className}
+                              >
+                                {content}
+                              </a>
+                            ) : (
+                              <article className={className}>{content}</article>
+                            )}
+                          </Reveal>
                         );
                       })}
                     </div>
@@ -1315,118 +1337,125 @@ export function GuestEcosystemV2({
 
             <div className="space-y-4 max-w-5xl mx-auto">
               {/* DỰ ÁN 1: HỌC BỔNG KHAI SÁNG */}
-              <article className="flex flex-col gap-5 rounded-2xl border border-blue-200/90 bg-white p-6 shadow-xs transition hover:border-blue-400 hover:shadow-md lg:flex-row lg:items-center lg:justify-between">
-                <div className="max-w-2xl">
-                  <h3 className="font-serif text-xl font-bold text-[#082352] sm:text-2xl">
-                    Chương trình Học bổng & Đề tài “Khai sáng” (Khaisang
-                    Initiative)
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
-                    Sáng kiến của Quỹ Thúc đẩy Hợp tác Nga - Việt tài trợ kinh
-                    phí sinh hoạt, hỗ trợ bảo vệ luận án và kết nối phòng thí
-                    nghiệm cho các nghiên cứu sinh, nhà khoa học trẻ tại LB Nga.
-                  </p>
-                </div>
-                <div className="flex shrink-0 flex-wrap sm:flex-nowrap items-center gap-3 lg:justify-end">
-                  <button
-                    type="button"
-                    disabled
-                    onClick={(e) => {
-                      e.preventDefault();
-                      /* showResultsModal */
-                    }}
-                    aria-disabled="true"
-                    title="Tính năng đang hoàn thiện"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
-                  >
-                    <span>Tra cứu Kết quả</span>
-                  </button>
-                  <button
-                    type="button"
-                    disabled
-                    onClick={(e) => e.preventDefault()}
-                    aria-disabled="true"
-                    title="Tính năng đang hoàn thiện"
-                    className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
-                  >
-                    <span>Đăng ký tham gia</span>
-                  </button>
-                </div>
-              </article>
+              <Reveal y={12} delay={0}>
+                <article className="flex flex-col gap-5 rounded-2xl border border-blue-200/90 bg-white p-6 shadow-xs transition hover:border-blue-400 hover:shadow-md lg:flex-row lg:items-center lg:justify-between">
+                  <div className="max-w-2xl">
+                    <h3 className="font-serif text-xl font-bold text-[#082352] sm:text-2xl">
+                      Chương trình Học bổng & Đề tài “Khai sáng” (Khaisang
+                      Initiative)
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
+                      Sáng kiến của Quỹ Thúc đẩy Hợp tác Nga - Việt tài trợ kinh
+                      phí sinh hoạt, hỗ trợ bảo vệ luận án và kết nối phòng thí
+                      nghiệm cho các nghiên cứu sinh, nhà khoa học trẻ tại LB
+                      Nga.
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 flex-wrap sm:flex-nowrap items-center gap-3 lg:justify-end">
+                    <button
+                      type="button"
+                      disabled
+                      onClick={(e) => {
+                        e.preventDefault();
+                        /* showResultsModal */
+                      }}
+                      aria-disabled="true"
+                      title="Tính năng đang hoàn thiện"
+                      className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
+                    >
+                      <span>Tra cứu Kết quả</span>
+                    </button>
+                    <button
+                      type="button"
+                      disabled
+                      onClick={(e) => e.preventDefault()}
+                      aria-disabled="true"
+                      title="Tính năng đang hoàn thiện"
+                      className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
+                    >
+                      <span>Đăng ký tham gia</span>
+                    </button>
+                  </div>
+                </article>
+              </Reveal>
 
               {/* DỰ ÁN 2: NĂNG LƯỢNG SẠCH & PIN THẾ HỆ MỚI */}
-              <article className="flex flex-col gap-5 rounded-2xl border border-blue-200/90 bg-white p-6 shadow-xs transition hover:border-blue-400 hover:shadow-md lg:flex-row lg:items-center lg:justify-between">
-                <div className="max-w-2xl">
-                  <h3 className="font-serif text-xl font-bold text-[#082352] sm:text-2xl">
-                    Dự án Hợp tác Nghiên cứu Năng lượng Sạch & Pin Thế hệ Mới
-                    Nga – Việt
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
-                    Chương trình tài trợ liên kết giữa VAST và MISIS / SPbPU
-                    nhằm chế tạo vật liệu lưu trữ năng lượng bền vững và pin
-                    trạng thái rắn (kinh phí dự kiến lên tới 15.000.000 RUB).
-                  </p>
-                </div>
-                <div className="flex shrink-0 flex-wrap sm:flex-nowrap items-center gap-3 lg:justify-end">
-                  <Link
-                    href="/news/1/mang-tri-thuc-tro-ve"
-                    onClick={(e) => e.preventDefault()}
-                    aria-disabled="true"
-                    tabIndex={-1}
-                    title="Tính năng đang hoàn thiện"
-                    className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-slate-50 px-5 py-2.5 text-sm font-bold text-slate-700 cursor-not-allowed opacity-90"
-                  >
-                    <span>Xem chi tiết</span>
-                  </Link>
-                  <button
-                    type="button"
-                    disabled
-                    onClick={(e) => e.preventDefault()}
-                    aria-disabled="true"
-                    title="Tính năng đang hoàn thiện"
-                    className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
-                  >
-                    <span>Đăng ký tham gia</span>
-                  </button>
-                </div>
-              </article>
+              <Reveal y={12} delay={0.08}>
+                <article className="flex flex-col gap-5 rounded-2xl border border-blue-200/90 bg-white p-6 shadow-xs transition hover:border-blue-400 hover:shadow-md lg:flex-row lg:items-center lg:justify-between">
+                  <div className="max-w-2xl">
+                    <h3 className="font-serif text-xl font-bold text-[#082352] sm:text-2xl">
+                      Dự án Hợp tác Nghiên cứu Năng lượng Sạch & Pin Thế hệ Mới
+                      Nga – Việt
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
+                      Chương trình tài trợ liên kết giữa VAST và MISIS / SPbPU
+                      nhằm chế tạo vật liệu lưu trữ năng lượng bền vững và pin
+                      trạng thái rắn (kinh phí dự kiến lên tới 15.000.000 RUB).
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 flex-wrap sm:flex-nowrap items-center gap-3 lg:justify-end">
+                    <Link
+                      href="/news/1/mang-tri-thuc-tro-ve"
+                      onClick={(e) => e.preventDefault()}
+                      aria-disabled="true"
+                      tabIndex={-1}
+                      title="Tính năng đang hoàn thiện"
+                      className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-slate-50 px-5 py-2.5 text-sm font-bold text-slate-700 cursor-not-allowed opacity-90"
+                    >
+                      <span>Xem chi tiết</span>
+                    </Link>
+                    <button
+                      type="button"
+                      disabled
+                      onClick={(e) => e.preventDefault()}
+                      aria-disabled="true"
+                      title="Tính năng đang hoàn thiện"
+                      className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
+                    >
+                      <span>Đăng ký tham gia</span>
+                    </button>
+                  </div>
+                </article>
+              </Reveal>
 
               {/* DỰ ÁN 3: AI & BIG DATA */}
-              <article className="flex flex-col gap-5 rounded-2xl border border-blue-200/90 bg-white p-6 shadow-xs transition hover:border-blue-400 hover:shadow-md lg:flex-row lg:items-center lg:justify-between">
-                <div className="max-w-2xl">
-                  <h3 className="font-serif text-xl font-bold text-[#082352] sm:text-2xl">
-                    Dự án Trung tâm Đổi mới AI & Xử lý Dữ liệu Lớn Song phương
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
-                    Sáng kiến thành lập mạng lưới phòng thí nghiệm ảo về AI,
-                    dịch máy đa ngữ Nga – Việt và phân tích dữ liệu quan trắc
-                    viễn thám không gian giữa Đại học Quốc gia Hà Nội và ĐH
-                    Bauman.
-                  </p>
-                </div>
-                <div className="flex shrink-0 flex-wrap sm:flex-nowrap items-center gap-3 lg:justify-end">
-                  <Link
-                    href="/news/5/truong-dai-hoc-khoa-hoc-tu-nhien-va-rosatom-quantum-thuc-day-hop-tac-trong-linh-vuc-cong-nghe-luong-tu"
-                    onClick={(e) => e.preventDefault()}
-                    aria-disabled="true"
-                    tabIndex={-1}
-                    title="Tính năng đang hoàn thiện"
-                    className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-slate-50 px-5 py-2.5 text-sm font-bold text-slate-700 cursor-not-allowed opacity-90"
-                  >
-                    <span>Xem chi tiết</span>
-                  </Link>
-                  <button
-                    type="button"
-                    disabled
-                    onClick={(e) => e.preventDefault()}
-                    aria-disabled="true"
-                    title="Tính năng đang hoàn thiện"
-                    className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
-                  >
-                    <span>Đăng ký tham gia</span>
-                  </button>
-                </div>
-              </article>
+              <Reveal y={12} delay={0.16}>
+                <article className="flex flex-col gap-5 rounded-2xl border border-blue-200/90 bg-white p-6 shadow-xs transition hover:border-blue-400 hover:shadow-md lg:flex-row lg:items-center lg:justify-between">
+                  <div className="max-w-2xl">
+                    <h3 className="font-serif text-xl font-bold text-[#082352] sm:text-2xl">
+                      Dự án Trung tâm Đổi mới AI & Xử lý Dữ liệu Lớn Song phương
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
+                      Sáng kiến thành lập mạng lưới phòng thí nghiệm ảo về AI,
+                      dịch máy đa ngữ Nga – Việt và phân tích dữ liệu quan trắc
+                      viễn thám không gian giữa Đại học Quốc gia Hà Nội và ĐH
+                      Bauman.
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 flex-wrap sm:flex-nowrap items-center gap-3 lg:justify-end">
+                    <Link
+                      href="/news/5/truong-dai-hoc-khoa-hoc-tu-nhien-va-rosatom-quantum-thuc-day-hop-tac-trong-linh-vuc-cong-nghe-luong-tu"
+                      onClick={(e) => e.preventDefault()}
+                      aria-disabled="true"
+                      tabIndex={-1}
+                      title="Tính năng đang hoàn thiện"
+                      className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-slate-50 px-5 py-2.5 text-sm font-bold text-slate-700 cursor-not-allowed opacity-90"
+                    >
+                      <span>Xem chi tiết</span>
+                    </Link>
+                    <button
+                      type="button"
+                      disabled
+                      onClick={(e) => e.preventDefault()}
+                      aria-disabled="true"
+                      title="Tính năng đang hoàn thiện"
+                      className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs cursor-not-allowed opacity-90"
+                    >
+                      <span>Đăng ký tham gia</span>
+                    </button>
+                  </div>
+                </article>
+              </Reveal>
             </div>
           </div>
         </section>
@@ -1498,37 +1527,41 @@ export function GuestEcosystemV2({
 
             {visibleKnowledge.length ? (
               <div className="grid gap-6 md:grid-cols-3">
-                {visibleKnowledge.map((article) => (
-                  <article
+                {visibleKnowledge.map((article, index) => (
+                  <Reveal
                     key={article.id}
-                    className="flex flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none"
+                    y={12}
+                    delay={Math.min(index * 0.06, 0.36)}
+                    className="h-full"
                   >
-                    <div>
-                      <p className="text-sm font-semibold text-blue-700">
-                        {formatDate(article.date, locale)}
-                      </p>
-                      <h3 className="mt-2 font-serif text-xl font-bold leading-snug text-[#082352]">
-                        {formatNewsTitle(article.title)}
-                      </h3>
-                      {article.summary ? (
-                        <p className="mt-3 line-clamp-3 text-base leading-relaxed text-slate-600">
-                          {article.summary}
+                    <article className="flex h-full flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none">
+                      <div>
+                        <p className="text-sm font-semibold text-blue-700">
+                          {formatDate(article.date, locale)}
                         </p>
-                      ) : null}
-                    </div>
-                    <div className="mt-5 border-t border-slate-100 pt-3">
-                      <Link
-                        href={newsArticleHref(article)}
-                        onClick={(e) => e.preventDefault()}
-                        aria-disabled="true"
-                        tabIndex={-1}
-                        title="Tính năng đang hoàn thiện"
-                        className="inline-flex min-h-11 items-center text-base font-extrabold text-blue-600 cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-                      >
-                        Xem chi tiết →
-                      </Link>
-                    </div>
-                  </article>
+                        <h3 className="mt-2 font-serif text-xl font-bold leading-snug text-[#082352]">
+                          {formatNewsTitle(article.title)}
+                        </h3>
+                        {article.summary ? (
+                          <p className="mt-3 line-clamp-3 text-base leading-relaxed text-slate-600">
+                            {article.summary}
+                          </p>
+                        ) : null}
+                      </div>
+                      <div className="mt-5 border-t border-slate-100 pt-3">
+                        <Link
+                          href={newsArticleHref(article)}
+                          onClick={(e) => e.preventDefault()}
+                          aria-disabled="true"
+                          tabIndex={-1}
+                          title="Tính năng đang hoàn thiện"
+                          className="inline-flex min-h-11 items-center text-base font-extrabold text-blue-600 cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                        >
+                          Xem chi tiết →
+                        </Link>
+                      </div>
+                    </article>
+                  </Reveal>
                 ))}
               </div>
             ) : (

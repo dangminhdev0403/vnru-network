@@ -207,7 +207,7 @@ export function GuestPublicNav({
           {!isAuthenticated ? (
             <Link
               href="/register"
-              className="hidden h-9 items-center justify-center whitespace-nowrap rounded-xl border border-blue-300 bg-white px-2.5 text-center text-xs font-bold text-blue-700 transition hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:inline-flex xl:h-10 xl:px-3.5 xl:text-sm 2xl:h-11 2xl:px-4 2xl:text-base"
+              className="hidden h-9 items-center justify-center whitespace-nowrap rounded-xl border border-blue-300 bg-white px-2.5 text-center text-xs font-bold text-blue-700 transition hover:border-blue-500 hover:bg-blue-50 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:inline-flex xl:h-10 xl:px-3.5 xl:text-sm 2xl:h-11 2xl:px-4 2xl:text-base"
             >
               {t.register}
             </Link>
@@ -215,7 +215,7 @@ export function GuestPublicNav({
 
           <Link
             href={isAuthenticated ? workspaceHref : "/login"}
-            className="hidden h-9 items-center justify-center whitespace-nowrap rounded-xl bg-blue-600 px-2.5 text-center text-xs font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:inline-flex xl:h-10 xl:px-3.5 xl:text-sm 2xl:h-11 2xl:px-4 2xl:text-base"
+            className="hidden h-9 items-center justify-center whitespace-nowrap rounded-xl bg-blue-600 px-2.5 text-center text-xs font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:inline-flex xl:h-10 xl:px-3.5 xl:text-sm 2xl:h-11 2xl:px-4 2xl:text-base"
           >
             {isAuthenticated ? t.workspace : t.login}
           </Link>
