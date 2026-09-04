@@ -1,7 +1,7 @@
 # Graph Report - vnru-network  (2026-09-04)
 
 ## Corpus Check
-- 383 files · ~1,296,431 words
+- 383 files · ~1,296,605 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -280,7 +280,7 @@ Nodes (14): create(), createMany(), deleteMany(), findMany(), findUnique(), IamA
 
 ### Community 3 - "dependencies"
 Cohesion: 0.12
-Nodes (17): class-variance-authority, clsx, @designcodeio/threeui, dependencies, class-variance-authority, clsx, @designcodeio/threeui, next-themes (+9 more)
+Nodes (17): class-variance-authority, clsx, @dangminhdev04032005/query-resource, dependencies, class-variance-authority, clsx, @dangminhdev04032005/query-resource, next-themes (+9 more)
 
 ### Community 4 - "Auth Service Specification — Module 1"
 Cohesion: 0.05
@@ -515,11 +515,11 @@ Cohesion: 0.17
 Nodes (12): 1. Purpose?, 2. Audience?, 3. Context?, 4-Level Decision Hierarchy, Decision Framework, Decision Quick-Path, Evaluation Before Delivery, Level 1: Motion Category (+4 more)
 
 ### Community 64 - "Four Archetypes"
-Cohesion: 0.17
+Cohesion: 0.15
 Nodes (12): 1. Signature Easing (80% of animations), 2. Duration Palette, 3. Entrance Pattern, Brand Motion Identity, Corporate / Professional, Energetic / Dynamic, Four Archetypes, Keyword Matching (+4 more)
 
 ### Community 65 - "Timing & Easing Tables"
-Cohesion: 0.15
+Cohesion: 0.17
 Nodes (12): Distance-Duration Scaling, Duration by Element Type, Duration by Personality, Easing: Directional Rules, Easing: Industry Standards, Enter vs. Exit, Interactive Feedback, Material-Based Easing (+4 more)
 
 ### Community 66 - "app/news/page.tsx"
@@ -555,7 +555,7 @@ Cohesion: 0.18
 Nodes (10): Accessibility Quality, CRITICAL, Emotional Quality, HIGH, MEDIUM, Performance Quality, Quality Checklist, Severity Tiers (+2 more)
 
 ### Community 74 - "Troubleshooting"
-Cohesion: 0.17
+Cohesion: 0.18
 Nodes (11): Feels Cheap / Flat, Feels Too Fast / Jarring, Feels Too Slow, Inconsistent Feel, Looks Robotic, No Personality, Performance (Dropped Frames), Personality Mistakes (+3 more)
 
 ### Community 75 - "RoleListPage.tsx"

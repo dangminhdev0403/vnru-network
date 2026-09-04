@@ -1535,15 +1535,18 @@ export function GuestEcosystemV2({
                     className="h-full"
                   >
                     <article className="flex h-full flex-col justify-between rounded-3xl border border-blue-200 bg-white p-7 shadow-xs transition hover:-translate-y-1 hover:border-blue-400 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none">
-                      <div>
+                      <div className="flex flex-1 flex-col">
                         <p className="text-sm font-semibold text-blue-700">
                           {formatDate(article.date, locale)}
                         </p>
-                        <h3 className="mt-2 font-serif text-xl font-bold leading-snug text-[#082352]">
+                        <h3
+                          className="mt-2 line-clamp-2 font-serif text-xl font-bold leading-snug text-[#082352] sm:min-h-[3.5rem]"
+                          title={formatNewsTitle(article.title)}
+                        >
                           {formatNewsTitle(article.title)}
                         </h3>
                         {article.summary ? (
-                          <p className="mt-3 line-clamp-3 text-base leading-relaxed text-slate-600">
+                          <p className="mt-3 line-clamp-3 text-base leading-relaxed text-slate-600 sm:min-h-[4.875rem]">
                             {article.summary}
                           </p>
                         ) : null}

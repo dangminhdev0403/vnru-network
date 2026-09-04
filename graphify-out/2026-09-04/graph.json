@@ -2153,7 +2153,7 @@
       "label": "Stagger()",
       "file_type": "code",
       "source_file": "frontend/components/shared/Reveal.tsx",
-      "source_location": "L126",
+      "source_location": "L159",
       "_origin": "ast",
       "id": "frontend_components_shared_reveal_stagger",
       "community": 88,
@@ -2164,7 +2164,7 @@
       "label": "StaggerItem()",
       "file_type": "code",
       "source_file": "frontend/components/shared/Reveal.tsx",
-      "source_location": "L215",
+      "source_location": "L278",
       "_origin": "ast",
       "id": "frontend_components_shared_reveal_staggeritem",
       "community": 88,
@@ -7700,8 +7700,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "frontend_package_dependencies_dangminhdev04032005_query_resource",
-      "community": 253,
-      "community_name": "@dangminhdev04032005/query-resource",
+      "community": 3,
+      "community_name": "dependencies",
       "norm_label": "@dangminhdev04032005/query-resource"
     },
     {
@@ -7711,8 +7711,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "dangminhdev04032005_query_resource",
-      "community": 253,
-      "community_name": "@dangminhdev04032005/query-resource",
+      "community": 3,
+      "community_name": "dependencies",
       "norm_label": "@dangminhdev04032005/query-resource"
     },
     {
@@ -7722,8 +7722,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_package_dependencies_designcodeio_threeui",
-      "community": 3,
-      "community_name": "dependencies",
+      "community": 253,
+      "community_name": "@dangminhdev04032005/query-resource",
       "norm_label": "@designcodeio/threeui"
     },
     {
@@ -7733,8 +7733,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "designcodeio_threeui",
-      "community": 3,
-      "community_name": "dependencies",
+      "community": 253,
+      "community_name": "@dangminhdev04032005/query-resource",
       "norm_label": "@designcodeio/threeui"
     },
     {
@@ -24153,8 +24153,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_skills_motion_design_director_motion_personality",
-      "community": 215,
-      "community_name": "motion-design/SKILL.md",
+      "community": 64,
+      "community_name": "Four Archetypes",
       "norm_label": "motion-personality.md"
     },
     {
@@ -25451,8 +25451,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_skills_motion_design_reference_timing_easing_tables",
-      "community": 65,
-      "community_name": "Timing & Easing Tables",
+      "community": 215,
+      "community_name": "motion-design/SKILL.md",
       "norm_label": "timing-easing-tables.md"
     },
     {
@@ -25594,8 +25594,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_skills_motion_design_reference_troubleshooting",
-      "community": 74,
-      "community_name": "Troubleshooting",
+      "community": 215,
+      "community_name": "motion-design/SKILL.md",
       "norm_label": "troubleshooting.md"
     },
     {
@@ -37626,7 +37626,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/components/shared/Reveal.tsx",
-      "source_location": "L126",
+      "source_location": "L159",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_components_shared_reveal",
@@ -37637,7 +37637,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/components/shared/Reveal.tsx",
-      "source_location": "L215",
+      "source_location": "L278",
       "weight": 1.0,
       "_origin": "ast",
       "source": "frontend_components_shared_reveal",

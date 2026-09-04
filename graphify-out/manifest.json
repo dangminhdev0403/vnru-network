@@ -1430,8 +1430,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestKnowledgeV2.tsx": {
-    "mtime": 1788484097.0458736,
-    "ast_hash": "fce0c8c4f2ae89156c44170ef4de0d27",
+    "mtime": 1788500265.920229,
+    "ast_hash": "dbbf37faffa352b1b1863309de75fe69",
     "semantic_hash": ""
   },
   "frontend/features/workspace/components/UnifiedWorkspaceDashboard.tsx": {
@@ -2005,8 +2005,8 @@
     "semantic_hash": ""
   },
   "frontend/features/public-v2/components/GuestEcosystemV2.tsx": {
-    "mtime": 1788485661.4553597,
-    "ast_hash": "f3eafea818a67475b1d510f911af31df",
+    "mtime": 1788500261.4455373,
+    "ast_hash": "8ddeb62e2e6870599954041d3cc80832",
     "semantic_hash": ""
   },
   "frontend/public/images/ecosystem-hero-bg.jpg": {
@@ -2375,7 +2375,7 @@
     "semantic_hash": ""
   },
   "frontend/components/shared/Reveal.tsx": {
-    "mtime": 1788485991.5332203,
+    "mtime": 1788486113.2189465,
     "ast_hash": "5470995e62e44a8c71b3580ae08e9d52",
     "semantic_hash": ""
   },
@@ -2665,46 +2665,6 @@
     "semantic_hash": ""
   },
   ".agents/skills/gsap-utils/SKILL.md": {
-    "mtime": 1788484747.7925825,
-    "ast_hash": "ef6b75ec2464a7d95a7bb5cfa88cfa79",
-    "semantic_hash": ""
-  },
-  ".aider-desk/skills/gsap-core/SKILL.md": {
-    "mtime": 1788484747.7879803,
-    "ast_hash": "442e31452152be4115b904fad0fa5487",
-    "semantic_hash": ""
-  },
-  ".aider-desk/skills/gsap-frameworks/SKILL.md": {
-    "mtime": 1788484747.7889788,
-    "ast_hash": "fbd4d542ae797fbe3a6eb34682b7d93f",
-    "semantic_hash": ""
-  },
-  ".aider-desk/skills/gsap-performance/SKILL.md": {
-    "mtime": 1788484747.7889788,
-    "ast_hash": "70536cc5c8f8c017be0a4ed8104b9845",
-    "semantic_hash": ""
-  },
-  ".aider-desk/skills/gsap-plugins/SKILL.md": {
-    "mtime": 1788484747.7899785,
-    "ast_hash": "466d8913c840ca9b1d2abdecde473e2c",
-    "semantic_hash": ""
-  },
-  ".aider-desk/skills/gsap-react/SKILL.md": {
-    "mtime": 1788484747.7899785,
-    "ast_hash": "daa3ecc330a1ab075aab9475824af231",
-    "semantic_hash": ""
-  },
-  ".aider-desk/skills/gsap-scrolltrigger/SKILL.md": {
-    "mtime": 1788484747.7909787,
-    "ast_hash": "9aa0d62e6b138cee09bafe595da0319f",
-    "semantic_hash": ""
-  },
-  ".aider-desk/skills/gsap-timeline/SKILL.md": {
-    "mtime": 1788484747.7920666,
-    "ast_hash": "07da4abbe71ed29f1babd34be3b960b3",
-    "semantic_hash": ""
-  },
-  ".aider-desk/skills/gsap-utils/SKILL.md": {
     "mtime": 1788484747.7925825,
     "ast_hash": "ef6b75ec2464a7d95a7bb5cfa88cfa79",
     "semantic_hash": ""

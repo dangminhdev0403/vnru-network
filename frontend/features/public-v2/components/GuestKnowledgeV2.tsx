@@ -11,7 +11,10 @@ import { GuestPublicNav } from "./GuestPublicNav";
 import { PUBLIC_STATIC_TRANSLATIONS } from "./public-static-translations";
 import { Reveal } from "@/components/shared/Reveal";
 
-const COPY: Record<Locale, { title: string; intro: string; empty: string; count: string }> = {
+const COPY: Record<
+  Locale,
+  { title: string; intro: string; empty: string; count: string }
+> = {
   vi: {
     title: "Kho tri thức",
     intro: "Nội dung tri thức từ Mạng lưới tri thức Nga - Việt.",
@@ -65,11 +68,17 @@ export function GuestKnowledgeV2({
           </div>
         </section>
 
-        <section className="px-4 py-10 sm:px-6 lg:px-8" aria-labelledby="knowledge-list-title">
+        <section
+          className="px-4 py-10 sm:px-6 lg:px-8"
+          aria-labelledby="knowledge-list-title"
+        >
           <div className="mx-auto max-w-[1460px]">
             <Reveal y={10}>
               <div className="flex items-end justify-between gap-4">
-                <h2 id="knowledge-list-title" className="text-2xl font-black text-slate-950">
+                <h2
+                  id="knowledge-list-title"
+                  className="text-2xl font-black text-slate-950"
+                >
                   {t.title}
                 </h2>
                 <p className="text-sm font-semibold text-slate-600">
@@ -102,16 +111,20 @@ export function GuestKnowledgeV2({
                       className="group block h-full rounded-2xl border border-blue-200/80 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 motion-reduce:transform-none motion-reduce:transition-none"
                     >
                       <span className="inline-flex rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-blue-700">
-                        {CATEGORY_LABELS[article.category]?.[locale] ?? article.category}
+                        {CATEGORY_LABELS[article.category]?.[locale] ??
+                          article.category}
                       </span>
                       <p className="text-sm font-semibold text-blue-700">
                         {formatDate(article.date, locale)}
                       </p>
-                      <h3 className="mt-3 text-xl font-black leading-snug text-slate-950 group-hover:text-blue-700">
+                      <h3
+                        className="mt-3 line-clamp-2 text-xl font-black leading-snug text-slate-950 group-hover:text-blue-700 sm:min-h-[3.5rem]"
+                        title={formatNewsTitle(article.title)}
+                      >
                         {formatNewsTitle(article.title)}
                       </h3>
                       {article.summary ? (
-                        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600">
+                        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600 sm:min-h-[4.5rem]">
                           {article.summary}
                         </p>
                       ) : null}
@@ -122,7 +135,9 @@ export function GuestKnowledgeV2({
             ) : (
               <Reveal y={12}>
                 <div className="mt-6 rounded-2xl border border-dashed border-blue-300 bg-white/70 px-6 py-16 text-center">
-                  <p className="text-base font-semibold text-slate-600">{t.empty}</p>
+                  <p className="text-base font-semibold text-slate-600">
+                    {t.empty}
+                  </p>
                 </div>
               </Reveal>
             )}
