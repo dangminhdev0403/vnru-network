@@ -90,16 +90,16 @@ export function GuestNewsFilterNav({
       aria-label={searchPlaceholder}
       className="relative z-30 mb-8 overflow-visible rounded-2xl border border-slate-200 bg-white shadow-sm has-[details[open]]:rounded-b-none"
     >
-      <div className="grid w-full grid-cols-2 divide-x divide-slate-200 border-b border-slate-200 sm:grid-cols-3 xl:grid-cols-5">
+      <div className="flex w-full overflow-x-auto rounded-t-2xl border-b border-slate-200 divide-x divide-slate-200 xl:grid xl:grid-cols-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {NEWS_CATEGORIES.map((category, index) => (
           <button
             key={category}
             type="button"
             onClick={() => onCategoryChange(category)}
             aria-pressed={activeCategory === category}
-            className={`flex min-h-11 w-full items-center justify-center px-3 text-center text-sm font-bold transition-colors focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue-600 ${
+            className={`flex min-h-11 shrink-0 flex-1 items-center justify-center px-4 text-center text-sm font-bold whitespace-nowrap transition-colors focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue-600 ${
               index === 0 ? "rounded-tl-2xl" : ""
-            } ${index === NEWS_CATEGORIES.length - 1 ? "rounded-tr-2xl" : ""} ${
+            } ${index === NEWS_CATEGORIES.length - 1 ? "xl:rounded-tr-2xl" : ""} ${
               activeCategory === category
                 ? "bg-blue-600 font-black text-white"
                 : "bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-blue-600"

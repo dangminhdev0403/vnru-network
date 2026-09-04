@@ -7,7 +7,7 @@ import { motion } from "motion/react";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { useLocale, type Locale } from "@/core/i18n/locale";
 import { BrandMark } from "@/components/shared/BrandMark";
-import { MenuIcon } from "@/components/shared/icons/SidebarIcons";
+import { CloseIcon, MenuIcon } from "@/components/shared/icons/SidebarIcons";
 
 type GuestNavActive =
   | "home"
@@ -118,6 +118,39 @@ export function GuestPublicNav({
     return () => window.removeEventListener("hashchange", handleHash);
   }, []);
 
+  const closeMobileMenu = () => {
+    if (typeof document !== "undefined") {
+      const details = document.querySelector<HTMLDetailsElement>("header details.group");
+      if (details) details.open = false;
+    }
+  };
+
+  useEffect(() => {
+    closeMobileMenu();
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      const details = document.querySelector<HTMLDetailsElement>("header details.group");
+      if (details?.open && !details.contains(event.target as Node)) {
+        details.open = false;
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMobileMenu();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   const resolveActive = (): string => {
     if (clickedKey) return clickedKey;
     if (pathname.startsWith("/news")) return "news";
@@ -225,7 +258,8 @@ export function GuestPublicNav({
               aria-label={t.menu}
               className="grid size-11 cursor-pointer list-none place-items-center rounded-xl border border-blue-200 bg-white text-blue-950 transition-colors hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 [&::-webkit-details-marker]:hidden"
             >
-              <MenuIcon aria-hidden="true" />
+              <MenuIcon aria-hidden="true" className="group-open:hidden" />
+              <CloseIcon aria-hidden="true" className="hidden group-open:block" />
             </summary>
             <div className="absolute inset-x-4 top-[calc(100%+8px)] rounded-2xl border border-blue-200 bg-white p-3 shadow-xl sm:inset-x-6">
               <nav className="grid gap-1" aria-label={t.menu}>
@@ -235,7 +269,10 @@ export function GuestPublicNav({
                     <Link
                       key={item.key}
                       href={item.href}
-                      onClick={() => setClickedKey(item.key)}
+                      onClick={() => {
+                        setClickedKey(item.key);
+                        closeMobileMenu();
+                      }}
                       aria-current={selected ? "page" : undefined}
                       className={`flex min-h-11 items-center justify-center rounded-xl px-4 text-center text-base font-bold ${selected ? "bg-blue-600 text-white" : "text-blue-950 hover:bg-blue-50"}`}
                     >
@@ -248,6 +285,7 @@ export function GuestPublicNav({
                 {!isAuthenticated ? (
                   <Link
                     href="/register"
+                    onClick={closeMobileMenu}
                     className="inline-flex min-h-11 items-center justify-center rounded-xl border border-blue-300 px-3 text-base font-bold text-blue-700"
                   >
                     {t.register}
@@ -255,6 +293,7 @@ export function GuestPublicNav({
                 ) : null}
                 <Link
                   href={isAuthenticated ? workspaceHref : "/login"}
+                  onClick={closeMobileMenu}
                   className={`${isAuthenticated ? "col-span-2" : ""} inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-600 px-3 text-base font-bold text-white`}
                 >
                   {isAuthenticated ? t.workspace : t.login}
