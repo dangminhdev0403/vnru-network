@@ -30,6 +30,7 @@ Current source, manifests, schemas, migrations and tests override target-state p
 | API contract | `../docs/API_SPEC.md`, `../frontend/docs/CONTRACT_GUIDE.md`, affected producer/consumer source |
 | Deployment | `../docs/DEPLOYMENT.md`, current Compose/deploy scripts |
 | Verification | `../docs/VERIFICATION_GUIDE.md` |
+| Complex planning/continuation | `RULES.md` plan lifecycle, then the selected `.hermes/plans/<timestamp>-<slug>.md` |
 
 ## Canonical detailed docs
 

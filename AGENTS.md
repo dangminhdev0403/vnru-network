@@ -27,6 +27,7 @@ Do not edit until this gate is complete. In the final report, list `Docs read:` 
 - Use the smallest working diff. No speculative services, packages, interfaces, factories, configuration, boilerplate, scaffolding, or docs.
 - Never simplify security, trust-boundary validation, data-loss prevention, or accessibility.
 - Non-trivial logic requires one smallest runnable check. Never claim an unrun command passed.
+- Complex work follows the single-plan lifecycle in `Architecture/RULES.md`; routine tasks do not create planning logs.
 - Mark a deliberate ceiling only when real: `ponytail: <ceiling>; upgrade when <measured condition>`.
 - Backend authorization is authoritative; frontend visibility is not a security boundary.
 
