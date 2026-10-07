@@ -221,11 +221,19 @@ test("news spotlight uses the backend featured flag", async () => {
   assert.match(carousel, /const isActive = index === spotlightIndex/);
 });
 
-test("official news keeps cover images aligned with their article", async () => {
-  const catalog = await read("features/public-v2/data/official-news.ts");
+test("official news keeps GCS cover images aligned with their article", async () => {
+  const [catalog, nextConfig] = await Promise.all([
+    read("features/public-v2/data/official-news.ts"),
+    read("next.config.ts"),
+  ]);
+  assert.doesNotMatch(catalog, /res\.cloudinary\.com/);
+  assert.doesNotMatch(nextConfig, /hostname: "\*\*"/);
+  assert.match(nextConfig, /hostname: "storage\.googleapis\.com"/);
+  assert.match(nextConfig, /pathname: "\/vnru-knowledge-data\/\*\*"/);
+  assert.match(nextConfig, /hostname: "images\.unsplash\.com"/);
   assert.match(
     catalog,
-    /"id": 1,[\s\S]*?"image": null,[\s\S]*?"id": 2,[\s\S]*?"title": "Ông Đỗ Xuân Hoàng[^\n]+[\s\S]*?"image": "https:\/\/res\.cloudinary\.com\/[^\n]+official-edbe2e6d[^\n]+"/,
+    /"id": 1,[\s\S]*?"image": null,[\s\S]*?"id": 2,[\s\S]*?"title": "Ông Đỗ Xuân Hoàng[^\n]+[\s\S]*?"image": "https:\/\/storage\.googleapis\.com\/vnru-knowledge-data\/vnru\/news\/[^\n]+"/,
   );
 });
 

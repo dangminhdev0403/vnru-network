@@ -151,6 +151,29 @@ describe('news media migration mapping', () => {
     ).toThrow(/metadata mismatch/);
   });
 
+  it('accepts every explicitly owned Cloudinary cloud', () => {
+    const secondSource =
+      'https://res.cloudinary.com/legacy/image/upload/v2/vnru/news/legacy.webp';
+    const multiCloud = buildNewsMediaManifest(
+      [
+        articles[0],
+        {
+          id: 'legacy',
+          coverImageUrl: secondSource,
+          translations: [],
+        },
+      ],
+      {
+        migrationId: 'migration-2',
+        createdAt: '2026-10-06T20:00:00.000Z',
+        sourceCloudName: 'demo,legacy',
+        targetBucketName: 'vnru-public-media',
+      },
+    );
+
+    expect(multiCloud.entries).toHaveLength(4);
+  });
+
   it('fails inventory instead of silently skipping an unowned Cloudinary URL', () => {
     expect(() =>
       buildNewsMediaManifest(
@@ -163,9 +186,9 @@ describe('news media migration mapping', () => {
           },
         ],
         {
-          migrationId: 'migration-2',
+          migrationId: 'migration-3',
           createdAt: '2026-10-06T20:00:00.000Z',
-          sourceCloudName: 'demo',
+          sourceCloudName: 'demo,legacy',
           targetBucketName: 'vnru-public-media',
         },
       ),

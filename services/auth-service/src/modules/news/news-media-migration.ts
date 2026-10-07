@@ -61,16 +61,24 @@ const sha256 = (value: string | Buffer) =>
 export function isOwnedCloudinaryNewsUrl(url: string, cloudName: string) {
   try {
     const parsed = new URL(url);
-    const prefix = `/${cloudName}/image/upload/`;
     if (
       parsed.protocol !== 'https:' ||
-      parsed.hostname !== 'res.cloudinary.com' ||
-      !parsed.pathname.startsWith(prefix)
+      parsed.hostname !== 'res.cloudinary.com'
     )
       return false;
-    return /^(?:v\d+\/)?vnru\/news\//.test(
-      decodeURIComponent(parsed.pathname.slice(prefix.length)),
-    );
+    return cloudName
+      .split(',')
+      .map((name) => name.trim())
+      .filter(Boolean)
+      .some((name) => {
+        const prefix = `/${name}/image/upload/`;
+        return (
+          parsed.pathname.startsWith(prefix) &&
+          /^(?:v\d+\/)?vnru\/news\//.test(
+            decodeURIComponent(parsed.pathname.slice(prefix.length)),
+          )
+        );
+      });
   } catch {
     return false;
   }

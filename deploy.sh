@@ -5,17 +5,43 @@ cd "$(dirname "$(readlink -f "$0")")"
 
 ENV_FILE=secrets/demo.env
 ACCOUNT_FILE=secrets/account.json
+GCP_CREDENTIAL_FILE=secrets/gcs-key.json
 COMPOSE=(docker compose --env-file "$ENV_FILE" -f docker-compose.yml -f docker-compose.prod.yml)
 
 check() {
   command -v docker >/dev/null
   docker compose version >/dev/null
-  for file in "$ENV_FILE" "$ACCOUNT_FILE"; do
+  for file in "$ENV_FILE" "$ACCOUNT_FILE" "$GCP_CREDENTIAL_FILE"; do
     [[ -s "$file" ]] || { echo "Missing secret: $file" >&2; return 1; }
     mode=$(stat -c %a "$file")
     (( (8#$mode & 8#077) == 0 )) || { echo "Unsafe permissions: $file ($mode); run chmod 600 $file" >&2; return 1; }
   done
+  ! grep -Eqi 'fill-|FILL_' "$ENV_FILE" "$GCP_CREDENTIAL_FILE" || {
+    echo "Google Cloud configuration still contains placeholders" >&2
+    return 1
+  }
   "${COMPOSE[@]}" config --quiet
+  postgres_container=$("${COMPOSE[@]}" ps -aq postgres)
+  if [[ -n $postgres_container ]]; then
+    [[ -n $("${COMPOSE[@]}" ps -q postgres) ]] || {
+      echo "Existing production PostgreSQL is stopped; start it and verify media migration before deploy" >&2
+      return 1
+    }
+    "${COMPOSE[@]}" exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d auth_db' >/dev/null 2>&1 || {
+      echo "Production PostgreSQL is not ready" >&2
+      return 1
+    }
+    news_tables=$("${COMPOSE[@]}" exec -T postgres sh -c \
+      'psql -X -U "$POSTGRES_USER" -d auth_db -Atc "SELECT count(*) FROM pg_class WHERE relkind = '\''r'\'' AND relname IN ('\''NewsArticle'\'', '\''NewsArticleTranslation'\'')"')
+    if [[ $news_tables == 2 ]]; then
+      legacy_media=$("${COMPOSE[@]}" exec -T postgres sh -c \
+        'psql -X -U "$POSTGRES_USER" -d auth_db -Atc "SELECT (SELECT count(*) FROM \"NewsArticle\" WHERE \"coverImageUrl\" LIKE '\''%res.cloudinary.com%'\'') + (SELECT count(*) FROM \"NewsArticleTranslation\" WHERE \"content\" LIKE '\''%res.cloudinary.com%'\'')"')
+      [[ $legacy_media == 0 ]] || {
+        echo "Cloudinary media references remain in auth_db ($legacy_media); complete media:migrate:gcs before deploy" >&2
+        return 1
+      }
+    fi
+  fi
 }
 
 check
@@ -33,9 +59,8 @@ if [[ -n $("${COMPOSE[@]}" ps -q postgres) ]] && "${COMPOSE[@]}" exec -T postgre
   echo "Backup verified: $backup"
 fi
 
-"${COMPOSE[@]}" --profile seed build
+"${COMPOSE[@]}" build migrate auth-service frontend nginx
 "${COMPOSE[@]}" run --rm migrate
-"${COMPOSE[@]}" --profile seed run --rm -T demo-seed < "$ACCOUNT_FILE"
 "${COMPOSE[@]}" up -d --remove-orphans
 "${COMPOSE[@]}" restart nginx
 

@@ -65,10 +65,9 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER:?set in secrets/demo.env}:${POSTGRES_PASSWORD:?set in secrets/demo.env}@postgres:5432/auth_db?schema=public
       GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:?set in secrets/demo.env}
       GCS_BUCKET: ${GCS_BUCKET:?set in secrets/demo.env}
-      SOURCE_CLOUDINARY_CLOUD_NAME: ${SOURCE_CLOUDINARY_CLOUD_NAME:?set in secrets/demo.env}
       GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/gcp-service-account.json
     volumes:
-      - ${GCS_CREDENTIALS_FILE:-./secrets/gcp-service-account.json}:/run/secrets/gcp-service-account.json:ro
+      - ${GCS_CREDENTIALS_FILE:-./secrets/gcs-key.json}:/run/secrets/gcp-service-account.json:ro
       - ./secrets/media-migration:/run/media-migration
     depends_on:
       postgres:
@@ -87,7 +86,7 @@ services:
       GCS_BUCKET: ${GCS_BUCKET:?set in secrets/demo.env}
       GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/gcp-service-account.json
     volumes:
-      - ${GCS_CREDENTIALS_FILE:-./secrets/gcp-service-account.json}:/run/secrets/gcp-service-account.json:ro
+      - ${GCS_CREDENTIALS_FILE:-./secrets/gcs-key.json}:/run/secrets/gcp-service-account.json:ro
     depends_on:
       migrate:
         condition: service_completed_successfully
