@@ -27,7 +27,7 @@ import {
   RequirePermission,
   type AuthenticatedRequest,
 } from '../authentication/authenticated-request-context';
-import { NewsService, type NewsLocale } from './news.service';
+import { NewsService } from './news.service';
 
 const localeSchema = z.enum(['vi', 'en', 'ru']).default('vi');
 const categorySchema = z.enum([
@@ -54,15 +54,19 @@ const publicQuerySchema = paginationSchema.extend({
   contentType: z
     .union([z.string(), z.array(z.string())])
     .transform((value) => (Array.isArray(value) ? value : [value]))
-    .pipe(z.array(z.enum([
-      'ARTICLE',
-      'EVENT',
-      'ANNOUNCEMENT',
-      'PROJECT',
-      'OPPORTUNITY',
-      'KNOWLEDGE',
-      'PUBLICATION',
-    ])))
+    .pipe(
+      z.array(
+        z.enum([
+          'ARTICLE',
+          'EVENT',
+          'ANNOUNCEMENT',
+          'PROJECT',
+          'OPPORTUNITY',
+          'KNOWLEDGE',
+          'PUBLICATION',
+        ]),
+      ),
+    )
     .optional(),
   q: z.string().trim().max(200).optional(),
   scope: z.enum(['vietnam', 'russia', 'bilateral']).optional(),
@@ -260,5 +264,4 @@ export class AdminNewsController {
   delete(@Param('id') id: string) {
     return this.service.delete(parse(uuidSchema, id));
   }
-
 }

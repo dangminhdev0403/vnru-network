@@ -38,6 +38,8 @@ coverage
 
 *.log
 backups/
+media-migration-*.json
+media-migration-*.json.*
 graphify-out/cache/
 
 # nested repository backups

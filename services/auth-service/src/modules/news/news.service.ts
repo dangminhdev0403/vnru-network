@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import type { Prisma, PrismaClient } from '@prisma/client';
 import { NewsMediaService } from './news-media.service';
 
 export const NEWS_PRISMA = 'NEWS_PRISMA';
@@ -22,6 +23,10 @@ const KNOWLEDGE_CATEGORIES = new Set([
   'knowledge-journal',
   'knowledge-invention',
 ]);
+
+const translationEntries = (
+  translations: Partial<Record<NewsLocale, NewsTranslationInput>>,
+) => Object.entries(translations) as Array<[NewsLocale, NewsTranslationInput]>;
 
 function validateCategory(contentType: NewsContentType, category: string) {
   if ((contentType === 'KNOWLEDGE') !== KNOWLEDGE_CATEGORIES.has(category)) {
@@ -49,16 +54,7 @@ export interface NewsTranslationInput {
   actionLabel?: string | null;
 }
 
-export interface NewsPrismaClient {
-  newsArticle: {
-    findMany: (args: Record<string, unknown>) => Promise<any[]>;
-    findFirst: (args: Record<string, unknown>) => Promise<any | null>;
-    create: (args: Record<string, unknown>) => Promise<any>;
-    update: (args: Record<string, unknown>) => Promise<any>;
-    delete: (args: Record<string, unknown>) => Promise<any>;
-    count: (args?: Record<string, unknown>) => Promise<number>;
-  };
-}
+export type NewsPrismaClient = Pick<PrismaClient, 'newsArticle'>;
 
 export interface AdminListNewsInput {
   limit: number;
@@ -72,7 +68,7 @@ export interface AdminListNewsInput {
 }
 
 export interface AdminNewsListResponse {
-  items: any[];
+  items: AdminNewsArticleResult[];
   total: number;
   counts: { total: number; published: number; featured: number };
 }
@@ -82,7 +78,10 @@ const localePriority = (locale: NewsLocale) =>
     (item, index, values) => values.indexOf(item) === index,
   );
 
-function prioritizeTranslations(article: any, locale: NewsLocale) {
+function prioritizeTranslations(
+  article: AdminNewsArticleResult,
+  locale: NewsLocale,
+) {
   const priority = localePriority(locale);
   return {
     ...article,
@@ -114,7 +113,11 @@ const articleSelect = {
       actionLabel: true,
     },
   },
-};
+} as const satisfies Prisma.NewsArticleSelect;
+
+type NewsArticleResult = Prisma.NewsArticleGetPayload<{
+  select: typeof articleSelect;
+}>;
 
 const adminArticleSelect = {
   id: true,
@@ -139,25 +142,32 @@ const adminArticleSelect = {
       summary: true,
     },
   },
-};
+} as const satisfies Prisma.NewsArticleSelect;
 
-function localize(article: any, locale: NewsLocale) {
+type AdminNewsArticleResult = Prisma.NewsArticleGetPayload<{
+  select: typeof adminArticleSelect;
+}>;
+
+function localize(article: NewsArticleResult, locale: NewsLocale) {
   const translation = localePriority(locale)
     .map((candidate) =>
-      article.translations?.find((item: any) => item.locale === candidate),
+      article.translations.find((item) => item.locale === candidate),
     )
     .find(Boolean);
-  const { translations: _translations, ...rest } = article;
+  const { translations, ...rest } = article;
+  void translations;
   return { ...rest, ...translation, locale: translation?.locale ?? locale };
 }
 
-function articleImageUrls(article: any) {
+function articleImageUrls(
+  article: Pick<NewsArticleResult, 'coverImageUrl' | 'translations'>,
+) {
   const urls = new Set<string>();
-  if (article?.coverImageUrl) urls.add(article.coverImageUrl);
-  for (const translation of article?.translations ?? []) {
-    for (const match of translation.content?.matchAll(
-      /https:\/\/res\.cloudinary\.com\/[^\s)'"<>]+/g,
-    ) ?? [])
+  if (article.coverImageUrl) urls.add(article.coverImageUrl);
+  for (const translation of article.translations) {
+    for (const match of translation.content.matchAll(
+      /https:\/\/storage\.googleapis\.com\/[^\s)'"<>]+/g,
+    ))
       urls.add(match[0]);
   }
   return urls;
@@ -172,7 +182,9 @@ export class NewsService {
 
   async listPublic(input: PublicListNewsInput) {
     const query = input.query?.trim();
-    const searchable = (values: string[]) => ({
+    const searchable = (
+      values: string[],
+    ): Prisma.NewsArticleTranslationListRelationFilter => ({
       some: {
         OR: values.flatMap((value) => [
           { title: { contains: value, mode: 'insensitive' } },
@@ -189,7 +201,7 @@ export class NewsService {
           bilateral: ['Việt - Nga', 'Nga - Việt', 'song phương'],
         }[input.scope]
       : undefined;
-    const where = {
+    const where: Prisma.NewsArticleWhereInput = {
       ...(input.excludeId ? { NOT: { id: input.excludeId } } : {}),
       ...(input.featured === undefined ? {} : { isFeatured: input.featured }),
       ...(input.category === undefined ? {} : { category: input.category }),
@@ -211,16 +223,8 @@ export class NewsService {
         where,
         orderBy:
           input.featured === true
-            ? [
-                { updatedAt: 'desc' },
-                { createdAt: 'desc' },
-                { id: 'desc' },
-              ]
-            : [
-                { publishedAt: 'desc' },
-                { createdAt: 'desc' },
-                { id: 'desc' },
-              ],
+            ? [{ updatedAt: 'desc' }, { createdAt: 'desc' }, { id: 'desc' }]
+            : [{ publishedAt: 'desc' }, { createdAt: 'desc' }, { id: 'desc' }],
         take: input.limit,
         skip: input.offset,
         select: articleSelect,
@@ -332,7 +336,7 @@ export class NewsService {
         ...data,
         publishedAt: new Date(),
         translations: {
-          create: Object.entries(translations).map(([locale, value]) => ({
+          create: translationEntries(translations).map(([locale, value]) => ({
             locale,
             ...value,
           })),
@@ -369,11 +373,13 @@ export class NewsService {
         ...(translations
           ? {
               translations: {
-                upsert: Object.entries(translations).map(([locale, value]) => ({
-                  where: { articleId_locale: { articleId: id, locale } },
-                  update: value,
-                  create: { locale, ...value },
-                })),
+                upsert: translationEntries(translations).map(
+                  ([locale, value]) => ({
+                    where: { articleId_locale: { articleId: id, locale } },
+                    update: value,
+                    create: { locale, ...value },
+                  }),
+                ),
               },
             }
           : {}),
@@ -393,5 +399,4 @@ export class NewsService {
     await this.media.delete(articleImageUrls(article));
     return { ok: true };
   }
-
 }

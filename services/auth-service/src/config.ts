@@ -15,9 +15,12 @@ const configSchema = z.object({
   AUTH_BRIDGE_SECRET: z
     .string()
     .min(32, 'AUTH_BRIDGE_SECRET must contain at least 32 characters'),
-  CLOUDINARY_CLOUD_NAME: z.string().min(1),
-  CLOUDINARY_API_KEY: z.string().min(1),
-  CLOUDINARY_API_SECRET: z.string().min(1),
+  GOOGLE_CLOUD_PROJECT: z.string().min(1),
+  GCS_BUCKET: z
+    .string()
+    .min(3)
+    .max(63)
+    .regex(/^[a-z0-9][a-z0-9._-]*[a-z0-9]$/, 'GCS_BUCKET is invalid'),
   NODE_ENV: z.enum(['development', 'test', 'production']).optional(),
 });
 

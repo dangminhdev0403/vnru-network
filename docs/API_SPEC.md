@@ -15,13 +15,13 @@ Implemented API families:
 - `GET /api/v1/news/:id`: public published article with VI fallback; drafts are not exposed.
 - `/api/v1/admin/news/*`: authenticated content create/read/update/delete operations authorized by `content.article.*` capabilities; the shared lifecycle includes `KNOWLEDGE`; delete reuses `content.article.update`.
 - `GET /api/v1/admin/news`: bounded admin list; accepts `locale=VI|EN|RU` (default `RU`) and optional `published=true|false`, and returns all translations with the requested locale first, then RU/VI/EN fallback order; `GET /api/v1/admin/news/:id` returns all translations for editing. `PATCH /api/v1/admin/news/:id` sets `publishedAt` to a timestamp to show content or `null` to hide it as a draft.
-- `POST /api/v1/admin/news/media`: authenticated multipart image upload (`file`, JPEG/PNG/WebP, max 20 MB) through `nestjs-cloudinary@1.0.7`; response returns Cloudinary URL and public ID for article/banner fields.
+- `POST /api/v1/admin/news/media`: authenticated multipart image upload (`file`, JPEG/PNG/WebP, max 20 MB) to Google Cloud Storage; response returns a durable public GCS URL and owned object name for article/banner fields.
 
-News media is uploaded only through the backend. Upload accepts either `content.article.create` or `content.article.update`, so editors can replace an existing cover. Frontend code must not sign Cloudinary requests, hold Cloudinary secrets, transform image binaries, or implement a parallel storage path.
+News media is uploaded only through the backend. Upload accepts either `content.article.create` or `content.article.update`, so editors can replace an existing cover. Frontend code must not hold Google credentials, call GCS directly, transform image binaries, or implement a parallel storage path.
 
 Create accepts an optional `coverImageUrl` and makes the article public immediately. Update edits the same public article. When an image is selected, the client uploads it before create/update; upload failure leaves no new article.
 
-Required backend runtime secrets: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`. Keep values only in ignored/runtime environment files; never commit or expose them to the browser.
+Required backend runtime configuration: `GOOGLE_CLOUD_PROJECT`, `GCS_BUCKET`, and Application Default Credentials. On the external VPS, mount the ignored credential file read-only through `GOOGLE_APPLICATION_CREDENTIALS`; never commit or expose it to the browser.
 
 Membership application body:
 

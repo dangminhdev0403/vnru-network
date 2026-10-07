@@ -1,10 +1,23 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryService } from 'nestjs-cloudinary';
-import { validateConfig } from '../../config';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
+import type { Bucket } from '@google-cloud/storage';
+import { randomUUID } from 'node:crypto';
+import sharp from 'sharp';
 
+export const NEWS_MEDIA_BUCKET = Symbol('NEWS_MEDIA_BUCKET');
 export const MAX_NEWS_IMAGE_BYTES = 20 * 1024 * 1024;
+export const MAX_NEWS_IMAGE_PIXELS = 40_000_000;
+export const NEWS_MEDIA_PREFIX = 'vnru/news/';
 const ALLOWED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
+const MIME_BY_FORMAT = {
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+  webp: 'image/webp',
+} as const;
 
 export interface NewsImageFile {
   buffer: Buffer;
@@ -13,29 +26,75 @@ export interface NewsImageFile {
   originalname?: string;
 }
 
-export function validateNewsImage(file?: NewsImageFile): asserts file is NewsImageFile {
+export interface ValidatedNewsImage {
+  buffer: Buffer;
+  contentType: (typeof MIME_BY_FORMAT)[keyof typeof MIME_BY_FORMAT];
+  format: keyof typeof MIME_BY_FORMAT;
+  width: number;
+  height: number;
+}
+
+export function publicGcsUrl(bucketName: string, objectName: string) {
+  const objectPath = objectName.split('/').map(encodeURIComponent).join('/');
+  return `https://storage.googleapis.com/${bucketName}/${objectPath}`;
+}
+
+export function newsImageObjectName(url: string, bucketName: string) {
+  try {
+    const parsed = new URL(url);
+    const prefix = `/${bucketName}/`;
+    if (
+      parsed.protocol !== 'https:' ||
+      parsed.hostname !== 'storage.googleapis.com' ||
+      !parsed.pathname.startsWith(prefix)
+    )
+      return null;
+    const objectName = decodeURIComponent(parsed.pathname.slice(prefix.length));
+    return objectName.startsWith(NEWS_MEDIA_PREFIX) ? objectName : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function validateNewsImage(
+  file?: NewsImageFile,
+): Promise<ValidatedNewsImage> {
   if (!file) throw new BadRequestException('Image file is required');
   if (!ALLOWED_IMAGE_TYPES.has(file.mimetype))
     throw new BadRequestException('Only JPEG, PNG and WebP images are allowed');
-  if (file.size > MAX_NEWS_IMAGE_BYTES)
+  if (
+    file.size > MAX_NEWS_IMAGE_BYTES ||
+    file.buffer.length > MAX_NEWS_IMAGE_BYTES
+  )
     throw new BadRequestException('Image must not exceed 20 MB');
-}
 
-export function newsImagePublicId(url: string, cloudName: string) {
   try {
-    const parsed = new URL(url);
-    const marker = `/${cloudName}/image/upload/`;
-    const path = decodeURIComponent(parsed.pathname);
-    const start = path.indexOf('/vnru/news/', marker.length);
-    if (
-      parsed.hostname !== 'res.cloudinary.com' ||
-      !path.startsWith(marker) ||
-      start < 0
-    )
-      return null;
-    return path.slice(start + 1).replace(/\.[^/.]+$/, '');
+    const image = sharp(file.buffer, {
+      failOn: 'warning',
+      limitInputPixels: MAX_NEWS_IMAGE_PIXELS,
+    }).rotate();
+    const metadata = await image.metadata();
+    const format = metadata.format as keyof typeof MIME_BY_FORMAT;
+    const contentType = MIME_BY_FORMAT[format];
+    if (!contentType || contentType !== file.mimetype)
+      throw new Error('Image content does not match its MIME type');
+
+    const output = await image
+      .toFormat(format)
+      .toBuffer({ resolveWithObject: true });
+    if (!output.info.width || !output.info.height)
+      throw new Error('Invalid dimensions');
+    if (output.data.length > MAX_NEWS_IMAGE_BYTES)
+      throw new Error('Processed image exceeds the byte limit');
+    return {
+      buffer: output.data,
+      contentType,
+      format,
+      width: output.info.width,
+      height: output.info.height,
+    };
   } catch {
-    return null;
+    throw new BadRequestException('Image content is invalid');
   }
 }
 
@@ -43,47 +102,49 @@ export function newsImagePublicId(url: string, cloudName: string) {
 export class NewsMediaService {
   private readonly logger = new Logger(NewsMediaService.name);
 
-  constructor(private readonly cloudinary: CloudinaryService) {}
+  constructor(@Inject(NEWS_MEDIA_BUCKET) private readonly bucket: Bucket) {}
 
   async upload(file: NewsImageFile) {
-    validateNewsImage(file);
-    const result = await this.cloudinary.uploadFile(
-      file as Parameters<CloudinaryService['uploadFile']>[0],
-      { folder: 'vnru/news', resource_type: 'image' },
-    );
-    if ('error' in result || !result.secure_url || !result.public_id)
-      throw new BadRequestException('Cloudinary upload failed');
+    const image = await validateNewsImage(file);
+    const objectName = `${NEWS_MEDIA_PREFIX}${randomUUID()}.${image.format === 'jpeg' ? 'jpg' : image.format}`;
+    try {
+      await this.bucket.file(objectName).save(image.buffer, {
+        resumable: false,
+        validation: 'crc32c',
+        preconditionOpts: { ifGenerationMatch: 0 },
+        metadata: {
+          contentType: image.contentType,
+          cacheControl: 'public, max-age=31536000, immutable',
+        },
+      });
+    } catch {
+      throw new BadRequestException('Image upload failed');
+    }
     return {
-      url: result.secure_url,
-      publicId: result.public_id,
-      width: result.width,
-      height: result.height,
-      format: result.format,
+      url: publicGcsUrl(this.bucket.name, objectName),
+      publicId: objectName,
+      width: image.width,
+      height: image.height,
+      format: image.format,
     };
   }
 
   async delete(urls: Iterable<string>) {
-    const config = validateConfig();
-    cloudinary.config({
-      cloud_name: config.CLOUDINARY_CLOUD_NAME,
-      api_key: config.CLOUDINARY_API_KEY,
-      api_secret: config.CLOUDINARY_API_SECRET,
-    });
-    const publicIds = [
+    const objectNames = [
       ...new Set(
         [...urls]
-          .map((url) => newsImagePublicId(url, config.CLOUDINARY_CLOUD_NAME))
-          .filter((id): id is string => Boolean(id)),
+          .map((url) => newsImageObjectName(url, this.bucket.name))
+          .filter((name): name is string => Boolean(name)),
       ),
     ];
     const results = await Promise.allSettled(
-      publicIds.map((id) =>
-        cloudinary.uploader.destroy(id, { resource_type: 'image' }),
+      objectNames.map((name) =>
+        this.bucket.file(name).delete({ ignoreNotFound: true }),
       ),
     );
     results.forEach((result, index) => {
       if (result.status === 'rejected')
-        this.logger.warn(`Could not delete news image ${publicIds[index]}`);
+        this.logger.warn(`Could not delete news image ${objectNames[index]}`);
     });
   }
 }

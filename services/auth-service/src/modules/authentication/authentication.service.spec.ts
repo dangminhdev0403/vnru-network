@@ -31,6 +31,8 @@ describe('AuthenticationService Auth.js bridge', () => {
   beforeAll(() => {
     process.env.DATABASE_URL = 'postgresql://test:test@localhost/test';
     process.env.AUTH_BRIDGE_SECRET = secret;
+    process.env.GOOGLE_CLOUD_PROJECT = 'vnru-test';
+    process.env.GCS_BUCKET = 'vnru-test-media';
   });
 
   it('accepts a fresh signed Auth.js assertion and creates an opaque session', async () => {

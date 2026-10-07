@@ -111,9 +111,7 @@ export class AuthenticatedRequestGuard implements CanActivate {
     if (
       anyPermissions?.length &&
       (!authContext.activeContext ||
-        !anyPermissions.some((item) =>
-          authContext.capabilities.includes(item),
-        ))
+        !anyPermissions.some((item) => authContext.capabilities.includes(item)))
     ) {
       throw new ForbiddenException('Permission denied for active context');
     }

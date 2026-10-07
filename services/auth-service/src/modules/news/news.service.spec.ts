@@ -1,20 +1,31 @@
+import type { NewsMediaService } from './news-media.service';
 import { NewsService } from './news.service';
 
 describe('NewsService', () => {
+  let createArgs: unknown;
   const prisma = {
     newsArticle: {
       findMany: jest.fn(),
       findFirst: jest.fn(),
-      create: jest.fn(),
+      create: jest.fn((args: unknown): Promise<unknown> => {
+        createArgs = args;
+        return Promise.resolve({});
+      }),
       update: jest.fn(),
       delete: jest.fn(),
       count: jest.fn(),
     },
   };
   const media = { delete: jest.fn().mockResolvedValue(undefined) };
-  const service = new NewsService(prisma, media as any);
+  const service = new NewsService(
+    prisma as never,
+    media as unknown as NewsMediaService,
+  );
 
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    createArgs = undefined;
+    jest.clearAllMocks();
+  });
 
   it('lists featured articles for the home feed', async () => {
     prisma.newsArticle.findMany.mockResolvedValue([]);
@@ -22,21 +33,18 @@ describe('NewsService', () => {
 
     await service.listPublic({ featured: true, limit: 4, offset: 0 });
 
-    expect(prisma.newsArticle.findMany).toHaveBeenCalledWith({
-      where: {
-        isFeatured: true,
-        contentType: { not: 'KNOWLEDGE' },
-        publishedAt: { not: null },
-      },
-      orderBy: [
-        { updatedAt: 'desc' },
-        { createdAt: 'desc' },
-        { id: 'desc' },
-      ],
-      take: 4,
-      skip: 0,
-      select: expect.any(Object),
-    });
+    expect(prisma.newsArticle.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          isFeatured: true,
+          contentType: { not: 'KNOWLEDGE' },
+          publishedAt: { not: null },
+        },
+        orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }, { id: 'desc' }],
+        take: 4,
+        skip: 0,
+      }),
+    );
     expect(prisma.newsArticle.count).toHaveBeenCalledWith({
       where: {
         isFeatured: true,
@@ -148,7 +156,7 @@ describe('NewsService', () => {
       offset: 0,
       locale: 'RU',
     });
-    expect(res.items[0].translations.map((item: any) => item.locale)).toEqual([
+    expect(res.items[0].translations.map((item) => item.locale)).toEqual([
       'RU',
       'VI',
       'EN',
@@ -217,8 +225,6 @@ describe('NewsService', () => {
       lastName: 'Dang',
     });
   });
-
-
   it('filters draft admin articles before pagination', async () => {
     prisma.newsArticle.findMany.mockResolvedValue([]);
     prisma.newsArticle.count.mockResolvedValue(0);
@@ -275,8 +281,6 @@ describe('NewsService', () => {
   });
 
   it('creates a public article with a server timestamp', async () => {
-    prisma.newsArticle.create.mockResolvedValue({ id: 'article-1' });
-
     await service.create({
       category: 'education',
       authorId: 'user-1',
@@ -287,20 +291,22 @@ describe('NewsService', () => {
       },
     });
 
-    expect(prisma.newsArticle.create).toHaveBeenCalledWith(
-      expect.objectContaining({
-        data: expect.objectContaining({ publishedAt: expect.any(Date) }),
-      }),
-    );
+    const data = (createArgs as { data?: unknown }).data;
+    const publishedAt = (data as { publishedAt?: unknown }).publishedAt;
+    expect(publishedAt).toBeInstanceOf(Date);
   });
 
-  it('deletes an article before cleaning up its Cloudinary images', async () => {
+  it('deletes an article before cleaning up its GCS images', async () => {
     prisma.newsArticle.findFirst.mockResolvedValue({
       id: 'article-1',
-      coverImageUrl: 'https://res.cloudinary.com/demo/image/upload/v1/vnru/news/cover.webp',
-      translations: [{
-        content: '![Ảnh](https://res.cloudinary.com/demo/image/upload/v1/vnru/news/body.webp)',
-      }],
+      coverImageUrl:
+        'https://storage.googleapis.com/vnru-public-media/vnru/news/cover.webp',
+      translations: [
+        {
+          content:
+            '![Ảnh](https://storage.googleapis.com/vnru-public-media/vnru/news/body.webp)',
+        },
+      ],
     });
     prisma.newsArticle.delete.mockResolvedValue({ id: 'article-1' });
 
@@ -308,9 +314,11 @@ describe('NewsService', () => {
     expect(prisma.newsArticle.delete).toHaveBeenCalledWith({
       where: { id: 'article-1' },
     });
-    expect(media.delete).toHaveBeenCalledWith(new Set([
-      'https://res.cloudinary.com/demo/image/upload/v1/vnru/news/cover.webp',
-      'https://res.cloudinary.com/demo/image/upload/v1/vnru/news/body.webp',
-    ]));
+    expect(media.delete).toHaveBeenCalledWith(
+      new Set([
+        'https://storage.googleapis.com/vnru-public-media/vnru/news/cover.webp',
+        'https://storage.googleapis.com/vnru-public-media/vnru/news/body.webp',
+      ]),
+    );
   });
 });
