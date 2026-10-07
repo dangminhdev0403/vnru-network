@@ -4,6 +4,7 @@ set -euo pipefail
 script=$(<deploy.sh)
 grep -Fq '[[ $PWD == /var/www/vnru-network ]]' <<< "$script"
 grep -Fq 'stat -c %a "$file"' <<< "$script"
+grep -Fq 'stat -c %u "$GCP_CREDENTIAL_FILE"' <<< "$script"
 grep -Fq 'GCP_CREDENTIAL_FILE=secrets/gcs-key.json' <<< "$script"
 grep -Fq 'Google Cloud configuration still contains placeholders' <<< "$script"
 grep -Fq 'http://127.0.0.1:8080/' <<< "$script"
@@ -32,7 +33,13 @@ printf 'GOOGLE_CLOUD_PROJECT=fill-google-cloud-project-id\n' > "$tmp/secrets/dem
 printf '{}\n' > "$tmp/secrets/account.json"
 printf '{"project_id":"fill-google-cloud-project-id"}\n' > "$tmp/secrets/gcs-key.json"
 printf '#!/usr/bin/env sh\nexit 0\n' > "$tmp/bin/docker"
-printf '#!/usr/bin/env sh\nprintf "600\\n"\n' > "$tmp/bin/stat"
+cat > "$tmp/bin/stat" <<'EOF'
+#!/usr/bin/env sh
+case "$*" in
+  *"%u"*) printf '%s\n' "${GCP_KEY_UID:-1001}" ;;
+  *) printf '600\n' ;;
+esac
+EOF
 chmod +x "$tmp/bin/docker" "$tmp/bin/stat"
 set +e
 output=$(cd "$tmp" && PATH="$tmp/bin:$PATH" bash ./deploy.sh check 2>&1)
@@ -43,6 +50,13 @@ grep -Fq 'Google Cloud configuration still contains placeholders' <<< "$output"
 
 printf 'GOOGLE_CLOUD_PROJECT=vnru-project-510917\nGCS_BUCKET=vnru-knowledge-data\n' > "$tmp/secrets/demo.env"
 printf '{"project_id":"vnru-project-510917"}\n' > "$tmp/secrets/gcs-key.json"
+set +e
+output=$(cd "$tmp" && GCP_KEY_UID=0 PATH="$tmp/bin:$PATH" bash ./deploy.sh check 2>&1)
+status=$?
+set -e
+(( status != 0 ))
+grep -Fq 'GCP credential must be owned by runtime UID 1001' <<< "$output"
+
 cat > "$tmp/bin/docker" <<'EOF'
 #!/usr/bin/env sh
 case "$*" in

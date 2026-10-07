@@ -13,7 +13,7 @@ Cloud Storage uses Application Default Credentials, not an API key.
    - `GOOGLE_CLOUD_PROJECT`
    - `GCS_BUCKET`
    - `GCS_CREDENTIALS_FILE=./secrets/gcs-key.json`
-4. Restrict the runtime files: `chmod 600 secrets/demo.env secrets/gcs-key.json`.
+4. Make the key readable only by the container runtime user: `chown 1001 secrets/gcs-key.json && chmod 600 secrets/demo.env secrets/gcs-key.json`.
 
 The current application contract returns public `storage.googleapis.com` news URLs. The bucket therefore needs uniform bucket-level access plus public object viewing for public news media; the service account needs object create/read/delete access on this bucket. Do not grant project-wide owner/editor access.
 

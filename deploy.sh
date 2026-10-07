@@ -16,6 +16,10 @@ check() {
     mode=$(stat -c %a "$file")
     (( (8#$mode & 8#077) == 0 )) || { echo "Unsafe permissions: $file ($mode); run chmod 600 $file" >&2; return 1; }
   done
+  [[ $(stat -c %u "$GCP_CREDENTIAL_FILE") == 1001 ]] || {
+    echo "GCP credential must be owned by runtime UID 1001; run chown 1001 $GCP_CREDENTIAL_FILE" >&2
+    return 1
+  }
   ! grep -Eqi 'fill-|FILL_' "$ENV_FILE" "$GCP_CREDENTIAL_FILE" || {
     echo "Google Cloud configuration still contains placeholders" >&2
     return 1
