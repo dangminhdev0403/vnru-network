@@ -408,21 +408,21 @@ describe('IamAdminService', () => {
           id: 'role-1',
           name: 'ADMIN',
           permissions: [
-            { permission: { key: 'iam.users.manage' } },
-            { permission: { key: 'iam.roles.manage' } },
+            { permission: 'iam.users.manage' },
+            { permission: 'iam.roles.manage' },
           ],
         },
         {
           id: 'role-2',
           name: 'USER',
           permissions: [
-            { permission: { key: 'knowledge.publications.submit' } },
+            { permission: 'knowledge.publications.submit' },
           ],
         },
         {
           id: 'role-super',
           name: 'SUPER_ADMIN',
-          permissions: [{ permission: { key: 'iam.roles.manage' } }],
+          permissions: [{ permission: 'iam.roles.manage' }],
         },
       ];
       prismaMock.role.findMany.mockResolvedValue(rolesFromPrisma);
@@ -435,11 +435,7 @@ describe('IamAdminService', () => {
         where: { name: { not: 'SUPER_ADMIN' } },
         orderBy: { name: 'asc' },
         include: {
-          permissions: {
-            include: {
-              permission: true,
-            },
-          },
+          permissions: true,
         },
       });
       expect(result).toEqual([
@@ -480,9 +476,6 @@ describe('IamAdminService', () => {
         id: 'role-1',
         name: 'RESEARCHER',
       });
-      prismaMock.permission.findMany.mockResolvedValue([
-        { id: 'perm-1', key: 'collab.proposals.create' },
-      ]);
       prismaMock.rolePermission.deleteMany.mockResolvedValue({ count: 1 });
       prismaMock.rolePermission.createMany.mockResolvedValue({ count: 1 });
 
@@ -501,7 +494,7 @@ describe('IamAdminService', () => {
         where: { roleId: 'role-1' },
       });
       expect(prismaMock.rolePermission.createMany).toHaveBeenCalledWith({
-        data: [{ roleId: 'role-1', permissionId: 'perm-1' }],
+        data: [{ roleId: 'role-1', permission: 'collab.proposals.create' }],
       });
       expect(prismaMock.securityAuditEvent.create).toHaveBeenCalledWith({
         data: {

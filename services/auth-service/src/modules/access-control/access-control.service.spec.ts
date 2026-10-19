@@ -12,7 +12,7 @@ describe('AccessControlService', () => {
         AccessControlPrismaClient['roleAssignment']['findMany']
       >;
     };
-    permission: {
+    rolePermission: {
       findMany: jest.Mock;
     };
   };
@@ -22,12 +22,12 @@ describe('AccessControlService', () => {
       roleAssignment: {
         findMany: jest.fn(),
       },
-      permission: {
+      rolePermission: {
         findMany: jest.fn(),
       },
     };
 
-    service = new AccessControlService(prisma);
+    service = new AccessControlService(prisma as unknown as AccessControlPrismaClient);
   });
 
   it('resolves exact capability keys for an active assignment matching (userId, contextType, contextId)', async () => {
@@ -49,16 +49,10 @@ describe('AccessControlService', () => {
           name: 'INSTITUTION_ADMIN',
           permissions: [
             {
-              permission: {
-                id: 'perm-1',
-                key: 'organization.members.manage',
-              },
+              permission: 'organization.members.manage',
             },
             {
-              permission: {
-                id: 'perm-2',
-                key: 'collab.proposals.verify_institutional',
-              },
+              permission: 'collab.proposals.verify_institutional',
             },
           ],
         },
@@ -77,11 +71,7 @@ describe('AccessControlService', () => {
       include: {
         role: {
           include: {
-            permissions: {
-              include: {
-                permission: true,
-              },
-            },
+            permissions: true,
           },
         },
       },
@@ -124,10 +114,7 @@ describe('AccessControlService', () => {
                 name: 'RESEARCHER',
                 permissions: [
                   {
-                    permission: {
-                      id: 'perm-res',
-                      key: 'collab.proposals.create',
-                    },
+                    permission: 'collab.proposals.create',
                   },
                 ],
               },
@@ -153,10 +140,7 @@ describe('AccessControlService', () => {
                 name: 'REVIEWER',
                 permissions: [
                   {
-                    permission: {
-                      id: 'perm-rev',
-                      key: 'reviews.evaluations.score',
-                    },
+                    permission: 'reviews.evaluations.score',
                   },
                 ],
               },
@@ -219,16 +203,10 @@ describe('AccessControlService', () => {
           name: 'FACULTY_MEMBER',
           permissions: [
             {
-              permission: {
-                id: 'p-1',
-                key: 'collab.proposals.create',
-              },
+              permission: 'collab.proposals.create',
             },
             {
-              permission: {
-                id: 'p-2',
-                key: 'knowledge.publications.submit',
-              },
+              permission: 'knowledge.publications.submit',
             },
           ],
         },
@@ -244,16 +222,10 @@ describe('AccessControlService', () => {
           name: 'LAB_LEAD',
           permissions: [
             {
-              permission: {
-                id: 'p-1',
-                key: 'collab.proposals.create', // duplicate permission key across roles in same context
-              },
+              permission: 'collab.proposals.create', // duplicate permission key across roles in same context
             },
             {
-              permission: {
-                id: 'p-3',
-                key: 'projects.milestones.update',
-              },
+              permission: 'projects.milestones.update',
             },
           ],
         },
@@ -293,9 +265,9 @@ describe('AccessControlService', () => {
         },
       },
     ]);
-    prisma.permission.findMany.mockResolvedValue([
-      { id: 'p-iam', key: 'iam.users.manage' },
-      { id: 'p-knowledge', key: 'knowledge.workspace.view' },
+    prisma.rolePermission.findMany.mockResolvedValue([
+      { permission: 'iam.users.manage' },
+      { permission: 'knowledge.workspace.view' },
     ]);
 
     await expect(

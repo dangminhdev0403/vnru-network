@@ -27,9 +27,7 @@ export interface RoleWithPermissions {
   id: string;
   name: string;
   permissions: {
-    permission: {
-      key: string;
-    } | null;
+    permission: string;
   }[];
 }
 
@@ -68,25 +66,15 @@ export interface IamAdminPrismaClient {
       where?: { name: { not: string } };
       orderBy?: { name: 'asc' | 'desc' };
       include?: {
-        permissions: {
-          include: {
-            permission: boolean;
-          };
-        };
+        permissions: boolean;
       };
     }): Promise<RoleWithPermissions[]>;
     findUnique(args: { where: { id: string } }): Promise<Role | null>;
   };
-  permission: {
-    findMany(args: {
-      where: { key: { in: string[] } };
-      select: { id: boolean; key: boolean };
-    }): Promise<{ id: string; key: string }[]>;
-  };
   rolePermission: {
     deleteMany(args: { where: { roleId: string } }): Promise<{ count: number }>;
     createMany(args: {
-      data: { roleId: string; permissionId: string }[];
+      data: { roleId: string; permission: string }[];
     }): Promise<{ count: number }>;
   };
   roleAssignment: {
@@ -356,11 +344,7 @@ export class IamAdminService {
       where: { name: { not: 'SUPER_ADMIN' } },
       orderBy: { name: 'asc' },
       include: {
-        permissions: {
-          include: {
-            permission: true,
-          },
-        },
+        permissions: true,
       },
     });
 
@@ -368,7 +352,7 @@ export class IamAdminService {
       .filter((role) => !isSuperAdminRole(role.name))
       .map((role) => {
         const permissionKeys: string[] = role.permissions
-          .map((rp) => rp.permission?.key)
+          .map((rp) => rp.permission)
           .filter((key): key is string => typeof key === 'string');
 
         return {
@@ -408,21 +392,11 @@ export class IamAdminService {
       }
     }
 
-    const permissions = permissionKeys.length
-      ? await this.prisma.permission.findMany({
-          where: { key: { in: permissionKeys } },
-          select: { id: true, key: true },
-        })
-      : [];
-    if (permissions.length !== permissionKeys.length) {
-      throw new NotFoundException('One or more permissions do not exist');
-    }
-
     await this.prisma.$transaction(async (tx) => {
       await tx.rolePermission.deleteMany({ where: { roleId } });
-      if (permissions.length) {
+      if (permissionKeys.length) {
         await tx.rolePermission.createMany({
-          data: permissions.map(({ id }) => ({ roleId, permissionId: id })),
+          data: permissionKeys.map((permission) => ({ roleId, permission })),
         });
       }
       await tx.securityAuditEvent.create({

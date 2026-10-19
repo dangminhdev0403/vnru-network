@@ -8,16 +8,10 @@ export interface ResolveCapabilitiesInput {
   contextId: string;
 }
 
-export interface PermissionRecord {
-  id: string;
-  key: string;
-}
-
 export interface RolePermissionRecord {
   id?: string;
   roleId?: string;
-  permissionId?: string;
-  permission: PermissionRecord;
+  permission: string;
 }
 
 export interface RoleRecord {
@@ -37,8 +31,11 @@ export interface RoleAssignmentRecord {
 }
 
 export interface AccessControlPrismaClient {
-  permission: {
-    findMany: () => Promise<PermissionRecord[]>;
+  rolePermission: {
+    findMany: (args?: {
+      select?: { permission: boolean };
+      distinct?: ('permission')[];
+    }) => Promise<{ permission: string }[]>;
   };
   roleAssignment: {
     findMany: (args: {
@@ -51,11 +48,7 @@ export interface AccessControlPrismaClient {
       include?: {
         role: {
           include?: {
-            permissions: {
-              include: {
-                permission: boolean;
-              };
-            };
+            permissions: boolean;
           };
           select?: { name: boolean };
         };
@@ -88,11 +81,7 @@ export class AccessControlService {
       include: {
         role: {
           include: {
-            permissions: {
-              include: {
-                permission: true,
-              },
-            },
+            permissions: true,
           },
         },
       },
@@ -103,9 +92,11 @@ export class AccessControlService {
     }
 
     if (assignments.some(({ role }) => role?.name === 'SUPER_ADMIN')) {
-      return (await this.prisma.permission.findMany())
-        .map(({ key }) => key)
-        .sort();
+      const allPermissions = await this.prisma.rolePermission.findMany({
+        select: { permission: true },
+        distinct: ['permission'],
+      });
+      return allPermissions.map(({ permission }) => permission).sort();
     }
 
     const permissionKeys = new Set<string>();
@@ -117,8 +108,8 @@ export class AccessControlService {
       const rolePermissions = assignment.role?.permissions;
       if (Array.isArray(rolePermissions)) {
         for (const rp of rolePermissions) {
-          if (rp.permission?.key) {
-            permissionKeys.add(rp.permission.key);
+          if (rp.permission) {
+            permissionKeys.add(rp.permission);
           }
         }
       }

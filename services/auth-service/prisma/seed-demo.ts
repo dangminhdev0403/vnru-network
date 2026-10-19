@@ -92,18 +92,12 @@ async function main() {
         update: {},
         create: { name: customRole.name },
       });
-      const permissions = await prisma.permission.findMany({
-        where: { key: { in: [...customRole.permissions] } },
-        select: { id: true },
-      });
-      if (permissions.length !== customRole.permissions.length)
-        throw new Error(`Missing permission for ${customRole.name}`);
       await prisma.rolePermission.deleteMany({ where: { roleId: role.id } });
-      if (permissions.length)
+      if (customRole.permissions.length)
         await prisma.rolePermission.createMany({
-          data: permissions.map(({ id }) => ({
+          data: customRole.permissions.map((permission) => ({
             roleId: role.id,
-            permissionId: id,
+            permission,
           })),
         });
     }

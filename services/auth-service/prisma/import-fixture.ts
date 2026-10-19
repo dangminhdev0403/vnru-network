@@ -135,18 +135,12 @@ export async function importFixture(
 
       await tx.rolePermission.deleteMany({ where: { roleId: role.id } });
       for (const permission of item.permissions) {
-        const stored = await tx.permission.upsert({
-          where: { key: permission.key },
-          update: {},
-          create: permission,
-        });
-
         await tx.rolePermission.upsert({
           where: {
-            roleId_permissionId: { roleId: role.id, permissionId: stored.id },
+            roleId_permission: { roleId: role.id, permission: permission.key },
           },
           update: {},
-          create: { roleId: role.id, permissionId: stored.id },
+          create: { roleId: role.id, permission: permission.key },
         });
       }
 
