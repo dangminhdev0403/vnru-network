@@ -189,7 +189,6 @@ async function main() {
         roleAssignments: { none: {} },
       },
     });
-    await prisma.permission.deleteMany({ where: { roles: { none: {} } } });
     console.log(
       `Provisioned ${accounts.length} Auth.js demo identities for 3 portal roles.`,
     );
